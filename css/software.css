@@ -1,0 +1,321 @@
+div.content-container div.flowchart-item{
+  width: 36px;
+  height: 36px;
+  float: left;
+  margin-right: 12px;
+  margin-top: 4.5px;
+}
+li.lckzmk1 div.content-container div.flowchart-item,
+li.lckzmk2 div.content-container div.flowchart-item{
+  width: 30px;
+  height: 16px;
+  float: left;
+  margin-right: 30px;
+  margin-top: 12px;
+}
+div.content-container div.flowchart-board{
+	background:url(../img/kz-zb-big.png) no-repeat;
+	background-size:contain;
+}
+div.flowchart-container div.flowchart-board-item{
+	background:url(../img/kz-zb-big.png) no-repeat center;
+	font-size: 0;
+	background-size:contain;
+	width:75px;
+	height:36px;
+}
+div.content-container div.flowchart-light{
+	background:url(../img/sc-ledd-big.png) no-repeat;
+	background-size:contain;
+}
+div.flowchart-container div.flowchart-light-item{
+	background:url(../img/sc-ledd-big.png) no-repeat center;
+	font-size: 0;
+	background-size: contain;
+	width:75px;
+	height:36px;
+}
+div.content-container div.flowchart-switch{
+	background:url(../img/sr-kgmk-big.png) no-repeat;
+	background-size:contain;
+}
+div.flowchart-container div.flowchart-switch-item{
+	background:url(../img/sr-kgmk-big.png) no-repeat center;
+	font-size: 0;
+	background-size: contain;
+	width:75px;
+	height:36px;
+}
+div.content-container div.flowchart-button{
+	background:url(../img/sr-ajmk-big.png) no-repeat;
+	background-size:contain;
+}
+div.flowchart-container div.flowchart-button-item{
+	background:url(../img/sr-ajmk-big.png) no-repeat center;
+	font-size: 0;
+	background-size: contain;
+	width:75px;
+	height:36px;
+}
+div.content-container div.flowchart-soundSensor{
+	background:url(../img/sc-syscmk-big.png) no-repeat;
+	background-size:contain;
+}
+div.flowchart-container div.flowchart-soundSensor-item{
+	background:url(../img/sc-syscmk-big.png) no-repeat center;
+	font-size: 0;
+	background-size: contain;
+	width:75px;
+	height:36px;
+}
+div.content-container div.flowchart-infraredOut{
+	background:url(../img/sc-hwfsmk-big.png) no-repeat;
+	background-size:contain;
+}
+div.flowchart-container div.flowchart-infraredOut-item{
+	background:url(../img/sc-hwfsmk-big.png) no-repeat center;
+	font-size: 0;
+	background-size: contain;
+	width:75px;
+	height:36px;
+}
+div.content-container div.flowchart-digitalTube{
+	background:url(../img/xs-smgmk-big.png) no-repeat;
+	background-size:contain;
+}
+div.flowchart-container div.flowchart-digitalTube-item{
+	background:url(../img/xs-smgmk-big.png) no-repeat center;
+	font-size: 0;
+	background-size: contain;
+	width:75px;
+	height:36px;
+}
+div.content-container div.flowchart-dcMotor{
+	background:url(../img/zx-djkzmk-big.png) no-repeat;
+	background-size:contain;
+}
+div.flowchart-container div.flowchart-dcMotor-item{
+	background:url(../img/zx-djkzmk-big.png) no-repeat center;
+	font-size: 0;
+	background-size: contain;
+	width:75px;
+	height:36px;
+}
+div.content-container div.flowchart-streeringEngine{
+	background:url(../img/zx-dj-big.png) no-repeat;
+	background-size:contain;
+}
+div.flowchart-container div.flowchart-streeringEngine-item{
+	background:url(../img/zx-dj-big.png) no-repeat center;
+	font-size: 0;
+	background-size: contain;
+	width:75px;
+	height:36px;
+}
+div.content-container div.flowchart-pm25{
+	background:url(../img/cg-pm-big.png) no-repeat;
+	background-size:contain;
+}
+div.flowchart-container div.flowchart-pm25-item{
+	background:url(../img/cg-pm-big.png) no-repeat center;
+	font-size: 0;
+	background-size:contain;
+	width:75px;
+	height:36px;
+}
+div.content-container div.flowchart-illumination{
+	background:url(../img/cg-ggmk-big.png) no-repeat;
+	background-size:contain;
+}
+div.flowchart-container div.flowchart-illumination-item{
+	background:url(../img/cg-ggmk-big.png) no-repeat center;
+	font-size: 0;
+	background-size: contain;
+	width:75px;
+	height:36px;
+}
+div.content-container div.flowchart-sg{
+	background:url(../img/cg-sgmk-big.png) no-repeat;
+	background-size:contain;
+}
+div.flowchart-container div.flowchart-sg-item{
+	background:url(../img/cg-sgmk-big.png) no-repeat center;
+	font-size: 0;
+	background-size: contain;
+	width:75px;
+	height:36px;
+}
+div.content-container div.flowchart-fireA{
+	background:url(../img/cg-hymk-big.png) no-repeat;
+	background-size:contain;
+}
+div.flowchart-container div.flowchart-fireA-item{
+	background:url(../img/cg-hymk-big.png) no-repeat center;
+	font-size: 0;
+	background-size: contain;
+	width:75px;
+	height:36px;
+}
+div.content-container div.flowchart-temperatue{
+	background:url(../img/cg-wdmk-big.png) no-repeat;
+	background-size:contain;
+}
+div.flowchart-container div.flowchart-temperatue-item{
+	background:url(../img/cg-wdmk-big.png) no-repeat center;
+	font-size: 0;
+	background-size: contain;
+	width:75px;
+	height:36px;
+}
+div.content-container div.flowchart-tjfz{
+	background:url(../img/lct/tjfz.png) no-repeat;
+	background-size: contain;
+}
+div.flowchart-container div.flowchart-tjfz-item{
+	background:url(../img/lct/tjfz-big.png) no-repeat;
+	width:75px;
+	height:26px;
+}
+div.content-container div.flowchart-tjxh{
+	background:url(../img/lct/tjxh.png) no-repeat;
+	background-size: contain;
+}
+div.flowchart-container div.flowchart-tjxh-item{
+	background:url(../img/lct/tjxh-big.png) no-repeat;
+	width:75px;
+	height:26px;
+}
+div.content-container div.flowchart-yyxh{
+	background:url(../img/lct/yyxh.png) no-repeat;
+	background-size: contain;
+}
+div.flowchart-container div.flowchart-yyxh-item{
+	background:url(../img/lct/yyxh-big.png) no-repeat;
+	width:75px;
+	height:26px;
+}
+div.content-container div.flowchart-jsxh{
+	background:url(../img/lct/jsxh.png) no-repeat;
+	background-size: contain;
+}
+div.flowchart-container div.flowchart-jsxh-item{
+	background:url(../img/lct/jsxh-big.png) no-repeat;
+	width:75px;
+	height:26px;
+}
+div.content-container div.flowchart-fh{
+	background:url(../img/lct/fh.png) no-repeat;
+	background-size: contain;
+}
+div.flowchart-container div.flowchart-fh-item{
+	background:url(../img/lct/fh-big.jpg) no-repeat;
+	width:75px;
+	height:26px;
+}
+div.content-container div.flowchart-yshs{
+	background:url(../img/lct/yshs.png) no-repeat;
+	background-size: contain;
+}
+div.flowchart-container div.flowchart-yshs-item{
+	background:url(../img/lct/yshs-big.png) no-repeat;
+	width:75px;
+	height:26px;
+}
+div.content-container div.flowchart-fzhs{
+	background:url(../img/lct/fzhs.png) no-repeat;
+	background-size: contain;
+}
+div.flowchart-container div.flowchart-fzhs-item{
+	background:url(../img/lct/fzhs-big.png) no-repeat;
+	width:75px;
+	height:26px;
+}
+div.content-container div.flowchart-dshs{
+	background:url(../img/lct/dshs.png) no-repeat;
+	background-size: contain;
+}
+div.flowchart-container div.flowchart-dshs-item{
+	background:url(../img/lct/dshs-big.png) no-repeat;
+	width:75px;
+	height:26px;
+}
+div.content-container div.flowchart-sjhs{
+	background:url(../img/lct/sjhs.png) no-repeat;
+	background-size: contain;
+}
+div.flowchart-container div.flowchart-sjhs-item{
+	background:url(../img/lct/sjhs-big.png) no-repeat;
+	width:75px;
+	height:26px;
+}
+div.content-container div.flowchart-zdyhs{
+	background:url(../img/lct/zdyhs.png) no-repeat;
+	background-size: contain;
+}
+div.flowchart-container div.flowchart-zdyhs-item{
+	background:url(../img/lct/zdyhs-big.png) no-repeat;
+	width:75px;
+	height:26px;
+}
+div.flowchart-container div.flowchart-oval-item{
+	background:url(../img/lct/ks-big.png) no-repeat;
+	width:75px;
+	height:26px;
+}
+div.flowchart-container{
+	float:left;
+	position: relative;
+	width:100%;
+	height:100%;
+	//border:1px solid #000;
+	overflow:hidden;
+}
+div.flowchart-container div.flowchart-container-item{
+	//width:100px;
+	//height:40px;
+	top:20px;
+	//font-size:12px;
+	//padding:10px 20px;
+	cursor:pointer;
+	color:#FFF;
+	line-height: 26px;
+    font-weight: bolder;
+	background-size: contain;
+}
+.flowchart-item-border-show{
+	border:1px solid #F00;
+}
+.content-rotate{
+	transform:rotate(180deg);
+}
+
+.floatDivBaseStyle{
+	z-index:9999;
+	position:absolute;
+	width:250px;
+	height:auto;
+	border-radius:5px;
+	-webkit-border-radiux:5px;
+	-moz-border-radius:5px;
+}
+.floatDivHeader{
+	position:relative;
+	top:0px;
+	left:0px;
+	width:248px;
+	height:20px;
+	padding:10px;
+	background-color:#2E8ACC;
+	color:#FFF;
+}
+.floatDivBody{
+	position:relative;
+	top:0px;
+	left:0px;
+	width:248px;
+	height:auto;
+	padding:5px 10px;
+	background-color:#FFF;
+}
+
+
