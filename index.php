@@ -65,9 +65,9 @@
 		 <li class="rjbc">
 		   <span>STEP 2</span>
 		   <span>软件编程</span>
-		   <div class="triangle-border tb-border1"></div>
+		   <!-- <div class="triangle-border tb-border1"></div>
 		   <div class="triangle-border tb-border"></div>
-		   <div class="triangle-border tb-background"></div>
+		   <div class="triangle-border tb-background"></div> -->
 		 </li>
 		 <li class="fzyz">
 		   <span>STEP 3</span>
@@ -174,7 +174,7 @@
 		 <div class="list hardware_part_list">
 		   <ul></ul>
 		 </div>
-		 <div class="btn2 buy">点击购买</div>
+		 <div class="btn2 buy" onclick="window.open('http://www.kenrobot.com/index.php?app=shop');">元件选购</div>
 	   </div>
 	 </div>
      <div class="mod rjbc_mod">

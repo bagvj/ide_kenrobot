@@ -7,6 +7,12 @@
  *	需要为jsPlumb_container+"-item"元素指定css样式，控制每个生成的流程元素块的大小
  */
 define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","generateC","jquery-ui","jquery-menu"],function($,jsPlumb,eventcenter,d3,fis,generateC){
+	var showGuide=null;
+
+	function setShowGuid(show){
+		showGuide = show;
+	}
+
 	var jsPlumb_container='flowchart-container';
 	var jsPlumb_instance=null;
 	var jsPlumb_nodes=[];
@@ -41,6 +47,8 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","generateC","
 			
 			$('#'+jsPlumb_container).on('drop', function(ev){
 				finishDrag(ev);
+				if(showGuide)
+					showGuide(4);
 			}).on('dragover', function(ev){
 				checkLinkEndpoint(ev);
 				ev.preventDefault();
@@ -68,6 +76,45 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","generateC","
 		var cCode = generateC.generateMain();
 		console.log(cCode);
 		$("#c_code_input").html(cCode);
+
+		movePanel();
+	}
+
+	function movePanel(){
+		eventcenter.bind('flowchart','mousedown',function(e){
+			if($(e.target).attr('id')==jsPlumb_container){
+				// 相对于屏幕的鼠标点击的起始位置
+				var startX = e.pageX;
+				var startY = e.pageY;
+				var keepmoving = 1;
+				$('#'+jsPlumb_container).css({cursor:'move'});
+				$(document).bind({
+					mouseup:function(e){
+						keepmoving = -1;
+						$('#'+jsPlumb_container).css({cursor:'auto'});
+					},
+					mouseout:function(e){
+						keepmoving = -1;
+						$('#'+jsPlumb_container).css({cursor:'auto'});
+					},
+					mousemove:function(e){
+						if(keepmoving !== -1){
+							// 当前鼠标光标的位置
+							var nowX = e.pageX;
+							var nowY = e.pageY;
+							// 相对于鼠标点击起始位置的偏移量
+							var offsetDistanceX = nowX - startX;
+							var offsetDistanceY = nowY - startY;
+
+							moveAllNodes(-offsetDistanceX,-offsetDistanceY);
+
+							startX = nowX;
+							startY = nowY
+						}
+					}
+				});
+			}
+		});
 	}
 
 	function rightClick(){
@@ -77,7 +124,7 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","generateC","
 	        callback: function(key, options) {
 	        	switch(key){
 	        		case 'delete':deleteNodeByElement(this);break;
-	        		case 'edit':editNodeByElement(this);break;
+	        		case 'edit':editNodeByElement(this);if(showGuide){showGuide(5)};break;
 	        		default:break;
 	        	}
 	        },
@@ -253,11 +300,25 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","generateC","
 	 * @desc 在水平方向上移动所有的元素
 	 * @param double distance 移动距离
 	 */
-	function moveAllNodes(distance){
+	// function moveAllNodes(distance){
+	// 	for(var i=0;i<jsPlumb_nodes.length;i++){
+	// 		var node=jsPlumb.getSelector('#' + jsPlumb_nodes[i]['id'])[0];
+	// 		var left=$('#' + jsPlumb_nodes[i]['id']).position().left;
+	// 		$(node).css("left",(left-distance)+"px");
+	// 		//重绘流程元素
+	// 		jsPlumb_instance.repaint(node);
+	// 	}
+	// }
+	function moveAllNodes(xDistance,yDistance){
+		if(yDistance == null){
+			yDistance = 0;
+		}
 		for(var i=0;i<jsPlumb_nodes.length;i++){
 			var node=jsPlumb.getSelector('#' + jsPlumb_nodes[i]['id'])[0];
 			var left=$('#' + jsPlumb_nodes[i]['id']).position().left;
-			$(node).css("left",(left-distance)+"px");
+			$(node).css("left",(left-xDistance)+"px");
+			var top=$('#' + jsPlumb_nodes[i]['id']).position().top;
+			$(node).css("top",(top-yDistance)+"px");
 			//重绘流程元素
 			jsPlumb_instance.repaint(node);
 		}
@@ -1043,6 +1104,7 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","generateC","
 		draw:draw,
 		isEmpty:isEmpty,
 		setSelectedNodeInfo:setSelectedNodeInfo,
-		getNodeInfoByKey:getNodeInfoByKey
+		getNodeInfoByKey:getNodeInfoByKey,
+		setShowGuid:setShowGuid
 	}
 });

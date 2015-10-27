@@ -7,6 +7,12 @@
  *	需要为jsPlumb_container+"-item"元素指定css样式，控制每个生成的流程元素块的大小
  */
 define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","jquery-ui"],function($,jsPlumb,eventcenter,d3,fis){
+	var showGuide=null;
+
+	function setShowGuid(show){
+		showGuide = show;
+	}
+
 	var jsPlumb_container='hardware-container';
 	var jsPlumb_instance=null;
 	var jsPlumb_nodes=[];
@@ -22,6 +28,9 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","jquery-ui"],
 	var moved_container_x = 0;
 	var moved_container_y = 0;
 
+	var dragging_left=0;
+	var dragging_top=0;
+
 	var data_transfer={};
 
 	// 拖拽时临时产生的提示连接点
@@ -29,13 +38,10 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","jquery-ui"],
 	// 可能使用的端口、位信息
 	var linkablePortBits={};
 
-	var dragging_left=0;
-	var dragging_top=0;
-
 	var initCloseEndpoint=null;
 
 	// 放大缩小
-	var scrollLever = 1;
+	var scrollLever = 0;
 
 	/**
 	 * 整个处理的入口，需要初始化
@@ -82,6 +88,8 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","jquery-ui"],
 			
 			$('#'+jsPlumb_container).on('drop', function(ev){
 				finishDrag(ev);
+				if(showGuide)
+					showGuide(2);
 				// linkableEndpoints=[];
 			}).on('dragover', function(ev){
 				ev.preventDefault();
@@ -90,7 +98,7 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","jquery-ui"],
 		    jsPlumb.fire("jsFlowLoaded", jsPlumb_instance);
 
 		    initMainBoard();
-
+		    addResizeButton();
 		});
 
 		$(window).resize(function(e){
@@ -104,16 +112,171 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","jquery-ui"],
 		rightClick();
 
 		eventcenter.bind('hardware','mousewheel',function(args){
-			var mousescroll = args.e; //1为缩小，-1为放大
-			if(mousescroll>0 && scrollLever>-3){
+			var mousescroll = args.e; //1为放大，-1为缩小
+			if(mousescroll>0 && scrollLever>-2){
 				scrollLever--;
-			}else if(mousescroll<0 && scrollLever<3){
+			}else if(mousescroll<0 && scrollLever<2){
 				scrollLever++;
 			}
-			console.log(scrollLever);
+
+			resizeAllNode();
 		});
 
 		movePanel();
+	}
+
+	function resizeAllNode(ratio){
+		if(scrollLever == 0){
+			return;
+		}
+		if(ratio==null)ratio = scrollLever;
+		if(ratio<0){
+			ratio = 1/Math.abs(ratio);
+		}
+
+		for(var i=0;i<jsPlumb_nodes.length;i++){
+			var node=jsPlumb.getSelector('#' + jsPlumb_nodes[i]['id'])[0];
+			$(node).width(jsPlumb_nodes[i]['width']*ratio).height(jsPlumb_nodes[i]['height']*ratio);
+			// 重绘流程元素
+			jsPlumb_instance.repaint(node);
+		}
+
+		// 原主板中心位置
+		var mainboardJN = jsPlumb_nodes[0];
+		var centerX = parseInt(mainboardJN['x']) + mainboardJN['width']/2.0;
+		var centerY = parseInt(mainboardJN['y']) + mainboardJN['height']/2.0;
+
+		// 缩放所有的图块
+		for(var i=0;i<jsPlumb_nodes.length;i++){
+			// 原元件中心位置
+			var jsPlumbNode = jsPlumb_nodes[i];
+			var tmpCX = parseInt(jsPlumbNode['x']) + jsPlumbNode['width']/2.0;
+			var tmpCY = parseInt(jsPlumbNode['y']) + jsPlumbNode['height']/2.0;
+			// 现元件中心位置
+			var tmpNode = $(jsPlumb.getSelector('#' + jsPlumbNode['id'])[0]);
+			var mbcX = tmpNode.position().left + tmpNode.width()/2.0;
+			var mbcY = tmpNode.position().top + tmpNode.height()/2.0;
+			// 若原元件中心和原主板中心位置相同，则是中心主板，直接进行移动即可，否则重新计算位置，进行移动
+			if (tmpCX == centerX && tmpCY == centerY) {
+				var moveCX = mbcX - tmpCX;
+				var moveCY = mbcY - tmpCY;
+				moveOneNode(jsPlumbNode['id'],moveCX,moveCY);
+			} else {
+				// 目标中心位置
+				var aimX = centerX - (centerX - tmpCX) * ratio;
+				var aimY = centerY - (centerY - tmpCY) * ratio;
+				var moveCX = mbcX - aimX;
+				var moveCY = mbcY - aimY;
+				moveOneNode(jsPlumbNode['id'],moveCX,moveCY);
+			}
+		}
+		switch(scrollLever){
+			case 2:
+				$('#hardware_sml_btn').prop('disabled',false);
+				$('#hardware_nor_btn').prop('disabled',false);
+				$('#hardware_lar_btn').prop('disabled',true);
+				break;
+			case -2:
+				$('#hardware_sml_btn').prop('disabled',true);
+				$('#hardware_nor_btn').prop('disabled',false);
+				$('#hardware_lar_btn').prop('disabled',false);
+				break;
+			default:
+				$('#hardware_sml_btn').prop('disabled',false);
+				$('#hardware_nor_btn').prop('disabled',true);
+				$('#hardware_lar_btn').prop('disabled',false);
+				break;
+		}
+	}
+
+	function addResizeButton(ratio){
+		var btnDiv = $('<div></div>').css({
+			position:'absolute',
+			bottom:'10px',
+			left:'20px',
+			width:'200px',
+			height:'20px',
+			padding:'2px'
+		});
+		var sbtn = $('<button></button>').css({
+			position:'relative',
+			top:'0px',
+			left:'0px',
+			borderRadius:'10px',
+			width:'45px',
+			height:'25px',
+			border:'1px solid',
+			backgroundColor:'#FFF'
+		}).attr('id','hardware_sml_btn').html('缩小');
+		btnDiv.append(sbtn);
+		var nbtn = $('<button></button>').css({
+			position:'relative',
+			top:'0px',
+			left:'5px',
+			borderRadius:'10px',
+			width:'45px',
+			height:'25px',
+			border:'1px solid',
+			backgroundColor:'#FFF'
+		}).attr('id','hardware_nor_btn').html('还原').prop('disabled',true);
+		btnDiv.append(nbtn);
+		var lbtn = $('<button></button>').css({
+			position:'relative',
+			top:'0px',
+			left:'10px',
+			borderRadius:'10px',
+			width:'45px',
+			height:'25px',
+			border:'1px solid',
+			backgroundColor:'#FFF'
+		}).attr('id','hardware_lar_btn').html('放大');
+		btnDiv.append(lbtn);
+
+		$('#'+jsPlumb_container).append(btnDiv);
+
+		$('#hardware_sml_btn').click(function(e){
+			switch(scrollLever){
+				case 2:scrollLever=1;break;
+				default:scrollLever=-2;break;
+			}
+			resizeAllNode(scrollLever);
+			if (scrollLever == -2) {
+				$(this).prop('disabled',true);
+				$('#hardware_nor_btn').prop('disabled',false);
+			}
+			if (scrollLever == 1) {
+				$('#hardware_nor_btn').prop('disabled',true);
+			}
+			$('#hardware_lar_btn').prop('disabled',false);
+		});
+		$('#hardware_nor_btn').click(function(e){
+			scrollLever=1;
+			resizeAllNode(scrollLever);
+			$(this).prop('disabled',true);
+			$('#hardware_sml_btn').prop('disabled',false);
+			$('#hardware_lar_btn').prop('disabled',false);
+		});
+		$('#hardware_lar_btn').click(function(e){
+			switch(scrollLever){
+				case 0:scrollLever=2;break;
+				case 1:scrollLever=2;break;
+				default:scrollLever=1;break;
+			}
+			resizeAllNode(scrollLever);
+			if (scrollLever == 2) {
+				$(this).prop('disabled',true);
+				$('#hardware_nor_btn').prop('disabled',false);
+			}
+			if (scrollLever == 1) {
+				$('#hardware_nor_btn').prop('disabled',true);
+			}
+			$('#hardware_sml_btn').prop('disabled',false);
+		});
+	}
+
+	function checkPosition(x,y,v){
+		var div=$("<div>"+v+"</div>").css({'position':'absolute','left':x+'px','top':y+'px','zIndex':1000});
+		$('#'+jsPlumb_container).append(div);
 	}
 
 	function movePanel(){
@@ -150,6 +313,7 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","jquery-ui"],
 					}
 				});
 			}
+
 		});
 	}
 
@@ -180,14 +344,18 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","jquery-ui"],
 			yDistance = 0;
 		}
 		for(var i=0;i<jsPlumb_nodes.length;i++){
-			var node=jsPlumb.getSelector('#' + jsPlumb_nodes[i]['id'])[0];
-			var left=$('#' + jsPlumb_nodes[i]['id']).position().left;
-			$(node).css("left",(left-xDistance)+"px");
-			var top=$('#' + jsPlumb_nodes[i]['id']).position().top;
-			$(node).css("top",(top-yDistance)+"px");
-			//重绘流程元素
-			jsPlumb_instance.repaint(node);
+			moveOneNode(jsPlumb_nodes[i]['id'],xDistance,yDistance);
 		}
+	}
+
+	function moveOneNode(id,xDistance,yDistance){
+		var node=jsPlumb.getSelector('#' + id)[0];
+		var left=$('#' + id).position().left;
+		$(node).css("left",(left-xDistance)+"px");
+		var top=$('#' + id).position().top;
+		$(node).css("top",(top-yDistance)+"px");
+		//重绘流程元素
+		jsPlumb_instance.repaint(node);
 	}
 
 	function initMainBoard(){
@@ -210,7 +378,7 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","jquery-ui"],
 			"add_info":"",
 			"text":firstNodeParam['text'],
 			"left":left,
-			"top":top
+			"top":top,
 		});
 	}
 
@@ -228,6 +396,8 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","jquery-ui"],
 		}
 		var node = addNode(jsPlumb_container, param);
 		param['add_info'] = tmpAddInfo;
+		param['width'] = $(node).width();
+		param['height'] = $(node).height();
 		jsPlumb_nodes.push(param);
 		if(node===false){
 			return false;
@@ -611,6 +781,8 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","jquery-ui"],
 	 * @param event e 鼠标拖拽实践
 	 */
 	function initDrag(e){
+		resizeAllNode(1);
+
 		try{
 			e.originalEvent.dataTransfer.setData('text',e.target.id);
 			e.originalEvent.dataTransfer.setData('offsetX',e.originalEvent.offsetX);
@@ -895,6 +1067,12 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","jquery-ui"],
 		}
 
 		initCloseEndpoint = null;
+
+		// 将每个元素的位置信息进行一次处理，为放大缩小进行位置信息整理准备
+		for(var i=0;i<jsPlumb_nodes.length;i++){
+			jsPlumb_nodes[i]['x'] = $(jsPlumb.getSelector('#' + jsPlumb_nodes[i]['id'])[0]).position().left;
+			jsPlumb_nodes[i]['y'] = $(jsPlumb.getSelector('#' + jsPlumb_nodes[i]['id'])[0]).position().top;
+		}
 	}
 
 	function getSelectedJsPlumbNode(node){
@@ -1015,7 +1193,7 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","jquery-ui"],
 				// objX=baseX+9-$(node).outerWidth()/2;
 				objX=baseX-relativeDistance;
 				//主板连接点定制
-				if(sourceEndPoint.anchor.y==0.03){
+				if(sourceEndPoint.anchor.y<0.5){
 					//主板上连接点
 					if(nodeName=='adapter'){
 						objY=baseY-$(node).outerHeight();
@@ -1374,6 +1552,7 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","jquery-ui"],
 		clear:clear,
 		draw:draw,
 		isEmpty:isEmpty,
-		setSelectedNodeInfo:setSelectedNodeInfo
+		setSelectedNodeInfo:setSelectedNodeInfo,
+		setShowGuid:setShowGuid
 	}
 });

@@ -12,7 +12,12 @@ define(['jquery','kenrobotDialog','eventcenter'],function($,kenrobotDialog,event
 		$("#hardware-container").mousewheel(function(event, deltaj, deltax, deltay){
 			eventcenter.trigger('hardware','mousewheel',{e:event,j:deltaj,x:deltax,y:deltay});
 		}).mousedown(function(e){
-			eventcenter.trigger('hardware','mousedown',e)
+			eventcenter.trigger('hardware','mousedown',e);
+		});
+		$("#flowchart-container").mousewheel(function(event, deltaj, deltax, deltay){
+			eventcenter.trigger('flowchart','mousewheel',{e:event,j:deltaj,x:deltax,y:deltay});
+		}).mousedown(function(e){
+			eventcenter.trigger('flowchart','mousedown',e);
 		});
 
 		initIndexInfo();

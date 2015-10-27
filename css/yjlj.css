@@ -69,7 +69,17 @@
 }
 
 .yjlj_mod .buy{
-  bottom: 30px;
+  bottom: 20px;
   position: absolute;
   left: 20px;
+}
+
+div.hardware_part_list{
+  position: absolute;
+  top: 48px;
+  bottom: 55px;
+  left: 0;
+  right: 0;
+  overflow: auto;
+  
 }

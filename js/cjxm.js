@@ -2,6 +2,33 @@ define(["jquery","kenrobotDialog","flowchartInfo"],function($,kenrobotDialog,flo
 	
 	var current_project=null;
 
+    var current_user=1;
+
+    function init(){
+    	var uid = $("#kenrobot_uid").val();
+    	var pid = $("#kenrobot_pid").val();
+    	if(uid){
+    		setCurrentUser(Number(uid));
+    		if(pid){
+    			setCurrentProject(Number(pid));
+				var args={
+					"pid":getCurrentPorject()
+				}
+				flowchartInfo.getFlowchart(args,function(result){
+					projectInfo=result;
+				});
+    		}
+    	}
+    }
+
+    function getCurrentUser(){
+    	return current_user;
+    }
+
+    function setCurrentUser(uid){
+    	current_user = uid;
+    }
+
 	function getCurrentPorject(){
 		return current_project;
 	}
@@ -102,7 +129,7 @@ define(["jquery","kenrobotDialog","flowchartInfo"],function($,kenrobotDialog,flo
 		var data={
 			"name":name,
 			"scope":1,
-			"user_id":1,
+			"user_id":getCurrentUser(),
 			"user_name":"xiaoming",
 			"status":1,
 			"info":desc
@@ -145,7 +172,7 @@ define(["jquery","kenrobotDialog","flowchartInfo"],function($,kenrobotDialog,flo
 		$(".project_list ul li .del").click(function(e){
 			var pid = Number($(this).attr("value"));
 			var data = {id:pid,
-			            user_id:1};
+			            user_id:getCurrentUser()};
 			deleteProject(data,reqProjectList);
 		});
 	}
@@ -193,7 +220,7 @@ define(["jquery","kenrobotDialog","flowchartInfo"],function($,kenrobotDialog,flo
 		var data={
 			"name":name,
 			"scope":1,
-			"user_id":1,
+			"user_id":getCurrentUser(),
 			"user_name":"xiaoming",
 			"status":1,
 			"info":desc
@@ -209,7 +236,8 @@ define(["jquery","kenrobotDialog","flowchartInfo"],function($,kenrobotDialog,flo
 
 	reqProjectList({'user_id':1})
 
-	return {reqProjectList:reqProjectList,
+	return {init:init,
+		    reqProjectList:reqProjectList,
 		    getCurrentPorject:getCurrentPorject,
 		    drawSaveDialog:drawSaveDialog,
 		    getProjectInfo:getProjectInfo,

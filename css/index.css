@@ -314,6 +314,7 @@ body{
 }
 .fzyz{
    //background:url('../img/fzyz.png') no-repeat center;
+   display: none;
 }
 
 .cjxm:hover{

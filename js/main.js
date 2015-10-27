@@ -20,6 +20,7 @@ require.config({
 		"eventcenter":"../eventcenter",
 		"html2canvas":"html2canvas.min",
 		"defaultJs":"../default",
+		"guide":"../guide",
 		"keninit":"../keninit"
 	},
 	shim: {
@@ -39,6 +40,14 @@ require.config({
             deps: ['jquery'],
             exports: 'bootstrap'
         },
+        'jsplumb':{
+        	deps: ['jquery'],
+            exports: 'jsplumb'
+        },
+        'jqueryCookie':{
+        	deps: ['jquery'],
+        	exports: 'jqueryCookie'
+        }
     }
 });
 
@@ -48,7 +57,10 @@ var hasInitedSoftware = 0;
 //project_info
 //本地项目内存地址
 var projectInfo = null;
-require(['jquery','cjxm','software','hardware','kenrobotJsPlumb','kenrobotDialog','flowchartInfo','eventcenter','defaultJs','flowchart_item_set','generateC','keninit','jquery-mousewheel'], function($,cjxm,software,hardware,kenrobotJsPlumb,kenrobotDialog,flowchartInfo,eventcenter,defaultJs,fis,generateC,keninit) {
+require(['jquery','cjxm','software','hardware','kenrobotJsPlumb','kenrobotDialog','flowchartInfo','eventcenter','defaultJs','guide','flowchart_item_set','generateC','keninit','jquery-mousewheel'], function($,cjxm,software,hardware,kenrobotJsPlumb,kenrobotDialog,flowchartInfo,eventcenter,defaultJs,guide,fis,generateC,keninit) {
+	
+	cjxm.init();
+	
 	keninit.init();
 
 	// 初始化硬件元件
@@ -72,6 +84,7 @@ require(['jquery','cjxm','software','hardware','kenrobotJsPlumb','kenrobotDialog
 			hardware.init('hardware-item','hardware-container');
 		}
 		hasInitedHardware=1;
+		guide.show(1);
 	});
 
 	// 初始化流程图连接板事件
@@ -187,6 +200,8 @@ require(['jquery','cjxm','software','hardware','kenrobotJsPlumb','kenrobotDialog
 		var cCode = generateC.generateMain();
 		//console.log(cCode);
 		$("#c_code_input").html(cCode);
+		//guide
+		guide.show(6);
 	}
 
 	var hardwareImg={};
@@ -441,14 +456,22 @@ require(['jquery','cjxm','software','hardware','kenrobotJsPlumb','kenrobotDialog
 
 		// 将非格式化展示的内容在末尾展示，控制模块不在末尾追加
 		var tmpIndex=0;
+		var elementCount = 0;
 		for (var i in jsonHE){
 			if(i.indexOf("控制模块")>-1){
 				continue;
 			}
 			$('div.nav-second ul:first',$('div.yjlj_mod')).append(createUlObj(i,'tmp_'+tmpIndex,jsonHE[i]));
+			elementCount += jsonHE[i].length;
 			tmpIndex++;
 		}
-		$('li:first',$('div.nav-second ul:first',$('div.yjlj_mod'))).addClass('active');
+		if (elementCount<=5) {
+			$('li', $('div.nav-second ul:first',$('div.yjlj_mod'))).addClass('active');
+			$('li div.triangle', $('div.nav-second ul:first',$('div.yjlj_mod'))).remove();
+		} else {
+			$('li:first',$('div.nav-second ul:first',$('div.yjlj_mod'))).addClass('active');
+		}
+		
 		jsonHE=null;
 	}
 
