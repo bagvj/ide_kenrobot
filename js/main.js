@@ -346,18 +346,15 @@ int main(void)
 			success: function(result){
 				alert(result.msg);
 				if(result.code == 0){
-					downloadFile("./download.php?time=" + result.time);
+					downloadFile("/download.php?time=" + result.time);
 				}
-			},
-			error: function(result){
-				console.log(result);
 			}
 		});
     });
 
-	function downloadFile(url){
-    	$("body").append($("<iframe/>").attr("src", url));
-    }
+	function downloadFile(url) {
+		window.open (url);
+	}
 
     function heredoc(fn) {
     	return fn.toString().split('\n').slice(1,-1).join('\n') + '\n';

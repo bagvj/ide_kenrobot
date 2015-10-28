@@ -26,11 +26,11 @@
 		 <div class="logo"></div>
 		 <div class="nav">
 		   <ul>
-			 <li>我的主页</li>
-			 <li>开发</li>
-			 <li>广场</li>
-			 <li>课程</li>
-			 <li>商城</li>
+			 <li><a href="http://www.kenrobot.com/index.php?app=square&mod=Index&act=index">我的主页</a></li>
+			 <li><a href="http://platform.kenrobot.com/">开发</a></li>
+			 <li><a href="http://www.kenrobot.com/index.php?app=square&mod=Index&act=listshow">广场</a></li>
+			 <!--<li><a href=""课程</li>-->
+			 <li><a href="http://www.kenrobot.com/index.php?app=shop">商城</a></li>
 		   </ul>
 		 </div>
 		 <div class="photo"></div>

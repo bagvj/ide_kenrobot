@@ -11,7 +11,7 @@ define(["jquery"],function($){
     "flowchart_start_item":{"name":"main","head":"TopCenter","body":null,"foot":["BottomCenter"]},
     "flowchart_tjfz_item":{"name":["if","else"],"head":"TopCenter","body":null,"foot":["LeftMiddle","RightMiddle"]},
     "flowchart_tjxh_item":{"name":"while","head":"TopCenter","body":"BottomCenter","foot":["RightMiddle"]},
-    "flowchart_yyxh_item":{"name":"while","head":"TopCenter","body":"BottomCenter","foot":["RightMiddle"]},
+    "flowchart_yyxh_item":{"name":"while(1)","head":"TopCenter","body":"BottomCenter","foot":["RightMiddle"]},
     "flowchart_jsxh_item":{"name":"while","head":"TopCenter","body":"BottomCenter","foot":["RightMiddle"]},
   }
 
@@ -232,7 +232,7 @@ define(["jquery"],function($){
     if(value==null){
       return code;
     }else{
-      code = code.replace("X","'"+value["port"]+"'");
+      code = code.replace("X",value["port"] - 'A');
       code = code.replace(", n",", "+value["bit"]);
       return code;
     }
