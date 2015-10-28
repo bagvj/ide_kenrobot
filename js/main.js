@@ -287,6 +287,82 @@ require(['jquery','cjxm','software','hardware','kenrobotJsPlumb','kenrobotDialog
 	    }
     });
 
+    //下载
+    $('#download_btn').click(function(e){
+    	var source = heredoc(function(){/*
+#define __Motor_USE
+#define __NUM_USE
+#include "Device.h"
+#include<avr/io.h>
+#include<avr/interrupt.h>
+
+long result = 0;
+
+void Init()
+{
+	DDRC = 0xfe;
+	PORTC = 0x00;
+	
+	initTimer3();
+}
+
+int main(void)
+{
+	//初始化
+    Init();
+	//开中断
+	sei();
+	
+	//LED灯亮灭标志(1亮，0灭)
+	unsigned char flag = 0;
+	//开关输入
+	unsigned char s = 0;
+    for(;;) 
+    {
+		//从C1口读取(开关的状态)
+		s = IoInB(2, 0);
+		//延迟去抖
+		delay_ms(50);
+		if(s != flag)
+		{
+			flag = s;
+			IoOutB(2, 1, flag);
+			delay_ms(500);
+		}
+    }
+	return 0;
+}
+*/});
+		var bytes = [];
+		for (var i = 0; i < source.length; ++i) {
+		    bytes.push(source.charCodeAt(i));
+		}
+		$.ajax({
+			type: "POST",
+			url: "./build.php",
+			data: {source: source},
+			dataType:"json",
+			async: true, //异步
+			success: function(result){
+				alert(result.msg);
+				if(result.code == 0){
+					downloadFile("./download.php?time=" + result.time);
+				}
+			},
+			error: function(result){
+				console.log(result);
+			}
+		});
+    });
+
+	function downloadFile(url){
+    	$("body").append($("<iframe/>").attr("src", url));
+    }
+
+    function heredoc(fn) {
+    	return fn.toString().split('\n').slice(1,-1).join('\n') + '\n';
+	}
+
 	$("#redraw_btn").click(function(e){
 		var data={
 			"pid":cjxm.getCurrentPorject(),

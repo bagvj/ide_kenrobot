@@ -202,8 +202,11 @@ define(["jquery"],function($){
   function generateCode(){
     initStr = [];
     var mainStr = generateMain();
-    var str = '#include"Device.h"';
-    str += "\n";
+    var str = '#define __Motor_USE\n';
+    str += '#define __NUM_USE\n';
+    str += '#include "Device.h"\n';
+    str += '#include<avr/io.h>\n';
+    str += '#include<avr/interrupt.h>\n';
     str += "long result = 0;\n";
     str += generateInit();
     str += mainStr;

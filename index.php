@@ -20,12 +20,7 @@
   <script data-main="js/main" src="js/lib/require.min.js" type="text/javascript"></script>
  </head>
  <body>
-   	<?php
-  		$uid = $_REQUEST['uid'];
-  		$pid = $_REQUEST['pid'];
-  		echo '<input type="hidden" id="kenrobot_uid" value="'.$uid.'">';
-  		echo '<input type="hidden" id="kenrobot_pid" value="'.$pid.'">';
-  	?>
+
    <div class="header">
      <div class="content">
 		 <div class="logo"></div>
