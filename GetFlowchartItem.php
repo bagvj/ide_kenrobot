@@ -63,7 +63,7 @@ foreach ($ret as $key => $value) {
 	$arrHardware['name']=$value['name_en'];
 	$arrHardware['name_cn']=$value['name_cn'];
 	$arrHardware['type']=Constants::$ruleType[$value['type']];
-	$arrHardware['desc']=$value['desc'];
+	//$arrHardware['desc']=$value['desc'];
 	$arrHardware['kind']="hardware";
 	$arrHardware['isController']="0";
 
@@ -71,7 +71,7 @@ foreach ($ret as $key => $value) {
 	$arrHardware['bits']=$value['bits'];
 	$arrHardware['needsPinboard']=$value['has_pinboard'];
 	$arrHardware['needsDriveplate']=$value['has_driveplate'];
-	$arrHardware['maxDriveplate']=$value['max_driveplate'];
+	//$arrHardware['maxDriveplate']=$value['max_driveplate'];
 	$arrHardware['func']=$value['func'];
 	$arrHardware['func_desc']=$value['func_desc'];
 	$arrHardware['set_title']=$value['set_title'];
