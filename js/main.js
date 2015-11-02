@@ -72,6 +72,8 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 		save_flowchart: save_flowchart
 	});
 
+	software.initVarTable('var-table');
+
 	generateC.init('c_code_input', kenrobotJsPlumb.getFlowchartElements, kenrobotJsPlumb.getNodeInfoByKey, software.getVarList);
 
 	//拖拽生成的元素列表

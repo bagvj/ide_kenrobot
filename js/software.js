@@ -7,8 +7,8 @@ define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, 
 		"initial": 0,
 		"scope": "global"
 	}];
-	var varTable_container = 'var-table';
-	var container = $('#' + varTable_container);
+	var varContainerId;
+	var container;
 	var sel_item;
 
 	function getFormatTR(data) {
@@ -98,7 +98,7 @@ define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, 
 			"initial": data.initial,
 			"scope": data.scope
 		});
-		container = $('#' + varTable_container);
+		container = $('#' + varContainerId);
 		container.append(getFormatTR(data));
 		bindItemEvent();
 		eventcenter.trigger('generateC', 'refresh');
@@ -112,7 +112,7 @@ define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, 
 	})
 
 	function bindItemEvent() {
-		container = $('#' + varTable_container);
+		container = $('#' + varContainerId);
 		container.html(container.html())
 		container.find(".tr").mousemove(function(e) {
 			$(this).attr("class", "tr special")
@@ -137,14 +137,14 @@ define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, 
 		});
 	}
 
-	function initVarTable(strContainer) {
-		varTable_container = strContainer;
-		if (varTable_container.length == 0) {
+	function initVarTable(containerId) {
+		varContainerId = containerId;
+		container = $('#' + varContainerId);
+		if(!container){
 			alert("缺少初始化变量的位置");
 			return false;
 		}
 
-		container = $('#' + varTable_container);
 		for (var i = 0; i < var_list.length; i++) {
 			container.append(getFormatTR(var_list[i]));
 		};
