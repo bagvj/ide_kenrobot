@@ -1,20 +1,22 @@
 <?php
 $time = $_REQUEST['time'];
 $path = "/tmp/$time/";
-$hexName = $path."CSource.hex";
 $srcName = $path."CSource.c";
-if(!file_exists($hexName) || !file_exists($srcName)){
+$hexName = $path."CSource.hex";
+$binName = $path."CSource.bin";
+if(!file_exists($srcName) || !file_exists($hexName) || !file_exists($binName)){
 	//C代码文件或者编译出来的hex文件不存在
 	header("content-type=text/html,charset=utf-8");
 	die("非法请求");
 }
 
 //打包
-$zipName = $path."CSource.zip";
+$zipName = $path."CSource-".date("YmdHis", $time).".zip";
 $zip = new ZipArchive();
 if($zip->open($zipName, ZipArchive::CREATE) === TRUE){
-	$zip->addFile($hexName, basename($hexName));
 	$zip->addFile($srcName, basename(($srcName)));
+	$zip->addFile($hexName, basename($hexName));
+	$zip->addFile($hexName, basename($binName));
 	$zip->close();
 }
 
