@@ -75,7 +75,6 @@ define(['eventcenter','jquery','jquery-ui'],function(eventcenter,$){
 			}else if(oneContent.inputType=="select"){
 				var inputSelect=$("<select></select>").css({
 					"width":(tmpWidth*0.5)+"px",
-					"height":"20px",
 					"padding":"3px"
 				}).addClass("dialog_input_save");
 				for(var j=0;j<oneContent.inputHolder.length;j++){
@@ -91,6 +90,7 @@ define(['eventcenter','jquery','jquery-ui'],function(eventcenter,$){
 				dialogBody.append(staticShow);
 			}
 		}
+		$("input[data-item='name']", dialogBody).focus();
 	}
 
 	/**

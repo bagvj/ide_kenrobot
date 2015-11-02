@@ -12,12 +12,8 @@ $arrFields=array(
 	'type',
 	'info'
 );
-$arrConds=array(
-	"pid = "=>$_REQUEST['pid'],
-	//"type = "=>$_REQUEST['type']
-);
 
-$ret=$db->select("ken_flowchart",$arrFields,$arrConds);
+$ret=$db->select("ken_flowchart",$arrFields);
 
 foreach ($ret as $key => $value) {
     switch ($value['type'])

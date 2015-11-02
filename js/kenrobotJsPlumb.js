@@ -72,9 +72,7 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","generateC","
 		// 右键菜单
 		rightClick();
 
-		generateC.init(getFlowchartElements(),getNodeInfoByKey);
 		var cCode = generateC.generateMain();
-		console.log(cCode);
 		$("#c_code_input").html(cCode);
 
 		movePanel();
@@ -175,9 +173,7 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","generateC","
 	function deleteNodeByElement(obj){
 		deleteNode(jsPlumb.getSelector('#' + $(obj).attr('id'))[0]);
 
-		generateC.init(getFlowchartElements(),getNodeInfoByKey);
 		var cCode = generateC.generateMain();
-		console.log(cCode);
 		$("#c_code_input").html(cCode);
 	}
 
@@ -653,9 +649,7 @@ define(["jquery","jsplumb","eventcenter","d3","flowchart_item_set","generateC","
 			data_transfer={};
 		}
 
-		generateC.init(getFlowchartElements(),getNodeInfoByKey);
 		var cCode = generateC.generateMain();
-		console.log(cCode);
 		$("#c_code_input").html(cCode);
 	}
 

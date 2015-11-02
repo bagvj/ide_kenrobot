@@ -1,16 +1,26 @@
 <?php
 
+function fromCharCode($codes) {
+	if (is_scalar($codes))
+		$codes= func_get_args();
+	$str= '';
+	foreach ($codes as $code)
+		$str.= chr($code);
+	return $str;
+}
+
 $result = array();
 $code = -1;
 
-$bytes = $_REQUEST['source'];
+$bytes = $_POST['source'];
 if($bytes)
 {
+	$source = fromCharCode($bytes);
 	$time = time();
 	$path = "/tmp/$time";
 	mkdir($path);
 	$f = fopen($path."/CSource.cpp", "wb");
-	fwrite($f, $bytes);
+	fwrite($f, $source);
 	fclose($f);
 
 	$cmd = "sh build.sh $time 2>&1";
@@ -18,7 +28,7 @@ if($bytes)
 	exec($cmd, &$output, &$code);
 	if($code == 0){
 		$result['msg'] = "编译成功";
-		$result['time'] = $time;
+		$result['url'] = "/download.php?time=$time";
 	} else {
 		$result['msg'] = "编译失败";
 	}

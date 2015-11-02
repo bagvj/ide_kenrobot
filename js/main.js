@@ -66,10 +66,11 @@ require(['jquery','cjxm','software','hardware','kenrobotJsPlumb','kenrobotDialog
 	// 初始化硬件元件
 	initHardwareElement(fis);
 
-
 	defaultJs.init();
-	defaultJs.set_save_function({save_hardware:save_hardware,
-	                             save_flowchart:save_flowchart});
+	defaultJs.set_save_function({save_hardware:save_hardware, save_flowchart:save_flowchart});
+
+	generateC.init(kenrobotJsPlumb.getFlowchartElements, kenrobotJsPlumb.getNodeInfoByKey, software.getVarList);
+
 	//拖拽生成的元素列表
 	var arrHardware=[];
 
@@ -195,10 +196,7 @@ require(['jquery','cjxm','software','hardware','kenrobotJsPlumb','kenrobotDialog
 	function saveFlowchartProperty(data){
 		kenrobotJsPlumb.setSelectedNodeInfo(data);
 
-		generateC.init(kenrobotJsPlumb.getFlowchartElements(),
-			           kenrobotJsPlumb.getNodeInfoByKey);
 		var cCode = generateC.generateMain();
-		//console.log(cCode);
 		$("#c_code_input").html(cCode);
 		//guide
 		guide.show(6);
@@ -217,45 +215,6 @@ require(['jquery','cjxm','software','hardware','kenrobotJsPlumb','kenrobotDialog
 			//console.log(projectInfo);
 		});
 	});
-
-	/*$("#save_btn").click(function(e){
-		var data={
-			"pid":1,
-			"type":1,
-			"info":{}
-		}
-		hardwareImg=hardware.getFlowchartElements();
-		//console.log(hardwareImg);
-		data.type=1
-		data.info=hardwareImg;
-		flowchartInfo.addFlowchart(data);
-
-		flowchartImg=kenrobotJsPlumb.getFlowchartElements();
-		//console.log(flowchartImg);
-		data.type=2
-		data.info=flowchartImg;
-		flowchartInfo.addFlowchart(data);
-	});*/
-    
-    //保存项目到数据库
-    /*$("#save_btn").click(function(e){
-    	defaultJs.save_project_to_local();
-    	var pid = cjxm.getCurrentPorject();
-    	if(pid == null){
-    		alert("请先创建或者加载项目");
-    		return false;
-    	}
-		var data={
-			"pid":pid,
-			"info":{}
-		}
-		if(projectInfo&&projectInfo.hardware&&projectInfo.flowchart){
-			data.info=projectInfo;
-			data.info.code = $("#c_code_input").html();
-			//console.log(data)
-			flowchartInfo.addFlowchart(data);
-		}
-	});*/
 
     //保存项目到数据库
     $("#save_btn").click(function(e){
@@ -297,24 +256,20 @@ require(['jquery','cjxm','software','hardware','kenrobotJsPlumb','kenrobotDialog
 		$.ajax({
 			type: "POST",
 			url: "./build.php",
-			data: {source: source},
+			data: {source: bytes},
 			dataType:"json",
 			async: true, //异步
 			success: function(result){
 				alert(result.msg);
 				if(result.code == 0){
-					downloadFile("/download.php?time=" + result.time);
+					downloadFile(result.url);
 				}
 			}
 		});
     });
 
 	function downloadFile(url) {
-		window.open (url);
-	}
-
-    function heredoc(fn) {
-    	return fn.toString().split('\n').slice(1,-1).join('\n') + '\n';
+		window.open(url);
 	}
 
 	$("#redraw_btn").click(function(e){
@@ -432,10 +387,7 @@ require(['jquery','cjxm','software','hardware','kenrobotJsPlumb','kenrobotDialog
 		    hasInitedSoftware=1;
 
 		    //generate c code
-			generateC.init(kenrobotJsPlumb.getFlowchartElements(),
-				           kenrobotJsPlumb.getNodeInfoByKey);
 			var cCode = generateC.generateMain();
-			console.log(cCode);
 			$("#c_code_input").html(cCode);
 		}
 	}
