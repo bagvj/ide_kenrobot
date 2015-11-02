@@ -2,7 +2,7 @@
 $time = $_REQUEST['time'];
 $path = "/tmp/$time/";
 $hexName = $path."CSource.hex";
-$srcName = $path."CSource.cpp";
+$srcName = $path."CSource.c";
 if(!file_exists($hexName) || !file_exists($srcName)){
 	//C代码文件或者编译出来的hex文件不存在
 	header("content-type=text/html,charset=utf-8");

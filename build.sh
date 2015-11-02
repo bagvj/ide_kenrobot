@@ -5,7 +5,7 @@ if [ $# -ne 1 ];then
     exit 1
 fi
 STAMP=$1
-SOURCE=/tmp/$STAMP/CSource.cpp
+SOURCE=/tmp/$STAMP/CSource.c
 SOURCEPATH=/tmp/$STAMP/
 DATAHEADER=/alidata/server/avr/
 

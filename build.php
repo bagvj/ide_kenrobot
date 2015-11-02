@@ -19,7 +19,7 @@ if($bytes)
 	$time = time();
 	$path = "/tmp/$time";
 	mkdir($path);
-	$f = fopen($path."/CSource.cpp", "wb");
+	$f = fopen($path."/CSource.c", "wb");
 	fwrite($f, $source);
 	fclose($f);
 
