@@ -149,7 +149,7 @@ define(["jquery", "kenrobotDialog"], function($, kenrobotDialog) {
 		bindItemEvent();
 	}
 
-	function getVarList(){
+	function getVarList() {
 		return var_list;
 	}
 

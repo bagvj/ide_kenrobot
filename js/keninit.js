@@ -1,35 +1,47 @@
-define(['jquery','kenrobotDialog','eventcenter'],function($,kenrobotDialog,eventcenter){
-	function init(){
+define(['jquery', 'kenrobotDialog', 'eventcenter'], function($, kenrobotDialog, eventcenter) {
+	function init() {
 		// 关闭默认右键菜单
-		$("body").bind("contextmenu",function(e){
-			var obj=$(e.target);
-			if(!obj.hasClass("hardware-container-item") && !obj.hasClass("flowchart-container-item")){
+		$("body").bind("contextmenu", function(e) {
+			var obj = $(e.target);
+			if (!obj.hasClass("hardware-container-item") && !obj.hasClass("flowchart-container-item")) {
 				return false;
 			}
 			kenrobotDialog.hide();
 		});
-		$("body").bind("selectstart",function(){return false;});
-		$("#hardware-container").mousewheel(function(event, deltaj, deltax, deltay){
-			eventcenter.trigger('hardware','mousewheel',{e:event,j:deltaj,x:deltax,y:deltay});
-		}).mousedown(function(e){
-			eventcenter.trigger('hardware','mousedown',e);
+		$("body").bind("selectstart", function() {
+			return false;
 		});
-		$("#flowchart-container").mousewheel(function(event, deltaj, deltax, deltay){
-			eventcenter.trigger('flowchart','mousewheel',{e:event,j:deltaj,x:deltax,y:deltay});
-		}).mousedown(function(e){
-			eventcenter.trigger('flowchart','mousedown',e);
+		$("#hardware-container").mousewheel(function(event, deltaj, deltax, deltay) {
+			eventcenter.trigger('hardware', 'mousewheel', {
+				e: event,
+				j: deltaj,
+				x: deltax,
+				y: deltay
+			});
+		}).mousedown(function(e) {
+			eventcenter.trigger('hardware', 'mousedown', e);
+		});
+		$("#flowchart-container").mousewheel(function(event, deltaj, deltax, deltay) {
+			eventcenter.trigger('flowchart', 'mousewheel', {
+				e: event,
+				j: deltaj,
+				x: deltax,
+				y: deltay
+			});
+		}).mousedown(function(e) {
+			eventcenter.trigger('flowchart', 'mousedown', e);
 		});
 
 		initIndexInfo();
 	}
 
-	function initIndexInfo(){
+	function initIndexInfo() {
 		$.ajax({
 			type: "GET",
 			url: "./GetInitInfo.php",
 			data: "",
-			dataType:"json",
-			success: function(result){
+			dataType: "json",
+			success: function(result) {
 				// console.log(result);
 				$('#platform_name').html("欢迎你，" + result.uname);
 			}
@@ -37,6 +49,6 @@ define(['jquery','kenrobotDialog','eventcenter'],function($,kenrobotDialog,event
 	}
 
 	return {
-		init:init
+		init: init
 	}
 });

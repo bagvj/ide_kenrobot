@@ -196,7 +196,7 @@ define(["jquery"], function($) {
 			str += "\n";
 		}
 		var targetInfo = getTargetIDBySourceID(startID, links);
-		if(targetInfo){
+		if (targetInfo) {
 			console.log('targetInfo sourceId ' + targetInfo.source_id + " targetId " + targetInfo.target_id + " startId " + startID);
 		}
 		if (!targetInfo || targetInfo.target_id.indexOf(end) != -1) {
