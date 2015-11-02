@@ -72,7 +72,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 		save_flowchart: save_flowchart
 	});
 
-	generateC.init(kenrobotJsPlumb.getFlowchartElements, kenrobotJsPlumb.getNodeInfoByKey, software.getVarList);
+	generateC.init('c_code_input', kenrobotJsPlumb.getFlowchartElements, kenrobotJsPlumb.getNodeInfoByKey, software.getVarList);
 
 	//拖拽生成的元素列表
 	var arrHardware = [];
@@ -201,11 +201,14 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 		}, saveFlowchartProperty);
 	});
 
+	eventcenter.bind('generateC', 'refresh', function(){
+		generateC.refresh();
+	});
+
 	function saveFlowchartProperty(data) {
 		kenrobotJsPlumb.setSelectedNodeInfo(data);
 
-		var cCode = generateC.generateMain();
-		$("#c_code_input").html(cCode);
+		generateC.refresh();
 		//guide
 		guide.show(6);
 	}
@@ -262,7 +265,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 
 	//下载
 	$('#download_btn').click(function(e) {
-		var source = generateC.generateMain();
+		var source = $('#c_code_input').val();
 		var bytes = [];
 		for (var i = 0; i < source.length; ++i) {
 			bytes.push(source.charCodeAt(i));
@@ -404,9 +407,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 			kenrobotJsPlumb.draw(projectInfo.flowchart);
 			hasInitedSoftware = 1;
 
-			//generate c code
-			var cCode = generateC.generateMain();
-			$("#c_code_input").html(cCode);
+			generateC.refresh();
 		}
 	}
 

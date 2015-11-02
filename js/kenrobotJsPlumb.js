@@ -72,8 +72,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "generat
 		// 右键菜单
 		rightClick();
 
-		var cCode = generateC.generateMain();
-		$("#c_code_input").html(cCode);
+		generateC.refresh();
 
 		movePanel();
 	}
@@ -196,8 +195,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "generat
 	function deleteNodeByElement(obj) {
 		deleteNode(jsPlumb.getSelector('#' + $(obj).attr('id'))[0]);
 
-		var cCode = generateC.generateMain();
-		$("#c_code_input").html(cCode);
+		generateC.refresh();
 	}
 
 	// 删除流程元素
@@ -716,8 +714,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "generat
 			data_transfer = {};
 		}
 
-		var cCode = generateC.generateMain();
-		$("#c_code_input").html(cCode);
+		generateC.refresh();
 	}
 
 	/**

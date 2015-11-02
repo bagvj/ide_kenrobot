@@ -1,4 +1,4 @@
-define(["jquery", "kenrobotDialog"], function($, kenrobotDialog) {
+define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, eventcenter) {
 
 	var var_list = [{
 		"name": "result",
@@ -101,11 +101,13 @@ define(["jquery", "kenrobotDialog"], function($, kenrobotDialog) {
 		container = $('#' + varTable_container);
 		container.append(getFormatTR(data));
 		bindItemEvent();
+		eventcenter.trigger('generateC', 'refresh');
 	}
 
 	$(".var-side .btn.del").click(function() {
 		if (sel_item) {
-			sel_item.remove()
+			sel_item.remove();
+			eventcenter.trigger('generateC', 'refresh');
 		}
 	})
 

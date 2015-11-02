@@ -1,5 +1,6 @@
 define(["jquery"], function($) {
 
+	var codeContainerId;
 	var data;
 	var getFlowchartElements;
 	var getNodeInfoByKey;
@@ -111,36 +112,6 @@ define(["jquery"], function($) {
 		return type;
 	}
 
-	function getNameByType(type) {
-		var type_info = controlTypePoint[type];
-		if (typeof(type_info) == "undefined") {
-			return {
-				"name": ""
-			};
-		}
-		return type_info;
-	}
-
-	function getBodyByType(type) {
-		var type_info = controlTypePoint[type];
-		if (typeof(type_info) == "undefined") {
-			return {
-				"body": null
-			};
-		}
-		return type_info;
-	}
-
-	function getFootByType(type) {
-		var type_info = controlTypePoint[type];
-		if (typeof(type_info) == "undefined") {
-			return {
-				"foot": ["BottomCenter"]
-			};
-		}
-		return type_info;
-	}
-
 	function getControlTypeInfo(type) {
 		var type_info = controlTypePoint[type];
 		if (typeof(type_info) == "undefined") {
@@ -196,9 +167,6 @@ define(["jquery"], function($) {
 			str += "\n";
 		}
 		var targetInfo = getTargetIDBySourceID(startID, links);
-		if (targetInfo) {
-			console.log('targetInfo sourceId ' + targetInfo.source_id + " targetId " + targetInfo.target_id + " startId " + startID);
-		}
 		if (!targetInfo || targetInfo.target_id.indexOf(end) != -1) {
 			return str;
 		}
@@ -237,8 +205,9 @@ define(["jquery"], function($) {
 		return str;
 	}
 
-	function init(getFlowchart, func, getVar) {
-		getFlowchartElements = getFlowchart
+	function init(containerId, getFlowchart, func, getVar) {
+		codeContainerId = containerId;
+		getFlowchartElements = getFlowchart;
 		getNodeInfoByKey = func;
 		getVarList = getVar;
 	}
@@ -246,6 +215,7 @@ define(["jquery"], function($) {
 	function generateMain() {
 		data = getFlowchartElements();
 		var str = "int main(){\n";
+		str += generateLocalVar();
 		str += getSpace(1) + "Init();\n";
 		str += getSpace(1) + "sei();\n";
 		var node = getIDByPrefix("flowchart_start", data.nodes);
@@ -270,18 +240,44 @@ define(["jquery"], function($) {
 		return str;
 	}
 
+	function generateGlobalVar(){
+		var str = "";
+		var varList = getVarList();
+		for(var i = 0; i < varList.length; i++){
+			var varInfo = varList[i];
+			if(varInfo.scope == "global"){
+				str += (varInfo.kind == "auto" ? "" : varInfo.kind + ' ') + varInfo.type + ' ' + varInfo.name + ' = ' + varInfo.initial + ';\n';
+			}
+		}
+		return str;
+	}
+
+	function generateLocalVar(){
+		var str = "";
+		var varList = getVarList();
+		for(var i = 0; i < varList.length; i++){
+			var varInfo = varList[i];
+			if(varInfo.scope == "local"){
+				str += getSpace(1) + (varInfo.kind == "auto" ? "" : varInfo.kind + ' ') + varInfo.type + ' ' + varInfo.name + ' = ' + varInfo.initial + ';\n';
+			}
+		}
+		return str;
+	}
+
 	var initStr = [];
 
-	function generateCode() {
+	function generate() {
 		initStr = [];
 		var mainStr = generateMain();
 		var str = '#define __Motor_USE\n';
 		str += '#define __NUM_USE\n';
 		str += '#include "Device.h"\n';
-		str += '#include<avr/io.h>\n';
-		str += '#include<avr/interrupt.h>\n';
-		str += "long result = 0;\n";
+		str += '#include <avr/io.h>\n';
+		str += '#include <avr/interrupt.h>\n\n';
+		str += generateGlobalVar();
+		str += '\n';
 		str += generateInit();
+		str += '\n';
 		str += mainStr;
 		return str;
 	}
@@ -304,22 +300,22 @@ define(["jquery"], function($) {
 	}
 
 	function addVarForCode(code, value) {
-		var porttonum = {
-			"A": 0,
-			"B": 1,
-			"C": 2,
-			"D": 3,
-			"E": 4,
-			"F": 5,
-			"G": 6,
-		};
 		if (!code) {
-			return "//无";
+			return null;
 		}
 		if (value == null) {
 			return code;
 		} else {
-			code = code.replace("X", porttonum[value["port"]]);
+			var portToNum = {
+				"A": 0,
+				"B": 1,
+				"C": 2,
+				"D": 3,
+				"E": 4,
+				"F": 5,
+				"G": 6,
+			};
+			code = code.replace("X", portToNum[value["port"]]);
 			code = code.replace(", n", ", " + value["bit"]);
 			return code;
 		}
@@ -327,18 +323,24 @@ define(["jquery"], function($) {
 
 	function addPropertyForCode(code, property) {
 		if (!code) {
-			return "";
+			return null;
 		}
 		if (!property) {
 			return code;
 		} else {
-			code = code.replace("DigitalValue", "" + property + "");
+			code = code.replace("DigitalValue", property);
+			code = code.replace("ToLed(Num)", "ToLed(" + property + ")");
 			return code;
 		}
 	}
 
+	function refresh(){
+		var source = generate();
+		$('#' + codeContainerId).html(source);
+	}
+
 	return {
 		init: init,
-		generateMain: generateCode
+		refresh: refresh
 	}
 });
