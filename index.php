@@ -241,7 +241,7 @@
 			 <div class="operator">
 			 <div class="btn add">添加</div>
 	         <div class="btn del">删除</div>
-	         <div class="btn">修改</div>
+	         <div class="btn modify">修改</div>
 	         </div>
 		   </div>
 		   <div class="code-side">
