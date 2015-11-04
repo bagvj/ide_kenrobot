@@ -60,7 +60,7 @@ define(function() {
 				"inputHolder": "数字或者变量",
 				"defaultValue": "5",
 			}],
-			"format": "for(int i = 0; i < count; i++)"
+			"format": "for(int index = 0; index < count; index++)"
 		},
 		//条件分支
 		"tjfz": {

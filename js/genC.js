@@ -260,7 +260,8 @@ define(["jquery"], function($) {
 						value = infoParams[infoName];
 					}
 				}
-				format = format.replace(param.name, value);
+				var regExp = new RegExp(param.name, "g");
+				format = format.replace(regExp, value);
 			}
 		}
 
