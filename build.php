@@ -44,7 +44,7 @@ if($bytes)
 			$result['url'] = "/download.php?proj=$projectName&time=$time";
 		} else {
 			//直接烧写
-			$cmd = "sh flashburn.sh $time";
+			$cmd = "sh flashburn.sh $projectName $time";
 			$output = array();
 			exec($cmd, &$output, &$code);
 			if($code == 0){

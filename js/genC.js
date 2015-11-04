@@ -246,9 +246,13 @@ define(["jquery"], function($) {
 				var param = params[i];
 				var value = param.defaultValue;
 				if (param.name == "port") {
-					value = port || value;
+					if(port !== undefined){
+						value = port;
+					}
 				} else if (param.name == "bit") {
-					value = bit || value;
+					if(bit !== undefined){
+						value = bit;
+					}
 				} else {
 					var infoName = isInit ? "init_" + param.name : param.name;
 					if (infoParams && infoParams[infoName]) {
