@@ -95,7 +95,7 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 				dialogBody.append(staticShow);
 			}
 		}
-		$("input[data-item='name']", dialogBody).focus();
+		$("input:first", dialogBody).focus();
 	}
 
 	/**

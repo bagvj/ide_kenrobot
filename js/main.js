@@ -184,7 +184,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 						contents.push({
 							"title": param.title,
 							"inputType": param.inputType,
-							"inputHolder": (param.options) ? args.options : "",
+							"inputHolder": (param.inputHolder) ? param.inputHolder : "",
 							"inputInitValue": value == "" ? param.defaultValue : value,
 							"inputKey": paramName
 						});
@@ -200,7 +200,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 					contents.push({
 						"title": param.title,
 						"inputType": param.inputType,
-						"inputHolder": (param.options) ? args.options : "",
+						"inputHolder": (param.inputHolder) ? param.inputHolder : "",
 						"inputInitValue": value == "" ? param.defaultValue : value,
 						"inputKey": param.name
 					});
@@ -215,7 +215,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 						contents.push({
 							"title": param.title,
 							"inputType": param.inputType,
-							"inputHolder": (param.options) ? args.options : "",
+							"inputHolder": (param.inputHolder) ? param.inputHolder : "",
 							"inputInitValue": param.defaultValue,
 							"inputKey": "init_" + param.name
 						});
@@ -230,7 +230,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 					contents.push({
 						"title": param.title,
 						"inputType": param.inputType,
-						"inputHolder": (param.options) ? args.options : "",
+						"inputHolder": (param.inputHolder) ? param.inputHolder : "",
 						"inputInitValue": param.defaultValue,
 						"inputKey": param.name
 					});

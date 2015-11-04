@@ -61,8 +61,9 @@ define(["jquery"], function($) {
 
 	//生成初始化函数
 	function genSetup() {
-		var defaultInitCode = "initTimer3();"
-		initCodes.splice(0, 0, defaultInitCode);
+		var defaultInitCode1 = "initTimer3();";
+		var defaultInitCode2 = "sei();";
+		initCodes.splice(0, 0, defaultInitCode1, defaultInitCode2);
 
 		var str = "void setup(){\n";
 		for (var i = 0; i < initCodes.length; i++) {

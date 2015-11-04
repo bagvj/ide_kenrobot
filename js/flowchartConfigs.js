@@ -359,9 +359,10 @@ define(function() {
 				"autoSet": true
 			}, {
 				"name": "value",
-				"title": "1亮/0灭",
+				"title": "输出值",
 				"inputType": "text",
-				"defaultValue": "Value",
+				"inputHolder": "1亮/0灭",
+				"defaultValue": "1",
 			}],
 			"format": "IoOutB(port, bit, value);",
 		},
@@ -384,9 +385,10 @@ define(function() {
 				"autoSet": true
 			}, {
 				"name": "value",
-				"title": "输出值(0/1)",
+				"title": "输出值",
 				"inputType": "text",
-				"defaultValue": "Value",
+				"inputHolder": "0或1",
+				"defaultValue": "1",
 			}],
 			"format": "IoOutB(port, bit, value);",
 		},
@@ -411,7 +413,8 @@ define(function() {
 				"name": "value",
 				"title": "输出值(0/1)",
 				"inputType": "text",
-				"defaultValue": "Value",
+				"inputHolder": "0或1",
+				"defaultValue": "1",
 			}],
 			"format": "IoOutB(port, bit, value);",
 		},
@@ -434,9 +437,10 @@ define(function() {
 				"autoSet": true
 			}, {
 				"name": "value",
-				"title": "输出值(0/1)",
+				"title": "输出值",
 				"inputType": "text",
-				"defaultValue": "Value",
+				"inputHolder": "0或1",
+				"defaultValue": "1",
 			}],
 			"format": "IoOutB(port, bit, value);",
 		},
@@ -470,13 +474,15 @@ define(function() {
 			"type": 4,
 			"params": [{
 				"name": "index",
-				"title": "编号(0/1)",
+				"title": "编号",
 				"inputType": "text",
+				"inputHolder": "0或1",
 				"defaultValue": "Index"
 			}, {
 				"name": "degree",
 				"title": "转动角度",
 				"inputType": "text",
+				"inputHolder": "-90~90",
 				"defaultValue": "Degree"
 			}],
 			"format": "Servo(index, degree);",
@@ -606,6 +612,7 @@ define(function() {
 				"name": "index",
 				"title": "串口号",
 				"inputType": "text",
+				"inputHolder": "0或1",
 				"defaultValue": "Index",
 			}, {
 				"name": "value",
@@ -616,18 +623,21 @@ define(function() {
 			"initParams": [{
 				"name": "index",
 				"title": "串口号",
+				"inputHolder": "0或1",
 				"inputType": "text",
 				"defaultValue": "Index",
 			}, {
 				"name": "baudRate",
 				"title": "波特率",
 				"inputType": "text",
-				"defaultValue": "BaudRate",
+				"inputHolder": "0-5,分别表示4800,9600,19200,38400,57600,115200",
+				"defaultValue": "1",
 			}, {
 				"name": "check",
 				"title": "校验位",
 				"inputType": "text",
-				"defaultValue": "Check",
+				"inputHolder": "0奇校验;1偶校验;2无校验",
+				"defaultValue": "2",
 			}],
 			"format": "value = uGetChar(index);",
 			"initFormat": "uart_init(index, baudRate, check);"
@@ -640,6 +650,7 @@ define(function() {
 			"params": [{
 				"name": "index",
 				"title": "串口号",
+				"inputHolder": "0或1",
 				"inputType": "text",
 				"defaultValue": "1",
 				"autoSet": true
@@ -652,18 +663,21 @@ define(function() {
 			"initParams": [{
 				"name": "index",
 				"title": "串口号",
+				"inputHolder": "0或1",
 				"inputType": "text",
 				"defaultValue": "Index",
 			}, {
 				"name": "baudRate",
 				"title": "波特率",
 				"inputType": "text",
-				"defaultValue": "BaudRate",
+				"inputHolder": "0-5,分别表示4800,9600,19200,38400,57600,115200",
+				"defaultValue": "1",
 			}, {
 				"name": "check",
 				"title": "校验位",
 				"inputType": "text",
-				"defaultValue": "Check",
+				"inputHolder": "0奇校验;1偶校验;2无校验",
+				"defaultValue": "2",
 			}],
 			"format": "uPutChar(index, value);",
 			"initFormat": "uart_init(index, baudRate, check);"
@@ -689,11 +703,13 @@ define(function() {
 				"name": "register",
 				"title": "波特率寄存器",
 				"inputType": "text",
+				"inputHolder": "0-1023",
 				"defaultValue": "Register",
 			}, {
 				"name": "preFeequency",
 				"title": "预分频",
 				"inputType": "text",
+				"inputHolder": "0-3,分别表示1,4,16,64",
 				"defaultValue": "PreFeequency",
 			}],
 			"format": "value = i2c_Ultr_Rag(arg);",
@@ -720,11 +736,13 @@ define(function() {
 				"name": "register",
 				"title": "波特率寄存器",
 				"inputType": "text",
+				"inputHolder": "0-1023",
 				"defaultValue": "Register",
 			}, {
 				"name": "preFeequency",
 				"title": "预分频",
 				"inputType": "text",
+				"inputHolder": "0-3,分别表示1,4,16,64",
 				"defaultValue": "PreFeequency",
 			}],
 			"format": "value = i2c_Compass(arg);",
@@ -750,11 +768,13 @@ define(function() {
 				"name": "register",
 				"title": "波特率寄存器",
 				"inputType": "text",
+				"inputHolder": "0-1023",
 				"defaultValue": "Register",
 			}, {
 				"name": "preFeequency",
 				"title": "预分频",
 				"inputType": "text",
+				"inputHolder": "0-3,分别表示1,4,16,64",
 				"defaultValue": "PreFeequency",
 			}],
 			"format": "value = i2c_maste_read(arg);",
@@ -780,11 +800,13 @@ define(function() {
 				"name": "register",
 				"title": "波特率寄存器",
 				"inputType": "text",
+				"inputHolder": "0-1023",
 				"defaultValue": "Register",
 			}, {
 				"name": "preFeequency",
 				"title": "预分频",
 				"inputType": "text",
+				"inputHolder": "0-3,分别表示1,4,16,64",
 				"defaultValue": "PreFeequency",
 			}],
 			"format": "i2c_maste_transt(arg, value);",
