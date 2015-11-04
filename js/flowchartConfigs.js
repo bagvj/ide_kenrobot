@@ -49,12 +49,18 @@ define(function() {
 			"type": 3,
 			"subType": 1,
 			"params": [{
-				"name": "count",
-				"title": "循环条件",
+				"name": "index",
+				"title": "循环变量",
 				"inputType": "text",
-				"defaultValue": "1",
+				"defaultValue": "i",
+			}, {
+				"name": "count",
+				"title": "循环次数",
+				"inputType": "text",
+				"inputHolder": "数字或者变量",
+				"defaultValue": "5",
 			}],
-			"format": "for(unsigned int count = )"
+			"format": "for(int i = 0; i < count; i++)"
 		},
 		//条件分支
 		"tjfz": {

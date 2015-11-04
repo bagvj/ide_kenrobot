@@ -247,7 +247,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 				$("#prop_set_port_show").text("无");
 			}
 			contents.push({
-				"title": "硬件连接端口",
+				"title": "端口",
 				"inputType": "none",
 				"fontColor": "#F00",
 				"showText": portText
