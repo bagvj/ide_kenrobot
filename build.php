@@ -15,7 +15,7 @@ $code = -1;
 //下载
 // $type = 0;
 //直接烧写
-$type = 0;
+$type = 1;
 
 //代码的字节码
 $bytes = $_POST['source'];

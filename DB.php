@@ -9,7 +9,8 @@ class DB{
 	private $_server_name="127.0.0.1";
 	private $_port="3306";
 	private $_username="root";
-	private $_password="/y9of8BRq";
+	// private $_password="/y9of8BRq";
+	private $_password="string";
 	
 	public function __construct($db){
 		$this->_db=mysqli_init();
