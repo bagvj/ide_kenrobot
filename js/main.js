@@ -10,7 +10,8 @@ require.config({
 		"bootstrap": "bootstrap/bootstrap.min",
 		"d3": "d3.min",
 		"flowchart_item_set": "../flowchart-item-set",
-		"generateC": "../generateC",
+		"flowchartConfigs": "../flowchartConfigs",
+		"genC": "../genC",
 		"cjxm": "../cjxm",
 		"hardware": "../hardware",
 		"software": "../software",
@@ -57,7 +58,7 @@ var hasInitedSoftware = 0;
 //project_info
 //本地项目内存地址
 var projectInfo = null;
-require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 'flowchartInfo', 'eventcenter', 'defaultJs', 'guide', 'flowchart_item_set', 'generateC', 'keninit', 'jquery-mousewheel'], function($, cjxm, software, hardware, kenrobotJsPlumb, kenrobotDialog, flowchartInfo, eventcenter, defaultJs, guide, fis, generateC, keninit) {
+require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 'flowchartInfo', 'eventcenter', 'defaultJs', 'guide', 'flowchart_item_set', 'flowchartConfigs', 'genC', 'keninit', 'jquery-mousewheel'], function($, cjxm, software, hardware, kenrobotJsPlumb, kenrobotDialog, flowchartInfo, eventcenter, defaultJs, guide, fis, flowchartConfigs, genC, keninit) {
 
 	cjxm.init();
 
@@ -74,7 +75,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 
 	software.initVarTable('var-table');
 
-	generateC.init('c_code_input', kenrobotJsPlumb.getFlowchartElements, kenrobotJsPlumb.getNodeInfoByKey, software.getVarList);
+	genC.init('c_code_input', flowchartConfigs, kenrobotJsPlumb.getFlowchartElements, software.getVarList);
 
 	//拖拽生成的元素列表
 	var arrHardware = [];
@@ -157,60 +158,129 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 
 	// 点击流程元素时激活的事件
 	eventcenter.bind("kenrobot", "flowchart_item_click", function(args) {
-		var fc_top = $("#flowchart-container").offset().top;
-		fc_top += args.top;
-		var fc_left = $("#flowchart-container").offset().left + 150;
-		fc_left += args.left;
-
-		//输入设置
-		var needInputType = "text";
-		if (args.options) {
-			needInputType = "select";
+		var ids = args.id.split("_");
+		var nodeName = ids[1];
+		var nodeConfig = flowchartConfigs[nodeName];
+		if (nodeConfig === undefined) {
+			console.log("unknow node: " + nodeName);
+			return;
 		}
-		// 端口信息展示处理
-		var portText = args.text.substring(args.text.lastIndexOf("(") + 1, args.text.lastIndexOf(")"));
-		if (portText.length > 0) {
-			$("#prop_set_port_show").text(portText);
+
+		if (!nodeConfig.initParams && !nodeConfig.params) {
+			//没有参数
+			return;
+		}
+
+		var contents = [];
+		var paramValues = args.add_info;
+		if (paramValues) {
+			var initParams = nodeConfig.initParams;
+			if (initParams) {
+				for (var i = 0; i < initParams.length; i++) {
+					var param = initParams[i];
+					if (!param.autoSet) {
+						var paramName = "init_" + param.name;
+						var value = paramValues[paramName];
+						contents.push({
+							"title": param.title,
+							"inputType": param.inputType,
+							"inputHolder": (param.options) ? args.options : "",
+							"inputInitValue": value == "" ? param.defaultValue : value,
+							"inputKey": paramName
+						});
+					}
+				}
+			}
+
+			var params = nodeConfig.params;
+			for (var i = 0; i < params.length; i++) {
+				var param = params[i];
+				if (!param.autoSet) {
+					var value = paramValues[param.name];
+					contents.push({
+						"title": param.title,
+						"inputType": param.inputType,
+						"inputHolder": (param.options) ? args.options : "",
+						"inputInitValue": value == "" ? param.defaultValue : value,
+						"inputKey": param.name
+					});
+				}
+			}
 		} else {
-			$("#prop_set_port_show").text("无");
+			var initParams = nodeConfig.initParams;
+			if (initParams) {
+				for (var i = 0; i < initParams.length; i++) {
+					var param = initParams[i];
+					if (!param.autoSet) {
+						contents.push({
+							"title": param.title,
+							"inputType": param.inputType,
+							"inputHolder": (param.options) ? args.options : "",
+							"inputInitValue": param.defaultValue,
+							"inputKey": "init_" + param.name
+						});
+					}
+				}
+			}
+
+			var params = nodeConfig.params;
+			for (var i = 0; i < params.length; i++) {
+				var param = params[i];
+				if (!param.autoSet) {
+					contents.push({
+						"title": param.title,
+						"inputType": param.inputType,
+						"inputHolder": (param.options) ? args.options : "",
+						"inputInitValue": param.defaultValue,
+						"inputKey": param.name
+					});
+				}
+			}
 		}
 
-		var key = "property";
-		var initValue = "";
-		if (args.add_info && args.add_info[key]) {
-			initValue = args.add_info[key];
-		}
-		kenrobotDialog.show(0, {
-			"top": fc_top,
-			"left": fc_left,
-			"contents": [{
-				"title": "属性设置",
-				"inputType": needInputType,
-				"inputHolder": (args.options) ? args.options : "",
-				"inputInitValue": initValue,
-				"inputKey": key
-			}, {
+		if (nodeConfig.type == 4) {
+			// 端口信息展示处理
+			var portText = args.text.substring(args.text.lastIndexOf("(") + 1, args.text.lastIndexOf(")"));
+			if (portText.length > 0) {
+				$("#prop_set_port_show").text(portText);
+			} else {
+				$("#prop_set_port_show").text("无");
+			}
+			contents.push({
 				"title": "硬件连接端口",
 				"inputType": "none",
 				"fontColor": "#F00",
 				"showText": portText
-			}, {
-				"title": "注释",
-				"inputType": "none",
-				"fontColor": "#BBBDBF",
-				"showText": (args.desc.length > 0) ? args.desc : "暂无"
-			}]
+			});
+		}
+
+		contents.push({
+			"title": "注释",
+			"inputType": "none",
+			"fontColor": "#BBBDBF",
+			"showText": (args.desc.length > 0) ? args.desc : "暂无"
+		});
+
+		var fc_top = $("#flowchart-container").offset().top;
+		fc_top += args.top;
+		var fc_left = $("#flowchart-container").offset().left + 150;
+		fc_left += args.left;
+		kenrobotDialog.show(0, {
+			"title": "属性设置",
+			"top": fc_top,
+			"left": fc_left,
+			"contents": contents
 		}, saveFlowchartProperty);
 	});
 
-	eventcenter.bind('generateC', 'refresh', function(){
-		generateC.refresh();
+	eventcenter.bind('genC', 'refresh', function() {
+		genC.refresh();
 	});
 
 	function saveFlowchartProperty(data) {
 		kenrobotJsPlumb.setSelectedNodeInfo(data);
 
-		generateC.refresh();
+		genC.refresh();
 		//guide
 		guide.show(6);
 	}
@@ -281,9 +351,10 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 			dataType: "json",
 			async: true, //异步
 			success: function(result) {
-				alert(result.msg);
-				if (result.code == 0) {
+				if (result.code == 0 && result.url) {
 					downloadFile(result.url);
+				} else {
+					alert(result.msg);
 				}
 			}
 		});
@@ -409,7 +480,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 			kenrobotJsPlumb.draw(projectInfo.flowchart);
 			hasInitedSoftware = 1;
 
-			generateC.refresh();
+			genC.refresh();
 		}
 	}
 

@@ -1,18 +1,12 @@
 define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, eventcenter) {
 
-	var var_list = [{
-		"name": "result",
-		"type": "long",
-		"kind": "auto",
-		"initial": 0,
-		"scope": "global"
-	}];
+	var var_list = [];
 	var varContainerId;
 	var container;
 	var sel_item;
 
 	function getFormatTR(data) {
-		return "<tr class='tr'><td>" + data.name + "</td><td>" + data.type + "</td><td>" + data.kind + "</td><td>" + data.initial + "</td><td>" + data.scope + "</td><td></td>tr>"
+		return "<tr class='tr'><td>" + data.name + "</td><td>" + data.type + "</td><td>" + data.kind + "</td><td>" + data.initial + "</td><td></td>tr>"
 	}
 
 	$(".var-side .btn.add").click(function() {
@@ -74,65 +68,150 @@ define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, 
 				"inputHolder": "",
 				"inputInitValue": "",
 				"inputKey": "initial"
-			}, {
-				"title": "变量作用域",
-				"inputType": "select",
-				"inputHolder": [{
-					"value": "local",
-					"text": "局部变量"
-				}, {
-					"value": "global",
-					"text": "全局变量"
-				}],
-				"inputInitValue": "local",
-				"inputKey": "scope"
-			}, ]
-		}, saveFlowchartProperty);
+			}]
+		}, saveVarList);
 	});
 
-	function saveFlowchartProperty(data) {
-		var_list.push({
-			"name": data.name,
-			"type": data.type,
-			"kind": data.kind,
-			"initial": data.initial,
-			"scope": data.scope
-		});
+	$(".var-side .btn.modify").click(function() {
+		if(!sel_item){
+			return;
+		}
+		var fc_top = $("#flowchart-container").offset().top + 100;
+		var fc_left = $("#flowchart-container").offset().left + $("#flowchart-container").width() / 2 - 125;
+		container = $("#" + varContainerId);
+		var items = container.find(".tr");
+		var index;
+		for(var i = 0; i < items.length; i++) {
+			if($(items[i]).html() == sel_item.html()){
+				index = i;
+				break;
+			}
+		}
+		var varInfo = var_list[index];
+
+		kenrobotDialog.show(0, {
+			"top": fc_top,
+			"left": fc_left,
+			"title": "添加/更改变量",
+			"isSplit": 0,
+			"contents": [{
+				"title": "变量名称",
+				"inputType": "text",
+				"inputHolder": "",
+				"inputInitValue": varInfo.name,
+				"inputKey": "name"
+			}, {
+				"title": "变量类型",
+				"inputType": "select",
+				"inputHolder": [{
+					"value": "bool",
+					"text": "bool"
+				}, {
+					"value": "unsigned char",
+					"text": "unsigned char"
+				}, {
+					"value": "int",
+					"text": "int"
+				}, {
+					"value": "long",
+					"text": "long"
+				}, {
+					"value": "float",
+					"text": "float"
+				}],
+				"inputInitValue": varInfo.type,
+				"inputKey": "type"
+			}, {
+				"title": "变量种类",
+				"inputType": "select",
+				"inputHolder": [{
+					"value": "auto",
+					"text": "auto"
+				}, {
+					"value": "register",
+					"text": "register"
+				}, {
+					"value": "static",
+					"text": "static"
+				}, {
+					"value": "volatile",
+					"text": "volatile"
+				}],
+				"inputInitValue": varInfo.kind,
+				"inputKey": "kind"
+			}, {
+				"title": "变量初值",
+				"inputType": "text",
+				"inputHolder": "",
+				"inputInitValue": varInfo.initial,
+				"inputKey": "initial"
+			}]
+		}, saveVarList);
+	});
+
+	function saveVarList(data) {
+		data.initial = data.initial == "" ? (data.type == "bool" ? "false" : (data.type == "unsigned char" ? "''" : "0")) : data.initial;
+		var index = -1;
+		for(var i = 0; i < var_list.length; i++){
+			if(var_list[i].name == data.name){
+				index = i;
+				break;
+			}
+		}
 		container = $('#' + varContainerId);
-		container.append(getFormatTR(data));
+		if(index >= 0){
+			var varInfo = var_list[index];
+			varInfo.name = data.name;
+			varInfo.type = data.type;
+			varInfo.kind = data.kind;
+			varInfo.initial = data.initial;
+			var tr = $(container.find(".tr")[index]);
+			$(getFormatTR(data)).insertAfter(tr);
+			tr.remove();
+			sel_item = null;
+		} else {
+			container.append(getFormatTR(data));
+			var_list.push({
+				"name": data.name,
+				"type": data.type,
+				"kind": data.kind,
+				"initial": data.initial
+			});
+		}
 		bindItemEvent();
-		eventcenter.trigger('generateC', 'refresh');
+		eventcenter.trigger('genC', 'refresh');
 	}
 
 	$(".var-side .btn.del").click(function() {
 		if (sel_item) {
+			var index = sel_item.index() - 1;
 			sel_item.remove();
-			eventcenter.trigger('generateC', 'refresh');
+			sel_item = null;
+			var_list.splice(index, 1);
+
+			eventcenter.trigger('genC', 'refresh');
 		}
 	})
 
 	function bindItemEvent() {
 		container = $('#' + varContainerId);
-		container.html(container.html())
+		container.html(container.html());
 		container.find(".tr").mousemove(function(e) {
-			$(this).attr("class", "tr special")
+			$(this).attr("class", "tr special");
 		});
 		container.find(".tr").mouseout(function(e) {
 			if (sel_item && sel_item.html() == $(this).html()) {
-				return
+				return;
 			}
-			$(this).attr("class", "tr normal")
+			$(this).attr("class", "tr normal");
 		});
 		container.find(".tr").click(function() {
-			if (sel_item) {
-				sel_item.attr("class", "tr normal")
-			}
 			if (sel_item && sel_item.html() == $(this).html()) {
-				$(this).attr("class", "tr normal")
-				sel_item = ""
+				$(this).attr("class", "tr normal");
+				sel_item = null;
 			} else {
-				$(this).attr("class", "tr special")
-				sel_item = $(this)
+				$(this).attr("class", "tr special");
+				sel_item = $(this);
 			}
 		});
 	}

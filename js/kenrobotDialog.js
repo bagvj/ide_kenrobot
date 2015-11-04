@@ -83,7 +83,7 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 					"padding": "3px"
 				}).addClass("dialog_input_save");
 				for (var j = 0; j < oneContent.inputHolder.length; j++) {
-					var optionObj = $("<option value=" + oneContent.inputHolder[j].value + ">" + oneContent.inputHolder[j].text + "</options>");
+					var optionObj = $('<option value="' + oneContent.inputHolder[j].value + '">' + oneContent.inputHolder[j].text + '</options>');
 					inputSelect.append(optionObj);
 				}
 				inputSelect.attr("data-item", oneContent.inputKey).val(oneContent.inputInitValue);

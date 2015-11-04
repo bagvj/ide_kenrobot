@@ -12,7 +12,8 @@ define(["jquery"], function($) {
 		"flowchart_tjxh_item",
 		"flowchart_yyxh_item",
 		"flowchart_jsxh_item",
-		"flowchart_yshs_item"
+		"flowchart_yshs_item",
+		"flowchart_fzhs_item"
 	];
 	var controlTypePoint = {
 		"flowchart_start_item": {
@@ -56,6 +57,13 @@ define(["jquery"], function($) {
 			"body": "BottomCenter",
 			"foot": ["BottomCenter"],
 			"type": "func"
+		},
+		"flowchart_fzhs_item": {
+			"name": "",
+			"head": "TopCenter",
+			"body": "BottomCenter",
+			"foot": ["BottomCenter"],
+			"type": "func"
 		}
 	}
 
@@ -79,17 +87,13 @@ define(["jquery"], function($) {
 	}
 
 	function getProperty(node, isHardware) {
-		if (node == null)
+		if (node == null || typeof(node.add_info) == "undefined" || typeof(node.add_info.property) == "undefined" || node.add_info.property == "")
 			return "";
-		if (typeof(node.add_info) != "undefined" &&
-			typeof(node.add_info.property) != "undefined" &&
-			node.add_info.property != "")
-			if (!isHardware)
-				return "(" + node.add_info.property + ")";
-			else
-				return node.add_info.property
+
+		if (!isHardware)
+			return "(" + node.add_info.property + ")";
 		else
-			return "";
+			return node.add_info.property
 	}
 
 	function getTargetIDBySourceID(sourceID, links) {
@@ -330,6 +334,7 @@ define(["jquery"], function($) {
 		} else {
 			code = code.replace("DigitalValue", property);
 			code = code.replace("ToLed(Num)", "ToLed(" + property + ")");
+			code = code.replace("read_adc(n)", "read_adc(" + property + ")");
 			return code;
 		}
 	}

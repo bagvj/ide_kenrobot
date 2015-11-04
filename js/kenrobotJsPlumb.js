@@ -6,7 +6,7 @@
  *	需要为jsPlumb_container设定css样式，控制描图区域
  *	需要为jsPlumb_container+"-item"元素指定css样式，控制每个生成的流程元素块的大小
  */
-define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "generateC", "jquery-ui", "jquery-menu"], function($, jsPlumb, eventcenter, d3, fis, generateC) {
+define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", "jquery-ui", "jquery-menu"], function($, jsPlumb, eventcenter, d3, fis, genC) {
 	var showGuide = null;
 
 	function setShowGuid(show) {
@@ -72,7 +72,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "generat
 		// 右键菜单
 		rightClick();
 
-		generateC.refresh();
+		genC.refresh();
 
 		movePanel();
 	}
@@ -171,9 +171,9 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "generat
 		jsPlumb_selected_node = node;
 		for (var i = 0; i < jsPlumb_nodes.length; i++) {
 			if ($(jsPlumb_selected_node).attr('id') == jsPlumb_nodes[i]['id']) {
-				if (jsPlumb_nodes[i] && (jsPlumb_nodes[i]['add_info'] == null || jsPlumb_nodes[i]['add_info'] == undefined)) {
-					jsPlumb_nodes[i]['add_info'] = "";
-				}
+				// if (jsPlumb_nodes[i] && (jsPlumb_nodes[i]['add_info'] == null || jsPlumb_nodes[i]['add_info'] == undefined)) {
+				// 	jsPlumb_nodes[i]['add_info'] = "";
+				// }
 				var nodeKind = getNodeInfoByKey($(jsPlumb_selected_node).attr("data-item"), "kind");
 				eventcenter.trigger("kenrobot", "flowchart_item_click", {
 					"id": jsPlumb_nodes[i]['id'],
@@ -195,7 +195,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "generat
 	function deleteNodeByElement(obj) {
 		deleteNode(jsPlumb.getSelector('#' + $(obj).attr('id'))[0]);
 
-		generateC.refresh();
+		genC.refresh();
 	}
 
 	// 删除流程元素
@@ -714,7 +714,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "generat
 			data_transfer = {};
 		}
 
-		generateC.refresh();
+		genC.refresh();
 	}
 
 	/**

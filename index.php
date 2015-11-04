@@ -233,7 +233,6 @@
 			   	 <th>type</th>
 			   	 <th>kind</th>
 			   	 <th>initial</th>
-			   	 <th>scope</th>
 			   	 <th>desc</th>
 			   	 </tr>
 			   </table>

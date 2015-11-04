@@ -126,44 +126,44 @@ define(['eventcenter', 'jquery', 'hardware', 'kenrobotJsPlumb', 'defaultJs'], fu
 	}
 
 	function show(step) {
-		var guideValue = getCookie('guide');
-		if (guideValue == 1) {
-			return;
-		}
-		switch (step) {
-			case 1:
-				step1();
-				showCover();
-				break;
-			case 2:
-				step1Close();
-				step2();
-				break;
-			case 3:
-				step2Close();
-				step3();
-				break;
-			case 4:
-				step3Close();
-				step4();
-				break;
-			case 5:
-				step4Close();
-				step5();
-				break;
-			case 6:
-				step5Close();
-				hide();
-				setCookie('guide', 1);
-				// step6();
-				break;
-			case 7:
-				step6Close();
-				hide();
-				setCookie('guide', 1);
-			default:
-				break;
-		}
+		// var guideValue = getCookie('guide');
+		// if (guideValue == 1) {
+		// 	return;
+		// }
+		// switch (step) {
+		// 	case 1:
+		// 		step1();
+		// 		showCover();
+		// 		break;
+		// 	case 2:
+		// 		step1Close();
+		// 		step2();
+		// 		break;
+		// 	case 3:
+		// 		step2Close();
+		// 		step3();
+		// 		break;
+		// 	case 4:
+		// 		step3Close();
+		// 		step4();
+		// 		break;
+		// 	case 5:
+		// 		step4Close();
+		// 		step5();
+		// 		break;
+		// 	case 6:
+		// 		step5Close();
+		// 		hide();
+		// 		setCookie('guide', 1);
+		// 		// step6();
+		// 		break;
+		// 	case 7:
+		// 		step6Close();
+		// 		hide();
+		// 		setCookie('guide', 1);
+		// 	default:
+		// 		break;
+		// }
 	}
 
 	function showToolTip(content, url, top, left, width, height) {

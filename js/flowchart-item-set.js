@@ -312,7 +312,14 @@ define(["jquery"], function($) {
 				"target": false,
 				"color": "#FF0",
 				"shape": "Dot"
-			}, ]
+			}, ],
+			"add_info": {
+				"params": [{
+					"name": "time",
+					"title": "时间"
+				}],
+				"format": "delay_ms(time)"
+			}
 		},
 		//定时函数
 		"flowchart_dshs_item": {
@@ -356,7 +363,17 @@ define(["jquery"], function($) {
 				"target": false,
 				"color": "#FF0",
 				"shape": "Dot"
-			}, ]
+			}, ],
+			"add_info": {
+				"params": [{
+					"name": "left",
+					"title": "左边"
+				},{
+					"name": "right",
+					"title": "右边"
+				}],
+				"format": "left = right"
+			}
 		},
 		//随机函数
 		"flowchart_sjhs_item": {
