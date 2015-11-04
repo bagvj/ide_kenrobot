@@ -15,27 +15,33 @@ $code = -1;
 //下载
 // $type = 0;
 //直接烧写
-$type = 1;
+$type = 0;
 
+//代码的字节码
 $bytes = $_POST['source'];
+//编译类型
+$buildType = $_POST['buildType'];
+//项目名字
+$projectName = $_POST['projectName'];
+
 if($bytes)
 {
 	$source = fromCharCode($bytes);
-	$time = time();
-	$path = "/tmp/$time";
+	$time = microtime(true) * 10000;
+	$path = "/tmp/build$time$projectName.tmp";
 	mkdir($path);
-	$f = fopen($path."/CSource.c", "wb");
+	$f = fopen($path."/$projectName.cpp", "wb");
 	fwrite($f, $source);
 	fclose($f);
 
-	$cmd = "sh build.sh $time 2>&1";
+	$cmd = "sh compiler/$buildType/build.sh $projectName $time 2>&1";
 	$output = array();
 	exec($cmd, &$output, &$code);
 	if($code == 0){
 		$result['msg'] = "编译成功";
 		if($type == 0){
 			//下载
-			$result['url'] = "/download.php?time=$time";
+			$result['url'] = "/download.php?proj=$projectName&time=$time";
 		} else {
 			//直接烧写
 			$cmd = "sh flashburn.sh $time";

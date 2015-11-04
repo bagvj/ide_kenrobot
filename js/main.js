@@ -308,7 +308,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 			var xmmc_init_value = "";
 			var xmms_init_value = "";
 			if (pid == null) {
-				xmmc_init_value = "未命名";
+				xmmc_init_value = "Rosys";
 				xmms_init_value = "kenrobot";
 				var data = {
 					"xmmc_init_value": xmmc_init_value,
@@ -342,11 +342,16 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 		for (var i = 0; i < source.length; ++i) {
 			bytes.push(source.charCodeAt(i));
 		}
+		var projectName = "Rosys";
+		var buildType = "Rosys";
+
 		$.ajax({
 			type: "POST",
 			url: "./build.php",
 			data: {
-				source: bytes
+				source: bytes,
+				projectName: projectName,
+				buildType: buildType
 			},
 			dataType: "json",
 			async: true, //异步
@@ -356,6 +361,9 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 				} else {
 					alert(result.msg);
 				}
+			},
+			error: function(result){
+				console.log(result);
 			}
 		});
 	});
