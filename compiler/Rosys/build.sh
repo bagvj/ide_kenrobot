@@ -9,7 +9,7 @@ PROJECTNAME=$1
 STAMP=$2
 SOURCEPATH=/tmp/"build"${STAMP}${PROJECTNAME}".tmp"/
 SOURCECPP=${SOURCEPATH}/${PROJECTNAME}".cpp"
-HEADERPATH=`pwd`
+HEADERPATH=`dirname $(pwd)/${0}` #`pwd`
 
 ${AVRBINPATH}/avr-g++ -c -g -Wall -Os -mmcu=atmega128 -I${HEADERPATH} -o ${SOURCEPATH}/${PROJECTNAME}.o ${SOURCEPATH}/${PROJECTNAME}.cpp 
 
