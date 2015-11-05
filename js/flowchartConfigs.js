@@ -28,7 +28,7 @@ define(function() {
 		//流程控制模块：if-else、while、for
 		//条件循环
 		"tjxh": {
-			"type": 3,
+			"type": 2,
 			"subType": 1,
 			"params": [{
 				"name": "condition",
@@ -40,13 +40,13 @@ define(function() {
 		},
 		//永远循环
 		"yyxh": {
-			"type": 3,
+			"type": 2,
 			"subType": 1,
 			"format": "for(;;)"
 		},
 		//计数循环
 		"jsxh": {
-			"type": 3,
+			"type": 2,
 			"subType": 1,
 			"params": [{
 				"name": "index",
@@ -64,7 +64,7 @@ define(function() {
 		},
 		//条件分支
 		"tjfz": {
-			"type": 3,
+			"type": 2,
 			"subType": 2,
 			"params": [{
 				"name": "condition",
@@ -76,16 +76,14 @@ define(function() {
 		},
 		//条件分支合并节点
 		"tjfzMerge": {
-			"type": 3,
-			"subType": 3
+			"type": 2,
 		},
-
 
 		//硬件模块：LED灯、开关、传感器
 		//输入模块
 		//按键
 		"button": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -108,7 +106,7 @@ define(function() {
 		},
 		//开关
 		"switch": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -131,7 +129,7 @@ define(function() {
 		},
 		//行程开关
 		"travelSwitch": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -154,7 +152,7 @@ define(function() {
 		},
 		//巡线
 		"linePatrol": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -177,7 +175,7 @@ define(function() {
 		},
 		//火焰D
 		"fireD": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -200,7 +198,7 @@ define(function() {
 		},
 		//火焰D
 		"fireD": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -223,7 +221,7 @@ define(function() {
 		},
 		//红外接收
 		"infraredIn": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -246,7 +244,7 @@ define(function() {
 		},
 		//声音传感
 		"soundSensor": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -269,7 +267,7 @@ define(function() {
 		},
 		//倾斜
 		"lean": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -292,7 +290,7 @@ define(function() {
 		},
 		//金属接近
 		"metalClose": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -315,7 +313,7 @@ define(function() {
 		},
 		//矩阵键盘
 		"keyboard": {
-			"type": 4,
+			"type": 3,
 			"initParams": [{
 				"name": "port",
 				"title": "端口",
@@ -329,7 +327,7 @@ define(function() {
 		//输出模块
 		//LED灯
 		"light": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -353,7 +351,7 @@ define(function() {
 		},
 		//继电器
 		"relay": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -377,7 +375,7 @@ define(function() {
 		},
 		//蜂鸣器
 		"buzzer": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -401,7 +399,7 @@ define(function() {
 		},
 		//红外发射
 		"infraredOut": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -425,7 +423,7 @@ define(function() {
 		},
 		//数码管
 		"digitalTube": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "num",
 				"title": "显示数值",
@@ -446,7 +444,7 @@ define(function() {
 		//执行模块
 		//舵机
 		"streeringEngine": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "index",
 				"title": "编号",
@@ -465,7 +463,7 @@ define(function() {
 		},
 		//直流电机
 		"dcMotor": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "index",
 				"title": "编号",
@@ -486,7 +484,7 @@ define(function() {
 		//传感模块
 		//光照
 		"illumination": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "bit",
 				"title": "位号",
@@ -502,7 +500,7 @@ define(function() {
 		},
 		//温度
 		"temperatue": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "bit",
 				"title": "位号",
@@ -518,7 +516,7 @@ define(function() {
 		},
 		//PM2.5
 		"pm25": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "bit",
 				"title": "位号",
@@ -534,7 +532,7 @@ define(function() {
 		},
 		//火焰A
 		"fireA": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "bit",
 				"title": "位号",
@@ -550,7 +548,7 @@ define(function() {
 		},
 		//AD输入
 		"ad": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "bit",
 				"title": "位号",
@@ -568,7 +566,7 @@ define(function() {
 		//其它
 		//串口输入
 		"serialPortIn": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "index",
 				"title": "串口号",
@@ -605,7 +603,7 @@ define(function() {
 		},
 		//串口输出
 		"serialPortOut": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "index",
 				"title": "串口号",
@@ -643,7 +641,7 @@ define(function() {
 		},
 		//超声测距
 		"ultrasoundLocation": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "arg",
 				"title": "参数",
@@ -674,7 +672,7 @@ define(function() {
 		},
 		//电子罗盘
 		"electronicCompass": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "arg",
 				"title": "参数",
@@ -705,7 +703,7 @@ define(function() {
 		},
 		//IIC输入
 		"iicIn": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "arg",
 				"title": "参数",
@@ -735,7 +733,7 @@ define(function() {
 		},
 		//IIC输出
 		"iicOut": {
-			"type": 4,
+			"type": 3,
 			"params": [{
 				"name": "arg",
 				"title": "参数",
@@ -767,7 +765,7 @@ define(function() {
 		//函数模块：延时、定时
 		//延时函数
 		"yshs": {
-			"type": 5,
+			"type": 4,
 			"params": [{
 				"name": "time",
 				"title": "延时(毫秒)",
@@ -778,7 +776,7 @@ define(function() {
 		},
 		//赋值函数
 		"fzhs": {
-			"type": 5,
+			"type": 4,
 			"params": [{
 				"name": "var",
 				"title": "变量",

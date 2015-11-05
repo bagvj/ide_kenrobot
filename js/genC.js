@@ -151,8 +151,6 @@ define(["jquery"], function($) {
 		if (nodeType == 1) {
 			str += visitNode(targetId.replace("TopCenter", "BottomCenter"), endNodeId, index);
 		} else if (nodeType == 2) {
-
-		} else if (nodeType == 3) {
 			if (subType == 1) {
 				//循环
 				str += genIndent(index) + getFormatExp(nodeConfig, nodeInfo, false) + "{\n";
@@ -171,12 +169,10 @@ define(["jquery"], function($) {
 				str += noCode == "" ? "\n" : noCode;
 				str += genIndent(index) + "}\n";
 				str += visitNode(mergeId + "_BottomCenter", endNodeId, index);
-			} else if (subType == 3) {
-				//分支合并
 			} else {
 				console.log("unknow node sub type: " + subType);
 			}
-		} else if (nodeType == 4 || nodeType == 5) {
+		} else if (nodeType == 3 || nodeType == 4) {
 			//硬件节点或者函数节点
 			var initCode = getFormatExp(nodeConfig, nodeInfo, true);
 			if (initCode && initCode != "") {
