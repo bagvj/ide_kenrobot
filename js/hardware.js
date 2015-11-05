@@ -775,6 +775,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 				maxConnections: -1,
 				isSource: arrAnchor[i].source,
 				isTarget: arrAnchor[i].target,
+				//连线不能被手动删除
+				connectionsDetachable: false,
 			});
 			//鼠标进入连接点时候激活的处理
 			jsPlumb_instance.getEndpoint(tmpUuid).bind("mouseenter", function(e) {
@@ -785,12 +787,12 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 
 	/**
 	 * 连接两个endpoint
-	 * @param string source_id 起点endpoint的uuid	
-	 * @param string target_id 终点endpoint的uuid
+	 * @param string sourceId 起点endpoint的uuid	
+	 * @param string targetId 终点endpoint的uuid
 	 */
-	function connectPortsByUuid(source_id, target_id) {
+	function connectPortsByUuid(sourceId, targetId) {
 		jsPlumb_instance.connect({
-			uuids: [source_id, target_id]
+			uuids: [sourceId, targetId]
 		});
 	}
 
@@ -1568,8 +1570,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		var jsPlumb_links = [];
 		$.each(jsPlumb_instance.getConnections(), function(id, connection) {
 			jsPlumb_links.push({
-				"source_id": connection.endpoints[0].getUuid(),
-				"target_id": connection.endpoints[1].getUuid()
+				"sourceId": connection.endpoints[0].getUuid(),
+				"targetId": connection.endpoints[1].getUuid()
 			});
 		});
 		//更新每个点的实时坐标
@@ -1626,8 +1628,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 			jsPlumb_instance.detachAllConnections($(tmpNode));
 		});
 		$.each(flowchart["links"], function(i, o) {
-			var sourceId = o["source_id"];
-			var targetId = o["target_id"];
+			var sourceId = o["sourceId"];
+			var targetId = o["targetId"];
 			connectPortsByUuid(sourceId, targetId);
 		});
 	}

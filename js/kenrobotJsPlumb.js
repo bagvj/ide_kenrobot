@@ -200,7 +200,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 
 	// 删除流程元素
 	function deleteNode(node) {
-		if ($(node).attr("data-item") == "flowchart_start_item" || $(node).attr("data-item") == "flowchart_end_item") {
+		var objSet = fis[$(node).attr("data-item")];
+		if (objSet['always'] !== undefined && objSet['always'] == true) {
 			alert("不可删除元素！");
 			return false;
 		}
@@ -358,23 +359,50 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 	 */
 	function initStartAndEnd() {
 		var left = container_width / 2 - 30;
-		var firstNodeParam = {};
-		firstNodeParam['x'] = '' + left + 'px';
-		firstNodeParam['y'] = '20px';
-		firstNodeParam['id'] = "flowchart_start_" + (new Date().getTime());
-		firstNodeParam['data-item'] = "flowchart_start_item";
-		firstNodeParam['text'] = "开始";
-		var startNode = initNode(firstNodeParam);
-		var startEndPoint = jsPlumb_instance.getEndpoints($(startNode))[0];
-		var secondNodeParam = {};
-		secondNodeParam['x'] = '' + left + 'px';
-		secondNodeParam['y'] = '100px';
-		secondNodeParam['id'] = "flowchart_end_" + (new Date().getTime());
-		secondNodeParam['data-item'] = "flowchart_end_item";
-		secondNodeParam['text'] = "结束";
-		var endNode = initNode(secondNodeParam);
-		var endEndPoint = jsPlumb_instance.getEndpoints($(endNode))[0];
-		connectPortsBySt(startEndPoint, endEndPoint);
+
+		//开始
+		var startNodeParam = {};
+		startNodeParam['x'] = '' + left + 'px';
+		startNodeParam['y'] = '20px';
+		startNodeParam['id'] = "flowchart_start_" + (new Date().getTime());
+		startNodeParam['data-item'] = "flowchart_start_item";
+		startNodeParam['text'] = "开始";
+		var startNode = initNode(startNodeParam);
+		var startEndPoints = jsPlumb_instance.getEndpoints($(startNode));
+
+		//loop开始
+		var loopStartNodeParam = {};
+		loopStartNodeParam['x'] = '' + left + 'px';
+		loopStartNodeParam['y'] = '100px';
+		loopStartNodeParam['id'] = "flowchart_loopStart_" + (new Date().getTime());
+		loopStartNodeParam['data-item'] = "flowchart_loopStart_item";
+		loopStartNodeParam['text'] = "loop开始";
+		var loopStartNode = initNode(loopStartNodeParam);
+		var loopStartEndPoints = jsPlumb_instance.getEndpoints($(loopStartNode));
+		connectPortsBySt(startEndPoints[0], loopStartEndPoints[0]);
+
+		//loop结束
+		var loopEndNodeParam = {};
+		loopEndNodeParam['x'] = '' + left + 'px';
+		loopEndNodeParam['y'] = '180px';
+		loopEndNodeParam['id'] = "flowchart_loopEnd_" + (new Date().getTime());
+		loopEndNodeParam['data-item'] = "flowchart_loopEnd_item";
+		loopEndNodeParam['text'] = "loop结束";
+		var loopEndNode = initNode(loopEndNodeParam);
+		var loopEndEndPoints = jsPlumb_instance.getEndpoints($(loopEndNode));
+		connectPortsBySt(loopStartEndPoints[1], loopEndEndPoints[0]);
+		connectPortsBySt(loopEndEndPoints[2], loopStartEndPoints[2]);
+
+		//结束
+		var endNodeParam = {};
+		endNodeParam['x'] = '' + left + 'px';
+		endNodeParam['y'] = '260px';
+		endNodeParam['id'] = "flowchart_end_" + (new Date().getTime());
+		endNodeParam['data-item'] = "flowchart_end_item";
+		endNodeParam['text'] = "结束";
+		var endNode = initNode(endNodeParam);
+		var endEndPoints = jsPlumb_instance.getEndpoints($(endNode));
+		connectPortsBySt(loopEndEndPoints[1], endEndPoints[0]);
 	}
 
 	/**
@@ -464,9 +492,12 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 	 */
 	function addConnection(node) {
 		var nodeType = getNodeInfoByKey($(node).attr("data-item"), "type");
-		if (nodeType && nodeType == "loop") {
-			var nodeEndpoints = jsPlumb_instance.getEndpoints($(node));
+		if (!nodeType) {
+			return;
+		}
 
+		var nodeEndpoints = jsPlumb_instance.getEndpoints($(node));
+		if (nodeType == "loop") {
 			var initSourceEndpoint = null;
 			var initTargetEndpoint = null;
 			for (var i = 0; i < nodeEndpoints.length; i++) {
@@ -480,6 +511,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 			if (initSourceEndpoint != null && initTargetEndpoint != null) {
 				connectPortsBySt(initSourceEndpoint, initTargetEndpoint);
 			}
+		} else if (nodeType == "tjfz") {
+			var a = 0;
 		}
 	}
 
@@ -526,7 +559,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 		var arrAnchor = fis[$(node).attr('data-item')].points;
 		for (var i = 0; i < arrAnchor.length; i++) {
 			var tmpUuid = node.getAttribute("id") + "_" + arrAnchor[i].position;
-			jsPlumb_instance.addEndpoint(node, {
+			var endPoint = jsPlumb_instance.addEndpoint(node, {
 				uuid: tmpUuid,
 				paintStyle: {
 					radius: 3,
@@ -536,6 +569,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 				maxConnections: -1,
 				isSource: arrAnchor[i].source,
 				isTarget: arrAnchor[i].target,
+				//连线不能被手动删除
+				connectionsDetachable: false,
 				connectorStyle: {
 					lineWidth: 2,
 					strokeStyle: "#61B7CF",
@@ -543,10 +578,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 					outlineColor: "#EEE"
 						// outlineWidth: 2
 				}
-			});
-			//鼠标进入连接点时候激活的处理
-			jsPlumb_instance.getEndpoint(tmpUuid).bind("mouseenter", function(e) {
-				console.log("mouseenter");
 			});
 		}
 	}
@@ -572,12 +603,12 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 
 	/**
 	 * 连接两个endpoint
-	 * @param string source_id 起点endpoint的uuid	
-	 * @param string target_id 终点endpoint的uuid
+	 * @param string sourceId 起点endpoint的uuid	
+	 * @param string targetId 终点endpoint的uuid
 	 */
-	function connectPortsByUuid(source_id, target_id) {
+	function connectPortsByUuid(sourceId, targetId) {
 		return jsPlumb_instance.connect({
-			uuids: [source_id, target_id]
+			uuids: [sourceId, targetId]
 		});
 	}
 
@@ -603,7 +634,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 				gap: 3,
 				curviness: 50,
 				midpoint: 1,
-				stub: 20
+				stub: 20,
+				alwaysRespectStubs: true
 			}],
 			DragOptions: {
 				cursor: "pointer",
@@ -681,10 +713,10 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 			startOffsetX = data_transfer['offsetX'];
 			startOffsetY = data_transfer['offsetY'];
 		}
-		var flowchart_obj_param_x = e.originalEvent.offsetX - startOffsetX;
-		var flowchart_obj_param_y = e.originalEvent.offsetY - startOffsetY;
-		flowchart_obj_param['x'] = '' + flowchart_obj_param_x + 'px';
-		flowchart_obj_param['y'] = '' + flowchart_obj_param_y + 'px';
+		var x = e.originalEvent.offsetX - startOffsetX;
+		var y = e.originalEvent.offsetY - startOffsetY;
+		flowchart_obj_param['x'] = '' + x + 'px';
+		flowchart_obj_param['y'] = '' + y + 'px';
 
 		flowchart_obj_param['id'] = objId + "_" + (new Date().getTime());
 		flowchart_obj_param['data-item'] = $("#" + objId).attr('data-item');
@@ -693,20 +725,23 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 			flowchart_obj_param['text'] = $("#" + objId).parent().text();
 		}
 
+		if (flowchart_obj_param['data-item'] == "flowchart_tjfz_item") {
+			var mergeNodeParam = {};
+			mergeNodeParam['id'] = "flowchart_tjfzMerge_" + (new Date().getTime());
+			mergeNodeParam['x'] = flowchart_obj_param['x'];
+			mergeNodeParam['y'] = flowchart_obj_param['y'];
+			mergeNodeParam['text'] = "分支合并";
+			mergeNodeParam['data-item'] = "flowchart_tjfzMerge_item";
+
+			var mergeNode = initNode(mergeNodeParam);
+			var mergeNodeEndPoints = jsPlumb_instance.getEndpoints($(mergeNode));
+			//若拖拽进入已有元素，则自动连接
+			initConnection(mergeNode, e.target, x, y);
+		}
 		var node = initNode(flowchart_obj_param);
 
-		if (e.target.closest("div").className.indexOf('_jsPlumb') >= 0) {
-			//若拖拽进入已有元素，则自动连接
-			initConnection(
-				node,
-				e.target,
-				flowchart_obj_param_x,
-				flowchart_obj_param_y
-			);
-		} else {
-			//若拖拽只进入绘制区域，不进入元素，则元素自动删除
-			// jsPlumb_instance.remove($(node));
-		}
+		//若拖拽进入已有元素，则自动连接
+		initConnection(node, e.target, x, y);
 
 		try {
 			e.originalEvent.dataTransfer.clearData();
@@ -761,6 +796,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 				break;
 			case "RightMiddle":
 				objX = baseX + $(node).outerWidth() + 20;
+				// objX = baseX;
 				objY = baseY + $(targetDiv).outerHeight() + 20;
 				break;
 			case "BottomCenter":
@@ -768,7 +804,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 				objY = baseY + $(targetDiv).outerHeight() + 30;
 				break;
 			case "LeftMiddle":
-				objX = baseX - $(node).outerWidth() - 20;
+				// objX = baseX - $(node).outerWidth() - 20;
+				objX = baseX;
 				objY = baseY + $(targetDiv).outerHeight() + 20;
 				break;
 			default:
@@ -790,10 +827,10 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 
 		connectPortsBySt(sourceEndPoint, targetEndPoint);
 
-		if (sourceFis.kind == "flowchart") {
+		// if (sourceFis.kind == "flowchart") {
 			//从sourceEndPoint出来的所有元素位置下移
-			moveRelationalNodes(sourceEndPoint, node, sourceEndPoint, "down");
-		}
+		moveRelationalNodes(sourceEndPoint, node, sourceEndPoint, "down");
+		// }
 		//截断需截断连接，重新连接
 		cutAndLink(sourceEndPoint, node);
 	}
@@ -851,19 +888,16 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 			tmpLabel = connections[i].getLabel();
 			jsPlumb_instance.detach(connections[i]);
 			for (var j = 0; j < arrSourceTargetEndPoint.length; j++) {
-				var conn = connectPortsBySt(arrSourceTargetEndPoint[j], connections[i].endpoints[1]);
 				if (tmpObjType && tmpObjType == "if") {
-					if (j == 0) {
-						conn.setLabel({
-							location: 0.1,
-							label: "N"
-						});
-					} else if (j == 1) {
-						conn.setLabel({
-							location: 0.1,
-							label: "Y"
-						});
-					}
+					var endPoint = connections[i].endpoints[1];
+					var mergeNodeEndPoints = jsPlumb_instance.getEndpoints(endPoint.elementId);
+					var conn = connectPortsBySt(arrSourceTargetEndPoint[j], mergeNodeEndPoints[j]);
+					conn.setLabel({
+						location: 0.5,
+						label: j == 0 ? "Yes" : "No"
+					});
+				} else {
+					connectPortsBySt(arrSourceTargetEndPoint[j], connections[i].endpoints[1]);
 				}
 			}
 		}
@@ -871,7 +905,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 			connectionToNode.setLabel(tmpLabel);
 		}
 		if (tmpObjType && tmpObjType == "loop") {
-			moveRelationalNodes(arrSourceTargetEndPoint[0], node, arrSourceTargetEndPoint[0], "right");
+			// moveRelationalNodes(arrSourceTargetEndPoint[0], node, arrSourceTargetEndPoint[0], "right");
 		}
 	}
 
@@ -888,33 +922,33 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 		var nodeType = getNodeInfoByKey($(sourceEndPoint.getElement()).attr("data-item"), "type");
 
 		var compareId = "";
-		if (nodeType && nodeType == "if") {
-			var yNodes = {};
-			var nNodes = {};
-			var ifEndpoints = jsPlumb_instance.getEndpoints(sourceEndPoint.getElement());
-			for (var i = 0; i < ifEndpoints.length; i++) {
-				if (ifEndpoints[i].isSource) {
-					if (sourceEndPoint.getUuid() == ifEndpoints[i].getUuid()) {
-						yNodes = getMoreNodesEndpoint(ifEndpoints[i]);
-					} else {
-						nNodes = getMoreNodesEndpoint(ifEndpoints[i]);
-					}
-				}
-			}
-			var tmpArrNodeId = [];
-			for (var i in yNodes) {
-				var level = yNodes[i];
-				for (var j in nNodes) {
-					if (i == j) {
-						if (yNodes[i] < nNodes[j] && yNodes[i] > 0) {
-							compareId = i;
-							break;
-						}
-					}
-				}
-				if (compareId.length > 0) break;
-			}
-		}
+		// if (nodeType && nodeType == "if") {
+		// 	var yNodes = {};
+		// 	var nNodes = {};
+		// 	var ifEndpoints = jsPlumb_instance.getEndpoints(sourceEndPoint.getElement());
+		// 	for (var i = 0; i < ifEndpoints.length; i++) {
+		// 		if (ifEndpoints[i].isSource) {
+		// 			if (sourceEndPoint.getUuid() == ifEndpoints[i].getUuid()) {
+		// 				yNodes = getMoreNodesEndpoint(ifEndpoints[i]);
+		// 			} else {
+		// 				nNodes = getMoreNodesEndpoint(ifEndpoints[i]);
+		// 			}
+		// 		}
+		// 	}
+		// 	var tmpArrNodeId = [];
+		// 	for (var i in yNodes) {
+		// 		var level = yNodes[i];
+		// 		for (var j in nNodes) {
+		// 			if (i == j) {
+		// 				if (yNodes[i] < nNodes[j] && yNodes[i] > 0) {
+		// 					compareId = i;
+		// 					break;
+		// 				}
+		// 			}
+		// 		}
+		// 		if (compareId.length > 0) break;
+		// 	}
+		// }
 		for (var i = 0; i < connections.length; i++) {
 			//判定该连接终点元素是不是刚刚绘制的node元素，通过ID判定
 			if ($(node).attr('id') == connections[i].targetId) {
@@ -925,8 +959,14 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 				continue;
 			}
 			//如果终点在循环元素上，则循环继续
-			var tmpObjType = getNodeInfoByKey($(connections[i].target).attr("data-item"), "type");
-			if (tmpObjType && tmpObjType == "loop") {
+			var targetType = getNodeInfoByKey($(connections[i].target).attr("data-item"), "type");
+			var sourceType = getNodeInfoByKey($(connections[i].source).attr("data-item"), "type");
+			var nodeType = getNodeInfoByKey($(node).attr("data-item"), "type");
+			if (targetType && targetType == "loop") {
+				continue;
+			}
+
+			if (targetType && sourceType && sourceType == "loopEnd" && targetType == "loopStart") {
 				continue;
 			}
 
@@ -943,7 +983,10 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 				positionY -= $(connections[i].target).outerHeight() + 20;
 				$(connections[i].target).css("top", positionY);
 			} else {
-				positionY += $(connections[i].target).outerHeight() + 30;
+				positionY += $(connections[i].target).outerHeight() + 20;
+				if(nodeType == "loop"){
+					positionY += 30;
+				}
 				$(connections[i].target).css("top", positionY);
 			}
 			//重绘流程元素
@@ -1027,7 +1070,9 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 	 */
 	function getNodeInfoByKey(data_item, key) {
 		var objSet = fis[data_item];
-		if (objSet[key] && objSet[key] != undefined) return objSet[key];
+		if (objSet && objSet[key] && objSet[key] != undefined) {
+			return objSet[key];
+		}
 		return false;
 	}
 
@@ -1112,8 +1157,10 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 		var jsPlumb_links = [];
 		$.each(jsPlumb_instance.getConnections(), function(id, connection) {
 			jsPlumb_links.push({
-				"source_id": connection.endpoints[0].getUuid(),
-				"target_id": connection.endpoints[1].getUuid()
+				"sourceId": connection.endpoints[0].getUuid(),
+				"sourceAnchorType": connection.endpoints[0].anchor.type,
+				"targetId": connection.endpoints[1].getUuid(),
+				"targetAnchorType": connection.endpoints[1].anchor.type,
 			});
 		});
 		//更新每个点的实时坐标
@@ -1157,8 +1204,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 		});
 
 		$.each(flowchart["links"], function(i, o) {
-			var sourceId = o["source_id"];
-			var targetId = o["target_id"];
+			var sourceId = o["sourceId"];
+			var targetId = o["targetId"];
 			connectPortsByUuid(sourceId, targetId);
 		});
 	}

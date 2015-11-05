@@ -98,7 +98,7 @@ define(["jquery"], function($) {
 
 	function getTargetIDBySourceID(sourceID, links) {
 		for (var i = 0; i < links.length; i++) {
-			if (links[i].source_id == sourceID) {
+			if (links[i].sourceId == sourceID) {
 				return links[i];
 			}
 		};
@@ -171,11 +171,11 @@ define(["jquery"], function($) {
 			str += "\n";
 		}
 		var targetInfo = getTargetIDBySourceID(startID, links);
-		if (!targetInfo || targetInfo.target_id.indexOf(end) != -1) {
+		if (!targetInfo || targetInfo.targetId.indexOf(end) != -1) {
 			return str;
 		}
 
-		var targetID = targetInfo.target_id;
+		var targetID = targetInfo.targetId;
 		var type = getTypeByID(targetID);
 		var controlInfo = getControlTypeInfo(type);
 		if (controlInfo.body != null) {

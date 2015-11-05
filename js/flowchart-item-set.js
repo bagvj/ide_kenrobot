@@ -23,6 +23,7 @@ define(["jquery"], function($) {
 			"className": "flowchart-oval-item",
 			"name": "start",
 			"unique": true,
+			"always": true,
 			"type": "start",
 			"kind": "flowchart",
 			"desc": "",
@@ -34,19 +35,67 @@ define(["jquery"], function($) {
 				"shape": "Dot"
 			}]
 		},
+		//loop开始
+		"flowchart_loopStart_item": {
+			"className": "flowchart-oval-item",
+			"name": "loopStart",
+			"unique": true,
+			"always": true,
+			"type": "loopStart",
+			"kind": "flowchart",
+			"desc": "",
+			"points": [{
+				"position": "TopCenter",
+				"target": true,
+				"color": "#FF8891",
+				"shape": "Dot"
+			}, {
+				"position": "BottomCenter",
+				"source": true,
+				"color": "#FF0",
+				"shape": "Dot"
+			}, {
+				"position": "LeftMiddle",
+				"color": "#CCC",
+				"shape": "Dot"
+			}]
+		},
+		//loop结束
+		"flowchart_loopEnd_item": {
+			"className": "flowchart-oval-item",
+			"name": "loopEnd",
+			"unique": true,
+			"always": true,
+			"type": "loopEnd",
+			"kind": "flowchart",
+			"desc": "",
+			"points": [{
+				"position": "TopCenter",
+				"target": true,
+				"color": "#FF8891",
+				"shape": "Dot"
+			},{
+				"position": "BottomCenter",
+				"color": "#CCC",
+				"shape": "Dot"
+			}, {
+				"position": "LeftMiddle",
+				"color": "#CCC",
+				"shape": "Dot"
+			}]
+		},
 		//结束
 		"flowchart_end_item": {
 			"className": "flowchart-oval-item",
 			"name": "end",
 			"unique": false,
+			"always": true,
 			"type": "end",
 			"kind": "flowchart",
 			"desc": "",
 			"points": [{
 				"position": "TopCenter",
-				"source": false,
-				"target": true,
-				"color": "#FF8891",
+				"color": "#CCC",
 				"shape": "Dot"
 			}]
 		},
@@ -172,20 +221,42 @@ define(["jquery"], function($) {
 			"desc": "",
 			"points": [{
 				"position": "TopCenter",
-				"source": false,
+				"target": true,
+				"color": "#FF8891",
+				"shape": "Dot"
+			}, {
+				"position": "BottomCenter",
+				"source": true,
+				"color": "#FF0",
+				"shape": "Dot"
+			}, {
+				"position": "RightMiddle",
+				"source": true,
+				"color": "#FF0",
+				"shape": "Dot"
+			}]
+		},
+		//条件分支合并节点
+		"flowchart_tjfzMerge_item": {
+			"className": "flowchart-tjfz-item",
+			"name": "tjfzMerge",
+			"unique": false,
+			"type": "tjfzMerge",
+			"kind": "flowchart",
+			"desc": "",
+			"points": [{
+				"position": "TopCenter",
 				"target": true,
 				"color": "#FF8891",
 				"shape": "Dot"
 			}, {
 				"position": "RightMiddle",
-				"source": true,
-				"target": false,
-				"color": "#FF0",
+				"target": true,
+				"color": "#FF8891",
 				"shape": "Dot"
 			}, {
-				"position": "LeftMiddle",
+				"position": "BottomCenter",
 				"source": true,
-				"target": false,
 				"color": "#FF0",
 				"shape": "Dot"
 			}]

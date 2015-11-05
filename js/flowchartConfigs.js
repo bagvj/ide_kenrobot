@@ -6,22 +6,28 @@ define(function() {
 		//特殊模块：开始、结束
 		//开始
 		"start": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 1,
+			"subType": 1
+		},
+		//loop开始
+		"loopStart": {
+			"type": 1,
+			"subType": 2
+		},
+		//loop结束
+		"loopEnd": {
+			"type": 1,
+			"subType": 3
 		},
 		//结束
 		"end": {
-			"type": 2,
+			"type": 1,
+			"subType": 4
 		},
-
 
 		//流程控制模块：if-else、while、for
 		//条件循环
 		"tjxh": {
-			"head": "TopCenter",
-			"body": "BottomCenter",
-			"foot": "RightMiddle",
 			"type": 3,
 			"subType": 1,
 			"params": [{
@@ -34,18 +40,12 @@ define(function() {
 		},
 		//永远循环
 		"yyxh": {
-			"head": "TopCenter",
-			"body": "BottomCenter",
-			"foot": "RightMiddle",
 			"type": 3,
 			"subType": 1,
 			"format": "for(;;)"
 		},
 		//计数循环
 		"jsxh": {
-			"head": "TopCenter",
-			"body": "BottomCenter",
-			"foot": "RightMiddle",
 			"type": 3,
 			"subType": 1,
 			"params": [{
@@ -64,8 +64,6 @@ define(function() {
 		},
 		//条件分支
 		"tjfz": {
-			"head": "TopCenter",
-			"foot": ["LeftMiddle", "RightMiddle"],
 			"type": 3,
 			"subType": 2,
 			"params": [{
@@ -76,14 +74,17 @@ define(function() {
 			}],
 			"format": "if(condition)"
 		},
+		//条件分支合并节点
+		"tjfzMerge": {
+			"type": 3,
+			"subType": 3
+		},
 
 
 		//硬件模块：LED灯、开关、传感器
 		//输入模块
 		//按键
 		"button": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "port",
@@ -107,8 +108,6 @@ define(function() {
 		},
 		//开关
 		"switch": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "port",
@@ -132,8 +131,6 @@ define(function() {
 		},
 		//行程开关
 		"travelSwitch": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "port",
@@ -157,8 +154,6 @@ define(function() {
 		},
 		//巡线
 		"linePatrol": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "port",
@@ -182,8 +177,6 @@ define(function() {
 		},
 		//火焰D
 		"fireD": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "port",
@@ -207,8 +200,6 @@ define(function() {
 		},
 		//火焰D
 		"fireD": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "port",
@@ -232,8 +223,6 @@ define(function() {
 		},
 		//红外接收
 		"infraredIn": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "port",
@@ -257,8 +246,6 @@ define(function() {
 		},
 		//声音传感
 		"soundSensor": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "port",
@@ -282,8 +269,6 @@ define(function() {
 		},
 		//倾斜
 		"lean": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "port",
@@ -307,8 +292,6 @@ define(function() {
 		},
 		//金属接近
 		"metalClose": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "port",
@@ -332,8 +315,6 @@ define(function() {
 		},
 		//矩阵键盘
 		"keyboard": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"initParams": [{
 				"name": "port",
@@ -348,8 +329,6 @@ define(function() {
 		//输出模块
 		//LED灯
 		"light": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "port",
@@ -374,8 +353,6 @@ define(function() {
 		},
 		//继电器
 		"relay": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "port",
@@ -400,8 +377,6 @@ define(function() {
 		},
 		//蜂鸣器
 		"buzzer": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "port",
@@ -426,8 +401,6 @@ define(function() {
 		},
 		//红外发射
 		"infraredOut": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "port",
@@ -452,8 +425,6 @@ define(function() {
 		},
 		//数码管
 		"digitalTube": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "num",
@@ -475,8 +446,6 @@ define(function() {
 		//执行模块
 		//舵机
 		"streeringEngine": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "index",
@@ -496,8 +465,6 @@ define(function() {
 		},
 		//直流电机
 		"dcMotor": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "index",
@@ -519,8 +486,6 @@ define(function() {
 		//传感模块
 		//光照
 		"illumination": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "bit",
@@ -537,8 +502,6 @@ define(function() {
 		},
 		//温度
 		"temperatue": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "bit",
@@ -555,8 +518,6 @@ define(function() {
 		},
 		//PM2.5
 		"pm25": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "bit",
@@ -573,8 +534,6 @@ define(function() {
 		},
 		//火焰A
 		"fireA": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "bit",
@@ -591,8 +550,6 @@ define(function() {
 		},
 		//AD输入
 		"ad": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "bit",
@@ -611,8 +568,6 @@ define(function() {
 		//其它
 		//串口输入
 		"serialPortIn": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "index",
@@ -650,8 +605,6 @@ define(function() {
 		},
 		//串口输出
 		"serialPortOut": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "index",
@@ -690,8 +643,6 @@ define(function() {
 		},
 		//超声测距
 		"ultrasoundLocation": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "arg",
@@ -723,8 +674,6 @@ define(function() {
 		},
 		//电子罗盘
 		"electronicCompass": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "arg",
@@ -756,8 +705,6 @@ define(function() {
 		},
 		//IIC输入
 		"iicIn": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "arg",
@@ -788,8 +735,6 @@ define(function() {
 		},
 		//IIC输出
 		"iicOut": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 4,
 			"params": [{
 				"name": "arg",
@@ -822,8 +767,6 @@ define(function() {
 		//函数模块：延时、定时
 		//延时函数
 		"yshs": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 5,
 			"params": [{
 				"name": "time",
@@ -835,8 +778,6 @@ define(function() {
 		},
 		//赋值函数
 		"fzhs": {
-			"head": "TopCenter",
-			"foot": "BottomCenter",
 			"type": 5,
 			"params": [{
 				"name": "var",
