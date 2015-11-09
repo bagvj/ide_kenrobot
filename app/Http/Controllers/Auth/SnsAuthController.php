@@ -49,11 +49,9 @@ class SnsAuthController extends Controller
            $user = $this->createUser($data);
         }
 
-        Auth::login($user);
+        Auth::login($user,true);
 
-
-        dd(Auth::user());
-
+        var_dump(Session::all());
 
     }
 
