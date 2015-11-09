@@ -36,15 +36,36 @@ class SnsAuthController extends Controller
      */
     public function getLogin(Request $request)
     {
-        $token = $request->input('token');
-        $data = $this->getUserinfo($token);
-        dd($data);
+        $uid = $request->input('uid');
+
+        $data = $this->getUserinfo();
+            
+        if (!empty($uid)) {
+            $data['uid'] = $uid;
+        }
+
+        $user = $this->getUser($data);
+        if ($user == null) {
+           $user = $this->createUser($data);
+        }
+
+        Auth::login($user);
+
+
+        dd(Auth::user());
 
 
     }
 
     private function getUserinfo($token = '')
     {
+        $name = str_random();
+        return ['name' => $name,
+                'email' => $name.'@qq.com',
+                'password' => $name,
+                'uid'   => rand(1,99999)
+            ];
+
         $url = 'http://localhost:9003/index.php?app=public&mod=Platform&act=userinfo';
         // $url = 'http://www.baidu.com';
         // $url = 'http://localhost:9003/index.php?app=public&mod=Register&act=wxBind';
@@ -59,8 +80,33 @@ class SnsAuthController extends Controller
         //     'token' => $token
         //     ]);
         $data = $curl->get($url);
-        var_dump($curl);
+
         return $data;
     }
+
+
+
+    private function getUser($data = array()){
+
+        $user = User::where('uid',$data['uid'])->first();
+        return $user;
+    }
+
+
+    /**
+     * 创建用户
+     */
+    private function createUser($data = array())
+    {
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['email'].'321'),
+            'uid'   => $data['uid'],
+            'source'   => 'sns'
+        ]);
+    }
+
+
 
 }
