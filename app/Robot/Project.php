@@ -13,6 +13,8 @@ class Project extends Model
      */
     protected $table = 'ken_project';
 
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *

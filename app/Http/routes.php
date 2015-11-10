@@ -25,3 +25,24 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 Route::get('auth/snslogin', 'Auth\SnsAuthController@getLogin');
 
+//GetInitInfo
+Route::get('initinfo','HomeController@initinfo');
+
+//GetFlowChartInfo.php
+Route::get('flowchart/info', 'FlowChartController@info');
+//GetFlowchartItem.php
+Route::get('flowchart/item', 'FlowChartController@item');
+//AddFlowChart.php
+Route::match(['get','post'], 'flowchart/add', 'FlowChartController@create');
+
+
+Route::get('project/list', 'ProjectController@index');
+
+Route::get('project/info', 'ProjectController@info');
+Route::get('project/add', 'ProjectController@create');
+Route::get('project/edit', 'ProjectController@edit');
+
+Route::get('project/del', 'ProjectController@destroy');
+
+Route::get('/component/getmatch', 'ConnectRuleController@getMatchComponent');
+
