@@ -36,7 +36,7 @@ Route::get('flowchart/item', 'FlowChartController@item');
 Route::match(['get','post'], 'flowchart/add', 'FlowChartController@create');
 
 
-Route::get('project/list', 'ProjectController@index');
+Route::match(['get','post'],'project/list', 'ProjectController@index');
 
 Route::get('project/info', 'ProjectController@info');
 Route::get('project/add', 'ProjectController@create');
@@ -44,5 +44,5 @@ Route::get('project/edit', 'ProjectController@edit');
 
 Route::get('project/del', 'ProjectController@destroy');
 
-Route::get('/component/getmatch', 'ConnectRuleController@getMatchComponent');
+Route::match(['get','post'],'/board/match', 'ConnectRuleController@getMatchComponent');
 

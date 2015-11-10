@@ -90,9 +90,18 @@ define(["jquery", "kenrobotDialog", "flowchartInfo"], function($, kenrobotDialog
 	}
 
 	function getProjectList(data, call) {
+		 $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+    	});
+
+
+
 		$.ajax({
 			type: "POST",
-			url: "./GetProjectList.php",
+			// url: "./GetProjectList.php",
+			url: "/project/list",
 			data: data,
 			dataType: "json",
 			async: true, //需同步处理完成后才能进行下一步，故此处用async

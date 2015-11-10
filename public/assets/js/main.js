@@ -64,6 +64,14 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 
 	keninit.init();
 
+			//设置ajax请求的csrftoken
+		$.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+
+
 	// 初始化硬件元件
 	initHardwareElement(fis);
 

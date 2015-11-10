@@ -245,8 +245,8 @@
                     <div class="item"><span>变量说明</span><div class="input" ><input type="text" /></div></div>
                 </div>
                 <div class="operator">
-                    <div class="btn">确定</div>
-                    <div class="btn">取消</div>
+                    <div class="btn" >确定</div>
+                    <div class="btn" >取消</div>
                 </div>
         </div>
      </div>
