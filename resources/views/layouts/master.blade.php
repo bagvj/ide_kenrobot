@@ -30,7 +30,7 @@
          <div class="logo"></div>
          <div class="nav">
            <ul>
-             <li><a href="http://www.kenrobot.com/index.php?app=square&mod=Index&act=index">我的主页</a></li>
+             <li><a href="http://mars.kenrobot.com/index.php?app=public&mod=Index&act=allshow">我的主页</a></li>
              <li><a href="http://platform.kenrobot.com/">开发</a></li>
              <li><a href="http://www.kenrobot.com/index.php?app=square&mod=Index&act=listshow">广场</a></li>
              <!--<li><a href=""课程</li>-->
