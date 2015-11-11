@@ -8,27 +8,14 @@
          <li class="cjxm active" style="display:none">
            <span>STEP 1</span>
            <span>创建项目</span>
-           <div class="triangle-border tb-border1"></div>
-           <div class="triangle-border tb-border"></div>
-           <div class="triangle-border tb-background"></div>
          </li>
          <li class="yjlj active">
            <span>STEP 1</span>
            <span>硬件连接</span>
-           <div class="triangle-border tb-border1"></div>
-           <div class="triangle-border tb-border"></div>
-           <div class="triangle-border tb-background"></div>
          </li>
          <li class="rjbc">
            <span>STEP 2</span>
            <span>软件编程</span>
-           <!-- <div class="triangle-border tb-border1"></div>
-           <div class="triangle-border tb-border"></div>
-           <div class="triangle-border tb-background"></div> -->
-         </li>
-         <li class="fzyz">
-           <span>STEP 3</span>
-           <span>仿真验证</span>
          </li>
        </ul>
        <div id="save_btn" class="btn3 save">保存</div>
@@ -214,43 +201,7 @@
              </div>
            </div>
        </div>
-       <div id="software-var" class="floatDivBaseStyle" style="display:none">
-                <div class="floatDivHeader var-head">添加/更改变量</div>
-                <div class="floatDivBody var-body">
-                    <div class="item"><span>变量名称</span><div class="input" ><input type="text" /></div></div>
-                    <div class="item"><span>变量类型</span><div class="sel" >
-                        <select>
-                            <option>bool</option>
-                            <option>char</option>
-                            <option>int</option>
-                            <option>long</option>
-                            <option>float</option>
-                        </select>
-                        </div></div>
-                    <div class="item"><span>变量种类</span><div class="sel" >
-                        <select>
-                            <option>auto</option>
-                            <option>register</option>
-                            <option>static</option>
-                            <option>volatile</option>
-                        </select>
-                        </div></div>
-                    <div class="item"><span>变量初值</span><div class="input" ><input type="text" /></div></div>
-                    <div class="item"><span>变量作用域</span><div class="sel" >
-                        <select>
-                            <option>local</option>
-                            <option>global</option>
-                        </select>
-                        </div></div>
-                    <div class="item"><span>变量说明</span><div class="input" ><input type="text" /></div></div>
-                </div>
-                <div class="operator">
-                    <div class="btn" >确定</div>
-                    <div class="btn" >取消</div>
-                </div>
-        </div>
-     </div>
-     <!--<div class="mod fzyz_mod"></div>-->     
+     </div>  
    </div>
 
 

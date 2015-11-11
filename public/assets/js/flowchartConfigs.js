@@ -6,48 +6,179 @@ define(function() {
 		//特殊模块：开始、结束
 		//开始
 		"start": {
-			"type": 1,
-			"subType": 1
+			"tag": 1,
+			"subTag": 1,
+			"className": "flowchart-oval-item",
+			"name": "start",
+			"unique": true,
+			"always": true,
+			"type": "start",
+			"kind": "flowchart",
+			"desc": "",
+			"points": [{
+				"position": "BottomCenter",
+				"source": true,
+				"target": false,
+				"color": "#FF0",
+				"shape": "Dot"
+			}]
 		},
 		//loop开始
 		"loopStart": {
-			"type": 1,
-			"subType": 2
+			"tag": 1,
+			"subTag": 2,
+			"className": "flowchart-oval-item",
+			"name": "loopStart",
+			"unique": true,
+			"always": true,
+			"type": "loopStart",
+			"kind": "flowchart",
+			"desc": "",
+			"points": [{
+				"position": "TopCenter",
+				"target": true,
+				"color": "#FF8891",
+				"shape": "Dot"
+			}, {
+				"position": "BottomCenter",
+				"source": true,
+				"color": "#FF0",
+				"shape": "Dot"
+			}, {
+				"position": "LeftMiddle",
+				"color": "#CCC",
+				"shape": "Dot"
+			}]
 		},
 		//loop结束
 		"loopEnd": {
-			"type": 1,
-			"subType": 3
+			"tag": 1,
+			"subTag": 3,
+			"className": "flowchart-oval-item",
+			"name": "loopEnd",
+			"unique": true,
+			"always": true,
+			"type": "loopEnd",
+			"kind": "flowchart",
+			"desc": "",
+			"points": [{
+				"position": "TopCenter",
+				"target": true,
+				"color": "#FF8891",
+				"shape": "Dot"
+			},{
+				"position": "BottomCenter",
+				"color": "#CCC",
+				"shape": "Dot"
+			}, {
+				"position": "LeftMiddle",
+				"color": "#CCC",
+				"shape": "Dot"
+			}]
 		},
 		//结束
 		"end": {
-			"type": 1,
-			"subType": 4
+			"tag": 1,
+			"subTag": 4,
+			"className": "flowchart-oval-item",
+			"name": "end",
+			"unique": false,
+			"always": true,
+			"type": "end",
+			"kind": "flowchart",
+			"desc": "",
+			"points": [{
+				"position": "TopCenter",
+				"color": "#CCC",
+				"shape": "Dot"
+			}]
 		},
 
 		//流程控制模块：if-else、while、for
 		//条件循环
 		"tjxh": {
-			"type": 2,
-			"subType": 1,
+			"tag": 2,
+			"subTag": 1,
 			"params": [{
 				"name": "condition",
 				"title": "循环条件",
 				"inputType": "text",
 				"defaultValue": "Condition",
 			}],
-			"format": "while(condition)"
+			"format": "while(condition)",
+			"className": "flowchart-tjxh-item",
+			"name": "tjxh",
+			"unique": false,
+			"type": "loop",
+			"kind": "flowchart",
+			"desc": "",
+			"points": [{
+				"position": "TopCenter",
+				"source": false,
+				"target": true,
+				"color": "#FF8891",
+				"shape": "Dot"
+			}, {
+				"position": "BottomCenter",
+				"source": true,
+				"target": false,
+				"color": "#FF0",
+				"shape": "Dot"
+			}, {
+				"position": "RightMiddle",
+				"source": true,
+				"target": false,
+				"color": "#FF0",
+				"shape": "Dot"
+			}, {
+				"position": "LeftMiddle",
+				"source": false,
+				"target": true,
+				"color": "#FF8891",
+				"shape": "Dot"
+			}]
 		},
 		//永远循环
 		"yyxh": {
-			"type": 2,
-			"subType": 1,
-			"format": "for(;;)"
+			"tag": 2,
+			"subTag": 1,
+			"format": "for(;;)",
+			"className": "flowchart-yyxh-item",
+			"name": "yyxh",
+			"unique": false,
+			"type": "loop",
+			"kind": "flowchart",
+			"desc": "",
+			"points": [{
+				"position": "TopCenter",
+				"source": false,
+				"target": true,
+				"color": "#FF8891",
+				"shape": "Dot"
+			}, {
+				"position": "BottomCenter",
+				"source": true,
+				"target": false,
+				"color": "#FF0",
+				"shape": "Dot"
+			}, {
+				"position": "RightMiddle",
+				"source": true,
+				"target": false,
+				"color": "#FF0",
+				"shape": "Dot"
+			}, {
+				"position": "LeftMiddle",
+				"source": false,
+				"target": true,
+				"color": "#FF8891",
+				"shape": "Dot"
+			}]
 		},
 		//计数循环
 		"jsxh": {
-			"type": 2,
-			"subType": 1,
+			"tag": 2,
+			"subTag": 1,
 			"params": [{
 				"name": "index",
 				"title": "循环变量",
@@ -60,30 +191,106 @@ define(function() {
 				"inputHolder": "数字或者变量",
 				"defaultValue": "5",
 			}],
-			"format": "for(int index = 0; index < count; index++)"
+			"format": "for(int index = 0; index < count; index++)",
+			"className": "flowchart-jsxh-item",
+			"name": "jsxh",
+			"unique": false,
+			"type": "loop",
+			"kind": "flowchart",
+			"desc": "",
+			"points": [{
+				"position": "TopCenter",
+				"source": false,
+				"target": true,
+				"color": "#FF8891",
+				"shape": "Dot"
+			}, {
+				"position": "BottomCenter",
+				"source": true,
+				"target": false,
+				"color": "#FF0",
+				"shape": "Dot"
+			}, {
+				"position": "RightMiddle",
+				"source": true,
+				"target": false,
+				"color": "#FF0",
+				"shape": "Dot"
+			}, {
+				"position": "LeftMiddle",
+				"source": false,
+				"target": true,
+				"color": "#FF8891",
+				"shape": "Dot"
+			}]
 		},
 		//条件分支
 		"tjfz": {
-			"type": 2,
-			"subType": 2,
+			"tag": 2,
+			"subTag": 2,
 			"params": [{
 				"name": "condition",
 				"title": "分支条件",
 				"inputType": "text",
 				"defaultValue": "Condition",
 			}],
-			"format": "if(condition)"
+			"format": "if(condition)",
+			"className": "flowchart-tjfz-item",
+			"name": "tjfz",
+			"unique": false,
+			"type": "if",
+			"kind": "flowchart",
+			"desc": "",
+			"points": [{
+				"position": "TopCenter",
+				"target": true,
+				"color": "#FF8891",
+				"shape": "Dot"
+			}, {
+				"position": "BottomCenter",
+				"source": true,
+				"color": "#FF0",
+				"shape": "Dot"
+			}, {
+				"position": "RightMiddle",
+				"source": true,
+				"color": "#FF0",
+				"shape": "Dot"
+			}]
 		},
 		//条件分支合并节点
 		"tjfzMerge": {
-			"type": 2,
+			"tag": 2,
+			"subTag": 3,
+			"className": "flowchart-tjfz-item",
+			"name": "tjfzMerge",
+			"unique": false,
+			"type": "tjfzMerge",
+			"kind": "flowchart",
+			"desc": "",
+			"points": [{
+				"position": "TopCenter",
+				"target": true,
+				"color": "#FF8891",
+				"shape": "Dot"
+			}, {
+				"position": "RightMiddle",
+				"target": true,
+				"color": "#FF8891",
+				"shape": "Dot"
+			}, {
+				"position": "BottomCenter",
+				"source": true,
+				"color": "#FF0",
+				"shape": "Dot"
+			}]
 		},
 
 		//硬件模块：LED灯、开关、传感器
 		//输入模块
 		//按键
 		"button": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -106,7 +313,7 @@ define(function() {
 		},
 		//开关
 		"switch": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -129,7 +336,7 @@ define(function() {
 		},
 		//行程开关
 		"travelSwitch": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -152,7 +359,7 @@ define(function() {
 		},
 		//巡线
 		"linePatrol": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -175,7 +382,7 @@ define(function() {
 		},
 		//火焰D
 		"fireD": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -198,7 +405,7 @@ define(function() {
 		},
 		//火焰D
 		"fireD": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -221,7 +428,7 @@ define(function() {
 		},
 		//红外接收
 		"infraredIn": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -244,7 +451,7 @@ define(function() {
 		},
 		//声音传感
 		"soundSensor": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -267,7 +474,7 @@ define(function() {
 		},
 		//倾斜
 		"lean": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -290,7 +497,7 @@ define(function() {
 		},
 		//金属接近
 		"metalClose": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -313,7 +520,7 @@ define(function() {
 		},
 		//矩阵键盘
 		"keyboard": {
-			"type": 3,
+			"tag": 3,
 			"initParams": [{
 				"name": "port",
 				"title": "端口",
@@ -327,7 +534,7 @@ define(function() {
 		//输出模块
 		//LED灯
 		"light": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -351,7 +558,7 @@ define(function() {
 		},
 		//继电器
 		"relay": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -375,7 +582,7 @@ define(function() {
 		},
 		//蜂鸣器
 		"buzzer": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -399,7 +606,7 @@ define(function() {
 		},
 		//红外发射
 		"infraredOut": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "port",
 				"title": "端口",
@@ -423,7 +630,7 @@ define(function() {
 		},
 		//数码管
 		"digitalTube": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "num",
 				"title": "显示数值",
@@ -444,7 +651,7 @@ define(function() {
 		//执行模块
 		//舵机
 		"streeringEngine": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "index",
 				"title": "编号",
@@ -463,7 +670,7 @@ define(function() {
 		},
 		//直流电机
 		"dcMotor": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "index",
 				"title": "编号",
@@ -484,7 +691,7 @@ define(function() {
 		//传感模块
 		//光照
 		"illumination": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "bit",
 				"title": "位号",
@@ -500,7 +707,23 @@ define(function() {
 		},
 		//温度
 		"temperatue": {
-			"type": 3,
+			"tag": 3,
+			"params": [{
+				"name": "bit",
+				"title": "位号",
+				"inputType": "text",
+				"defaultValue": "Bit",
+			}, {
+				"name": "value",
+				"title": "读取到变量",
+				"inputType": "text",
+				"defaultValue": "Tem",
+			}],
+			"format": "value = read_adc(bit);"
+		},
+		//湿度
+		"humidity": {
+			"tag": 3,
 			"params": [{
 				"name": "bit",
 				"title": "位号",
@@ -516,7 +739,7 @@ define(function() {
 		},
 		//PM2.5
 		"pm25": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "bit",
 				"title": "位号",
@@ -532,7 +755,7 @@ define(function() {
 		},
 		//火焰A
 		"fireA": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "bit",
 				"title": "位号",
@@ -548,7 +771,7 @@ define(function() {
 		},
 		//AD输入
 		"ad": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "bit",
 				"title": "位号",
@@ -566,7 +789,7 @@ define(function() {
 		//其它
 		//串口输入
 		"serialPortIn": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "index",
 				"title": "串口号",
@@ -603,7 +826,7 @@ define(function() {
 		},
 		//串口输出
 		"serialPortOut": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "index",
 				"title": "串口号",
@@ -641,7 +864,7 @@ define(function() {
 		},
 		//超声测距
 		"ultrasoundLocation": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "arg",
 				"title": "参数",
@@ -672,7 +895,7 @@ define(function() {
 		},
 		//电子罗盘
 		"electronicCompass": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "arg",
 				"title": "参数",
@@ -703,7 +926,7 @@ define(function() {
 		},
 		//IIC输入
 		"iicIn": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "arg",
 				"title": "参数",
@@ -733,7 +956,7 @@ define(function() {
 		},
 		//IIC输出
 		"iicOut": {
-			"type": 3,
+			"tag": 3,
 			"params": [{
 				"name": "arg",
 				"title": "参数",
@@ -765,7 +988,7 @@ define(function() {
 		//函数模块：延时、定时
 		//延时函数
 		"yshs": {
-			"type": 4,
+			"tag": 4,
 			"params": [{
 				"name": "time",
 				"title": "延时(毫秒)",
@@ -773,10 +996,29 @@ define(function() {
 				"defaultValue": "1000",
 			}],
 			"format": "delay_ms(time);",
+			"className": "flowchart-yshs-item",
+			"name": "yshs",
+			"unique": false,
+			"type": "op",
+			"kind": "flowchart",
+			"desc": "",
+			"points": [{
+				"position": "TopCenter",
+				"source": false,
+				"target": true,
+				"color": "#FF8891",
+				"shape": "Dot"
+			}, {
+				"position": "BottomCenter",
+				"source": true,
+				"target": false,
+				"color": "#FF0",
+				"shape": "Dot"
+			}, ]
 		},
 		//赋值函数
 		"fzhs": {
-			"type": 4,
+			"tag": 4,
 			"params": [{
 				"name": "var",
 				"title": "变量",
@@ -789,6 +1031,25 @@ define(function() {
 				"defaultValue": "Exp",
 			}],
 			"format": "var = exp;",
+			"className": "flowchart-fzhs-item",
+			"name": "fzhs",
+			"unique": false,
+			"type": "op",
+			"kind": "flowchart",
+			"desc": "",
+			"points": [{
+				"position": "TopCenter",
+				"source": false,
+				"target": true,
+				"color": "#FF8891",
+				"shape": "Dot"
+			}, {
+				"position": "BottomCenter",
+				"source": true,
+				"target": false,
+				"color": "#FF0",
+				"shape": "Dot"
+			}, ]
 		}
 	}
 

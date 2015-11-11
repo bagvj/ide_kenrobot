@@ -135,8 +135,8 @@ define(["jquery"], function($) {
 
 		var nodeName = targetId.split("_")[1];
 		var nodeConfig = configs[nodeName];
-		var nodeType = nodeConfig.type;
-		var subType = nodeConfig.subType;
+		var nodeTag = nodeConfig.tag;
+		var subTag = nodeConfig.subTag;
 
 		if (nodeConfig === undefined) {
 			//找不到节点配置
@@ -151,17 +151,17 @@ define(["jquery"], function($) {
 			return str;
 		}
 
-		if (nodeType == 1) {
+		if (nodeTag == 1) {
 			str += visitNode(targetId.replace("TopCenter", "BottomCenter"), endNodeId, index);
-		} else if (nodeType == 2) {
-			if (subType == 1) {
+		} else if (nodeTag == 2) {
+			if (subTag == 1) {
 				//循环
 				str += genIndent(index) + getFormatExp(nodeConfig, nodeInfo, false) + "{\n";
 				var innerCode = visitNode(targetId.replace("TopCenter", "BottomCenter"), targetId.replace("TopCenter", "LeftMiddle"), index + 1);
 				str += innerCode == "" ? "\n" : innerCode;
 				str += genIndent(index) + "}\n";
 				str += visitNode(targetId.replace("TopCenter", "RightMiddle"), endNodeId, index);
-			} else if (subType == 2) {
+			} else if (subTag == 2) {
 				//条件分支
 				var mergeId = targetId.substring(0, targetId.lastIndexOf("_")).replace("tjfz", "tjfzMerge");
 				str += genIndent(index) + getFormatExp(nodeConfig, nodeInfo, false) + "{\n";
@@ -172,10 +172,12 @@ define(["jquery"], function($) {
 				str += noCode == "" ? "\n" : noCode;
 				str += genIndent(index) + "}\n";
 				str += visitNode(mergeId + "_BottomCenter", endNodeId, index);
+			} else if(subTag == 3) {
+				//do nothing
 			} else {
-				console.log("unknow node sub type: " + subType);
+				console.log("unknow node sub type: " + subTag);
 			}
-		} else if (nodeType == 3 || nodeType == 4) {
+		} else if (nodeTag == 3 || nodeTag == 4) {
 			//硬件节点或者函数节点
 			var initCode = getFormatExp(nodeConfig, nodeInfo, true);
 			if (initCode && initCode != "") {
@@ -184,7 +186,7 @@ define(["jquery"], function($) {
 			str += genIndent(index) + getFormatExp(nodeConfig, nodeInfo, false) + "\n";
 			str += visitNode(targetId.replace("TopCenter", "BottomCenter"), endNodeId, index);
 		} else {
-			console.log("unknow node type: " + nodeType);
+			console.log("unknow node type: " + nodeTag);
 		}
 
 		return str;

@@ -199,8 +199,14 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 	}
 
 	// 删除流程元素
-	function deleteNode(node) {
-		var objSet = fis[$(node).attr("data-item")];
+	function deleteNode(node, from) {
+		var nodeName = $(node).attr("data-item");
+		var nodeType = getNodeInfoByKey(nodeName, "type");
+		if(nodeType == "tjfzMerge" && (from === undefined || from != "tjfz")){
+			alert("请删除条件分支！");
+			return false;
+		}
+		var objSet = fis[nodeName];
 		if (objSet['always'] !== undefined && objSet['always'] == true) {
 			alert("不可删除元素！");
 			return false;
@@ -227,12 +233,15 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 		});
 		if (childrenEndpoints.length > 1) {
 			for (var i = 0; i < childrenEndpoints.length - 1; i++) {
-				if (childrenEndpoints[i].getUuid() != childrenEndpoints[i + 1].getUuid()) {
+				var onePoint = childrenEndpoints[i];
+				var otherPoint = childrenEndpoints[i + 1];
+				if (onePoint.getUuid() != otherPoint.getUuid() && onePoint.elementId != otherPoint.elementId) {
 					alert("存在分支处理，无法删除！");
 					return false;
 				}
 			}
 		}
+		var nodeId = $(node).attr('id');
 		jsPlumb_instance.remove(node);
 
 		for (var i = 0; i < jsPlumb_nodes.length; i++) {
@@ -248,6 +257,12 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 				label: o.label
 			});
 		});
+
+		if(nodeType == "if"){
+			var mergeNodeId = nodeId.replace("tjfz", "tjfzMerge");
+			var mergeNode = jsPlumb.getSelector("#" + mergeNodeId)[0];
+			deleteNode(mergeNode, "tjfz");
+		}
 	}
 
 	/**
@@ -511,8 +526,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 			if (initSourceEndpoint != null && initTargetEndpoint != null) {
 				connectPortsBySt(initSourceEndpoint, initTargetEndpoint);
 			}
-		} else if (nodeType == "tjfz") {
-			var a = 0;
 		}
 	}
 

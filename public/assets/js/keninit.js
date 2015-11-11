@@ -32,15 +32,12 @@ define(['jquery', 'kenrobotDialog', 'eventcenter'], function($, kenrobotDialog, 
 			eventcenter.trigger('flowchart', 'mousedown', e);
 		});
 
-	
-
 		initIndexInfo();
 	}
 
 	function initIndexInfo() {
 		$.ajax({
 			type: "GET",
-			// url: "./GetInitInfo.php",
 			url: "/initinfo",
 			data: "",
 			dataType: "json",

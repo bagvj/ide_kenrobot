@@ -100,7 +100,6 @@ define(["jquery", "kenrobotDialog", "flowchartInfo"], function($, kenrobotDialog
 
 		$.ajax({
 			type: "POST",
-			// url: "./GetProjectList.php",
 			url: "/project/list",
 			data: data,
 			dataType: "json",
@@ -160,7 +159,6 @@ define(["jquery", "kenrobotDialog", "flowchartInfo"], function($, kenrobotDialog
 		var li_str = "";
 		for (var i = 0; i < data.list.length; i++) {
 			li_str += '<li>'
-				//li_str += '<img src="http://kr.zhiyicx.com/data/upload/2015/0719/21/55aba5ed37c01.png" style="width:115px;height:115px;">'
 			li_str += '<span>' + data.list[i].name + '</span>'
 			li_str += '<div class="operator">'
 			li_str += '<div class="btn load" name="' + data.list[i].name + '" value=' + data.list[i].id + '>加载</div>'

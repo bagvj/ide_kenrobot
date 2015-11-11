@@ -109,7 +109,7 @@ body{
 	float:left;
     position: absolute;
   top: 65px;
-  bottom: 41px;
+  bottom: 0px;
 }
 .main .nav-first ul{
     margin: 0;
@@ -354,7 +354,7 @@ body{
 .main .mod{
     left: 96px;
     right: 0px;
-    bottom:41px;
+    bottom: 8px;
     top:65px;
     position: absolute;
 	  float:left;
@@ -443,7 +443,7 @@ body{
 .side{
   width:180px;
   height:100%;
-  margin-top:10px;
+  margin-top:8px;
   background-color:#fff;
   clear: right;
   float:right;

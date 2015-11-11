@@ -104,7 +104,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 
 	// 初始化流程图连接板事件
 	eventcenter.bind('flowchart', 'init_container', function() {
-		initCodeInputArea();
+		// initCodeInputArea();
 		reset_arrHardware();
 		var flowchartKind = "flowchart";
 		if (arrHardware.length > 0) {

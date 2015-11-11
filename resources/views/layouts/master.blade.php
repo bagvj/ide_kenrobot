@@ -47,9 +47,5 @@
      </div>
    </div>
    @yield('main')
-
-   <div class="foot">
-     <span>©2015 kenrobot.com 京ICP证030173号 </span>
-   </div>
  </body>
 </html>

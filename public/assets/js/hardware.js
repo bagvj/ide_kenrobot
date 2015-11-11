@@ -888,7 +888,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 
 		$.ajax({
 			type: "POST",
-			// url: "./GetMatchControllers.php",
 			url: "/board/match",
 			data: {
 				name: name
