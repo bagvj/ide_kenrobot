@@ -12,6 +12,8 @@
 */
 
 Route::get('/', 'HomeController@index');
+Route::post('/build', 'HomeController@build');
+Route::get('/download', 'HomeController@download');
 
 
 // 登录验证

@@ -353,9 +353,14 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 		var projectName = "Rosys";
 		var buildType = "Rosys";
 
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
 		$.ajax({
 			type: "POST",
-			url: "./build.php",
+			url: "./build",
 			data: {
 				source: bytes,
 				projectName: projectName,
