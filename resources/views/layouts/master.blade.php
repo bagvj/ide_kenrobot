@@ -27,7 +27,7 @@
 
    <div class="header">
      <div class="content">
-         <div><a href="http://www.kenrobot.com/index.php?app=square&mod=Index&act=index" class="logo"></a></div>
+         <span><a href="http://www.kenrobot.com/index.php?app=square&mod=Index&act=index" class="logo"></a></span>
          <div class="nav">
            <ul>
              <li><a href="http://www.kenrobot.com/index.php?app=public&mod=Index&act=allshow">我的主页</a></li>

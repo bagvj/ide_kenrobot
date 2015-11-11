@@ -19,8 +19,8 @@ body{
    height: 43px;
    float: left;
    margin-top: 8px;
-   background:url('../img/logo.png') no-repeat center;
-   background-size: contain;
+   background:url('../img/logo.png') no-repeat;
+   background-size: 100%;
 }
 
 .header .robot {
@@ -58,6 +58,10 @@ body{
 .header .nav ul li:hover {
   color: #eeeeee;
   background:#62a82c;
+}
+.header .nav ul li a {
+  font-size: 14px;
+  letter-spacing: 5px;
 }
 .header .nav ul li:last-child{
   border-right: 0px;
