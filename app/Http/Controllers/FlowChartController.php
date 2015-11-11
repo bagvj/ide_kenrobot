@@ -83,6 +83,7 @@ class FlowChartController extends Controller
         //获取规则信息
 
         $ruleData = DB::table('ken_rule')
+                            ->where('is_delete',0)
                             ->orderBy('category')
                             ->groupBy('name_en')
                             ->get();
