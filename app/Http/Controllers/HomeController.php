@@ -80,6 +80,14 @@ class HomeController extends Controller
                 echo fread($file, $buffer);
             }            
             fclose($file);
+            
+            // $headers = array();
+            // $headers['Content-type'] = "application/octet-stream";
+            // $headers['Accept-Ranges'] = "bytes";
+            // $headers['Accept-Length'] = filesize($filename);
+            // $headers['Content-Disposition'] = "attachment; filename=".basename($filename);
+
+            // return response()->download($filename, basename($filename), $headers);
         } else {
             echo "<script>alert('对不起，您要下载的文件不存在！');</script>";
         }
@@ -139,7 +147,8 @@ class HomeController extends Controller
         }
         $result['code'] = $code;
 
-        echo json_encode($result, true);
+        // echo json_encode($result, true);
+        return collect($result)->toJson();
     }
 
     private function fromCharCode($codes) {
