@@ -407,7 +407,7 @@ body{
   border-bottom: 0px;
 }
 
-/*.main .nav-second ul li .triangle{
+.main .nav-second ul li .triangle{
   width: 45px;
   height: 45px;
   float:right;
@@ -415,7 +415,7 @@ body{
 }
 .main .nav-second ul li.active .triangle{
   background:url('../img/down.png') no-repeat center;
-}*/
+}
 
 .main .nav-second ul li ul{
   background-color:#fff;
