@@ -29,8 +29,8 @@ class ConnectRuleController extends Controller
             for ($i=0; $i < intval($connectRuleData->bits); $i++) { 
                 $needle.='1';
             }
-            $link = $connectRuleData->link;
 
+            $link = $connectRuleData->link;
 
             $port_bit_1=$componentData['port_bit_1'];
             $port_position_1=$componentData['port_position_1'];
