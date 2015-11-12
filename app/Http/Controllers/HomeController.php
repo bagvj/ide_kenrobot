@@ -32,7 +32,8 @@ class HomeController extends Controller
         if ($user !== null) {
             return [
                 'uid' => $user->id,
-                'uname' => $user->name
+                'uname' => $user->name,
+                'avatar_url' => $user->avatar_url,
             ];
         }
         return [
