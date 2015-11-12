@@ -1,5 +1,7 @@
+@extends('layouts.master')
 <!-- resources/views/auth/register.blade.php -->
 
+@section('main')
 <form method="POST" action="/auth/register">
     {!! csrf_field() !!}
 
@@ -27,4 +29,5 @@
         <button type="submit">注册</button>
     </div>
 </form>
+@stop
 
