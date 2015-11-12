@@ -406,6 +406,10 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 		var loopEndNode = initNode(loopEndNodeParam);
 		var loopEndEndPoints = jsPlumb_instance.getEndpoints($(loopEndNode));
 		connectPortsBySt(loopStartEndPoints[1], loopEndEndPoints[0]);
+
+		var connector = ["Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }];
+		loopEndEndPoints[2].connector = connector;
+		loopStartEndPoints[2].connector = connector;
 		connectPortsBySt(loopEndEndPoints[2], loopStartEndPoints[2]);
 
 		//结束
@@ -431,7 +435,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 			return false;
 		}
 		addPorts(node);
-		jsPlumb_instance.draggable($(node));
+		jsPlumb_instance.draggable($(node),  {grid: [5, 5]});
 
 		//根据元素类型初始化连接
 		addConnection(node);
@@ -575,7 +579,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 			var endPoint = jsPlumb_instance.addEndpoint(node, {
 				uuid: tmpUuid,
 				paintStyle: {
-					radius: 3,
+					radius: 5,
 					fillStyle: arrAnchor[i].color
 				},
 				anchor: arrAnchor[i].position,
@@ -644,10 +648,11 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 		var color = "#E8C870";
 		jsPlumb_instance = jsPlumb.getInstance({
 			Connector: ["Flowchart", {
-				gap: 3,
-				curviness: 50,
-				midpoint: 1,
+				gap: 10,
+				// curviness: 50,
+				// midpoint: 1,
 				stub: 20,
+				cornerRadius: 5,
 				alwaysRespectStubs: true
 			}],
 			DragOptions: {
@@ -672,14 +677,14 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 				["Arrow", {
 					width: 10,
 					length: 10,
-					location: -5
+					location: 1
 				}]
 			],
 			Container: jsPlumb_container,
-			connectorStyle: {
-				outlineWidth: 2,
-				outlineColor: "WHITE"
-			}
+			// connectorStyle: {
+			// 	outlineWidth: 2,
+			// 	outlineColor: "WHITE"
+			// }
 		});
 		jsPlumb_instance.bind("dblclick", function(conn, e) {
 			// jsPlumb_instance.detach(conn);
@@ -711,7 +716,12 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 		if (e.target.closest("div").className.indexOf('_jsPlumb') < 0 || e.target.closest("div").className.indexOf(jsPlumb_container + '-item') < 0) {
 			return false;
 		}
+		var targetNodeType = $(e.target).attr('data-item');
+		if(targetNodeType == "flowchart_loopEnd_item" || targetNodeType == "flowchart_end_item"){
+			return false;
+		}
 		e.preventDefault();
+		
 		//生成流程图元素的样式、位置
 		var flowchart_obj_param = {};
 		var objId = "";
@@ -726,19 +736,21 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 			startOffsetX = data_transfer['offsetX'];
 			startOffsetY = data_transfer['offsetY'];
 		}
+
 		var x = e.originalEvent.offsetX - startOffsetX;
 		var y = e.originalEvent.offsetY - startOffsetY;
 		flowchart_obj_param['x'] = '' + x + 'px';
 		flowchart_obj_param['y'] = '' + y + 'px';
 
+		var nodeType = $("#" + objId).attr('data-item');
 		flowchart_obj_param['id'] = objId + "_" + (new Date().getTime());
-		flowchart_obj_param['data-item'] = $("#" + objId).attr('data-item');
+		flowchart_obj_param['data-item'] = nodeType;
 		flowchart_obj_param['text'] = $("#" + objId).text();
 		if (flowchart_obj_param['text'].length == 0) {
 			flowchart_obj_param['text'] = $("#" + objId).parent().text();
 		}
 
-		if (flowchart_obj_param['data-item'] == "flowchart_tjfz_item") {
+		if (nodeType== "flowchart_tjfz_item") {
 			var mergeNodeParam = {};
 			mergeNodeParam['id'] = "flowchart_tjfzMerge_" + (new Date().getTime());
 			mergeNodeParam['x'] = flowchart_obj_param['x'];
