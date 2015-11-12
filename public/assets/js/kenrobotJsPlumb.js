@@ -406,6 +406,10 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 		var loopEndNode = initNode(loopEndNodeParam);
 		var loopEndEndPoints = jsPlumb_instance.getEndpoints($(loopEndNode));
 		connectPortsBySt(loopStartEndPoints[1], loopEndEndPoints[0]);
+
+		var connector = ["Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }];
+		loopEndEndPoints[2].connector = connector;
+		loopStartEndPoints[2].connector = connector;
 		connectPortsBySt(loopEndEndPoints[2], loopStartEndPoints[2]);
 
 		//结束
