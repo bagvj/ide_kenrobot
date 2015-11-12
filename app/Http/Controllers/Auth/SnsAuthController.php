@@ -28,13 +28,16 @@ class SnsAuthController extends Controller
         $this->loginPath = '/auth/snslogin';        
     }
 
+ 
+
+
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getLogin(Request $request)
+    public function snsLogin(Request $request)
     {
         $uid = $request->input('uid');
         $token = $request->input('token');
@@ -42,20 +45,22 @@ class SnsAuthController extends Controller
         
 
         $data = $this->getUserinfo($token);
-
-        dd($data);
-        
-        return $data;         
-        if (!empty($uid)) {
-            $data['uid'] = $uid;
+        if ($data == null) {
+            return redirect('/');//跳转根目录
         }
 
-        $user = $this->getUser($data);
+
+        $userInfo = array_only($data,['uid','uname','email']);
+        $userInfo['name'] = $userInfo['uname'];
+        unset($userInfo['uname']);
+
+        $user = $this->getUser($userInfo);
         if ($user == null) {
-           $user = $this->createUser($data);
+           $user = $this->createUser($userInfo);
         }
-
         Auth::login($user,true);
+        return redirect('/');
+
     }
 
     /**
@@ -79,12 +84,9 @@ class SnsAuthController extends Controller
             'email' => $email,
             'password' => $password
             ]);
-        if ($data == 'fail') {
-            return false;
-        }else{
+       
             $userData = json_decode($data,true);
             return $userData;
-        }
     }
 
 
