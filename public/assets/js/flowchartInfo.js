@@ -16,7 +16,8 @@ define(["jquery"], function($) {
 	function addFlowchart(data) {
 		$.ajax({
 			type: "POST",
-			url: "./AddFlowchartInfo.php",
+			// url: "./AddFlowchartInfo.php",
+			url: "flowchart/add",
 			data: data,
 			dataType: "json",
 			async: true, //需同步处理完成后才能进行下一步，故此处用async

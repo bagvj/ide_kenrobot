@@ -46,7 +46,8 @@ define(["jquery", "kenrobotDialog", "flowchartInfo"], function($, kenrobotDialog
 	function addProject(data, call, arg) {
 		$.ajax({
 			type: "POST",
-			url: "./AddProjectInfo.php",
+			// url: "./AddProjectInfo.php",
+			url: "/project/add",
 			data: data,
 			dataType: "json",
 			async: true, //需同步处理完成后才能进行下一步，故此处用async
@@ -63,7 +64,8 @@ define(["jquery", "kenrobotDialog", "flowchartInfo"], function($, kenrobotDialog
 		console.log(data)
 		$.ajax({
 			type: "POST",
-			url: "./EditProjectInfo.php",
+			// url: "./EditProjectInfo.php",
+			url: "/project/edit",
 			data: data,
 			dataType: "json",
 			async: true, //需同步处理完成后才能进行下一步，故此处用async
@@ -76,7 +78,8 @@ define(["jquery", "kenrobotDialog", "flowchartInfo"], function($, kenrobotDialog
 	function deleteProject(data, call) {
 		$.ajax({
 			type: "POST",
-			url: "./DeleteProjectInfo.php",
+			// url: "./DeleteProjectInfo.php",
+			url: "/project/del",
 			data: data,
 			dataType: "json",
 			async: true, //需同步处理完成后才能进行下一步，故此处用async
@@ -90,11 +93,11 @@ define(["jquery", "kenrobotDialog", "flowchartInfo"], function($, kenrobotDialog
 	}
 
 	function getProjectList(data, call) {
-		 $.ajaxSetup({
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-    	});
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
 
 
 
@@ -113,7 +116,8 @@ define(["jquery", "kenrobotDialog", "flowchartInfo"], function($, kenrobotDialog
 	function getProjectInfo(data, call) {
 		$.ajax({
 			type: "POST",
-			url: "./GetProjectInfo.php",
+			// url: "./GetProjectInfo.php",
+			url:"project/info",
 			data: data,
 			dataType: "json",
 			async: true, //需同步处理完成后才能进行下一步，故此处用async
