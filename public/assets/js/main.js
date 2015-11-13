@@ -578,18 +578,4 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 
 		return topLiObj;
 	}
-
-	/*$(".flowchart_input_text").on("change",function(e){
-		kenrobotJsPlumb.setSelectedNodeInfo($(this).val());
-		$(this).val("");
-	});*/
-	function initCodeInputArea() {
-		var topSide = $('.rjbc_mod .side .code-side');
-		var topHeight = topSide.height();
-		var barHeight = $('div.bar', topSide).height();
-
-		var maxInputArearHeight = topHeight - barHeight;
-		$('#c_code_input', topSide).height(maxInputArearHeight);
-		$('#c_code_input', topSide).width(topSide.width() - 5);
-	}
 });

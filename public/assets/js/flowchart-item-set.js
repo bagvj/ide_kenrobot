@@ -620,9 +620,7 @@ define(["jquery"], function($) {
 	}
 
 	function getResult() {
-		// console.log(data);
 		getControllerItems();
-		// console.log(data);
 		return data;
 	}
 
