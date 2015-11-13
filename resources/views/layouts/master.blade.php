@@ -31,24 +31,26 @@
          <div class="nav">
            <ul>
              <li><a href="http://www.kenrobot.com/index.php?app=public&mod=Index&act=allshow">我的主页</a></li>
-             <li><a href="http://platform.kenrobot.com/">开发</a></li>
+             <li><a href="http://platform.kenrobot.com/" class="on">开发</a></li>
              <li><a href="http://www.kenrobot.com/index.php?app=square&mod=Index&act=listshow">广场</a></li>
-             <!--<li><a href=""课程</li>-->
              <li><a href="http://www.kenrobot.com/index.php?app=shop">商城</a></li>
            </ul>
          </div>
-         @if( null !== $user && null !== $user->avatar_url )
-            <div class="photo" style="background-image:url(' {{ $user->avatar_url }}')"></div>
-         @else
-            <div class="photo" ></div>
-
-         @endif
-         <!--<div class="triangle"></div>-->
-         <div class="welcome">
-           <span id="platform_name">
-             {{ issset($user->name) ? $user->name : '未登录' }}
-           </span>
-         </div>
+        <div class="person-wrap">
+          <div class="person">
+            <a href="#" class="photo"><img src="{{ asset('assets/img/photo.png') }}" /></a>
+            <i class="iconfont icon-dot">&#xe600;</i>
+            <span class="welcome">
+              欢迎你，{{ $user->name or '小萝卜'}}
+            </span>
+        </div>
+        </div>
+        <div class="search">
+          <form method="post" action="#">
+            <input class="search_input" id="search_input" type="text" placeholder="搜索" autocomplete="off" name="search_input"></input>
+            <i class="iconfont icon-search">&#xe665;</i>
+          </form>
+        </div>
      </div>
    </div>
    @yield('main')

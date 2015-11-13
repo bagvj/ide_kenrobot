@@ -412,6 +412,16 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 		alert($("#c_code_input").html());
 	});
 
+	$('#search_input').focus(function(){
+		$('.search').animate({width: 180}, 200);
+	}).blur(function(){
+		if($(this).val() !== ''){
+			return false;
+		}
+		
+		$('.search').animate({width: 110}, 200);
+	});
+
 	//保存硬件到本地内存
 	function save_hardware() {
 		if (!projectInfo) {
