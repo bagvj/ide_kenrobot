@@ -41,8 +41,8 @@ Route::match(['get','post'], 'flowchart/add', 'FlowChartController@create');
 Route::match(['get','post'],'project/list', 'ProjectController@index');
 
 Route::get('project/info', 'ProjectController@info');
-Route::get('project/add', 'ProjectController@create');
-Route::get('project/edit', 'ProjectController@edit');
+Route::post('project/add', 'ProjectController@create');
+Route::post('project/edit', 'ProjectController@edit');
 
 Route::get('project/del', 'ProjectController@destroy');
 
