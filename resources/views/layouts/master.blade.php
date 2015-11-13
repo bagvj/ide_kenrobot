@@ -11,7 +11,6 @@
 
   <link rel="stylesheet" type="text/css" href="   {{ asset('assets/css/base.css') }} " />
   <link rel="stylesheet" type="text/css" href="   {{ asset('assets/css/index.css') }} " />
-  <link rel="stylesheet" type="text/css" href="   {{ asset('assets/css/cjxm.css') }} " />
   <link rel="stylesheet" type="text/css" href="   {{ asset('assets/css/yjlj.css') }} " />
   <link rel="stylesheet" type="text/css" href="   {{ asset('assets/css/hardware.css') }} " />
   <link rel="stylesheet" type="text/css" href="   {{ asset('assets/css/rjbc.css') }} " />

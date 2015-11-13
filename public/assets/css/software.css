@@ -18,8 +18,8 @@ div.content-container div.flowchart-board{
 	background-size:contain;
 }
 
-/*ÊäÈëÄ£¿é*/
-/*°´¼ü*/
+/*è¾“å…¥æ¨¡å—*/
+/*æŒ‰é”®*/
 div.flowchart-button{
 	background:url(../img/sr-ajmk-big.png) no-repeat;
 	background-size: contain;
@@ -33,7 +33,7 @@ div.flowchart-container div.flowchart-button-item{
 	height:36px;
 }
 
-/*¿ª¹Ø*/
+/*å¼€å…³*/
 div.flowchart-switch{
 	background:url(../img/sr-kgmk-big.png) no-repeat;
 	background-size: contain;
@@ -47,7 +47,7 @@ div.flowchart-container div.flowchart-switch-item{
 	height:36px;
 }
 
-/*Ñ²Ïß*/
+/*å·¡çº¿*/
 div.flowchart-linePatrol{
 	background:url(../img/default.png) no-repeat;
 	background-size: contain;
@@ -61,7 +61,7 @@ div.flowchart-container div.flowchart-linePatrol-item{
 	height:36px;
 }
 
-/*ºìÍâ½ÓÊÕ*/
+/*çº¢å¤–æ¥æ”¶*/
 div.flowchart-infraredIn{
 	background:url(../img/default.png) no-repeat;
 	background-size: contain;
@@ -75,7 +75,7 @@ div.flowchart-container div.flowchart-infraredIn-item{
 	height:36px;
 }
 
-/*ÉùÒô´«¸Ğ*/
+/*å£°éŸ³ä¼ æ„Ÿ*/
 div.flowchart-soundSensor{
 	background:url(../img/sc-syscmk-big.png) no-repeat;
 	background-size: contain;
@@ -89,7 +89,7 @@ div.flowchart-container div.flowchart-soundSensor-item{
 	height:36px;
 }
 
-/*ÇãĞ±*/
+/*å€¾æ–œ*/
 div.flowchart-lean{
 	background:url(../img/default.png) no-repeat;
 	background-size: contain;
@@ -103,7 +103,7 @@ div.flowchart-container div.flowchart-lean-item{
 	height:36px;
 }
 
-/*Ñ²ÏßÕóÁĞ*/
+/*å·¡çº¿é˜µåˆ—*/
 div.flowchart-linePatrolRow{
 	background:url(../img/default.png) no-repeat;
 	background-size: contain;
@@ -117,7 +117,7 @@ div.flowchart-container div.flowchart-linePatrolRow-item{
 	height:36px;
 }
 
-/*¾ØÕó¼üÅÌ*/
+/*çŸ©é˜µé”®ç›˜*/
 div.flowchart-keyboard{
 	background:url(../img/default.png) no-repeat;
 	background-size: contain;
@@ -137,8 +137,8 @@ div.flowchart-container div.flowchart-adapter-item{
 	height: 64px;
 }
 
-/*******Êä³öÄ£¿é*******/
-/*µÆ*/
+/*******è¾“å‡ºæ¨¡å—*******/
+/*ç¯*/
 div.flowchart-light{
 	background:url(../img/sc-ledd-big.png) no-repeat;
 	background-size: contain;
@@ -152,7 +152,7 @@ div.flowchart-container div.flowchart-light-item{
 	height:36px;
 }
 
-/*¼ÌµçÆ÷*/
+/*ç»§ç”µå™¨*/
 div.flowchart-relay{
 	background:url(../img/default.png) no-repeat;
 	background-size: contain;
@@ -166,7 +166,7 @@ div.flowchart-container div.flowchart-relay-item{
 	height:36px;
 }
 
-/*·äÃùÆ÷*/
+/*èœ‚é¸£å™¨*/
 div.flowchart-buzzer{
 	background:url(../img/default.png) no-repeat;
 	background-size: contain;
@@ -180,7 +180,7 @@ div.flowchart-container div.flowchart-buzzer-item{
 	height:36px;
 }
 
-/*ºìÍâÊä³ö*/
+/*çº¢å¤–è¾“å‡º*/
 div.flowchart-infraredOut{
 	background:url(../img/sc-hwfsmk-big.png) no-repeat;
 	background-size: contain;
@@ -194,7 +194,7 @@ div.flowchart-container div.flowchart-infraredOut-item{
 	height:36px;
 }
 
-/*1Î»I/OÊä³ö*/
+/*1ä½I/Oè¾“å‡º*/
 div.flowchart-oneBitOut{
 	background:url(../img/default.png) no-repeat;
 	background-size: contain;
@@ -208,7 +208,7 @@ div.flowchart-container div.flowchart-oneBitOut-item{
 	height:36px;
 }
 
-/*ÊıÂë¹Ü*/
+/*æ•°ç ç®¡*/
 div.flowchart-digitalTube{
 	background:url(../img/xs-smgmk-big.png) no-repeat;
 	background-size: contain;
@@ -222,8 +222,8 @@ div.flowchart-container div.flowchart-digitalTube-item{
 	height:36px;
 }
 
-/******Ö´ĞĞÄ£¿é*******/
-/*¶æ»ú*/
+/******æ‰§è¡Œæ¨¡å—*******/
+/*èˆµæœº*/
 div.flowchart-streeringEngine{
 	background:url(../img/zx-dj-big.png) no-repeat;
 	background-size: contain;
@@ -236,7 +236,7 @@ div.flowchart-container div.flowchart-streeringEngine-item{
 	height: 36px;
 }
 
-/*Ö±Á÷µç»ú*/
+/*ç›´æµç”µæœº*/
 div.flowchart-dcMotor{
 	background:url(../img/zx-djkzmk-big.png) no-repeat;
 	background-size: contain;
@@ -250,8 +250,8 @@ div.flowchart-container div.flowchart-dcMotor-item{
 	height: 36px;
 }
 
-/***********´«¸ĞÄ£¿é*******/
-/*¹âÕÕ*/
+/***********ä¼ æ„Ÿæ¨¡å—*******/
+/*å…‰ç…§*/
 div.flowchart-illumination{
 	background:url(../img/cg-ggmk-big.png) no-repeat;
 	background-size: contain;
@@ -264,7 +264,7 @@ div.flowchart-container div.flowchart-illumination-item{
 	height:36px;
 }
 
-/*ÎÂ¶È*/
+/*æ¸©åº¦*/
 div.flowchart-temperatue{
 	background:url(../img/cg-wdmk-big.png) no-repeat;
 	background-size: contain;
@@ -277,7 +277,7 @@ div.flowchart-container div.flowchart-temperatue-item{
 	height:36px;
 }
 
-/*Êª¶È*/
+/*æ¹¿åº¦*/
 div.flowchart-humidity{
 	background:url(../img/default.png) no-repeat;
 	background-size: contain;
@@ -304,7 +304,7 @@ div.flowchart-container div.flowchart-pm25-item{
 	height:36px;
 }
 
-/*ADÊäÈë*/
+/*ADè¾“å…¥*/
 div.flowchart-ad{
 	background:url(../img/default.png) no-repeat;
 	background-size: contain;
@@ -318,8 +318,8 @@ div.flowchart-container div.flowchart-ad-item{
 	height:36px;
 }
 
-/********Í¨Ñ¶Ä£¿é*******/
-/*´®¿ÚÊäÈë*/
+/********é€šè®¯æ¨¡å—*******/
+/*ä¸²å£è¾“å…¥*/
 div.flowchart-serialPortIn{
 	background:url(../img/tx-ck.png) no-repeat;
 	background-size: contain;
@@ -333,7 +333,7 @@ div.flowchart-container div.flowchart-serialPortIn-item{
 	height:36px;
 }
 
-/*´®¿ÚÊä³ö*/
+/*ä¸²å£è¾“å‡º*/
 div.flowchart-serialPortOut{
 	background:url(../img/default.png) no-repeat;
 	background-size: contain;
@@ -347,7 +347,7 @@ div.flowchart-container div.flowchart-serialPortOut-item{
 	height:36px;
 }
 
-/*³¬Éù²â¾à*/
+/*è¶…å£°æµ‹è·*/
 div.flowchart-ultrasoundLocation{
 	background:url(../img/default.png) no-repeat;
 	background-size: contain;
@@ -361,7 +361,7 @@ div.flowchart-container div.flowchart-ultrasoundLocation-item{
 	height:36px;
 }
 
-/*µç×ÓÂŞÅÌ*/
+/*ç”µå­ç½—ç›˜*/
 div.flowchart-electronicCompass{
 	background:url(../img/default.png) no-repeat;
 	background-size: contain;
@@ -375,7 +375,7 @@ div.flowchart-container div.flowchart-electronicCompass-item{
 	height:36px;
 }
 
-/*IICÊä³ö*/
+/*IICè¾“å‡º*/
 div.flowchart-iicOut{
 	background:url(../img/default.png) no-repeat;
 	background-size: contain;
@@ -389,7 +389,7 @@ div.flowchart-container div.flowchart-iicOut-item{
 	height:36px;
 }
 
-/*IICÊäÈë*/
+/*IICè¾“å…¥*/
 div.flowchart-iicIn{
 	background:url(../img/default.png) no-repeat;
 	background-size: contain;
@@ -403,7 +403,7 @@ div.flowchart-container div.flowchart-iicIn-item{
 	height:36px;
 }
 
-/*Á÷³Ì¿ØÖÆÄ£¿é*/
+/*æµç¨‹æ§åˆ¶æ¨¡å—*/
 div.content-container div.flowchart-tjfz{
 	background:url(../img/lct/tjfz.png) no-repeat;
 	background-size: contain;
@@ -460,7 +460,7 @@ div.flowchart-container div.flowchart-fh-item{
 	height:26px;
 }
 
-/*Á÷³Ì¿ØÖÆÄ£¿é*/
+/*æµç¨‹æ§åˆ¶æ¨¡å—*/
 div.content-container div.flowchart-yshs{
 	background:url(../img/lct/yshs.png) no-repeat;
 	background-size: contain;
