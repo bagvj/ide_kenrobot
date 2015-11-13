@@ -166,8 +166,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 
 	function editNode(node) {
 		var divElement = $("#" + $(node).attr('id'));
-		$(".flowchart-item-border-show").removeClass("flowchart-item-border-show");
-		divElement.addClass("flowchart-item-border-show");
+		$(".item-border-show").removeClass("item-border-show");
+		divElement.addClass("item-border-show");
 		jsPlumb_selected_node = node;
 		for (var i = 0; i < jsPlumb_nodes.length; i++) {
 			if ($(jsPlumb_selected_node).attr('id') == jsPlumb_nodes[i]['id']) {
@@ -445,8 +445,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 		}).click(function(e) {
 			//为流程元素新增选中激活
 			var divElement = $("#" + $(node).attr('id'));
-			if (divElement.hasClass("flowchart-item-border-show")) {
-				divElement.removeClass("flowchart-item-border-show");
+			if (divElement.hasClass("item-border-show")) {
+				divElement.removeClass("item-border-show");
 				jsPlumb_selected_node = null;
 				//eventcenter有事件则激活，没事件则不激活
 				eventcenter.trigger("kenrobot", "flowchart_item_click", null);

@@ -52,15 +52,11 @@ define(['eventcenter', 'jquery', 'hardware', 'kenrobotJsPlumb', 'defaultJs'], fu
 	}
 
 	function step2() {
-		$(".nav-first li.rjbc").css("z-index", 1000);
-		var top = $(".nav-first li.rjbc").offset().top + 20;
-		showToolTip("", "url(img/guide/rjbc.png)", top, 90, 200, 100);
+
 	}
 
 	function step2Close() {
-		$(".nav-first li.rjbc").css("z-index", 998);
 
-		$(".guide-tooltip").remove();
 	}
 
 	function step3() {

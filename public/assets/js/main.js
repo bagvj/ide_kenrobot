@@ -76,10 +76,6 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 	initHardwareElement(fis);
 
 	defaultJs.init();
-	defaultJs.set_save_function({
-		save_hardware: save_hardware,
-		save_flowchart: save_flowchart
-	});
 
 	software.initVarTable('var-table');
 
@@ -374,7 +370,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 		window.open(url);
 	}
 
-	$('.rjbc_mod .side .code-side .code_view').click(function(e) {
+	$('.code-side .code_view').click(function(e) {
 		alert($("#c_code_input").html());
 	});
 
@@ -514,7 +510,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 			key: '传感模块',
 			cls: 'cgmk'
 		}];
-		$('div.nav-second ul:first', $('div.yjlj_mod')).empty();
+		$('div.nav-second ul:first', $('.mod:first')).empty();
 
 		// 优先采用顺序话的显示
 		for (var i = 0; i < showOrder.length; i++) {
@@ -529,7 +525,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 			if (key.indexOf('控制模块') > -1 && tmpArray.length == 1) {
 				continue;
 			}
-			$('div.nav-second ul:first', $('div.yjlj_mod')).append(createUlObj(key, cls, tmpArray));
+			$('div.nav-second ul:first', $('.mod:first')).append(createUlObj(key, cls, tmpArray));
 
 			delete jsonHE[key];
 		};
@@ -541,15 +537,15 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 			if (i.indexOf("控制模块") > -1) {
 				continue;
 			}
-			$('div.nav-second ul:first', $('div.yjlj_mod')).append(createUlObj(i, 'tmp_' + tmpIndex, jsonHE[i]));
+			$('div.nav-second ul:first', $('.mod:first')).append(createUlObj(i, 'tmp_' + tmpIndex, jsonHE[i]));
 			elementCount += jsonHE[i].length;
 			tmpIndex++;
 		}
 		if (elementCount <= 5) {
-			$('li', $('div.nav-second ul:first', $('div.yjlj_mod'))).addClass('active');
-			$('li div.triangle', $('div.nav-second ul:first', $('div.yjlj_mod'))).remove();
+			$('li', $('div.nav-second ul:first', $('.mod:first'))).addClass('active');
+			$('li div.triangle', $('div.nav-second ul:first', $('.mod:first'))).remove();
 		} else {
-			$('li:first', $('div.nav-second ul:first', $('div.yjlj_mod'))).addClass('active');
+			$('li:first', $('div.nav-second ul:first', $('.mod:first'))).addClass('active');
 		}
 
 		jsonHE = null;

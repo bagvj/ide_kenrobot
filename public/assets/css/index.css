@@ -244,14 +244,8 @@ body {
     position: absolute;
     float: left;
     background-color: #eeeeee;
-}
-
-.canvas {
-    float: left;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+    padding: 0 180px;
+    display: none;
 }
 
 .mod select {
@@ -325,23 +319,38 @@ body {
     color: #757575;
 }
 
+.nav-second ul li li {
+    padding-left: 20px;
+}
+
+.nav-second ul li.ypzmk li {
+    height: 45px;
+    line-height: 45px;
+}
+
+.nav-second ul li.lckzmk1 li,
+.nav-second ul li.lckzmk2 li {
+    height: 40px;
+    line-height: 40px;
+}
+
 .nav-second ul li.active ul {
     display: block;
 }
 
-.mod_btn {
-    float: right;
-    right: 180px;
-    bottom: 10px;
-    position: absolute;
-}
-
-.mod_btn div {
+.canvas {
     float: left;
-    margin-right: 15px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 .side {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    top: 0px;
     width: 180px;
     height: 100%;
     background-color: #fff;
@@ -359,34 +368,19 @@ body {
     color: #eeeeee;
 }
 
-.side .bar .gwc {
-    width: 45px;
-    height: 45px;
+.mod_btn {
     float: right;
-    background: url('../img/gwc.png') no-repeat center;
-}
-
-.yjlj_mod,
-.rjbc_mod {
-    display: none;
-}
-
-.yjlj_mod {
-    padding-left: 180px;
-    padding-right: 180px;
-}
-
-.yjlj_mod .nav-second ul li li {
-    padding-left: 20px;
-}
-
-.yjlj_mod .side {
-    height: 100%;
+    right: 180px;
+    bottom: 10px;
     position: absolute;
-    right: 0
 }
 
-.yjlj_mod .side ul {
+.mod_btn div {
+    float: left;
+    margin-right: 15px;
+}
+
+.trolley ul {
     margin: 0;
     padding: 0;
     background-color: #fff;
@@ -394,7 +388,7 @@ body {
     padding-bottom: 20px;
 }
 
-.yjlj_mod .side ul li {
+.trolley ul li {
     line-height: 45px;
     list-style: none;
     font-size: 14px;
@@ -406,10 +400,17 @@ body {
     border-bottom: 0px;
 }
 
-.yjlj_mod .buy {
+.trolley .buy {
     bottom: 20px;
     left: 20px;
     position: absolute;
+}
+
+.trolley .gwc {
+    width: 45px;
+    height: 45px;
+    float: right;
+    background: url('../img/gwc.png') no-repeat center;
 }
 
 .hardware_part_list {
@@ -419,33 +420,6 @@ body {
     left: 0;
     right: 0;
     overflow: auto;
-}
-
-.rjbc_mod {
-    padding-left: 180px;
-    padding-right: 180px;
-}
-
-.rjbc_mod .nav-second ul li li {
-    padding-left: 20px;
-}
-
-.main .nav-second ul li.ypzmk li {
-    height: 45px;
-    line-height: 45px;
-}
-
-.main .nav-second ul li.lckzmk1 li,
-.main .nav-second ul li.lckzmk2 li {
-    height: 40px;
-    line-height: 40px;
-}
-
-.side {
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
-    top: 0px;
 }
 
 .yjlj-side {
@@ -528,42 +502,6 @@ td {
     bottom: 0px;
     position: absolute;
     cursor: pointer;
-}
-
-#software-var {
-    position: absolute;
-    left: 40%;
-    top: 20%;
-}
-
-#software-var span,
-.input,
-.sel {
-    display: inline-block;
-}
-
-#software-var .input,
-.sel {
-    float: right;
-}
-
-#software-var .item {
-    margin-top: 10px;
-}
-
-#software-var .operator {
-    position: relative;
-    top: 0px;
-    left: 0px;
-    width: 248px;
-    height: 20px;
-    padding: 5px 10px;
-    background-color: #FFF;
-}
-
-#software-var .btn {
-    float: left;
-    margin-left: 60px;
 }
 
 .hardware-item {
@@ -990,10 +928,6 @@ td {
     cursor: pointer;
     color: #F00;
     background-size: contain;
-}
-
-.hardware-item-border-show {
-    border: 1px solid #F00;
 }
 
 .content-rotate {
@@ -1625,12 +1559,8 @@ td {
     background-size: contain;
 }
 
-.flowchart-item-border-show {
+.item-border-show {
     border: 1px solid #F00;
-}
-
-.content-rotate {
-    transform: rotate(180deg);
 }
 
 .main .btn {
@@ -1688,17 +1618,7 @@ td {
     background-color: #cccccc;
 }
 
-.main .input {
-    border: 1px solid #b7b7b7;
-    width: 50%;
-}
-
-.main .sel {
-    border: 1px solid #b7b7b7;
-    width: 50%;
-}
-
-.mod_btn .btn3 {
+.main .btn3 {
     width: 41.25px;
     height: 41.25px;
     background-color: #f5db26;
@@ -1715,11 +1635,11 @@ td {
     -o-border-radius: 32px;
 }
 
-.mod_btn .btn3:hover {
+.main .btn3:hover {
     background-color: #cccccc;
 }
 
-.mod_btn .btn4 {
+.main .btn4 {
     width: 41.25px;
     height: 41.25px;
     background-color: #72d338;
@@ -1736,6 +1656,16 @@ td {
     -o-border-radius: 32px;
 }
 
-.mod_btn .btn4:hover {
+.main .btn4:hover {
     background-color: #cccccc;
+}
+
+.main .input {
+    border: 1px solid #b7b7b7;
+    width: 50%;
+}
+
+.main .sel {
+    border: 1px solid #b7b7b7;
+    width: 50%;
 }

@@ -3,7 +3,7 @@
 @section('main')
 
 <div class="main">
-    <div class="mod yjlj_mod">
+    <div class="mod">
         <div class="nav-second">
             <ul>
                 <li class="srmk">输入模块<div class="triangle"></div>
@@ -83,7 +83,7 @@
             <div class="btn2 buy" onclick="window.open('http://www.kenrobot.com/index.php?app=shop');">元件选购</div>
         </div>
     </div>
-    <div class="mod rjbc_mod">
+    <div class="mod">
         <div class="nav-second">
             <ul>
                 <li class="ypzmk active">已配置模块<div class="triangle"></div>
