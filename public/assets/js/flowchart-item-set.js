@@ -482,61 +482,61 @@ define(["jquery"], function($) {
 			"kind": "hardware",
 			"desc": "",
 			"points": [{
-				"position": [0.16, 0.05, 0, 0],
+				"position": [0.55, 0.0, 0, 0],
 				"source": true,
 				"target": false,
 				"color": "#FF0",
 				"shape": "Rectangle",
-				"port": "A0"
+				"port": "A0",
 			}, {
-				"position": [0.34, 0.05, 0, 0],
+				"position": [0.335, 0.0, 0, 0],
 				"source": true,
 				"target": false,
 				"color": "#FF0",
 				"shape": "Rectangle",
-				"port": "B0"
+				"port": "B0",
 			}, {
-				"position": [0.66, 0.05, 0, 0],
+				"position": [0.66, 0.0, 0, 0],
 				"source": true,
 				"target": false,
 				"color": "#FF0",
 				"shape": "Rectangle",
-				"port": "C0"
+				"port": "C0",
 			}, {
-				"position": [0.84, 0.05, 0, 0],
+				"position": [0.84, 0.0, 0, 0],
 				"source": true,
 				"target": false,
 				"color": "#FF0",
 				"shape": "Rectangle",
-				"port": "D0"
+				"port": "D0",
 			}, {
-				"position": [0.16, 0.95, 0, 0],
+				"position": [0.16, 1, 0, 0],
 				"source": true,
 				"target": false,
 				"color": "#FF0",
 				"shape": "Rectangle",
-				"port": "E0"
+				"port": "E0",
 			}, {
-				"position": [0.34, 0.95, 0, 0],
+				"position": [0.34, 1, 0, 0],
 				"source": true,
 				"target": false,
 				"color": "#FF0",
 				"shape": "Rectangle",
-				"port": "F0"
+				"port": "F0",
 			}, {
-				"position": [0.66, 0.95, 0, 0],
+				"position": [0.66, 1, 0, 0],
 				"source": true,
 				"target": false,
 				"color": "#FF0",
 				"shape": "Rectangle",
-				"port": "G0"
+				"port": "G0",
 			}, {
-				"position": [0.84, 0.95, 0, 0],
+				"position": [0.84, 1, 0, 0],
 				"source": true,
 				"target": false,
 				"color": "#FF0",
 				"shape": "Rectangle",
-				"port": "H0"
+				"port": "H0",
 			}, ]
 		},
 		//LED灯

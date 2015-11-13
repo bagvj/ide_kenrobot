@@ -3,12 +3,6 @@
 @section('main')
 
    <div class="main">
-    <div class="tabs">
-      <ul>
-        <li><span>硬件连接</span></li>
-        <li><span>软件编程</span></li>
-      </ul>
-    </div>
      <div class="mod yjlj_mod">
        <div class="nav-second">
        <ul>
@@ -167,6 +161,12 @@
              </div>
            </div>
        </div>
+     </div>
+     <div class="tabs">
+       <ul>
+         <li><span>硬件连接</span></li>
+         <li><span>软件编程</span></li>
+       </ul>
      </div>
      <div class="mod_btn">
       <div class="btn3 save">保存</div>
