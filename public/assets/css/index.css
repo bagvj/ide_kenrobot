@@ -220,12 +220,13 @@ body {
 .tabs {
     float: left;
     top: 60px;
+    left: 180px;
     position: absolute;
 }
 
 .tabs ul {
     float: left;
-    padding-left: 180px;
+    padding-left: 0px;
 }
 
 .tabs ul li {
