@@ -28,6 +28,13 @@ class HomeController extends Controller
 
     public function initinfo()
     {
+        $user = Auth::user();
+        if ($user !== null) {
+            return [
+                'uid' => $user->id,
+                'uname' => $user->name
+            ];
+        }
         return [
             'uid' => 1,
             'uname' => '萝卜头'

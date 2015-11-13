@@ -28,63 +28,106 @@ class SnsAuthController extends Controller
         $this->loginPath = '/auth/snslogin';        
     }
 
+ 
+
+
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getLogin(Request $request)
+    public function snsLogin(Request $request)
     {
         $uid = $request->input('uid');
+        $token = $request->input('token');
 
-        $data = $this->getUserinfo();
-            
-        if (!empty($uid)) {
-            $data['uid'] = $uid;
+        
+
+        $data = $this->getUserinfo($token);
+        if ($data == null) {
+            return redirect('/');//跳转根目录
         }
 
-        $user = $this->getUser($data);
+
+        $userInfo = array_only($data,['uid','uname','email']);
+        $userInfo['name'] = $userInfo['uname'];
+        unset($userInfo['uname']);
+
+        $user = $this->getUser($userInfo);
         if ($user == null) {
-           $user = $this->createUser($data);
+           $user = $this->createUser($userInfo);
         }
-
         Auth::login($user,true);
-
-        var_dump(Session::all());
+        return redirect('/');
 
     }
 
-    private function getUserinfo($token = '')
-    {
-        $name = str_random();
-        return ['name' => $name,
-                'email' => $name.'@qq.com',
-                'password' => $name,
-                'uid'   => rand(1,99999)
-            ];
+    /**
+     * 验证sns账号密码
+     */
+    private function validateSnsUser($email,$password){
 
-        $url = 'http://localhost:9003/index.php?app=public&mod=Platform&act=userinfo';
-        // $url = 'http://www.baidu.com';
-        // $url = 'http://localhost:9003/index.php?app=public&mod=Register&act=wxBind';
-        $referer = 'http://localhost:9003';
-        $key = 'paltform_43fda8dsafjakfdj';
+        $url = config('sns.validate.url');
+        // $url = 'http://localhost:8800/N1CwG46Ml';
+        $referer = config('sns.validate.referer');
+        $key = config('sns.key');
+
+
+        // echo $url,$referer,$key;
 
         $curl = new Curl();
         $curl->setReferrer($referer);
 
-        // $data = $curl->post($url,[
-        //     'key' => $key,
-        //     'token' => $token
-        //     ]);
-        $data = $curl->get($url);
-
-        return $data;
+        $data = $curl->post($url,[
+            'key' => $key,
+            'email' => $email,
+            'password' => $password
+            ]);
+       
+            $userData = json_decode($data,true);
+            return $userData;
     }
 
 
+    private function getUserinfo($token = '')
+    {
 
+        $url = config('sns.userinfo.url');
+        $referer = config('sns.userinfo.referer');
+        $key = config('sns.key');
+
+        $curl = new Curl();
+        $curl->setReferrer($referer);
+        $data = $curl->post($url,[
+            'key' => $key,
+            'token' => $token
+            ]);
+        $userData = json_decode($data,true);
+
+        return $userData;
+    }
+
+
+    private function getFakeUserinfo($token = '')
+    {
+        $name = str_random();
+
+        return ['name' => $name,
+                'email' => $name.'@qq.com',
+                'password' => $name,
+                'uid'   => rand(1,99999)
+        ];
+    }
+
+
+    /**
+     * 获取本地用户
+     */
     private function getUser($data = array()){
+        if (!isset($data['uid'])) {
+            return null;
+        }
 
         $user = User::where('uid',$data['uid'])->first();
         return $user;

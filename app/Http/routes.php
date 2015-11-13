@@ -25,7 +25,7 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
-Route::get('auth/snslogin', 'Auth\SnsAuthController@getLogin');
+Route::get('auth/snslogin', 'Auth\SnsAuthController@snsLogin');
 
 //GetInitInfo
 Route::get('initinfo','HomeController@initinfo');
