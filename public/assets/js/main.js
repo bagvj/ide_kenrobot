@@ -296,19 +296,8 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 	var hardwareImg = {};
 	var flowchartImg = {};
 
-	//加载数据库中项目到内存
-	$("#load_project").click(function(e) {
-		var data = {
-			"pid": cjxm.getCurrentPorject()
-		}
-		flowchartInfo.getFlowchart(data, function(data) {
-			projectInfo = data;
-			//console.log(projectInfo);
-		});
-	});
-
 	//保存项目到数据库
-	$("#save_btn").click(function(e) {
+	$(".mod_btn .save").click(function(e) {
 		defaultJs.save_project_to_local();
 		var pid = cjxm.getCurrentPorject();
 		if (projectInfo && projectInfo.hardware && projectInfo.flowchart) {
@@ -344,7 +333,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 	});
 
 	//下载
-	$('#download_btn').click(function(e) {
+	$('.mod_btn .download').click(function(e) {
 		var source = $('#c_code_input').val();
 		var bytes = [];
 		for (var i = 0; i < source.length; ++i) {
@@ -384,29 +373,6 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 	function downloadFile(url) {
 		window.open(url);
 	}
-
-	$("#redraw_btn").click(function(e) {
-		var data = {
-			"pid": cjxm.getCurrentPorject(),
-			"type": 1,
-		}
-		flowchartInfo.getFlowchart(data, function(data) {
-			if (hardware.isEmpty()) {
-				hardware.init('hardware-item', 'hardware-container');
-			}
-			hardware.clear();
-			hardware.draw(data.hardware);
-		});
-		data.type = 2;
-		flowchartInfo.getFlowchart(data, function(data) {
-			if (kenrobotJsPlumb.isEmpty()) {
-				kenrobotJsPlumb.init('flowchart-item', 'flowchart-container');
-			}
-			kenrobotJsPlumb.clear();
-			// console.log(data);
-			kenrobotJsPlumb.draw(data.flowchart);
-		});
-	});
 
 	$('.rjbc_mod .side .code-side .code_view').click(function(e) {
 		alert($("#c_code_input").html());

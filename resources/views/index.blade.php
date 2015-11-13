@@ -3,46 +3,12 @@
 @section('main')
 
    <div class="main">
-     <div class="nav-first">
-       <ul>
-         <li class="cjxm active" style="display:none">
-           <span>STEP 1</span>
-           <span>创建项目</span>
-         </li>
-         <li class="yjlj active">
-           <span>STEP 1</span>
-           <span>硬件连接</span>
-         </li>
-         <li class="rjbc">
-           <span>STEP 2</span>
-           <span>软件编程</span>
-         </li>
-       </ul>
-       <div id="save_btn" class="btn3 save">保存</div>
-       <!--<div id="redraw_btn" class="btn3 redraw">重画</div>-->
-       <div id="download_btn" class="btn4 download">下载</div>
-     </div>
-     <div class="mod cjxm_mod">
-       <table>
-       <tr><td>开发信息</td><td></td></tr>
-       <tr><td>项目名称</td><td><div class="tbx_edit"><input type="text" name="xmmc" /></div></td></tr>
-       <tr><td>项目描述</td><td><div class="tbx_area"><textarea   name="xmms" rows=5></textarea></td></tr>
-       <tr><td><!--<div class="btn2 load" id="load_project">加载</div>--></td><td><div class="btn2 create" id="create_project">创建</div></td></tr>
-       </table>
-       <div class="project_list">
-        <ul>
-               <li>
-                <!--<img src="http://kr.zhiyicx.com/data/upload/2015/0719/21/55aba5ed37c01.png" style="width:115px;height:115px;">-->
-                <span>机器人</span>
-                <div class="operator">
-                    <div class="btn load">加载</div>
-                    <div class="btn del">删除</div>
-                    <div class="btn edit">修改</div>
-                </div>
-               </li>
-         </ul>
-       </div>
-     </div>
+    <div class="tabs">
+      <ul>
+        <li><span>硬件连接</span></li>
+        <li><span>软件编程</span></li>
+      </ul>
+    </div>
      <div class="mod yjlj_mod">
        <div class="nav-second">
        <ul>
@@ -201,7 +167,11 @@
              </div>
            </div>
        </div>
-     </div>  
+     </div>
+     <div class="mod_btn">
+      <div class="btn3 save">保存</div>
+      <div class="btn4 download">下载</div>
+     </div>
    </div>
 
 
