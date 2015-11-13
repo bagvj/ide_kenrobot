@@ -42,6 +42,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 
 	// 放大缩小
 	var scrollLever = 0;
+	var ratio = 1;
 
 	/**
 	 * 整个处理的入口，需要初始化
@@ -100,7 +101,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 			jsPlumb.fire("jsFlowLoaded", jsPlumb_instance);
 
 			initMainBoard();
-			addResizeButton();
 		});
 
 		$(window).resize(function(e) {
@@ -115,10 +115,10 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 
 		eventcenter.bind('hardware', 'mousewheel', function(args) {
 			var mousescroll = args.e; //1为放大，-1为缩小
-			if (mousescroll > 0 && scrollLever > -2) {
-				scrollLever--;
-			} else if (mousescroll < 0 && scrollLever < 2) {
+			if (mousescroll > 0 && scrollLever < 5) {
 				scrollLever++;
+			} else if (mousescroll < 0 && scrollLever > -5) {
+				scrollLever--;
 			}
 
 			resizeAllNode();
@@ -127,14 +127,17 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		movePanel();
 	}
 
-	function resizeAllNode(ratio) {
-		if (scrollLever == 0) {
+	function resizeAllNode() {
+		var newRatio = 1;
+		if(scrollLever > 0) {
+			newRatio = scrollLever;
+		}else if (scrollLever < 0) {
+			newRatio = 1 / Math.abs(scrollLever);
+		}
+		if(newRatio == ratio){
 			return;
 		}
-		if (ratio == null) ratio = scrollLever;
-		if (ratio < 0) {
-			ratio = 1 / Math.abs(ratio);
-		}
+		ratio = newRatio;
 
 		for (var i = 0; i < jsPlumb_nodes.length; i++) {
 			var node = jsPlumb.getSelector('#' + jsPlumb_nodes[i]['id'])[0];
@@ -172,118 +175,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 				moveOneNode(jsPlumbNode['id'], moveCX, moveCY);
 			}
 		}
-		switch (scrollLever) {
-			case 2:
-				$('#hardware_sml_btn').prop('disabled', false);
-				$('#hardware_nor_btn').prop('disabled', false);
-				$('#hardware_lar_btn').prop('disabled', true);
-				break;
-			case -2:
-				$('#hardware_sml_btn').prop('disabled', true);
-				$('#hardware_nor_btn').prop('disabled', false);
-				$('#hardware_lar_btn').prop('disabled', false);
-				break;
-			default:
-				$('#hardware_sml_btn').prop('disabled', false);
-				$('#hardware_nor_btn').prop('disabled', true);
-				$('#hardware_lar_btn').prop('disabled', false);
-				break;
-		}
-	}
-
-	function addResizeButton(ratio) {
-		var btnDiv = $('<div></div>').css({
-			position: 'absolute',
-			bottom: '10px',
-			left: '20px',
-			width: '200px',
-			height: '20px',
-			padding: '2px'
-		});
-		var sbtn = $('<button></button>').css({
-			position: 'relative',
-			top: '0px',
-			left: '0px',
-			borderRadius: '10px',
-			width: '45px',
-			height: '25px',
-			border: '1px solid',
-			backgroundColor: '#FFF'
-		}).attr('id', 'hardware_sml_btn').html('缩小');
-		btnDiv.append(sbtn);
-		var nbtn = $('<button></button>').css({
-			position: 'relative',
-			top: '0px',
-			left: '5px',
-			borderRadius: '10px',
-			width: '45px',
-			height: '25px',
-			border: '1px solid',
-			backgroundColor: '#FFF'
-		}).attr('id', 'hardware_nor_btn').html('还原').prop('disabled', true);
-		btnDiv.append(nbtn);
-		var lbtn = $('<button></button>').css({
-			position: 'relative',
-			top: '0px',
-			left: '10px',
-			borderRadius: '10px',
-			width: '45px',
-			height: '25px',
-			border: '1px solid',
-			backgroundColor: '#FFF'
-		}).attr('id', 'hardware_lar_btn').html('放大');
-		btnDiv.append(lbtn);
-
-		$('#' + jsPlumb_container).append(btnDiv);
-
-		$('#hardware_sml_btn').click(function(e) {
-			switch (scrollLever) {
-				case 2:
-					scrollLever = 1;
-					break;
-				default:
-					scrollLever = -2;
-					break;
-			}
-			resizeAllNode(scrollLever);
-			if (scrollLever == -2) {
-				$(this).prop('disabled', true);
-				$('#hardware_nor_btn').prop('disabled', false);
-			}
-			if (scrollLever == 1) {
-				$('#hardware_nor_btn').prop('disabled', true);
-			}
-			$('#hardware_lar_btn').prop('disabled', false);
-		});
-		$('#hardware_nor_btn').click(function(e) {
-			scrollLever = 1;
-			resizeAllNode(scrollLever);
-			$(this).prop('disabled', true);
-			$('#hardware_sml_btn').prop('disabled', false);
-			$('#hardware_lar_btn').prop('disabled', false);
-		});
-		$('#hardware_lar_btn').click(function(e) {
-			switch (scrollLever) {
-				case 0:
-					scrollLever = 2;
-					break;
-				case 1:
-					scrollLever = 2;
-					break;
-				default:
-					scrollLever = 1;
-					break;
-			}
-			resizeAllNode(scrollLever);
-			if (scrollLever == 2) {
-				$(this).prop('disabled', true);
-				$('#hardware_nor_btn').prop('disabled', false);
-			}
-			if (scrollLever == 1) {
-				$('#hardware_nor_btn').prop('disabled', true);
-			}
-			$('#hardware_sml_btn').prop('disabled', false);
-		});
 	}
 
 	function checkPosition(x, y, v) {
@@ -432,7 +323,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 			return false;
 		}
 		addPorts(node);
-		jsPlumb_instance.draggable($(node));
+		jsPlumb_instance.draggable($(node), {gird: [5, 5]});
 
 		$(node).dblclick(function(ev) {
 			// deleteNodeByElement(this);
@@ -827,12 +718,17 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		jsPlumb_instance = jsPlumb.getInstance({
 			// Connector : [ "StateMachine", { curviness:1 } ],
 			Connector: ["Flowchart", {
-				curviness: 1
+				gap: 10,
+				// curviness: 50,
+				// midpoint: 1,
+				stub: 20,
+				cornerRadius: 5,
+				alwaysRespectStubs: true
 			}],
 			//DragOptions : { cursor: "pointer", zIndex:2000 },
 			PaintStyle: {
 				strokeStyle: color,
-				lineWidth: 5
+				lineWidth: 2
 			},
 			EndpointStyle: {
 				radius: 5,
@@ -858,7 +754,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 	 * @param event e 鼠标拖拽实践
 	 */
 	function initDrag(e) {
-		resizeAllNode(1);
+		scrollLever = 0;
+		resizeAllNode();
 
 		try {
 			e.originalEvent.dataTransfer.setData('text', e.target.id);
