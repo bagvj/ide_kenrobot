@@ -37,11 +37,16 @@
              <li><a href="http://www.kenrobot.com/index.php?app=shop">商城</a></li>
            </ul>
          </div>
-         <div class="photo"></div>
+         @if( null !== $user && null !== $user->avatar_url )
+            <div class="photo" style="background-image:url(' {{ $user->avatar_url }}')"></div>
+         @else
+            <div class="photo" ></div>
+
+         @endif
          <!--<div class="triangle"></div>-->
          <div class="welcome">
            <span id="platform_name">
-             欢迎你，{{ $user->name or '小萝卜'}}
+             {{ issset($user->name) ? $user->name : '未登录' }}
            </span>
          </div>
      </div>
