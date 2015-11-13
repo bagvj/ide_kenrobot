@@ -168,19 +168,19 @@ body {
 }
 
 .header .search input::-webkit-input-placeholder {
-    color: #666;
+    color: #fff;
 }
 
 .header .search input:-moz-placeholder {
-    color: #666;
+    color: #fff;
 }
 
 .header .search input::-moz-placeholder {
-    color: #666;
+    color: #fff;
 }
 
 .header .search input:-ms-input-placeholder {
-    color: #666;
+    color: #fff;
 }
 
 .header .person-wrap {
@@ -198,6 +198,12 @@ body {
     height: 40px;
     line-height: 60px;
     vertical-align: center;
+}
+
+.photo img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
 }
 
 .header .person .icon-dot{

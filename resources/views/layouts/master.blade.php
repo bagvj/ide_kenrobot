@@ -38,15 +38,19 @@
          </div>
         <div class="person-wrap">
           <div class="person">
-            <a href="#" class="photo"><img src="{{ asset('assets/img/photo.png') }}" /></a>
+            <a href="#" class="photo">
+              <img src="{{ $user->avatar_url or asset('assets/img/photo.png') }}" />
+            </a>
             <i class="iconfont icon-dot">&#xe600;</i>
             <span class="welcome">
-              欢迎你，{{ $user->name or '小萝卜'}}
+              Hi,{{ $user->name or '萝卜头'}}
             </span>
+          </div>
         </div>
-        </div>
+   
         <div class="search">
           <form method="post" action="#">
+            {{ csrf_field() }}
             <input class="search_input" id="search_input" type="text" placeholder="搜索" autocomplete="off" name="search_input"></input>
             <i class="iconfont icon-search">&#xe665;</i>
           </form>
