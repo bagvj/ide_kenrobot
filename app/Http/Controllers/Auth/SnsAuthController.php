@@ -49,10 +49,13 @@ class SnsAuthController extends Controller
             return redirect('/');//跳转根目录
         }
 
+        $userInfo = array_only($data,['uid','uname','email','avatar_big']);
 
-        $userInfo = array_only($data,['uid','uname','email']);
         $userInfo['name'] = $userInfo['uname'];
         unset($userInfo['uname']);
+
+        $userInfo['avatar_url'] = $userInfo['avatar_big'];
+        unset($userInfo['avatar_big']);
 
         $user = $this->getUser($userInfo);
         if ($user == null) {
@@ -144,6 +147,7 @@ class SnsAuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['email'].'321'),
             'uid'   => $data['uid'],
+            'avatar_url' => $data['avatar_url'],
             'source'   => 'sns'
         ]);
     }
