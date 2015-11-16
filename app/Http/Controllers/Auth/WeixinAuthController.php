@@ -60,7 +60,7 @@ class WeixinAuthController extends Controller
         if ($user == null) {
            $user = $this->createUser($userInfo);
         }
-        Auth::login($user,true);
+        Auth::login($user,false);
         return 1;
 
     }
