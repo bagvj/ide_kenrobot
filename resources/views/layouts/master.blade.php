@@ -19,39 +19,43 @@
 
  </head>
  <body>
-
-   <div class="header">
-     <div class="content">
-         <span><a href="http://www.kenrobot.com/index.php?app=square&mod=Index&act=index" class="logo"></a></span>
-         <div class="nav">
-           <ul>
-             <li><a href="http://www.kenrobot.com/index.php?app=public&mod=Index&act=allshow">我的主页</a></li>
-             <li><a href="http://platform.kenrobot.com/" class="on">开发</a></li>
-             <li><a href="http://www.kenrobot.com/index.php?app=square&mod=Index&act=listshow">广场</a></li>
-             <li><a href="http://www.kenrobot.com/index.php?app=shop">商城</a></li>
-           </ul>
-         </div>
-        <div class="person-wrap">
-          <div class="person">
-            <a href="#" class="photo">
-              <img src="{{ $user->avatar_url or asset('assets/img/photo.png') }}" />
-            </a>
-            <i class="iconfont icon-dot">&#xe600;</i>
-            <span class="welcome">
-              Hi,{{ $user->name or '萝卜头'}}
-            </span>
-          </div>
+  <div class="header">
+    <div class="content">
+      <span><a href="http://www.kenrobot.com/index.php?app=square&mod=Index&act=index" class="logo"></a></span>
+      <div class="nav">
+        <ul>
+          <li><a href="http://www.kenrobot.com/index.php?app=public&mod=Index&act=allshow">我的主页</a></li>
+          <li><a href="http://platform.kenrobot.com/" class="on">开发</a></li>
+          <li><a href="http://www.kenrobot.com/index.php?app=square&mod=Index&act=listshow">广场</a></li>
+          <li><a href="http://www.kenrobot.com/index.php?app=shop">商城</a></li>
+        </ul>
+      </div>
+      <div class="login">
+        <ul>
+          <li><a href="http://www.kenrobot.com/index.php?app=public&mod=Register&act=index">注册</a></li>
+          <li><a href="javascript:;" class="loginBtn">登录</a></li>
+        </ul>
+      </div>
+      <div class="person-wrap">
+        <div class="person">
+          <a href="http://www.kenrobot.com/index.php?app=public&mod=Index&act=allshow" class="photo">
+            <img src="{{ $user->avatar_url or asset('assets/img/photo.png') }}" />
+          </a>
+          <span class="welcome">Hi,{{ $user->name or '萝卜头'}}</span>
         </div>
-   
+      </div>
+      <div class="search-wrap">
         <div class="search">
           <form method="post" action="#">
             {{ csrf_field() }}
             <input class="search_input" id="search_input" type="text" placeholder="搜索" autocomplete="off" name="search_input"></input>
-            <i class="iconfont icon-search">&#xe665;</i>
+            <i class="iconfont icon">&#xe665;</i>
           </form>
         </div>
-     </div>
-   </div>
+      </div>
+    </div>
+  </div>
    @yield('main')
+  <div id="login_dialog" style="display:none"></div>
  </body>
 </html>
