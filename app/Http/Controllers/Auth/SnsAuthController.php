@@ -64,7 +64,44 @@ class SnsAuthController extends Controller
         Auth::login($user,true);
         return redirect('/');
 
+    }   
+
+    /**
+     * 使用sns账号密码登录
+     */
+    public function snsPostLogin(Request $request)
+    {
+        $email = $request->input('email');
+        $password = $request->input('password');
+        if (empty($email) || empty($password)) {
+            redirect('/login');
+        }
+
+        $data = $this->validateSnsUser($email,$password);
+        if ($data == null) {
+            return redirect('/');//跳转根目录
+        }
+        // dd($data);
+        $userInfo = array_only($data,['uid','uname','email','avatar_big']);
+
+        $userInfo['name'] = $userInfo['uname'];
+        unset($userInfo['uname']);
+
+        $userInfo['avatar_url'] = isset($userInfo['avatar_big']) ? $userInfo['avatar_big'] : '';
+        unset($userInfo['avatar_big']);
+
+        $user = $this->getUser($userInfo);
+        if ($user == null) {
+           $user = $this->createUser($userInfo);
+        }
+        Auth::login($user,true);
+        return redirect('/');
+
+
+
     }
+
+
 
     /**
      * 验证sns账号密码

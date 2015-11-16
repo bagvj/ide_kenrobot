@@ -26,7 +26,9 @@ Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 Route::get('auth/snslogin', 'Auth\SnsAuthController@snsLogin');
-Route::get('auth/weixinlogin', 'Auth\WeixinAuthController@weixinlogin');
+Route::any('/snspostlogin','Auth\SnsAuthController@snsPostLogin');
+Route::any('weixinlogin', 'Auth\WeixinAuthController@weixinlogin');
+Route::get('/login', 'Auth\WeixinAuthController@index');
 
 
 //GetInitInfo

@@ -23,11 +23,21 @@ class WeixinAuthController extends Controller
     {
       //  $this->middleware('guest', ['except' => 'getLogout']);
         $this->redirectPath = '/';
-        $this->loginPath = '/auth/snslogin';        
+        $this->loginPath = '/login';        
     }
 
  
 
+    public function index()
+    {
+        $qrcode = rand(70000,80000);
+        $qrcodeurl = $this->getQrcodeurl($qrcode);
+        $key = 'qrscene_'.$qrcode;
+        Session::put('key',$key);
+
+        $url = config('weixin.userinfo.url')."?key=$key";
+        return view('auth.authlogin',compact('qrcode','qrcodeurl','key'));
+    }
 
 
     /**
@@ -39,12 +49,11 @@ class WeixinAuthController extends Controller
     {
         $key = $request->input('key');
 
+        // $key = Session::get('key');
+        $userInfo = $this->getUserinfo($key);
         
-
-        $data = $this->getUserinfo($key);
-
-        if ($data == null) {
-            return redirect('/');//跳转根目录
+        if ($userInfo == null) {
+           return 0;
         }
 
         $user = $this->getUser($userInfo);
@@ -52,35 +61,11 @@ class WeixinAuthController extends Controller
            $user = $this->createUser($userInfo);
         }
         Auth::login($user,true);
-        return redirect('/');
+        return 1;
 
     }
 
-    /**
-     * 验证sns账号密码
-     */
-    private function validateSnsUser($email,$password){
-
-        $url = config('sns.validate.url');
-        // $url = 'http://localhost:8800/N1CwG46Ml';
-        $referer = config('sns.validate.referer');
-        $key = config('sns.key');
-
-
-        // echo $url,$referer,$key;
-
-        $curl = new Curl();
-        $curl->setReferrer($referer);
-
-        $data = $curl->post($url,[
-            'key' => $key,
-            'email' => $email,
-            'password' => $password
-            ]);
-       
-            $userData = json_decode($data,true);
-            return $userData;
-    }
+   
 
     private function wrapUserinfo($userInfo)
     {
@@ -92,20 +77,31 @@ class WeixinAuthController extends Controller
        $userdata['name'] = $userInfo['nickname'];
        $userdata['email'] = $userInfo['openid'].'@kenrobot.com';
        $userdata['avatar_url'] = $userInfo['headimgurl'];
-
+       return $userdata;
     }
 
 
     private function getUserinfo($key = '')
     {
-
+        $key = $key;
         $url = config('weixin.userinfo.url');
         $url .="?key=$key";
-
         $curl = new Curl();
         $data = $curl->get($url);
         $userData = json_decode($data,true);
         return $this->wrapUserinfo($userData);
+      //  return $userData;
+    }
+
+    private function getQrcodeurl($key = '')
+    {
+
+        $url = config('weixin.qrcode.url');
+        $url .="$key";
+        $curl = new Curl();
+        $qrcodeurl = $curl->get($url);
+
+        return $qrcodeurl;
       //  return $userData;
     }
 
