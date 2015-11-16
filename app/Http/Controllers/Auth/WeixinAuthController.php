@@ -48,6 +48,9 @@ class WeixinAuthController extends Controller
     public function weixinLogin(Request $request)
     {
         $key = $request->input('key');
+        if (Auth::check()) {
+            return 1;
+        }
 
         // $key = Session::get('key');
         $userInfo = $this->getUserinfo($key);
