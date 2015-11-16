@@ -26,6 +26,23 @@ class WeixinAuthController extends Controller
         $this->loginPath = '/login';        
     }
 
+    public function homeIndex()
+    {
+        $qrcode = rand(70000,80000);
+        $qrcodeurl = $this->getQrcodeurl($qrcode);
+        $key = 'qrscene_'.$qrcode;
+        Session::put('key',$key);
+
+        $url = config('weixin.userinfo.url')."?key=$key";
+
+
+        if (Auth::check()) {
+            $user = Auth::user();
+        }
+    
+        return view('index',compact('user','qrcode','qrcodeurl','key'));
+    }
+
  
 
     public function index()
