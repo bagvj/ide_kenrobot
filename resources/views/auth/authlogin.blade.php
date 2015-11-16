@@ -3,10 +3,11 @@
 	$(function(){
 		$("#login-tabs").tabs();
 
-		setInterval(function(){
+		var time1 = setInterval(function(){
 			$.get('/weixinlogin?key={{$key}}', function(ret){
 				if (ret == 1) {
 					window.location.href = "{{url('/')}}";
+					time1.stop();
 				};
 			});
 		}, 3000);
