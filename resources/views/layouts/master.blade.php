@@ -30,12 +30,18 @@
           <li><a href="http://www.kenrobot.com/index.php?app=shop">商城</a></li>
         </ul>
       </div>
+
       <div class="login">
         <ul>
+          @if(isset($user))
+          <li><a href="auth/logout" class="logoutBtn">退出</a></li>
+          @else
           <li><a href="http://www.kenrobot.com/index.php?app=public&mod=Register&act=index">注册</a></li>
           <li><a href="javascript:;" class="loginBtn">登录</a></li>
+          @endif
         </ul>
       </div>
+      
       <div class="person-wrap">
         <div class="person">
           <a href="http://www.kenrobot.com/index.php?app=public&mod=Index&act=allshow" class="photo">
