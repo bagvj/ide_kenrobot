@@ -6,11 +6,11 @@
 		var time1 = setInterval(function(){
 			$.get('/weixinlogin?key={{$key}}', function(ret){
 				if (ret == 1) {
+					clearInterval(time1);
 					window.location.href = "{{url('/')}}";
-					time1.stop();
 				};
 			});
-		}, 3000);
+		}, 1000);
 	})
 </script>
 <div id="login-tabs">
