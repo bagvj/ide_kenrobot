@@ -10,7 +10,7 @@
 					window.location.href = "{{url('/')}}";
 				};
 			});
-		}, 1000);
+		}, 3000);
 	})
 </script>
 <div id="login-tabs">
