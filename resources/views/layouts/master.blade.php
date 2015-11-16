@@ -34,7 +34,7 @@
         <div class="person-wrap">
           <div class="person">
             <a href="#" class="photo">
-              <img src="{{ $user->avatar_url or asset('assets/img/photo.png') }}" />
+              <img src="{{ !empty($user->avatar_url) ? $user->avatar_url : asset('assets/img/photo.png') }}" />
             </a>
             <i class="iconfont icon-dot">&#xe600;</i>
             <span class="welcome">

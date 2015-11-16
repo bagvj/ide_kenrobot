@@ -33,7 +33,7 @@ class SnsAuthController extends Controller
 
 
     /**
-     * Display a listing of the resource.
+     * SNS登录.
      *
      * @return \Illuminate\Http\Response
      */
@@ -74,12 +74,14 @@ class SnsAuthController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
         if (empty($email) || empty($password)) {
-            redirect('/login');
+            redirect('/login')->with('message','登录失败');
         }
 
         $data = $this->validateSnsUser($email,$password);
+
         if ($data == null) {
-            return redirect('/');//跳转根目录
+            //验证失败了也要退出
+            return redirect('/login');//跳转回登录界面
         }
         // dd($data);
         $userInfo = array_only($data,['uid','uname','email','avatar_big']);
@@ -94,6 +96,7 @@ class SnsAuthController extends Controller
         if ($user == null) {
            $user = $this->createUser($userInfo);
         }
+        Auth::logout();
         Auth::login($user,true);
         return redirect('/');
 
@@ -105,6 +108,8 @@ class SnsAuthController extends Controller
 
     /**
      * 验证sns账号密码
+     * 这个应该移到controller外面去
+     * 且应该和
      */
     private function validateSnsUser($email,$password){
 
@@ -148,7 +153,10 @@ class SnsAuthController extends Controller
         return $userData;
     }
 
-
+    /**
+     * 弃用方法，这个应该写在单元测试里，
+     *
+     */
     private function getFakeUserinfo($token = '')
     {
         $name = str_random();
@@ -163,6 +171,7 @@ class SnsAuthController extends Controller
 
     /**
      * 获取本地用户
+     * 这个功能应该放在UserRepository里
      */
     private function getUser($data = array()){
         if (!isset($data['uid'])) {
@@ -176,6 +185,7 @@ class SnsAuthController extends Controller
 
     /**
      * 创建用户
+     * 应该放在UserRepository里面
      */
     private function createUser($data = array())
     {

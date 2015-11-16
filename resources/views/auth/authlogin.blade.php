@@ -55,7 +55,9 @@
 								<div class="tab-pane active" id="panel-625269">
 									<form method="POST" action="/snspostlogin">
 								    {!! csrf_field() !!}
-
+								    <div>
+								    	{{ $message or '' }}
+								    </div>
 								    <div>
 								        账户
 								        <input type="email" name="email" value="{{ old('email') }}">
