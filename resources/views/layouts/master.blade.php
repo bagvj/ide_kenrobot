@@ -31,13 +31,13 @@
       <a href="javascript:;" title="返回" class="baseLoginBtn" data-action="baseLogin" style="display:none;"></a>
       <div class="baseLogin">
         <div class="title">登录到啃萝卜</div>
-        <form method="POST" action="/snspostlogin">
+        <form>
           {!! csrf_field() !!}
           <div class="field">
             <label class="email">
               <!-- <i class="iconauth"></i> -->
             </label>
-            <input type="email" name="email" value="{{ old('email') }}" placeholder="邮箱地址/手机号码" />
+            <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="邮箱地址/手机号码" />
           </div>
           <div class="field">
               <label class="password">
@@ -49,7 +49,7 @@
           </div>
           <div>
               <input id="qrcode_key" type="hidden" value="{{$key or ''}}">
-              <input class="submitBtn" type="submit" value="登录"/>
+              <input class="submitBtn" type="button" value="登录"/>
           </div>
         </form>
       </div>
