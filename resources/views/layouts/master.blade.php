@@ -44,6 +44,7 @@
               <input type="checkbox" name="remember" /><label>记住我</label>
           </div>
           <div class="submit">
+              
               <input id="qrcode_key" type="hidden" value="{{$key or ''}}">
               <input type="submit" value="登录"/>
           </div>
