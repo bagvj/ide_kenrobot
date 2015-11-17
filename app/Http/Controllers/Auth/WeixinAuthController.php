@@ -28,6 +28,23 @@ class WeixinAuthController extends Controller
         $this->loginPath = '/login';        
     }
 
+    public function homeIndex()
+    {
+        $qrcode = rand(70000,80000);
+        $qrcodeurl = $this->getQrcodeurl($qrcode);
+        $key = 'qrscene_'.$qrcode;
+        Session::put('key',$key);
+
+        $url = config('weixin.userinfo.url')."?key=$key";
+
+
+        if (Auth::check()) {
+            $user = Auth::user();
+        }
+    
+        return view('index',compact('user','qrcode','qrcodeurl','key'));
+    }
+
  
     /**
      * 生成qrcode,获取二维码，这部分不应该写在这里，应该放到Weixin目录下
@@ -54,6 +71,9 @@ class WeixinAuthController extends Controller
     public function weixinLogin(Request $request)
     {
         $key = $request->input('key');
+        if (Auth::check()) {
+            return 1;
+        }
 
         // $key = Session::get('key');
         $userInfo = $this->getUserinfo($key);
@@ -66,7 +86,7 @@ class WeixinAuthController extends Controller
         if ($user == null) {
            $user = $this->createUser($userInfo);
         }
-        Auth::login($user,true);
+        Auth::login($user,false);
         return 1;
 
     }

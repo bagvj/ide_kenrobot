@@ -11,7 +11,9 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::get('/home', 'HomeController@index');
+Route::get('/', 'Auth\WeixinAuthController@homeIndex');
+
 Route::post('/build', 'HomeController@build');
 Route::get('/download', 'HomeController@download');
 
