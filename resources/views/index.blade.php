@@ -3,13 +3,13 @@
 @section('main')
  <div class="header">
     <div class="content">
-      <span><a href="{{$nav['self']}}" class="logo"></a></span>
+      <span><a href="{{$nav['self'] or '#'}}" class="logo"></a></span>
       <div class="nav">
         <ul>
-          <li><a href="{{$nav['mainpage']}}">我的主页</a></li>
-          <li><a href="{{$nav['develop']}}" class="on">开发</a></li>
-          <li><a href="{{$nav['square']}}">广场</a></li>
-          <li><a href="{{$nav['market']}}">商城</a></li>
+          <li><a href="{{$nav['mainpage'] or '#'}}">我的主页</a></li>
+          <li><a href="{{$nav['develop'] or '#'}}" class="on">开发</a></li>
+          <li><a href="{{$nav['square'] or '#'}}">广场</a></li>
+          <li><a href="{{$nav['market'] or '#'}}">商城</a></li>
         </ul>
       </div>
 
