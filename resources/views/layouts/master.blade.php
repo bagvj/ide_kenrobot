@@ -16,7 +16,7 @@
   <link rel="stylesheet" type="text/css" href="   {{ asset('assets/css/index.css') }} " />
   <link href="{{ asset('assets/img/favicon.ico') }}" type="image/x-icon" rel="shortcut icon" />
   <script data-main="assets/js/main" src=" {{ asset('assets/js/lib/require.min.js')}}" type="text/javascript"></script>
-
+  @yield('scripts')
  </head>
  <body>
    @yield('main')

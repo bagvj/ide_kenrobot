@@ -1,4 +1,4 @@
-define(["jquery"], function($) {
+define(["jquery",'hljs'], function($,hljs) {
 	var containerId;
 	var configs;
 	var getFlowchart;
@@ -21,6 +21,10 @@ define(["jquery"], function($) {
 	function refresh() {
 		var source = gen();
 		$('#' + containerId).html(source);
+		$('pre code').each(function(i, block) {
+                hljs.highlightBlock(block);
+        });
+
 	}
 
 	//生成代码

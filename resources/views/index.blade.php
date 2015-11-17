@@ -1,6 +1,8 @@
 @extends('layouts.master')
 
 @section('main')
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/highlight/styles/default.css') }}" />
+
  <div class="header">
     <div class="content">
       <span><a href="{{$nav['self'] or '#'}}" class="logo"></a></span>
@@ -216,7 +218,12 @@
             <div class="code-side">
                 <div class="bar">C语言</div>
                 <div class="content">
-                    <textarea id="c_code_input" class="c_code_area"></textarea>
+                    <pre>
+                        <code id="c_code_input" class=""></>
+                        
+                        </code>
+                    </pre>
+                    <!-- <textarea id="c_code_input" class="c_code_area"></textarea> -->
                     <div class="code_view"></div>
                 </div>
             </div>
@@ -233,5 +240,10 @@
         <div class="btn4 download">下载</div>
     </div>
 </div>
+
+ <!--  <link rel="stylesheet" type="text/css" href="{{ asset('assets/highlight/styles/default.css') }}" />
+  <script src="{{ asset('assets/highlight/highlight.pack.js') }}"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+ -->
 
 @stop

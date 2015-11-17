@@ -22,7 +22,8 @@ require.config({
 		"html2canvas": "html2canvas.min",
 		"defaultJs": "../default",
 		"guide": "../guide",
-		"keninit": "../keninit"
+		"keninit": "../keninit",
+		'hljs':"../../highlight/highlight.pack"
 	},
 	shim: {
 		'jquery-ui': {
@@ -58,7 +59,7 @@ var hasInitedSoftware = 0;
 //project_info
 //本地项目内存地址
 var projectInfo = null;
-require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 'flowchartInfo', 'eventcenter', 'defaultJs', 'guide', 'flowchart_item_set', 'flowchartConfigs', 'genC', 'keninit', 'jquery-mousewheel'], function($, cjxm, software, hardware, kenrobotJsPlumb, kenrobotDialog, flowchartInfo, eventcenter, defaultJs, guide, fis, flowchartConfigs, genC, keninit) {
+require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 'flowchartInfo', 'eventcenter', 'defaultJs', 'guide', 'flowchart_item_set', 'flowchartConfigs', 'genC', 'keninit','hljs', 'jquery-mousewheel'], function($, cjxm, software, hardware, kenrobotJsPlumb, kenrobotDialog, flowchartInfo, eventcenter, defaultJs, guide, fis, flowchartConfigs, genC, keninit,hljs) {
 
 	cjxm.init();
 
@@ -70,8 +71,6 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
         });
-
-
 	// 初始化硬件元件
 	initHardwareElement(fis);
 
