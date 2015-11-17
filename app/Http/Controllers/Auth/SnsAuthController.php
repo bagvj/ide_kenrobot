@@ -11,6 +11,7 @@ use Auth;
 use Session;
 use App\User;
 use Curl\Curl;
+use App\WebAuth\Factory as WebAuthFactory;
 
 class SnsAuthController extends Controller
 {
@@ -33,7 +34,7 @@ class SnsAuthController extends Controller
 
 
     /**
-     * Display a listing of the resource.
+     * SNS登录.
      *
      * @return \Illuminate\Http\Response
      */
@@ -73,31 +74,33 @@ class SnsAuthController extends Controller
     {
         $email = $request->input('email');
         $password = $request->input('password');
-        if (empty($email) || empty($password)) {
-            redirect('/login');
+
+        if (Auth::check()) {
+            return 2;
         }
 
-        $data = $this->validateSnsUser($email,$password);
-        if ($data == null) {
-            return redirect('/');//跳转根目录
+        // dd($request->all());
+
+        $snsauth = WebAuthFactory::create('sns');
+        $crendentials = $request->only('email','password');
+        // dd($crendentials);
+        $loginResult = $snsauth->validate($crendentials);
+
+        if ($loginResult === false) {
+            return 0;
         }
-        // dd($data);
-        $userInfo = array_only($data,['uid','uname','email','avatar_big']);
 
-        $userInfo['name'] = $userInfo['uname'];
-        unset($userInfo['uname']);
+        $userInfo = $snsauth->user();
 
-        $userInfo['avatar_url'] = isset($userInfo['avatar_big']) ? $userInfo['avatar_big'] : '';
-        unset($userInfo['avatar_big']);
-
+        //这部分逻辑移到UserRepository里面
         $user = $this->getUser($userInfo);
         if ($user == null) {
            $user = $this->createUser($userInfo);
         }
+        //成功后，先调用推出
+        Auth::logout();
         Auth::login($user,true);
-        return redirect('/');
-
-
+        return 1;
 
     }
 
@@ -105,6 +108,8 @@ class SnsAuthController extends Controller
 
     /**
      * 验证sns账号密码
+     * 这个应该移到controller外面去
+     * 且应该和
      */
     private function validateSnsUser($email,$password){
 
@@ -148,7 +153,10 @@ class SnsAuthController extends Controller
         return $userData;
     }
 
-
+    /**
+     * 弃用方法，这个应该写在单元测试里，
+     *
+     */
     private function getFakeUserinfo($token = '')
     {
         $name = str_random();
@@ -163,6 +171,7 @@ class SnsAuthController extends Controller
 
     /**
      * 获取本地用户
+     * 这个功能应该放在UserRepository里
      */
     private function getUser($data = array()){
         if (!isset($data['uid'])) {
@@ -176,6 +185,7 @@ class SnsAuthController extends Controller
 
     /**
      * 创建用户
+     * 应该放在UserRepository里面
      */
     private function createUser($data = array())
     {

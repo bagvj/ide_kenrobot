@@ -46,7 +46,6 @@
               <input type="password" name="password" id="password" />
           </div>
           <div class="remember">
-              <input type="checkbox" name="remember" /><label>记住我</label>
           </div>
           <div>
               <input id="qrcode_key" type="hidden" value="{{$key or ''}}">

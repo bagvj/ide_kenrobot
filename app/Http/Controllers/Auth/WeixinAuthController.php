@@ -22,7 +22,9 @@ class WeixinAuthController extends Controller
     public function __construct()
     {
       //  $this->middleware('guest', ['except' => 'getLogout']);
+        //跳转路径
         $this->redirectPath = '/';
+        //登录路径
         $this->loginPath = '/login';        
     }
 
@@ -44,7 +46,11 @@ class WeixinAuthController extends Controller
     }
 
  
-
+    /**
+     * 生成qrcode,获取二维码，这部分不应该写在这里，应该放到Weixin目录下
+     * 同时，qrcode的划分要有一个详细的配置
+     *
+     */
     public function index()
     {
         $qrcode = rand(70000,80000);
