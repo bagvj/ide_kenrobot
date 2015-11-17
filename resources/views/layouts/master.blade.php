@@ -28,12 +28,15 @@
     <li><a href="#login-tab-2">微信登录</a></li>
   </ul>
   <div id="login-tab-1">
-      <form method="POST" action="/snspostlogin" class="loginForm">
+      <form class="loginForm">
           {!! csrf_field() !!}
+          <div class="field" id="loginerror" style="color:red;">
+            
+          </div>
 
           <div class="field">
             <label>账户</label>
-            <input type="email" name="email" value="{{ old('email') }}" />
+            <input type="email" name="email" id='email' value="{{ old('email') }}" />
           </div>
           <div class="field">
               <label>密码</label>
@@ -41,11 +44,12 @@
           </div>
           <div class="remember">
               <input type="checkbox" name="remember" /><label>记住我</label>
+
           </div>
           <div class="submit">
               
               <input id="qrcode_key" type="hidden" value="{{$key or ''}}">
-              <input type="submit" value="登录"/>
+              <input id="snslogin" type="button" value="登录"/>
           </div>
       </form>
   </div>
