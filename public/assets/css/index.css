@@ -602,8 +602,8 @@ td {
 
 .hardware-board-item {
     background: url(../img/hardware/board.png) no-repeat;
-    width: 268px;
-    height: 185px;
+    width: 240px;
+    height: 148px;
 }
 
 
@@ -646,7 +646,7 @@ td {
 }
 
 .hardware-linePatrol-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/linePatrol.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -660,7 +660,7 @@ td {
 }
 
 .hardware-infraredIn-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/infraredIn.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -688,7 +688,7 @@ td {
 }
 
 .hardware-lean-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/lean.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -702,7 +702,7 @@ td {
 }
 
 .hardware-linePatrolRow-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/linePatrolRow.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -716,7 +716,7 @@ td {
 }
 
 .hardware-keyboard-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/keyboard.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -753,7 +753,7 @@ td {
 }
 
 .hardware-relay-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/relay.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -767,7 +767,7 @@ td {
 }
 
 .hardware-buzzer-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/buzzer.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -795,7 +795,7 @@ td {
 }
 
 .hardware-oneBitOut-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/oneBitOut.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -885,7 +885,7 @@ td {
 }
 
 .hardware-humidity-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/humidity.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -958,7 +958,7 @@ td {
 }
 
 .hardware-ultrasoundLocation-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/ultrasoundLocation.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -972,7 +972,7 @@ td {
 }
 
 .hardware-electronicCompass-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/electronicCompass.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -986,7 +986,7 @@ td {
 }
 
 .hardware-iicOut-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/iicOut.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -1000,7 +1000,7 @@ td {
 }
 
 .hardware-iicIn-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/iicIn.png) no-repeat;
     width: 43px;
     height: 78px;
 }
