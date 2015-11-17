@@ -23,6 +23,7 @@ define(["jquery",'hljs'], function($,hljs) {
 		$('#' + containerId).html(source);
 		$('pre code').each(function(i, block) {
                 hljs.highlightBlock(block);
+                
         });
 
 	}
