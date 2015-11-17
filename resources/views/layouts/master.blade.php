@@ -19,7 +19,6 @@
 
  </head>
  <body>
- 
    @yield('main')
   <div id="login_dialog" style="display:none">
    

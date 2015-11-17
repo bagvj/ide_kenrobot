@@ -435,7 +435,12 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 			return false;
 		}
 		addPorts(node);
-		jsPlumb_instance.draggable($(node),  {grid: [5, 5]});
+		jsPlumb_instance.draggable($(node),  {
+			grid: [5, 5],
+			stop: function(e, ui){
+				
+			}
+		});
 
 		//根据元素类型初始化连接
 		addConnection(node);
@@ -761,7 +766,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 			var mergeNode = initNode(mergeNodeParam);
 			var mergeNodeEndPoints = jsPlumb_instance.getEndpoints($(mergeNode));
 			//若拖拽进入已有元素，则自动连接
-			initConnection(mergeNode, e.target, x, y);
+			initConnection(mergeNode, e.target, x, y, 0, 40);
 		}
 		var node = initNode(flowchart_obj_param);
 
@@ -784,7 +789,9 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 	 * @param float centerX 实际中心点当前位置
 	 * @param float centerY 实际中心点当前位置
 	 */
-	function initConnection(node, target, centerX, centerY) {
+	function initConnection(node, target, centerX, centerY, offsetX, offsetY) {
+		offsetX = offsetX || 0;
+		offsetY = offsetY || 0;
 		var targetDiv = target.closest("div");
 		//拖拽位置所指对象的位置
 		var baseX = $(targetDiv).position().left;
@@ -817,12 +824,12 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 		switch (sourceEndPoint.anchor.type) {
 			case "TopCenter":
 				objX = baseX;
-				objY = baseY - $(targetDiv).outerHeight() - 20;
+				objY = baseY - $(targetDiv).outerHeight() - 30;
 				break;
 			case "RightMiddle":
-				objX = baseX + $(node).outerWidth() + 20;
+				objX = baseX + $(node).outerWidth() + 30;
 				// objX = baseX;
-				objY = baseY + $(targetDiv).outerHeight() + 20;
+				objY = baseY + $(targetDiv).outerHeight() + 30;
 				break;
 			case "BottomCenter":
 				objX = baseX;
@@ -831,12 +838,14 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 			case "LeftMiddle":
 				// objX = baseX - $(node).outerWidth() - 20;
 				objX = baseX;
-				objY = baseY + $(targetDiv).outerHeight() + 20;
+				objY = baseY + $(targetDiv).outerHeight() + 30;
 				break;
 			default:
 				break;
 		}
 
+		objX += offsetX;
+		objY += offsetY;
 		$(node).css("top", objY).css("left", objX);
 		//重绘流程元素
 		jsPlumb_instance.repaint(node);
@@ -902,6 +911,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 			} else {
 				positionY += $(connections[i].target).outerHeight() + 20;
 				if (nodeType == "loop") {
+					positionY += 30;
+				} else if(nodeType == "tjfzMerge") {
 					positionY += 30;
 				}
 				$(connections[i].target).css("top", positionY);

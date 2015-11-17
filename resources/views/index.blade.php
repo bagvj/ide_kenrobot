@@ -3,13 +3,13 @@
 @section('main')
  <div class="header">
     <div class="content">
-      <span><a href="http://www.kenrobot.com/index.php?app=square&mod=Index&act=index" class="logo"></a></span>
+      <span><a href="{{$nav['self'] or '#'}}" class="logo"></a></span>
       <div class="nav">
         <ul>
-          <li><a href="http://www.kenrobot.com/index.php?app=public&mod=Index&act=allshow">我的主页</a></li>
-          <li><a href="http://platform.kenrobot.com/" class="on">开发</a></li>
-          <li><a href="http://www.kenrobot.com/index.php?app=square&mod=Index&act=listshow">广场</a></li>
-          <li><a href="http://www.kenrobot.com/index.php?app=shop">商城</a></li>
+          <li><a href="{{$nav['mainpage'] or '#'}}">我的主页</a></li>
+          <li><a href="{{$nav['develop'] or '#'}}" class="on">开发</a></li>
+          <li><a href="{{$nav['square'] or '#'}}">广场</a></li>
+          <li><a href="{{$nav['market'] or '#'}}">商城</a></li>
         </ul>
       </div>
 
@@ -24,15 +24,18 @@
         </ul>
       </div>
       
+      @if(isset($user))
       <div class="person-wrap">
         <div class="person">
-          <a href="http://www.kenrobot.com/index.php?app=public&mod=Index&act=allshow" class="photo">
-            <img src="{{ $user->avatar_url or asset('assets/img/photo.png') }}" />
-          </a>
-          <span class="welcome">Hi,{{ $user->name or '萝卜头'}}</span>
+            <a href="http://www.kenrobot.com/index.php?app=public&mod=Index&act=allshow" class="photo">
+                <img src="{{ $user->avatar_url or asset('assets/img/photo.png') }}" />
+            </a>
+            <span class="welcome">Hi,{{$user->name}}</span>
         </div>
       </div>
-      <div class="search-wrap">
+      @endif
+
+      <!--<div class="search-wrap">
         <div class="search">
           <form method="post" action="#">
             {{ csrf_field() }}
@@ -40,7 +43,7 @@
             <i class="iconfont icon">&#xe665;</i>
           </form>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
 

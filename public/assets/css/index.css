@@ -602,8 +602,8 @@ td {
 
 .hardware-board-item {
     background: url(../img/hardware/board.png) no-repeat;
-    width: 268px;
-    height: 185px;
+    width: 240px;
+    height: 148px;
 }
 
 
@@ -646,7 +646,7 @@ td {
 }
 
 .hardware-linePatrol-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/linePatrol.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -660,7 +660,7 @@ td {
 }
 
 .hardware-infraredIn-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/infraredIn.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -688,7 +688,7 @@ td {
 }
 
 .hardware-lean-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/lean.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -702,9 +702,9 @@ td {
 }
 
 .hardware-linePatrolRow-item {
-    background: url(../img/hardware/default.png) no-repeat;
-    width: 43px;
-    height: 78px;
+    background: url(../img/hardware/linePatrolRow.png) no-repeat;
+    width: 100px;
+    height: 80px;
 }
 
 
@@ -716,9 +716,9 @@ td {
 }
 
 .hardware-keyboard-item {
-    background: url(../img/hardware/default.png) no-repeat;
-    width: 43px;
-    height: 78px;
+    background: url(../img/hardware/keyboard.png) no-repeat;
+    width: 80px;
+    height: 100px;
 }
 
 .hardware-adapter-item {
@@ -753,7 +753,7 @@ td {
 }
 
 .hardware-relay-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/relay.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -767,7 +767,7 @@ td {
 }
 
 .hardware-buzzer-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/buzzer.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -795,7 +795,7 @@ td {
 }
 
 .hardware-oneBitOut-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/oneBitOut.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -885,7 +885,7 @@ td {
 }
 
 .hardware-humidity-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/humidity.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -913,7 +913,7 @@ td {
 }
 
 .hardware-ad-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/ad.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -958,7 +958,7 @@ td {
 }
 
 .hardware-ultrasoundLocation-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/ultrasoundLocation.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -972,7 +972,7 @@ td {
 }
 
 .hardware-electronicCompass-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/electronicCompass.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -986,7 +986,7 @@ td {
 }
 
 .hardware-iicOut-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/iicOut.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -1000,16 +1000,15 @@ td {
 }
 
 .hardware-iicIn-item {
-    background: url(../img/hardware/default.png) no-repeat;
+    background: url(../img/hardware/iicIn.png) no-repeat;
     width: 43px;
     height: 78px;
 }
 
 .hardware-container-item {
     top: 20px;
-    font-size: 0px;
+    font-size: 0;
     cursor: pointer;
-    color: #F00;
     background-size: contain;
 }
 
@@ -1052,7 +1051,7 @@ td {
 
 .flowchart-button-item {
     background: url(../img/hardware/button-big.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1068,7 +1067,7 @@ td {
 
 .flowchart-switch-item {
     background: url(../img/hardware/switch.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1084,7 +1083,7 @@ td {
 
 .flowchart-linePatrol-item {
     background: url(../img/hardware/default.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1100,7 +1099,7 @@ td {
 
 .flowchart-infraredIn-item {
     background: url(../img/hardware/default.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1116,7 +1115,7 @@ td {
 
 .flowchart-soundSensor-item {
     background: url(../img/hardware/soundSensor.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1132,7 +1131,7 @@ td {
 
 .flowchart-lean-item {
     background: url(../img/hardware/default.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1148,7 +1147,7 @@ td {
 
 .flowchart-linePatrolRow-item {
     background: url(../img/hardware/default.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1164,7 +1163,7 @@ td {
 
 .flowchart-keyboard-item {
     background: url(../img/hardware/default.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1189,7 +1188,7 @@ td {
 
 .flowchart-light-item {
     background: url(../img/hardware/light.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1205,7 +1204,7 @@ td {
 
 .flowchart-relay-item {
     background: url(../img/hardware/default.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1221,7 +1220,7 @@ td {
 
 .flowchart-buzzer-item {
     background: url(../img/hardware/default.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1237,7 +1236,7 @@ td {
 
 .flowchart-infraredOut-item {
     background: url(../img/hardware/infraredOut.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1253,7 +1252,7 @@ td {
 
 .flowchart-oneBitOut-item {
     background: url(../img/hardware/default.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1269,7 +1268,7 @@ td {
 
 .flowchart-digitalTube-item {
     background: url(../img/hardware/digitalTube.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1288,7 +1287,7 @@ td {
 
 .flowchart-streeringEngine-item {
     background: url(../img/hardware/streeringEngine.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1304,7 +1303,7 @@ td {
 
 .flowchart-dcMotor-item {
     background: url(../img/hardware/dcMotor.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1323,7 +1322,7 @@ td {
 
 .flowchart-illumination-item {
     background: url(../img/hardware/illumination.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1339,7 +1338,7 @@ td {
 
 .flowchart-temperatue-item {
     background: url(../img/hardware/temperatue.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1355,7 +1354,7 @@ td {
 
 .flowchart-humidity-item {
     background: url(../img/hardware/default.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1371,7 +1370,7 @@ td {
 
 .flowchart-pm25-item {
     background: url(../img/hardware/pm25.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1387,7 +1386,7 @@ td {
 
 .flowchart-ad-item {
     background: url(../img/hardware/default.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1406,7 +1405,7 @@ td {
 
 .flowchart-serialPortIn-item {
     background: url(../img/hardware/serialPortIn.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1422,7 +1421,7 @@ td {
 
 .flowchart-serialPortOut-item {
     background: url(../img/hardware/default.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1438,7 +1437,7 @@ td {
 
 .flowchart-ultrasoundLocation-item {
     background: url(../img/hardware/default.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1454,7 +1453,7 @@ td {
 
 .flowchart-electronicCompass-item {
     background: url(../img/hardware/default.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1470,7 +1469,7 @@ td {
 
 .flowchart-iicOut-item {
     background: url(../img/hardware/default.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1486,7 +1485,7 @@ td {
 
 .flowchart-iicIn-item {
     background: url(../img/hardware/default.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 36px;
@@ -1502,7 +1501,7 @@ td {
 
 .flowchart-tjfz-item {
     background: url(../img/flowchart/tjfz.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 26px;
@@ -1515,7 +1514,7 @@ td {
 
 .flowchart-tjxh-item {
     background: url(../img/flowchart/tjxh.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 26px;
@@ -1528,7 +1527,7 @@ td {
 
 .flowchart-yyxh-item {
     background: url(../img/flowchart/yyxh.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 26px;
@@ -1541,7 +1540,7 @@ td {
 
 .flowchart-jsxh-item {
     background: url(../img/flowchart/jsxh.png) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 26px;
@@ -1554,7 +1553,7 @@ td {
 
 .flowchart-fh-item {
     background: url(../img/flowchart/fh.jpg) no-repeat center;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 26px;
@@ -1570,7 +1569,7 @@ td {
 
 .flowchart-yshs-item {
     background: url(../img/flowchart/yshs.png) no-repeat;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 26px;
@@ -1583,7 +1582,7 @@ td {
 
 .flowchart-fzhs-item {
     background: url(../img/flowchart/fzhs.png) no-repeat;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 26px;
@@ -1596,7 +1595,7 @@ td {
 
 .flowchart-dshs-item {
     background: url(../img/flowchart/dshs.png) no-repeat;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 26px;
@@ -1609,7 +1608,7 @@ td {
 
 .flowchart-sjhs-item {
     background: url(../img/flowchart/sjhs.png) no-repeat;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 26px;
@@ -1622,7 +1621,7 @@ td {
 
 .flowchart-zdyhs-item {
     background: url(../img/flowchart/zdyhs.png) no-repeat;
-    font-size: 0;
+    font-size: 14px;
     background-size: contain;
     width: 75px;
     height: 26px;
