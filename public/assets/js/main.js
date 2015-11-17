@@ -59,7 +59,7 @@ var hasInitedSoftware = 0;
 //project_info
 //本地项目内存地址
 var projectInfo = null;
-require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 'flowchartInfo', 'eventcenter', 'defaultJs', 'guide', 'flowchart_item_set', 'flowchartConfigs', 'genC', 'keninit','hljs', 'jquery-mousewheel'], function($, cjxm, software, hardware, kenrobotJsPlumb, kenrobotDialog, flowchartInfo, eventcenter, defaultJs, guide, fis, flowchartConfigs, genC, keninit,hljs) {
+require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 'flowchartInfo', 'eventcenter', 'defaultJs', 'guide', 'flowchart_item_set', 'flowchartConfigs', 'genC', 'keninit','hljs', 'jquery-mousewheel'], function($, cjxm, software, hardware, kenrobotJsPlumb, kenrobotDialog, flowchartInfo, eventcenter, defaultJs, guide, fis, flowchartConfigs, genC, keninit, hljs) {
 
 	cjxm.init();
 
@@ -370,7 +370,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 	}
 
 	$('.code-side .code_view').click(function(e) {
-		alert($("#c_code_input").html());
+		alert(genC.gen());
 	});
 
 	$('#search_input').focus(function(){

@@ -18,14 +18,12 @@ define(["jquery",'hljs'], function($,hljs) {
 		getVars = getVarList;
 	}
 
-	function refresh() {
-		var source = gen();
+	function refresh(source) {
+		source = source || gen();
 		$('#' + containerId).html(source);
 		$('pre code').each(function(i, block) {
-                hljs.highlightBlock(block);
-                
+           hljs.highlightBlock(block);
         });
-
 	}
 
 	//生成代码
@@ -288,6 +286,7 @@ define(["jquery",'hljs'], function($,hljs) {
 
 	return {
 		init: init,
-		refresh: refresh
+		refresh: refresh,
+		gen: gen,
 	};
 });

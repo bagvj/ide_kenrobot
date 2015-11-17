@@ -36,19 +36,8 @@
         </div>
       </div>
       @endif
-
-      <!--<div class="search-wrap">
-        <div class="search">
-          <form method="post" action="#">
-            {{ csrf_field() }}
-            <input class="search_input" id="search_input" type="text" placeholder="搜索" autocomplete="off" name="search_input"></input>
-            <i class="iconfont icon">&#xe665;</i>
-          </form>
-        </div>
-      </div>-->
     </div>
   </div>
-
 
 <div class="main">
     <div class="mod">
@@ -123,13 +112,6 @@
             </ul>
         </div>
         <div class="canvas" id="hardware-container"></div>
-        <div class="side trolley">
-            <div class="bar">已配置模块<div class="gwc"></div></div>
-            <div class="list hardware_part_list">
-                <ul></ul>
-            </div>
-            <div class="btn2 buy" onclick="window.open('http://www.kenrobot.com/index.php?app=shop');">元件选购</div>
-        </div>
     </div>
     <div class="mod">
         <div class="nav-second">
@@ -189,45 +171,53 @@
             </ul>
         </div>
         <div class="canvas" id="flowchart-container"></div>
-        <div class="side">
-            <div class="yjlj-side">
-                <div class="bar">硬件连接</div>
-                <div class="content" id="yjlj-content">
+    </div>
+    <div class="side">
+        <div class="trolley-side">
+            <div class="bar">已配置模块<div class="car"></div></div>
+            <div class="list hardware_part_list">
+                <ul></ul>
+            </div>
+            <div class="buy" onclick="window.open('http://www.kenrobot.com/index.php?app=shop');">元件选购</div>
+        </div>
+        <div class="var-side">
+            <div class="bar">变量</div>
+            <div class="content">
+                <table id="var-table">
+                    <tr>
+                        <th>name</th>
+                        <th>type</th>
+                        <th>kind</th>
+                        <th>initial</th>
+                        <th>desc</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="operator">
+                <div class="btn add">增加</div>
+                <div class="btn del">删除</div>
+                <div class="btn">修改</div>
+            </div>
+        </div>
+        <div class="code-side">
+            <div class="bar">C语言</div>
+            <div class="content">
+                <div class="code-wrap">
+                <pre>
+                    <code id="c_code_input" class="c_code_area">#include "Rosys.h"
+
+void setup(){
+    initTimer3();
+    sei();
+}
+
+void loop(){
+
+}</code>
+                </pre>
                 </div>
             </div>
-            <div class="var-side">
-                <div class="bar">变量</div>
-                <div class="content">
-                    <table id="var-table">
-                        <tr>
-                            <th>name</th>
-                            <th>type</th>
-                            <th>kind</th>
-                            <th>initial</th>
-                            <th>scope</th>
-                            <th>desc</th>
-                        </tr>
-                    </table>
-                </div>
-                <div class="operator">
-                    <div class="btn add">增加</div>
-                    <div class="btn del">删除</div>
-                    <div class="btn">修改</div>
-                </div>
-            </div>
-            <div class="code-side">
-                <div class="bar">C语言</div>
-                <div class="content">
-                    <pre>
-                        <code id="c_code_input" class=""></>
-                        
-                        
-                        </code>
-                    </pre>
-                    <!-- <textarea id="c_code_input" class="c_code_area"></textarea> -->
-                    <div class="code_view"></div>
-                </div>
-            </div>
+                <div class="code_view"></div>
         </div>
     </div>
     <div class="tabs">
@@ -237,14 +227,8 @@
         </ul>
     </div>
     <div class="mod_btn">
-        <div class="btn3 save">保存</div>
-        <div class="btn4 download">下载</div>
+        <div class="save">保存</div>
+        <div class="download">下载</div>
     </div>
 </div>
-
- <!--  <link rel="stylesheet" type="text/css" href="{{ asset('assets/highlight/styles/default.css') }}" />
-  <script src="{{ asset('assets/highlight/highlight.pack.js') }}"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
- -->
-
 @stop

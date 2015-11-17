@@ -632,7 +632,7 @@ body {
     position: absolute;
     float: left;
     background-color: #eeeeee;
-    padding: 0 180px;
+    padding: 0 240px 0 180px;
     display: none;
 }
 
@@ -738,9 +738,8 @@ body {
     position: absolute;
     right: 0px;
     bottom: 0px;
-    top: 0px;
-    width: 180px;
-    height: 100%;
+    top: 60px;
+    width: 240px;
     background-color: #fff;
     clear: right;
     float: right;
@@ -758,7 +757,7 @@ body {
 
 .mod_btn {
     float: right;
-    right: 180px;
+    right: 240px;
     bottom: 10px;
     position: absolute;
 }
@@ -768,15 +767,70 @@ body {
     margin-right: 15px;
 }
 
-.trolley ul {
-    margin: 0;
-    padding: 0;
-    background-color: #fff;
-    padding-top: 10px;
-    padding-bottom: 20px;
+.mod_btn .save {
+    width: 41.25px;
+    height: 41.25px;
+    background-color: #f5db26;
+    border-radius: 5px;
+    margin-left: auto;
+    color: #ffffff;
+    font-size: 13.5px;
+    text-align: center;
+    line-height: 41.25px;
+    cursor: pointer;
+    border-radius: 32px;
+    -webkit-border-radius: 32px;
+    -moz-border-radius: 32px;
+    -o-border-radius: 32px;
 }
 
-.trolley ul li {
+.mod_btn .save:hover {
+    background-color: #cccccc;
+}
+
+.mod_btn .download {
+    width: 41.25px;
+    height: 41.25px;
+    background-color: #72d338;
+    border-radius: 5px;
+    margin-left: auto;
+    color: #ffffff;
+    font-size: 13.5px;
+    text-align: center;
+    line-height: 41.25px;
+    cursor: pointer;
+    border-radius: 32px;
+    -webkit-border-radius: 32px;
+    -moz-border-radius: 32px;
+    -o-border-radius: 32px;
+}
+
+.mod_btn .download:hover {
+    background-color: #cccccc;
+}
+
+
+.trolley-side {
+    width: 100%;
+    height: 33%;
+    position: relative;
+}
+
+.trolley-side .hardware_part_list {
+    top: 45px;
+    bottom: 40px;
+    left: 0px;
+    right: 0px;
+    position: absolute;
+}
+
+.trolley-side ul {
+    margin: 0;
+    padding: 5px 0 10px 0;
+    background-color: #fff;
+}
+
+.trolley-side ul li {
     line-height: 45px;
     list-style: none;
     font-size: 14px;
@@ -788,40 +842,53 @@ body {
     border-bottom: 0px;
 }
 
-.trolley .buy {
-    bottom: 20px;
-    left: 20px;
+.trolley-side .buy {
+    width: 120px;
+    height: 28px;
+    background-color: #6ab82e;
+    border-radius: 5px;
+    bottom: 5px;
+    left: 60px;
     position: absolute;
+    color: #ffffff;
+    font-size: 14px;
+    text-align: center;
+    line-height: 28px;
+    cursor: pointer;
 }
 
-.trolley .car {
+.trolley-side .buy:hover {
+    background-color: #cccccc;
+}
+
+.trolley-side .car {
     width: 45px;
     height: 45px;
     float: right;
     background: url('../img/car.png') no-repeat center;
 }
 
-.hardware_part_list {
+/*.hardware_part_list {
     position: absolute;
     top: 48px;
     bottom: 55px;
-    left: 0;
-    right: 0;
     overflow: auto;
-}
+}*/
 
 .yjlj-side {
     height: 32%;
 }
 
 .var-side {
-    height: 32%;
+    width: 100%;
+    height: 33%;
     position: relative;
 }
 
 .var-side .operator {
     position: absolute;
     bottom: 10px;
+    left: 14%;
 }
 
 .var-side .btn {
@@ -830,8 +897,12 @@ body {
 }
 
 .var-side .content {
-    overflow: scroll;
-    height: 55%;
+    height: auto;
+}
+
+.var-side table {
+    white-space:nowrap;
+    width: 240px;
 }
 
 .var-side table tr:first-child {
@@ -861,7 +932,7 @@ td {
 }
 
 .code-side {
-    height: 32%;
+    height: 33%;
     width: 100%;
     position: relative;
 }
@@ -869,16 +940,27 @@ td {
 .code-side .content {
     top: 45px;
     bottom: 0px;
+    width: 240px;
     left: 0px;
     position: absolute;
+    overflow:auto;
+}
+
+.code-wrap {
+    margin: 5px;
+    width:220px;
 }
 
 .code-side .c_code_area {
-    width: 175px;
+    background-color: #fff;
+    width:100%;
     top: 0px;
+    padding: 0px;
     height: 100%;
     border: 0px;
     margin: 0px;
+    overflow:auto;
+    outline: none;
 }
 
 .code-side .code_view {
@@ -886,8 +968,8 @@ td {
     background: url(../img/code_view.png) no-repeat;
     width: 33px;
     height: 33px;
-    left: 135px;
-    bottom: 0px;
+    right: 4%;
+    bottom: 0%;
     position: absolute;
     cursor: pointer;
 }
@@ -1983,67 +2065,6 @@ td {
 }
 
 .main .btn1:hover {
-    background-color: #cccccc;
-}
-
-.main .btn2 {
-    width: 120px;
-    height: 28px;
-    background-color: #6ab82e;
-    border-radius: 5px;
-    margin-top: 18px;
-    margin-left: auto;
-    margin-right: auto;
-    color: #ffffff;
-    font-size: 14px;
-    text-align: center;
-    line-height: 28px;
-    cursor: pointer;
-}
-
-.main .btn2:hover {
-    background-color: #cccccc;
-}
-
-.main .btn3 {
-    width: 41.25px;
-    height: 41.25px;
-    background-color: #f5db26;
-    border-radius: 5px;
-    margin-left: auto;
-    color: #ffffff;
-    font-size: 13.5px;
-    text-align: center;
-    line-height: 41.25px;
-    cursor: pointer;
-    border-radius: 32px;
-    -webkit-border-radius: 32px;
-    -moz-border-radius: 32px;
-    -o-border-radius: 32px;
-}
-
-.main .btn3:hover {
-    background-color: #cccccc;
-}
-
-.main .btn4 {
-    width: 41.25px;
-    height: 41.25px;
-    background-color: #72d338;
-    border-radius: 5px;
-    margin-left: auto;
-    color: #ffffff;
-    font-size: 13.5px;
-    text-align: center;
-    line-height: 41.25px;
-    cursor: pointer;
-    border-radius: 32px;
-    -webkit-border-radius: 32px;
-    -moz-border-radius: 32px;
-    -o-border-radius: 32px;
-}
-
-.main .btn4:hover {
     background-color: #cccccc;
 }
 
