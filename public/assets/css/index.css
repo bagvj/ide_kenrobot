@@ -458,6 +458,15 @@ body {
     zoom: 1;
 }
 
+.baseLogin .field .email {
+    background: url('../img/email.png') no-repeat center;
+}
+
+.baseLogin .field .password {
+    background: url('../img/password.png') no-repeat center;
+}
+
+
 .baseLogin .field input {
     -webkit-appearance: none;
     -webkit-rtl-ordering: logical;

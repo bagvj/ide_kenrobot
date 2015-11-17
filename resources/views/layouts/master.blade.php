@@ -34,14 +34,14 @@
         <form method="POST" action="/snspostlogin">
           {!! csrf_field() !!}
           <div class="field">
-            <label>
-              <i class="iconauth"></i>
+            <label class="email">
+              <!-- <i class="iconauth"></i> -->
             </label>
             <input type="email" name="email" value="{{ old('email') }}" placeholder="邮箱地址/手机号码" />
           </div>
           <div class="field">
-              <label>
-                <i class="iconauth"></i>
+              <label class="password">
+                <!-- <i class="iconauth"></i> -->
               </label>
               <input type="password" name="password" id="password" />
           </div>
