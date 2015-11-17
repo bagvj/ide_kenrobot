@@ -11,6 +11,7 @@ use Auth;
 use Session;
 use App\User;
 use Curl\Curl;
+use App\WebAuth\Factory as WebAuthFactory;
 
 class SnsAuthController extends Controller
 {
@@ -73,34 +74,33 @@ class SnsAuthController extends Controller
     {
         $email = $request->input('email');
         $password = $request->input('password');
-        if (empty($email) || empty($password)) {
-            redirect('/login')->with('message','登录失败');
+
+        if (Auth::check()) {
+            return 2;
         }
 
-        $data = $this->validateSnsUser($email,$password);
+        // dd($request->all());
 
-        if ($data == null) {
-            //验证失败了也要退出
-            return redirect('/login');//跳转回登录界面
+        $snsauth = WebAuthFactory::create('sns');
+        $crendentials = $request->only('email','password');
+        // dd($crendentials);
+        $loginResult = $snsauth->validate($crendentials);
+
+        if ($loginResult === false) {
+            return 0;
         }
-        // dd($data);
-        $userInfo = array_only($data,['uid','uname','email','avatar_big']);
 
-        $userInfo['name'] = $userInfo['uname'];
-        unset($userInfo['uname']);
+        $userInfo = $snsauth->user();
 
-        $userInfo['avatar_url'] = isset($userInfo['avatar_big']) ? $userInfo['avatar_big'] : '';
-        unset($userInfo['avatar_big']);
-
+        //这部分逻辑移到UserRepository里面
         $user = $this->getUser($userInfo);
         if ($user == null) {
            $user = $this->createUser($userInfo);
         }
+        //成功后，先调用推出
         Auth::logout();
         Auth::login($user,true);
-        return redirect('/');
-
-
+        return 1;
 
     }
 

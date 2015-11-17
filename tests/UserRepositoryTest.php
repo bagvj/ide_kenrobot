@@ -23,7 +23,7 @@ class UserRepositoryTest extends TestCase
        //  $this->assertEquals($userEntity->password,$userData['password']);
        // $this->assertEquals($userEntity->password,bcrypt($userData['password']));
         // 删除测试数据
-//$userEntity->delete();
+        $userEntity->delete();
     }
 
     /**
