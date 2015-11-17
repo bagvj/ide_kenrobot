@@ -35,12 +35,12 @@ class WeixinAuthController extends Controller
 
         $url = config('weixin.userinfo.url')."?key=$key";
 
-
+        $nav = config('navigation.master');
         if (Auth::check()) {
             $user = Auth::user();
         }
     
-        return view('index',compact('user','qrcode','qrcodeurl','key'));
+        return view('index',compact('user','qrcode','qrcodeurl','key','nav'));
     }
 
  
@@ -66,7 +66,7 @@ class WeixinAuthController extends Controller
     {
         $key = $request->input('key');
         if (Auth::check()) {
-            return 1;
+            return 2;
         }
 
         // $key = Session::get('key');
