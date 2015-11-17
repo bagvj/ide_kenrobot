@@ -39,7 +39,7 @@
         </div>
       </div>
 
-      <div class="search-wrap">
+      <!--<div class="search-wrap">
         <div class="search">
           <form method="post" action="#">
             {{ csrf_field() }}
@@ -47,7 +47,7 @@
             <i class="iconfont icon">&#xe665;</i>
           </form>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
 
