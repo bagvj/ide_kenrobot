@@ -53,6 +53,7 @@
           </div>
         </form>
       </div>
+      <div class="closeBtn"></div>
     </div>
   </div>
   <div id="use_weixin" style="display:none">

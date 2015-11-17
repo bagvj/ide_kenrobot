@@ -268,6 +268,18 @@ body {
     
 }
 
+#login_dialog .closeBtn {
+    background: url('../img/closeBtn.png') no-repeat center;
+    cursor: pointer;
+    display: block;
+    height: 24px;
+    width: 24px;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    z-index: 200;
+}
+
 .qrLogin {
     background-attachment: scroll;
     background-clip: border-box;
