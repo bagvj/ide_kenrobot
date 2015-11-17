@@ -435,7 +435,12 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 			return false;
 		}
 		addPorts(node);
-		jsPlumb_instance.draggable($(node),  {grid: [5, 5]});
+		jsPlumb_instance.draggable($(node),  {
+			grid: [5, 5],
+			stop: function(e, ui){
+				
+			}
+		});
 
 		//根据元素类型初始化连接
 		addConnection(node);

@@ -16,7 +16,6 @@
       <div class="login">
         <ul>
           @if(isset($user))
-
           <li><a href="/auth/logout" class="logoutBtn">退出</a></li>
           @else
           <li><a href="http://www.kenrobot.com/index.php?app=public&mod=Register&act=index">注册</a></li>
@@ -25,19 +24,16 @@
         </ul>
       </div>
       
-      <div class="person-wrap">
       @if(isset($user))
+      <div class="person-wrap">
         <div class="person">
-      @else
-         <div class="person" style="display:none;">
-      @endif
-
-          <a href="http://www.kenrobot.com/index.php?app=public&mod=Index&act=allshow" class="photo">
-            <img src="{{ $user->avatar_url or asset('assets/img/photo.png') }}" />
-          </a>
-          <span class="welcome">Hi,{{ $user->name or '萝卜头'}}</span>
+            <a href="http://www.kenrobot.com/index.php?app=public&mod=Index&act=allshow" class="photo">
+                <img src="{{ $user->avatar_url or asset('assets/img/photo.png') }}" />
+            </a>
+            <span class="welcome">Hi,{{$user->name}}</span>
         </div>
       </div>
+      @endif
 
       <!--<div class="search-wrap">
         <div class="search">
