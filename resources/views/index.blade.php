@@ -3,19 +3,20 @@
 @section('main')
  <div class="header">
     <div class="content">
-      <span><a href="http://www.kenrobot.com/index.php?app=square&mod=Index&act=index" class="logo"></a></span>
+      <span><a href="{{$nav['self']}}" class="logo"></a></span>
       <div class="nav">
         <ul>
-          <li><a href="http://www.kenrobot.com/index.php?app=public&mod=Index&act=allshow">我的主页</a></li>
-          <li><a href="http://platform.kenrobot.com/" class="on">开发</a></li>
-          <li><a href="http://www.kenrobot.com/index.php?app=square&mod=Index&act=listshow">广场</a></li>
-          <li><a href="http://www.kenrobot.com/index.php?app=shop">商城</a></li>
+          <li><a href="{{$nav['mainpage']}}">我的主页</a></li>
+          <li><a href="{{$nav['develop']}}" class="on">开发</a></li>
+          <li><a href="{{$nav['square']}}">广场</a></li>
+          <li><a href="{{$nav['market']}}">商城</a></li>
         </ul>
       </div>
 
       <div class="login">
         <ul>
           @if(isset($user))
+
           <li><a href="/auth/logout" class="logoutBtn">退出</a></li>
           @else
           <li><a href="http://www.kenrobot.com/index.php?app=public&mod=Register&act=index">注册</a></li>
@@ -25,13 +26,19 @@
       </div>
       
       <div class="person-wrap">
+      @if(isset($user))
         <div class="person">
+      @else
+         <div class="person" style="display:none;">
+      @endif
+
           <a href="http://www.kenrobot.com/index.php?app=public&mod=Index&act=allshow" class="photo">
             <img src="{{ $user->avatar_url or asset('assets/img/photo.png') }}" />
           </a>
           <span class="welcome">Hi,{{ $user->name or '萝卜头'}}</span>
         </div>
       </div>
+
       <div class="search-wrap">
         <div class="search">
           <form method="post" action="#">
