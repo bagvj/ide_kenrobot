@@ -203,8 +203,8 @@
             <div class="bar">C语言</div>
             <div class="content">
                 <div class="code-wrap">
-                <pre>
-                    <code id="c_code_input" class="c_code_area">#include "Rosys.h"
+                    <pre>
+                        <code id="c_code_input" class="c_code_area">#include "Rosys.h"
 
 void setup(){
     initTimer3();
@@ -213,11 +213,12 @@ void setup(){
 
 void loop(){
 
-}</code>
-                </pre>
+}
+                        </code>
+                    </pre>
                 </div>
             </div>
-                <div class="code_view"></div>
+            <div class="code_view"></div>
         </div>
     </div>
     <div class="tabs">
@@ -225,6 +226,12 @@ void loop(){
             <li><span>硬件连接</span></li>
             <li><span>软件编程</span></li>
         </ul>
+    </div>
+    <div class="thumbnail">
+        <div class="canvas-wrap" data-action="show">
+            <div class="canvas" id="thumbnailCanvas"></div>
+        </div>
+        <div class="foldBtn"></div>
     </div>
     <div class="mod_btn">
         <div class="save">保存</div>

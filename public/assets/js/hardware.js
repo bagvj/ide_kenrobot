@@ -50,23 +50,23 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 	 * @param string itemClass 可以拖拽的元素
 	 */
 	function init(itemClass, strContainer) {
-		// console.log(fis);
 		jsPlumb_container = strContainer;
 		if (jsPlumb_container.length == 0) {
 			alert("缺少搭建流程图的位置");
 			return false;
 		}
 
-		container_width = $('#' + jsPlumb_container).width();
-		container_height = $('#' + jsPlumb_container).height();
-		container_init_x = $('#' + jsPlumb_container).offset().left;
-		container_init_y = $('#' + jsPlumb_container).offset().top;
-		moved_container_width = $('#' + jsPlumb_container).width();
-		moved_container_height = $('#' + jsPlumb_container).height();
-		moved_container_x = $('#' + jsPlumb_container).offset().left;
-		moved_container_y = $('#' + jsPlumb_container).offset().top;
 
 		jsPlumb.ready(function() {
+			container_width = $('#' + jsPlumb_container).width();
+			container_height = $('#' + jsPlumb_container).height();
+			container_init_x = $('#' + jsPlumb_container).offset().left;
+			container_init_y = $('#' + jsPlumb_container).offset().top;
+			moved_container_width = $('#' + jsPlumb_container).width();
+			moved_container_height = $('#' + jsPlumb_container).height();
+			moved_container_x = $('#' + jsPlumb_container).offset().left;
+			moved_container_y = $('#' + jsPlumb_container).offset().top;
+
 			//Initialize JsPlumb
 			initJsPlumbInstance();
 

@@ -88,7 +88,6 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 		redraw_hardware()
 		reset_arrHardware()
 		redraw_hardware_list()
-			//console.log(arrHardware)
 		if (hasInitedHardware) return false;
 		if (hardware.isEmpty()) {
 			hardware.init('hardware-item', 'hardware-container');

@@ -616,12 +616,46 @@ body {
     text-align: center;
     vertical-align: center;
     list-style: outside none none;
+    background: #ddd none repeat scroll 0% 0%;
     color: #111;
 }
 
 .tabs ul li.active {
     background: #4a5044 none repeat scroll 0% 0%;
     color: #eee;
+}
+
+.thumbnail {
+    float: left;
+    top: 60px;
+    right: 242px;
+    width: 200px;
+    height: 160px;
+    
+    position: absolute;
+}
+
+.thumbnail .canvas-wrap {
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+    float: right;
+    background-color: #4A5044;
+}
+
+.thumbnail .canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.thumbnail .foldBtn {
+    background: url('../img/fold.png') no-repeat center;
+    top: 0px;
+    right: 0px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    cursor: pointer;
 }
 
 .mod {
