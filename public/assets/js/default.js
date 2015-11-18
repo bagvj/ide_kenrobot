@@ -196,7 +196,8 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs'], function($, eventcenter
             initLogin();
             initThumbnail();
 
-            
+            eventcenter.delaytrigger('hardware', 'init_container');
+
             $('pre code').each(function(i, block) {
                 hljs.highlightBlock(block);
             });
