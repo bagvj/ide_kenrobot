@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('main')
-  <link rel="stylesheet" type="text/css" href="{{ asset('assets/highlight/styles/default.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/highlight/styles/solarized_light.css') }}" />
 
  <div class="header">
     <div class="content">

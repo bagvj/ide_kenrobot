@@ -4,7 +4,6 @@ require.config({
 		"jquery": "jquery-1.11.2.min",
 		"jquery-ui": "jquery-ui-1.11.3.min",
 		"jquery-menu": "jquery.contextMenu",
-		"jquery-leanModal": "jquery.leanModal.min",
 		"jquery-mousewheel": "jquery-mousewheel",
 		"jsplumb": "jsPlumb/jsplumb",
 		"bootstrap": "bootstrap/bootstrap.min",

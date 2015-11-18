@@ -1012,7 +1012,7 @@ td {
 }
 
 .code-wrap pre {
-    font-family: 'Lucida Grande', sans-serif;
+    font-family: 'Source Code Pro',sans-serif;
 }
 
 .code-side .c_code_area {
@@ -1028,7 +1028,7 @@ td {
 }
 
 .code-side .code_view {
-    z-index: 9999;
+    /*z-index: 9999;*/
     background: url(../img/code_view.png) no-repeat;
     width: 33px;
     height: 33px;
