@@ -40,7 +40,7 @@
   </div>
 
 <div class="main">
-    <div class="mod">
+    <div class="mod active">
         <div class="nav-second">
             <ul>
                 <li class="srmk">输入模块<div class="triangle"></div>
@@ -222,7 +222,7 @@ void loop(){
     </div>
     <div class="tabs">
         <ul>
-            <li><span>硬件连接</span></li>
+            <li class="active"><span>硬件连接</span></li>
             <li><span>软件编程</span></li>
         </ul>
     </div>

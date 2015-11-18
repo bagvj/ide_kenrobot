@@ -43,8 +43,8 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs'], function($, eventcenter
                         });
                     }
 
-                    $('.mod').hide();
-                    $('.mod:eq(' + index + ')').show();
+                    $('.mod').removeClass("active");
+                    $('.mod:eq(' + index + ')').addClass("active");
 
                     if (index == 0) {
                         eventcenter.delaytrigger('hardware', 'init_container');
@@ -196,7 +196,7 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs'], function($, eventcenter
             initLogin();
             initThumbnail();
 
-            $('.tabs li:first-child').click();
+            
             $('pre code').each(function(i, block) {
                 hljs.highlightBlock(block);
             });

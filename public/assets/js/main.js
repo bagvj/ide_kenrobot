@@ -262,14 +262,8 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 			"showText": (args.desc.length > 0) ? args.desc : "暂无"
 		});
 
-		var fc_top = $("#flowchart-container").offset().top;
-		fc_top += args.top;
-		var fc_left = $("#flowchart-container").offset().left + 150;
-		fc_left += args.left;
 		kenrobotDialog.show(0, {
 			"title": "属性设置",
-			"top": fc_top,
-			"left": fc_left,
 			"contents": contents
 		}, saveFlowchartProperty);
 	});

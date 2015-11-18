@@ -117,13 +117,12 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 	 * @param string callback 回调函数
 	 */
 	function initDialog(callback) {
+		var width = dialogParams.width || 250;
 		var floatDiv = $("<div></div>").css({
 			"z-index": 1000,
 			"position": "absolute",
-			"width": (dialogParams.width) ? (dialogParams.width + "px") : "250px",
-			"height": (dialogParams.height) ? (dialogParams.height + "px") : "auto",
-			"top": (dialogParams.top) ? (dialogParams.top + "px") : "100px",
-			"left": (dialogParams.left) ? (dialogParams.left + "px") : "100px",
+			"width": width,
+			"height": dialogParams.height || "auto",
 			"border-radius": "5px",
 			"-webkit-border-radius": "5px",
 			"-moz-border-radius": "5px"
@@ -133,7 +132,7 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 			"position": "relative",
 			"top": "0px",
 			"left": "0px",
-			"width": (dialogParams.width) ? ((dialogParams.width - 2) + "px") : "248px",
+			"width": width - 2,
 			"height": "20px",
 			"padding": "10px",
 			"background-color": "#6dd526",
@@ -174,7 +173,7 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 			"position": "relative",
 			"top": "0px",
 			"left": "0px",
-			"width": (dialogParams.width) ? ((dialogParams.width - 2) + "px") : "248px",
+			"width": width - 2,
 			"height": "auto",
 			"padding": "5px 10px",
 			"background-color": "#FFF"
@@ -185,7 +184,7 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 			"position": "relative",
 			"top": "0px",
 			"left": "0px",
-			"width": (dialogParams.width) ? ((dialogParams.width - 2) + "px") : "248px",
+			"width": width - 2,
 			"height": "auto",
 			"padding": "5px 10px",
 			"background-color": "#6dd526",
@@ -251,6 +250,19 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 		tmpDiv.append(confirmBtn).append(" ").append(cancelBtn);
 		footerDiv.append(tmpDiv);
 		floatDiv.append(footerDiv);
+		var top = dialogParams.top;
+		var left = dialogParams.left;
+		var height = floatDiv.height();
+		if(!top) {
+			top = ($(window).height() - height) / 2;
+		}
+		if(!left) {
+			left = ($(window).width() - width) / 2;
+		}
+		floatDiv.css({
+			"top": top,
+			"left": left
+		});
 
 		$("body").append(floatDiv);
 		dialog = floatDiv;

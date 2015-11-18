@@ -702,6 +702,10 @@ body {
     display: none;
 }
 
+.mod.active {
+    display: block;
+}
+
 .mod select {
     border: 0px;
     width: 100%;

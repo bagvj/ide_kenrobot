@@ -10,11 +10,7 @@ define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, 
 	}
 
 	$(".var-side .btn.add").click(function() {
-		var fc_top = $("#flowchart-container").offset().top + 100;
-		var fc_left = $("#flowchart-container").offset().left + $("#flowchart-container").width() / 2 - 125;
 		kenrobotDialog.show(0, {
-			"top": fc_top,
-			"left": fc_left,
 			"title": "添加/更改变量",
 			"isSplit": 0,
 			"contents": [{
@@ -76,8 +72,6 @@ define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, 
 		if(!sel_item){
 			return;
 		}
-		var fc_top = $("#flowchart-container").offset().top + 100;
-		var fc_left = $("#flowchart-container").offset().left + $("#flowchart-container").width() / 2 - 125;
 		container = $("#" + varContainerId);
 		var items = container.find(".tr");
 		var index;
@@ -90,8 +84,6 @@ define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, 
 		var varInfo = var_list[index];
 
 		kenrobotDialog.show(0, {
-			"top": fc_top,
-			"left": fc_left,
 			"title": "添加/更改变量",
 			"isSplit": 0,
 			"contents": [{

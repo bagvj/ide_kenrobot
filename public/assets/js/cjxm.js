@@ -192,12 +192,8 @@ define(["jquery", "kenrobotDialog", "flowchartInfo"], function($, kenrobotDialog
 
 	function drawSaveDialog(data, call) {
 		var width = 500;
-		var fc_top = $(".mod").offset().top + 100;
-		var fc_left = $(".mod").offset().left + $(".mod").width() / 2 - width / 2;
 		kenrobotDialog.show(1, {
 			"width": width,
-			"top": fc_top,
-			"left": fc_left,
 			"title": "保存信息",
 			"isSplit": 0,
 			"contents": [{
