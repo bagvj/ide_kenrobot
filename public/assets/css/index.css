@@ -959,6 +959,7 @@ body {
     width: 100%;
     height: 33%;
     position: relative;
+    overflow: auto;
 }
 
 .var-side .operator {
@@ -973,38 +974,47 @@ body {
 }
 
 .var-side .content {
-    height: auto;
+    height: 70%;
 }
 
 .var-side table {
-    white-space:nowrap;
-    width: 240px;
+    border-spacing: 0;
+    width: 100%;    
+    border-bottom: 1px solid #ccc;
 }
 
-.var-side table tr:first-child {
-    background-color: #6dd526;
-    color: #fff
+.var-side tr:hover {
+    background: #fbf8e9;
+    -o-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;     
+}    
+    
+.var-side td, .var-side th {
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    text-align: center;    
 }
 
-.var-side table tr:first-child th {
-    border: 2px solid #fff;
+.var-side th {
+    background-color: #dce9f9;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ebf3fc), to(#dce9f9));
+    background-image: -webkit-linear-gradient(top, #ebf3fc, #dce9f9);
+    background-image:    -moz-linear-gradient(top, #ebf3fc, #dce9f9);
+    background-image:     -ms-linear-gradient(top, #ebf3fc, #dce9f9);
+    background-image:      -o-linear-gradient(top, #ebf3fc, #dce9f9);
+    background-image:         linear-gradient(top, #ebf3fc, #dce9f9);
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset; 
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;  
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;        
+    border-top: none;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5); 
 }
 
-.var-side table .normal {
-    background-color: #dcdcdc;
-    color: #8c8c8c;
-    cursor: pointer;
-}
-
-.var-side table .special {
-    background-color: #1677E8;
-    color: white;
-    cursor: pointer;
-}
-
-.var-side th,
-td {
-    border: 1px solid #b7b7b7;
+.var-side td:first-child, .var-side th:first-child {
+    border-left: none;
 }
 
 .code-side {
