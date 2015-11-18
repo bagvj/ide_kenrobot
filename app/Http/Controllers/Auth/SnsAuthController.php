@@ -76,7 +76,7 @@ class SnsAuthController extends Controller
         $password = $request->input('password');
 
         if (Auth::check()) {
-            return 2;
+            return collect(['code' => 1, 'message' => '已经登录'])->toJson();
         }
 
         // dd($request->all());
@@ -87,7 +87,8 @@ class SnsAuthController extends Controller
         $loginResult = $snsauth->validate($crendentials);
 
         if ($loginResult === false) {
-            return 0;
+            return collect(['code' => 2, 'message' => '登录失败'])->toJson();
+
         }
 
         $userInfo = $snsauth->user();
@@ -100,7 +101,8 @@ class SnsAuthController extends Controller
         //成功后，先调用推出
         Auth::logout();
         Auth::login($user,true);
-        return 1;
+        return collect(['code' => 0, 'message' => '登录成功'])->toJson();
+
 
     }
 
