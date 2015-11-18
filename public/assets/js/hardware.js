@@ -282,8 +282,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		var left = container_width / 2 - 165;
 		var top = container_height / 2 - 135;
 		var firstNodeParam = {};
-		firstNodeParam['x'] = '' + left + 'px';
-		firstNodeParam['y'] = '' + top + 'px';
+		firstNodeParam['x'] = left;
+		firstNodeParam['y'] = top;
 		firstNodeParam['id'] = "hardware_board_" + (new Date().getTime());
 		firstNodeParam['data-item'] = "hardware_board_item";
 		firstNodeParam['text'] = "主板";
@@ -632,8 +632,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 
 		panel.append('div')
 			.style('position', 'absolute')
-			.style('top', param['y'])
-			.style('left', param['x'])
+			.style('top', param['y'] + "px")
+			.style('left', param['x'] + "px")
 			.attr('align', 'center')
 			.attr('id', param['id'])
 			.attr('data-item', param['data-item'])
@@ -888,8 +888,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		}
 		var flowchart_obj_param_x = originalEventOffsetX - startOffsetX;
 		var flowchart_obj_param_y = originalEventOffsetY - startOffsetY;
-		flowchart_obj_param['x'] = '' + flowchart_obj_param_x + 'px';
-		flowchart_obj_param['y'] = '' + flowchart_obj_param_y + 'px';
+		flowchart_obj_param['x'] = flowchart_obj_param_x;
+		flowchart_obj_param['y'] = flowchart_obj_param_y;
 
 		flowchart_obj_param['id'] = objId + "_" + (new Date().getTime());
 		flowchart_obj_param['data-item'] = $("#" + objId).attr('data-item');
@@ -1473,8 +1473,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		});
 		//更新每个点的实时坐标
 		for (var i = 0; i < jsPlumb_nodes.length; i++) {
-			jsPlumb_nodes[i]['x'] = "" + $("#" + jsPlumb_nodes[i]['id']).position().left + "px";
-			jsPlumb_nodes[i]['y'] = "" + $("#" + jsPlumb_nodes[i]['id']).position().top + "px";
+			jsPlumb_nodes[i]['x'] = $("#" + jsPlumb_nodes[i]['id']).position().left;
+			jsPlumb_nodes[i]['y'] = $("#" + jsPlumb_nodes[i]['id']).position().top;
 		}
 
 		return {

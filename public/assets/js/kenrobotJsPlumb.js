@@ -19,6 +19,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 	var jsPlumb_selected_node = null;
 
 	var container_width = 0;
+	var container_height = 0;
 
 	var data_transfer = {};
 
@@ -38,6 +39,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 		}
 
 		container_width = $('#' + jsPlumb_container).width();
+		container_height = $('#' + jsPlumb_container).height();
 
 		jsPlumb.ready(function() {
 			//Initialize JsPlumb
@@ -144,9 +146,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 					name: "Edit",
 					icon: "edit"
 				},
-				// "cut": {name: "Cut", icon: "cut"},
-				// "copy": {name: "Copy", icon: "copy"},
-				// "paste": {name: "Paste", icon: "paste"},
 				"delete": {
 					name: "Delete",
 					icon: "delete"
@@ -345,15 +344,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 	 * @desc 在水平方向上移动所有的元素
 	 * @param double distance 移动距离
 	 */
-	// function moveAllNodes(distance){
-	// 	for(var i=0;i<jsPlumb_nodes.length;i++){
-	// 		var node=jsPlumb.getSelector('#' + jsPlumb_nodes[i]['id'])[0];
-	// 		var left=$('#' + jsPlumb_nodes[i]['id']).position().left;
-	// 		$(node).css("left",(left-distance)+"px");
-	// 		//重绘流程元素
-	// 		jsPlumb_instance.repaint(node);
-	// 	}
-	// }
 	function moveAllNodes(xDistance, yDistance) {
 		if (yDistance == null) {
 			yDistance = 0;
@@ -374,11 +364,12 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 	 */
 	function initStartAndEnd() {
 		var left = container_width / 2 - 30;
+		var offsetY = container_height / 2 - 140
 
 		//开始
 		var startNodeParam = {};
-		startNodeParam['x'] = '' + left + 'px';
-		startNodeParam['y'] = '20px';
+		startNodeParam['x'] = left;
+		startNodeParam['y'] = offsetY;
 		startNodeParam['id'] = "flowchart_start_" + (new Date().getTime());
 		startNodeParam['data-item'] = "flowchart_start_item";
 		startNodeParam['text'] = "开 始";
@@ -387,8 +378,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 
 		//loop开始
 		var loopStartNodeParam = {};
-		loopStartNodeParam['x'] = '' + left + 'px';
-		loopStartNodeParam['y'] = '100px';
+		loopStartNodeParam['x'] = left;
+		loopStartNodeParam['y'] = offsetY + 80;
 		loopStartNodeParam['id'] = "flowchart_loopStart_" + (new Date().getTime());
 		loopStartNodeParam['data-item'] = "flowchart_loopStart_item";
 		loopStartNodeParam['text'] = "loop开始";
@@ -398,8 +389,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 
 		//loop结束
 		var loopEndNodeParam = {};
-		loopEndNodeParam['x'] = '' + left + 'px';
-		loopEndNodeParam['y'] = '180px';
+		loopEndNodeParam['x'] = left;
+		loopEndNodeParam['y'] = offsetY + 160;
 		loopEndNodeParam['id'] = "flowchart_loopEnd_" + (new Date().getTime());
 		loopEndNodeParam['data-item'] = "flowchart_loopEnd_item";
 		loopEndNodeParam['text'] = "loop结束";
@@ -414,8 +405,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 
 		//结束
 		var endNodeParam = {};
-		endNodeParam['x'] = '' + left + 'px';
-		endNodeParam['y'] = '260px';
+		endNodeParam['x'] = left;
+		endNodeParam['y'] = offsetY + 240;
 		endNodeParam['id'] = "flowchart_end_" + (new Date().getTime());
 		endNodeParam['data-item'] = "flowchart_end_item";
 		endNodeParam['text'] = "结 束";
@@ -437,9 +428,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 		addPorts(node);
 		jsPlumb_instance.draggable($(node),  {
 			grid: [5, 5],
-			stop: function(e, ui){
-				
-			}
 		});
 
 		//根据元素类型初始化连接
@@ -557,8 +545,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 		}
 		panel.append('div')
 			.style('position', 'absolute')
-			.style('top', param['y'])
-			.style('left', param['x'])
+			.style('top', "" + param['y'] + "px")
+			.style('left', "" + param['x'] + "px")
 			.attr('align', 'center')
 			.attr('id', param['id'])
 			.attr('data-item', param['data-item'])
@@ -744,8 +732,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 
 		var x = e.originalEvent.offsetX - startOffsetX;
 		var y = e.originalEvent.offsetY - startOffsetY;
-		flowchart_obj_param['x'] = '' + x + 'px';
-		flowchart_obj_param['y'] = '' + y + 'px';
+		flowchart_obj_param['x'] = x;
+		flowchart_obj_param['y'] = y;
 
 		var nodeType = $("#" + objId).attr('data-item');
 		flowchart_obj_param['id'] = objId + "_" + (new Date().getTime());
@@ -1164,8 +1152,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 		});
 		//更新每个点的实时坐标
 		for (var i = 0; i < jsPlumb_nodes.length; i++) {
-			jsPlumb_nodes[i]['x'] = "" + $("#" + jsPlumb_nodes[i]['id']).position().left + "px";
-			jsPlumb_nodes[i]['y'] = "" + $("#" + jsPlumb_nodes[i]['id']).position().top + "px";
+			jsPlumb_nodes[i]['x'] = $("#" + jsPlumb_nodes[i]['id']).position().left;
+			jsPlumb_nodes[i]['y'] = $("#" + jsPlumb_nodes[i]['id']).position().top;
 		}
 		return {
 			"nodes": jsPlumb_nodes,

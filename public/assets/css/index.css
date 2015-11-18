@@ -1062,7 +1062,7 @@ td {
 /*巡线*/
 
 .hardware-linePatrol {
-    background: url(../img/hardware/default-small.png) no-repeat;
+    background: url(../img/hardware/linePatrol-small.png) no-repeat;
     background-size: contain;
 }
 
@@ -1104,12 +1104,12 @@ td {
 /*倾斜*/
 
 .hardware-lean {
-    background: url(../img/hardware/default-small.png) no-repeat;
+    background: url(../img/hardware/lean-small.png) no-repeat;
     background-size: contain;
 }
 
 .hardware-lean-item {
-    background: url(../img/hardware/lean.png) no-repeat;
+    background: url(../img/hardware/default.png) no-repeat;
     width: 43px;
     height: 78px;
 }
@@ -1118,7 +1118,7 @@ td {
 /*巡线阵列*/
 
 .hardware-linePatrolRow {
-    background: url(../img/hardware/default-small.png) no-repeat;
+    background: url(../img/hardware/linePatrolRow-small.png) no-repeat;
     background-size: contain;
 }
 
@@ -1360,7 +1360,7 @@ td {
 /*串口输出*/
 
 .hardware-serialPortOut {
-    background: url(../img/hardware/default-small.png) no-repeat;
+    background: url(../img/hardware/serialPortOut-small.png) no-repeat;
     background-size: contain;
 }
 
@@ -1374,7 +1374,7 @@ td {
 /*超声测距*/
 
 .hardware-ultrasoundLocation {
-    background: url(../img/hardware/default-small.png) no-repeat;
+    background: url(../img/hardware/ultrasoundLocation-small.png) no-repeat;
     background-size: contain;
 }
 
@@ -1388,7 +1388,7 @@ td {
 /*电子罗盘*/
 
 .hardware-electronicCompass {
-    background: url(../img/hardware/default-small.png) no-repeat;
+    background: url(../img/hardware/electronicCompass-small.png) no-repeat;
     background-size: contain;
 }
 
@@ -1546,7 +1546,7 @@ td {
 /*倾斜*/
 
 .flowchart-lean {
-    background: url(../img/hardware/default-small.png) no-repeat;
+    background: url(../img/hardware/lean-small.png) no-repeat;
     background-size: contain;
 }
 
@@ -1562,7 +1562,7 @@ td {
 /*巡线阵列*/
 
 .flowchart-linePatrolRow {
-    background: url(../img/hardware/default-small.png) no-repeat;
+    background: url(../img/hardware/linePatrolRow-small.png) no-repeat;
     background-size: contain;
 }
 
