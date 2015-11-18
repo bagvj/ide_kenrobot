@@ -1135,7 +1135,7 @@ td {
 /*继电器*/
 
 .hardware-relay {
-    background: url(../img/hardware/default-small.png) no-repeat;
+    background: url(../img/hardware/relay-small.png) no-repeat;
     background-size: contain;
 }
 
@@ -1578,7 +1578,7 @@ td {
     font-size: 14px;
     background-size: contain;
     width: 75px;
-    height: 36px;
+    height: 36px;`
 }
 
 
