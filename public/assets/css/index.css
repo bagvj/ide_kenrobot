@@ -10,7 +10,7 @@
     /* iOS 4.1- */
 }
 
-/* 代码字体文件*/
+/* 代码用等宽字体 */
 @font-face{
    font-family: SourceCodePro-Regular;
    src:url(/assets/font/SourceCodePro-Regular.ttf);
@@ -1032,6 +1032,12 @@ td {
     overflow:auto;
     outline: none;
 }
+
+/* 代码使用等宽字体*/
+.hljs{
+     font-family: SourceCodePro-Regular;
+}
+
 
 .code-side .code_view {
     /*z-index: 9999;*/
