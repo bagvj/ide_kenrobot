@@ -32,7 +32,7 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 	 */
 	function show(mode, params, callback) {
 		if (params != null || params.length == 0) dialogParams = params;
-		if (mode) showCover();
+		showCover();
 		initDialog(callback);
 
 		var tmpWidth = (dialogParams.width) ? dialogParams.width : 250;
@@ -123,9 +123,6 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 			"position": "absolute",
 			"width": width,
 			"height": dialogParams.height || "auto",
-			"border-radius": "5px",
-			"-webkit-border-radius": "5px",
-			"-moz-border-radius": "5px"
 		}).attr("id", "param_set_div");
 
 		var headerDiv = $("<div></div>").css({
@@ -137,12 +134,6 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 			"padding": "10px",
 			"background-color": "#6dd526",
 			"color": "#FFF",
-			"border-top-right-radius": "5px",
-			"border-top-left-radius": "5px",
-			"-moz-border-top-right-radius": "5px",
-			"-moz-border-top-left-radius": "5px",
-			"-webkit-border-top-right-radius": "5px",
-			"-webkit-border-top-left-radius": "5px"
 		}).text(dialogParams.title || "流程元素").addClass("param_set_div_header");
 
 		var closeSpan = $("<span></span>").css({
@@ -188,17 +179,8 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 			"height": "auto",
 			"padding": "5px 10px",
 			"background-color": "#6dd526",
-			"border-bottom-right-radius": "5px",
-			"border-bottom-left-radius": "5px",
-			"-moz-border-bottom-right-radius": "5px",
-			"-moz-border-bottom-left-radius": "5px",
-			"-webkit-border-bottom-right-radius": "5px",
-			"-webkit-border-bottom-left-radius": "5px"
 		});
 		var confirmBtn = $("<span></span>").css({
-			"border-radius": "5px",
-			"-moz-border-radius": "5px",
-			"-webkit-border-radius": "5px",
 			"width": "28px",
 			"padding": "3px 20px",
 			"background-color": "#FCF8E3",
@@ -220,9 +202,6 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 			callSave(callback);
 		});
 		var cancelBtn = $("<span></span>").css({
-			"border-radius": "5px",
-			"-moz-border-radius": "5px",
-			"-webkit-border-radius": "5px",
 			"width": "28px",
 			"padding": "3px 20px",
 			"background-color": "#F2DEDE",
@@ -266,6 +245,10 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 
 		$("body").append(floatDiv);
 		dialog = floatDiv;
+
+		floatDiv.draggable({
+			handle: headerDiv
+		});
 	}
 
 	/**
@@ -284,6 +267,9 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 		});
 		$("body").append(cover);
 		cover.width($(window).width()).height($(window).height());
+		$(window).resize(function(e) {
+			cover.width($(window).width()).height($(window).height());
+		});
 	}
 
 	/**
