@@ -62,7 +62,7 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 			// 根据inputType类型配置显示
 			if (oneContent.inputType == "text") {
 				var inputText = $("<input type='text'>").css({
-					"width": (tmpWidth * 0.6) + "px",
+					"width": (tmpWidth * 0.65) + "px",
 					"padding": "3px"
 				}).addClass("dialog_input_save");
 				inputText.attr("placeholder", oneContent.inputHolder);
@@ -79,7 +79,7 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 				dialogBody.append(inputTextArea);
 			} else if (oneContent.inputType == "select") {
 				var inputSelect = $("<select></select>").css({
-					"width": (tmpWidth * 0.5) + "px",
+					"width": (tmpWidth * 0.68) + "px",
 					"padding": "3px"
 				}).addClass("dialog_input_save");
 				for (var j = 0; j < oneContent.inputHolder.length; j++) {
@@ -132,7 +132,7 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 			"width": width - 2,
 			"height": "20px",
 			"padding": "10px",
-			"background-color": "#6dd526",
+			"background-color": "#4a5044",
 			"color": "#FFF",
 		}).text(dialogParams.title || "流程元素").addClass("param_set_div_header");
 
@@ -178,24 +178,24 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 			"width": width - 2,
 			"height": "auto",
 			"padding": "5px 10px",
-			"background-color": "#6dd526",
+			"background-color": "#fff",
 		});
 		var confirmBtn = $("<span></span>").css({
 			"width": "28px",
-			"padding": "3px 20px",
-			"background-color": "#FCF8E3",
+			"padding": "3px 16px",
+			"background-color": "#4a5044",
 			"margin": "auto",
 			"cursor": "pointer",
-			"color": "#000"
+			"color": "#fff"
 		}).hover(
 			function() {
 				$(this).css({
-					"background-color": "#DFF0D8"
+					"background-color": "#41473c"
 				});
 			},
 			function() {
 				$(this).css({
-					"background-color": "#FCF8E3"
+					"background-color": "#4a5044"
 				});
 			}
 		).html("保存").click(function(e) {
@@ -203,20 +203,20 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 		});
 		var cancelBtn = $("<span></span>").css({
 			"width": "28px",
-			"padding": "3px 20px",
-			"background-color": "#F2DEDE",
+			"padding": "3px 16px",
+			"background-color": "#4a5044",
 			"margin": "auto",
 			"cursor": "pointer",
-			"color": "#000"
+			"color": "#fff"
 		}).hover(
 			function() {
 				$(this).css({
-					"background-color": "#DFF0D8"
+					"background-color": "#41473c"
 				});
 			},
 			function() {
 				$(this).css({
-					"background-color": "#F2DEDE"
+					"background-color": "#4a5044"
 				});
 			}
 		).html("取消").click(function(e) {
