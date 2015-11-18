@@ -629,8 +629,8 @@ body {
     float: left;
     top: 60px;
     right: 242px;
-    width: 240px;
-    height: 180px;
+    width: 20%;
+    height: 20%;
     
     position: absolute;
 }
@@ -1023,8 +1023,8 @@ td {
 
 .hardware-board-item {
     background: url(../img/hardware/board.png) no-repeat;
-    width: 240px;
-    height: 148px;
+    width: 300px;
+    height: 184px;
 }
 
 
