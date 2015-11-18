@@ -187,6 +187,10 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs'], function($, eventcenter
                 wrap.attr("data-action", "show");
             }
         });
+
+        $('.thumbnail').draggable({
+            containment: "window"
+        });
     }
 
     function init() {
