@@ -61,6 +61,7 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
             $('#login_dialog').dialog({
                 draggable: false,
                 modal: true,
+                resizable: false,
                 show: {
                     effect: "blind",
                     duration: 200
@@ -194,8 +195,17 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
     }
 
     function initCode(){
+        $('#code-more .closeBtn').click(function(e) {
+            $('#code-more').dialog("close");
+        });
+
         $('.code-side .code_view').click(function(e) {
-            alert(genC.gen());
+            $('#code-more .code').html($('#c_code_input').html())
+            $('#code-more').dialog({
+                draggable: false,
+                modal: true,
+                resizable: false,
+            });
         });
     }
     

@@ -227,5 +227,11 @@
         <div class="save">保存</div>
         <div class="download">下载</div>
     </div>
+    <div id="code-more" style="display:none">
+    <div class="closeBtn"></div>
+    <div class="code-wrap">
+<pre><code class="code"></code></pre>
+    </div>
+    </div>
 </div>
 @stop

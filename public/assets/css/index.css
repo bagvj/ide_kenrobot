@@ -259,12 +259,15 @@ body {
 
 .ui-dialog-titlebar { display : none;}
 
-#login_dialog .closeBtn {
+.closeBtn {
     background: url('../img/closeBtn.png') no-repeat center;
     cursor: pointer;
     display: block;
     height: 16px;
     width: 16px;
+}
+
+#login_dialog .closeBtn {
     position: absolute;
     left: 10px;
     top: 10px;
@@ -1038,9 +1041,12 @@ body {
     overflow:auto;
 }
 
+.code-side .code-wrap {
+    width:220px;
+}
+
 .code-wrap {
     margin: 5px;
-    width:220px;
 }
 
 .code-wrap pre {
@@ -1058,6 +1064,21 @@ body {
     margin: 0px;
     overflow:auto;
     outline: none;
+}
+
+#code-more {
+    padding: 0px;
+    overflow: auto;
+    outline: none;
+    width: 640px;
+    height: 480px;
+}
+
+#code-more .closeBtn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 200;
 }
 
 /* 代码使用等宽字体*/
