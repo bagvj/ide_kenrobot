@@ -1,5 +1,5 @@
 require.config({
-	baseUrl: "assets/js/lib",
+	baseUrl: "/assets/js/lib",
 	paths: {
 		"jquery": "jquery-1.11.2.min",
 		"jquery-ui": "jquery-ui-1.11.3.min",

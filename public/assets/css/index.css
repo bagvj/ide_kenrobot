@@ -948,7 +948,7 @@ body {
 .var-side .operator {
     position: absolute;
     bottom: 10px;
-    left: 14%;
+    left: 4%;
 }
 
 .var-side .btn {
@@ -1009,6 +1009,10 @@ td {
 .code-wrap {
     margin: 5px;
     width:220px;
+}
+
+.code-wrap pre {
+    font-family: 'Lucida Grande', sans-serif;
 }
 
 .code-side .c_code_area {
@@ -2093,7 +2097,7 @@ td {
 }
 
 .main .btn {
-    width: 30px;
+    width: 50px;
     height: 20px;
     background-color: #6ab82e;
     border-radius: 5px;

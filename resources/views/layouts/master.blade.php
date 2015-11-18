@@ -9,13 +9,13 @@
   <meta name="keywords" content="啃萝卜智能硬件平台" />
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-  <link rel="stylesheet" type="text/css" href="   {{ asset('assets/css/base.css') }} " />
-  <link rel="stylesheet" type="text/css" href="   {{ asset('assets/css/scroll.css') }} " />
-  <link rel="stylesheet" type="text/css" href="   {{ asset('assets/css/jquery-ui.min.css') }} " />
-  <link rel="stylesheet" type="text/css" href="   {{ asset('assets/css/jquery.contextMenu.css') }} " />
-  <link rel="stylesheet" type="text/css" href="   {{ asset('assets/css/index.css') }} " />
-  <link href="{{ asset('assets/img/favicon.ico') }}" type="image/x-icon" rel="shortcut icon" />
-  <script data-main="assets/js/main" src=" {{ asset('assets/js/lib/require.min.js')}}" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="   {{ asset('/assets/css/base.css') }} " />
+  <link rel="stylesheet" type="text/css" href="   {{ asset('/assets/css/scroll.css') }} " />
+  <link rel="stylesheet" type="text/css" href="   {{ asset('/assets/css/jquery-ui.min.css') }} " />
+  <link rel="stylesheet" type="text/css" href="   {{ asset('/assets/css/jquery.contextMenu.css') }} " />
+  <link rel="stylesheet" type="text/css" href="   {{ asset('/assets/css/index.css') }} " />
+  <link href="{{ asset('/assets/img/favicon.ico') }}" type="image/x-icon" rel="shortcut icon" />
+  <script data-main="/assets/js/main" src=" {{ asset('/assets/js/lib/require.min.js')}}" type="text/javascript"></script>
   @yield('scripts')
  </head>
  <body>
@@ -60,7 +60,7 @@
     </div>
   </div>
   <div id="use_weixin">
-    <img src="{{asset('assets/img/use_weixin.png')}}" />
+    <img src="{{asset('/assets/img/use_weixin.png')}}" />
   </div>
  </body>
 </html>

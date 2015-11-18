@@ -185,11 +185,11 @@
             <div class="content">
                 <table id="var-table">
                     <tr>
-                        <th>name</th>
-                        <th>type</th>
-                        <th>kind</th>
-                        <th>initial</th>
-                        <th>desc</th>
+                        <th>名称</th>
+                        <th>种类</th>
+                        <th>类型</th>
+                        <th>初值</th>
+                        <th>描述</th>
                     </tr>
                 </table>
             </div>
@@ -203,8 +203,8 @@
             <div class="bar">C语言</div>
             <div class="content">
                 <div class="code-wrap">
-                    <pre>
-                        <code id="c_code_input" class="c_code_area">#include "Rosys.h"
+<pre>
+<code id="c_code_input" class="c_code_area">#include "Rosys.h"
 
 void setup(){
     initTimer3();
@@ -213,9 +213,8 @@ void setup(){
 
 void loop(){
 
-}
-                        </code>
-                    </pre>
+}</code>
+</pre>
                 </div>
             </div>
             <div class="code_view"></div>

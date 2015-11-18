@@ -71,6 +71,7 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs'], function($, eventcenter
                 },
                 close: function(event, ui) {
                     $('.login li a.loginBtn').blur();
+                    $('#use_weixin').removeClass("active");
                 }
             });
         });
@@ -151,7 +152,7 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs'], function($, eventcenter
                     .animate({
                         left: left + 260,
                         opacity: 1,
-                    }, 300, "swing");
+                    }, 500);
             }
         }, function(e) {
             var left = $(this).offset().left;
@@ -160,8 +161,8 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs'], function($, eventcenter
                     .animate({
                         left: left + 420,
                         opacity: 0,
-                    }, 300, "swing", function(){
-                        $(this).removeClass("active")
+                    }, 500, null, function(){
+                        $(this).removeClass("active");
                     });
             }
         })
