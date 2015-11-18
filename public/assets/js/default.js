@@ -43,8 +43,8 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs'], function($, eventcenter
                         });
                     }
 
-                    $('.mod').removeClass("active");
-                    $('.mod:eq(' + index + ')').addClass("active");
+                    $('.mod').css({display: "none"});
+                    $('.mod:eq(' + index + ')').css({display: "block"});
 
                     if (index == 0) {
                         eventcenter.delaytrigger('hardware', 'init_container');
@@ -197,10 +197,8 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs'], function($, eventcenter
             initThumbnail();
 
             eventcenter.delaytrigger('hardware', 'init_container');
-
-            $('pre code').each(function(i, block) {
-                hljs.highlightBlock(block);
-            });
+            eventcenter.delaytrigger('flowchart', 'init_container');
+            $('.tabs li:first-child').click();
         });
     }
 

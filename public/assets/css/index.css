@@ -699,11 +699,6 @@ body {
     float: left;
     background-color: #eeeeee;
     padding: 0 240px 0 180px;
-    display: none;
-}
-
-.mod.active {
-    display: block;
 }
 
 .mod select {

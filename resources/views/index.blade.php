@@ -40,7 +40,7 @@
   </div>
 
 <div class="main">
-    <div class="mod active">
+    <div class="mod">
         <div class="nav-second">
             <ul>
                 <li class="srmk">输入模块<div class="triangle"></div>
@@ -204,16 +204,7 @@
             <div class="content">
                 <div class="code-wrap">
 <pre>
-<code id="c_code_input" class="c_code_area">#include "Rosys.h"
-
-void setup(){
-    initTimer3();
-    sei();
-}
-
-void loop(){
-
-}</code>
+<code id="c_code_input" class="c_code_area"></code>
 </pre>
                 </div>
             </div>
@@ -222,7 +213,7 @@ void loop(){
     </div>
     <div class="tabs">
         <ul>
-            <li class="active"><span>硬件连接</span></li>
+            <li><span>硬件连接</span></li>
             <li><span>软件编程</span></li>
         </ul>
     </div>
