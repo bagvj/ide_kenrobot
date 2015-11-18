@@ -72,22 +72,29 @@ class WeixinAuthController extends Controller
     {
         $key = $request->input('key');
         if (Auth::check()) {
-            return 2;
+            return response()->json(['code' => 1, 'message' => '已经登录']);
+
         }
 
         // $key = Session::get('key');
         $userInfo = $this->getUserinfo($key);
         
         if ($userInfo == null) {
-           return 0;
+            return response()->json(['code' => 2, 'message' => '登录失败']);
+
         }
 
         $user = $this->getUser($userInfo);
         if ($user == null) {
            $user = $this->createUser($userInfo);
         }
+        if (Auth::check()) {
+            Auth::logout();
+
+        }
         Auth::login($user,false);
-        return 1;
+        return response()->json(['code' => 0, 'message' => '登录成功']);
+
 
     }
 
