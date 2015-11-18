@@ -3,7 +3,7 @@
 @section('main')
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/highlight/styles/solarized_light.css') }}" />
 
- <div class="header">
+ <div class="header no-select">
     <div class="content">
       <span><a href="{{$nav['self'] or '#'}}" class="logo"></a></span>
       <div class="nav">
@@ -40,7 +40,7 @@
   </div>
 
 <div class="main">
-    <div class="mod">
+    <div class="mod no-select">
         <div class="nav-second">
             <ul>
                 <li class="srmk">输入模块<div class="triangle"></div>
@@ -113,7 +113,7 @@
         </div>
         <div class="canvas" id="hardware-container"></div>
     </div>
-    <div class="mod">
+    <div class="mod no-select">
         <div class="nav-second">
             <ul>
                 <li class="ypzmk active">已配置模块<div class="triangle"></div>
@@ -173,14 +173,14 @@
         <div class="canvas" id="flowchart-container"></div>
     </div>
     <div class="side">
-        <div class="trolley-side">
+        <div class="trolley-side no-select">
             <div class="bar">已配置模块<div class="car"></div></div>
             <div class="list hardware_part_list">
                 <ul></ul>
             </div>
             <div class="buy" onclick="window.open('http://www.kenrobot.com/index.php?app=shop');">元件选购</div>
         </div>
-        <div class="var-side">
+        <div class="var-side no-select">
             <div class="bar">变量</div>
             <div class="content">
                 <table id="var-table">
@@ -200,7 +200,7 @@
             </div>
         </div>
         <div class="code-side">
-            <div class="bar">C语言</div>
+            <div class="bar no-select">C语言</div>
             <div class="content">
                 <div class="code-wrap">
 <pre>
@@ -211,19 +211,19 @@
             <div class="code_view"></div>
         </div>
     </div>
-    <div class="tabs">
+    <div class="tabs no-select">
         <ul>
             <li><span>硬件连接</span></li>
             <li><span>软件编程</span></li>
         </ul>
     </div>
-    <div class="thumbnail">
+    <div class="thumbnail no-select">
         <div class="canvas-wrap" data-action="show">
             <div class="canvas" id="thumbnailCanvas"></div>
         </div>
         <div class="foldBtn active"></div>
     </div>
-    <div class="mod_btn">
+    <div class="mod_btn no-select">
         <div class="save">保存</div>
         <div class="download">下载</div>
     </div>

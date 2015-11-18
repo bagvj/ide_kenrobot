@@ -8,7 +8,7 @@ define(['jquery', 'kenrobotDialog', 'eventcenter'], function($, kenrobotDialog, 
 			}
 			kenrobotDialog.hide();
 		});
-		$("body").bind("selectstart", function() {
+		$(".mod .canvas").bind("selectstart", function() {
 			return false;
 		});
 		$("#hardware-container").mousewheel(function(event, deltaj, deltax, deltay) {

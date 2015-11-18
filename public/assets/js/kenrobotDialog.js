@@ -118,7 +118,7 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 	 */
 	function initDialog(callback) {
 		var width = dialogParams.width || 250;
-		var floatDiv = $("<div></div>").css({
+		var floatDiv = $('<div class="no-select"></div>').css({
 			"z-index": 1000,
 			"position": "absolute",
 			"width": width,
@@ -272,7 +272,7 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 	 * @desc modal dialog展示时候的遮罩
 	 */
 	function showCover() {
-		cover = $("<div></div>").css({
+		cover = $('<div class="no-select"></div>').css({
 			"filter": "alpha(opacity:50)",
 			"-moz-opacity": 0.5,
 			"opacity": 0.5,
