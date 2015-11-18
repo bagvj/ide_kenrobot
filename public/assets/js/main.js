@@ -22,7 +22,8 @@ require.config({
 		"defaultJs": "../default",
 		"guide": "../guide",
 		"keninit": "../keninit",
-		'hljs':"../../highlight/highlight.pack"
+		'hljs':"../../highlight/highlight.pack",
+		'EasterEgg' : "../EasterEgg",
 	},
 	shim: {
 		'jquery-ui': {
@@ -58,7 +59,13 @@ var hasInitedSoftware = 0;
 //project_info
 //本地项目内存地址
 var projectInfo = null;
-require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 'flowchartInfo', 'eventcenter', 'defaultJs', 'guide', 'flowchart_item_set', 'flowchartConfigs', 'genC', 'keninit','hljs', 'jquery-mousewheel'], function($, cjxm, software, hardware, kenrobotJsPlumb, kenrobotDialog, flowchartInfo, eventcenter, defaultJs, guide, fis, flowchartConfigs, genC, keninit, hljs) {
+require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 'flowchartInfo', 'eventcenter', 'defaultJs', 'guide', 'flowchart_item_set', 'flowchartConfigs', 'genC', 'keninit','hljs','EasterEgg', 'jquery-mousewheel'], function($, cjxm, software, hardware, kenrobotJsPlumb, kenrobotDialog, flowchartInfo, eventcenter, defaultJs, guide, fis, flowchartConfigs, genC, keninit, hljs,EasterEgg) {
+
+
+	var hundouluo = [38,38,40,40,37,39,37,39,65,66,65,66];
+	EasterEgg.listen(hundouluo,function(){
+      alert('我不是魂斗罗，你也没有30条命');
+    });
 
 	cjxm.init();
 
