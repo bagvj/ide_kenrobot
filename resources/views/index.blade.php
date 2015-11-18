@@ -180,11 +180,11 @@
             </div>
             <div class="buy" onclick="window.open('http://www.kenrobot.com/index.php?app=shop');">元件选购</div>
         </div>
-        <div class="var-side no-select">
-            <div class="bar">变量</div>
+        <div class="var-side">
+            <div class="bar no-select">变量</div>
             <div class="content">
                 <table id="var-table">
-                    <tr>
+                    <tr class="no-select">
                         <th>名称</th>
                         <th>种类</th>
                         <th>类型</th>
@@ -193,7 +193,7 @@
                     </tr>
                 </table>
             </div>
-            <div class="operator">
+            <div class="operator no-select">
                 <div class="btn add">增加</div>
                 <div class="btn del">删除</div>
                 <div class="btn">修改</div>
