@@ -1149,7 +1149,7 @@ td {
 /*蜂鸣器*/
 
 .hardware-buzzer {
-    background: url(../img/hardware/default-small.png) no-repeat;
+    background: url(../img/hardware/buzzer-small.png) no-repeat;
     background-size: contain;
 }
 
@@ -1177,7 +1177,7 @@ td {
 /*1位I/O输出*/
 
 .hardware-oneBitOut {
-    background: url(../img/hardware/default-small.png) no-repeat;
+    background: url(../img/hardware/oneBitOut-small.png) no-repeat;
     background-size: contain;
 }
 
