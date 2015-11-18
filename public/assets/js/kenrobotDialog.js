@@ -252,12 +252,12 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 		floatDiv.append(footerDiv);
 		var top = dialogParams.top;
 		var left = dialogParams.left;
-		var height = floatDiv.height();
+		var height = floatDiv.height() || 150;
 		if(!top) {
 			top = ($(window).height() - height) / 2;
 		}
 		if(!left) {
-			left = ($(window).width() - width) / 2;
+			left = ($(window).width() - width - 60) / 2;
 		}
 		floatDiv.css({
 			"top": top,
