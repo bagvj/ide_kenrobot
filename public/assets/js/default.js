@@ -142,9 +142,28 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs'], function($, eventcenter
         });
 
         $('.qrLogin .qrcode').hover(function(e){
-            $('#use_weixin').addClass("active");
+            var top = $(this).offset().top;
+            var left = $(this).offset().left;
+            if(!$('#use_weixin').is(":animated")){
+                $('#use_weixin')
+                    .addClass("active")
+                    .css({top: top - 160, left: left + 50, opacity: 0})
+                    .animate({
+                        left: left + 260,
+                        opacity: 1,
+                    }, 300, "swing");
+            }
         }, function(e) {
-            $('#use_weixin').removeClass("active");
+            var left = $(this).offset().left;
+            if(!$('#use_weixin').is(":animated")){
+                $('#use_weixin')
+                    .animate({
+                        left: left + 420,
+                        opacity: 0,
+                    }, 300, "swing", function(){
+                        $(this).removeClass("active")
+                    });
+            }
         })
     }
 
