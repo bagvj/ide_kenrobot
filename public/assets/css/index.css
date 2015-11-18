@@ -826,7 +826,7 @@ body {
     line-height: 45px;
     position: relative;
     padding-left: 20px;
-    font-size: 14px;
+    font-size: 12px;
     color: #eeeeee;
 }
 
@@ -845,7 +845,7 @@ body {
 .mod_btn .save {
     width: 41.25px;
     height: 41.25px;
-    background-color: #f5db26;
+    background-color: #4a5044;
     border-radius: 5px;
     margin-left: auto;
     color: #ffffff;
@@ -860,13 +860,13 @@ body {
 }
 
 .mod_btn .save:hover {
-    background-color: #cccccc;
+    background-color: #41473c;
 }
 
 .mod_btn .download {
     width: 41.25px;
     height: 41.25px;
-    background-color: #72d338;
+    background-color: #4a5044;
     border-radius: 5px;
     margin-left: auto;
     color: #ffffff;
@@ -881,7 +881,7 @@ body {
 }
 
 .mod_btn .download:hover {
-    background-color: #cccccc;
+    background-color: #41473c;
 }
 
 
@@ -897,6 +897,8 @@ body {
     left: 0px;
     right: 0px;
     position: absolute;
+    overflow: auto;
+    height: 70%;
 }
 
 .trolley-side ul {
@@ -908,7 +910,7 @@ body {
 .trolley-side ul li {
     line-height: 45px;
     list-style: none;
-    font-size: 14px;
+    font-size: 12px;
     color: #828487;
     padding-left: 20px;
     border-bottom: 1px solid #f0f0f0;
@@ -918,22 +920,21 @@ body {
 }
 
 .trolley-side .buy {
-    width: 120px;
-    height: 28px;
-    background-color: #6ab82e;
-    border-radius: 5px;
+    width: 80px;
+    height: 24px;
+    background-color: #4a5044;
     bottom: 5px;
-    left: 60px;
+    left: 80px;
     position: absolute;
     color: #ffffff;
-    font-size: 14px;
+    font-size: 12px;
     text-align: center;
-    line-height: 28px;
+    line-height: 24px;
     cursor: pointer;
 }
 
 .trolley-side .buy:hover {
-    background-color: #cccccc;
+    background-color: #41473c;
 }
 
 .trolley-side .car {
@@ -963,7 +964,7 @@ body {
 .var-side .operator {
     position: absolute;
     bottom: 10px;
-    left: 4%;
+    left: 0%;
 }
 
 .var-side .btn {
@@ -2118,27 +2119,25 @@ td {
 }
 
 .main .btn {
-    width: 50px;
-    height: 20px;
-    background-color: #6ab82e;
-    border-radius: 5px;
+    width: 54px;
+    height: 24px;
+    background-color: #4a5044;
     margin-right: auto;
     color: #ffffff;
     font-size: 12px;
     text-align: center;
-    line-height: 20px;
+    line-height: 24px;
     cursor: pointer;
 }
 
 .main .btn:hover {
-    background-color: #cccccc;
+    background-color: #41473c;
 }
 
 .main .btn1 {
     width: 53px;
     height: 28px;
-    background-color: #1677E8;
-    border-radius: 5px;
+    background-color: #4a5044;
     margin-top: 18px;
     margin-left: auto;
     margin-right: auto;
@@ -2150,7 +2149,7 @@ td {
 }
 
 .main .btn1:hover {
-    background-color: #cccccc;
+    background-color: #41473c;
 }
 
 .main .input {
