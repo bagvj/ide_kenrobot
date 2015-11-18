@@ -30,9 +30,12 @@
       </div>
       <a href="javascript:;" title="返回" class="baseLoginBtn" data-action="baseLogin" style="display:none;"></a>
       <div class="baseLogin">
-        <div class="title">登录到啃萝卜</div>
+        <div class="tips">登录到啃萝卜</div>
         <form>
           {!! csrf_field() !!}
+          <div class="message">
+            <span></span>
+          </div>
           <div class="field">
             <label class="email">
               <!-- <i class="iconauth"></i> -->
@@ -56,7 +59,7 @@
       <div class="closeBtn"></div>
     </div>
   </div>
-  <div id="use_weixin" style="display:none">
+  <div id="use_weixin">
     <img src="{{asset('assets/img/use_weixin.png')}}" />
   </div>
  </body>

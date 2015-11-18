@@ -104,10 +104,12 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		});
 
 		$(window).resize(function(e) {
-			var new_container_width = $('#' + jsPlumb_container).width();
-			var move_distance = (container_width - new_container_width) / 2;
+			var width = $('#' + jsPlumb_container).width();
+			var height = $('#' + jsPlumb_container).width();
+			var move_distance = (container_width - width) / 2;
 			moveAllNodes(move_distance);
-			container_width = new_container_width;
+			container_width = width;
+			container_height = height;
 		});
 
 		// 右键菜单
@@ -245,16 +247,10 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 				}
 			},
 			items: {
-				// "edit": {name: "Edit", icon: "edit"},
-				// "cut": {name: "Cut", icon: "cut"},
-				// "copy": {name: "Copy", icon: "copy"},
-				// "paste": {name: "Paste", icon: "paste"},
 				"delete": {
 					name: "Delete",
 					icon: "delete"
 				},
-				// "sep1": "---------",
-				// "quit": {name: "Quit", icon: "quit"}
 			}
 		});
 	}
@@ -279,8 +275,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 	}
 
 	function initMainBoard() {
-		var left = container_width / 2 - 165;
-		var top = container_height / 2 - 135;
+		var left = container_width / 2 - 150;
+		var top = container_height / 2 - 92;
 		var firstNodeParam = {};
 		firstNodeParam['x'] = left;
 		firstNodeParam['y'] = top;

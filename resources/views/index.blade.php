@@ -231,7 +231,7 @@ void loop(){
         <div class="canvas-wrap" data-action="show">
             <div class="canvas" id="thumbnailCanvas"></div>
         </div>
-        <div class="foldBtn"></div>
+        <div class="foldBtn active"></div>
     </div>
     <div class="mod_btn">
         <div class="save">保存</div>
