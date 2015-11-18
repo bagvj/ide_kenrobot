@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('main')
-  <link rel="stylesheet" type="text/css" href="{{ asset('assets/highlight/styles/default.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/highlight/styles/solarized_light.css') }}" />
 
  <div class="header">
     <div class="content">
@@ -185,11 +185,11 @@
             <div class="content">
                 <table id="var-table">
                     <tr>
-                        <th>name</th>
-                        <th>type</th>
-                        <th>kind</th>
-                        <th>initial</th>
-                        <th>desc</th>
+                        <th>名称</th>
+                        <th>种类</th>
+                        <th>类型</th>
+                        <th>初值</th>
+                        <th>描述</th>
                     </tr>
                 </table>
             </div>
@@ -203,8 +203,8 @@
             <div class="bar">C语言</div>
             <div class="content">
                 <div class="code-wrap">
-                    <pre>
-                        <code id="c_code_input" class="c_code_area">#include "Rosys.h"
+<pre>
+<code id="c_code_input" class="c_code_area">#include "Rosys.h"
 
 void setup(){
     initTimer3();
@@ -213,9 +213,8 @@ void setup(){
 
 void loop(){
 
-}
-                        </code>
-                    </pre>
+}</code>
+</pre>
                 </div>
             </div>
             <div class="code_view"></div>
@@ -231,7 +230,7 @@ void loop(){
         <div class="canvas-wrap" data-action="show">
             <div class="canvas" id="thumbnailCanvas"></div>
         </div>
-        <div class="foldBtn"></div>
+        <div class="foldBtn active"></div>
     </div>
     <div class="mod_btn">
         <div class="save">保存</div>
