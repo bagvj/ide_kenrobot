@@ -256,11 +256,11 @@ body {
     background: url('../img/closeBtn.png') no-repeat center;
     cursor: pointer;
     display: block;
-    height: 24px;
-    width: 24px;
+    height: 16px;
+    width: 16px;
     position: absolute;
-    left: 5px;
-    top: 5px;
+    left: 10px;
+    top: 10px;
     z-index: 200;
 }
 
@@ -662,7 +662,7 @@ body {
     height: 100%;
     opacity: 0.8;
     float: right;
-    background-color: #ffe;
+    background-color: #f9f8f4;
 }
 
 .thumbnail .canvas {
