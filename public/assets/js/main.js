@@ -361,20 +361,6 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 		window.open(url);
 	}
 
-	$('.code-side .code_view').click(function(e) {
-		alert(genC.gen());
-	});
-
-	$('#search_input').focus(function(){
-		$('.search').animate({width: 180}, 200);
-	}).blur(function(){
-		if($(this).val() !== ''){
-			return false;
-		}
-		
-		$('.search').animate({width: 110}, 200);
-	});
-
 	//保存硬件到本地内存
 	function save_hardware() {
 		if (!projectInfo) {

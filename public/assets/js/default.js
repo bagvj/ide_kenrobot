@@ -1,4 +1,4 @@
-define(['jquery', 'eventcenter', 'html2canvas', 'hljs'], function($, eventcenter, _, hljs) {
+define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eventcenter, _, hljs, genC) {
     var showGuide = null;
 
     function setShowGuid(show) {
@@ -193,12 +193,19 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs'], function($, eventcenter
         });
     }
 
+    function initCode(){
+        $('.code-side .code_view').click(function(e) {
+            alert(genC.gen());
+        });
+    }
+    
     function init() {
         $(document).ready(function() {
             initTabs();
             initNavSecond();
             initLogin();
             initThumbnail();
+            initCode();
 
             eventcenter.delaytrigger('hardware', 'init_container');
             eventcenter.delaytrigger('flowchart', 'init_container');
