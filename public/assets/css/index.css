@@ -629,8 +629,8 @@ body {
     float: left;
     top: 60px;
     right: 242px;
-    width: 200px;
-    height: 160px;
+    width: 240px;
+    height: 180px;
     
     position: absolute;
 }
@@ -640,7 +640,7 @@ body {
     height: 100%;
     opacity: 0.8;
     float: right;
-    background-color: #4A5044;
+    background-color: #ffe;
 }
 
 .thumbnail .canvas {
