@@ -40,6 +40,7 @@ body {
     color: #8d9092;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "liga", "kern";
+    letter-spacing: 2px;
 }
 
 .iconfont {
@@ -843,16 +844,17 @@ body {
 }
 
 .mod_btn .save {
-    width: 41.25px;
-    height: 41.25px;
+    width: 48px;
+    height: 48px;
     background-color: #4a5044;
     border-radius: 5px;
     margin-left: auto;
     color: #ffffff;
-    font-size: 13.5px;
+    font-size: 13px;
     text-align: center;
-    line-height: 41.25px;
+    line-height: 48px;
     cursor: pointer;
+    font-weight: lighter;
     border-radius: 32px;
     -webkit-border-radius: 32px;
     -moz-border-radius: 32px;
@@ -864,15 +866,16 @@ body {
 }
 
 .mod_btn .download {
-    width: 41.25px;
-    height: 41.25px;
+    width: 48px;
+    height: 48px;
     background-color: #4a5044;
+    font-weight: lighter;
     border-radius: 5px;
     margin-left: auto;
     color: #ffffff;
-    font-size: 13.5px;
+    font-size: 13px;
     text-align: center;
-    line-height: 41.25px;
+    line-height: 48px;
     cursor: pointer;
     border-radius: 32px;
     -webkit-border-radius: 32px;
@@ -941,7 +944,7 @@ body {
     width: 45px;
     height: 45px;
     float: right;
-    background: url('../img/car.png') no-repeat center;
+    background: url('../img/shoppingcart.png') no-repeat center;
 }
 
 /*.hardware_part_list {
@@ -999,6 +1002,7 @@ body {
 }
 
 .var-side th {
+    font-weight: normal;
     background-color: #dce9f9;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#ebf3fc), to(#dce9f9));
     background-image: -webkit-linear-gradient(top, #ebf3fc, #dce9f9);
@@ -1014,6 +1018,8 @@ body {
 }
 
 .var-side td:first-child, .var-side th:first-child {
+    padding-top: 2px;
+    padding-bottom: 2px;
     border-left: none;
 }
 
@@ -1038,6 +1044,7 @@ body {
 }
 
 .code-wrap pre {
+    letter-spacing: 0px !important;
     font-family: 'Source Code Pro',sans-serif;
 }
 
