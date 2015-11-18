@@ -10,6 +10,12 @@
     /* iOS 4.1- */
 }
 
+/* 代码字体文件*/
+@font-face{
+   font-family: SourceCodePro-Regular;
+   src:url(/assets/font/SourceCodePro-Regular.ttf);
+}
+
 * {
     -webkit-margin-before: 0px;
     -webkit-margin-after: 0px;
