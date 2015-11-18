@@ -670,7 +670,7 @@ body {
     right: 242px;
     width: 240px;
     height: 180px;
-    
+    cursor: move;
     position: absolute;
 }
 
