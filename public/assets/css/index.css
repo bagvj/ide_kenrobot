@@ -1011,6 +1011,15 @@ body {
     -ms-transition: all 0.1s ease-in-out;
     transition: all 0.1s ease-in-out;     
 }    
+
+.var-side tr .active {
+    background: #fbf8e9;
+    -o-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;     
+}
     
 .var-side td, .var-side th {
     border-left: 1px solid #ccc;
