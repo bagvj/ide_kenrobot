@@ -35,6 +35,8 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
                 selector = "#hardware-container";
             }
             html2canvas($(selector), {
+                profile: true,
+                allowTaint: true,
                 onrendered: function(canvas) {
                     $('#thumbnailCanvas').html(canvas);
                     if ($(canvas).attr("width") != 0) {

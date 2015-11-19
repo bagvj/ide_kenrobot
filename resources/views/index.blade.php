@@ -192,19 +192,22 @@
             <div class="bar">变量</div>
             <div class="content">
                 <table id="var-table">
-                    <tr>
-                        <th>名称</th>
-                        <th>种类</th>
-                        <th>类型</th>
-                        <th>初值</th>
-                        <th>描述</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>种类</th>
+                            <th>类型</th>
+                            <th>初值</th>
+                            <th>描述</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
                 </table>
             </div>
             <div class="operator">
                 <div class="btn add">增加</div>
                 <div class="btn del">删除</div>
-                <div class="btn">修改</div>
+                <div class="btn modify">修改</div>
             </div>
         </div>
         <div class="code-side">

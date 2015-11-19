@@ -1,12 +1,12 @@
 define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, eventcenter) {
 
-	var var_list = [];
+	var varList = [];
 	var varContainerId;
 	var container;
-	var sel_item;
+	var curRow;
 
 	function getFormatTR(data) {
-		return "<tr class='tr'><td>" + data.name + "</td><td>" + data.type + "</td><td>" + data.kind + "</td><td>" + data.initial + "</td><td></td>tr>"
+		return "<td>" + data.name + "</td><td>" + data.type + "</td><td>" + data.kind + "</td><td>" + data.initial + "</td><td></td>"
 	}
 
 	$(".var-side .btn.add").click(function() {
@@ -69,19 +69,12 @@ define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, 
 	});
 
 	$(".var-side .btn.modify").click(function() {
-		if(!sel_item){
+		if(!curRow) {
 			return;
 		}
-		container = $("#" + varContainerId);
-		var items = container.find(".tr");
-		var index;
-		for(var i = 0; i < items.length; i++) {
-			if($(items[i]).html() == sel_item.html()){
-				index = i;
-				break;
-			}
-		}
-		var varInfo = var_list[index];
+		
+		var index = curRow.index();
+		var varInfo = varList[index];
 
 		kenrobotDialog.show(0, {
 			"title": "添加/更改变量",
@@ -142,88 +135,67 @@ define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, 
 	});
 
 	function saveVarList(data) {
+		if(data.name == "") {
+			// alert();
+			return;
+		}
+
 		data.initial = data.initial == "" ? (data.type == "bool" ? "false" : (data.type == "unsigned char" ? "''" : "0")) : data.initial;
+		container = $('#' + varContainerId);
 		var index = -1;
-		for(var i = 0; i < var_list.length; i++){
-			if(var_list[i].name == data.name){
+		for(var i = 0; i < varList.length; i++) {
+			var varInfo = varList[i];
+			if(varInfo.name == data.name) {
 				index = i;
 				break;
 			}
 		}
-		container = $('#' + varContainerId);
+
+		$("tbody tr.active", container).removeClass("active");
 		if(index >= 0){
-			var varInfo = var_list[index];
+			var varInfo = varList[index];
 			varInfo.name = data.name;
 			varInfo.type = data.type;
 			varInfo.kind = data.kind;
 			varInfo.initial = data.initial;
-			var tr = $(container.find(".tr")[index]);
-			$(getFormatTR(data)).insertAfter(tr);
-			tr.remove();
-			sel_item = null;
+			curRow = $('tr:eq(' + (index + 1) + ')', container).addClass("active");
+			curRow.html(getFormatTR(data));
 		} else {
-			container.append(getFormatTR(data));
-			var_list.push({
-				"name": data.name,
-				"type": data.type,
-				"kind": data.kind,
-				"initial": data.initial
+			varList.push({
+				name: data.name,
+				type: data.type,
+				kind: data.kind,
+				initial: data.initial
+			});
+
+			curRow = $('<tr></tr>').addClass("active").html(getFormatTR(data)).appendTo($("tbody", container)).click(function() {
+				$("tbody tr.active", container).removeClass("active");
+				curRow = $(this).addClass("active");
 			});
 		}
-		bindItemEvent();
 		eventcenter.trigger('genC', 'refresh');
 	}
 
 	$(".var-side .btn.del").click(function() {
-		if (sel_item) {
-			var index = sel_item.index() - 1;
-			sel_item.remove();
-			sel_item = null;
-			var_list.splice(index, 1);
-
+		if (curRow) {
+			var index = curRow.index();
+			varList.splice(index, 1);
+			curRow.remove();
+			curRow = null;
 			eventcenter.trigger('genC', 'refresh');
 		}
 	})
 
-	function bindItemEvent() {
-		container = $('#' + varContainerId);
-		container.html(container.html());
-		container.find(".tr").mousemove(function(e) {
-			$(this).attr("class", "tr special");
-		});
-		container.find(".tr").mouseout(function(e) {
-			if (sel_item && sel_item.html() == $(this).html()) {
-				return;
-			}
-			$(this).attr("class", "tr normal");
-		});
-		container.find(".tr").click(function() {
-			if (sel_item && sel_item.html() == $(this).html()) {
-				$(this).attr("class", "tr normal");
-				sel_item = null;
-			} else {
-				$(this).attr("class", "tr special");
-				sel_item = $(this);
-			}
-		});
-	}
-
 	function initVarTable(containerId) {
 		varContainerId = containerId;
 		container = $('#' + varContainerId);
-		if(!container){
-			alert("缺少初始化变量的位置");
-			return false;
-		}
-
-		for (var i = 0; i < var_list.length; i++) {
-			container.append(getFormatTR(var_list[i]));
+		for (var i = 0; i < varList.length; i++) {
+			container.append(getFormatTR(varList[i]));
 		};
-		bindItemEvent();
 	}
 
 	function getVarList() {
-		return var_list;
+		return varList;
 	}
 
 	return {
