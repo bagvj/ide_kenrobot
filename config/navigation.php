@@ -24,6 +24,7 @@ return [
        'square'     => 'http://www.kenrobot.com/index.php?app=square&mod=Index&act=listshow',
        //商场
        'market'     => 'http://www.kenrobot.com/index.php?app=shop',
+       'register'   => 'http://www.kenrobot.com/index.php?app=public&mod=Register&act=index'
     ],
 
 ];
