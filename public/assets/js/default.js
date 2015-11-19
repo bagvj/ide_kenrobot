@@ -190,7 +190,8 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
         });
 
         $('.thumbnail').draggable({
-            containment: "window"
+            containment: "window",
+            handle: ".canvas-wrap"
         });
     }
 

@@ -673,7 +673,6 @@ body {
     right: 242px;
     width: 240px;
     height: 150px;
-    cursor: move;
     position: absolute;
 }
 
@@ -682,6 +681,7 @@ body {
     height: 100%;
     opacity: 0.8;
     float: right;
+    cursor: move;
     background-color: #f9f8f4;
 }
 
