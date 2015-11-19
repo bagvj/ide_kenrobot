@@ -6,12 +6,13 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
     }
 
     function initNavSecond() {
-        $(".nav-second li").click(function() {
-            if ($(this).attr("class").indexOf("active") == -1) {
-                $(this).parent().find(".active").removeClass("active");
-                $(this).addClass("active");
+        $(".nav-second>ul>li .category").click(function() {
+            var li = $(this).parent();
+            if (li.attr("class").indexOf("active") == -1) {
+                li.parent().find(".active").removeClass("active");
+                li.addClass("active");
             } else {
-                $(this).removeClass("active");
+                li.removeClass("active");
             }
         });
     }
@@ -98,23 +99,23 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
                     display: "block"
                 });
             }
-        });
 
-        var time1 = setInterval(function() {
-            var key = $('#qrcode_key').val();
-            $.get('/weixinlogin?key=' + key, function(result) {
-                if (result.code == 0) {
-                    //登录成功
-                    clearInterval(time1);
-                    window.location.href = "/";
-                } else if(result.code == 1) {
-                    //已经登录
-                    clearInterval(time1);
-                } else {
-                    //登录失败
-                }
-            });
-        }, 3000);
+            var time1 = setInterval(function() {
+                var key = $('#qrcode_key').val();
+                $.get('/weixinlogin?key=' + key, function(result) {
+                    if (result.code == 0) {
+                        //登录成功
+                        clearInterval(time1);
+                        window.location.href = "/";
+                    } else if(result.code == 1) {
+                        //已经登录
+                        clearInterval(time1);
+                    } else {
+                        //登录失败
+                    }
+                });
+            }, 3000);
+        });
 
         $('#login_dialog .closeBtn').click(function(e) {
             $('#login_dialog').dialog('close');
@@ -172,22 +173,28 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
     //缩略图
     function initThumbnail() {
         var wrap = $('.thumbnail .canvas-wrap');
+        var wrapWidth = 0;
+        var wrapHeight = 0;
+        var wrapLeft = 0;
         $('.thumbnail .foldBtn').click(function(e) {
             if (wrap.attr("data-action") == "show") {
-                var left = wrap.width();
+                wrapLeft = wrap.position().left;
+                wrapWidth = wrap.width();
+                wrapHeight = wrap.height();
                 $(this).removeClass("active");
                 wrap.stop().animate({
-                    width: "0%",
-                    height: "0%",
-                    left: left,
+                    width: 0,
+                    height: 0,
+                    left: wrapLeft + wrapWidth,
                 }, 300);
                 wrap.attr("data-action", "hide");
             } else {
+                wrapLeft = wrap.position().left;
                 $(this).addClass("active")
                 wrap.stop().animate({
-                    width: "100%",
-                    height: "100%",
-                    left: 0,
+                    width: wrapWidth,
+                    height: wrapHeight,
+                    left: wrapLeft - wrapWidth,
                 }, 300);
                 wrap.attr("data-action", "show");
             }

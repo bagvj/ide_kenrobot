@@ -454,10 +454,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 			} else {
 
 			}
-		}).bind("mouseover", function(e) {
-			showDesc(node, true);
-		}).on('mouseout', function(e) {
-			showDesc(node, false);
 		});
 
 		return node;

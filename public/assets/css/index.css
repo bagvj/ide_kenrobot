@@ -774,14 +774,18 @@ body {
     border-bottom: 0px;
 }
 
-.nav-second ul li .triangle {
+.nav-second ul li .category {
+    height: 45px;
+}
+
+.nav-second ul li .arrow {
     width: 45px;
     height: 45px;
     float: right;
     background: url('../img/forward.png') no-repeat center;
 }
 
-.nav-second ul li.active .triangle {
+.nav-second ul li.active .arrow {
     background: url('../img/down.png') no-repeat center;
 }
 

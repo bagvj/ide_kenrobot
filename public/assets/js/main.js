@@ -401,8 +401,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 	}
 
 	function createUlObj(key, cls, arr) {
-		var topLiObj = $('<li></li>').addClass(cls);
-		topLiObj.append(key).append($('<div></div>').addClass('triangle'));
+		var topLiObj = $('<li></li>').addClass(cls).append($('<div></div>').append(key).append('<div class="arrow"></div>').addClass('category'));
 
 		var ulObj = $('<ul></ul>');
 		var divObj = $('<div></div>').addClass('content-container');

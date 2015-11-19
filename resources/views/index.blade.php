@@ -43,7 +43,8 @@
     <div class="mod no-select">
         <div class="nav-second">
             <ul>
-                <li class="srmk">输入模块<div class="triangle"></div>
+                <li class="srmk">
+                    <div class="category">输入模块<div class="arrow"></div></div>
                     <ul>
                         <div class="content-container">
                             <li>
@@ -55,7 +56,8 @@
                         </div>
                     </ul>
                 </li>
-                <li class="scmk">输出模块<div class="triangle"></div>
+                <li class="scmk">
+                    <div class="category">输出模块<div class="arrow"></div></div>
                     <ul>
                         <div class="content-container">
                             <li>
@@ -70,7 +72,8 @@
                         </div>
                     </ul>
                 </li>
-                <li class="zxmk">执行模块<div class="triangle"></div>
+                <li class="zxmk">
+                    <div class="category">执行模块<div class="arrow"></div></div>
                     <ul>
                         <div class="content-container">
                             <li>
@@ -82,7 +85,8 @@
                         </div>
                     </ul>
                 </li>
-                <li class="cgmk">传感模块<div class="triangle"></div>
+                <li class="cgmk">
+                    <div class="category">传感模块<div class="arrow"></div></div>
                     <ul>
                         <div class="content-container">
                             <li>
@@ -100,7 +104,8 @@
                         </div>
                     </ul>
                 </li>
-                <li class="txmk">通信模块<div class="triangle"></div>
+                <li class="txmk">
+                    <div class="category">通信模块<div class="arrow"></div></div>
                     <ul>
                         <div class="content-container">
                             <li>
@@ -116,7 +121,8 @@
     <div class="mod no-select">
         <div class="nav-second">
             <ul>
-                <li class="ypzmk active">已配置模块<div class="triangle"></div>
+                <li class="ypzmk active">
+                    <div class="category">已配置模块<div class="arrow"></div></div>
                     <div class="content-container flowchart_hardware_part_list">
                         <ul>
                             <li><div id="flowchart_board" data-item="flowchart_board_item" class="flowchart-item flowchart-board"></div>主板</li>
@@ -126,7 +132,8 @@
                         </ul>
                     </div>
                 </li>
-                <li class="lckzmk1">流程控制模块<div class="triangle"></div>
+                <li class="lckzmk1">
+                    <div class="category">流程控制模块<div class="arrow"></div></div>
                     <ul>
                         <div class="content-container">
                             <li>
@@ -147,7 +154,8 @@
                         </div>
                     </ul>
                 </li>
-                <li class="lckzmk2">流程控制模块<div class="triangle"></div>
+                <li class="lckzmk2">
+                    <div class="category">流程控制模块<div class="arrow"></div></div>
                     <ul>
                         <div class="content-container">
                             <li>

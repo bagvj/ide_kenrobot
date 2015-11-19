@@ -340,36 +340,42 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 	}
 
 	function showDesc(node, show) {
+		var nodeType = $(node).attr('data-item');
+
 		if (!show) {
-			$('.desc_show_' + $(node).attr('data-item')).hide(150, function(e) {
+			$('.desc_show_' + nodeType).hide(150, function(e) {
 				$(this).remove();
 			});
+			return false;
+		}
+
+		if(nodeType == "hardware_board_item") {
 			return false;
 		}
 
 		var width = $(window).width();
 		var height = $(window).height();
 		var showText = '';
-		var nowJsPlumbNodeAddInfo = getSelectedJsPlumbNode(node).node.add_info;
+		var addInfo = getSelectedJsPlumbNode(node).node.add_info;
 
-		if (nowJsPlumbNodeAddInfo.category && nowJsPlumbNodeAddInfo.category != undefined) {
-			showText += nowJsPlumbNodeAddInfo.category;
+		if (addInfo.category && addInfo.category != undefined) {
+			showText += addInfo.category;
 		}
-		if (nowJsPlumbNodeAddInfo.name_cn && nowJsPlumbNodeAddInfo.name_cn != undefined) {
-			showText += '：' + nowJsPlumbNodeAddInfo.name_cn;
+		if (addInfo.name_cn && addInfo.name_cn != undefined) {
+			showText += '：' + addInfo.name_cn;
 		}
 		if (showText.length === 0) {
 			return false;
 		}
-		if (nowJsPlumbNodeAddInfo.isController == 1) {
+		if (addInfo.isController == 1) {
 			showText += '；可用端口信息：';
-			for (var i = 0; i < nowJsPlumbNodeAddInfo.points.length; i++) {
-				showText += ' <span style="font-size:12px;">' + (nowJsPlumbNodeAddInfo.points)[i].port + ":" + (nowJsPlumbNodeAddInfo.points)[i].bit + '</span>';
+			for (var i = 0; i < addInfo.points.length; i++) {
+				showText += ' <span style="font-size:12px;">' + (addInfo.points)[i].port + ":" + (addInfo.points)[i].bit + '</span>';
 			}
 		} else {
-			showText += '；使用端口位：' + nowJsPlumbNodeAddInfo.usedPortBit;
-			if (nowJsPlumbNodeAddInfo.func && nowJsPlumbNodeAddInfo.func != undefined) {
-				showText += '；函数：' + nowJsPlumbNodeAddInfo.func;
+			showText += '；使用端口位：' + addInfo.usedPortBit;
+			if (addInfo.func && addInfo.func != undefined) {
+				showText += '；函数：' + addInfo.func;
 			}
 		}
 		if (showText.length === 0) {
