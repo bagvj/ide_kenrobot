@@ -43,8 +43,8 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
                         });
                     }
 
-                    $('.mod.active').removeClass('active');
-                    $('.mod:eq(' + index + ')').addClass('active');
+                    $('.mod').css({visibility : "hidden"});
+                    $('.mod:eq(' + index + ')').css({visibility : "visible"});
 
                     if (index == 0) {
                         eventcenter.delaytrigger('hardware', 'init_container');
