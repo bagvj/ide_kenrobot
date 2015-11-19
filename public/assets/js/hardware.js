@@ -246,11 +246,13 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 
 	function initNode(param) {
 		var tmpAddInfo = {};
-		for (var i in fis[param['data-item']]) {
-			tmpAddInfo[i] = fis[param['data-item']][i];
-		}
+		
 		if (param['add_info']) {
 			tmpAddInfo = param['add_info'];
+		} else {
+			for (var key in fis[param['data-item']]) {
+				tmpAddInfo[key] = fis[param['data-item']][key];
+			}
 		}
 		var node = addNode(jsPlumb_container, param);
 		param.add_info = tmpAddInfo;
@@ -1326,42 +1328,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		}
 	}
 
-	/**
-	 * 根据点、线信息绘制流程图
-	 * @param object flowchart {"nodes":[],"links":[]}格式数据，可通过getFlowchartElements获取
-	 */
-	function draw(flowchart) {
-		if (jsPlumb_nodes.length > 0) {
-			if (confirm("是否覆盖重绘?")) {
-				clear();
-			} else {
-				return false;
-			}
-		}
-		$.each(flowchart["nodes"], function(i, o) {
-			//是否需要旋转180°
-			var initRotateStatus = 0;
-			if (o['add_info'] && o['add_info']['rotate'] && o['add_info']['rotate'] == '1') {
-				initRotateStatus = 1;
-			}
-			var tmpNode = initNode(o);
-			if (initRotateStatus == 1) {
-				$(tmpNode).addClass('content-rotate');
-				var targetEndPoints = jsPlumb_instance.getEndpoints($(tmpNode));
-				for (var j = 0; j < targetEndPoints.length; j++) {
-					targetEndPoints[j].anchor.x = 1 - targetEndPoints[j].anchor.x;
-					targetEndPoints[j].anchor.y = 1 - targetEndPoints[j].anchor.y;
-				}
-			}
-			jsPlumb_instance.detachAllConnections($(tmpNode));
-		});
-		$.each(flowchart["links"], function(i, o) {
-			var sourceId = o["sourceId"];
-			var targetId = o["targetId"];
-			connectPortsByUuid(sourceId, targetId);
-		});
-	}
-
 	function isEmpty() {
 		return jsPlumb_nodes.length == 0;
 	}
@@ -1370,7 +1336,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		init: init,
 		getFlowchartElements: getFlowchartElements,
 		clear: clear,
-		draw: draw,
 		isEmpty: isEmpty,
 		setSelectedNodeInfo: setSelectedNodeInfo,
 		setShowGuid: setShowGuid,

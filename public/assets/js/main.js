@@ -71,7 +71,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 
 	keninit.init();
 
-			//设置ajax请求的csrftoken
+		//设置ajax请求的csrftoken
 		$.ajaxSetup({
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -91,9 +91,6 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 
 	// 初始化硬件连接板事件
 	eventcenter.bind('hardware', 'init_container', function() {
-		redraw_hardware()
-		reset_arrHardware()
-		redraw_hardware_list()
 		if (hasInitedHardware) return false;
 		if (hardware.isEmpty()) {
 			hardware.init('hardware-item', 'hardware-container');
@@ -104,8 +101,6 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 
 	// 初始化流程图连接板事件
 	eventcenter.bind('flowchart', 'init_container', function() {
-		// initCodeInputArea();
-		reset_arrHardware();
 		var flowchartKind = "flowchart";
 		if (arrHardware.length > 0) {
 			$("ul", $("div.flowchart_hardware_part_list")).empty();
@@ -120,7 +115,6 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 				$("ul", $("div.flowchart_hardware_part_list")).append(liObj);
 			}
 		}
-		redraw_flowchart()
 		if (hasInitedSoftware) {
 			//为重新生成的元素提供拖拽支持
 			kenrobotJsPlumb.initDraggable('flowchart-item');
@@ -292,43 +286,12 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 
 	//保存项目到数据库
 	$(".mod_btn .save").click(function(e) {
-		defaultJs.save_project_to_local();
-		var pid = cjxm.getCurrentPorject();
-		if (projectInfo && projectInfo.hardware && projectInfo.flowchart) {
-			projectInfo.code = $("#c_code_input").html();
-			var xmmc_init_value = "";
-			var xmms_init_value = "";
-			if (pid == null) {
-				xmmc_init_value = "Rosys";
-				xmms_init_value = "kenrobot";
-				var data = {
-					"xmmc_init_value": xmmc_init_value,
-					"xmms_init_value": xmms_init_value
-				};
-				cjxm.drawSaveDialog(data, cjxm.saveProjectInfo);
-			} else {
-				cjxm.getProjectInfo({
-					"id": pid
-				}, function(data) {
-					console.log(data)
-					xmmc_init_value = data.info.name;
-					xmms_init_value = data.info.info;
-					var data = {
-						"xmmc_init_value": xmmc_init_value,
-						"xmms_init_value": xmms_init_value
-					};
-					cjxm.drawSaveDialog(data, cjxm.saveProjectInfo);
-				});
 
-			}
-		} else {
-			alert("进入STEP2，才能保存！！！")
-		}
 	});
 
 	//下载
 	$('.mod_btn .download').click(function(e) {
-		var source = $('#c_code_input').val();
+		var source = genC.gen();
 		var bytes = [];
 		for (var i = 0; i < source.length; ++i) {
 			bytes.push(source.charCodeAt(i));
@@ -366,99 +329,6 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 
 	function downloadFile(url) {
 		window.open(url);
-	}
-
-	//保存硬件到本地内存
-	function save_hardware() {
-		if (!projectInfo) {
-			projectInfo = {}
-		}
-		projectInfo.hardware = hardware.getFlowchartElements();
-		//console.log(projectInfo)
-	}
-
-	//保存软件流程到内存
-	function save_flowchart() {
-		if (!projectInfo) {
-			projectInfo = {}
-		}
-		projectInfo.flowchart = kenrobotJsPlumb.getFlowchartElements();
-		//console.log(projectInfo)
-	}
-
-	//重画硬件
-	function redraw_hardware() {
-		if (projectInfo && projectInfo.hardware) {
-			if (hardware.isEmpty()) {
-				hardware.init('hardware-item', 'hardware-container');
-			}
-			hardware.clear();
-			//console.log(projectInfo.hardware)
-			hardware.draw(projectInfo.hardware);
-			hasInitedHardware = 1
-		}
-	}
-
-	//在硬件连接页面，重画右侧硬件列表
-	function redraw_hardware_list() {
-		if (arrHardware.length > 0) {
-			$("ul", $("div.hardware_part_list")).empty();
-			for (var i = 0; i < arrHardware.length; i++) {
-				var kindClass = arrHardware[i].kind + "-item";
-				var kindTypeClass = arrHardware[i].kind + "-" + arrHardware[i].name;
-				var itemText = arrHardware[i].text;
-				var portBit = arrHardware[i].usedPortBit;
-				if (portBit && portBit.length > 0) itemText += "(" + portBit + ")";
-				var liObj = $("<li></li>").attr("data-item", arrHardware[i].id).append($("<div></div>").addClass(kindClass).addClass(kindTypeClass)).append(itemText);
-				$("ul", $("div.hardware_part_list")).append(liObj);
-			}
-		}
-	}
-
-	//重新设置硬件列表内存
-	function reset_arrHardware() {
-		if (projectInfo && projectInfo.hardware) {
-			arrHardware = []
-			var nodes = projectInfo.hardware.nodes
-			for (var i = 0; i < nodes.length; i++) {
-				if (nodes[i].add_info.type == "adapter") {
-					continue
-				}
-				var port = ""
-				if (nodes[i].add_info.type != "board") {
-					port = nodes[i].add_info.port;
-				}
-				var itemText = nodes[i].text;
-				if (nodes[i].add_info.usedPortBit && nodes[i].add_info.usedPortBit.length > 0) {
-					itemText += "(" + nodes[i].add_info.usedPortBit + ")";
-				}
-				arrHardware.push({
-					"id": nodes[i].id,
-					"kind": nodes[i].add_info.kind,
-					"type": nodes[i].add_info.type,
-					"port": port,
-					"text": itemText,
-					"name": nodes[i].add_info.name
-				});
-			};
-		}
-		// console.log(arrHardware)
-	}
-
-	//重画软件流程
-	function redraw_flowchart() {
-
-		if (projectInfo && projectInfo.flowchart) {
-			if (kenrobotJsPlumb.isEmpty()) {
-				kenrobotJsPlumb.init('flowchart-item', 'flowchart-container');
-			}
-			kenrobotJsPlumb.clear();
-			//console.log(projectInfo.flowchart)
-			kenrobotJsPlumb.draw(projectInfo.flowchart);
-			hasInitedSoftware = 1;
-
-			genC.refresh();
-		}
 	}
 
 	function initHardwareElement(fis) {
