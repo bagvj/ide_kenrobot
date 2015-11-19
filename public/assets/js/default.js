@@ -171,20 +171,23 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
 
     //缩略图
     function initThumbnail() {
+        var wrap = $('.thumbnail .canvas-wrap');
         $('.thumbnail .foldBtn').click(function(e) {
-            var wrap = $('.thumbnail .canvas-wrap');
             if (wrap.attr("data-action") == "show") {
+                var left = wrap.width();
                 $(this).removeClass("active");
                 wrap.stop().animate({
                     width: "0%",
-                    height: "0%"
+                    height: "0%",
+                    left: left,
                 }, 300);
                 wrap.attr("data-action", "hide");
             } else {
                 $(this).addClass("active")
                 wrap.stop().animate({
                     width: "100%",
-                    height: "100%"
+                    height: "100%",
+                    left: 0,
                 }, 300);
                 wrap.attr("data-action", "show");
             }
@@ -194,9 +197,18 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
             containment: "window",
             handle: ".canvas-wrap",
             opacity: 0.5,
-        }).resizable();
+        });
+
+        wrap.resizable({
+            handles: "sw",
+            autoHide: true,
+            aspectRatio: true,
+        });
 
         $(window).resize(function(e) {
+            if(e.target == wrap[0]) {
+                return
+            }
             var windowWidth = $(window).width();
             var width = thumbnail.width();
             thumbnail.css({
