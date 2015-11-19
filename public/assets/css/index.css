@@ -71,14 +71,12 @@ body {
 }
 
 .header {
-    width: 1180px;
     height: 60px;
     margin: 0px auto;
     background: #FFFFFF;
 }
 
 .header .content {
-    width: 1180px;
     margin: 0px auto;
     height: 60px;
 }
@@ -224,6 +222,7 @@ body {
 
 .header .login {
     float: right;
+    margin-right:24px;
 }
 
 .header .login ul li {
