@@ -5,6 +5,24 @@ define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, 
 	var container;
 	var curRow;
 
+	//C++关键字
+	var keywords = [
+		"asm", "do", "if", "return", "typedef", "auto", "double",
+		"inline", "short", "typeid", "bool", "dynamic_cast", "int",
+		"signed", "typename", "break", "else", "long", "sizeof", "union",
+		"case", "enum", "mutable", "static", "unsigned", "catch", "explicit",
+		"namespace", "static_cast", "using", "char", "export",
+		"new", "struct", "virtual", "class", "extern", "operator",
+		"switch", "void", "const", "false", "private", "template",
+		"volatile", "const_cast", "float", "protected", "this",
+		"wchar_t", "continue", "for", "public", "throw", "while",
+		"default", "friend", "register", "true", "delete", "goto",
+		"reinterpret_cast", "try", "_Bool", "_Complex", "_Imaginary",
+	];
+
+	//合法的变量名正则表达式
+	var nameRegex = /^[_a-zA-Z][_a-zA-Z0-9]*$/;
+
 	function getFormatTR(data) {
 		return "<td>" + data.name + "</td><td>" + data.type + "</td><td>" + data.kind + "</td><td>" + data.initial + "</td><td></td>"
 	}
@@ -136,7 +154,17 @@ define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, 
 
 	function saveVarList(data) {
 		if(data.name == "") {
-			// alert();
+			alert("变量名不能为空");
+			return;
+		}
+
+		if(keywords.indexOf(data.name) >= 0) {
+			alert("变量名不能是关键字");
+			return;
+		}
+
+		if(!nameRegex.test(data.name)) {
+			alert("变量名只能由字母、数字或下划线组成，且不能以数字开头");
 			return;
 		}
 
