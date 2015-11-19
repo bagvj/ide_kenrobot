@@ -713,6 +713,11 @@ body {
     float: left;
     background-color: #eeeeee;
     padding: 0 240px 0 180px;
+    visibility: hidden;
+}
+
+.mod.active {
+    visibility: visible;
 }
 
 .mod select {

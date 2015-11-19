@@ -43,8 +43,8 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
                         });
                     }
 
-                    $('.mod').css({display: "none"});
-                    $('.mod:eq(' + index + ')').css({display: "block"});
+                    $('.mod.active').removeClass('active');
+                    $('.mod:eq(' + index + ')').addClass('active');
 
                     if (index == 0) {
                         eventcenter.delaytrigger('hardware', 'init_container');
@@ -169,6 +169,7 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
         })
     }
 
+    //缩略图
     function initThumbnail() {
         $('.thumbnail .foldBtn').click(function(e) {
             var wrap = $('.thumbnail .canvas-wrap');
@@ -189,9 +190,19 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
             }
         });
 
-        $('.thumbnail').draggable({
+        var thumbnail = $('.thumbnail').draggable({
             containment: "window",
-            handle: ".canvas-wrap"
+            handle: ".canvas-wrap",
+            opacity: 0.5,
+        });
+
+        $(window).resize(function(e) {
+            var windowWidth = $(window).width();
+            var width = thumbnail.width();
+            thumbnail.css({
+                top: 60,
+                left: windowWidth - 242 - width,
+            });
         });
     }
 

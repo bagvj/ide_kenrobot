@@ -64,12 +64,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 			initStartAndEnd();
 		});
 
-		$(window).resize(function(e) {
-			var new_container_width = $('#' + jsPlumb_container).width();
-			var move_distance = (container_width - new_container_width) / 2;
-			moveAllNodes(move_distance);
-			container_width = new_container_width;
-		});
+		$(window).resize(onWindowResize);
 
 		// 右键菜单
 		rightClick();
@@ -79,42 +74,49 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 		movePanel();
 	}
 
+	function onWindowResize(e) {
+		var width = $('#' + jsPlumb_container).width();
+		var height = $('#' + jsPlumb_container).height();
+		var offsetX = (width - container_width) / 2;
+		var offsetY = (height - container_height) / 2;
+		container_width = width;
+		container_height = height;
+
+		moveAllNodes(offsetX, offsetY);
+	}
+
 	function movePanel() {
 		eventcenter.bind('flowchart', 'mousedown', function(e) {
 			if ($(e.target).attr('id') == jsPlumb_container) {
 				// 相对于屏幕的鼠标点击的起始位置
 				var startX = e.pageX;
 				var startY = e.pageY;
-				var keepmoving = 1;
+				var isMoving = true;
 				$('#' + jsPlumb_container).css({
 					cursor: 'move'
 				});
 				$(document).bind({
 					mouseup: function(e) {
-						keepmoving = -1;
+						isMoving = false;
 						$('#' + jsPlumb_container).css({
 							cursor: 'auto'
 						});
 					},
 					mouseout: function(e) {
-						keepmoving = -1;
+						isMoving = false;
 						$('#' + jsPlumb_container).css({
 							cursor: 'auto'
 						});
 					},
 					mousemove: function(e) {
-						if (keepmoving !== -1) {
-							// 当前鼠标光标的位置
+						if (isMoving) {
 							var nowX = e.pageX;
 							var nowY = e.pageY;
-							// 相对于鼠标点击起始位置的偏移量
-							var offsetDistanceX = nowX - startX;
-							var offsetDistanceY = nowY - startY;
-
-							moveAllNodes(-offsetDistanceX, -offsetDistanceY);
-
+							var offsetX = nowX - startX;
+							var offsetY = nowY - startY;
 							startX = nowX;
-							startY = nowY
+							startY = nowY;
+							moveAllNodes(offsetX, offsetY);
 						}
 					}
 				});
@@ -136,8 +138,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 						if (showGuide) {
 							showGuide(5)
 						};
-						break;
-					default:
 						break;
 				}
 			},
@@ -340,23 +340,31 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 		});
 	}
 
-	/**
-	 * @desc 在水平方向上移动所有的元素
-	 * @param double distance 移动距离
-	 */
-	function moveAllNodes(xDistance, yDistance) {
-		if (yDistance == null) {
-			yDistance = 0;
-		}
+	function moveAllNodes(offsetX, offsetY) {
+		offsetX = offsetX || 0;
+		offsetY = offsetY || 0;
+
 		for (var i = 0; i < jsPlumb_nodes.length; i++) {
-			var node = jsPlumb.getSelector('#' + jsPlumb_nodes[i]['id'])[0];
-			var left = $('#' + jsPlumb_nodes[i]['id']).position().left;
-			$(node).css("left", (left - xDistance) + "px");
-			var top = $('#' + jsPlumb_nodes[i]['id']).position().top;
-			$(node).css("top", (top - yDistance) + "px");
-			//重绘流程元素
-			jsPlumb_instance.repaint(node);
+			moveOneNode(jsPlumb_nodes[i]['id'], offsetX, offsetY);
 		}
+	}
+
+	function moveOneNode(id, offsetX, offsetY) {
+		offsetX = offsetX || 0;
+		offsetY = offsetY || 0;
+		if(offsetX == 0 && offsetY == 0){
+			return;
+		}
+
+		var node = jsPlumb.getSelector('#' + id);
+		var pos = $(node).position();
+		$(node).css({
+			left: pos.left + offsetX,
+			top: pos.top + offsetY,
+		});
+
+		//重绘流程元素
+		jsPlumb_instance.repaint(node);
 	}
 
 	/**
@@ -447,29 +455,24 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "genC", 
 
 			}
 		}).bind("mouseover", function(e) {
-			var linkedEndPoints = jsPlumb_instance.getEndpoints($(node));
-			$.each(linkedEndPoints, function(i, o) {
-				// o.setPaintStyle({fillStyle:"1"})
-			});
-			showDesc(node, 1);
+			showDesc(node, true);
 		}).on('mouseout', function(e) {
-			showDesc(node, 2);
+			showDesc(node, false);
 		});
 
 		return node;
 	}
 
-	function showDesc(node, type) {
-		var width = $(window).width();
-		var height = $(window).height();
-
-		if (type == 2) {
+	function showDesc(node, show) {
+		if (!show) {
 			$('.desc_show_' + $(node).attr('data-item')).hide(150, function(e) {
 				$(this).remove();
 			});
 			return false;
 		}
 
+		var width = $(window).width();
+		var height = $(window).height();
 		var showText = '';
 		var nowJsPlumbNodeAddInfo = getSelectedJsPlumbNode(node).node;
 		showText += "图符说明：" + nowJsPlumbNodeAddInfo.text;
