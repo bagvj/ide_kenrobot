@@ -680,9 +680,14 @@ body {
     width: 100%;
     height: 100%;
     opacity: 0.8;
-    float: right;
+    float: left;
     cursor: move;
     background-color: #f9f8f4;
+}
+
+.thumbnail .ui-icon-gripsmall-diagonal-se {
+    background-image: none;
+    display: none;
 }
 
 .thumbnail .canvas {
