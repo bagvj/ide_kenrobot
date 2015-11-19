@@ -14,19 +14,13 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 	}
 
 	var jsPlumb_container = 'hardware-container';
+	var itemClass = "";
 	var jsPlumb_instance = null;
 	var jsPlumb_nodes = [];
 	var jsPlumb_selected_node = null;
 
 	var container_width = 0;
 	var container_height = 0;
-	var container_init_x = 0;
-	var container_init_y = 0;
-
-	var moved_container_width = 0;
-	var moved_container_height = 0;
-	var moved_container_x = 0;
-	var moved_container_y = 0;
 
 	var dragging_left = 0;
 	var dragging_top = 0;
@@ -41,152 +35,72 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 	var initCloseEndpoint = null;
 
 	// 放大缩小
-	var scrollLever = 0;
-	var ratio = 1;
+	var zoomLevel = 0;
+	var zoom = 1;
 
 	/**
 	 * 整个处理的入口，需要初始化
 	 * @param string strContainer 用来绘制流程图的DIV
 	 * @param string itemClass 可以拖拽的元素
 	 */
-	function init(itemClass, strContainer) {
+	function init(itemCls, strContainer) {
 		jsPlumb_container = strContainer;
-		if (jsPlumb_container.length == 0) {
-			alert("缺少搭建流程图的位置");
-			return false;
-		}
+		itemClass = itemCls;
 
-
-		jsPlumb.ready(function() {
-			container_width = $('#' + jsPlumb_container).width();
-			container_height = $('#' + jsPlumb_container).height();
-			container_init_x = $('#' + jsPlumb_container).offset().left;
-			container_init_y = $('#' + jsPlumb_container).offset().top;
-			moved_container_width = $('#' + jsPlumb_container).width();
-			moved_container_height = $('#' + jsPlumb_container).height();
-			moved_container_x = $('#' + jsPlumb_container).offset().left;
-			moved_container_y = $('#' + jsPlumb_container).offset().top;
-
-			//Initialize JsPlumb
-			initJsPlumbInstance();
-
-			$('div.' + itemClass).attr('draggable', 'true').on('dragstart', function(ev) {
-				initDrag(ev, this);
-			}).on('touchstart', function(ev) {
-				initDrag(ev, this);
-			}).on('dragend', function(ev) {
-				// 恢复连接点默认色
-				for (var i = 0; i < linkableEndpoints.length; i++) {
-					linkableEndpoints[i].setPaintStyle({
-						fillStyle: '#333'
-					});
-				}
-				linkableEndpoints = [];
-				linkablePortBits = {};
-			}).on('drag', function(ev) {
-				// 对象拖拽移动事件
-				setRelativeMovingPosition(ev);
-
-			});
-
-			$('#' + jsPlumb_container).on('drop', function(ev) {
-				finishDrag(ev);
-				if (showGuide)
-					showGuide(2);
-				// linkableEndpoints=[];
-			}).on('dragover', function(ev) {
-				ev.preventDefault();
-			});
-
-			jsPlumb.fire("jsFlowLoaded", jsPlumb_instance);
-
-			initMainBoard();
-		});
-
-		$(window).resize(function(e) {
-			var width = $('#' + jsPlumb_container).width();
-			var height = $('#' + jsPlumb_container).width();
-			var move_distance = (container_width - width) / 2;
-			moveAllNodes(move_distance);
-			container_width = width;
-			container_height = height;
-		});
-
-		// 右键菜单
-		rightClick();
-
-		eventcenter.bind('hardware', 'mousewheel', function(args) {
-			var mousescroll = args.e; //1为放大，-1为缩小
-			if (mousescroll > 0 && scrollLever < 5) {
-				scrollLever++;
-			} else if (mousescroll < 0 && scrollLever > -5) {
-				scrollLever--;
-			}
-
-			resizeAllNode();
-		});
-
+		jsPlumb.ready(onReady);
+		$(window).resize(onWindowResize);
+		eventcenter.bind('hardware', 'mousewheel', onMouseWheel);
 		movePanel();
+		rightClick();
 	}
 
-	function resizeAllNode() {
-		var newRatio = 1;
-		if(scrollLever > 0) {
-			newRatio = scrollLever;
-		}else if (scrollLever < 0) {
-			newRatio = 1 / Math.abs(scrollLever);
-		}
-		if(newRatio == ratio){
-			return;
-		}
-		ratio = newRatio;
+	function onReady(){
+		container_width = $('#' + jsPlumb_container).width();
+		container_height = $('#' + jsPlumb_container).height();
 
-		for (var i = 0; i < jsPlumb_nodes.length; i++) {
-			var node = jsPlumb.getSelector('#' + jsPlumb_nodes[i]['id'])[0];
-			$(node).width(jsPlumb_nodes[i]['width'] * ratio).height(jsPlumb_nodes[i]['height'] * ratio);
-			// 重绘流程元素
-			jsPlumb_instance.repaint(node);
-		}
+		//Initialize JsPlumb
+		initJsPlumbInstance();
 
-		// 原主板中心位置
-		var mainboardJN = jsPlumb_nodes[0];
-		var centerX = parseInt(mainboardJN['x']) + mainboardJN['width'] / 2.0;
-		var centerY = parseInt(mainboardJN['y']) + mainboardJN['height'] / 2.0;
-
-		// 缩放所有的图块
-		for (var i = 0; i < jsPlumb_nodes.length; i++) {
-			// 原元件中心位置
-			var jsPlumbNode = jsPlumb_nodes[i];
-			var tmpCX = parseInt(jsPlumbNode['x']) + jsPlumbNode['width'] / 2.0;
-			var tmpCY = parseInt(jsPlumbNode['y']) + jsPlumbNode['height'] / 2.0;
-			// 现元件中心位置
-			var tmpNode = $(jsPlumb.getSelector('#' + jsPlumbNode['id'])[0]);
-			var mbcX = tmpNode.position().left + tmpNode.width() / 2.0;
-			var mbcY = tmpNode.position().top + tmpNode.height() / 2.0;
-			// 若原元件中心和原主板中心位置相同，则是中心主板，直接进行移动即可，否则重新计算位置，进行移动
-			if (tmpCX == centerX && tmpCY == centerY) {
-				var moveCX = mbcX - tmpCX;
-				var moveCY = mbcY - tmpCY;
-				moveOneNode(jsPlumbNode['id'], moveCX, moveCY);
-			} else {
-				// 目标中心位置
-				var aimX = centerX - (centerX - tmpCX) * ratio;
-				var aimY = centerY - (centerY - tmpCY) * ratio;
-				var moveCX = mbcX - aimX;
-				var moveCY = mbcY - aimY;
-				moveOneNode(jsPlumbNode['id'], moveCX, moveCY);
+		$('div.' + itemClass).attr('draggable', 'true').on('dragstart', function(ev) {
+			initDrag(ev, this);
+		}).on('touchstart', function(ev) {
+			initDrag(ev, this);
+		}).on('dragend', function(ev) {
+			// 恢复连接点默认色
+			for (var i = 0; i < linkableEndpoints.length; i++) {
+				linkableEndpoints[i].setPaintStyle({
+					fillStyle: '#333'
+				});
 			}
-		}
+			linkableEndpoints = [];
+			linkablePortBits = {};
+		}).on('drag', function(ev) {
+			// 对象拖拽移动事件
+			setRelativeMovingPosition(ev);
+		});
+
+		$('#' + jsPlumb_container).on('drop', function(ev) {
+			finishDrag(ev);
+			if (showGuide)
+				showGuide(2);
+		}).on('dragover', function(ev) {
+			ev.preventDefault();
+		});
+
+		jsPlumb.fire("jsFlowLoaded", jsPlumb_instance);
+
+		initMainBoard();
 	}
 
-	function checkPosition(x, y, v) {
-		var div = $("<div>" + v + "</div>").css({
-			'position': 'absolute',
-			'left': x + 'px',
-			'top': y + 'px',
-			'zIndex': 1000
-		});
-		$('#' + jsPlumb_container).append(div);
+	function onWindowResize(e) {
+		var width = $('#' + jsPlumb_container).width();
+		var height = $('#' + jsPlumb_container).height();
+		var offsetX = (width - container_width) / 2;
+		var offsetY = (height - container_height) / 2;
+		container_width = width;
+		container_height = height;
+
+		moveAllNodes(offsetX, offsetY);
 	}
 
 	function movePanel() {
@@ -195,54 +109,46 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 				// 相对于屏幕的鼠标点击的起始位置
 				var startX = e.pageX;
 				var startY = e.pageY;
-				var keepmoving = 1;
+				var isMoving = true;
 				$('#' + jsPlumb_container).css({
 					cursor: 'move'
 				});
 				$(document).bind({
 					mouseup: function(e) {
-						keepmoving = -1;
+						isMoving = false;
 						$('#' + jsPlumb_container).css({
 							cursor: 'auto'
 						});
 					},
 					mouseout: function(e) {
-						keepmoving = -1;
+						isMoving = false;
 						$('#' + jsPlumb_container).css({
 							cursor: 'auto'
 						});
 					},
 					mousemove: function(e) {
-						if (keepmoving !== -1) {
-							// 当前鼠标光标的位置
+						if (isMoving) {
 							var nowX = e.pageX;
 							var nowY = e.pageY;
-							// 相对于鼠标点击起始位置的偏移量
-							var offsetDistanceX = nowX - startX;
-							var offsetDistanceY = nowY - startY;
-
-							moveAllNodes(-offsetDistanceX, -offsetDistanceY);
-
+							var offsetX = nowX - startX;
+							var offsetY = nowY - startY;
 							startX = nowX;
-							startY = nowY
+							startY = nowY;
+							moveAllNodes(offsetX, offsetY);
 						}
 					}
 				});
 			}
-
 		});
 	}
 
 	function rightClick() {
-		var selectorClass = "." + jsPlumb_container + "-item";
 		$.contextMenu({
-			selector: selectorClass,
+			selector: "." + jsPlumb_container + "-item",
 			callback: function(key, options) {
 				switch (key) {
 					case 'delete':
 						deleteNodeByElement(this);
-						break;
-					default:
 						break;
 				}
 			},
@@ -255,53 +161,89 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		});
 	}
 
-	function moveAllNodes(xDistance, yDistance) {
-		if (yDistance == null) {
-			yDistance = 0;
+	function onMouseWheel(args) {
+		var direction = args.e;
+		if (direction > 0 && zoomLevel < 5) {
+			zoomLevel++;
+		} else if (direction < 0 && zoomLevel > -5) {
+			zoomLevel--;
 		}
+
+		var newZoom = 1;
+		if(zoomLevel > 0) {
+			newZoom = zoomLevel;
+		}else if (zoomLevel < 0) {
+			newZoom = (1 / Math.abs(zoomLevel)).toFixed(3);
+		}
+		if(newZoom == zoom){
+			return;
+		}
+		zoom = newZoom;
+
 		for (var i = 0; i < jsPlumb_nodes.length; i++) {
-			moveOneNode(jsPlumb_nodes[i]['id'], xDistance, yDistance);
+			var nodeInfo = jsPlumb_nodes[i];
+			var node = jsPlumb.getSelector('#' + nodeInfo.id)[0];
+			$(node).css({
+				width: nodeInfo.width * zoom,
+				height: nodeInfo.height * zoom,
+			});
+			jsPlumb_instance.repaint(node);
 		}
 	}
 
-	function moveOneNode(id, xDistance, yDistance) {
-		var node = jsPlumb.getSelector('#' + id)[0];
-		var left = $('#' + id).position().left;
-		$(node).css("left", (left - xDistance) + "px");
-		var top = $('#' + id).position().top;
-		$(node).css("top", (top - yDistance) + "px");
+	function moveAllNodes(offsetX, offsetY) {
+		offsetX = offsetX || 0;
+		offsetY = offsetY || 0;
+		for (var i = 0; i < jsPlumb_nodes.length; i++) {
+			moveOneNode(jsPlumb_nodes[i]['id'], offsetX, offsetY);
+		}
+	}
+
+	function moveOneNode(id, offsetX, offsetY) {
+		offsetX = offsetX || 0;
+		offsetY = offsetY || 0;
+		if(offsetX == 0 && offsetY == 0){
+			return;
+		}
+
+		var node = jsPlumb.getSelector('#' + id);
+		var pos = $(node).position();
+		$(node).css({
+			left: pos.left + offsetX,
+			top: pos.top + offsetY,
+		});
+
 		//重绘流程元素
 		jsPlumb_instance.repaint(node);
 	}
 
 	function initMainBoard() {
+		var dataItem = "hardware_board_item";
 		var left = container_width / 2 - 150;
 		var top = container_height / 2 - 92;
-		var firstNodeParam = {};
-		firstNodeParam['x'] = left;
-		firstNodeParam['y'] = top;
-		firstNodeParam['id'] = "hardware_board_" + (new Date().getTime());
-		firstNodeParam['data-item'] = "hardware_board_item";
-		firstNodeParam['text'] = "主板";
-		var startNode = initNode(firstNodeParam);
+		var param = {
+			x: left,
+			y: top,
+			id: "hardware_board_" + (new Date().getTime()),
+			'data-item': dataItem,
+			text: "主板",
+		};
+		
+		initNode(param);
 
 		eventcenter.delaytrigger('hardware', 'finish_drag', {
-			"id": firstNodeParam['id'],
-			"kind": getNodeInfoByKey(firstNodeParam['data-item'], "kind"),
-			"type": getNodeInfoByKey(firstNodeParam['data-item'], "type"),
-			"name": getNodeInfoByKey(firstNodeParam['data-item'], "name"),
-			"port": "",
-			"add_info": "",
-			"text": firstNodeParam['text'],
-			"left": left,
-			"top": top,
+			id: param.id,
+			kind: getNodeInfoByKey(dataItem, "kind"),
+			type: getNodeInfoByKey(dataItem, "type"),
+			name: getNodeInfoByKey(dataItem, "name"),
+			text: param.text,
+			left: left,
+			top: top,
+			port: "",
+			add_info: "",
 		});
 	}
 
-	/**
-	 * 为jsPlumb面板增加一个流程元素
-	 * @param object param {id:"",data-item:"",text:"",x:"",y:""}的信息集
-	 */
 	function initNode(param) {
 		var tmpAddInfo = {};
 		for (var i in fis[param['data-item']]) {
@@ -311,9 +253,9 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 			tmpAddInfo = param['add_info'];
 		}
 		var node = addNode(jsPlumb_container, param);
-		param['add_info'] = tmpAddInfo;
-		param['width'] = $(node).width();
-		param['height'] = $(node).height();
+		param.add_info = tmpAddInfo;
+		param.width = $(node).width();
+		param.height = $(node).height();
 		jsPlumb_nodes.push(param);
 		if (node === false) {
 			return false;
@@ -321,51 +263,13 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		addPorts(node);
 		jsPlumb_instance.draggable($(node), {gird: [5, 5]});
 
-		$(node).dblclick(function(ev) {
-			// deleteNodeByElement(this);
-			// jsPlumb_instance.remove(this);
-
-			// for(var i=0;i<jsPlumb_nodes.length;i++){
-			// 	if(jsPlumb_nodes[i]['id']==$(node).attr('id')){
-			// 		eventcenter.trigger('hardware','finish_remove',{
-			// 			"id":jsPlumb_nodes[i]['id']
-			// 		});
-			// 		jsPlumb_nodes.splice(i,1);
-			// 		break;
-			// 	}
-			// }
-		}).click(function(e) {
-			//为流程元素新增选中激活时间
-			var divElement = $("#" + $(node).attr('id'));
-			if (divElement.hasClass("item-border-show")) {
-				divElement.removeClass("item-border-show");
-				jsPlumb_selected_node = null;
-				eventcenter.trigger("kenrobot", "jsplumb_element_click", null);
-			} else {
-				$(".item-border-show").removeClass("item-border-show");
-				divElement.addClass("item-border-show");
-				jsPlumb_selected_node = node;
-				for (var i = 0; i < jsPlumb_nodes.length; i++) {
-					if ($(jsPlumb_selected_node).attr('id') == jsPlumb_nodes[i]['id']) {
-						eventcenter.trigger("kenrobot", "jsplumb_element_click", jsPlumb_nodes[i]);
-						break;
-					}
-				}
-			}
-		}).on('dragover', function(e) {
+		$(node).on('dragover', function(e) {
 			onDragoverEvent(e, this);
 		}).on('mouseover', function(e) {
-			showDesc(node, 1);
+			showDesc(node, true);
 		}).on('mouseout', function(e) {
-			showDesc(node, 2);
+			showDesc(node, false);
 		});
-		// $(node).on("dragenter",function(e){
-		// 	var divElement=$("#"+$(node).attr('id'));
-		// 	divElement.css("border","1px solid #F00");
-		// }).on("dragleave",function(e){
-		// 	var divElement=$("#"+$(node).attr('id'));
-		// 	divElement.css("border","");
-		// });
 
 		return node;
 	}
@@ -384,8 +288,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 
 		var objX = Math.floor($(obj).offset().left);
 		var objY = Math.floor($(obj).offset().top);
-		// console.log(dragging_top+" "+dragging_left);
-		// console.log($(obj).offset().top +" "+ $(obj).offset().left);
 
 		var mousemoveX = Math.floor(dragging_left) - objX;
 		var mousemoveY = Math.floor(dragging_top) - objY;
@@ -419,17 +321,16 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		}
 	}
 
-	function showDesc(node, type) {
-		var width = $(window).width();
-		var height = $(window).height();
-
-		if (type == 2) {
+	function showDesc(node, show) {
+		if (!show) {
 			$('.desc_show_' + $(node).attr('data-item')).hide(150, function(e) {
 				$(this).remove();
 			});
 			return false;
 		}
 
+		var width = $(window).width();
+		var height = $(window).height();
 		var showText = '';
 		var nowJsPlumbNodeAddInfo = getSelectedJsPlumbNode(node).node.add_info;
 
@@ -742,6 +643,26 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		jsPlumb_instance.bind("dblclick", function(conn, e) {
 			jsPlumb_instance.detach(conn);
 		});
+		jsPlumb_instance.bind("click", function(ep, e) {
+			console.log("click");
+		});
+		jsPlumb_instance.bind("contextMenu", function(ep, e) {
+			console.log("contextMenu");
+		});
+		jsPlumb_instance.bind("mouseenter", function(ep, e) {
+			console.log("mouseenter");
+		});
+		jsPlumb_instance.bind("mouseexit", function(ep, e) {
+			console.log("mouseexit");
+		});
+		jsPlumb_instance.bind("mousedown", function(ep, e) {
+			console.log("mousedown");
+		});
+		jsPlumb_instance.bind("mouseup", function(ep, e) {
+			console.log("mouseup");
+		});
+
+
 		jsPlumb_instance.setZoom(1);
 	}
 
@@ -750,9 +671,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 	 * @param event e 鼠标拖拽实践
 	 */
 	function initDrag(e) {
-		scrollLever = 0;
-		resizeAllNode();
-
 		try {
 			e.originalEvent.dataTransfer.setData('text', e.target.id);
 			e.originalEvent.dataTransfer.setData('offsetX', e.originalEvent.offsetX);
@@ -850,26 +768,14 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 
 		//拖拽对象不是连接目标的时候
 		var targetDiv = $(e.target);
-		var originalEventOffsetX = e.originalEvent.offsetX;
-		var originalEventOffsetY = e.originalEvent.offsetY;
 
 		if (targetDiv.closest("div").attr('class').indexOf('_jsPlumb') < 0 || targetDiv.closest("div").attr('class').indexOf(jsPlumb_container + '-item') < 0) {
-			// if(targetDiv.closest('div').attr('class').indexOf('_jsPlumb_endpoint')>=0 && targetDiv.closest('div').attr('class').indexOf('_jsPlumb_endpoint_anchor_')>=0){
-			// 	console.log(targetDiv.offset());
-			// 	while(targetDiv.closest('div').attr('class').indexOf('hardware-container-item')<0){
-			// 		originalEventOffsetX=targetDiv.offset().left;
-			// 		originalEventOffsetY=targetDiv.offset().top;
-			// 		targetDiv=targetDiv.closest('div').prev();
-			// 		originalEventOffsetX=originalEventOffsetX-targetDiv.offset().left;
-			// 		originalEventOffsetY=originalEventOffsetY-targetDiv.offset().top;
-			// 	}
-			// }else{
 			return false;
-			// }
 		}
 		e.preventDefault();
-		//生成流程图元素的样式、位置
-		var flowchart_obj_param = {};
+
+		var originalEventOffsetX = e.originalEvent.offsetX;
+		var originalEventOffsetY = e.originalEvent.offsetY;
 		var objId = "";
 		var startOffsetX = 0;
 		var startOffsetY = 0;
@@ -882,20 +788,20 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 			startOffsetX = data_transfer['offsetX'];
 			startOffsetY = data_transfer['offsetY'];
 		}
-		var flowchart_obj_param_x = originalEventOffsetX - startOffsetX;
-		var flowchart_obj_param_y = originalEventOffsetY - startOffsetY;
-		flowchart_obj_param['x'] = flowchart_obj_param_x;
-		flowchart_obj_param['y'] = flowchart_obj_param_y;
 
-		flowchart_obj_param['id'] = objId + "_" + (new Date().getTime());
-		flowchart_obj_param['data-item'] = $("#" + objId).attr('data-item');
-		flowchart_obj_param['text'] = $("#" + objId).text();
-		if (flowchart_obj_param['text'].length == 0) {
-			flowchart_obj_param['text'] = $("#" + objId).parent().text();
-		}
+		//生成流程图元素的样式、位置
+		var nodeX = originalEventOffsetX - startOffsetX;
+		var nodeY = originalEventOffsetY - startOffsetY;
+		var param = {
+			x: nodeX,
+			y: nodeY,
+			id: objId + "_" + (new Date().getTime()),
+			text: $("#" + objId).text() || $("#" + objId).parent().text(),
+			'data-item': $("#" + objId).attr('data-item'),
+		};
 
-		var node = initNode(flowchart_obj_param);
-		var nodeFis = fis[flowchart_obj_param['data-item']];
+		var node = initNode(param);
+		var nodeFis = fis[param['data-item']];
 		var nodePort = '';
 		targetJsPlumbNode = null;
 
@@ -911,7 +817,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 
 			var sEndpoint = initCloseEndpoint;
 			if (sEndpoint == null) {
-				sEndpoint = getNearestEndPointFromNode(targetDiv, node, flowchart_obj_param_x, flowchart_obj_param_y);
+				sEndpoint = getNearestEndPointFromNode(targetDiv, node, nodeX, nodeY);
 			}
 
 			// 确认该点的端口
@@ -947,18 +853,19 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 						}
 					}
 					if (!hasAdapter) {
-						var adapterNodeParam = {};
-						adapterNodeParam['x'] = flowchart_obj_param['x'];
-						adapterNodeParam['y'] = flowchart_obj_param['y'];
-						adapterNodeParam['id'] = "hardware_adapter_" + (new Date().getTime());
-						adapterNodeParam['data-item'] = "hardware_adapter_item";
-						adapterNodeParam['text'] = "转接口";
-						var adapterNode = initNode(adapterNodeParam);
+						var adapterParam = {
+							x: param.x,
+							y: param.y,
+							id: "hardware_adapter_" + (new Date().getTime()),
+							text: "转接口",
+							'data-item': "hardware_adapter_item",
+						};
+						var adapterNode = initNode(adapterParam);
 						initConnection(
 							adapterNode,
 							targetDiv,
-							flowchart_obj_param_x,
-							flowchart_obj_param_y
+							nodeX,
+							nodeY
 						);
 						targetDiv = $(adapterNode);
 					}
@@ -969,42 +876,11 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 			initConnection(
 				node,
 				targetDiv,
-				flowchart_obj_param_x,
-				flowchart_obj_param_y,
+				nodeX,
+				nodeY,
 				userInitFlag
 			);
-
-			// initCloseEndpoint.setPaintStyle({fillStyle:"#FF0"});
 		}
-
-		// for(var i=0;i<jsPlumb_nodes.length;i++){
-		// 	if(jsPlumb_nodes[i]['id']==$(node).attr('id')){
-		// 		// if(jsPlumb_nodes[i] && (jsPlumb_nodes[i]['add_info']==null || jsPlumb_nodes[i]['add_info']==undefined)){
-		// 		// 	jsPlumb_nodes[i]['add_info']="";
-		// 		// }
-
-		// 		var usedPortBit=getConnectedBit(targetJsPlumbNode,nodePort,jsPlumb_nodes[i]);
-
-		// 		jsPlumb_nodes[i]['add_info']['port']=nodePort;
-		// 		jsPlumb_nodes[i]['add_info']['usedPortBit']=usedPortBit;
-		// 		var data={
-		// 			"id":jsPlumb_nodes[i]['id'],
-		// 			"kind":nodeFis.kind,
-		// 			"type":nodeFis.type,
-		// 			"port":usedPortBit,
-		// 			"add_info":jsPlumb_nodes[i]['add_info'],
-		// 			"text":jsPlumb_nodes[i]['text'],
-		// 			"left":$(node).position().left,
-		// 			"top":$(node).position().top
-		// 		}
-		// 		for(var ii in nodeFis){
-		// 			if(ii=="port" || ii == 'usedPortBit' || ii == 'rotate')continue;
-		// 			data[ii]=nodeFis[ii];
-		// 		}
-		// 		eventcenter.trigger('hardware','finish_drag',data);
-		// 		break;
-		// 	}
-		// }
 
 		var tmpJsPlumbNode = getSelectedJsPlumbNode(node);
 		if (tmpJsPlumbNode.index > -1) {
@@ -1182,12 +1058,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 						tmpJsPlumbNode.node['add_info']['rotate'] = 1;
 						jsPlumb_nodes.splice(tmpJsPlumbNode.index, 1, tmpJsPlumbNode.node);
 					}
-					// for(var i=0;i<jsPlumb_nodes.length;i++){
-					// 	if(jsPlumb_nodes[i]['id']==$(node).attr('id')){
-					// 		jsPlumb_nodes[i]['add_info']['rotate']=1;
-					// 		break;
-					// 	}
-					// }
+
 					var targetEndPoints = jsPlumb_instance.getEndpoints($(node));
 					for (var i = 0; i < targetEndPoints.length; i++) {
 						targetEndPoints[i].anchor.x = 1 - targetEndPoints[i].anchor.x;
@@ -1213,12 +1084,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 						tmpJsPlumbNode.node['add_info']['rotate'] = 1;
 						jsPlumb_nodes.splice(tmpJsPlumbNode.index, 1, tmpJsPlumbNode.node);
 					}
-					// for(var i=0;i<jsPlumb_nodes.length;i++){
-					// 	if(jsPlumb_nodes[i]['id']==$(node).attr('id')){
-					// 		jsPlumb_nodes[i]['add_info']['rotate']=1;
-					// 		break;
-					// 	}
-					// }
+
 					var targetEndPoints = jsPlumb_instance.getEndpoints($(node));
 					for (var i = 0; i < targetEndPoints.length; i++) {
 						targetEndPoints[i].anchor.x = 1 - targetEndPoints[i].anchor.x;
@@ -1283,8 +1149,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 			//从sourceEndPoint出来的所有元素位置下移
 			moveRelationalNodes(sourceEndPoint, node);
 		}
-		//截断需截断连接，重新连接
-		// cutAndLink(sourceEndPoint,node);
 	}
 
 	function getLeftTopToSourceEndpointDistance(node) {
@@ -1416,35 +1280,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 	}
 
 	/**
-	 * 获取整个流程图的链接信息
-	 */
-	function getConnections() {
-		$.each(jsPlumb_instance.getAllConnections(), function(id, connection) {
-			console.log(connection);
-			// $.each(scopeConnections, function(i, el) {
-			// 	locations.push($.extend(el.source.offset(), { nodeId: el.source.data("id") }));
-			// 	locations.push($.extend(el.target.offset(), { nodeId: el.target.data("id") }));
-			// 	connections.push({ source: el.source.data("id"), target: el.target.data("id") });
-			// });
-		});
-		console.log(JSON.stringify(connections));
-	};
-
-	/**
-	 * 获取整个流程图信息
-	 */
-	function getFlowchart() {
-		var arrFlowchart = [];
-		$.each(jsPlumb_instance.getConnections(), function(id, connection) {
-			arrFlowchart.push({
-				"source": connection.sourceId,
-				"target": connection.targetId
-			})
-		});
-		console.log(arrFlowchart);
-	}
-
-	/**
 	 * 将目前绘制的流程图清除
 	 */
 	function clear() {
@@ -1528,29 +1363,16 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 	}
 
 	function isEmpty() {
-		if (jsPlumb_nodes.length > 0) {
-			return false;
-		}
-		return true;
+		return jsPlumb_nodes.length == 0;
 	}
 
-	/**
-	 * @return function init 初始化流程图绘制工具
-	 * @return function getConnections 获取连接信息
-	 * @return function getFlowchart 获取流程图信息
-	 * @return function getFlowchartElements 获取流程图元素集
-	 * @return function clear 清空整个流程图面板
-	 * @return function draw 根据给定元素绘制流程图
-	 */
 	return {
 		init: init,
-		getConnections: getConnections,
-		getFlowchart: getFlowchart,
 		getFlowchartElements: getFlowchartElements,
 		clear: clear,
 		draw: draw,
 		isEmpty: isEmpty,
 		setSelectedNodeInfo: setSelectedNodeInfo,
-		setShowGuid: setShowGuid
+		setShowGuid: setShowGuid,
 	}
 });
