@@ -194,7 +194,7 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
             containment: "window",
             handle: ".canvas-wrap",
             opacity: 0.5,
-        });
+        }).resizable();
 
         $(window).resize(function(e) {
             var windowWidth = $(window).width();

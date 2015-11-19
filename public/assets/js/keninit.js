@@ -11,20 +11,20 @@ define(['jquery', 'kenrobotDialog', 'eventcenter'], function($, kenrobotDialog, 
 		$(".mod .canvas").bind("selectstart", function() {
 			return false;
 		});
-		$("#hardware-container").mousewheel(function(event, deltaj, deltax, deltay) {
+		$("#hardware-container").mousewheel(function(event, delta, deltax, deltay) {
 			eventcenter.trigger('hardware', 'mousewheel', {
-				e: event,
-				j: deltaj,
+				event: event,
+				delta: delta,
 				x: deltax,
 				y: deltay
 			});
 		}).mousedown(function(e) {
 			eventcenter.trigger('hardware', 'mousedown', e);
 		});
-		$("#flowchart-container").mousewheel(function(event, deltaj, deltax, deltay) {
+		$("#flowchart-container").mousewheel(function(event, delta, deltax, deltay) {
 			eventcenter.trigger('flowchart', 'mousewheel', {
-				e: event,
-				j: deltaj,
+				event: event,
+				delta: delta,
 				x: deltax,
 				y: deltay
 			});

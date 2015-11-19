@@ -222,7 +222,7 @@
         <div class="foldBtn active"></div>
     </div>
     <div class="mod_btn no-select">
-        <div class="save">保存</div>
+        <!-- <div class="save">保存</div> -->
         <div class="download">下载</div>
     </div>
     <div id="code-more" style="display:none">

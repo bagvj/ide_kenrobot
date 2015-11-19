@@ -4,7 +4,7 @@ require.config({
 		"jquery": "jquery-1.11.2.min",
 		"jquery-ui": "jquery-ui-1.11.3.min",
 		"jquery-menu": "jquery.contextMenu",
-		"jquery-mousewheel": "jquery-mousewheel",
+		"jquery-mousewheel": "jquery.mousewheel",
 		"jsplumb": "jsPlumb/jsplumb",
 		"bootstrap": "bootstrap/bootstrap.min",
 		"d3": "d3.min",
@@ -395,12 +395,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 			elementCount += jsonHE[i].length;
 			tmpIndex++;
 		}
-		if (elementCount <= 5) {
-			$('li', $('div.nav-second ul:first', $('.mod:first'))).addClass('active');
-			$('li div.triangle', $('div.nav-second ul:first', $('.mod:first'))).remove();
-		} else {
-			$('li:first', $('div.nav-second ul:first', $('.mod:first'))).addClass('active');
-		}
+		$('li:first', $('div.nav-second ul:first', $('.mod:first'))).addClass('active');
 
 		jsonHE = null;
 	}

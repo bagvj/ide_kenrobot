@@ -103,6 +103,20 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		moveAllNodes(offsetX, offsetY);
 	}
 
+	function mousePosition(e){  
+	　　if(e.pageX || e.pageY){
+	　　　　return {
+				x: e.pageX,
+				y: e.pageY
+			};
+	　　} else {
+			return {
+				x: e.clientX + document.body.scrollLeft - document.body.clientLeft,
+				y:ev.clientY + document.body.scrollTop - document.body.clientTop,
+			}; 
+		}
+	}  
+
 	function movePanel() {
 		eventcenter.bind('hardware', 'mousedown', function(e) {
 			if ($(e.target).attr('id') == jsPlumb_container) {
@@ -162,10 +176,10 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 	}
 
 	function onMouseWheel(args) {
-		var direction = args.e;
-		if (direction > 0 && zoomLevel < 5) {
+		var delta = args.delta;
+		if (delta > 0 && zoomLevel < 5) {
 			zoomLevel++;
-		} else if (direction < 0 && zoomLevel > -5) {
+		} else if (delta < 0 && zoomLevel > -5) {
 			zoomLevel--;
 		}
 
@@ -180,6 +194,8 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		}
 		zoom = newZoom;
 
+		var mousePos = mousePosition(args.event);
+		console.log("mousePos: " + mousePos.x + ", " + mousePos.y);
 		for (var i = 0; i < jsPlumb_nodes.length; i++) {
 			var nodeInfo = jsPlumb_nodes[i];
 			var node = jsPlumb.getSelector('#' + nodeInfo.id)[0];
