@@ -20,7 +20,7 @@
           @if(isset($user))
           <li><a href="/auth/logout" class="logoutBtn">退出</a></li>
           @else
-          <li><a href="http://www.kenrobot.com/index.php?app=public&mod=Register&act=index">注册</a></li>
+          <li><a href="{{ $nav['register'] or '#'}}">注册</a></li>
           <li><a href="javascript:;" class="loginBtn">登录</a></li>
           @endif
         </ul>
@@ -29,7 +29,7 @@
       @if(isset($user))
       <div class="person-wrap">
         <div class="person">
-            <a href="http://www.kenrobot.com/index.php?app=public&mod=Index&act=allshow" class="photo">
+            <a href="{{$nav['mainpage'] or '#'}}" class="photo">
                 <img src="{{ $user->avatar_url or asset('assets/img/photo.png') }}" />
             </a>
             <span class="welcome">Hi,{{$user->name}}</span>
