@@ -263,7 +263,6 @@ body {
 .ui-dialog-titlebar { display : none;}
 
 .closeBtn {
-    background: url('../img/closeBtn.png') no-repeat center;
     cursor: pointer;
     display: block;
     height: 16px;
@@ -271,6 +270,7 @@ body {
 }
 
 #login_dialog .closeBtn {
+    background: url('../img/closeBtn.png') no-repeat center;
     position: absolute;
     left: 10px;
     top: 10px;
@@ -1102,6 +1102,7 @@ body {
 }
 
 #code-more .closeBtn {
+    background: url('../img/closeBtn_black.png') no-repeat center;
     position: absolute;
     right: 10px;
     top: 10px;
