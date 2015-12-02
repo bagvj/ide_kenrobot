@@ -170,7 +170,9 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
 
     //缩略图
     function initThumbnail() {
+        var scaleTip = $('.thumbnail .scaleTip');
         var wrap = $('.thumbnail .canvas-wrap');
+
         var wrapWidth = 0;
         var wrapHeight = 0;
         var wrapLeft = 0;
@@ -209,6 +211,14 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
             autoHide: true,
             aspectRatio: true,
         });
+        wrap.resize(function(e) {
+            var wrapHeight = wrap.height();
+            var wrapLeft = wrap.position().left
+            scaleTip.css({
+                left: wrapLeft + 2,
+                top: wrapHeight - scaleTip.height()
+            });
+        })
 
         $(window).resize(function(e) {
             if(e.target == wrap[0]) {
