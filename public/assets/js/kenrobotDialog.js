@@ -1,4 +1,4 @@
-define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
+define(['jquery', 'jquery-ui'], function($) {
 	/**
 	 * windowParams用于初始化窗口信息
 	 * top:??px
@@ -108,8 +108,12 @@ define(['eventcenter', 'jquery', 'jquery-ui'], function(eventcenter, $) {
 		$(".dialog_input_save", dialogBody).each(function(i, o) {
 			data[$(this).attr("data-item")] = $(this).val();
 		});
-		callback && callback(data);
-		hide();
+		var needHide = true;
+		if(callback) {
+			needHide = callback(data) != false;
+		}
+		if(needHide)
+			hide();
 	}
 
 	/**

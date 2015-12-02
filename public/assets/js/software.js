@@ -1,4 +1,4 @@
-define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, eventcenter) {
+define(["jquery", "kenrobotDialog", "genC"], function($, kenrobotDialog, genC) {
 
 	var varList = [];
 	var varContainerId;
@@ -155,17 +155,17 @@ define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, 
 	function saveVarList(data) {
 		if(data.name == "") {
 			alert("变量名不能为空");
-			return;
+			return false;
 		}
 
 		if(keywords.indexOf(data.name) >= 0) {
 			alert("变量名不能是关键字");
-			return;
+			return false;
 		}
 
 		if(!nameRegex.test(data.name)) {
 			alert("变量名只能由字母、数字或下划线组成，且不能以数字开头");
-			return;
+			return false;
 		}
 
 		data.initial = data.initial == "" ? (data.type == "bool" ? "false" : (data.type == "unsigned char" ? "''" : "0")) : data.initial;
@@ -201,7 +201,7 @@ define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, 
 				curRow = $(this).addClass("active");
 			});
 		}
-		eventcenter.trigger('genC', 'refresh');
+		genC.refresh();
 	}
 
 	$(".var-side .btn.del").click(function() {
@@ -210,7 +210,7 @@ define(["jquery", "kenrobotDialog", "eventcenter"], function($, kenrobotDialog, 
 			varList.splice(index, 1);
 			curRow.remove();
 			curRow = null;
-			eventcenter.trigger('genC', 'refresh');
+			genC.refresh();
 		}
 	})
 

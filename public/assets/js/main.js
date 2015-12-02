@@ -5,25 +5,19 @@ require.config({
 		"jquery-ui": "jquery-ui-1.11.3.min",
 		"jquery-menu": "jquery.contextMenu",
 		"jquery-mousewheel": "jquery.mousewheel",
-		"jsplumb": "jsPlumb/jsplumb",
-		"bootstrap": "bootstrap/bootstrap.min",
-		"d3": "d3.min",
-		"flowchart_item_set": "../flowchart-item-set",
-		"flowchartConfigs": "../flowchartConfigs",
+		"jsplumb": "jsplumb",
+		"html2canvas": "html2canvas.min",
+		'hljs': "../../highlight/highlight.pack",
+
+		"elementConfig": "../elementConfig",
 		"genC": "../genC",
-		"cjxm": "../cjxm",
 		"hardware": "../hardware",
 		"software": "../software",
 		"kenrobotJsPlumb": "../kenrobotJsPlumb",
 		"kenrobotDialog": "../kenrobotDialog",
-		"flowchartInfo": "../flowchartInfo",
 		"eventcenter": "../eventcenter",
-		"html2canvas": "html2canvas.min",
 		"defaultJs": "../default",
-		"guide": "../guide",
-		"keninit": "../keninit",
-		'hljs':"../../highlight/highlight.pack",
-		'EasterEgg' : "../EasterEgg",
+		'EasterEgg': "../EasterEgg",
 	},
 	shim: {
 		'jquery-ui': {
@@ -38,10 +32,6 @@ require.config({
 			deps: ['jquery'],
 			exports: 'jquery-mousewheel'
 		},
-		'bootstrap': {
-			deps: ['jquery'],
-			exports: 'bootstrap'
-		},
 		'jsplumb': {
 			deps: ['jquery'],
 			exports: 'jsplumb'
@@ -52,39 +42,42 @@ require.config({
 		}
 	}
 });
+require(['jquery', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 'eventcenter', 'elementConfig', 'genC', 'hljs', 'EasterEgg', 'jquery-mousewheel', 'defaultJs'], function($, software, hardware, kenrobotJsPlumb, kenrobotDialog, eventcenter, elementConfig, genC, hljs, EasterEgg, _, defaultJs) {
+	// 是否已经初始化
+	var hasInitedHardware = 0;
+	var hasInitedSoftware = 0;
 
-// 是否已经初始化
-var hasInitedHardware = 0;
-var hasInitedSoftware = 0;
-//project_info
-//本地项目内存地址
-var projectInfo = null;
-require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 'flowchartInfo', 'eventcenter', 'defaultJs', 'guide', 'flowchart_item_set', 'flowchartConfigs', 'genC', 'keninit','hljs','EasterEgg', 'jquery-mousewheel'], function($, cjxm, software, hardware, kenrobotJsPlumb, kenrobotDialog, flowchartInfo, eventcenter, defaultJs, guide, fis, flowchartConfigs, genC, keninit, hljs,EasterEgg) {
+	var hundouluo = [38, 38, 40, 40, 37, 39, 37, 39, 65, 66, 65, 66];
+	EasterEgg.listen(hundouluo, function() {
+		alert('我不是魂斗罗，你也没有30条命');
+	});
 
+	// 关闭默认右键菜单
+	$("body").bind("contextmenu", function(e) {
+		var obj = $(e.target);
+		if (!obj.hasClass("hardware-container-item") && !obj.hasClass("flowchart-container-item")) {
+			return false;
+		}
+		kenrobotDialog.hide();
+	});
+	$(".mod .canvas").bind("selectstart", function() {
+		return false;
+	});
 
-	var hundouluo = [38,38,40,40,37,39,37,39,65,66,65,66];
-	EasterEgg.listen(hundouluo,function(){
-      alert('我不是魂斗罗，你也没有30条命');
-    });
+	//设置ajax请求的csrftoken
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
 
-	cjxm.init();
-
-	keninit.init();
-
-		//设置ajax请求的csrftoken
-		$.ajaxSetup({
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-        });
-	// 初始化硬件元件
-	initHardwareElement(fis);
+	initElements();
 
 	defaultJs.init();
 
 	software.initVarTable('var-table');
 
-	genC.init('c_code_input', flowchartConfigs, kenrobotJsPlumb.getFlowchartElements, software.getVarList);
+	genC.init('c_code_input', elementConfig.flowcharts, kenrobotJsPlumb.getFlowchartElements, software.getVarList);
 
 	//拖拽生成的元素列表
 	var arrHardware = [];
@@ -93,10 +86,9 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 	eventcenter.bind('hardware', 'init_container', function() {
 		if (hasInitedHardware) return false;
 		if (hardware.isEmpty()) {
-			hardware.init('hardware-item', 'hardware-container');
+			hardware.init('hardware-item', 'hardware-container', elementConfig.hardwares);
 		}
 		hasInitedHardware = 1;
-		guide.show(1);
 	});
 
 	// 初始化流程图连接板事件
@@ -122,7 +114,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 		}
 		//flowchart-container为流程图绘制区域，flowchart-item为即将成为拖拽生成流程图对象的元素，详细参照kenrobotJsPlumb
 		if (kenrobotJsPlumb.isEmpty()) {
-			kenrobotJsPlumb.init('flowchart-item', 'flowchart-container');
+			kenrobotJsPlumb.init('flowchart-item', 'flowchart-container', elementConfig.flowcharts);
 		}
 
 		hasInitedSoftware = 1;
@@ -130,14 +122,13 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 
 	// 完成拖拽后激活的事件
 	eventcenter.bind('hardware', 'finish_drag', function(args) {
-		var kindClass = args.kind + "-item";
-		var kindTypeClass = args.kind + "-" + args.name;
+		var kindClass = "hardware-item";
+		var kindTypeClass = "hardware-" + args.name;
 		var itemText = args.text;
 		var portBit = args.port;
 		if (portBit && portBit.length > 0) itemText += "(" + portBit + ")";
-		var liObj = $("<li></li>").attr("data-item", args.id).append($("<div></div>").addClass(kindClass).addClass(kindTypeClass)).append(itemText);
-		$("ul", $("div.hardware_part_list")).append(liObj);
-		//console.log(args)
+		var li = $("<li></li>").attr("data-item", args.id).append($("<div></div>").addClass(kindClass).addClass(kindTypeClass)).append(itemText);
+		$("ul", $("div.hardware_part_list")).append(li);
 		arrHardware.push({
 			"id": args.id,
 			"kind": args.kind,
@@ -162,7 +153,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 	eventcenter.bind("kenrobot", "flowchart_item_click", function(args) {
 		var ids = args.id.split("_");
 		var nodeName = ids[1];
-		var nodeConfig = flowchartConfigs[nodeName];
+		var nodeConfig = elementConfig.flowcharts[nodeName];
 		if (nodeConfig === undefined) {
 			console.log("unknow node: " + nodeName);
 			return;
@@ -260,7 +251,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 			"title": "注释",
 			"inputType": "none",
 			"fontColor": "#BBBDBF",
-			"showText": (args.desc.length > 0) ? args.desc : "暂无"
+			"showText": args.desc || "暂无"
 		});
 
 		kenrobotDialog.show(0, {
@@ -277,8 +268,6 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 		kenrobotJsPlumb.setSelectedNodeInfo(data);
 
 		genC.refresh();
-		//guide
-		guide.show(6);
 	}
 
 	var hardwareImg = {};
@@ -321,7 +310,7 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 					alert(result.msg);
 				}
 			},
-			error: function(result){
+			error: function(result) {
 				console.log(result);
 			}
 		});
@@ -331,95 +320,62 @@ require(['jquery', 'cjxm', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotD
 		window.open(url);
 	}
 
-	function initHardwareElement(fis) {
-		// 抽离fis中数据，整合成需要的格式
-		var jsonHE = {};
-		for (var i in fis) {
-			if (i.indexOf('hardware_') > -1 && fis[i]['category']) {
-				var tmpArray = [];
-				if (jsonHE[fis[i]['category']] && jsonHE[fis[i]['category']].length > 0) {
-					tmpArray = jsonHE[fis[i]['category']];
+
+	function initElements() {
+		var mods = $('.mod');
+
+		var hardwareGroups = [];
+		for (var name in elementConfig.hardwares) {
+			var hardware = elementConfig.hardwares[name];
+			if (hardware.inUse) {
+				var category = hardware.category;
+				var group = null;
+				for (var i = 0; i < hardwareGroups.length; i++) {
+					if (hardwareGroups[i].category == category) {
+						group = hardwareGroups[i];
+						break;
+					}
 				}
-				tmpArray.push({
-					'name': fis[i]['name'],
-					'name_cn': fis[i]['name_cn']
-				});
-				jsonHE[fis[i]['category']] = tmpArray;
-			};
-		};
-		// 格式化显示顺序
-		var showOrder = [{
-			key: '控制模块',
-			cls: 'kzmk'
-		}, {
-			key: '输入模块',
-			cls: 'srmk'
-		}, {
-			key: '输出模块',
-			cls: 'scmk'
-		}, {
-			key: '执行模块',
-			cls: 'zxmk'
-		}, {
-			key: '传感模块',
-			cls: 'cgmk'
-		}];
-		$('div.nav-second ul:first', $('.mod:first')).empty();
-
-		// 优先采用顺序话的显示
-		for (var i = 0; i < showOrder.length; i++) {
-			var key = showOrder[i].key;
-			var cls = showOrder[i].cls;
-			var tmpArray = jsonHE[key];
-			if (tmpArray == undefined || tmpArray.length == 0) {
-				continue;
+				if (!group) {
+					group = {
+						category: category,
+						hardwares: []
+					};
+					hardwareGroups.push(group);
+				}
+				group.hardwares.push(hardware);
 			}
-
-			// 控制模块只有一个时不显示
-			if (key.indexOf('控制模块') > -1 && tmpArray.length == 1) {
-				continue;
-			}
-			$('div.nav-second ul:first', $('.mod:first')).append(createUlObj(key, cls, tmpArray));
-
-			delete jsonHE[key];
-		};
-
-		// 将非格式化展示的内容在末尾展示，控制模块不在末尾追加
-		var tmpIndex = 0;
-		var elementCount = 0;
-		for (var i in jsonHE) {
-			if (i.indexOf("控制模块") > -1) {
-				continue;
-			}
-			$('div.nav-second ul:first', $('.mod:first')).append(createUlObj(i, 'tmp_' + tmpIndex, jsonHE[i]));
-			elementCount += jsonHE[i].length;
-			tmpIndex++;
 		}
-		$('li:first', $('div.nav-second ul:first', $('.mod:first'))).addClass('active');
+		hardwareGroups = hardwareGroups.sort(function(a, b) {
+			return a.category > b.category;
+		});
 
-		jsonHE = null;
-	}
-
-	function createUlObj(key, cls, arr) {
-		var topLiObj = $('<li></li>').addClass(cls).append($('<div></div>').append(key).append('<div class="arrow"></div>').addClass('category'));
-
-		var ulObj = $('<ul></ul>');
-		var divObj = $('<div></div>').addClass('content-container');
-
-		for (var j = 0; j < arr.length; j++) {
-			var name = arr[j].name;
-			var name_cn = arr[j].name_cn;
-			var tmpLiObj = $('<li></li>');
-			var tmpDivObj = $('<div></div>').attr({
-				'id': 'hardware_' + name,
-				'data-item': 'hardware_' + name + '_item'
-			}).addClass('hardware-item').addClass('hardware-' + name);
-			tmpLiObj.append(tmpDivObj).append(name_cn);
-			divObj.append(tmpLiObj);
+		var categories = ['输入模块', '输出模块', '执行模块', '传感模块', '通讯模块'];
+		var hardwareNav = $('.nav-second>ul', mods[0]).empty();
+		for (var i = 0; i < hardwareGroups.length; i++) {
+			var group = hardwareGroups[i];
+			if (group.category > 0) {
+				var category = categories[group.category - 1];
+				var li = $('<li>').appendTo(hardwareNav);
+				$('<div>').addClass('category').append(category).append('<div class="arrow"></div>').appendTo(li);
+				var contentDiv = $('<div>');
+				for (var j = 0; j < group.hardwares.length; j++) {
+					var hardware = group.hardwares[j];
+					var name = hardware.name;
+					var alias = hardware.alias;
+					var itemDiv = $('<div>').addClass('hardware-item').addClass('hardware-' + name).attr({
+						'id': 'hardware_' + name,
+						'data-item': 'hardware_' + name + '_item'
+					});
+					$('<li>').append(itemDiv).append(alias).appendTo(contentDiv);
+				}
+				$('<ul>').append(contentDiv).appendTo(li);
+			}
 		}
-		ulObj.append(divObj);
-		topLiObj.append(ulObj);
+		$(".nav-second>ul>li:first-child").addClass("active");
 
-		return topLiObj;
+
+
+		// var flowchartNav = $('.nav-second>ul', mods[1]).empty();
 	}
 });

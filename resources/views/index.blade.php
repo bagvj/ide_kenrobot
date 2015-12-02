@@ -25,7 +25,7 @@
           @endif
         </ul>
       </div>
-      
+
       @if(isset($user))
       <div class="person-wrap">
         <div class="person">
@@ -42,79 +42,7 @@
 <div class="main">
     <div class="mod no-select">
         <div class="nav-second">
-            <ul>
-                <li class="srmk">
-                    <div class="category">输入模块<div class="arrow"></div></div>
-                    <ul>
-                        <div class="content-container">
-                            <li>
-                                <div id="hardware_switch" data-item="hardware_switch_item" class="hardware-item hardware-switch"></div>开关
-                            </li>
-                            <li>
-                                <div id="hardware_button" data-item="hardware_button_item" class="hardware-item hardware-button"></div>按键
-                            </li>
-                        </div>
-                    </ul>
-                </li>
-                <li class="scmk">
-                    <div class="category">输出模块<div class="arrow"></div></div>
-                    <ul>
-                        <div class="content-container">
-                            <li>
-                                <div id="hardware_light" data-item="hardware_light_item" class="hardware-item hardware-light"></div>灯
-                            </li>
-                            <li>
-                                <div id="hardware_soundSensor" data-item="hardware_soundSensor_item" class="hardware-item hardware-soundSensor"></div>声音
-                            </li>
-                            <li>
-                                <div id="hardware_infraredOut" data-item="hardware_infraredOut_item" class="hardware-item hardware-infraredOut"></div>红外发射
-                            </li>
-                        </div>
-                    </ul>
-                </li>
-                <li class="zxmk">
-                    <div class="category">执行模块<div class="arrow"></div></div>
-                    <ul>
-                        <div class="content-container">
-                            <li>
-                                <div id="hardware_dcMotor" data-item="hardware_dcMotor_item" class="hardware-item hardware-dcMotor"></div>电机
-                            </li>
-                            <li>
-                                <div id="hardware_streeringEngine" data-item="hardware_streeringEngine_item" class="hardware-item hardware-streeringEngine"></div>舵机
-                            </li>
-                        </div>
-                    </ul>
-                </li>
-                <li class="cgmk">
-                    <div class="category">传感模块<div class="arrow"></div></div>
-                    <ul>
-                        <div class="content-container">
-                            <li>
-                                <div id="hardware_pm25" data-item="hardware_pm25_item" class="hardware-item hardware-pm25"></div>PM2.5
-                            </li>
-                            <li>
-                                <div id="hardware_illumination" data-item="hardware_illumination_item" class="hardware-item hardware-illumination"></div>光感
-                            </li>
-                            <li>
-                                <div id="hardware_temperatue" data-item="hardware_temperatue_item" class="hardware-item hardware-temperatue"></div>温度
-                            </li>
-                            <li>
-                                <div id="hardware_fireA" data-item="hardware_fireA_item" class="hardware-item hardware-fireA"></div>火焰
-                            </li>
-                        </div>
-                    </ul>
-                </li>
-                <li class="txmk">
-                    <div class="category">通信模块<div class="arrow"></div></div>
-                    <ul>
-                        <div class="content-container">
-                            <li>
-                                <div id="hardware_serialPortIn" data-item="hardware_serialPortIn_item" class="hardware-item hardware-serialPortIn"></div>串口
-                            </li>
-                        </div>
-                    </ul>
-                </li>
-            </ul>
+            <ul></ul>
         </div>
         <div class="canvas" id="hardware-container"></div>
     </div>
@@ -124,12 +52,7 @@
                 <li class="ypzmk active">
                     <div class="category">已配置模块<div class="arrow"></div></div>
                     <div class="content-container flowchart_hardware_part_list">
-                        <ul>
-                            <li><div id="flowchart_board" data-item="flowchart_board_item" class="flowchart-item flowchart-board"></div>主板</li>
-                            <li><div id="flowchart_light" data-item="flowchart_light_item" class="flowchart-item flowchart-light"></div>灯</li>
-                            <li><div id="flowchart_button" data-item="flowchart_button_item" class="flowchart-item flowchart-button"></div>按键</li>
-                            <li><div id="flowchart_zjbkg" data-item="flowchart_zjbkg_item" class="flowchart-item flowchart-zjbkg"></div>转接板开关</li>
-                        </ul>
+                        <ul></ul>
                     </div>
                 </li>
                 <li class="lckzmk1">
@@ -155,7 +78,7 @@
                     </ul>
                 </li>
                 <li class="lckzmk2">
-                    <div class="category">流程控制模块<div class="arrow"></div></div>
+                    <div class="category">函数控制模块<div class="arrow"></div></div>
                     <ul>
                         <div class="content-container">
                             <li>
@@ -211,7 +134,7 @@
             </div>
         </div>
         <div class="code-side">
-            <div class="bar no-select">C语言</div>
+            <div class="bar no-select">源代码</div>
             <div class="content">
                 <div class="code-wrap">
 <pre><code id="c_code_input" class="c_code_area"></code></pre>

@@ -9,7 +9,7 @@
 | It's a breeze. Simply tell Laravel the URIs it should respond to
 | and give it the controller to call when that URI is requested.
 |
-*/
+ */
 
 Route::get('/home', 'HomeController@index');
 Route::get('/', 'Auth\WeixinAuthController@homeIndex');
@@ -17,40 +17,21 @@ Route::get('/', 'Auth\WeixinAuthController@homeIndex');
 Route::post('/build', 'HomeController@build');
 Route::get('/download', 'HomeController@download');
 
-
 // 登录验证
-Route::get('auth/login', 'Auth\AuthController@getLogin');
-Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
+Route::get('/auth/login', 'Auth\AuthController@getLogin');
+Route::post('/auth/login', 'Auth\AuthController@postLogin');
+Route::get('/auth/logout', 'Auth\AuthController@getLogout');
 
-// 注册路由
-Route::get('auth/register', 'Auth\AuthController@getRegister');
-Route::post('auth/register', 'Auth\AuthController@postRegister');
+// 注册
+Route::get('/auth/register', 'Auth\AuthController@getRegister');
+Route::post('/auth/register', 'Auth\AuthController@postRegister');
 
-Route::get('auth/snslogin', 'Auth\SnsAuthController@snsLogin');
-Route::any('/snspostlogin','Auth\SnsAuthController@snsPostLogin');
-Route::any('weixinlogin', 'Auth\WeixinAuthController@weixinlogin');
+Route::get('/auth/snslogin', 'Auth\SnsAuthController@snsLogin');
+Route::any('/snspostlogin', 'Auth\SnsAuthController@snsPostLogin');
+Route::any('/weixinlogin', 'Auth\WeixinAuthController@weixinlogin');
 Route::get('/login', 'Auth\WeixinAuthController@index');
 
-
-//GetInitInfo
-Route::get('initinfo','HomeController@initinfo');
-
-//GetFlowChartInfo.php
-Route::get('flowchart/info', 'FlowChartController@info');
 //GetFlowchartItem.php
-Route::get('flowchart/item', 'FlowChartController@item');
-//AddFlowChart.php
-Route::match(['get','post'], 'flowchart/add', 'FlowChartController@create');
+Route::get('/flowchart/item', 'FlowChartController@item');
 
-
-Route::match(['get','post'],'project/list', 'ProjectController@index');
-
-Route::get('project/info', 'ProjectController@info');
-Route::post('project/add', 'ProjectController@create');
-Route::post('project/edit', 'ProjectController@edit');
-
-Route::get('project/del', 'ProjectController@destroy');
-
-Route::match(['get','post'],'/board/match', 'ConnectRuleController@getMatchComponent');
-
+Route::match(['get', 'post'], '/board/match', 'ConnectRuleController@getMatchComponent');

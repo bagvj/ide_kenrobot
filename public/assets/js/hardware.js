@@ -1,23 +1,8 @@
-/**
- * <div id="flowchart_if" data-item="flowchart_if_item" class="flowchart-item flowchart-prismatic">判定</div>
- *	右侧拖拽栏中的id只是用来最后的标志，虽然可以事后识别，但最好还是带上意义，比如if
- *	data-item对象才是重点，对应flowchart-item-set.js中配置的关键字
- *	参数jsPlumb_container所指定的区域是绘制流程图的区域，即id为jsPlumb_container的DIV
- *	需要为jsPlumb_container设定css样式，控制描图区域
- *	需要为jsPlumb_container+"-item"元素指定css样式，控制每个生成的流程元素块的大小
- */
-define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-ui"], function($, jsPlumb, eventcenter, d3, fis) {
-	var showGuide = null;
-
-	function setShowGuid(show) {
-		showGuide = show;
-	}
-
-	var jsPlumb_container = 'hardware-container';
-	var itemClass = "";
-	var jsPlumb_instance = null;
+define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, eventcenter) {
+	var jsPlumb_container;
+	var itemClass;
+	var jsPlumb_instance;
 	var jsPlumb_nodes = [];
-	var jsPlumb_selected_node = null;
 
 	var container_width = 0;
 	var container_height = 0;
@@ -37,28 +22,45 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 	// 放大缩小
 	var zoomLevel = 0;
 	var zoom = 1;
+	var configs;
 
 	/**
 	 * 整个处理的入口，需要初始化
 	 * @param string strContainer 用来绘制流程图的DIV
 	 * @param string itemClass 可以拖拽的元素
 	 */
-	function init(itemCls, strContainer) {
+	function init(itemCls, strContainer, hardwares) {
 		jsPlumb_container = strContainer;
 		itemClass = itemCls;
+		configs = hardwares;
 
 		jsPlumb.ready(onReady);
 		$(window).resize(onWindowResize);
-		eventcenter.bind('hardware', 'mousewheel', onMouseWheel);
-		movePanel();
-		rightClick();
+		$('#' + jsPlumb_container).mousewheel(onMouseWheel);
+		$('#' + jsPlumb_container).mousedown(onMouseDown);
+		$.contextMenu({
+			selector: "." + jsPlumb_container + "-item",
+			callback: function(key, options) {
+				switch (key) {
+					case 'delete':
+						var node = jsPlumb.getSelector('#' + $(this).attr('id'))[0];
+						deleteNodeByElement(node);
+						break;
+				}
+			},
+			items: {
+				"delete": {
+					name: "Delete",
+					icon: "delete"
+				},
+			}
+		});
 	}
 
-	function onReady(){
+	function onReady() {
 		container_width = $('#' + jsPlumb_container).width();
 		container_height = $('#' + jsPlumb_container).height();
 
-		//Initialize JsPlumb
 		initJsPlumbInstance();
 
 		$('div.' + itemClass).attr('draggable', 'true').on('dragstart', function(ev) {
@@ -81,8 +83,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 
 		$('#' + jsPlumb_container).on('drop', function(ev) {
 			finishDrag(ev);
-			if (showGuide)
-				showGuide(2);
 		}).on('dragover', function(ev) {
 			ev.preventDefault();
 		});
@@ -93,8 +93,9 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 	}
 
 	function onWindowResize(e) {
-		var width = $('#' + jsPlumb_container).width();
-		var height = $('#' + jsPlumb_container).height();
+		var canvas = $('#' + jsPlumb_container);
+		var width = canvas.width();
+		var height = canvas.height();
 		var offsetX = (width - container_width) / 2;
 		var offsetY = (height - container_height) / 2;
 		container_width = width;
@@ -103,134 +104,113 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		moveAllNodes(offsetX, offsetY);
 	}
 
-	function mousePosition(e){  
-	　　if(e.pageX || e.pageY){
-	　　　　return {
-				x: e.pageX,
-				y: e.pageY
-			};
-	　　} else {
-			return {
-				x: e.clientX + document.body.scrollLeft - document.body.clientLeft,
-				y:ev.clientY + document.body.scrollTop - document.body.clientTop,
-			}; 
+	function onMouseDown(e) {
+		if($(e.target).attr('id') != jsPlumb_container) {
+			return false;
 		}
-	}  
 
-	function movePanel() {
-		eventcenter.bind('hardware', 'mousedown', function(e) {
-			if ($(e.target).attr('id') == jsPlumb_container) {
-				// 相对于屏幕的鼠标点击的起始位置
-				var startX = e.pageX;
-				var startY = e.pageY;
-				var isMoving = true;
-				$('#' + jsPlumb_container).css({
-					cursor: 'move'
-				});
-				$(document).bind({
-					mouseup: function(e) {
-						isMoving = false;
-						$('#' + jsPlumb_container).css({
-							cursor: 'auto'
-						});
-					},
-					mouseout: function(e) {
-						isMoving = false;
-						$('#' + jsPlumb_container).css({
-							cursor: 'auto'
-						});
-					},
-					mousemove: function(e) {
-						if (isMoving) {
-							var nowX = e.pageX;
-							var nowY = e.pageY;
-							var offsetX = nowX - startX;
-							var offsetY = nowY - startY;
-							startX = nowX;
-							startY = nowY;
-							moveAllNodes(offsetX, offsetY);
-						}
-					}
-				});
-			}
+		var startX = e.pageX;
+		var startY = e.pageY;
+		var isMoving = true;
+		var canvas = $('#' + jsPlumb_container);
+		canvas.css({
+			cursor: 'move'
 		});
-	}
-
-	function rightClick() {
-		$.contextMenu({
-			selector: "." + jsPlumb_container + "-item",
-			callback: function(key, options) {
-				switch (key) {
-					case 'delete':
-						deleteNodeByElement(this);
-						break;
-				}
+		$(document).bind({
+			mouseup: function(e) {
+				isMoving = false;
+				canvas.css({
+					cursor: 'auto'
+				});
 			},
-			items: {
-				"delete": {
-					name: "Delete",
-					icon: "delete"
-				},
+			mouseout: function(e) {
+				isMoving = false;
+				canvas.css({
+					cursor: 'auto'
+				});
+			},
+			mousemove: function(e) {
+				if (isMoving) {
+					var nowX = e.pageX;
+					var nowY = e.pageY;
+					var offsetX = nowX - startX;
+					var offsetY = nowY - startY;
+					startX = nowX;
+					startY = nowY;
+					moveAllNodes(offsetX, offsetY);
+				}
 			}
 		});
 	}
 
-	function onMouseWheel(args) {
-		var delta = args.delta;
-		if (delta > 0 && zoomLevel < 5) {
+	function onMouseWheel(e, delta, x, y) {
+		if (delta > 0 && zoomLevel < 20) {
 			zoomLevel++;
-		} else if (delta < 0 && zoomLevel > -5) {
+		} else if (delta < 0 && zoomLevel > -20) {
 			zoomLevel--;
 		}
 
 		var newZoom = 1;
-		if(zoomLevel > 0) {
-			newZoom = zoomLevel;
-		}else if (zoomLevel < 0) {
-			newZoom = (1 / Math.abs(zoomLevel)).toFixed(3);
+		if (zoomLevel > 0) {
+			newZoom = 1 + 0.2 * zoomLevel;
+		} else if (zoomLevel < 0) {
+			newZoom = 1 - 0.04 * Math.abs(zoomLevel);
 		}
-		if(newZoom == zoom){
+		if (newZoom == zoom) {
 			return;
 		}
 		zoom = newZoom;
 
-		var mousePos = mousePosition(args.event);
-		console.log("mousePos: " + mousePos.x + ", " + mousePos.y);
+		var offset = $('#' + jsPlumb_container).offset();
+		var mouseX = e.pageX - offset.left;
+		var mouseY = e.pageY - offset.top;
+		// console.log("zoom " + zoom + " level " + zoomLevel + " mouse: " + mouseX + ", " + mouseY);
+
 		for (var i = 0; i < jsPlumb_nodes.length; i++) {
 			var nodeInfo = jsPlumb_nodes[i];
 			var node = jsPlumb.getSelector('#' + nodeInfo.id)[0];
+			var oldX = $(node).position().left;
+			var oldY = $(node).position().top;
+			var newX = Math.round((nodeInfo.x - mouseX) * zoom + mouseX);
+			var newY = Math.round((nodeInfo.y - mouseY) * zoom + mouseY);
+			var newWidth = Math.round(nodeInfo.width * zoom);
+			var newHeight = Math.round(nodeInfo.height * zoom);
 			$(node).css({
-				width: nodeInfo.width * zoom,
-				height: nodeInfo.height * zoom,
+				left: newX,
+				top: newY,
+				width: newWidth,
+				height: newHeight,
 			});
+			// console.log("zoom " + zoom + " level " + zoomLevel + " mouse: " + mouseX + ", " + mouseY + " pos: " + oldX + ", " + oldY + " -> " + newX + ", " + newY);
 			jsPlumb_instance.repaint(node);
 		}
 	}
 
-	function moveAllNodes(offsetX, offsetY) {
-		offsetX = offsetX || 0;
-		offsetY = offsetY || 0;
-		for (var i = 0; i < jsPlumb_nodes.length; i++) {
-			moveOneNode(jsPlumb_nodes[i]['id'], offsetX, offsetY);
-		}
-	}
-
-	function moveOneNode(id, offsetX, offsetY) {
-		offsetX = offsetX || 0;
-		offsetY = offsetY || 0;
-		if(offsetX == 0 && offsetY == 0){
-			return;
-		}
-
-		var node = jsPlumb.getSelector('#' + id);
-		var pos = $(node).position();
-		$(node).css({
-			left: pos.left + offsetX,
-			top: pos.top + offsetY,
+	function initJsPlumbInstance() {
+		var color = "#333";
+		jsPlumb_instance = jsPlumb.getInstance({
+			Connector: ["Flowchart", {
+				cornerRadius: 5,
+				// alwaysRespectStubs: true
+			}],
+			PaintStyle: {
+				strokeStyle: color,
+				lineWidth: 2
+			},
+			EndpointStyle: {
+				radius: 5,
+				fillStyle: color
+			},
+			HoverPaintStyle: {
+				strokeStyle: "#7073EB"
+			},
+			EndpointHoverStyle: {
+				fillStyle: "#7073EB"
+			},
+			Container: jsPlumb_container
 		});
 
-		//重绘流程元素
-		jsPlumb_instance.repaint(node);
+		jsPlumb_instance.setZoom(1);
 	}
 
 	function initMainBoard() {
@@ -243,43 +223,91 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 			id: "hardware_board_" + (new Date().getTime()),
 			'data-item': dataItem,
 			text: "主板",
+			port: "",
+			add_info: "",
 		};
-		
+
 		initNode(param);
 
+		var config = getConfig(dataItem);
 		eventcenter.delaytrigger('hardware', 'finish_drag', {
 			id: param.id,
-			kind: getNodeInfoByKey(dataItem, "kind"),
-			type: getNodeInfoByKey(dataItem, "type"),
-			name: getNodeInfoByKey(dataItem, "name"),
+			type: config.type,
+			name: config.name,
 			text: param.text,
 			left: left,
 			top: top,
-			port: "",
-			add_info: "",
 		});
 	}
 
 	function initNode(param) {
+		var type = param['data-item'];
+		var config = getConfig(type);
+		var canvas = $("#" + jsPlumb_container);
+		if (config.unique && $("div[data-item='" + type + "']", canvas).length > 0) {
+			alert("指定硬件元件在流程中只能使用一次");
+			return false;
+		}
+
+		$('<div>').appendTo(canvas)
+			.css({
+				position: 'absolute',
+				left: param.x,
+				top: param.y,
+			})
+			.attr('align', 'center')
+			.attr('id', param.id)
+			.attr('data-item', type)
+			.addClass(config.className)
+			.addClass('node')
+			.addClass(jsPlumb_container + '-item');
+
+		var node = jsPlumb.getSelector('#' + param.id)[0];
+		param.width = $(node).width();
+		param.height = $(node).height();
+		$(node).css({
+			width: Math.round($(node).width() * zoom),
+			height: Math.round($(node).height() * zoom)
+		});
+
 		var tmpAddInfo = {};
-		
 		if (param['add_info']) {
 			tmpAddInfo = param['add_info'];
 		} else {
-			for (var key in fis[param['data-item']]) {
-				tmpAddInfo[key] = fis[param['data-item']][key];
+			for (var key in config) {
+				tmpAddInfo[key] = config[key];
 			}
 		}
-		var node = addNode(jsPlumb_container, param);
 		param.add_info = tmpAddInfo;
-		param.width = $(node).width();
-		param.height = $(node).height();
 		jsPlumb_nodes.push(param);
-		if (node === false) {
-			return false;
+
+		var arrAnchor = getConfig($(node).attr('data-item')).points;
+		for (var i = 0; i < arrAnchor.length; i++) {
+			var uuid = node.getAttribute("id") + "_" + arrAnchor[i].position;
+			var paintStyle = {
+				radius: 5,
+				fillStyle: arrAnchor[i].color
+			};
+			jsPlumb_instance.addEndpoint(node, {
+				endpoint: arrAnchor[i].shape,
+				uuid: uuid,
+				paintStyle: paintStyle,
+				anchor: arrAnchor[i].position,
+				maxConnections: -1,
+				isSource: arrAnchor[i].source,
+				isTarget: arrAnchor[i].target,
+				//连线不能被手动删除
+				connectionsDetachable: false,
+			});
 		}
-		addPorts(node);
-		jsPlumb_instance.draggable($(node), {gird: [5, 5]});
+
+		jsPlumb_instance.draggable($(node), {
+			gird: [5, 5],
+			stop: function(e, ui) {
+				param.x = Math.round($(node).position().left);
+				param.y = Math.round($(node).position().top);
+			}
+		});
 
 		$(node).on('dragover', function(e) {
 			onDragoverEvent(e, this);
@@ -292,6 +320,367 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		return node;
 	}
 
+	function initDrag(e) {
+		data_transfer.id = e.target.id;
+		data_transfer.offsetX = e.originalEvent.offsetX;
+		data_transfer.offsetY = e.originalEvent.offsetY;
+
+		var nodeType = $(e.target).attr("data-item");
+		getAndInitLinkEndpoint(nodeType);
+	}
+
+	function finishDrag(e) {
+		// 如果无可连接点，则返回
+		if (linkableEndpoints == null || linkableEndpoints.length == 0) {
+			return false;
+		};
+
+		//拖拽对象不是连接目标的时候
+		var targetDiv = $(e.target);
+
+		if (targetDiv.closest("div").attr('class').indexOf('_jsPlumb') < 0 || targetDiv.closest("div").attr('class').indexOf(jsPlumb_container + '-item') < 0) {
+			return false;
+		}
+		e.preventDefault();
+
+		//生成流程图元素的样式、位置
+		var nodeX = Math.round(e.originalEvent.offsetX - data_transfer.offsetX);
+		var nodeY = Math.round(e.originalEvent.offsetY - data_transfer.offsetY);
+		console.log("nodeXY: " + nodeX + ", " + nodeY);
+
+		var id = data_transfer.id;
+		var target = $("#" + id);
+		var param = {
+			x: nodeX,
+			y: nodeY,
+			id: id + "_" + (new Date().getTime()),
+			text: target.text() || target.parent().text(),
+			'data-item': target.attr('data-item'),
+		};
+
+		var node = initNode(param);
+		var nodeFis = getConfig(param['data-item']);
+		var nodePort = '';
+		var targetJsPlumbNode = null;
+
+		// 若拖拽进入已有元素，则自动连接，并调整元素位置
+		if (targetDiv.closest("div").attr('class').indexOf('_jsPlumb') >= 0) {
+			var sourceFis = getConfig($(targetDiv.closest("div")).attr("data-item"));
+			for (var i = 0; i < jsPlumb_nodes.length; i++) {
+				if (jsPlumb_nodes[i]['id'] === $(targetDiv.closest("div")).attr('id')) {
+					targetJsPlumbNode = jsPlumb_nodes[i];
+					sourceFis = jsPlumb_nodes[i]['add_info'];
+				}
+			}
+
+			var sEndpoint = initCloseEndpoint;
+			if (sEndpoint == null) {
+				sEndpoint = getNearestEndPointFromNode(targetDiv, node, nodeX, nodeY);
+			}
+
+			// 确认该点的端口
+			var sEndpointX = sEndpoint.anchor.x;
+			var sEndpointY = sEndpoint.anchor.y;
+			var sourceFisPoints = sourceFis['points'];
+			for (var i = 0; i < sourceFisPoints.length; i++) {
+				if (sEndpointX == sourceFisPoints[i].position[0] && sEndpointY == sourceFisPoints[i].position[1] && sEndpoint.isSource == sourceFisPoints[i].source && sEndpoint.isTarget == sourceFisPoints[i].target) {
+					nodePort = sourceFisPoints[i].port;
+					break;
+				}
+			}
+
+			var userInitFlag = true;
+			//连接点在硬件主板上，且连接元素室LED灯时，需要确认转接口的存在
+			if (sourceFis.type == 'board') {
+				var hasAdapter = false;
+				var conns = jsPlumb_instance.getConnections({
+					source: targetDiv.closest("div")
+				});
+				if (nodeFis.needPinboard) {
+					//确认是否在该点上有链接的转接口
+					for (var i = 0; i < conns.length; i++) {
+						if (conns[i].endpoints[0].getUuid() != sEndpoint.getUuid()) continue;
+
+						for (var j = 0; j < conns[i].endpoints.length; j++) {
+							var tmpEndpoint = conns[i].endpoints[1];
+							var tmpNodeFis = getConfig($(tmpEndpoint.getElement()).attr("data-item"));
+							if (tmpNodeFis.type == "adapter") {
+								hasAdapter = true;
+								targetDiv = $(tmpEndpoint.getElement());
+								break;
+							}
+						}
+					}
+					if (!hasAdapter) {
+						var adapterParam = {
+							x: param.x,
+							y: param.y,
+							id: "hardware_adapter_" + (new Date().getTime()),
+							text: "转接口",
+							'data-item': "hardware_adapter_item",
+						};
+						var adapterNode = initNode(adapterParam);
+						initConnection(
+							adapterNode,
+							targetDiv,
+							nodeX,
+							nodeY
+						);
+						targetDiv = $(adapterNode);
+					}
+					userInitFlag = false;
+				}
+			}
+
+			initConnection(
+				node,
+				targetDiv,
+				nodeX,
+				nodeY,
+				userInitFlag
+			);
+		}
+
+		var tmpJsPlumbNode = getSelectedJsPlumbNode(node);
+		if (tmpJsPlumbNode.index > -1) {
+			var tmpNode = tmpJsPlumbNode.node;
+			var tmpIndex = tmpJsPlumbNode.index;
+			var usedPortBit = getConnectedBit(targetJsPlumbNode, nodePort, tmpNode);
+
+			tmpNode['add_info']['port'] = nodePort;
+			tmpNode['add_info']['usedPortBit'] = usedPortBit;
+
+			jsPlumb_nodes.splice(tmpIndex, 1, tmpNode);
+			var data = {
+				id: tmpNode['id'],
+				type: nodeFis.type,
+				port: usedPortBit,
+				add_info: tmpNode['add_info'],
+				text: tmpNode['text'],
+				left: $(node).position().left,
+				top: $(node).position().top
+			}
+			for (var i in nodeFis) {
+				if (i == 'port' || i == 'usedPortBit' || i == 'rotate') {
+					continue;
+				}
+				data[i] = nodeFis[i];
+			}
+			eventcenter.trigger('hardware', 'finish_drag', data);
+		}
+
+		data_transfer = {};
+
+		initCloseEndpoint = null;
+
+		//将每个元素的位置信息进行一次处理，为放大缩小进行位置信息整理准备
+		for (var i = 0; i < jsPlumb_nodes.length; i++) {
+			var nodeInfo = jsPlumb_nodes[i];
+			nodeInfo.x = $(jsPlumb.getSelector('#' + nodeInfo.id)).position().left;
+			nodeInfo.y = $(jsPlumb.getSelector('#' + nodeInfo.id)).position().top;
+		}
+	}
+
+	function initConnection(node, target, centerX, centerY, flag) {
+		var targetDiv = target.closest("div");
+
+		var nodeConfig = getConfig($(node).attr('data-item'));
+		var nodeName = nodeConfig.name;
+
+		var sourceEndPoint = null;
+		if (flag) {
+			sourceEndPoint = initCloseEndpoint;
+		}
+		if (sourceEndPoint == null) {
+			sourceEndPoint = getNearestEndPointFromNode(targetDiv, node, centerX, centerY);
+		}
+		if (sourceEndPoint == null) {
+			jsPlumb_instance.remove($(node));
+			return false;
+		}
+
+		//拖拽位置所指对象的位置
+		var baseX = $(targetDiv).position().left;
+		var baseY = $(targetDiv).position().top;
+
+		//获取起始连接点的属性
+		var sourceFis = getConfig($(targetDiv).attr("data-item"));
+		//根据最近的起始连接点重定位新流程元素位置
+		var objX = 0;
+		var objY = 0;
+
+		var baseX = $(sourceEndPoint.canvas).position().left + $(sourceEndPoint.canvas).width() / 2 - $(node).width() / 2;
+		var baseY = $(sourceEndPoint.canvas).position().top;
+		if (sourceFis.type == "board") {
+			objX = baseX;
+			//主板连接点定制
+			if (sourceEndPoint.anchor.y > 0.5) {
+				$(node).addClass("content-rotate");
+				var targetEndPoints = jsPlumb_instance.getEndpoints($(node));
+				for (var i = 0; i < targetEndPoints.length; i++) {
+					targetEndPoints[i].anchor.x = 1 - targetEndPoints[i].anchor.x;
+					targetEndPoints[i].anchor.y = 1 - targetEndPoints[i].anchor.y;
+				}
+				var tmpJsPlumbNode = getSelectedJsPlumbNode(node);
+				if (tmpJsPlumbNode.index > -1) {
+					tmpJsPlumbNode.node['add_info']['rotate'] = 1;
+					jsPlumb_nodes.splice(tmpJsPlumbNode.index, 1, tmpJsPlumbNode.node);
+				}
+				//主板下连接点
+				if (nodeName == 'adapter') {
+					objY = baseY + 30;
+				} else {
+					objY = baseY + 40;
+				}
+			} else {
+				//主板上连接点
+				if (nodeName == 'adapter') {
+					objY = baseY - $(node).outerHeight();
+				} else {
+					objY = baseY - $(node).outerHeight() - 30;
+				}
+			}
+		} else {
+			if ($(targetDiv).hasClass("content-rotate")) {
+				//父点旋转，子点也旋转
+				objX = baseX;
+				objY = baseY + 30;
+				$(node).addClass("content-rotate");
+				var tmpJsPlumbNode = getSelectedJsPlumbNode(node);
+				if (tmpJsPlumbNode.index > -1) {
+					tmpJsPlumbNode.node['add_info']['rotate'] = 1;
+					jsPlumb_nodes.splice(tmpJsPlumbNode.index, 1, tmpJsPlumbNode.node);
+				}
+
+				var targetEndPoints = jsPlumb_instance.getEndpoints($(node));
+				for (var i = 0; i < targetEndPoints.length; i++) {
+					targetEndPoints[i].anchor.x = 1 - targetEndPoints[i].anchor.x;
+					targetEndPoints[i].anchor.y = 1 - targetEndPoints[i].anchor.y;
+				}
+			} else {
+				objX = baseX;
+				objY = baseY - $(node).outerHeight() - 30;
+			}
+			var arrConn = jsPlumb_instance.getConnections({
+				source: sourceEndPoint.getElement()
+			});
+			//将同一节点出来的元素拆分显示
+			if (arrConn.length % 2 == 0) {
+				objX = objX - ($(node).outerWidth() + 10) * arrConn.length / 2;
+			} else if (arrConn.length == 1) {
+				objX = objX + $(node).outerWidth() + 10;
+			} else if (arrConn.length % 2 == 1) {
+				objX = objX + ($(node).outerWidth() + 10) * (arrConn.length - arrConn.length % 2 + 2) / 2;
+			}
+		}
+
+		$(node).css({
+			top: objY,
+			left: objX
+		});
+		//重绘流程元素
+		jsPlumb_instance.repaint(node);
+
+		var targetEndPoints = jsPlumb_instance.getEndpoints($(node));
+
+		var targetEndPoint = null;
+		for (var i = 0; i < targetEndPoints.length; i++) {
+			if (targetEndPoints[i].isTarget) {
+				targetEndPoint = targetEndPoints[i];
+				break;
+			}
+		}
+
+		jsPlumb_instance.connect({
+			source: sourceEndPoint,
+			target: targetEndPoint
+		});
+	}
+
+	function getNearestEndPointFromNode(div, node, centerX, centerY) {
+		var realX = $(node).outerWidth() / 2 + centerX;
+		var realY = $(node).outerHeight() / 2 + centerY;
+
+		var sourceEndPoint = null;
+
+		//拖拽位置所指对象的位置
+		var baseX = $(div).position().left;
+		var baseY = $(div).position().top;
+
+		//获取拖拽位置所指对象的所有连接点endpoint
+		var sourceEndPoints = jsPlumb_instance.getEndpoints(div);
+
+		var nodeConfig = getConfig($(div).attr('data-item'));
+		//根据拖拽放置情况获取离当前元素最近的连接点
+		var distance = 0;
+		for (var i = 0; i < sourceEndPoints.length; i++) {
+			var endpoint = sourceEndPoints[i];
+			if (endpoint.isSource && (nodeConfig.type != "board" || linkableEndpoints.length == 0 || linkableEndpoints.indexOf(endpoint) >= 0)) {
+				var offsetX = $(endpoint.canvas).position().left - baseX - realX;
+				var offsetY = $(endpoint.canvas).position().top - baseY - realY;
+				if (distance == 0) {
+					distance = offsetX * offsetX + offsetY * offsetY;
+					sourceEndPoint = sourceEndPoints[i];
+				} else {
+					var tmpDistance = offsetX * offsetX + offsetY * offsetY;;
+					if (distance > tmpDistance) {
+						distance = tmpDistance;
+						sourceEndPoint = sourceEndPoints[i];
+					}
+				}
+			}
+		}
+		return sourceEndPoint;
+	}
+
+	function cutAndLink(sourceEndPoint, node) {
+		//在新的元素上获取打断重连的起点
+		var sourceTargetEndPoint = null;
+		var sourceEndPoints = jsPlumb_instance.getEndpoints($(node));
+		for (var i = 0; i < sourceEndPoints.length; i++) {
+			if (!sourceEndPoints[i].isSource) continue;
+			sourceTargetEndPoint = sourceEndPoints[i];
+			break;
+		}
+		var connections = jsPlumb_instance.getConnections({
+			source: sourceEndPoint.getElement()
+		});
+		for (var i = 0; i < connections.length; i++) {
+			if (sourceEndPoint.getUuid() != connections[i].endpoints[0].getUuid()) continue;
+			if ($(node).attr('id') == connections[i].targetId || $(node).attr('id') == connections[i].sourceId) {
+				continue;
+			}
+			jsPlumb_instance.detach(connections[i]);
+			jsPlumb_instance.connect({
+				source: sourceTargetEndPoint,
+				target: connections[i].endpoints[1]
+			});
+		}
+	}
+
+	function moveAllNodes(offsetX, offsetY) {
+		offsetX = offsetX || 0;
+		offsetY = offsetY || 0;
+		if (offsetX == 0 && offsetY == 0) {
+			return;
+		}
+
+		for (var i = 0; i < jsPlumb_nodes.length; i++) {
+			var nodeInfo = jsPlumb_nodes[i];
+			var node = jsPlumb.getSelector('#' + nodeInfo.id);
+			var pos = $(node).position();
+			$(node).css({
+				left: Math.round(pos.left + offsetX),
+				top: Math.round(pos.top + offsetY),
+			});
+			nodeInfo.x = Math.round($(node).position().left);
+			nodeInfo.y = Math.round($(node).position().top);
+
+			//重绘流程元素
+			jsPlumb_instance.repaint(node);
+		}
+	}
+
 	function setRelativeMovingPosition(ev) {
 		// 获取相对元素内的相对移动位置
 		dragging_left = ev.originalEvent.x;
@@ -300,30 +689,26 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 
 	function onDragoverEvent(e, obj) {
 		var nowJsPlumbNodeAddInfo = getSelectedJsPlumbNodeByObj($(obj)).node.add_info;
-		if (nowJsPlumbNodeAddInfo.isController != 1) {
+		if (nowJsPlumbNodeAddInfo.type != "board") {
 			return false;
 		}
 
-		var objX = Math.floor($(obj).offset().left);
-		var objY = Math.floor($(obj).offset().top);
-
-		var mousemoveX = Math.floor(dragging_left) - objX;
-		var mousemoveY = Math.floor(dragging_top) - objY;
+		var mousemoveX = Math.round(dragging_left);
+		var mousemoveY = Math.round(dragging_top);
 
 		var closeEndpoint = null;
 		var closeDistance = 0;
 		for (var i = 0; i < linkableEndpoints.length; i++) {
 			linkableEndpoints[i].setPaintStyle({
-				fillStyle: '#FF0'
+				fillStyle: '#0FF'
 			});
-			var tmpX = Math.floor($(linkableEndpoints[i].canvas).offset().left) - objX;
-			var tmpY = Math.floor($(linkableEndpoints[i].canvas).offset().top) - objY;
-			// console.log(tmpX+","+tmpY);
+			var tmpX = Math.round($(linkableEndpoints[i].canvas).offset().left) - mousemoveX;
+			var tmpY = Math.round($(linkableEndpoints[i].canvas).offset().top) - mousemoveY;
 			if (closeEndpoint == null) {
 				closeEndpoint = linkableEndpoints[i];
-				closeDistance = Math.sqrt(Math.pow((mousemoveY - tmpY), 2) + Math.pow((mousemoveX - tmpX), 2));
+				closeDistance = tmpX * tmpX + tmpY * tmpY;
 			} else {
-				tmpDistance = Math.sqrt(Math.pow((mousemoveY - tmpY), 2) + Math.pow((mousemoveX - tmpX), 2));
+				tmpDistance = tmpX * tmpX + tmpY * tmpY;
 				if (tmpDistance < closeDistance) {
 					closeDistance = tmpDistance;
 					closeEndpoint = linkableEndpoints[i];
@@ -349,7 +734,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 			return false;
 		}
 
-		if(nodeType == "hardware_board_item") {
+		if (nodeType == "hardware_board_item") {
 			return false;
 		}
 
@@ -367,7 +752,7 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		if (showText.length === 0) {
 			return false;
 		}
-		if (addInfo.isController == 1) {
+		if (addInfo.type == "board") {
 			showText += '；可用端口信息：';
 			for (var i = 0; i < addInfo.points.length; i++) {
 				showText += ' <span style="font-size:12px;">' + (addInfo.points)[i].port + ":" + (addInfo.points)[i].bit + '</span>';
@@ -384,31 +769,25 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 
 		var div = $("<div></div>").html(showText).css({
 			position: 'absolute',
-			top: ((height - 60) + 'px'),
-			left: '10px',
-			width: ((width - 70) + "px"),
-			height: '30px',
+			top: height - 60,
+			left: 10,
+			width: width - 70,
+			height: 30,
 			border: '1px solid #6AB82E',
 			backgroundColor: '#FFF',
 			zIndex: 999,
-			borderRadius: '5px',
+			borderRadius: 5,
 			opacity: 0.7,
 			filter: 'alpha(opacity=70)',
 			padding: '10px 20px',
 			fontSize: '20px'
-		}).addClass('desc_show_' + $(node).attr('data-item')).hide();
-		$('body').append(div);
-		div.show(150);
+		}).addClass('desc_show_' + $(node).attr('data-item')).appendTo('body').hide().show(150);
 	}
 
 	// 根据html元素删除节点对象
-	function deleteNodeByElement(obj) {
-		deleteNode(jsPlumb.getSelector('#' + $(obj).attr('id'))[0]);
-	}
-
-	// 删除流程元素
-	function deleteNode(node) {
-		if ($(node).attr("data-item") == "hardware_board_item") {
+	function deleteNodeByElement(node) {
+		var config = getConfig($(node).attr("data-item"));
+		if (config.always) {
 			alert("不可删除元素！");
 			return false;
 		}
@@ -537,185 +916,16 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		}
 	}
 
-	/**
-	 * 新增一个流程元素
-	 * @param string parentId 整个流程图绘制版DIV的id
-	 * @param object param {id:"",data-item:"",text:"",x:"",y:""}的信息集
-	 */
-	function addNode(parentId, param) {
-		var objSet = fis[param['data-item']];
-		var panel = d3.select("#" + parentId);
-
-		if (objSet.unique && $("div[data-item='" + param['data-item'] + "']", $("#" + parentId)).length > 0) {
-			alert("指定硬件元件在流程中只能使用一次");
-			return false;
-		}
-
-		panel.append('div')
-			.style('position', 'absolute')
-			.style('top', param['y'] + "px")
-			.style('left', param['x'] + "px")
-			.attr('align', 'center')
-			.attr('id', param['id'])
-			.attr('data-item', param['data-item'])
-			.classed(objSet.className, true)
-			.classed('node', true)
-			.classed(jsPlumb_container + '-item', true)
-			.text(param['text']);
-		return jsPlumb.getSelector('#' + param['id'])[0];
+	function getConfig(name) {
+		var names = name.split('_');
+		name = names.length > 1 ? names[1] : name;
+		return configs[name];
 	}
 
-	/**
-	 * 根据配置为流程增加endpoint
-	 * @param element node 一个流程元素
-	 */
-	function addPorts(node) {
-		//Assume horizental layout
-		var arrAnchor = fis[$(node).attr('data-item')].points;
-		for (var i = 0; i < arrAnchor.length; i++) {
-			var tmpUuid = node.getAttribute("id") + "_" + arrAnchor[i].position;
-			var tmpPaintStyle = {
-				radius: 5,
-				fillStyle: arrAnchor[i].color
-			};
-			var tmpShape = arrAnchor[i].shape;
-			jsPlumb_instance.addEndpoint(node, {
-				endpoint: tmpShape,
-				uuid: tmpUuid,
-				paintStyle: tmpPaintStyle,
-				anchor: arrAnchor[i].position,
-				maxConnections: -1,
-				isSource: arrAnchor[i].source,
-				isTarget: arrAnchor[i].target,
-				//连线不能被手动删除
-				connectionsDetachable: false,
-			});
-			//鼠标进入连接点时候激活的处理
-			jsPlumb_instance.getEndpoint(tmpUuid).bind("mouseenter", function(e) {
-				console.log("mouseenter");
-			});
-		}
-	}
-
-	/**
-	 * 连接两个endpoint
-	 * @param string sourceId 起点endpoint的uuid	
-	 * @param string targetId 终点endpoint的uuid
-	 */
-	function connectPortsByUuid(sourceId, targetId) {
-		jsPlumb_instance.connect({
-			uuids: [sourceId, targetId]
-		});
-	}
-
-	/**
-	 * 连接两个endpoint
-	 * @param string/endpoint source 起点	
-	 * @param string/endpoint target 终点
-	 */
-	function connectPortsBySt(source, target) {
-		jsPlumb_instance.connect({
-			source: source,
-			target: target
-		});
-	}
-
-	/**
-	 * @desc 通过制定的data_item信息获取flowchart_item_set中的kind信息，即流程元素所属
-	 * @param string data_item
-	 * @param string key
-	 */
-	function getNodeInfoByKey(data_item, key) {
-		var objSet = fis[data_item];
-		if (objSet[key] && objSet[key] != undefined) return objSet[key];
-		return false;
-	}
-
-	/**
-	 * 初始化整个画板，同时增加双击链接取消链接功能
-	 */
-	function initJsPlumbInstance() {
-		var color = "#333";
-		jsPlumb_instance = jsPlumb.getInstance({
-			// Connector : [ "StateMachine", { curviness:1 } ],
-			Connector: ["Flowchart", {
-				gap: 10,
-				// curviness: 50,
-				// midpoint: 1,
-				stub: 20,
-				cornerRadius: 5,
-				alwaysRespectStubs: true
-			}],
-			//DragOptions : { cursor: "pointer", zIndex:2000 },
-			PaintStyle: {
-				strokeStyle: color,
-				lineWidth: 2
-			},
-			EndpointStyle: {
-				radius: 5,
-				fillStyle: color
-			},
-			HoverPaintStyle: {
-				strokeStyle: "#7073EB"
-			},
-			EndpointHoverStyle: {
-				fillStyle: "#7073EB"
-			},
-			//ConnectionOverlays : [["Arrow",{ width:10,length:10,location:-5}]],
-			Container: jsPlumb_container
-		});
-		jsPlumb_instance.bind("dblclick", function(conn, e) {
-			jsPlumb_instance.detach(conn);
-		});
-		jsPlumb_instance.bind("click", function(ep, e) {
-			console.log("click");
-		});
-		jsPlumb_instance.bind("contextMenu", function(ep, e) {
-			console.log("contextMenu");
-		});
-		jsPlumb_instance.bind("mouseenter", function(ep, e) {
-			console.log("mouseenter");
-		});
-		jsPlumb_instance.bind("mouseexit", function(ep, e) {
-			console.log("mouseexit");
-		});
-		jsPlumb_instance.bind("mousedown", function(ep, e) {
-			console.log("mousedown");
-		});
-		jsPlumb_instance.bind("mouseup", function(ep, e) {
-			console.log("mouseup");
-		});
-
-
-		jsPlumb_instance.setZoom(1);
-	}
-
-	/**
-	 * 初始化拖拽功能
-	 * @param event e 鼠标拖拽实践
-	 */
-	function initDrag(e) {
-		try {
-			e.originalEvent.dataTransfer.setData('text', e.target.id);
-			e.originalEvent.dataTransfer.setData('offsetX', e.originalEvent.offsetX);
-			e.originalEvent.dataTransfer.setData('offsetY', e.originalEvent.offsetY);
-		} catch (e) {
-
-		}
-		data_transfer['text'] = e.target.id;
-		data_transfer['offsetX'] = e.originalEvent.offsetX;
-		data_transfer['offsetY'] = e.originalEvent.offsetY;
-		getAndInitLinkEndpoint(e);
-	}
-
-	/** 
-	 * 确认连接点（通过控制器、端口、位等信息进行确认连接）
-	 *	@param event e
-	 */
-	function getAndInitLinkEndpoint(e) {
-		var fisKey = $(e.target).attr('data-item');
-		var name = getNodeInfoByKey(fisKey, 'name');
-		var bits = getNodeInfoByKey(fisKey, 'bits');
+	function getAndInitLinkEndpoint(nodeType) {
+		var nodeConfig = getConfig(nodeType);
+		var name = nodeConfig.name;
+		var bits = nodeConfig.bits;
 		var needle = "";
 		for (var i = 0; i < bits; i++) {
 			needle += "1";
@@ -780,177 +990,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		});
 	}
 
-	/**
-	 * 完成元素拖拽后的处理
-	 * @param event e 鼠标拖拽实践
-	 */
-	function finishDrag(e) {
-		// 如果无可连接点，则返回
-		if (linkableEndpoints == null || linkableEndpoints.length == 0) {
-			return false;
-		};
-
-		//拖拽对象不是连接目标的时候
-		var targetDiv = $(e.target);
-
-		if (targetDiv.closest("div").attr('class').indexOf('_jsPlumb') < 0 || targetDiv.closest("div").attr('class').indexOf(jsPlumb_container + '-item') < 0) {
-			return false;
-		}
-		e.preventDefault();
-
-		var originalEventOffsetX = e.originalEvent.offsetX;
-		var originalEventOffsetY = e.originalEvent.offsetY;
-		var objId = "";
-		var startOffsetX = 0;
-		var startOffsetY = 0;
-		try {
-			objId = e.originalEvent.dataTransfer.getData('text');
-			startOffsetX = e.originalEvent.dataTransfer.getData('offsetX');
-			startOffsetY = e.originalEvent.dataTransfer.getData('offsetY');
-		} catch (ev) {
-			objId = data_transfer['text'];
-			startOffsetX = data_transfer['offsetX'];
-			startOffsetY = data_transfer['offsetY'];
-		}
-
-		//生成流程图元素的样式、位置
-		var nodeX = originalEventOffsetX - startOffsetX;
-		var nodeY = originalEventOffsetY - startOffsetY;
-		var param = {
-			x: nodeX,
-			y: nodeY,
-			id: objId + "_" + (new Date().getTime()),
-			text: $("#" + objId).text() || $("#" + objId).parent().text(),
-			'data-item': $("#" + objId).attr('data-item'),
-		};
-
-		var node = initNode(param);
-		var nodeFis = fis[param['data-item']];
-		var nodePort = '';
-		targetJsPlumbNode = null;
-
-		// 若拖拽进入已有元素，则自动连接，并调整元素位置
-		if (targetDiv.closest("div").attr('class').indexOf('_jsPlumb') >= 0) {
-			var sourceFis = fis[$(targetDiv.closest("div")).attr("data-item")];
-			for (var i = 0; i < jsPlumb_nodes.length; i++) {
-				if (jsPlumb_nodes[i]['id'] === $(targetDiv.closest("div")).attr('id')) {
-					targetJsPlumbNode = jsPlumb_nodes[i];
-					sourceFis = jsPlumb_nodes[i]['add_info'];
-				}
-			}
-
-			var sEndpoint = initCloseEndpoint;
-			if (sEndpoint == null) {
-				sEndpoint = getNearestEndPointFromNode(targetDiv, node, nodeX, nodeY);
-			}
-
-			// 确认该点的端口
-			var sEndpointX = sEndpoint.anchor.x;
-			var sEndpointY = sEndpoint.anchor.y;
-			var sourceFisPoints = sourceFis['points'];
-			for (var i = 0; i < sourceFisPoints.length; i++) {
-				if (sEndpointX == sourceFisPoints[i].position[0] && sEndpointY == sourceFisPoints[i].position[1] && sEndpoint.isSource == sourceFisPoints[i].source && sEndpoint.isTarget == sourceFisPoints[i].target) {
-					nodePort = sourceFisPoints[i].port;
-				}
-			}
-
-			var userInitFlag = true;
-			//连接点在硬件主板上，且连接元素室LED灯时，需要确认转接口的存在
-			if (sourceFis.kind == "hardware" && (sourceFis.type == 'board')) {
-				var hasAdapter = false;
-				var conns = jsPlumb_instance.getConnections({
-					source: targetDiv.closest("div")
-				});
-				if (nodeFis.kind == "hardware" && nodeFis.needsPinboard == 1) {
-					//确认是否在该点上有链接的转接口
-					for (var i = 0; i < conns.length; i++) {
-						if (conns[i].endpoints[0].getUuid() != sEndpoint.getUuid()) continue;
-
-						for (var j = 0; j < conns[i].endpoints.length; j++) {
-							var tmpEndpoint = conns[i].endpoints[1];
-							var tmpNodeFis = fis[$(tmpEndpoint.getElement()).attr("data-item")];
-							if (tmpNodeFis.kind == "hardware" && tmpNodeFis.type == "adapter") {
-								hasAdapter = true;
-								targetDiv = $(tmpEndpoint.getElement());
-								break;
-							}
-						}
-					}
-					if (!hasAdapter) {
-						var adapterParam = {
-							x: param.x,
-							y: param.y,
-							id: "hardware_adapter_" + (new Date().getTime()),
-							text: "转接口",
-							'data-item': "hardware_adapter_item",
-						};
-						var adapterNode = initNode(adapterParam);
-						initConnection(
-							adapterNode,
-							targetDiv,
-							nodeX,
-							nodeY
-						);
-						targetDiv = $(adapterNode);
-					}
-					userInitFlag = false;
-				}
-			}
-
-			initConnection(
-				node,
-				targetDiv,
-				nodeX,
-				nodeY,
-				userInitFlag
-			);
-		}
-
-		var tmpJsPlumbNode = getSelectedJsPlumbNode(node);
-		if (tmpJsPlumbNode.index > -1) {
-			var tmpNode = tmpJsPlumbNode.node;
-			var tmpIndex = tmpJsPlumbNode.index;
-			var usedPortBit = getConnectedBit(targetJsPlumbNode, nodePort, tmpNode);
-
-			tmpNode['add_info']['port'] = nodePort;
-			tmpNode['add_info']['usedPortBit'] = usedPortBit;
-
-			jsPlumb_nodes.splice(tmpIndex, 1, tmpNode);
-			var data = {
-				"id": tmpNode['id'],
-				"kind": nodeFis.kind,
-				"type": nodeFis.type,
-				"port": usedPortBit,
-				"add_info": tmpNode['add_info'],
-				"text": tmpNode['text'],
-				"left": $(node).position().left,
-				"top": $(node).position().top
-			}
-			for (var i in nodeFis) {
-				if (i == 'port' || i == 'usedPortBit' || i == 'rotate') {
-					continue;
-				}
-				data[i] = nodeFis[i];
-			}
-			eventcenter.trigger('hardware', 'finish_drag', data);
-		}
-
-		try {
-			e.originalEvent.dataTransfer.clearData();
-			data_transfer = {};
-		} catch (ev) {
-			data_transfer = {};
-		}
-
-		initCloseEndpoint = null;
-
-		// 将每个元素的位置信息进行一次处理，为放大缩小进行位置信息整理准备
-		for (var i = 0; i < jsPlumb_nodes.length; i++) {
-			jsPlumb_nodes[i]['x'] = $(jsPlumb.getSelector('#' + jsPlumb_nodes[i]['id'])[0]).position().left;
-			jsPlumb_nodes[i]['y'] = $(jsPlumb.getSelector('#' + jsPlumb_nodes[i]['id'])[0]).position().top;
-		}
-	}
-
 	function getSelectedJsPlumbNode(node) {
 		return getSelectedJsPlumbNodeByObj($(node));
 	}
@@ -970,13 +1009,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		}
 	}
 
-	/**
-	 * @desc 获取对应端口上的使用位信息
-	 * @param jsPlumb_node targetJsPlumbNode对应目前拖拽对象放置位置目标对象
-	 * @param string nodePort 使用目标端口
-	 * @param jsPlumb_node jsPlumbNode 拖拽对象
-	 * @return string
-	 */
 	function getConnectedBit(targetJsPlumbNode, nodePort, jsPlumbNode) {
 		var returnStrBit = '';
 		// 当前端口、位信息
@@ -992,7 +1024,6 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		for (var j = 0; j < needBits; j++) {
 			needle += '1';
 			reverseNeedle += '0';
-			// returnStrBit+=nodePort+(nowBitStatus.indexOf(needle));
 		}
 		if (needBits == 1) {
 			returnStrBit = nodePort + nowBitStatus.indexOf(needle);
@@ -1024,342 +1055,12 @@ define(["jquery", "jsplumb", "eventcenter", "d3", "flowchart_item_set", "jquery-
 		return returnStrBit;
 	}
 
-	/**
-	 * @desc拖拽至元素时自动绘制图形位置，需将已有下属元素进行位置调整
-	 * @param node 流程元素
-	 * @param event e 事件
-	 * @param float centerX 实际中心点当前位置
-	 * @param float centerY 实际中心点当前位置
-	 */
-	function initConnection(node, target, centerX, centerY, userInitFlag) {
-		if (userInitFlag == null) {
-			userInitFlag = false;
-		}
-		var targetDiv = target.closest("div");
-
-		var nodeName = getNodeInfoByKey($(node).attr('data-item'), 'name');
-
-		var sourceEndPoint = null;
-		if (userInitFlag) {
-			sourceEndPoint = initCloseEndpoint;
-		}
-		if (sourceEndPoint == null) {
-			sourceEndPoint = getNearestEndPointFromNode(targetDiv, node, centerX, centerY);
-		}
-		if (sourceEndPoint == null) {
-			jsPlumb_instance.remove($(node));
-			return false;
-		}
-
-		//拖拽位置所指对象的位置
-		var baseX = $(targetDiv).position().left;
-		var baseY = $(targetDiv).position().top;
-
-		//获取起始连接点的属性
-		var sourceFis = fis[$(targetDiv).attr("data-item")];
-		//根据最近的起始连接点重定位新流程元素位置
-		var objX = 0;
-		var objY = 0;
-
-		var relativeDistance = getLeftTopToSourceEndpointDistance(node);
-		if (sourceFis.kind == "hardware") {
-			var baseX = $(sourceEndPoint.canvas).position().left;
-			var baseY = $(sourceEndPoint.canvas).position().top;
-			if (sourceFis.type == "board") {
-				// objX=baseX+9-$(node).outerWidth()/2;
-				objX = baseX - relativeDistance;
-				//主板连接点定制
-				if (sourceEndPoint.anchor.y < 0.5) {
-					//主板上连接点
-					if (nodeName == 'adapter') {
-						objY = baseY - $(node).outerHeight();
-					} else {
-						objY = baseY - $(node).outerHeight() - 30;
-					}
-					$(node).addClass("content-rotate");
-					var tmpJsPlumbNode = getSelectedJsPlumbNode(node);
-					if (tmpJsPlumbNode.index > -1) {
-						tmpJsPlumbNode.node['add_info']['rotate'] = 1;
-						jsPlumb_nodes.splice(tmpJsPlumbNode.index, 1, tmpJsPlumbNode.node);
-					}
-
-					var targetEndPoints = jsPlumb_instance.getEndpoints($(node));
-					for (var i = 0; i < targetEndPoints.length; i++) {
-						targetEndPoints[i].anchor.x = 1 - targetEndPoints[i].anchor.x;
-						targetEndPoints[i].anchor.y = 1 - targetEndPoints[i].anchor.y;
-					}
-				} else {
-					//主板下连接点
-					if (nodeName == 'adapter') {
-						objY = baseY + 10;
-					} else {
-						objY = baseY + 40;
-					}
-				}
-			} else {
-				if ($(targetDiv).hasClass("content-rotate")) {
-					//父点旋转，子点也旋转
-					// objX=baseX+3-$(node).outerWidth()/2;
-					objX = baseX - relativeDistance;
-					objY = baseY - $(node).outerHeight() - 30;
-					$(node).addClass("content-rotate");
-					var tmpJsPlumbNode = getSelectedJsPlumbNode(node);
-					if (tmpJsPlumbNode.index > -1) {
-						tmpJsPlumbNode.node['add_info']['rotate'] = 1;
-						jsPlumb_nodes.splice(tmpJsPlumbNode.index, 1, tmpJsPlumbNode.node);
-					}
-
-					var targetEndPoints = jsPlumb_instance.getEndpoints($(node));
-					for (var i = 0; i < targetEndPoints.length; i++) {
-						targetEndPoints[i].anchor.x = 1 - targetEndPoints[i].anchor.x;
-						targetEndPoints[i].anchor.y = 1 - targetEndPoints[i].anchor.y;
-					}
-				} else {
-					// objX=baseX+3-$(node).outerWidth()/2;
-					objX = baseX - relativeDistance;
-					objY = baseY + 30;
-				}
-				var arrConn = jsPlumb_instance.getConnections({
-					source: sourceEndPoint.getElement()
-				});
-				//将同一节点出来的元素拆分显示
-				if (arrConn.length % 2 == 0) {
-					objX = objX - ($(node).outerWidth() + 10) * arrConn.length / 2;
-				} else if (arrConn.length == 1) {
-					objX = objX + $(node).outerWidth() + 10;
-				} else if (arrConn.length % 2 == 1) {
-					objX = objX + ($(node).outerWidth() + 10) * (arrConn.length - arrConn.length % 2 + 2) / 2;
-				}
-			}
-		} else {
-			switch (sourceEndPoint.anchor.type) {
-				case "TopCenter":
-					objX = baseX;
-					objY = baseY - $(node).outerHeight() - 30;
-					break;
-				case "RightMiddle":
-					objX = baseX + $(node).outerWidth() + 30;
-					objY = baseY + $(node).outerHeight() + 10;
-					break;
-				case "BottomCenter":
-					objX = baseX;
-					objY = baseY + $(node).outerHeight() + 30;
-					break;
-				case "LeftMiddle":
-					objX = baseX - $(node).outerWidth() - 30;
-					objY = baseY + $(node).outerHeight() + 10;
-					break;
-				default:
-					break;
-			}
-		}
-
-		$(node).css("top", objY).css("left", objX);
-		//重绘流程元素
-		jsPlumb_instance.repaint(node);
-
-		var targetEndPoints = jsPlumb_instance.getEndpoints($(node));
-
-		var targetEndPoint = null;
-		for (var i = 0; i < targetEndPoints.length; i++) {
-			if (!targetEndPoints[i].isTarget) continue;
-			targetEndPoint = targetEndPoints[i];
-			break;
-		}
-
-		connectPortsBySt(sourceEndPoint, targetEndPoint);
-
-		if (sourceFis.kind == "flowchart") {
-			//从sourceEndPoint出来的所有元素位置下移
-			moveRelationalNodes(sourceEndPoint, node);
-		}
-	}
-
-	function getLeftTopToSourceEndpointDistance(node) {
-		var endpoints = jsPlumb_instance.getEndpoints($(node));
-		var nodeLeft = $(node).position().left;
-		var sourceLeft = 0;
-		for (var i = 0; i < endpoints.length; i++) {
-			if (endpoints[i].isTarget) {
-				sourceLeft = $(endpoints[i].canvas).position().left;
-			}
-		}
-		return sourceLeft - nodeLeft;
-	}
-
-	function getNearestEndPointFromNode(div, node, centerX, centerY) {
-		var realX = $(node).outerWidth() / 2 + centerX;
-		var realY = $(node).outerHeight() / 2 + centerY;
-
-		return getNearestEndPoint(div, realX, realY);
-	}
-
-	/**
-	 * @desc 截断需截断连接，重新连接
-	 * @param EndPoint sourceEndPoint 起始点
-	 * @param Node node 新绘制元素
-	 */
-	function cutAndLink(sourceEndPoint, node) {
-		//在新的元素上获取打断重连的起点
-		var sourceTargetEndPoint = null;
-		var sourceEndPoints = jsPlumb_instance.getEndpoints($(node));
-		for (var i = 0; i < sourceEndPoints.length; i++) {
-			if (!sourceEndPoints[i].isSource) continue;
-			sourceTargetEndPoint = sourceEndPoints[i];
-			break;
-		}
-		var connections = jsPlumb_instance.getConnections({
-			source: sourceEndPoint.getElement()
-		});
-		for (var i = 0; i < connections.length; i++) {
-			if (sourceEndPoint.getUuid() != connections[i].endpoints[0].getUuid()) continue;
-			if ($(node).attr('id') == connections[i].targetId || $(node).attr('id') == connections[i].sourceId) {
-				continue;
-			}
-			jsPlumb_instance.detach(connections[i]);
-			connectPortsBySt(sourceTargetEndPoint, connections[i].endpoints[1]);
-		}
-	}
-
-	/**
-	 * @desc 根据连接元素递归下移
-	 * @param EndPoint sourceEndPoint 起始点
-	 * @param Node node 新绘制元素
-	 */
-	function moveRelationalNodes(sourceEndPoint, node) {
-		var connections = jsPlumb_instance.getConnections({
-			source: sourceEndPoint.getElement()
-		});
-		//从同一个起点衍生出多个点时，需要将所有流程元素下移，除了刚刚绘制的流程元素
-		for (var i = 0; i < connections.length; i++) {
-			//判定该连接终点元素是不是刚刚绘制的node元素，通过ID判定
-			if ($(node).attr('id') == connections[i].targetId || $(node).attr('id') == connections[i].sourceId) {
-				continue;
-			}
-			//自己连自己的话
-			if (connections[i].targetId == connections[i].sourceId || connections[i].targetId == $(sourceEndPoint.getElement()).attr("id")) {
-				break;
-			}
-
-			var positionY = $(connections[i].target).position().top;
-			positionY += $(connections[i].target).outerHeight() + 30;
-			$(connections[i].target).css("top", positionY);
-			//重绘流程元素
-			jsPlumb_instance.repaint(connections[i].target);
-			arguments.callee(connections[i].endpoints[1], node);
-		}
-	}
-
-	/**
-	 * @desc 从附着有endpoint的div中获取离指定x，y最近的起始endpoint
-	 * @param element div 附着有endpoint的div
-	 * @param float realX 当前元素实际中心点X位置
-	 * @param float realY 当前元素实际中心点Y位置
-	 */
-	function getNearestEndPoint(div, realX, realY) {
-		var sourceEndPoint = null;
-
-		//拖拽位置所指对象的位置
-		var baseX = $(div).position().left;
-		var baseY = $(div).position().top;
-
-		//获取拖拽位置所指对象的所有连接点endpoint
-		var sourceEndPoints = jsPlumb_instance.getEndpoints(div);
-
-		var isContronller = getNodeInfoByKey($(div).attr('data-item'), 'isController');
-		//根据拖拽放置情况获取离当前元素最近的连接点
-		var distance = 0;
-		for (var i = 0; i < sourceEndPoints.length; i++) {
-			if (!sourceEndPoints[i].isSource) continue;
-			// 确认连接对象是控制器，且端口、位信息可以被连接
-			if (isContronller && !checkLinkable(sourceEndPoints[i])) continue;
-			// 获取endpoint点所在流程元素中的相对位置
-			var tmpY = $(sourceEndPoints[i].canvas).position().top - baseY;
-			var tmpX = $(sourceEndPoints[i].canvas).position().left - baseX;
-			if (distance == 0) {
-				distance = Math.sqrt(Math.pow((realY - tmpY), 2) + Math.pow((realX - tmpX), 2));
-				sourceEndPoint = sourceEndPoints[i];
-			} else {
-				var tmpDistance = Math.sqrt(Math.pow((realY - tmpY), 2) + Math.pow((realX - tmpX), 2));
-				if (distance > tmpDistance) {
-					distance = tmpDistance;
-					sourceEndPoint = sourceEndPoints[i];
-				}
-			}
-		}
-		return sourceEndPoint;
-	}
-
-	/**
-	 * 确认能够进行连接
-	 */
-	function checkLinkable(checkEndPoint) {
-		if (linkableEndpoints.length == 0) return true;
-		for (var i = 0; i < linkableEndpoints.length; i++) {
-			if (linkableEndpoints[i] == checkEndPoint) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * 将目前绘制的流程图清除
-	 */
-	function clear() {
-		$.each(jsPlumb_nodes, function(i, o) {
-			jsPlumb_instance.detachAllConnections(jsPlumb_instance.getSelector("#" + o['id'])[0]);
-			jsPlumb_instance.remove($("#" + o['id']));
-			$("#" + o['id']).remove();
-		});
-		jsPlumb_nodes = [];
-	}
-
-	/**
-	 * 获取展示中所有的元素，包括流程元素、线，主要用于绘制
-	 */
-	function getFlowchartElements() {
-		var jsPlumb_links = [];
-		$.each(jsPlumb_instance.getConnections(), function(id, connection) {
-			jsPlumb_links.push({
-				"sourceId": connection.endpoints[0].getUuid(),
-				"targetId": connection.endpoints[1].getUuid()
-			});
-		});
-		//更新每个点的实时坐标
-		for (var i = 0; i < jsPlumb_nodes.length; i++) {
-			jsPlumb_nodes[i]['x'] = $("#" + jsPlumb_nodes[i]['id']).position().left;
-			jsPlumb_nodes[i]['y'] = $("#" + jsPlumb_nodes[i]['id']).position().top;
-		}
-
-		return {
-			"nodes": jsPlumb_nodes,
-			"links": jsPlumb_links
-		};
-	}
-
-	/**
-	 * 设置当前选中元素的额外附加信息
-	 */
-	function setSelectedNodeInfo(jsPlumb_add_info) {
-		if (jsPlumb_selected_node == null) return false;
-		for (var i = 0; i < jsPlumb_nodes.length; i++) {
-			if ($(jsPlumb_selected_node).attr('id') == jsPlumb_nodes[i]['id']) {
-				jsPlumb_nodes[i]['add_info'] = jsPlumb_add_info;
-			}
-		}
-	}
-
 	function isEmpty() {
 		return jsPlumb_nodes.length == 0;
 	}
 
 	return {
 		init: init,
-		getFlowchartElements: getFlowchartElements,
-		clear: clear,
 		isEmpty: isEmpty,
-		setSelectedNodeInfo: setSelectedNodeInfo,
-		setShowGuid: setShowGuid,
 	}
 });

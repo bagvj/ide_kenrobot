@@ -1,27 +1,20 @@
 define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eventcenter, _, hljs, genC) {
-    var showGuide = null;
-
-    function setShowGuid(show) {
-        showGuide = show;
-    }
-
     function initNavSecond() {
         $(".nav-second>ul>li .category").click(function() {
             var li = $(this).parent();
-            if (li.attr("class").indexOf("active") == -1) {
+            if (li.hasClass("active")) {
+                li.removeClass("active");  
+            } else {
                 li.parent().find(".active").removeClass("active");
                 li.addClass("active");
-            } else {
-                li.removeClass("active");
             }
         });
     }
 
     function initTabs() {
         $('.tabs li').click(function() {
-            var className = $(this).attr("class");
-            if (className && className.indexOf("active") > -1) {
-                return false;
+            if ($(this).hasClass("active")) {
+                return;
             }
 
             $(this).parent().find(".active").removeClass("active");
@@ -105,6 +98,7 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
             var time1 = setInterval(function() {
                 var key = $('#qrcode_key').val();
                 $.get('/weixinlogin?key=' + key, function(result) {
+                    console.log(result.message);
                     if (result.code == 0) {
                         //登录成功
                         clearInterval(time1);
@@ -258,6 +252,5 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
 
     return {
         init: init,
-        setShowGuid: setShowGuid
     }
 });

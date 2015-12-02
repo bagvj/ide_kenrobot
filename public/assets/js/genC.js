@@ -1,4 +1,4 @@
-define(["jquery",'hljs'], function($,hljs) {
+define(["jquery", 'hljs'], function($, hljs) {
 	var containerId;
 	var configs;
 	var getFlowchart;
@@ -22,8 +22,8 @@ define(["jquery",'hljs'], function($,hljs) {
 		source = source || gen();
 		$('#' + containerId).html(source);
 		$('pre code').each(function(i, block) {
-           hljs.highlightBlock(block);
-        });
+			hljs.highlightBlock(block);
+		});
 	}
 
 	//生成代码
@@ -127,12 +127,12 @@ define(["jquery",'hljs'], function($,hljs) {
 	function visitNode(nodeId, endNodeId, index, initCodes) {
 		var str = "";
 		var linkInfo = getLinkInfo(nodeId);
-		if(!linkInfo){
+		if (!linkInfo) {
 			return str;
 		}
 
 		var targetId = linkInfo.targetId;
-		if(targetId == endNodeId) {
+		if (targetId == endNodeId) {
 			return str;
 		}
 
@@ -217,21 +217,6 @@ define(["jquery",'hljs'], function($,hljs) {
 			}
 		};
 		return null;
-	}
-
-	function isEndNode(sourceId, targetId) {
-		if(sourceId == targetId){
-			return true;
-		}
-
-		var links = flowchart.links;
-		for (var i = 0; i < links.length; i++) {
-			var linkInfo = links[i];
-			if (linkInfo.sourceId == targetId) {
-				return true;
-			}
-		};
-		return false;
 	}
 
 	function getFormatExp(nodeConfig, nodeInfo, isInit) {
