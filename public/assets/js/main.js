@@ -97,13 +97,16 @@ require(['jquery', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 
 		if (arrHardware.length > 0) {
 			$("ul", $("div.flowchart_hardware_part_list")).empty();
 			for (var i = 0; i < arrHardware.length; i++) {
-				// console.log(arrHardware[i]);
-				var flowchartObjId = flowchartKind + "_" + arrHardware[i].name + "_" + i;
-				var flowchartObjDataItem = flowchartKind + "_" + arrHardware[i].name + "_item";
+				var node = arrHardware[i];
+				var flowchartObjId = flowchartKind + "_" + node.name + "_" + i;
+				var flowchartObjDataItem = flowchartKind + "_" + node.name + "_item";
 				var flowchartObjClass1 = flowchartKind + "-item";
-				var flowchartObjClass2 = flowchartKind + "-" + arrHardware[i].name;
-				var divObj = $("<div></div>").attr("id", flowchartObjId).attr("data-item", flowchartObjDataItem).addClass(flowchartObjClass1).addClass(flowchartObjClass2);
-				var liObj = $("<li></li>").append(divObj).append(arrHardware[i].text);
+				var flowchartObjClass2 = flowchartKind + "-" + node.name;
+				var divObj = $("<div>").attr("id", flowchartObjId).attr("data-item", flowchartObjDataItem).addClass(flowchartObjClass1).addClass(flowchartObjClass2);
+				if(node.varName) {
+					divObj.attr("data-var-name", node.varName);
+				}
+				var liObj = $("<li>").append(divObj).append(arrHardware[i].text);
 				$("ul", $("div.flowchart_hardware_part_list")).append(liObj);
 			}
 		}
@@ -127,16 +130,35 @@ require(['jquery', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 
 		var itemText = args.text;
 		var portBit = args.port;
 		if (portBit && portBit.length > 0) itemText += "(" + portBit + ")";
-		var li = $("<li></li>").attr("data-item", args.id).append($("<div></div>").addClass(kindClass).addClass(kindTypeClass)).append(itemText);
-		$("ul", $("div.hardware_part_list")).append(li);
-		arrHardware.push({
-			"id": args.id,
-			"kind": args.kind,
-			"type": args.type,
-			"port": args.port,
-			"text": itemText,
-			"name": args.name
-		});
+		var li = $("<li>").attr("data-item", args.id).append($("<div>").addClass(kindClass).addClass(kindTypeClass)).append(itemText).appendTo($("ul", $("div.hardware_part_list")));
+		var node = {
+			id: args.id,
+			kind: args.kind,
+			type: args.type,
+			port: args.port,
+			text: itemText,
+			name: args.name,
+		};
+		arrHardware.push(node);
+
+		var flowcharts = elementConfig.flowcharts;
+		var config = flowcharts[args.name];
+		if(!config)
+			return;
+		var params = config.params;
+		if(!params)
+			return;
+
+		for(var i = 0; i < params.length; i++) {
+			var param = params[i];
+			if(param.increase) {
+				var name = software.addVar({
+					name: param.defaultValue
+				});
+				node.varName = name;
+				break;
+			}
+		}		
 	});
 
 	// 删除流程元素时激活事件
@@ -186,17 +208,19 @@ require(['jquery', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 
 			}
 
 			var params = nodeConfig.params;
-			for (var i = 0; i < params.length; i++) {
-				var param = params[i];
-				if (!param.autoSet) {
-					var value = paramValues[param.name];
-					contents.push({
-						"title": param.title,
-						"inputType": param.inputType,
-						"inputHolder": (param.inputHolder) ? param.inputHolder : "",
-						"inputInitValue": value == "" ? param.defaultValue : value,
-						"inputKey": param.name
-					});
+			if(params) {
+				for (var i = 0; i < params.length; i++) {
+					var param = params[i];
+					if (!param.autoSet) {
+						var value = paramValues[param.name];
+						contents.push({
+							"title": param.title,
+							"inputType": param.inputType,
+							"inputHolder": (param.inputHolder) ? param.inputHolder : "",
+							"inputInitValue": value == "" ? param.defaultValue : value,
+							"inputKey": param.name
+						});
+					}
 				}
 			}
 		} else {
@@ -217,20 +241,26 @@ require(['jquery', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 
 			}
 
 			var params = nodeConfig.params;
-			for (var i = 0; i < params.length; i++) {
-				var param = params[i];
-				if (!param.autoSet) {
-					contents.push({
-						"title": param.title,
-						"inputType": param.inputType,
-						"inputHolder": (param.inputHolder) ? param.inputHolder : "",
-						"inputInitValue": param.defaultValue,
-						"inputKey": param.name
-					});
+			if(params) {
+				for (var i = 0; i < params.length; i++) {
+					var param = params[i];
+					if (!param.autoSet) {
+						contents.push({
+							"title": param.title,
+							"inputType": param.inputType,
+							"inputHolder": (param.inputHolder) ? param.inputHolder : "",
+							"inputInitValue": param.defaultValue,
+							"inputKey": param.name
+						});
+					}
 				}
 			}
 		}
 
+		if(contents.length == 0) {
+			return;
+		}
+		
 		if (nodeConfig.type == 4) {
 			// 端口信息展示处理
 			var portText = args.text.substring(args.text.lastIndexOf("(") + 1, args.text.lastIndexOf(")"));
@@ -269,14 +299,6 @@ require(['jquery', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 
 
 		genC.refresh();
 	}
-
-	var hardwareImg = {};
-	var flowchartImg = {};
-
-	//保存项目到数据库
-	$(".mod_btn .save").click(function(e) {
-
-	});
 
 	//下载
 	$('.mod_btn .download').click(function(e) {
@@ -319,7 +341,6 @@ require(['jquery', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 
 	function downloadFile(url) {
 		window.open(url);
 	}
-
 
 	function initElements() {
 		var mods = $('.mod');
@@ -372,10 +393,5 @@ require(['jquery', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 
 				$('<ul>').append(contentDiv).appendTo(li);
 			}
 		}
-		$(".nav-second>ul>li:first-child").addClass("active");
-
-
-
-		// var flowchartNav = $('.nav-second>ul', mods[1]).empty();
 	}
 });

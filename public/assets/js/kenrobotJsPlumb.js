@@ -299,9 +299,11 @@ define(["jquery", "jsplumb", "eventcenter", "genC", "jquery-ui", "jquery-menu"],
 		param['y'] = y;
 
 		var nodeType = $("#" + objId).attr('data-item');
+		var varName = $("#" + objId).attr('data-var-name');
 		param['id'] = objId + "_" + (new Date().getTime());
 		param['data-item'] = nodeType;
 		param['text'] = $("#" + objId).text();
+		param.varName = varName || "";
 		if (param['text'].length == 0) {
 			param['text'] = $("#" + objId).parent().text();
 		}
@@ -331,6 +333,8 @@ define(["jquery", "jsplumb", "eventcenter", "genC", "jquery-ui", "jquery-menu"],
 		}
 
 		autoConnect();
+		var nodeConfig = getConfig(nodeType);
+
 		genC.refresh();
 	}
 
@@ -885,10 +889,11 @@ define(["jquery", "jsplumb", "eventcenter", "genC", "jquery-ui", "jquery-menu"],
 
 	// 根据html元素删除节点对象
 	function deleteNodeByElement(obj) {
-		deleteNode(jsPlumb.getSelector('#' + $(obj).attr('id'))[0]);
-
-		autoConnect();
-		genC.refresh();
+		var id = $(obj).attr('id');
+		if(deleteNode(jsPlumb.getSelector('#' + id)[0])){
+			autoConnect();
+			genC.refresh();
+		}
 	}
 
 	// 删除流程元素
@@ -958,6 +963,8 @@ define(["jquery", "jsplumb", "eventcenter", "genC", "jquery-ui", "jquery-menu"],
 			var mergeNode = jsPlumb.getSelector("#" + mergeNodeId)[0];
 			deleteNode(mergeNode, "tjfz");
 		}
+
+		return true;
 	}
 
 	function getConfig(name) {

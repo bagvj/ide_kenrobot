@@ -5,9 +5,11 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
             if (li.hasClass("active")) {
                 li.removeClass("active");  
             } else {
-                li.parent().find(".active").removeClass("active");
+                // li.parent().find(".active").removeClass("active");
                 li.addClass("active");
             }
+        }).each(function(i, o) {
+            $(this).parent().addClass("active");
         });
     }
 

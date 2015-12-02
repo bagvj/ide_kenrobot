@@ -168,7 +168,11 @@ define(["jquery", "kenrobotDialog", "genC"], function($, kenrobotDialog, genC) {
 			return false;
 		}
 
+		data.type = data.type || "int";
+		data.kind = data.kind || "auto";
+		data.initial = data.initial || "";
 		data.initial = data.initial == "" ? (data.type == "bool" ? "false" : (data.type == "unsigned char" ? "''" : "0")) : data.initial;
+
 		container = $('#' + varContainerId);
 		var index = -1;
 		for(var i = 0; i < varList.length; i++) {
@@ -226,8 +230,38 @@ define(["jquery", "kenrobotDialog", "genC"], function($, kenrobotDialog, genC) {
 		return varList;
 	}
 
+	function addVar(data) {
+		var name = data.name;
+		var num = 0;
+		while(!checkVar(name)) {
+			num++;
+			name = data.name + num.toString();
+		}
+		data.name = name;
+		saveVarList(data);
+		return name;
+	}
+
+	function removeVar(name) {
+
+	}
+
+	function checkVar(name) {
+		for(var i = 0; i < varList.length; i++) {
+			var varInfo = varList[i];
+			if(varInfo.name == name) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	return {
 		initVarTable: initVarTable,
-		getVarList: getVarList
+		getVarList: getVarList,
+		addVar: addVar,
+		removeVar: removeVar,
+		checkVar: checkVar,
 	}
 });

@@ -70,7 +70,8 @@ define(["jquery", 'hljs'], function($, hljs) {
 	//生成初始化函数
 	function genSetup() {
 		var initCodes = ["initTimer3();", "sei();"];
-		initCodes.concat(setupInitCodes).concat(loopInitCodes);
+		initCodes = initCodes.concat(setupInitCodes)
+		initCodes = initCodes.concat(loopInitCodes);
 
 		var str = "void setup(){\n";
 		for (var i = 0; i < initCodes.length; i++) {
@@ -155,26 +156,26 @@ define(["jquery", 'hljs'], function($, hljs) {
 		}
 
 		if (nodeTag == 1) {
-			str += visitNode(targetId.replace("TopCenter", "BottomCenter"), endNodeId, index);
+			str += visitNode(targetId.replace("TopCenter", "BottomCenter"), endNodeId, index, initCodes);
 		} else if (nodeTag == 2) {
 			if (subTag == 1) {
 				//循环
 				str += genIndent(index) + getFormatExp(nodeConfig, nodeInfo, false) + "{\n";
-				var innerCode = visitNode(targetId.replace("TopCenter", "BottomCenter"), targetId.replace("TopCenter", "LeftMiddle"), index + 1);
+				var innerCode = visitNode(targetId.replace("TopCenter", "BottomCenter"), targetId.replace("TopCenter", "LeftMiddle"), index + 1, initCodes);
 				str += innerCode == "" ? "\n" : innerCode;
 				str += genIndent(index) + "}\n";
-				str += visitNode(targetId.replace("TopCenter", "RightMiddle"), endNodeId, index);
+				str += visitNode(targetId.replace("TopCenter", "RightMiddle"), endNodeId, index, initCodes);
 			} else if (subTag == 2) {
 				//条件分支
 				var mergeId = targetId.substring(0, targetId.lastIndexOf("_")).replace("tjfz", "tjfzMerge");
 				str += genIndent(index) + getFormatExp(nodeConfig, nodeInfo, false) + "{\n";
-				var yesCode = visitNode(targetId.replace("TopCenter", "BottomCenter"), mergeId + "_TopCenter", index + 1);
+				var yesCode = visitNode(targetId.replace("TopCenter", "BottomCenter"), mergeId + "_TopCenter", index + 1, initCodes);
 				str += yesCode == "" ? "\n" : yesCode;
 				str += genIndent(index) + "} else {\n";
-				var noCode = visitNode(targetId.replace("TopCenter", "RightMiddle"), mergeId + "_RightMiddle", index + 1);
+				var noCode = visitNode(targetId.replace("TopCenter", "RightMiddle"), mergeId + "_RightMiddle", index + 1, initCodes);
 				str += noCode == "" ? "\n" : noCode;
 				str += genIndent(index) + "}\n";
-				str += visitNode(mergeId + "_BottomCenter", endNodeId, index);
+				str += visitNode(mergeId + "_BottomCenter", endNodeId, index, initCodes);
 			} else if(subTag == 3) {
 				//do nothing
 			} else {
@@ -187,7 +188,7 @@ define(["jquery", 'hljs'], function($, hljs) {
 				initCodes.push(initCode);
 			}
 			str += genIndent(index) + getFormatExp(nodeConfig, nodeInfo, false) + "\n";
-			str += visitNode(targetId.replace("TopCenter", "BottomCenter"), endNodeId, index);
+			str += visitNode(targetId.replace("TopCenter", "BottomCenter"), endNodeId, index, initCodes);
 		} else {
 			console.log("unknow node type: " + nodeTag);
 		}
@@ -223,7 +224,7 @@ define(["jquery", 'hljs'], function($, hljs) {
 		var format = "";
 		var params;
 
-		var infoParams = nodeInfo.add_info;
+		var infoParams = nodeInfo.add_info || {};
 		if (isInit) {
 			format = nodeConfig.initFormat;
 			params = nodeConfig.initParams;
@@ -257,7 +258,10 @@ define(["jquery", 'hljs'], function($, hljs) {
 					}
 				} else {
 					var infoName = isInit ? "init_" + param.name : param.name;
-					if (infoParams && infoParams[infoName]) {
+					if (infoParams[infoName]) {
+						value = infoParams[infoName];
+					} else if(param.increase && nodeInfo.varName) {
+						infoParams[infoName] = nodeInfo.varName;
 						value = infoParams[infoName];
 					}
 				}
@@ -265,6 +269,7 @@ define(["jquery", 'hljs'], function($, hljs) {
 				format = format.replace(regExp, value);
 			}
 		}
+		nodeInfo.add_info = infoParams;
 
 		return format === undefined ? "" : format;
 	}

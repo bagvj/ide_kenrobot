@@ -667,7 +667,6 @@ define(function() {
 			tag: 2,
 			subTag: 1,
 			format: "for(;;)",
-			className: "flowchart-yyxh-item",
 			type: "loop",
 			points: [{
 				position: "TopCenter",
@@ -804,6 +803,7 @@ define(function() {
 				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "Key",
+				increase: true,
 			}],
 			format: "value = IoInB(port, bit);",
 		},
@@ -827,6 +827,7 @@ define(function() {
 				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "Switch",
+				increase: true,
 			}],
 			format: "value = IoInB(port, bit);",
 		},
@@ -851,6 +852,7 @@ define(function() {
 				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "TravelSwitch",
+				increase: true,
 			}],
 			format: "value = IoInB(port, bit);",
 		},
@@ -874,6 +876,7 @@ define(function() {
 				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "Line",
+				increase: true,
 			}],
 			format: "value = IoInB(port, bit);",
 		},
@@ -897,6 +900,7 @@ define(function() {
 				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "FlameDigital",
+				increase: true,
 			}],
 			format: "value = IoInB(port, bit);",
 		},
@@ -920,6 +924,7 @@ define(function() {
 				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "InfraredReception",
+				increase: true,
 			}],
 			format: "value = IoInB(port, bit);",
 		},
@@ -943,6 +948,7 @@ define(function() {
 				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "Voice",
+				increase: true,
 			}],
 			format: "value = IoInB(port, bit);",
 		},
@@ -966,6 +972,7 @@ define(function() {
 				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "Lean",
+				increase: true,
 			}],
 			format: "value = IoInB(port, bit);",
 		},
@@ -989,6 +996,7 @@ define(function() {
 				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "Metal",
+				increase: true,
 			}],
 			format: "value = IoInB(port, bit);",
 		},
@@ -1012,6 +1020,7 @@ define(function() {
 				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "Value",
+				increase: true,
 			}],
 			format: "value = IoInB(port, bit);",
 		},
@@ -1223,6 +1232,7 @@ define(function() {
 				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "Light",
+				increase: true,
 			}],
 			format: "value = read_adc(bit);"
 		},
@@ -1239,6 +1249,7 @@ define(function() {
 				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "Tem",
+				increase: true,
 			}],
 			format: "value = read_adc(bit);"
 		},
@@ -1255,6 +1266,7 @@ define(function() {
 				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "Tem",
+				increase: true,
 			}],
 			format: "value = read_adc(bit);"
 		},
@@ -1270,7 +1282,8 @@ define(function() {
 				name: "value",
 				title: "读取到变量",
 				inputType: "text",
-				defaultValue: "PM25",
+				defaultValue: "PM",
+				increase: true,
 			}],
 			format: "value = read_adc(bit);"
 		},
@@ -1288,6 +1301,7 @@ define(function() {
 				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "FlameAnalog",
+				increase: true,
 			}],
 			format: "value = read_adc(bit);"
 		},
@@ -1304,6 +1318,7 @@ define(function() {
 				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "ADDefault",
+				increase: true,
 			}],
 			format: "value = read_adc(bit);"
 		},
@@ -1323,6 +1338,7 @@ define(function() {
 				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "UARTInput",
+				increase: true,
 			}],
 			initParams: [{
 				name: "index",
@@ -1398,6 +1414,7 @@ define(function() {
 				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "Ultrasound",
+				increase: true,
 			}],
 			initParams: [{
 				name: "register",
@@ -1429,6 +1446,7 @@ define(function() {
 				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "EleCompass",
+				increase: true,
 			}],
 			initParams: [{
 				name: "register",
@@ -1456,9 +1474,10 @@ define(function() {
 				defaultValue: "Add"
 			}, {
 				name: "value",
-				title: "输出值",
+				title: "读取到变量",
 				inputType: "text",
 				defaultValue: "I2CInput",
+				increase: true,
 			}],
 			initParams: [{
 				name: "register",
@@ -1598,6 +1617,14 @@ define(function() {
 				var point = points[i];
 				point.source = point.source || false;
 				point.target = point.target || false;
+			}
+
+			var params = flowchart.params;
+			if(params) {
+				for (var i = 0; i < params.length; i++) {
+					var param = params[i];
+					param.increase = param.increase || false;
+				}
 			}
 		}
 

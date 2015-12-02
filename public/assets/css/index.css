@@ -697,6 +697,7 @@ body {
 .thumbnail .canvas {
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
 .thumbnail .foldBtn {
@@ -828,7 +829,7 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .side {
@@ -1367,8 +1368,8 @@ body {
 
 .hardware-streeringEngine-item {
     background: url(../img/hardware/streeringEngine.png) no-repeat;
-    width: 128px;
-    height: 187px;
+    width: 90px;
+    height: 150px;
 }
 
 
@@ -1381,8 +1382,8 @@ body {
 
 .hardware-dcMotor-item {
     background: url(../img/hardware/dcMotor.png) no-repeat;
-    width: 128px;
-    height: 187px;
+    width: 87px;
+    height: 90px;
 }
 
 
@@ -1702,7 +1703,7 @@ body {
 }
 
 .flowchart-keyboard-item {
-    background: url(../img/hardware/keyboard-samll.png) no-repeat center;
+    background: url(../img/hardware/keyboard-small.png) no-repeat center;
     font-size: 14px;
     background-size: contain;
     width: 75px;

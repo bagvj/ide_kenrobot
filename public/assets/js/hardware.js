@@ -302,7 +302,6 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 		}
 
 		jsPlumb_instance.draggable($(node), {
-			gird: [5, 5],
 			stop: function(e, ui) {
 				param.x = Math.round($(node).position().left);
 				param.y = Math.round($(node).position().top);
@@ -346,7 +345,6 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 		//生成流程图元素的样式、位置
 		var nodeX = Math.round(e.originalEvent.offsetX - data_transfer.offsetX);
 		var nodeY = Math.round(e.originalEvent.offsetY - data_transfer.offsetY);
-		console.log("nodeXY: " + nodeX + ", " + nodeY);
 
 		var id = data_transfer.id;
 		var target = $("#" + id);
