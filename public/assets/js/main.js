@@ -257,9 +257,9 @@ require(['jquery', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 
 			}
 		}
 
-		if(contents.length == 0) {
-			return;
-		}
+		// if(contents.length == 0) {
+		// 	return;
+		// }
 		
 		if (nodeConfig.type == 4) {
 			// 端口信息展示处理
