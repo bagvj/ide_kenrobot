@@ -182,6 +182,7 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
                 wrapWidth = wrap.width();
                 wrapHeight = wrap.height();
                 $(this).removeClass("active");
+                scaleTip.hide();
                 wrap.stop().animate({
                     width: 0,
                     height: 0,
@@ -195,7 +196,9 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
                     width: wrapWidth,
                     height: wrapHeight,
                     left: wrapLeft - wrapWidth,
-                }, 300);
+                }, 300, function() {
+                    scaleTip.show();
+                });
                 wrap.attr("data-action", "show");
             }
         });

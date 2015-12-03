@@ -36,7 +36,7 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 
 		jsPlumb.ready(onReady);
 		$(window).resize(onWindowResize);
-		$('#' + jsPlumb_container).mousewheel(onMouseWheel);
+		// $('#' + jsPlumb_container).mousewheel(onMouseWheel);
 		$('#' + jsPlumb_container).mousedown(onMouseDown);
 		$.contextMenu({
 			selector: "." + jsPlumb_container + "-item",
@@ -63,10 +63,10 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 
 		initJsPlumbInstance();
 
-		$('div.' + itemClass).attr('draggable', 'true').on('dragstart', function(ev) {
-			initDrag(ev, this);
+		$('div.' + itemClass).parent().on('dragstart', function(ev) {
+			initDrag(ev);
 		}).on('touchstart', function(ev) {
-			initDrag(ev, this);
+			initDrag(ev);
 		}).on('dragend', function(ev) {
 			// 恢复连接点默认色
 			for (var i = 0; i < linkableEndpoints.length; i++) {

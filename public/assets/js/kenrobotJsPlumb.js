@@ -1,4 +1,4 @@
-define(["jquery", "jsplumb", "eventcenter", "genC", "jquery-ui", "jquery-menu"], function($, jsPlumb, eventcenter, genC) {
+define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"], function($, _, _, jsPlumb, eventcenter, genC) {
 	var jsPlumb_container = 'flowchart-container';
 	var jsPlumb_instance = null;
 	var jsPlumb_nodes = [];

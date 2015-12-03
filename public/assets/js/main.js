@@ -6,6 +6,7 @@ require.config({
 		"jquery-menu": "jquery.contextMenu",
 		"jquery-mousewheel": "jquery.mousewheel",
 		"jsplumb": "jsplumb",
+		// "d3": "d3.min",
 		"html2canvas": "html2canvas.min",
 		'hljs': "../../highlight/highlight.pack",
 
@@ -35,10 +36,6 @@ require.config({
 		'jsplumb': {
 			deps: ['jquery'],
 			exports: 'jsplumb'
-		},
-		'jqueryCookie': {
-			deps: ['jquery'],
-			exports: 'jqueryCookie'
 		}
 	}
 });
