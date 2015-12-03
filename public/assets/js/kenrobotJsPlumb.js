@@ -52,6 +52,24 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 			ev.preventDefault();
 		});
 
+		// $('#' + jsPlumb_container).droppable({
+		// 	drop: function(e, ui) {
+		// 		var a = e.target;
+		// 		var b = e.target.closest("div");
+		// 		var c = b.className;
+		// 		if (e.target.closest("div").className.indexOf('_jsPlumb') < 0 || e.target.closest("div").className.indexOf(jsPlumb_container + '-item') < 0) {
+		// 			return false;
+		// 		}
+		// 		var targetNodeType = $(e.target).attr('data-item');
+		// 		if(targetNodeType == "flowchart_loopEnd_item" || targetNodeType == "flowchart_end_item"){
+		// 			return false;
+		// 		}
+		// 		e.preventDefault();
+		// 		// finishDrag(ev);
+		// 		var a = 0;
+		// 	},
+		// });
+
 		jsPlumb.fire("jsFlowLoaded", jsPlumb_instance);
 
 		initStartAndEnd();
@@ -253,6 +271,24 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 			}
 			initDrag(ev, this);
 		});
+
+		// $('div.' + itemClass).each(function(i, item) {
+		// 	if ($(item).attr('data-item') == 'flowchart_board_item') {
+		// 		return;
+		// 	}
+
+		// 	var width = $(item).width();
+		// 	var height = $(item).height();
+		// 	$(item).parent().draggable({
+		// 		appendTo: "body",
+		// 		containment: "window",
+		// 		cursor: "pointer",
+		// 		cursorAt: {left: width / 2, top: height / 2},
+		// 		helper: function() {
+		// 			return $(item).clone();
+		// 		},
+		// 	});
+		// });
 	}
 
 	function initDrag(e) {
@@ -870,17 +906,17 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 	}
 
 	function editNode(node) {
-		var divElement = $("#" + $(node).attr('id'));
 		jsPlumb_selected_node = node;
 		for (var i = 0; i < jsPlumb_nodes.length; i++) {
-			if ($(jsPlumb_selected_node).attr('id') == jsPlumb_nodes[i]['id']) {
+			var nodeInfo = jsPlumb_nodes[i];
+			if ($(node).attr('id') == nodeInfo.id) {
 				eventcenter.trigger("kenrobot", "flowchart_item_click", {
-					id: jsPlumb_nodes[i]['id'],
-					text: jsPlumb_nodes[i]['text'],
-					type: getConfig($(jsPlumb_selected_node).attr("data-item")).type,
-					add_info: jsPlumb_nodes[i]['add_info'],
-					left: $(jsPlumb_selected_node).position().left,
-					top: $(jsPlumb_selected_node).position().top
+					id: nodeInfo.id,
+					text: nodeInfo.text,
+					type: getConfig($(node).attr("data-item")).type,
+					add_info: nodeInfo.add_info,
+					left: $(node).position().left,
+					top: $(node).position().top
 				});
 				break;
 			}

@@ -14,9 +14,8 @@ define(function() {
 				position: [0.182, 0.059],
 				source: true,
 				color: "#333",
-				shape: ["Image", {
-					src: "/assets/img/hardware/port/a0.jpg",
-					width: 50,
+				shape: ["Rectangle", {
+					width: 12,
 					height: 20
 				}],
 				port: "A",
@@ -25,9 +24,8 @@ define(function() {
 				position: [0.352, 0.059],
 				source: true,
 				color: "#333",
-				shape: ["Image", {
-					src: "/assets/img/hardware/port/b0.jpg",
-					width: 50,
+				shape: ["Rectangle", {
+					width: 12,
 					height: 20
 				}],
 				port: "B",
@@ -36,9 +34,8 @@ define(function() {
 				position: [0.662, 0.059],
 				source: true,
 				color: "#333",
-				shape: ["Image", {
-					src: "/assets/img/hardware/port/c0.jpg",
-					width: 50,
+				shape: ["Rectangle", {
+					width: 12,
 					height: 20
 				}],
 				port: "C",
@@ -47,9 +44,8 @@ define(function() {
 				position: [0.833, 0.059],
 				source: true,
 				color: "#333",
-				shape: ["Image", {
-					src: "/assets/img/hardware/port/d0.jpg",
-					width: 50,
+				shape: ["Rectangle", {
+					width: 12,
 					height: 20
 				}],
 				port: "D",
@@ -58,31 +54,28 @@ define(function() {
 				position: [0.352, 0.946],
 				source: true,
 				color: "#333",
-				shape: ["Image", {
-					src: "/assets/img/hardware/port/g0.jpg",
-					width: 50,
+				shape: ["Rectangle", {
+					width: 12,
 					height: 20
 				}],
 				port: "G",
-				bit: "11111111",
+				bit: "11111000",
 			}, {
 				position: [0.662, 0.946],
 				source: true,
 				color: "#333",
-				shape: ["Image", {
-					src: "/assets/img/hardware/port/f0.jpg",
-					width: 50,
+				shape: ["Rectangle", {
+					width: 12,
 					height: 20
 				}],
 				port: "F",
-				bit: "11111000",
+				bit: "11111111",
 			}, {
 				position: [0.833, 0.946],
 				source: true,
 				color: "#333",
-				shape: ["Image", {
-					src: "/assets/img/hardware/port/e0.jpg",
-					width: 50,
+				shape: ["Rectangle", {
+					width: 12,
 					height: 20
 				}],
 				port: "E",
@@ -1532,9 +1525,10 @@ define(function() {
 			tag: 4,
 			params: [{
 				name: "time",
-				title: "延时(毫秒)",
+				title: "延时",
 				inputType: "text",
 				defaultValue: "1000",
+				inputHolder: "毫秒",
 			}],
 			format: "delay_ms(time);",
 		},

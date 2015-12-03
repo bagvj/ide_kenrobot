@@ -261,15 +261,15 @@ define(["jquery", 'hljs'], function($, hljs) {
 					if (infoParams[infoName]) {
 						value = infoParams[infoName];
 					} else if(param.increase && nodeInfo.varName) {
-						infoParams[infoName] = nodeInfo.varName;
-						value = infoParams[infoName];
+						// infoParams[infoName] = nodeInfo.varName;
+						// value = infoParams[infoName];
 					}
 				}
 				var regExp = new RegExp(param.name, "g");
 				format = format.replace(regExp, value);
 			}
 		}
-		nodeInfo.add_info = infoParams;
+		// nodeInfo.add_info = infoParams;
 
 		return format === undefined ? "" : format;
 	}
