@@ -63,10 +63,10 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 
 		initJsPlumbInstance();
 
-		$('div.' + itemClass).on('dragstart', function(ev) {
-			initDrag(ev);
+		$('div.' + itemClass).attr('draggable', 'true').on('dragstart', function(ev) {
+			initDrag(ev, this);
 		}).on('touchstart', function(ev) {
-			initDrag(ev);
+			initDrag(ev, this);
 		}).on('dragend', function(ev) {
 			// 恢复连接点默认色
 			for (var i = 0; i < linkableEndpoints.length; i++) {
