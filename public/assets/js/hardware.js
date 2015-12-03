@@ -63,7 +63,7 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 
 		initJsPlumbInstance();
 
-		$('div.' + itemClass).parent().on('dragstart', function(ev) {
+		$('div.' + itemClass).on('dragstart', function(ev) {
 			initDrag(ev);
 		}).on('touchstart', function(ev) {
 			initDrag(ev);
