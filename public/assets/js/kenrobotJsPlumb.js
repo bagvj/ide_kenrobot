@@ -52,24 +52,6 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 			ev.preventDefault();
 		});
 
-		// $('#' + jsPlumb_container).droppable({
-		// 	drop: function(e, ui) {
-		// 		var a = e.target;
-		// 		var b = e.target.closest("div");
-		// 		var c = b.className;
-		// 		if (e.target.closest("div").className.indexOf('_jsPlumb') < 0 || e.target.closest("div").className.indexOf(jsPlumb_container + '-item') < 0) {
-		// 			return false;
-		// 		}
-		// 		var targetNodeType = $(e.target).attr('data-item');
-		// 		if(targetNodeType == "flowchart_loopEnd_item" || targetNodeType == "flowchart_end_item"){
-		// 			return false;
-		// 		}
-		// 		e.preventDefault();
-		// 		// finishDrag(ev);
-		// 		var a = 0;
-		// 	},
-		// });
-
 		jsPlumb.fire("jsFlowLoaded", jsPlumb_instance);
 
 		initStartAndEnd();
@@ -260,44 +242,28 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 	}
 
 	function initDraggable(itemClass) {
-		$('div.' + itemClass).attr('draggable', 'true').on('dragstart', function(ev) {
-			if ($(this).attr('data-item') == 'flowchart_board_item') {
-				return false;
-			}
+		$('div.' + itemClass).parent().attr('draggable', 'true').on('dragstart', function(ev) {
 			initDrag(ev, this);
 		}).on('touchstart', function(ev) {
-			if ($(this).attr('data-item') == 'flowchart_board_item') {
-				return false;
-			}
 			initDrag(ev, this);
 		});
-
-		// $('div.' + itemClass).each(function(i, item) {
-		// 	if ($(item).attr('data-item') == 'flowchart_board_item') {
-		// 		return;
-		// 	}
-
-		// 	var width = $(item).width();
-		// 	var height = $(item).height();
-		// 	$(item).parent().draggable({
-		// 		appendTo: "body",
-		// 		containment: "window",
-		// 		cursor: "pointer",
-		// 		cursorAt: {left: width / 2, top: height / 2},
-		// 		helper: function() {
-		// 			return $(item).clone();
-		// 		},
-		// 	});
-		// });
 	}
 
-	function initDrag(e) {
+	function initDrag(e, target) {
+		var drag = $('div', target);
+		if (drag.attr('data-item') == 'flowchart_board_item') {
+			return false;
+		}
+
 		try {
-			e.originalEvent.dataTransfer.setData('text', e.target.id);
+			var width = drag.width();
+			var height = drag.height();
+			e.originalEvent.dataTransfer.setDragImage(drag[0], width / 2, height / 2);
+			e.originalEvent.dataTransfer.setData('text', drag.attr('id'));
 			e.originalEvent.dataTransfer.setData('offsetX', e.originalEvent.offsetX);
 			e.originalEvent.dataTransfer.setData('offsetY', e.originalEvent.offsetY);
 		} catch (ev) {
-			data_transfer['text'] = e.target.id;
+			data_transfer['text'] = drag.attr('id');
 			data_transfer['offsetX'] = e.originalEvent.offsetX;
 			data_transfer['offsetY'] = e.originalEvent.offsetY;
 		}
@@ -858,7 +824,8 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 	}
 
 	function checkLinkEndpoint(e) {
-		if (!$(e.target).is("div") || e.target.closest("div").className.indexOf('_jsPlumb') < 0) return false;
+		if (!$(e.target).is("div") || e.target.closest("div").className.indexOf('_jsPlumb') < 0)
+			return false;
 
 		var startOffsetX = 0;
 		var startOffsetY = 0;
@@ -873,8 +840,9 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 		var check_endpoint_y = e.originalEvent.offsetY - startOffsetY;
 
 		var sourceEndPoint = getNearestEndPoint(e.target, check_endpoint_x, check_endpoint_y);
+		if (sourceEndPoint == null)
+			return false;
 
-		if (sourceEndPoint == null) return false;
 		var conns = jsPlumb_instance.getConnections({
 			source: sourceEndPoint.getElement()
 		});

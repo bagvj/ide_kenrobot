@@ -63,7 +63,7 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 
 		initJsPlumbInstance();
 
-		$('div.' + itemClass).attr('draggable', 'true').on('dragstart', function(ev) {
+		$('div.' + itemClass).parent().attr('draggable', 'true').on('dragstart', function(ev) {
 			initDrag(ev, this);
 		}).on('touchstart', function(ev) {
 			initDrag(ev, this);
@@ -319,12 +319,23 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 		return node;
 	}
 
-	function initDrag(e) {
-		data_transfer.id = e.target.id;
-		data_transfer.offsetX = e.originalEvent.offsetX;
-		data_transfer.offsetY = e.originalEvent.offsetY;
+	function initDrag(e, target) {
+		var drag = $('div', target);
 
-		var nodeType = $(e.target).attr("data-item");
+		try {
+			var width = drag.width();
+			var height = drag.height();
+			e.originalEvent.dataTransfer.setDragImage(drag[0], width / 2, height / 2);
+			e.originalEvent.dataTransfer.setData('text', drag.attr('id'));
+			e.originalEvent.dataTransfer.setData('offsetX', e.originalEvent.offsetX);
+			e.originalEvent.dataTransfer.setData('offsetY', e.originalEvent.offsetY);
+		} catch (ev) {
+			data_transfer.text = drag.attr('id');
+			data_transfer.offsetX = e.originalEvent.offsetX;
+			data_transfer.offsetY = e.originalEvent.offsetY;
+		}
+
+		var nodeType = drag.attr("data-item");
 		getAndInitLinkEndpoint(nodeType);
 	}
 
@@ -343,10 +354,22 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 		e.preventDefault();
 
 		//生成流程图元素的样式、位置
-		var nodeX = Math.round(e.originalEvent.offsetX - data_transfer.offsetX);
-		var nodeY = Math.round(e.originalEvent.offsetY - data_transfer.offsetY);
+		var id = "";
+		var offsetX = 0;
+		var offsetY = 0;
+		try {
+			id = e.originalEvent.dataTransfer.getData('text');
+			offsetX = e.originalEvent.dataTransfer.getData('offsetX');
+			offsetY = e.originalEvent.dataTransfer.getData('offsetY');
+		} catch (ev) {
+			id = data_transfer.text;
+			offsetX = data_transfer.offsetX;
+			offsetY = data_transfer.offsetY;
+		}
 
-		var id = data_transfer.id;
+		var nodeX = Math.round(e.originalEvent.offsetX - offsetX);
+		var nodeY = Math.round(e.originalEvent.offsetY - offsetY);
+
 		var target = $("#" + id);
 		var param = {
 			x: nodeX,
