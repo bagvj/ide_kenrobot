@@ -23,6 +23,12 @@ define(['jquery', 'eventcenter', 'html2canvas', 'hljs', 'genC'], function($, eve
             $(this).addClass("active");
 
             var index = $(this).index();
+
+            $('.mod .canvas').removeClass("grid");
+            if(index == 0) {
+                $('.mod:eq(' + index + ') .canvas').addClass("grid");
+            }
+
             var selector;
             if (index == 0) {
                 selector = "#flowchart-container";

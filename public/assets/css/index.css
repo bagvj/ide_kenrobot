@@ -837,33 +837,33 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .grid {
     background: 
-    -webkit-linear-gradient(top, transparent 39px, blue 39px, blue 41px, transparent 41px, transparent 79px, red 80px), 
-    -webkit-linear-gradient(left, transparent 39px, orange 39px, orange 41px, transparent 41px, transparent 79px, green 80px);
-    
-/*    background: 
-    -moz-linear-gradient(top, transparent 39px, blue 39px, blue 41px, transparent 41px, transparent 79px, red 80px), 
-    -moz-linear-gradient(left, transparent 39px, orange 39px, orange 41px, transparent 41px, transparent 79px, green 80px);
+    -webkit-linear-gradient(top,  transparent 39px,  blue 40px,blue 40px,     transparent 40px,transparent 79px,  orange 80px),
+    -webkit-linear-gradient(left, transparent 39px,  orange 40px,orange 40px, transparent 40px,transparent 79px,  blue 80px);
     
     background: 
-    -o-linear-gradient(top, transparent 39px, blue 39px, blue 41px,transparent 41px, transparent 79px, red 80px), 
-    -o-linear-gradient(left, transparent 39px, orange 39px, orange 41px,transparent 41px, transparent 79px, green 80px);
+    -moz-linear-gradient(top,     transparent 39px,  blue 40px,blue 40px,     transparent 40px,transparent 79px,  orange 80px), 
+    -moz-linear-gradient(left,    transparent 39px,  orange 40px,orange 40px, transparent 40px,transparent 79px,  blue 80px);
+    
+    background: 
+    -o-linear-gradient(top,       transparent 39px,  blue 40px,blue 40px,     transparent 40px,transparent 79px,  orange 80px), 
+    -o-linear-gradient(left,      transparent 39px,  orange 40px,orange 40px, transparent 40px,transparent 79px,  blue 80px);
 
     background: 
-    -ms-linear-gradient(top, transparent 39px, blue 39px, blue 41px, transparent 41px, transparent 79px, red 80px), 
-    -ms-linear-gradient(left, transparent 39px, orange 39px, orange 41px,transparent 41px, transparent 79px, green 80px);
+    -ms-linear-gradient(top,      transparent 39px,  blue 40px,blue 40px,     transparent 40px,transparent 79px,  orange 80px), 
+    -ms-linear-gradient(left,     transparent 39px,  orange 40px,orange 40px, transparent 40px,transparent 79px,  blue 80px);
 
     background: 
-    linear-gradient(top, transparent 39px, blue 39px, blue 41px, transparent 41px, transparent 79px, red 80px), 
-    linear-gradient(left, transparent 39px, orange 39px, orange 41px, transparent 41px, transparent 79px, green 80px);*/
+    linear-gradient(top,          transparent 39px,  blue 40px,blue 40px,     transparent 40px,transparent 79px,  orange 80px), 
+    linear-gradient(left,         transparent 39px,  orange 40px,orange 40px, transparent 40px,transparent 79px,  blue 80px);
 
-    -webkit-background-size: 81px 81px;
-    -moz-background-size: 81px 81px;
-    background-size: 81px 81px;
+    -webkit-background-size: 80px 80px;
+    -moz-background-size: 80px 80px;
+    background-size: 80px 80px;
 }
 
 .side {
