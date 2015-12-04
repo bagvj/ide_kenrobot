@@ -303,7 +303,7 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 			}
 		});
 		focus_endpoint_uuid = "";
-		
+
 		e.preventDefault();
 	}
 
@@ -528,22 +528,20 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 			return false;
 		}
 
-		var panel = $("#" + parentId);
-		var showText = param['text'];
-		var nodeDiv = $('<div>').appendTo(panel)
+		var nodeDiv = $('<div>').appendTo($("#" + parentId))
 			.css({
 				position: 'absolute',
-				top: param['y'],
-				left: param['x']
+				left: param.x,
+				top: param.y,
 			})
 			.attr('align', 'center')
-			.attr('id', param['id'])
+			.attr('id', param.id)
 			.attr('data-item', type)
 			.addClass(config.className)
 			.addClass('node')
 			.addClass(jsPlumb_container + '-item')
 		if(config.tag != 3)
-			nodeDiv.text(showText);
+			nodeDiv.text(param.text);
 		return jsPlumb.getSelector('#' + param['id'])[0];
 	}
 

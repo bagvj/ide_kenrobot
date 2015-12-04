@@ -150,7 +150,6 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 		var offset = $('#' + jsPlumb_container).offset();
 		var mouseX = e.pageX - offset.left;
 		var mouseY = e.pageY - offset.top;
-		// console.log("zoom " + zoom + " level " + zoomLevel + " mouse: " + mouseX + ", " + mouseY);
 
 		for (var i = 0; i < jsPlumb_nodes.length; i++) {
 			var nodeInfo = jsPlumb_nodes[i];
@@ -167,7 +166,6 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 				width: newWidth,
 				height: newHeight,
 			});
-			// console.log("zoom " + zoom + " level " + zoomLevel + " mouse: " + mouseX + ", " + mouseY + " pos: " + oldX + ", " + oldY + " -> " + newX + ", " + newY);
 			jsPlumb_instance.repaint(node);
 		}
 	}
@@ -294,20 +292,13 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 			}
 		});
 
-		$(node).on('dragover', function(e) {
-			onDragoverEvent(e, this);
-		}).on('mouseover', function(e) {
-			showDesc(node, true);
-		}).on('mouseout', function(e) {
-			showDesc(node, false);
-		});
+		$(node).on('dragover', onDragOver).on('mouseover', onMouseOver).on('mouseout', onMouseOut);
 
 		return node;
 	}
 
 	function onDragStart(e) {
 		var drag = $('div', e.target);
-
 		try {
 			var width = drag.width();
 			var height = drag.height();
@@ -704,8 +695,8 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 		}
 	}
 
-	function onDragoverEvent(e, obj) {
-		var nowJsPlumbNodeAddInfo = getSelectedJsPlumbNodeByObj($(obj)).node.add_info;
+	function onDragOver(e) {
+		var nowJsPlumbNodeAddInfo = getSelectedJsPlumbNodeByObj($(e.target)).node.add_info;
 		if (nowJsPlumbNodeAddInfo.type != "board") {
 			return false;
 		}
@@ -741,16 +732,8 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 		}
 	}
 
-	function showDesc(node, show) {
-		var nodeType = $(node).attr('data-item');
-
-		if (!show) {
-			$('.desc_show_' + nodeType).hide(150, function(e) {
-				$(this).remove();
-			});
-			return false;
-		}
-
+	function onMouseOver(e) {
+		var nodeType = $(e.target).attr('data-item');
 		if (nodeType == "hardware_board_item") {
 			return false;
 		}
@@ -758,7 +741,7 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 		var width = $(window).width();
 		var height = $(window).height();
 		var showText = '';
-		var addInfo = getSelectedJsPlumbNode(node).node.add_info;
+		var addInfo = getSelectedJsPlumbNode(e.target).node.add_info;
 
 		if (addInfo.category && addInfo.category != undefined) {
 			showText += addInfo.category;
@@ -798,7 +781,14 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 			filter: 'alpha(opacity=70)',
 			padding: '10px 20px',
 			fontSize: '20px'
-		}).addClass('desc_show_' + $(node).attr('data-item')).appendTo('body').hide().show(150);
+		}).addClass('desc_show_' + nodeType).appendTo('body').hide().show(150);
+	}
+
+	function onMouseOut(e) {
+		var nodeType = $(e.target).attr('data-item');
+		$('.desc_show_' + nodeType).hide(150, function(e) {
+			$(this).remove();
+		});
 	}
 
 	// 根据html元素删除节点对象
