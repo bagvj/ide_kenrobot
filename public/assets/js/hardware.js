@@ -7,9 +7,6 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 	var container_width = 0;
 	var container_height = 0;
 
-	var dragging_left = 0;
-	var dragging_top = 0;
-
 	var data_transfer = {};
 
 	// 拖拽时临时产生的提示连接点
@@ -66,7 +63,6 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 		$('div.' + itemClass).parent().attr('draggable', 'true')
 			.on('dragstart', onDragStart)
 			.on('touchstart', onDragStart)
-			.on('drag', onDrag)
 			.on('dragend', onDragEnd);
 
 		$('#' + jsPlumb_container).on('drop', onDrop).on('dragover', function(e) {
@@ -250,13 +246,13 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 		param.width = $(node).width();
 		param.height = $(node).height();
 		$(node).css({
-			width: Math.round($(node).width() * zoom),
-			height: Math.round($(node).height() * zoom)
+			width: Math.round(param.width * zoom),
+			height: Math.round(param.height * zoom)
 		});
 
 		var tmpAddInfo = {};
-		if (param['add_info']) {
-			tmpAddInfo = param['add_info'];
+		if (param.add_info) {
+			tmpAddInfo = param.add_info;
 		} else {
 			for (var key in config) {
 				tmpAddInfo[key] = config[key];
@@ -267,7 +263,7 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 
 		var arrAnchor = getConfig($(node).attr('data-item')).points;
 		for (var i = 0; i < arrAnchor.length; i++) {
-			var uuid = node.getAttribute("id") + "_" + arrAnchor[i].position;
+			var uuid = $(node).attr("id") + "_" + arrAnchor[i].position;
 			var paintStyle = {
 				radius: 5,
 				fillStyle: arrAnchor[i].color
@@ -314,12 +310,6 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 
 		var nodeType = drag.attr("data-item");
 		getAndInitLinkEndpoint(nodeType);
-	}
-
-	function onDrag(e) {
-		// 获取相对元素内的相对移动位置
-		dragging_left = e.originalEvent.x;
-		dragging_top = e.originalEvent.y;
 	}
 
 	function onDragEnd(e) {
@@ -518,14 +508,14 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 		var baseY = $(targetDiv).position().top;
 
 		//获取起始连接点的属性
-		var sourceFis = getConfig($(targetDiv).attr("data-item"));
+		var sourceConfig = getConfig($(targetDiv).attr("data-item"));
 		//根据最近的起始连接点重定位新流程元素位置
 		var objX = 0;
 		var objY = 0;
 
 		var baseX = $(sourceEndPoint.canvas).position().left + $(sourceEndPoint.canvas).width() / 2 - $(node).width() / 2;
 		var baseY = $(sourceEndPoint.canvas).position().top;
-		if (sourceFis.type == "board") {
+		if (sourceConfig.type == "board") {
 			objX = baseX;
 			//主板连接点定制
 			if (sourceEndPoint.anchor.y > 0.5) {
@@ -542,14 +532,14 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 				}
 				//主板下连接点
 				if (nodeName == 'adapter') {
-					objY = baseY + 30;
+					objY = baseY + 20;
 				} else {
 					objY = baseY + 40;
 				}
 			} else {
 				//主板上连接点
 				if (nodeName == 'adapter') {
-					objY = baseY - $(node).outerHeight();
+					objY = baseY - $(node).outerHeight() - 10;
 				} else {
 					objY = baseY - $(node).outerHeight() - 30;
 				}
@@ -696,13 +686,10 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 	}
 
 	function onDragOver(e) {
-		var nowJsPlumbNodeAddInfo = getSelectedJsPlumbNodeByObj($(e.target)).node.add_info;
-		if (nowJsPlumbNodeAddInfo.type != "board") {
+		var addInfo = getSelectedJsPlumbNodeByObj($(e.target)).node.add_info;
+		if (addInfo.type != "board") {
 			return false;
 		}
-
-		var mousemoveX = Math.round(dragging_left);
-		var mousemoveY = Math.round(dragging_top);
 
 		var closeEndpoint = null;
 		var closeDistance = 0;
@@ -710,8 +697,8 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 			linkableEndpoints[i].setPaintStyle({
 				fillStyle: '#0FF'
 			});
-			var tmpX = Math.round($(linkableEndpoints[i].canvas).offset().left) - mousemoveX;
-			var tmpY = Math.round($(linkableEndpoints[i].canvas).offset().top) - mousemoveY;
+			var tmpX = Math.round($(linkableEndpoints[i].canvas).offset().left) - e.originalEvent.x;
+			var tmpY = Math.round($(linkableEndpoints[i].canvas).offset().top) - e.originalEvent.y;
 			if (closeEndpoint == null) {
 				closeEndpoint = linkableEndpoints[i];
 				closeDistance = tmpX * tmpX + tmpY * tmpY;

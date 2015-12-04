@@ -291,8 +291,8 @@ require(['jquery', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 
 		genC.refresh();
 	});
 
-	function saveFlowchartProperty(data) {
-		kenrobotJsPlumb.setSelectedNodeInfo(data);
+	function saveFlowchartProperty(add_info) {
+		kenrobotJsPlumb.saveNodeInfo(add_info);
 
 		genC.refresh();
 	}

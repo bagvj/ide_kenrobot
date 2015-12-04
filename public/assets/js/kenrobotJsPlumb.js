@@ -2,7 +2,7 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 	var jsPlumb_container = 'flowchart-container';
 	var jsPlumb_instance = null;
 	var jsPlumb_nodes = [];
-	var jsPlumb_selected_node = null;
+	var currentNode = null;
 	var flowchart = null;
 
 	var container_width = 0;
@@ -261,33 +261,35 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 		if (!$(e.target).is("div") || e.target.closest("div").className.indexOf('_jsPlumb') < 0)
 			return false;
 
-		var startOffsetX = 0;
-		var startOffsetY = 0;
+		var offsetX = 0;
+		var offsetY = 0;
 		try {
-			startOffsetX = e.originalEvent.dataTransfer.getData('offsetX');
-			startOffsetY = e.originalEvent.dataTransfer.getData('offsetY');
+			offsetX = e.originalEvent.dataTransfer.getData('offsetX');
+			offsetY = e.originalEvent.dataTransfer.getData('offsetY');
 		} catch (ev) {
-			startOffsetX = data_transfer['offsetX'];
-			startOffsetY = data_transfer['offsetY'];
+			offsetX = data_transfer.offsetX;
+			offsetY = data_transfer.offsetY;
 		}
-		var check_endpoint_x = e.originalEvent.offsetX - startOffsetX;
-		var check_endpoint_y = e.originalEvent.offsetY - startOffsetY;
 
-		var sourceEndPoint = getNearestEndPoint(e.target, check_endpoint_x, check_endpoint_y);
+		var x = e.originalEvent.offsetX - offsetX;
+		var y = e.originalEvent.offsetY - offsetY;
+		var sourceEndPoint = getNearestEndPoint(e.target, x, y);
+
 		if (sourceEndPoint == null)
 			return false;
 
-		var conns = jsPlumb_instance.getConnections({
+		var connections = jsPlumb_instance.getConnections({
 			source: sourceEndPoint.getElement()
 		});
-		for (var i = 0; i < conns.length; i++) {
-			var tmpColor = "#E8C870";
-			if (sourceEndPoint.getUuid() == conns[i].endpoints[0].getUuid()) {
-				tmpColor = "red";
+		for (var i = 0; i < connections.length; i++) {
+			var connection = connections[i];
+			var color = "#E8C870";
+			if (sourceEndPoint.getUuid() == connection.endpoints[0].getUuid()) {
+				color = "red";
 				focus_endpoint_uuid = sourceEndPoint.getUuid();
 			}
-			conns[i].setPaintStyle({
-				strokeStyle: tmpColor
+			connection.setPaintStyle({
+				strokeStyle: color
 			});
 		}
 
@@ -350,8 +352,8 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 		param['data-item'] = nodeType;
 		param.text = drag.text();
 		param.varName = varName || "";
-		if (param['text'].length == 0) {
-			param['text'] = drag.parent().text();
+		if (param.text.length == 0) {
+			param.text = drag.parent().text();
 		}
 
 		if (nodeType == "flowchart_tjfz_item") {
@@ -605,18 +607,14 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 		offsetX = offsetX || 0;
 		offsetY = offsetY || 0;
 		var targetDiv = target.closest("div");
-		//拖拽位置所指对象的位置
-		var baseX = $(targetDiv).position().left;
-		var baseY = $(targetDiv).position().top;
-
-		//实际元素当前中心位置
-		var realX = $(node).outerWidth() / 2 + centerX;
-		var realY = $(node).outerHeight() / 2 + centerY;
-
+		
 		var sourceEndPoint = null;
 		if (focus_endpoint_uuid.length > 0) {
 			sourceEndPoint = jsPlumb_instance.getEndpoint(focus_endpoint_uuid);
 		} else {
+			//实际元素当前中心位置
+			var realX = $(node).outerWidth() / 2 + centerX;
+			var realY = $(node).outerHeight() / 2 + centerY;
 			sourceEndPoint = getNearestEndPoint(targetDiv, realX, realY);
 		}
 		if (sourceEndPoint == null) {
@@ -624,15 +622,10 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 			return false;
 		}
 
-		//获取起始连接点的属性
-		var sourceFis = getConfig($(sourceEndPoint.getElement()).attr("data-item"));
-		//根据最近的起始连接点重定位新流程元素位置
 		var objX = 0;
 		var objY = 0;
-
-		var relativeDistance = getLeftTopToSourceEndpointDistance(node);
-
-		baseX = baseX + $(targetDiv).outerWidth() / 2 - $(node).outerWidth() / 2;
+		var baseX = $(targetDiv).position().left + $(targetDiv).outerWidth() / 2 - $(node).outerWidth() / 2;
+		var baseY = $(targetDiv).position().top;
 		switch (sourceEndPoint.anchor.type) {
 			case "TopCenter":
 				objX = baseX;
@@ -640,7 +633,6 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 				break;
 			case "RightMiddle":
 				objX = baseX + $(node).outerWidth() + 30;
-				// objX = baseX;
 				objY = baseY + $(targetDiv).outerHeight() + 30;
 				break;
 			case "BottomCenter":
@@ -648,19 +640,13 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 				objY = baseY + $(targetDiv).outerHeight() + 30;
 				break;
 			case "LeftMiddle":
-				// objX = baseX - $(node).outerWidth() - 20;
 				objX = baseX;
 				objY = baseY + $(targetDiv).outerHeight() + 30;
 				break;
-			default:
-				break;
 		}
-
-		objX += offsetX;
-		objY += offsetY;
 		$(node).css({
-			top: objY,
-			left: objX
+			left: objX + offsetX,
+			top: objY + offsetY,
 		});
 		//重绘流程元素
 		jsPlumb_instance.repaint(node);
@@ -864,10 +850,10 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 	}
 
 	function editNode(node) {
-		jsPlumb_selected_node = node;
 		for (var i = 0; i < jsPlumb_nodes.length; i++) {
 			var nodeInfo = jsPlumb_nodes[i];
 			if ($(node).attr('id') == nodeInfo.id) {
+				currentNode = node;
 				eventcenter.trigger("kenrobot", "flowchart_item_click", {
 					id: nodeInfo.id,
 					text: nodeInfo.text,
@@ -1009,18 +995,6 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 		});
 	}
 
-	function getLeftTopToSourceEndpointDistance(node) {
-		var endpoints = jsPlumb_instance.getEndpoints($(node));
-		var nodeLeft = $(node).position().left;
-		var sourceLeft = 0;
-		for (var i = 0; i < endpoints.length; i++) {
-			if (endpoints[i].isTarget) {
-				sourceLeft = $(endpoints[i].canvas).position().left;
-			}
-		}
-		return sourceLeft - nodeLeft;
-	}
-
 	/**
 	 * 将目前绘制的流程图清除
 	 */
@@ -1060,11 +1034,16 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 	/**
 	 * 设置当前选中元素的额外附加信息
 	 */
-	function setSelectedNodeInfo(jsPlumb_add_info) {
-		if (jsPlumb_selected_node == null) return false;
+	function saveNodeInfo(add_info) {
+		if (!currentNode)
+			return;
+
+		var id = $(currentNode).attr('id');
 		for (var i = 0; i < jsPlumb_nodes.length; i++) {
-			if ($(jsPlumb_selected_node).attr('id') == jsPlumb_nodes[i]['id']) {
-				jsPlumb_nodes[i]['add_info'] = jsPlumb_add_info;
+			var nodeInfo = jsPlumb_nodes[i];
+			if (id == nodeInfo.id) {
+				nodeInfo.add_info = add_info;
+				break;
 			}
 		}
 	}
@@ -1106,6 +1085,6 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 		getFlowchartElements: getFlowchartElements,
 		draw: draw,
 		isEmpty: isEmpty,
-		setSelectedNodeInfo: setSelectedNodeInfo,
+		saveNodeInfo: saveNodeInfo,
 	}
 });
