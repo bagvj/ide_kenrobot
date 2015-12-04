@@ -51,16 +51,6 @@ define(function() {
 				port: "D",
 				bit: "11111111",
 			}, {
-				position: [0.352, 0.946],
-				source: true,
-				color: "#333",
-				shape: ["Rectangle", {
-					width: 12,
-					height: 20
-				}],
-				port: "G",
-				bit: "11111000",
-			}, {
 				position: [0.662, 0.946],
 				source: true,
 				color: "#333",
