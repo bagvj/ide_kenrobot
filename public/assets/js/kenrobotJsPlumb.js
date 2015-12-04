@@ -42,15 +42,7 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 
 		initDraggable(itemClass);
 
-		$('#' + jsPlumb_container).on('drop', function(ev) {
-			finishDrag(ev);
-		}).on('dragover', function(ev) {
-			checkLinkEndpoint(ev);
-			ev.preventDefault();
-		}).on('dragleave', function(ev) {
-			returnToInitStatus();
-			ev.preventDefault();
-		});
+		$('#' + jsPlumb_container).on('drop', onDrop).on('dragover', onDragOver).on('dragleave', onDragLeave);
 
 		jsPlumb.fire("jsFlowLoaded", jsPlumb_instance);
 
@@ -242,15 +234,11 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 	}
 
 	function initDraggable(itemClass) {
-		$('div.' + itemClass).parent().attr('draggable', 'true').on('dragstart', function(ev) {
-			initDrag(ev, this);
-		}).on('touchstart', function(ev) {
-			initDrag(ev, this);
-		});
+		$('div.' + itemClass).parent().attr('draggable', 'true').on('dragstart', onDragStart).on('touchstart', onDragStart);
 	}
 
-	function initDrag(e, target) {
-		var drag = $('div', target);
+	function onDragStart(e) {
+		var drag = $('div', e.target);
 		if (drag.attr('data-item') == 'flowchart_board_item') {
 			return false;
 		}
@@ -263,13 +251,63 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 			e.originalEvent.dataTransfer.setData('offsetX', e.originalEvent.offsetX);
 			e.originalEvent.dataTransfer.setData('offsetY', e.originalEvent.offsetY);
 		} catch (ev) {
-			data_transfer['text'] = drag.attr('id');
-			data_transfer['offsetX'] = e.originalEvent.offsetX;
-			data_transfer['offsetY'] = e.originalEvent.offsetY;
+			data_transfer.text = drag.attr('id');
+			data_transfer.offsetX = e.originalEvent.offsetX;
+			data_transfer.offsetY = e.originalEvent.offsetY;
 		}
 	}
 
-	function finishDrag(e) {
+	function onDragOver(e) {
+		if (!$(e.target).is("div") || e.target.closest("div").className.indexOf('_jsPlumb') < 0)
+			return false;
+
+		var startOffsetX = 0;
+		var startOffsetY = 0;
+		try {
+			startOffsetX = e.originalEvent.dataTransfer.getData('offsetX');
+			startOffsetY = e.originalEvent.dataTransfer.getData('offsetY');
+		} catch (ev) {
+			startOffsetX = data_transfer['offsetX'];
+			startOffsetY = data_transfer['offsetY'];
+		}
+		var check_endpoint_x = e.originalEvent.offsetX - startOffsetX;
+		var check_endpoint_y = e.originalEvent.offsetY - startOffsetY;
+
+		var sourceEndPoint = getNearestEndPoint(e.target, check_endpoint_x, check_endpoint_y);
+		if (sourceEndPoint == null)
+			return false;
+
+		var conns = jsPlumb_instance.getConnections({
+			source: sourceEndPoint.getElement()
+		});
+		for (var i = 0; i < conns.length; i++) {
+			var tmpColor = "#E8C870";
+			if (sourceEndPoint.getUuid() == conns[i].endpoints[0].getUuid()) {
+				tmpColor = "red";
+				focus_endpoint_uuid = sourceEndPoint.getUuid();
+			}
+			conns[i].setPaintStyle({
+				strokeStyle: tmpColor
+			});
+		}
+
+		e.preventDefault();
+	}
+
+	function onDragLeave(e) {
+		$.each(jsPlumb_instance.getAllConnections(), function(id, connection) {
+			for (var i in connection) {
+				connection[i].setPaintStyle({
+					strokeStyle: '#E8C870'
+				});
+			}
+		});
+		focus_endpoint_uuid = "";
+		
+		e.preventDefault();
+	}
+
+	function onDrop(e) {
 		//拖拽对象不是连接点的时候
 		if (e.target.closest("div").className.indexOf('_jsPlumb') < 0 || e.target.closest("div").className.indexOf(jsPlumb_container + '-item') < 0) {
 			return false;
@@ -278,7 +316,6 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 		if(targetNodeType == "flowchart_loopEnd_item" || targetNodeType == "flowchart_end_item"){
 			return false;
 		}
-		e.preventDefault();
 		
 		//生成流程图元素的样式、位置
 		var param = {};
@@ -290,42 +327,45 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 			startOffsetX = e.originalEvent.dataTransfer.getData('offsetX');
 			startOffsetY = e.originalEvent.dataTransfer.getData('offsetY');
 		} catch (ev) {
-			objId = data_transfer['text'];
-			startOffsetX = data_transfer['offsetX'];
-			startOffsetY = data_transfer['offsetY'];
+			objId = data_transfer.text;
+			startOffsetX = data_transfer.offsetX;
+			startOffsetY = data_transfer.offsetY;
 		}
 
 		var x = e.originalEvent.offsetX - startOffsetX;
 		var y = e.originalEvent.offsetY - startOffsetY;
-		param['x'] = x;
-		param['y'] = y;
+		param.x = x;
+		param.y = y;
 
 		var nodeType = $("#" + objId).attr('data-item');
-		var varName = $("#" + objId).attr('data-var-name');
-		param['id'] = objId + "_" + (new Date().getTime());
+		var nodeConfig = getConfig(nodeType);
+		if(!nodeConfig) {
+			return false;
+		}
+		e.preventDefault();
+
+		var drag = $("#" + objId);
+		var varName = drag.attr('data-var-name');
+		param.id = objId + "_" + (new Date().getTime());
 		param['data-item'] = nodeType;
-		param['text'] = $("#" + objId).text();
+		param.text = drag.text();
 		param.varName = varName || "";
 		if (param['text'].length == 0) {
-			param['text'] = $("#" + objId).parent().text();
+			param['text'] = drag.parent().text();
 		}
 
-		if (nodeType== "flowchart_tjfz_item") {
+		if (nodeType == "flowchart_tjfz_item") {
 			var mergeNodeParam = {};
-			mergeNodeParam['id'] = "flowchart_tjfzMerge_" + (new Date().getTime());
-			mergeNodeParam['x'] = param['x'];
-			mergeNodeParam['y'] = param['y'];
-			mergeNodeParam['text'] = "分支合并";
+			mergeNodeParam.id = "flowchart_tjfzMerge_" + (new Date().getTime());
+			mergeNodeParam.x = param.x;
+			mergeNodeParam.y = param.y;
+			mergeNodeParam.text = "分支合并";
 			mergeNodeParam['data-item'] = "flowchart_tjfzMerge_item";
 
 			var mergeNode = initNode(mergeNodeParam);
-			var mergeNodeEndPoints = jsPlumb_instance.getEndpoints($(mergeNode));
-			//若拖拽进入已有元素，则自动连接
 			initConnection(mergeNode, e.target, x, y, 0, 40);
 		}
 		var node = initNode(param);
-
-		//若拖拽进入已有元素，则自动连接
 		initConnection(node, e.target, x, y);
 
 		try {
@@ -335,8 +375,6 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 		}
 
 		autoConnect();
-		var nodeConfig = getConfig(nodeType);
-
 		genC.refresh();
 	}
 
@@ -823,52 +861,6 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 		return sourceEndPoint;
 	}
 
-	function checkLinkEndpoint(e) {
-		if (!$(e.target).is("div") || e.target.closest("div").className.indexOf('_jsPlumb') < 0)
-			return false;
-
-		var startOffsetX = 0;
-		var startOffsetY = 0;
-		try {
-			startOffsetX = e.originalEvent.dataTransfer.getData('offsetX');
-			startOffsetY = e.originalEvent.dataTransfer.getData('offsetY');
-		} catch (ev) {
-			startOffsetX = data_transfer['offsetX'];
-			startOffsetY = data_transfer['offsetY'];
-		}
-		var check_endpoint_x = e.originalEvent.offsetX - startOffsetX;
-		var check_endpoint_y = e.originalEvent.offsetY - startOffsetY;
-
-		var sourceEndPoint = getNearestEndPoint(e.target, check_endpoint_x, check_endpoint_y);
-		if (sourceEndPoint == null)
-			return false;
-
-		var conns = jsPlumb_instance.getConnections({
-			source: sourceEndPoint.getElement()
-		});
-		for (var i = 0; i < conns.length; i++) {
-			var tmpColor = "#E8C870";
-			if (sourceEndPoint.getUuid() == conns[i].endpoints[0].getUuid()) {
-				tmpColor = "red";
-				focus_endpoint_uuid = sourceEndPoint.getUuid();
-			}
-			conns[i].setPaintStyle({
-				strokeStyle: tmpColor
-			});
-		}
-	}
-
-	function returnToInitStatus() {
-		$.each(jsPlumb_instance.getAllConnections(), function(id, connection) {
-			for (var i in connection) {
-				connection[i].setPaintStyle({
-					strokeStyle: '#E8C870'
-				});
-			}
-		});
-		focus_endpoint_uuid = "";
-	}
-
 	function editNodeByElement(obj) {
 		editNode(jsPlumb.getSelector('#' + $(obj).attr('id'))[0]);
 	}
@@ -1056,8 +1048,10 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 		});
 		//更新每个点的实时坐标
 		for (var i = 0; i < jsPlumb_nodes.length; i++) {
-			jsPlumb_nodes[i]['x'] = $("#" + jsPlumb_nodes[i]['id']).position().left;
-			jsPlumb_nodes[i]['y'] = $("#" + jsPlumb_nodes[i]['id']).position().top;
+			var nodeInfo = jsPlumb_nodes[i];
+			var pos = $("#" + nodeInfo.id).position();
+			nodeInfo.x = pos.left;
+			nodeInfo.y = pos.top;
 		}
 		return {
 			"nodes": jsPlumb_nodes,

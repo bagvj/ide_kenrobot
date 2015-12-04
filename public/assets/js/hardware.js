@@ -63,28 +63,14 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 
 		initJsPlumbInstance();
 
-		$('div.' + itemClass).parent().attr('draggable', 'true').on('dragstart', function(ev) {
-			initDrag(ev, this);
-		}).on('touchstart', function(ev) {
-			initDrag(ev, this);
-		}).on('dragend', function(ev) {
-			// 恢复连接点默认色
-			for (var i = 0; i < linkableEndpoints.length; i++) {
-				linkableEndpoints[i].setPaintStyle({
-					fillStyle: '#333'
-				});
-			}
-			linkableEndpoints = [];
-			linkablePortBits = {};
-		}).on('drag', function(ev) {
-			// 对象拖拽移动事件
-			setRelativeMovingPosition(ev);
-		});
+		$('div.' + itemClass).parent().attr('draggable', 'true')
+			.on('dragstart', onDragStart)
+			.on('touchstart', onDragStart)
+			.on('drag', onDrag)
+			.on('dragend', onDragEnd);
 
-		$('#' + jsPlumb_container).on('drop', function(ev) {
-			finishDrag(ev);
-		}).on('dragover', function(ev) {
-			ev.preventDefault();
+		$('#' + jsPlumb_container).on('drop', onDrop).on('dragover', function(e) {
+			e.preventDefault();
 		});
 
 		jsPlumb.fire("jsFlowLoaded", jsPlumb_instance);
@@ -319,8 +305,8 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 		return node;
 	}
 
-	function initDrag(e, target) {
-		var drag = $('div', target);
+	function onDragStart(e) {
+		var drag = $('div', e.target);
 
 		try {
 			var width = drag.width();
@@ -329,7 +315,7 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 			e.originalEvent.dataTransfer.setData('text', drag.attr('id'));
 			e.originalEvent.dataTransfer.setData('offsetX', e.originalEvent.offsetX);
 			e.originalEvent.dataTransfer.setData('offsetY', e.originalEvent.offsetY);
-		} catch (ev) {
+		} catch (error) {
 			data_transfer.text = drag.attr('id');
 			data_transfer.offsetX = e.originalEvent.offsetX;
 			data_transfer.offsetY = e.originalEvent.offsetY;
@@ -339,7 +325,23 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 		getAndInitLinkEndpoint(nodeType);
 	}
 
-	function finishDrag(e) {
+	function onDrag(e) {
+		// 获取相对元素内的相对移动位置
+		dragging_left = e.originalEvent.x;
+		dragging_top = e.originalEvent.y;
+	}
+
+	function onDragEnd(e) {
+		for (var i = 0; i < linkableEndpoints.length; i++) {
+			linkableEndpoints[i].setPaintStyle({
+				fillStyle: '#333'
+			});
+		}
+		linkableEndpoints = [];
+		linkablePortBits = {};
+	}
+
+	function onDrop(e) {
 		// 如果无可连接点，则返回
 		if (linkableEndpoints == null || linkableEndpoints.length == 0) {
 			return false;
@@ -700,12 +702,6 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 			//重绘流程元素
 			jsPlumb_instance.repaint(node);
 		}
-	}
-
-	function setRelativeMovingPosition(ev) {
-		// 获取相对元素内的相对移动位置
-		dragging_left = ev.originalEvent.x;
-		dragging_top = ev.originalEvent.y;
 	}
 
 	function onDragoverEvent(e, obj) {
