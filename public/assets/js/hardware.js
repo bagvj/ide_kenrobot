@@ -323,20 +323,17 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 	}
 
 	function onDrop(e) {
-		// 如果无可连接点，则返回
-		if (linkableEndpoints == null || linkableEndpoints.length == 0) {
+		if (!linkableEndpoints || linkableEndpoints.length == 0) {
 			return false;
 		};
 
-		//拖拽对象不是连接目标的时候
-		var targetDiv = $(e.target);
-
-		if (targetDiv.closest("div").attr('class').indexOf('_jsPlumb') < 0 || targetDiv.closest("div").attr('class').indexOf(jsPlumb_container + '-item') < 0) {
+		var sourceDiv = $(e.target).closest("div");
+		var className = sourceDiv.attr('class');
+		if (className.indexOf('_jsPlumb_endpoint') < 0 && className.indexOf(jsPlumb_container + '-item') < 0) {
 			return false;
 		}
 		e.preventDefault();
 
-		//生成流程图元素的样式、位置
 		var id = "";
 		var offsetX = 0;
 		var offsetY = 0;
@@ -363,87 +360,73 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 		};
 
 		var node = initNode(param);
-		var nodeFis = getConfig(param['data-item']);
+		var nodeConfig = getConfig(param['data-item']);
 		var nodePort = '';
 		var targetJsPlumbNode = null;
 
-		// 若拖拽进入已有元素，则自动连接，并调整元素位置
-		if (targetDiv.closest("div").attr('class').indexOf('_jsPlumb') >= 0) {
-			var sourceFis = getConfig($(targetDiv.closest("div")).attr("data-item"));
-			for (var i = 0; i < jsPlumb_nodes.length; i++) {
-				if (jsPlumb_nodes[i]['id'] === $(targetDiv.closest("div")).attr('id')) {
-					targetJsPlumbNode = jsPlumb_nodes[i];
-					sourceFis = jsPlumb_nodes[i]['add_info'];
-				}
+		var sourceConfig = getConfig(sourceDiv.attr("data-item"));
+
+		for (var i = 0; i < jsPlumb_nodes.length; i++) {
+			var nodeInfo = jsPlumb_nodes[i];
+			if (nodeInfo.id === sourceDiv.attr('id')) {
+				targetJsPlumbNode = nodeInfo;
+				break;
 			}
-
-			var sEndpoint = initCloseEndpoint;
-			if (sEndpoint == null) {
-				sEndpoint = getNearestEndPointFromNode(targetDiv, node, nodeX, nodeY);
-			}
-
-			// 确认该点的端口
-			var sEndpointX = sEndpoint.anchor.x;
-			var sEndpointY = sEndpoint.anchor.y;
-			var sourceFisPoints = sourceFis['points'];
-			for (var i = 0; i < sourceFisPoints.length; i++) {
-				if (sEndpointX == sourceFisPoints[i].position[0] && sEndpointY == sourceFisPoints[i].position[1] && sEndpoint.isSource == sourceFisPoints[i].source && sEndpoint.isTarget == sourceFisPoints[i].target) {
-					nodePort = sourceFisPoints[i].port;
-					break;
-				}
-			}
-
-			var userInitFlag = true;
-			//连接点在硬件主板上，且连接元素室LED灯时，需要确认转接口的存在
-			if (sourceFis.type == 'board') {
-				var hasAdapter = false;
-				var conns = jsPlumb_instance.getConnections({
-					source: targetDiv.closest("div")
-				});
-				if (nodeFis.needPinboard) {
-					//确认是否在该点上有链接的转接口
-					for (var i = 0; i < conns.length; i++) {
-						if (conns[i].endpoints[0].getUuid() != sEndpoint.getUuid()) continue;
-
-						for (var j = 0; j < conns[i].endpoints.length; j++) {
-							var tmpEndpoint = conns[i].endpoints[1];
-							var tmpNodeFis = getConfig($(tmpEndpoint.getElement()).attr("data-item"));
-							if (tmpNodeFis.type == "adapter") {
-								hasAdapter = true;
-								targetDiv = $(tmpEndpoint.getElement());
-								break;
-							}
-						}
-					}
-					if (!hasAdapter) {
-						var adapterParam = {
-							x: param.x,
-							y: param.y,
-							id: "hardware_adapter_" + (new Date().getTime()),
-							text: "转接口",
-							'data-item': "hardware_adapter_item",
-						};
-						var adapterNode = initNode(adapterParam);
-						initConnection(
-							adapterNode,
-							targetDiv,
-							nodeX,
-							nodeY
-						);
-						targetDiv = $(adapterNode);
-					}
-					userInitFlag = false;
-				}
-			}
-
-			initConnection(
-				node,
-				targetDiv,
-				nodeX,
-				nodeY,
-				userInitFlag
-			);
 		}
+
+		var sEndpoint = initCloseEndpoint;
+		if (sEndpoint == null) {
+			sEndpoint = getNearestEndPointFromNode(sourceDiv, node, nodeX, nodeY);
+		}
+
+		// 确认该点的端口
+		var sEndpointX = sEndpoint.anchor.x;
+		var sEndpointY = sEndpoint.anchor.y;
+		var sourcePoints = sourceConfig.points;
+		for (var i = 0; i < sourcePoints.length; i++) {
+			var sourcePoint = sourcePoints[i];
+			if (sEndpointX == sourcePoint.position[0] && sEndpointY == sourcePoint.position[1] && sEndpoint.isSource == sourcePoint.source && sEndpoint.isTarget == sourcePoint.target) {
+				nodePort = sourcePoint.port;
+				break;
+			}
+		}
+
+		var userInitFlag = true;
+		var hasAdapter = false;
+		var conns = jsPlumb_instance.getConnections({
+			source: sourceDiv
+		});
+		if (nodeConfig.needPinboard) {
+			//确认是否在该点上有连接的转接口
+			for (var i = 0; i < conns.length; i++) {
+				var conn = conns[i];
+				if (conn.endpoints[0].getUuid() != sEndpoint.getUuid()) continue;
+
+				for (var j = 0; j < conn.endpoints.length; j++) {
+					var tmpEndpoint = conn.endpoints[1];
+					var tmpNodeFis = getConfig($(tmpEndpoint.getElement()).attr("data-item"));
+					if (tmpNodeFis.type == "adapter") {
+						hasAdapter = true;
+						sourceDiv = $(tmpEndpoint.getElement());
+						break;
+					}
+				}
+			}
+			if (!hasAdapter) {
+				var adapterParam = {
+					x: param.x,
+					y: param.y,
+					id: "hardware_adapter_" + (new Date().getTime()),
+					text: "转接口",
+					'data-item': "hardware_adapter_item",
+				};
+				var adapterNode = initNode(adapterParam);
+				initConnection(adapterNode, sourceDiv, nodeX, nodeY);
+				sourceDiv = $(adapterNode);
+			}
+			userInitFlag = false;
+		}
+		initConnection(node, sourceDiv, nodeX, nodeY, userInitFlag);
 
 		var tmpJsPlumbNode = getSelectedJsPlumbNode(node);
 		if (tmpJsPlumbNode.index > -1) {
@@ -457,18 +440,18 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 			jsPlumb_nodes.splice(tmpIndex, 1, tmpNode);
 			var data = {
 				id: tmpNode['id'],
-				type: nodeFis.type,
+				type: nodeConfig.type,
 				port: usedPortBit,
 				add_info: tmpNode['add_info'],
 				text: tmpNode['text'],
 				left: $(node).position().left,
 				top: $(node).position().top
 			}
-			for (var i in nodeFis) {
+			for (var i in nodeConfig) {
 				if (i == 'port' || i == 'usedPortBit' || i == 'rotate') {
 					continue;
 				}
-				data[i] = nodeFis[i];
+				data[i] = nodeConfig[i];
 			}
 			eventcenter.trigger('hardware', 'finish_drag', data);
 		}
@@ -694,19 +677,20 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 		var closeEndpoint = null;
 		var closeDistance = 0;
 		for (var i = 0; i < linkableEndpoints.length; i++) {
-			linkableEndpoints[i].setPaintStyle({
+			var endPoint = linkableEndpoints[i];
+			endPoint.setPaintStyle({
 				fillStyle: '#0FF'
 			});
-			var tmpX = Math.round($(linkableEndpoints[i].canvas).offset().left) - e.originalEvent.x;
-			var tmpY = Math.round($(linkableEndpoints[i].canvas).offset().top) - e.originalEvent.y;
+			var tmpX = Math.round($(endPoint.canvas).offset().left) - e.originalEvent.x;
+			var tmpY = Math.round($(endPoint.canvas).offset().top) - e.originalEvent.y;
 			if (closeEndpoint == null) {
-				closeEndpoint = linkableEndpoints[i];
+				closeEndpoint = endPoint;
 				closeDistance = tmpX * tmpX + tmpY * tmpY;
 			} else {
-				tmpDistance = tmpX * tmpX + tmpY * tmpY;
+				var tmpDistance = tmpX * tmpX + tmpY * tmpY;
 				if (tmpDistance < closeDistance) {
 					closeDistance = tmpDistance;
-					closeEndpoint = linkableEndpoints[i];
+					closeEndpoint = endPoint;
 				}
 			}
 		}
@@ -813,7 +797,7 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 		var mainboardIndex = 0;
 
 		var tmpJsPlumbNode = getSelectedJsPlumbNode(node);
-		var adpterExistFlag = false;
+		var hasAdapter = false;
 		if (tmpJsPlumbNode.index > -1) {
 			var tmpNode = tmpJsPlumbNode.node;
 			var tmpIndex = tmpJsPlumbNode.index;
@@ -851,53 +835,33 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 						usedPort = usedPortBit.substring(0, 1);
 						usedBits.push(Number(usedPortBit.substring(1)));
 					}
-					var usedPortIndex = 0;
-					switch (usedPort) {
-						case 'A':
-							usedPortIndex = 0;
+					var portIndex = 0;
+					var points = mainboard.add_info.points;
+					for(var i = 0; i < points.length; i++) {
+						var point = points[i];
+						if(point.port == usedPort) {
+							portIndex = i;
 							break;
-						case 'B':
-							usedPortIndex = 1;
-							break;
-						case 'C':
-							usedPortIndex = 2;
-							break;
-						case 'D':
-							usedPortIndex = 3;
-							break;
-						case 'E':
-							usedPortIndex = 4;
-							break;
-						case 'F':
-							usedPortIndex = 5;
-							break;
-						case 'G':
-							usedPortIndex = 6;
-							break;
-						case 'H':
-							usedPortIndex = 7;
-							break;
-						default:
-							usedPortIndex = 0;
-							break;
+						}
 					}
-					var oldPortBit = mainboard['add_info']['points'][usedPortIndex]['bit'];
+
+					var oldPortBit = points[portIndex].bit;
 					var subBits = '';
 					for (var j = 0; j < usedBits.length; j++) {
 						subBits += '1';
 					}
-					newPortBit = oldPortBit.substring(0, usedBits[0]) + subBits + oldPortBit.substring(usedBits[usedBits.length - 1] + 1);
-					mainboard['add_info']['points'][usedPortIndex]['bit'] = newPortBit;
+					var newPortBit = oldPortBit.substring(0, usedBits[0]) + subBits + oldPortBit.substring(usedBits[usedBits.length - 1] + 1);
+					points[portIndex].bit = newPortBit;
 					if (newPortBit.indexOf('0') < 0) {
 						// 当端口位都未被使用的情况下，若父节点是转接板的话，则要去掉转接板
-						adpterExistFlag = true;
+						hasAdapter = true;
 					}
 					jsPlumb_nodes[mainboardIndex] = mainboard;
 				}
 			}
 			jsPlumb_nodes.splice(tmpIndex, 1);
 
-			if (adpterExistFlag) {
+			if (hasAdapter) {
 				for (var i = 0; i < parentNodes.length; i++) {
 					if ($(parentNodes[i]).attr('data-item') == 'hardware_adapter_item') {
 						jsPlumb_instance.remove(parentNodes[i]);
