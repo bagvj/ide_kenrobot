@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Robot\Feedback;
 use Auth;
 use Illuminate\Http\Request;
 use ZipArchive;
@@ -135,6 +136,16 @@ class HomeController extends Controller {
 
 		// echo json_encode($result, true);
 		return collect($result)->toJson();
+	}
+
+	//平台建议&BUG反馈
+	public function feedback(Request $request) {
+		$feedback = Feedback::create([
+			'nickname' => $request->input('nickname'),
+			'contact' => $request->input('contact'),
+			'content' => $request->input('content'),
+			'create_time' => time(),
+		]);
 	}
 
 	private function fromCharCode($codes) {

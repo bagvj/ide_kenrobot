@@ -967,6 +967,28 @@ body {
     background-color: #41473c;
 }
 
+.mod_btn .feedback {
+    width: 48px;
+    height: 48px;
+    background-color: #4a5044;
+    font-weight: lighter;
+    border-radius: 5px;
+    margin-left: auto;
+    color: #ffffff;
+    font-size: 13px;
+    text-align: center;
+    line-height: 48px;
+    cursor: pointer;
+    border-radius: 32px;
+    -webkit-border-radius: 32px;
+    -moz-border-radius: 32px;
+    -o-border-radius: 32px;
+}
+
+.mod_btn .feedback:hover {
+    background-color: #41473c;
+}
+
 
 .trolley-side {
     width: 100%;

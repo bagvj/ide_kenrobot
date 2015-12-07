@@ -53,11 +53,13 @@ define(['jquery', 'jquery-ui'], function($) {
 			}
 			var oneContent = dialogParams.contents[i];
 			if (oneContent.title == null || oneContent.title == undefined) continue;
-			var rowTitle = $("<span></span>").css({
-				"color": (oneContent.titleColor) ? oneContent.titleColor : "#000",
-				"font-weight": "bold"
-			}).text(oneContent.title + " : ");
-			dialogBody.append(rowTitle);
+			if(oneContent.title != "") {
+				var rowTitle = $("<span></span>").css({
+					"color": (oneContent.titleColor) ? oneContent.titleColor : "#000",
+					"font-weight": "bold"
+				}).text(oneContent.title + " : ");
+				dialogBody.append(rowTitle);
+			}
 
 			// 根据inputType类型配置显示
 			if (oneContent.inputType == "text") {
@@ -70,7 +72,7 @@ define(['jquery', 'jquery-ui'], function($) {
 				dialogBody.append(inputText);
 			} else if (oneContent.inputType == "textarea") {
 				var inputTextArea = $("<textarea rows=5>").css({
-					"width": (tmpWidth * 0.8) + "px",
+					"width": (tmpWidth * (oneContent.title == "" ? 0.95 : 0.8)) + "px",
 					"padding": "3px",
 					"border-color": "#cccccc",
 				}).addClass("dialog_input_save");

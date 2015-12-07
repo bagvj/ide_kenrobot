@@ -16,6 +16,7 @@ Route::get('/', 'Auth\WeixinAuthController@homeIndex');
 
 Route::post('/build', 'HomeController@build');
 Route::get('/download', 'HomeController@download');
+Route::post('/feedback', 'HomeController@feedback');
 
 // 登录验证
 Route::get('/auth/login', 'Auth\AuthController@getLogin');

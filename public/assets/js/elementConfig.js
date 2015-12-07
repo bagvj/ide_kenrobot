@@ -765,6 +765,10 @@ define(function() {
 			}]
 		},
 
+		"board": {
+			tag: 3,
+		},
+
 		//输入模块
 		//按键
 		"button": {
@@ -1544,6 +1548,7 @@ define(function() {
 		for (var name in hardwares) {
 			var hardware = hardwares[name];
 			hardware.name = name;
+			hardware.tips = hardware.tips || hardware.alias;
 			hardware.type = hardware.type || name;
 			hardware.unique = hardware.unique || false;
 			hardware.always = hardware.always || false;
@@ -1575,6 +1580,7 @@ define(function() {
 		for (var name in flowcharts) {
 			var flowchart = flowcharts[name];
 			flowchart.name = name;
+			flowchart.tips = flowchart.tips || flowchart.name;
 			flowchart.type = flowchart.type || name;
 			flowchart.unique = flowchart.unique || false;
 			flowchart.always = flowchart.always || false;

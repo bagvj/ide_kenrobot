@@ -99,7 +99,7 @@ require(['jquery', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 
 				var flowchartObjDataItem = flowchartKind + "_" + node.name + "_item";
 				var flowchartObjClass1 = flowchartKind + "-item";
 				var flowchartObjClass2 = flowchartKind + "-" + node.name;
-				var divObj = $("<div>").attr("id", flowchartObjId).attr("data-item", flowchartObjDataItem).addClass(flowchartObjClass1).addClass(flowchartObjClass2);
+				var divObj = $("<div>").attr("id", flowchartObjId).attr("data-item", flowchartObjDataItem).attr("title", node.tips).addClass(flowchartObjClass1).addClass(flowchartObjClass2);
 				if(node.varName) {
 					divObj.attr("data-var-name", node.varName);
 				}
@@ -122,12 +122,19 @@ require(['jquery', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 
 
 	// 完成拖拽后激活的事件
 	eventcenter.bind('hardware', 'finish_drag', function(args) {
+		var flowcharts = elementConfig.flowcharts;
+		var config = flowcharts[args.name];
+		if(!config)
+			return;
+
 		var kindClass = "hardware-item";
 		var kindTypeClass = "hardware-" + args.name;
 		var itemText = args.text;
 		var portBit = args.port;
-		if (portBit && portBit.length > 0) itemText += "(" + portBit + ")";
-		var li = $("<li>").attr("data-item", args.id).append($("<div>").addClass(kindClass).addClass(kindTypeClass)).append(itemText).appendTo($("ul", $("div.hardware_part_list")));
+		if (portBit && portBit.length > 0)
+			itemText += "(" + portBit + ")";
+		console.log("name " + args.name + " tips " + config.tips);
+		$("<li>").attr("data-item", args.id).attr("title", config.tips).append($("<div>").addClass(kindClass).addClass(kindTypeClass)).append(itemText).appendTo($("ul", $("div.hardware_part_list")));
 		var node = {
 			id: args.id,
 			kind: args.kind,
@@ -135,13 +142,10 @@ require(['jquery', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 
 			port: args.port,
 			text: itemText,
 			name: args.name,
+			tips: config.tips,
 		};
 		arrHardware.push(node);
 
-		var flowcharts = elementConfig.flowcharts;
-		var config = flowcharts[args.name];
-		if(!config)
-			return;
 		var params = config.params;
 		if(!params)
 			return;
@@ -339,6 +343,57 @@ require(['jquery', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 
 		window.open(url);
 	}
 
+	$('.mod_btn .feedback').click(function(e) {
+		var contents = [];
+		contents.push({
+			title: "您的昵称",
+			inputType: "text",
+			inputKey: "nickname",
+		});
+		contents.push({
+			title: "",
+			inputType: "textarea",
+			inputKey: "content",
+			inputHolder: "您的任何问题或建议"
+		});
+		contents.push({
+			title: "联系方式",
+			inputType: "text",
+			inputKey: "contact",
+			inputHolder: "电话、邮箱或者其它联系方式"
+		});
+
+		kenrobotDialog.show(0, {
+			title: "反馈",
+			contents: contents
+		}, function(data) {
+			if(data.nickname == "") {
+				alert("请输入您的昵称");
+				return false;
+			}
+			if(data.content == "") {
+				alert("意见不能为空");
+				return false;
+			}
+			if(data.contact == "") {
+				alert("请输入您的联系方式");
+				return false;
+			}
+
+			$.ajax({
+				type: "POST",
+				url: "./feedback",
+				data: data,
+				success: function(result) {
+					console.log("success");
+				},
+				error: function(result) {
+					console.log("error");
+				}
+			});
+		});
+	});
+
 	function initElements() {
 		var mods = $('.mod');
 
@@ -380,12 +435,11 @@ require(['jquery', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 
 				for (var j = 0; j < group.hardwares.length; j++) {
 					var hardware = group.hardwares[j];
 					var name = hardware.name;
-					var alias = hardware.alias;
 					var itemDiv = $('<div>').addClass('hardware-item').addClass('hardware-' + name).attr({
 						'id': 'hardware_' + name,
 						'data-item': 'hardware_' + name + '_item'
 					});
-					$('<li>').append(itemDiv).append(alias).appendTo(contentDiv);
+					$('<li>').attr("title", hardware.tips).append(itemDiv).append(hardware.alias).appendTo(contentDiv);
 				}
 				$('<ul>').append(contentDiv).appendTo(li);
 			}
