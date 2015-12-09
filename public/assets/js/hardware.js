@@ -329,7 +329,7 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 
 		var sourceDiv = $(e.target).closest("div");
 		var className = sourceDiv.attr('class');
-		if (className.indexOf('_jsPlumb_endpoint') < 0 && className.indexOf(jsPlumb_container + '-item') < 0) {
+		if (className.indexOf('_jsPlumb_endpoint') < 0 || className.indexOf(jsPlumb_container + '-item') < 0) {
 			return false;
 		}
 		e.preventDefault();
@@ -875,6 +875,9 @@ define(["jquery", "jsplumb", "eventcenter", "jquery-ui"], function($, jsPlumb, e
 	}
 
 	function getConfig(name) {
+		if(!name){
+			return null;
+		}
 		var names = name.split('_');
 		name = names.length > 1 ? names[1] : name;
 		return configs[name];

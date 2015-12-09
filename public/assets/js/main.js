@@ -385,10 +385,10 @@ require(['jquery', 'software', 'hardware', 'kenrobotJsPlumb', 'kenrobotDialog', 
 				url: "./feedback",
 				data: data,
 				success: function(result) {
-					console.log("success");
+					alert("感谢您的反馈");
 				},
 				error: function(result) {
-					console.log("error");
+					alert("提交失败");
 				}
 			});
 		});

@@ -243,7 +243,6 @@ define(function() {
 			category: 1,
 			alias: "矩阵键盘",
 			port: "1111111111111111111111111111111100000000111111111111111111111111",
-			needPinboard: true,
 			bits: 8,
 			points: [{
 				position: [0.5, 0.95],

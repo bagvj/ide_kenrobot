@@ -948,6 +948,9 @@ define(["jquery", "jquery-ui", "jquery-menu", "jsplumb", "eventcenter", "genC"],
 	}
 
 	function getConfig(name) {
+		if(!name) {
+			return null;
+		}
 		var names = name.split('_');
 		name = names.length > 1 ? names[1] : name;
 		return configs[name];
