@@ -88,7 +88,7 @@ body {
     text-align: center;
     float: left;
     vertical-align: middle;
-    background-image: url('../img/logo.png');
+    background-image: url('../images/logo.png');
     background-size: 125px 44px;
     background-repeat: no-repeat;
     background-position: center;
@@ -270,7 +270,7 @@ body {
 }
 
 #login_dialog .closeBtn {
-    background: url('../img/closeBtn.png') no-repeat center;
+    background: url('../images/closeBtn.png') no-repeat center;
     position: absolute;
     left: 10px;
     top: 10px;
@@ -364,7 +364,7 @@ body {
     display: none;
     outline-style:none;
     border: 0;
-    background-image: url(../img/loginBtns.png);
+    background-image: url(../images/loginBtns.png);
     background-position: -201px -199px;
     background-repeat: no-repeat;
     color: rgb(0, 136, 204);
@@ -387,7 +387,7 @@ body {
 .qrLoginBtn {
     display: none;
     border: 0;
-    background-image: url(../img/loginBtns.png);
+    background-image: url(../images/loginBtns.png);
     background-position: -260px -260px;
     background-repeat: no-repeat;
     color: rgb(0, 136, 204);
@@ -506,11 +506,11 @@ body {
 }
 
 .baseLogin .field .email {
-    background: url('../img/email.png') no-repeat center;
+    background: url('../images/email.png') no-repeat center;
 }
 
 .baseLogin .field .password {
-    background: url('../img/password.png') no-repeat center;
+    background: url('../images/password.png') no-repeat center;
 }
 
 
@@ -645,6 +645,7 @@ body {
     top: 60px;
     left: 182px;
     position: absolute;
+    z-index: 3;
 }
 
 .tabs ul {
@@ -677,6 +678,7 @@ body {
     width: 240px;
     height: 150px;
     position: absolute;
+    z-index: 3;
 }
 
 .thumbnail .canvas-wrap {
@@ -701,7 +703,7 @@ body {
 }
 
 .thumbnail .foldBtn {
-    background: url('../img/show.png') no-repeat center;
+    background: url('../images/show.png') no-repeat center;
     top: 0px;
     right: 0px;
     width: 20px;
@@ -711,11 +713,11 @@ body {
 }
 
 .thumbnail .foldBtn.active {
-    background: url('../img/hide.png') no-repeat center;
+    background: url('../images/hide.png') no-repeat center;
 }
 
 .thumbnail .scaleTip {
-    background: url('../img/scaleTip.png') no-repeat center;
+    background: url('../images/scaleTip.png') no-repeat center;
     bottom: 1px;
     left: 2px;
     width: 6px;
@@ -784,7 +786,7 @@ body {
     border-bottom: 0px;
 }
 
-.nav-second ul li .category {
+.nav-second ul li .tag {
     height: 45px;
 }
 
@@ -792,11 +794,11 @@ body {
     width: 45px;
     height: 45px;
     float: right;
-    background: url('../img/forward.png') no-repeat center;
+    background: url('../images/forward.png') no-repeat center;
 }
 
 .nav-second ul li.active .arrow {
-    background: url('../img/down.png') no-repeat center;
+    background: url('../images/down.png') no-repeat center;
 }
 
 .nav-second ul li ul {
@@ -916,6 +918,7 @@ body {
     right: 246px;
     bottom: 20px;
     position: absolute;
+    z-index: 3;
 }
 
 .mod_btn div {
@@ -923,80 +926,13 @@ body {
     margin-right: 20px;
 }
 
-.mod_btn .save {
-    width: 48px;
-    height: 48px;
-    background-color: #4a5044;
-    border-radius: 5px;
-    margin-left: auto;
-    color: #ffffff;
-    font-size: 13px;
-    text-align: center;
-    line-height: 48px;
-    cursor: pointer;
-    font-weight: lighter;
-    border-radius: 32px;
-    -webkit-border-radius: 32px;
-    -moz-border-radius: 32px;
-    -o-border-radius: 32px;
-}
-
-.mod_btn .save:hover {
-    background-color: #41473c;
-}
-
-.mod_btn .download {
-    width: 48px;
-    height: 48px;
-    background-color: #4a5044;
-    font-weight: lighter;
-    border-radius: 5px;
-    margin-left: auto;
-    color: #ffffff;
-    font-size: 13px;
-    text-align: center;
-    line-height: 48px;
-    cursor: pointer;
-    border-radius: 32px;
-    -webkit-border-radius: 32px;
-    -moz-border-radius: 32px;
-    -o-border-radius: 32px;
-}
-
-.mod_btn .download:hover {
-    background-color: #41473c;
-}
-
-.mod_btn .feedback {
-    width: 48px;
-    height: 48px;
-    background-color: #4a5044;
-    font-weight: lighter;
-    border-radius: 5px;
-    margin-left: auto;
-    color: #ffffff;
-    font-size: 13px;
-    text-align: center;
-    line-height: 48px;
-    cursor: pointer;
-    border-radius: 32px;
-    -webkit-border-radius: 32px;
-    -moz-border-radius: 32px;
-    -o-border-radius: 32px;
-}
-
-.mod_btn .feedback:hover {
-    background-color: #41473c;
-}
-
-
 .trolley-side {
     width: 100%;
     height: 33%;
     position: relative;
 }
 
-.trolley-side .hardware_part_list {
+.trolley-side .hardware-list {
     top: 45px;
     bottom: 40px;
     left: 0px;
@@ -1046,16 +982,9 @@ body {
     width: 45px;
     height: 45px;
     float: right;
-    background: url('../img/shoppingcart.png') no-repeat center;
+    background: url('../images/shoppingcart.png') no-repeat center;
     background-size: 24px 24px;
 }
-
-/*.hardware_part_list {
-    position: absolute;
-    top: 48px;
-    bottom: 55px;
-    overflow: auto;
-}*/
 
 .yjlj-side {
     height: 32%;
@@ -1163,7 +1092,7 @@ body {
     font-family: 'Source Code Pro',sans-serif;
 }
 
-.code-side .c_code_area {
+#src {
     background-color: #fff;
     width:100%;
     top: 0px;
@@ -1184,7 +1113,7 @@ body {
 }
 
 #code-more .closeBtn {
-    background: url('../img/closeBtn_black.png') no-repeat center;
+    background: url('../images/closeBtn_black.png') no-repeat center;
     position: absolute;
     right: 10px;
     top: 10px;
@@ -1199,7 +1128,7 @@ body {
 
 .code-side .code_view {
     /*z-index: 9999;*/
-    background: url(../img/code_view.png) no-repeat;
+    background: url(../images/code_view.png) no-repeat;
     width: 33px;
     height: 33px;
     right: 4%;
@@ -1217,137 +1146,66 @@ body {
 }
 
 .hardware-board {
-    background: url(../img/hardware/board-small.png) no-repeat;
+    background: url(../images/hardware/board-small.png) no-repeat;
     background-size: contain;
 }
 
-.hardware-board-item {
-    background: url(../img/hardware/board.png) no-repeat;
-    width: 300px;
-    height: 184px;
-}
-
-
 /*输入模块*/
-
-
 /*按键*/
 
 .hardware-button {
-    background: url(../img/hardware/button-small.png) no-repeat;
+    background: url(../images/hardware/button-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-button-item {
-    background: url(../img/hardware/button.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*开关*/
 
 .hardware-switch {
-    background: url(../img/hardware/switch-small.png) no-repeat;
+    background: url(../images/hardware/switch-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-switch-item {
-    background: url(../img/hardware/switch.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*巡线*/
 
 .hardware-linePatrol {
-    background: url(../img/hardware/linePatrol-small.png) no-repeat;
+    background: url(../images/hardware/linePatrol-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-linePatrol-item {
-    background: url(../img/hardware/linePatrol.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*红外接收*/
 
 .hardware-infraredIn {
-    background: url(../img/hardware/infraredIn-small.png) no-repeat;
+    background: url(../images/hardware/infraredIn-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-infraredIn-item {
-    background: url(../img/hardware/infraredIn.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*声音传感*/
 
 .hardware-soundSensor {
-    background: url(../img/hardware/soundSensor-small.png) no-repeat;
+    background: url(../images/hardware/soundSensor-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-soundSensor-item {
-    background: url(../img/hardware/soundSensor.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*倾斜*/
 
 .hardware-lean {
-    background: url(../img/hardware/lean-small.png) no-repeat;
+    background: url(../images/hardware/lean-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-lean-item {
-    background: url(../img/hardware/lean.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*巡线阵列*/
 
 .hardware-linePatrolRow {
-    background: url(../img/hardware/linePatrolRow-small.png) no-repeat;
+    background: url(../images/hardware/linePatrolRow-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-linePatrolRow-item {
-    background: url(../img/hardware/linePatrolRow.png) no-repeat;
-    width: 100px;
-    height: 80px;
-}
-
 
 /*矩阵键盘*/
 
 .hardware-keyboard {
-    background: url(../img/hardware/keyboard-small.png) no-repeat;
+    background: url(../images/hardware/keyboard-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-keyboard-item {
-    background: url(../img/hardware/keyboard.png) no-repeat;
-    width: 80px;
-    height: 100px;
-}
-
-.hardware-adapter-item {
-    background: url(../img/hardware/adapter.png) no-repeat;
-    width: 36px;
-    height: 64px;
-}
-
 
 /*******输出模块*******/
 
@@ -1355,86 +1213,44 @@ body {
 /*灯*/
 
 .hardware-light {
-    background: url(../img/hardware/light-small.png) no-repeat;
+    background: url(../images/hardware/light-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-light-item {
-    background: url(../img/hardware/light.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*继电器*/
 
 .hardware-relay {
-    background: url(../img/hardware/relay-small.png) no-repeat;
+    background: url(../images/hardware/relay-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-relay-item {
-    background: url(../img/hardware/relay.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*蜂鸣器*/
 
 .hardware-buzzer {
-    background: url(../img/hardware/buzzer-small.png) no-repeat;
+    background: url(../images/hardware/buzzer-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-buzzer-item {
-    background: url(../img/hardware/buzzer.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*红外输出*/
 
 .hardware-infraredOut {
-    background: url(../img/hardware/infraredOut-small.png) no-repeat;
+    background: url(../images/hardware/infraredOut-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-infraredOut-item {
-    background: url(../img/hardware/infraredOut.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*1位I/O输出*/
 
 .hardware-oneBitOut {
-    background: url(../img/hardware/oneBitOut-small.png) no-repeat;
+    background: url(../images/hardware/oneBitOut-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-oneBitOut-item {
-    background: url(../img/hardware/oneBitOut.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*数码管*/
 
 .hardware-digitalTube {
-    background: url(../img/hardware/digitalTube-small.png) no-repeat;
+    background: url(../images/hardware/digitalTube-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-digitalTube-item {
-    background: url(../img/hardware/digitalTube.png) no-repeat;
-    width: 100px;
-    height: 80px;
-}
-
 
 /******执行模块*******/
 
@@ -1442,30 +1258,16 @@ body {
 /*舵机*/
 
 .hardware-streeringEngine {
-    background: url(../img/hardware/streeringEngine-small.png) no-repeat;
+    background: url(../images/hardware/streeringEngine-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-streeringEngine-item {
-    background: url(../img/hardware/streeringEngine.png) no-repeat;
-    width: 90px;
-    height: 150px;
-}
-
 
 /*直流电机*/
 
 .hardware-dcMotor {
-    background: url(../img/hardware/dcMotor-small.png) no-repeat;
+    background: url(../images/hardware/dcMotor-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-dcMotor-item {
-    background: url(../img/hardware/dcMotor.png) no-repeat;
-    width: 87px;
-    height: 90px;
-}
-
 
 /***********传感模块*******/
 
@@ -1473,72 +1275,37 @@ body {
 /*光照*/
 
 .hardware-illumination {
-    background: url(../img/hardware/illumination-small.png) no-repeat;
+    background: url(../images/hardware/illumination-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-illumination-item {
-    background: url(../img/hardware/illumination.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*温度*/
 
 .hardware-temperatue {
-    background: url(../img/hardware/temperatue-small.png) no-repeat;
+    background: url(../images/hardware/temperatue-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-temperatue-item {
-    background: url(../img/hardware/temperatue.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*湿度*/
 
 .hardware-humidity {
-    background: url(../img/hardware/humidity-small.png) no-repeat;
+    background: url(../images/hardware/humidity-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-humidity-item {
-    background: url(../img/hardware/humidity.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*PM2.5*/
 
 .hardware-pm25 {
-    background: url(../img/hardware/pm25-small.png) no-repeat;
+    background: url(../images/hardware/pm25-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-pm25-item {
-    background: url(../img/hardware/pm25.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*AD输入*/
 
 .hardware-ad {
-    background: url(../img/hardware/ad-small.png) no-repeat;
+    background: url(../images/hardware/ad-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-ad-item {
-    background: url(../img/hardware/ad.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /********通讯模块*******/
 
@@ -1546,90 +1313,42 @@ body {
 /*串口输入*/
 
 .hardware-serialPortIn {
-    background: url(../img/hardware/serialPortIn-small.png) no-repeat;
+    background: url(../images/hardware/serialPortIn-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-serialPortIn-item {
-    background: url(../img/hardware/default.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*串口输出*/
 
 .hardware-serialPortOut {
-    background: url(../img/hardware/serialPortOut-small.png) no-repeat;
+    background: url(../images/hardware/serialPortOut-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-serialPortOut-item {
-    background: url(../img/hardware/default.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*超声测距*/
 
 .hardware-ultrasoundLocation {
-    background: url(../img/hardware/ultrasoundLocation-small.png) no-repeat;
+    background: url(../images/hardware/ultrasoundLocation-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-ultrasoundLocation-item {
-    background: url(../img/hardware/ultrasoundLocation.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*电子罗盘*/
 
 .hardware-electronicCompass {
-    background: url(../img/hardware/electronicCompass-small.png) no-repeat;
+    background: url(../images/hardware/electronicCompass-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-electronicCompass-item {
-    background: url(../img/hardware/electronicCompass.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*IIC输出*/
 
 .hardware-iicOut {
-    background: url(../img/hardware/iicOut-small.png) no-repeat;
+    background: url(../images/hardware/iicOut-small.png) no-repeat;
     background-size: contain;
 }
-
-.hardware-iicOut-item {
-    background: url(../img/hardware/iicOut.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
 
 /*IIC输入*/
 
 .hardware-iicIn {
-    background: url(../img/hardware/iicOut-small.png) no-repeat;
-    background-size: contain;
-}
-
-.hardware-iicIn-item {
-    background: url(../img/hardware/iicIn.png) no-repeat;
-    width: 43px;
-    height: 78px;
-}
-
-.hardware-container-item {
-    top: 20px;
-    font-size: 0;
-    cursor: pointer;
+    background: url(../images/hardware/iicOut-small.png) no-repeat;
     background-size: contain;
 }
 
@@ -1637,7 +1356,7 @@ body {
     transform: rotate(180deg);
 }
 
-.flowchart-item {
+.software-item {
     width: 36px;
     height: 36px;
     float: left;
@@ -1645,8 +1364,8 @@ body {
     margin-top: 4.5px;
 }
 
-.lckzmk1 .flowchart-item,
-.lckzmk2 .flowchart-item {
+.lckzmk1 .software-item,
+.lckzmk2 .software-item {
     width: 30px;
     height: 16px;
     float: left;
@@ -1654,8 +1373,8 @@ body {
     margin-top: 12px;
 }
 
-.flowchart-board {
-    background: url(../img/hardware/board-small.png) no-repeat;
+.software-board {
+    background: url(../images/hardware/board-small.png) no-repeat;
     background-size: contain;
 }
 
@@ -1665,135 +1384,60 @@ body {
 
 /*按键*/
 
-.flowchart-button {
-    background: url(../img/hardware/button-small.png) no-repeat;
+.software-button {
+    background: url(../images/hardware/button-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-button-item {
-    background: url(../img/hardware/button-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /*开关*/
 
-.flowchart-switch {
-    background: url(../img/hardware/switch-small.png) no-repeat;
+.software-switch {
+    background: url(../images/hardware/switch-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-switch-item {
-    background: url(../img/hardware/switch-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /*巡线*/
 
-.flowchart-linePatrol {
-    background: url(../img/hardware/linePatrol-small.png) no-repeat;
+.software-linePatrol {
+    background: url(../images/hardware/linePatrol-small.png) no-repeat;
     background-size: contain;
-}
-
-.flowchart-linePatrol-item {
-    background: url(../img/hardware/linePatrol-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
 }
 
 
 /*红外接收*/
 
-.flowchart-infraredIn {
-    background: url(../img/hardware/infraredIn-small.png) no-repeat;
+.software-infraredIn {
+    background: url(../images/hardware/infraredIn-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-infraredIn-item {
-    background: url(../img/hardware/infraredIn-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /*声音传感*/
 
-.flowchart-soundSensor {
-    background: url(../img/hardware/soundSensor-small.png) no-repeat;
+.software-soundSensor {
+    background: url(../images/hardware/soundSensor-small.png) no-repeat;
     background-size: contain;
-}
-
-.flowchart-soundSensor-item {
-    background: url(../img/hardware/soundSensor-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
 }
 
 
 /*倾斜*/
 
-.flowchart-lean {
-    background: url(../img/hardware/lean-small.png) no-repeat;
+.software-lean {
+    background: url(../images/hardware/lean-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-lean-item {
-    background: url(../img/hardware/lean-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /*巡线阵列*/
 
-.flowchart-linePatrolRow {
-    background: url(../img/hardware/linePatrolRow-small.png) no-repeat;
+.software-linePatrolRow {
+    background: url(../images/hardware/linePatrolRow-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-linePatrolRow-item {
-    background: url(../img/hardware/default.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /*矩阵键盘*/
 
-.flowchart-keyboard {
-    background: url(../img/hardware/keyboard-small.png) no-repeat;
+.software-keyboard {
+    background: url(../images/hardware/keyboard-small.png) no-repeat;
     background-size: contain;
-}
-
-.flowchart-keyboard-item {
-    background: url(../img/hardware/keyboard-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
-.flowchart-adapter-item {
-    background: url(../img/hardware/adapter.png) no-repeat;
-    width: 36px;
-    height: 64px;
 }
 
 
@@ -1802,468 +1446,179 @@ body {
 
 /*灯*/
 
-.flowchart-light {
-    background: url(../img/hardware/light-small.png) no-repeat;
+.software-light {
+    background: url(../images/hardware/light-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-light-item {
-    background: url(../img/hardware/light-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;`
-}
-
 
 /*继电器*/
 
-.flowchart-relay {
-    background: url(../img/hardware/relay-small.png) no-repeat;
+.software-relay {
+    background: url(../images/hardware/relay-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-relay-item {
-    background: url(../img/hardware/relay-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
-
 /*蜂鸣器*/
 
-.flowchart-buzzer {
-    background: url(../img/hardware/buzzer-small.png) no-repeat;
+.software-buzzer {
+    background: url(../images/hardware/buzzer-small.png) no-repeat;
     background-size: contain;
-}
-
-.flowchart-buzzer-item {
-    background: url(../img/hardware/buzzer-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
 }
 
 
 /*红外输出*/
 
-.flowchart-infraredOut {
-    background: url(../img/hardware/infraredOut-small.png) no-repeat;
+.software-infraredOut {
+    background: url(../images/hardware/infraredOut-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-infraredOut-item {
-    background: url(../img/hardware/infraredOut-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /*1位I/O输出*/
 
-.flowchart-oneBitOut {
-    background: url(../img/hardware/oneBitOut-small.png) no-repeat;
+.software-oneBitOut {
+    background: url(../images/hardware/oneBitOut-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-oneBitOut-item {
-    background: url(../img/hardware/oneBitOut-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /*数码管*/
 
-.flowchart-digitalTube {
-    background: url(../img/hardware/digitalTube-small.png) no-repeat;
+.software-digitalTube {
+    background: url(../images/hardware/digitalTube-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-digitalTube-item {
-    background: url(../img/hardware/digitalTube-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /******执行模块*******/
 
 
 /*舵机*/
 
-.flowchart-streeringEngine {
-    background: url(../img/hardware/streeringEngine-small.png) no-repeat;
+.software-streeringEngine {
+    background: url(../images/hardware/streeringEngine-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-streeringEngine-item {
-    background: url(../img/hardware/streeringEngine-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /*直流电机*/
 
-.flowchart-dcMotor {
-    background: url(../img/hardware/dcMotor-small.png) no-repeat;
+.software-dcMotor {
+    background: url(../images/hardware/dcMotor-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-dcMotor-item {
-    background: url(../img/hardware/dcMotor-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /***********传感模块*******/
 
 
 /*光照*/
 
-.flowchart-illumination {
-    background: url(../img/hardware/illumination-small.png) no-repeat;
+.software-illumination {
+    background: url(../images/hardware/illumination-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-illumination-item {
-    background: url(../img/hardware/illumination-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /*温度*/
 
-.flowchart-temperatue {
-    background: url(../img/hardware/temperatue-small.png) no-repeat;
+.software-temperatue {
+    background: url(../images/hardware/temperatue-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-temperatue-item {
-    background: url(../img/hardware/temperatue-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /*湿度*/
 
-.flowchart-humidity {
-    background: url(../img/hardware/humidity-small.png) no-repeat;
+.software-humidity {
+    background: url(../images/hardware/humidity-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-humidity-item {
-    background: url(../img/hardware/humidity-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /*PM2.5*/
 
-.flowchart-pm25 {
-    background: url(../img/hardware/pm25-small.png) no-repeat;
+.software-pm25 {
+    background: url(../images/hardware/pm25-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-pm25-item {
-    background: url(../img/hardware/pm25-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /*AD输入*/
 
-.flowchart-ad {
-    background: url(../img/hardware/ad-small.png) no-repeat;
+.software-ad {
+    background: url(../images/hardware/ad-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-ad-item {
-    background: url(../img/hardware/ad-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /********通讯模块*******/
 
 
 /*串口输入*/
 
-.flowchart-serialPortIn {
-    background: url(../img/hardware/serialPortIn-small.png) no-repeat;
+.software-serialPortIn {
+    background: url(../images/hardware/serialPortIn-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-serialPortIn-item {
-    background: url(../img/hardware/serialPortIn-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /*串口输出*/
 
-.flowchart-serialPortOut {
-    background: url(../img/hardware/serialPortOut-small.png) no-repeat;
+.software-serialPortOut {
+    background: url(../images/hardware/serialPortOut-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-serialPortOut-item {
-    background: url(../img/hardware/serialPortOut-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /*超声测距*/
 
-.flowchart-ultrasoundLocation {
-    background: url(../img/hardware/ultrasoundLocation-small.png) no-repeat;
+.software-ultrasoundLocation {
+    background: url(../images/hardware/ultrasoundLocation-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-ultrasoundLocation-item {
-    background: url(../img/hardware/ultrasoundLocation-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /*电子罗盘*/
 
-.flowchart-electronicCompass {
-    background: url(../img/hardware/electronicCompass-small.png) no-repeat;
+.software-electronicCompass {
+    background: url(../images/hardware/electronicCompass-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-electronicCompass-item {
-    background: url(../img/hardware/electronicCompass-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /*IIC输出*/
 
-.flowchart-iicOut {
-    background: url(../img/hardware/iicOut-small.png) no-repeat;
+.software-iicOut {
+    background: url(../images/hardware/iicOut-small.png) no-repeat;
     background-size: contain;
 }
-
-.flowchart-iicOut-item {
-    background: url(../img/hardware/iicOut-small.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 36px;
-}
-
 
 /*IIC输入*/
 
-.flowchart-iicIn {
-    background: url(../img/hardware/iicIn-small.png) no-repeat;
+.software-iicIn {
+    background: url(../images/hardware/iicIn-small.png) no-repeat;
     background-size: contain;
 }
 
-.flowchart-iicIn-item {
-    background: url(../img/hardware/iicIn-small.png) no-repeat center;
-    font-size: 14px;
+/*流程控制模块*/
+
+.software-ifElse {
+    background: url(../images/software/ifElse-small.png) no-repeat;
     background-size: contain;
-    width: 75px;
-    height: 36px;
+}
+
+.software-conditionLoop {
+    background: url(../images/software/conditionLoop-small.png) no-repeat;
+    background-size: contain;
+}
+
+.software-foreverLoop {
+    background: url(../images/software/foreverLoop-small.png) no-repeat;
+    background-size: contain;
+}
+
+.software-countLoop {
+    background: url(../images/software/countLoop-small.png) no-repeat;
+    background-size: contain;
 }
 
 
 /*流程控制模块*/
 
-.flowchart-tjfz {
-    background: url(../img/flowchart/tjfz-small.png) no-repeat;
+.software-delay {
+    background: url(../images/software/delay-small.png) no-repeat;
     background-size: contain;
 }
 
-.flowchart-tjfz-item {
-    background: url(../img/flowchart/tjfz.png) no-repeat center;
-    font-size: 14px;
+.software-assignment {
+    background: url(../images/software/assignment-small.png) no-repeat;
     background-size: contain;
-    width: 75px;
-    height: 26px;
-}
-
-.flowchart-tjxh {
-    background: url(../img/flowchart/tjxh-small.png) no-repeat;
-    background-size: contain;
-}
-
-.flowchart-tjxh-item {
-    background: url(../img/flowchart/tjxh.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 26px;
-}
-
-.flowchart-yyxh {
-    background: url(../img/flowchart/yyxh-small.png) no-repeat;
-    background-size: contain;
-}
-
-.flowchart-yyxh-item {
-    background: url(../img/flowchart/yyxh.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 26px;
-}
-
-.flowchart-jsxh {
-    background: url(../img/flowchart/jsxh-small.png) no-repeat;
-    background-size: contain;
-}
-
-.flowchart-jsxh-item {
-    background: url(../img/flowchart/jsxh.png) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 26px;
-}
-
-.flowchart-fh {
-    background: url(../img/flowchart/fh-small.png) no-repeat;
-    background-size: contain;
-}
-
-.flowchart-fh-item {
-    background: url(../img/flowchart/fh.jpg) no-repeat center;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 26px;
-}
-
-
-/*流程控制模块*/
-
-.flowchart-yshs {
-    background: url(../img/flowchart/yshs-small.png) no-repeat;
-    background-size: contain;
-}
-
-.flowchart-yshs-item {
-    background: url(../img/flowchart/yshs.png) no-repeat;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 26px;
-}
-
-.flowchart-fzhs {
-    background: url(../img/flowchart/fzhs-small.png) no-repeat;
-    background-size: contain;
-}
-
-.flowchart-fzhs-item {
-    background: url(../img/flowchart/fzhs.png) no-repeat;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 26px;
-}
-
-.flowchart-dshs {
-    background: url(../img/flowchart/dshs-small.png) no-repeat;
-    background-size: contain;
-}
-
-.flowchart-dshs-item {
-    background: url(../img/flowchart/dshs.png) no-repeat;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 26px;
-}
-
-.flowchart-sjhs {
-    background: url(../img/flowchart/sjhs-small.png) no-repeat;
-    background-size: contain;
-}
-
-.flowchart-sjhs-item {
-    background: url(../img/flowchart/sjhs.png) no-repeat;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 26px;
-}
-
-.flowchart-zdyhs {
-    background: url(../img/flowchart/zdyhs-small.png) no-repeat;
-    background-size: contain;
-}
-
-.flowchart-zdyhs-item {
-    background: url(../img/flowchart/zdyhs.png) no-repeat;
-    font-size: 14px;
-    background-size: contain;
-    width: 75px;
-    height: 26px;
-}
-
-.flowchart-oval-item {
-    background: url(../img/flowchart/oval.png) no-repeat;
-    width: 75px;
-    height: 26px;
-}
-
-.flowchart-container-item {
-    top: 20px;
-    cursor: pointer;
-    color: #FFF;
-    line-height: 26px;
-    background-size: contain;
-}
-
-.item-border-show {
-    border: 1px solid #F00;
 }
 
 .main .btn {
@@ -2297,6 +1652,28 @@ body {
 }
 
 .main .btn1:hover {
+    background-color: #41473c;
+}
+
+.main .btn2 {
+    width: 48px;
+    height: 48px;
+    background-color: #4a5044;
+    font-weight: lighter;
+    border-radius: 5px;
+    margin-left: auto;
+    color: #ffffff;
+    font-size: 13px;
+    text-align: center;
+    line-height: 48px;
+    cursor: pointer;
+    border-radius: 32px;
+    -webkit-border-radius: 32px;
+    -moz-border-radius: 32px;
+    -o-border-radius: 32px;
+}
+
+.main .btn2:hover {
     background-color: #41473c;
 }
 
