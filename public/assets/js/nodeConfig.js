@@ -129,7 +129,6 @@ define(function() {
 			width: 100,
 			height: 80,
 			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
-			needPinboard: true,
 			needBit: 8,
 		},
 		//矩阵键盘
@@ -139,7 +138,6 @@ define(function() {
 			width: 100,
 			height: 80,
 			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
-			needPinboard: true,
 			needBit: 8,
 		},
 		//输出模块

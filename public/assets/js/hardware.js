@@ -85,10 +85,8 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 		EventManager.bind("hardware", "editNode", onEditNode);
 	}
 
-	function makeImage(width, height) {
-		return diagram.makeImage({
-			size: new go.Size(width, height),
-		});
+	function makeImage(options) {
+		return diagram.makeImage(options);
 	}
 
 	function getNodeData(key) {
@@ -324,6 +322,14 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 	function addInitNodes() {
 		var boardData = addNode("board");
 		specNodes["board"] = diagram.findNodeForData(boardData);
+
+		setTimeout(function(){
+			EventManager.trigger("hardware", "addNode", {
+				name: boardData.name,
+				text: boardData.alias,
+				key: boardData.key,
+			});
+		}, 100);
 	}
 
 	//添加节点

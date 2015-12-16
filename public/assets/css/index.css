@@ -673,10 +673,6 @@ body {
 
 .thumbnail {
     float: left;
-    top: 60px;
-    right: 242px;
-    width: 240px;
-    height: 150px;
     position: absolute;
     z-index: 3;
 }
@@ -924,6 +920,14 @@ body {
 .mod_btn div {
     float: left;
     margin-right: 20px;
+}
+
+.instro {
+    float: left;
+    left: 185px;
+    bottom: 5px;
+    opacity: 0.5;
+    position: absolute;
 }
 
 .trolley-side {

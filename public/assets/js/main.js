@@ -64,6 +64,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 	}
 
 	function initTabs() {
+		var first = true;
 		$('.tabs li').click(function() {
 			if ($(this).hasClass("active")) {
 				return;
@@ -78,15 +79,29 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 				visibility: "visible"
 			});
 
-			var canvas = $(".thumbnail .canvas").empty();
-			var width = canvas.width();
-			var height = canvas.height();
-			if(index == 0) {
-				$(software.makeImage(width, height)).appendTo(canvas);
+			if(first) {
+				first = false;
+				setTimeout(drawThumbnail(index), 1000);
 			} else {
-				$(hardware.makeImage(width, height)).appendTo(canvas);
+				drawThumbnail(index)();
 			}
 		});
+
+		function drawThumbnail(index) {
+			return function() {
+				var image;
+				if(index == 0) {
+					image = software.makeImage();
+				} else {
+					image = hardware.makeImage();
+				}
+				var canvas = $(".thumbnail .canvas").empty();
+				$(image).css({
+					width: canvas.width(),
+					height: canvas.height(),
+				}).appendTo(canvas);
+			};
+		}
 	}
 
 	function initNavSecond() {
@@ -269,13 +284,22 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 
 	//缩略图
 	function initThumbnail() {
-		var scaleTip = $('.thumbnail .scaleTip');
-		var wrap = $('.thumbnail .canvas-wrap');
+		var modCanvas = $(".mod .canvas");
+		
+		var thumbnail = $('.thumbnail').draggable({
+			containment: "window",
+			handle: ".canvas-wrap",
+			opacity: 0.5,
+		});
+
+		var wrap = $('.canvas-wrap', thumbnail);
 
 		var wrapWidth = 0;
 		var wrapHeight = 0;
 		var wrapLeft = 0;
-		$('.thumbnail .foldBtn').click(function(e) {
+
+		var scaleTip = $('.scaleTip', thumbnail);
+		$('.foldBtn', thumbnail).click(function(e) {
 			if (wrap.attr("data-action") == "show") {
 				wrapLeft = wrap.position().left;
 				wrapWidth = wrap.width();
@@ -302,12 +326,6 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 			}
 		});
 
-		var thumbnail = $('.thumbnail').draggable({
-			containment: "window",
-			handle: ".canvas-wrap",
-			opacity: 0.5,
-		});
-
 		wrap.resizable({
 			handles: "sw",
 			alsoResize: "img",
@@ -321,19 +339,28 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 				left: wrapLeft + 2,
 				top: wrapHeight - scaleTip.height()
 			});
-		})
+		});
 
 		$(window).resize(function(e) {
 			if (e.target == wrap[0]) {
 				return
 			}
-			var windowWidth = $(window).width();
-			var width = thumbnail.width();
-			thumbnail.css({
-				top: 60,
-				left: windowWidth - 242 - width,
-			});
+			onWindowResize();
 		});
+
+		function onWindowResize() {
+			var scale = 0.2;
+			var width = Math.floor(modCanvas.width() * scale);
+			var height = Math.floor(modCanvas.height() * scale);
+			thumbnail.css({
+				width: width,
+				height: height,
+				top: 60,
+				left: $(window).width() - 242 - width,
+			});
+		}
+
+		onWindowResize();
 	}
 
 	function initCode() {

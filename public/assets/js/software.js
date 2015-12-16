@@ -109,10 +109,8 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 		return specNodes[name];
 	}
 
-	function makeImage(width, height) {
-		return diagram.makeImage({
-			size: new go.Size(width, height),
-		});
+	function makeImage(options) {
+		return diagram.makeImage(options);
 	}
 
 	function test() {
@@ -142,6 +140,12 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 	}
 
 	function onDragStart(e, ui) {
+		var element = ui.helper.first();
+		var key = element.attr("data-key");
+		var hardwareNodeData = hardware.getNodeData(key);
+		if(hardwareNodeData.isController) {
+			return false;
+		}
 		var loopEndToLoopStartLink = specLinks["loopEnd_loopStart"];
 		var loopEndToEndLink = specLinks["loopEnd_end"];
 		diagram.links.each(function(link) {
@@ -161,7 +165,6 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 				link.findObject("ARROW").fill = "gray";
 			}
 		});
-
 	}
 
 	//监听window鼠标移动事件
@@ -221,6 +224,9 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 
 		model.startTransaction("addNode");
 		var nodeData = addNode(name, point.x, point.y);
+		if(!nodeData) {
+			return;
+		}
 		if (key) {
 			nodeData.hardwareKey = key;
 			nodeData.portIndex = hardwareNodeData.portIndex;
@@ -451,6 +457,11 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 	//添加节点
 	function addNode(name, x, y) {
 		var config = getConfig(name);
+		if(!config) {
+			console.log("unknow node " + name);
+			return false;
+		}
+
 		var nodeData = $.extend(true, {}, config);
 		var timeStamp = new Date().getTime();
 		nodeData.key = name + "_" + timeStamp;
@@ -545,7 +556,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 				node = findTargetNode(node, "B");
 				param.y += defaultOffsetY;
 			} else {
-				console.log("unknow node type: " + nodeType);
+				console.log("unknow node type: " + nodeName);
 				break;
 			}
 		}
