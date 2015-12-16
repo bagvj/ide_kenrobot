@@ -25,7 +25,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 			allowLink: false,
 
 			//可以撤消(Ctrl + Z)和重做(Ctrl + Y)
-			"undoManager.isEnabled": true,
+			// "undoManager.isEnabled": true,
 
 			//显示网格
 			// "grid.visible": true,
@@ -143,7 +143,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 		var element = ui.helper.first();
 		var key = element.attr("data-key");
 		var hardwareNodeData = hardware.getNodeData(key);
-		if(hardwareNodeData.isController) {
+		if(hardwareNodeData && hardwareNodeData.isController) {
 			return false;
 		}
 		var loopEndToLoopStartLink = specLinks["loopEnd_loopStart"];

@@ -23,7 +23,7 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 			allowLink: false,
 
 			//可以撤消(Ctrl + Z)和重做(Ctrl + Y)
-			"undoManager.isEnabled": true,
+			// "undoManager.isEnabled": true,
 
 			//显示网格
 			"grid.visible": true,
