@@ -1,681 +1,434 @@
 define(function() {
-	/*
-	 * 硬件配置
-	 */
+	//硬件配置
 	var hardwares = {
 		//主板
 		"board": {
+			tag: 0,
 			type: "board",
-			id: 1,
-			unique: true,
 			alias: "主板",
-			always: true,
-			points: [{
-				position: [0.182, 0.059],
-				source: true,
-				color: "#333",
-				shape: ["Rectangle", {
-					width: 12,
-					height: 20
-				}],
-				port: "A",
-				bit: "11111111",
-			}, {
-				position: [0.352, 0.059],
-				source: true,
-				color: "#333",
-				shape: ["Rectangle", {
-					width: 12,
-					height: 20
-				}],
-				port: "B",
-				bit: "11111111",
-			}, {
-				position: [0.662, 0.059],
-				source: true,
-				color: "#333",
-				shape: ["Rectangle", {
-					width: 12,
-					height: 20
-				}],
-				port: "C",
-				bit: "11111111",
-			}, {
-				position: [0.833, 0.059],
-				source: true,
-				color: "#333",
-				shape: ["Rectangle", {
-					width: 12,
-					height: 20
-				}],
-				port: "D",
-				bit: "11111111",
-			}, {
-				position: [0.662, 0.946],
-				source: true,
-				color: "#333",
-				shape: ["Rectangle", {
-					width: 12,
-					height: 20
-				}],
-				port: "F",
-				bit: "11111111",
-			}, {
-				position: [0.833, 0.946],
-				source: true,
-				color: "#333",
-				shape: ["Rectangle", {
-					width: 12,
-					height: 20
-				}],
-				port: "E",
-				bit: "11111111",
-			}, ],
+			deletable: false,
+			selectionAdorned: false,
+			isController: true,
+			width: 300,
+			height: 184,
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
+			category: "board",
 		},
 
+		//转接口
 		"adapter": {
+			tag: 0,
 			type: "adapter",
 			alias: "转接器",
-			points: [{
-				position: [0.5, 0.05],
-				source: true,
-				color: "#FF8891",
-				shape: "Dot"
-			}, {
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
+			selectionAdorned: false,
+			deletable: false,
+			width: 36,
+			height: 36,
+			category: "adapter",
 		},
 
 		//输入模块
 		//按键
 		"button": {
-			category: 1,
+			tag: 1,
 			alias: "按键",
-			port: "1111111111111111111111111111111100000000111111111111111111111111",
+			width: 43,
+			height: 78,
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//开关
 		"switch": {
-			category: 1,
+			tag: 1,
 			alias: "开关",
-			port: "1111111111111111111111111111111100000000111111111111111111111111",
+			width: 43,
+			height: 78,
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//行程开关
 		"travelSwitch": {
-			category: 1,
+			tag: 1,
 			alias: "行程开关",
-			port: "1111111111111111111111111111111100000000111111111111111111111111",
+			width: 43,
+			height: 78,
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
 			needPinboard: true,
 			inUse: false,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//巡线
 		"linePatrol": {
-			category: 1,
+			tag: 1,
 			alias: "巡线",
-			port: "1111111111111111111111111111111100000000111111111111111111111111",
+			width: 43,
+			height: 78,
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//火焰D
 		"fireD": {
-			category: 1,
+			tag: 1,
 			alias: "火焰D",
+			width: 43,
+			height: 78,
 			inUse: false,
-			port: "1111111111111111111111111111111100000000111111111111111111111111",
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//红外接收
 		"infraredIn": {
-			category: 1,
+			tag: 1,
 			alias: "红外接收",
-			port: "1111111111111111111111111111111100000000111111111111111111111111",
+			width: 43,
+			height: 78,
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//声音传感
 		"soundSensor": {
-			category: 1,
+			tag: 1,
 			alias: "声音传感",
-			port: "1111111111111111111111111111111100000000111111111111111111111111",
+			width: 43,
+			height: 78,
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//倾斜
 		"lean": {
-			category: 1,
+			tag: 1,
 			alias: "倾斜",
-			port: "1111111111111111111111111111111100000000111111111111111111111111",
+			width: 43,
+			height: 78,
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//金属接近
 		"metalClose": {
-			category: 1,
+			tag: 1,
 			alias: "金属接近",
 			inUse: false,
-			port: "1111111111111111111111111111111100000000111111111111111111111111",
+			width: 43,
+			height: 78,
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//1位I/O输入
 		"oneBitIn": {
-			category: 1,
+			tag: 1,
 			alias: "1位I/O输入",
 			inUse: false,
-			port: "1111111111111111111111111111111100000000111111111111111111111111",
+			width: 43,
+			height: 78,
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//巡线阵列
 		"linePatrolRow": {
-			category: 1,
+			tag: 1,
 			alias: "巡线阵列",
-			port: "1111111111111111111111111111111100000000111111111111111111111111",
+			width: 100,
+			height: 80,
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
 			needPinboard: true,
-			bits: 8,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
+			needBit: 8,
 		},
 		//矩阵键盘
 		"keyboard": {
-			category: 1,
+			tag: 1,
 			alias: "矩阵键盘",
-			port: "1111111111111111111111111111111100000000111111111111111111111111",
-			bits: 8,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
+			width: 100,
+			height: 80,
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
+			needPinboard: true,
+			needBit: 8,
 		},
 		//输出模块
 		//LED灯
 		"light": {
-			category: 2,
+			tag: 2,
 			alias: "灯",
-			port: "1111111111111111111111111111111100000000111111111111111111111111",
+			width: 43,
+			height: 78,
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//继电器
 		"relay": {
-			category: 2,
+			tag: 2,
 			alias: "继电器",
-			port: "1111111111111111111111111111111100000000111111111111111111111111",
+			width: 43,
+			height: 78,
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//蜂鸣器
 		"buzzer": {
-			category: 2,
+			tag: 2,
 			alias: "蜂鸣器",
-			port: "1111111111111111111111111111111100000000111111111111111111111111",
+			width: 43,
+			height: 78,
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//红外发射
 		"infraredOut": {
-			category: 2,
+			tag: 2,
 			alias: "红外发射",
-			port: "1111111111111111111111111111111100000000111111111111111111111111",
+			width: 43,
+			height: 78,
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//1位I/O输出
 		"oneBitOut": {
-			category: 2,
+			tag: 2,
 			alias: "1位I/O输出",
-			port: "1111111111111111111111111111111100000000111111111111111111111111",
+			width: 43,
+			height: 78,
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//数码管
 		"digitalTube": {
-			category: 2,
+			tag: 2,
 			alias: "数码管",
-			port: "1111111111111111111111111111111100000000111111111111111111111111",
-			bits: 8,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
+			width: 100,
+			height: 80,
+			port: "11111111 11111111 11111111 11111111 11111111 11111111 11111000 00000000",
+			needBit: 8,
 		},
 
 		//执行模块
 		//舵机
 		"streeringEngine": {
-			category: 3,
+			tag: 3,
 			alias: "舵机",
-			port: "0000000011111111000000000000000000000000000000000000000000000000",
-			bits: 8,
+			width: 90,
+			height: 150,
+			port: "00000000 11111111 00000000 00000000 00000000 00000000 00000000 00000000",
+			needBit: 8,
 			needDriveplate: true,
 			max: 2,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//直流电机
 		"dcMotor": {
-			category: 3,
+			tag: 3,
 			alias: "直流电机",
-			port: "0000000011111111000000000000000000000000000000000000000000000000",
-			bits: 8,
+			width: 87,
+			height: 90,
+			port: "00000000 11111111 00000000 00000000 00000000 00000000 00000000 00000000",
+			needBit: 8,
 			needDriveplate: true,
 			max: 2,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 
 		//传感模块
 		//光照
 		"illumination": {
-			category: 4,
+			tag: 4,
 			alias: "光照",
-			port: "0000000000000000000000000000000000000000111111110000000000000000",
+			width: 43,
+			height: 78,
+			port: "00000000 00000000 00000000 00000000 00000000 11111111 00000000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//温度
 		"temperatue": {
-			category: 4,
+			tag: 4,
 			alias: "温度",
-			port: "0000000000000000000000000000000000000000111111110000000000000000",
+			width: 43,
+			height: 78,
+			port: "00000000 00000000 00000000 00000000 00000000 11111111 00000000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//湿度
 		"humidity": {
-			category: 4,
+			tag: 4,
 			alias: "湿度",
-			port: "0000000000000000000000000000000000000000111111110000000000000000",
+			width: 43,
+			height: 78,
+			port: "00000000 00000000 00000000 00000000 00000000 11111111 00000000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//PM2.5
 		"pm25": {
-			category: 4,
+			tag: 4,
 			alias: "PM2.5",
-			port: "0000000000000000000000000000000000000000111111110000000000000000",
+			width: 43,
+			height: 78,
+			port: "00000000 00000000 00000000 00000000 00000000 11111111 00000000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//火焰A
 		"fireA": {
-			category: 4,
+			tag: 4,
 			alias: "火焰A",
 			inUse: false,
-			port: "0000000000000000000000000000000000000000111111110000000000000000",
+			width: 43,
+			height: 78,
+			port: "00000000 00000000 00000000 00000000 00000000 11111111 00000000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//AD输入
 		"ad": {
-			category: 4,
+			tag: 4,
 			alias: "AD输入",
-			port: "0000000000000000000000000000000000000000111111110000000000000000",
+			width: 43,
+			height: 78,
+			port: "00000000 00000000 00000000 00000000 00000000 11111111 00000000 00000000",
 			needPinboard: true,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
 		},
 		//超声测距
 		"ultrasoundLocation": {
-			category: 4,
+			tag: 4,
 			alias: "超声测距",
-			port: "0000000000000000000000001100000000000000000000000000000000000000",
+			width: 43,
+			height: 78,
+			port: "00000000 00000000 00000000 11000000 00000000 00000000 00000000 00000000",
 			needPinboard: true,
-			bits: 2,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
+			needBit: 2,
 		},
 		//电子罗盘
 		"electronicCompass": {
-			category: 4,
+			tag: 4,
 			alias: "电子罗盘",
-			port: "0000000000000000000000001100000000000000000000000000000000000000",
+			width: 43,
+			height: 78,
+			port: "00000000 00000000 00000000 11000000 00000000 00000000 00000000 00000000",
 			needPinboard: true,
-			bits: 2,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
+			needBit: 2,
 		},
 
 		//其它
 		//串口输入
 		"serialPortIn": {
-			category: 5,
+			tag: 5,
 			alias: "串口输入",
-			port: "0000000000000000000000000000000000000000000000000000000011000000",
+			width: 43,
+			height: 78,
+			port: "00000000 00000000 00000000 00000000 11000000 00000000 00000000 00000000",
 			needPinboard: true,
-			bits: 2,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
+			needBit: 2,
 		},
 		//串口输出
 		"serialPortOut": {
-			category: 5,
+			tag: 5,
 			alias: "串口输出",
-			port: "0000000000000000000000000000000000000000000000000000000011000000",
+			width: 43,
+			height: 78,
+			port: "00000000 00000000 00000000 00000000 11000000 00000000 00000000 00000000",
 			needPinboard: true,
-			bits: 2,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
+			needBit: 2,
 		},
 
 		//IIC输入
 		"iicIn": {
-			category: 5,
+			tag: 5,
 			alias: "IIC输入",
-			port: "0000000000000000000000001100000000000000000000000000000000000000",
+			width: 43,
+			height: 78,
+			port: "00000000 00000000 00000000 11000000 00000000 00000000 00000000 00000000",
 			needPinboard: true,
-			bits: 2,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
+			needBit: 2,
 		},
 		//IIC输出
 		"iicOut": {
-			category: 5,
+			tag: 5,
 			alias: "IIC输出",
-			port: "0000000000000000000000001100000000000000000000000000000000000000",
+			width: 43,
+			height: 78,
+			port: "00000000 00000000 00000000 11000000 00000000 00000000 00000000 00000000",
 			needPinboard: true,
-			bits: 2,
-			points: [{
-				position: [0.5, 0.95],
-				target: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, ],
+			needBit: 2,
 		},
 	};
 
-	/*
-	 * 流程图配置
-	 */
-	var flowcharts = {
-		//特殊模块：开始、结束
-		//开始
+	//流程图配置
+	var softwares = {
 		"start": {
 			tag: 1,
 			subTag: 1,
-			className: "oval",
-			unique: true,
-			always: true,
-			points: [{
-				position: "BottomCenter",
-				source: true,
-				color: "#FF0",
-				shape: "Dot"
-			}]
+			alias: "开始",
+			width: 75,
+			height: 26,
+			deletable: false,
+			category: "start",
 		},
-		//loop开始
 		"loopStart": {
 			tag: 1,
 			subTag: 2,
-			className: "oval",
-			unique: true,
-			always: true,
-			points: [{
-				position: "TopCenter",
-				target: true,
-				color: "#FF8891",
-				shape: "Dot"
-			}, {
-				position: "BottomCenter",
-				source: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, {
-				position: "LeftMiddle",
-				color: "#CCC",
-				shape: "Dot"
-			}]
+			alias: "loop开始",
+			width: 75,
+			height: 26,
+			deletable: false,
+			category: "loopStart",
 		},
-		//loop结束
 		"loopEnd": {
 			tag: 1,
 			subTag: 3,
-			className: "oval",
-			unique: true,
-			always: true,
-			points: [{
-				position: "TopCenter",
-				target: true,
-				color: "#FF8891",
-				shape: "Dot"
-			}, {
-				position: "BottomCenter",
-				color: "#CCC",
-				shape: "Dot"
-			}, {
-				position: "LeftMiddle",
-				color: "#CCC",
-				shape: "Dot"
-			}]
+			alias: "loop结束",
+			width: 75,
+			height: 26,
+			deletable: false,
+			category: "loopEnd",
 		},
-		//结束
 		"end": {
 			tag: 1,
 			subTag: 4,
-			className: "oval",
-			always: true,
-			points: [{
-				position: "TopCenter",
-				color: "#CCC",
-				shape: "Dot"
-			}]
+			alias: "结束",
+			width: 75,
+			height: 26,
+			deletable: false,
+			category: "end",
 		},
 
-		//流程控制模块：if-else、while、for
-		//条件循环
-		"tjxh": {
+		"ifElse": {
 			tag: 2,
 			subTag: 1,
+			alias: "条件分支",
+			width: 75,
+			height: 26,
+			category: "ifElse",
+			format: "if(condition)",
+			params: [{
+				name: "condition",
+				title: "分支条件",
+				inputType: "text",
+				defaultValue: "Condition",
+			}],
+		},
+		"conditionLoop": {
+			tag: 2,
+			subTag: 2,
+			alias: "条件循环",
+			width: 75,
+			height: 26,
+			category: "while",
+			format: "while(condition)",
 			params: [{
 				name: "condition",
 				title: "循环条件",
 				inputType: "text",
 				defaultValue: "Condition",
 			}],
-			format: "while(condition)",
-			type: "loop",
-			points: [{
-				position: "TopCenter",
-				target: true,
-				color: "#FF8891",
-				shape: "Dot"
-			}, {
-				position: "BottomCenter",
-				source: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, {
-				position: "RightMiddle",
-				source: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, {
-				position: "LeftMiddle",
-				target: true,
-				color: "#FF8891",
-				shape: "Dot"
-			}]
 		},
-		//永远循环
-		"yyxh": {
+		"foreverLoop": {
 			tag: 2,
-			subTag: 1,
+			subTag: 2,
+			alias: "永远循环",
+			width: 75,
+			height: 26,
+			category: "while",
 			format: "for(;;)",
-			type: "loop",
-			points: [{
-				position: "TopCenter",
-				target: true,
-				color: "#FF8891",
-				shape: "Dot"
-			}, {
-				position: "BottomCenter",
-				source: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, {
-				position: "RightMiddle",
-				source: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, {
-				position: "LeftMiddle",
-				target: true,
-				color: "#FF8891",
-				shape: "Dot"
-			}]
 		},
-		//计数循环
-		"jsxh": {
+		"countLoop": {
 			tag: 2,
-			subTag: 1,
+			subTag: 2,
+			alias: "计数循环",
+			width: 75,
+			height: 26,
+			category: "while",
+			format: "for(int index = 0; index < count; index++)",
 			params: [{
 				name: "index",
 				title: "循环变量",
@@ -688,90 +441,56 @@ define(function() {
 				inputHolder: "数字或者变量",
 				defaultValue: "5",
 			}],
-			format: "for(int index = 0; index < count; index++)",
-			type: "loop",
-			points: [{
-				position: "TopCenter",
-				target: true,
-				color: "#FF8891",
-				shape: "Dot"
-			}, {
-				position: "BottomCenter",
-				source: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, {
-				position: "RightMiddle",
-				source: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, {
-				position: "LeftMiddle",
-				target: true,
-				color: "#FF8891",
-				shape: "Dot"
-			}]
 		},
-		//条件分支
-		"tjfz": {
-			tag: 2,
-			subTag: 2,
+
+		"delay": {
+			tag: 3,
+			alias: "延时函数",
+			width: 75,
+			height: 26,
+			format: "delay_ms(time);",
 			params: [{
-				name: "condition",
-				title: "分支条件",
+				name: "time",
+				title: "延时",
 				inputType: "text",
-				defaultValue: "Condition",
+				defaultValue: "1000",
+				inputHolder: "毫秒",
 			}],
-			format: "if(condition)",
-			type: "if",
-			points: [{
-				position: "TopCenter",
-				target: true,
-				color: "#FF8891",
-				shape: "Dot"
-			}, {
-				position: "BottomCenter",
-				source: true,
-				color: "#FF0",
-				shape: "Dot"
-			}, {
-				position: "RightMiddle",
-				source: true,
-				color: "#FF0",
-				shape: "Dot"
-			}]
 		},
-		//条件分支合并节点
-		"tjfzMerge": {
-			tag: 2,
-			subTag: 3,
-			className: "tjfz",
-			points: [{
-				position: "TopCenter",
-				target: true,
-				color: "#FF8891",
-				shape: "Dot"
+		"assignment": {
+			tag: 3,
+			alias: "赋值函数",
+			width: 75,
+			height: 26,
+			format: "var = exp;",
+			params: [{
+				name: "var",
+				title: "变量",
+				inputType: "text",
+				defaultValue: "Var",
 			}, {
-				position: "RightMiddle",
-				target: true,
-				color: "#FF8891",
-				shape: "Dot"
-			}, {
-				position: "BottomCenter",
-				source: true,
-				color: "#FF0",
-				shape: "Dot"
-			}]
+				name: "exp",
+				title: "表达式",
+				inputType: "text",
+				defaultValue: "Exp",
+			}],
 		},
 
 		"board": {
-			tag: 3,
+			tag: 4,
+			alias: "主板",
+			width: 36,
+			height: 36,
 		},
 
 		//输入模块
 		//按键
 		"button": {
-			tag: 3,
+			tag: 4,
+			alias: "按键",
+			width: 36,
+			height: 36,
+			format: "value = IoInB(port, bit);",
 			params: [{
 				name: "port",
 				title: "端口",
@@ -791,11 +510,14 @@ define(function() {
 				defaultValue: "Key",
 				increase: true,
 			}],
-			format: "value = IoInB(port, bit);",
 		},
 		//开关
 		"switch": {
-			tag: 3,
+			tag: 4,
+			alias: "开关",
+			width: 36,
+			height: 36,
+			format: "value = IoInB(port, bit);",
 			params: [{
 				name: "port",
 				title: "端口",
@@ -815,12 +537,14 @@ define(function() {
 				defaultValue: "Switch",
 				increase: true,
 			}],
-			format: "value = IoInB(port, bit);",
 		},
 		//行程开关
 		"travelSwitch": {
-			tag: 3,
-			inUse: false,
+			tag: 4,
+			alias: "行程开关",
+			width: 36,
+			height: 36,
+			format: "value = IoInB(port, bit);",
 			params: [{
 				name: "port",
 				title: "端口",
@@ -840,11 +564,14 @@ define(function() {
 				defaultValue: "TravelSwitch",
 				increase: true,
 			}],
-			format: "value = IoInB(port, bit);",
 		},
 		//巡线
 		"linePatrol": {
-			tag: 3,
+			tag: 4,
+			alias: "巡线",
+			width: 36,
+			height: 36,
+			format: "value = IoInB(port, bit);",
 			params: [{
 				name: "port",
 				title: "端口",
@@ -864,11 +591,13 @@ define(function() {
 				defaultValue: "Line",
 				increase: true,
 			}],
-			format: "value = IoInB(port, bit);",
 		},
 		//火焰D
 		"fireD": {
-			tag: 3,
+			tag: 4,
+			alias: "火焰D",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "port",
 				title: "端口",
@@ -892,7 +621,10 @@ define(function() {
 		},
 		//红外接收
 		"infraredIn": {
-			tag: 3,
+			tag: 4,
+			alias: "红外接收",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "port",
 				title: "端口",
@@ -916,7 +648,10 @@ define(function() {
 		},
 		//声音传感
 		"soundSensor": {
-			tag: 3,
+			tag: 4,
+			alias: "声音传感",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "port",
 				title: "端口",
@@ -940,7 +675,10 @@ define(function() {
 		},
 		//倾斜
 		"lean": {
-			tag: 3,
+			tag: 4,
+			alias: "倾斜",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "port",
 				title: "端口",
@@ -964,7 +702,10 @@ define(function() {
 		},
 		//金属接近
 		"metalClose": {
-			tag: 3,
+			tag: 4,
+			alias: "金属接近",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "port",
 				title: "端口",
@@ -988,7 +729,10 @@ define(function() {
 		},
 		//1位I/O输入
 		"oneBitIn": {
-			tag: 3,
+			tag: 4,
+			alias: "1位I/O输入",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "port",
 				title: "端口",
@@ -1012,7 +756,10 @@ define(function() {
 		},
 		//矩阵键盘
 		"keyboard": {
-			tag: 3,
+			tag: 4,
+			alias: "矩阵键盘",
+			width: 36,
+			height: 36,
 			initParams: [{
 				name: "port",
 				title: "端口",
@@ -1026,7 +773,10 @@ define(function() {
 		//输出模块
 		//LED灯
 		"light": {
-			tag: 3,
+			tag: 4,
+			alias: "LED灯",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "port",
 				title: "端口",
@@ -1050,7 +800,10 @@ define(function() {
 		},
 		//继电器
 		"relay": {
-			tag: 3,
+			tag: 4,
+			alias: "继电器",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "port",
 				title: "端口",
@@ -1074,7 +827,10 @@ define(function() {
 		},
 		//蜂鸣器
 		"buzzer": {
-			tag: 3,
+			tag: 4,
+			alias: "蜂鸣器",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "port",
 				title: "端口",
@@ -1098,7 +854,10 @@ define(function() {
 		},
 		//红外发射
 		"infraredOut": {
-			tag: 3,
+			tag: 4,
+			alias: "红外发射",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "port",
 				title: "端口",
@@ -1122,7 +881,10 @@ define(function() {
 		},
 		//1位I/O输出
 		"oneBitOut": {
-			tag: 3,
+			tag: 4,
+			alias: "1位I/O输出",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "port",
 				title: "端口",
@@ -1146,7 +908,10 @@ define(function() {
 		},
 		//数码管
 		"digitalTube": {
-			tag: 3,
+			tag: 4,
+			alias: "数码管",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "num",
 				title: "显示数值",
@@ -1167,7 +932,10 @@ define(function() {
 		//执行模块
 		//舵机
 		"streeringEngine": {
-			tag: 3,
+			tag: 4,
+			alias: "舵机",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "index",
 				title: "编号",
@@ -1186,7 +954,10 @@ define(function() {
 		},
 		//直流电机
 		"dcMotor": {
-			tag: 3,
+			tag: 4,
+			alias: "直流电机",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "index",
 				title: "编号",
@@ -1207,7 +978,10 @@ define(function() {
 		//传感模块
 		//光照
 		"illumination": {
-			tag: 3,
+			tag: 4,
+			alias: "光照",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "bit",
 				title: "位号",
@@ -1224,7 +998,10 @@ define(function() {
 		},
 		//温度
 		"temperatue": {
-			tag: 3,
+			tag: 4,
+			alias: "温度",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "bit",
 				title: "位号",
@@ -1241,7 +1018,10 @@ define(function() {
 		},
 		//湿度
 		"humidity": {
-			tag: 3,
+			tag: 4,
+			alias: "湿度",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "bit",
 				title: "位号",
@@ -1258,7 +1038,10 @@ define(function() {
 		},
 		//PM2.5
 		"pm25": {
-			tag: 3,
+			tag: 4,
+			alias: "PM2.5",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "bit",
 				title: "位号",
@@ -1275,7 +1058,10 @@ define(function() {
 		},
 		//火焰A
 		"fireA": {
-			tag: 3,
+			tag: 4,
+			alias: "火焰A",
+			width: 36,
+			height: 36,
 			inUse: false,
 			params: [{
 				name: "bit",
@@ -1293,7 +1079,10 @@ define(function() {
 		},
 		//AD输入
 		"ad": {
-			tag: 3,
+			tag: 4,
+			alias: "AD输入",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "bit",
 				title: "位号",
@@ -1312,7 +1101,10 @@ define(function() {
 		//其它
 		//串口输入
 		"serialPortIn": {
-			tag: 3,
+			tag: 4,
+			alias: "串口输入",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "index",
 				title: "串口号",
@@ -1350,7 +1142,10 @@ define(function() {
 		},
 		//串口输出
 		"serialPortOut": {
-			tag: 3,
+			tag: 4,
+			alias: "串口输出",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "index",
 				title: "串口号",
@@ -1388,7 +1183,10 @@ define(function() {
 		},
 		//超声测距
 		"ultrasoundLocation": {
-			tag: 3,
+			tag: 4,
+			alias: "超声测距",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "arg",
 				title: "参数",
@@ -1420,7 +1218,10 @@ define(function() {
 		},
 		//电子罗盘
 		"electronicCompass": {
-			tag: 3,
+			tag: 4,
+			alias: "电子罗盘",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "arg",
 				title: "参数",
@@ -1452,7 +1253,10 @@ define(function() {
 		},
 		//IIC输入
 		"iicIn": {
-			tag: 3,
+			tag: 4,
+			alias: "IIC输入",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "arg",
 				title: "参数",
@@ -1483,7 +1287,10 @@ define(function() {
 		},
 		//IIC输出
 		"iicOut": {
-			tag: 3,
+			tag: 4,
+			alias: "IIC输出",
+			width: 36,
+			height: 36,
 			params: [{
 				name: "arg",
 				title: "参数",
@@ -1511,117 +1318,47 @@ define(function() {
 			format: "i2c_maste_transt(arg, value);",
 			initFormat: "twi_master_init(register, preFeequency);"
 		},
-
-		//函数模块：延时、定时
-		//延时函数
-		"yshs": {
-			tag: 4,
-			params: [{
-				name: "time",
-				title: "延时",
-				inputType: "text",
-				defaultValue: "1000",
-				inputHolder: "毫秒",
-			}],
-			format: "delay_ms(time);",
-		},
-		//赋值函数
-		"fzhs": {
-			tag: 4,
-			params: [{
-				name: "var",
-				title: "变量",
-				inputType: "text",
-				defaultValue: "Var",
-			}, {
-				name: "exp",
-				title: "表达式",
-				inputType: "text",
-				defaultValue: "Exp",
-			}],
-			format: "var = exp;",
-		}
-	}
+	};
 
 	function parse() {
-		for (var name in hardwares) {
-			var hardware = hardwares[name];
-			hardware.name = name;
-			hardware.tips = hardware.tips || hardware.alias;
-			hardware.type = hardware.type || name;
-			hardware.unique = hardware.unique || false;
-			hardware.always = hardware.always || false;
-			hardware.desc = hardware.desc || "";
-			hardware.className = "hardware-" + (hardware.className || name) + "-item";
-			hardware.category = hardware.category || 0;
-			hardware.inUse = hardware.inUse === undefined ? true : hardware.inUse;
-
-			if (hardware.type == "board") {
-				hardware.isController = true;
-			} else {
-				hardware.isController = false;
-				hardware.bits = hardware.bits || 1;
-				hardware.needPinboard = hardware.needPinboard || false;
-				hardware.needDriveplate = hardware.needDriveplate || false;
-				hardware.max = hardware.max || 0;
-			}
-
-			var points = hardware.points
-			if (points) {
-				for (var i = 0; i < points.length; i++) {
-					var point = points[i];
-					point.source = point.source || false;
-					point.target = point.target || false;
-				}
-			}
+		for(var name in hardwares){
+			var config = hardwares[name];
+			config.name = name;
+			config.category = config.category || "";
+			config.source = "assets/images/hardware/" + name + ".png";
+			config.location = "0 0";
+			config.inUse = config.inUse === undefined ? true : config.inUse;
+			config.deletable = config.deletable === undefined ? true: config.deletable;
+			config.isController = config.isController || false;
+			config.needBit = config.needBit || 1;
+			config.needPinboard = config.needPinboard || false;
+			config.needDriveplate = config.needDriveplate || false;
+			config.max = config.max || 0;
+			config.textVisible = false;
+			config.angle = 0;
+			config.port = config.port || "";
 		}
 
-		for (var name in flowcharts) {
-			var flowchart = flowcharts[name];
-			flowchart.name = name;
-			flowchart.tips = flowchart.tips || flowchart.name;
-			flowchart.type = flowchart.type || name;
-			flowchart.unique = flowchart.unique || false;
-			flowchart.always = flowchart.always || false;
-			flowchart.className = "flowchart-" + (flowchart.className || name) + "-item";
-			flowchart.desc = flowchart.desc || "";
-
-			var points = flowchart.points;
-			if (!points) {
-				points = [{
-					position: "TopCenter",
-					target: true,
-					color: "#FF8891",
-					shape: "Dot"
-				}, {
-					position: "BottomCenter",
-					source: true,
-					color: "#FF0",
-					shape: "Dot"
-				}];
-				flowchart.points = points;
+		for(var name in softwares){
+			var config = softwares[name];
+			config.name = name;
+			config.category = config.category || "";
+			if(config.tag >= 4) {
+				config.source = "assets/images/hardware/" + name + "-small.png";
+			} else {
+				config.source = "assets/images/software/" + name + ".png";
 			}
-
-			for (var i = 0; i < points.length; i++) {
-				var point = points[i];
-				point.source = point.source || false;
-				point.target = point.target || false;
-			}
-
-			var params = flowchart.params;
-			if(params) {
-				for (var i = 0; i < params.length; i++) {
-					var param = params[i];
-					param.increase = param.increase || false;
-				}
-			}
+			config.location = "0 0";
+			config.deletable = config.deletable === undefined ? true: config.deletable;
+			config.textVisible = config.tag < 4;
+			config.angle = 0;
 		}
 
 		return {
 			hardwares: hardwares,
-			flowcharts: flowcharts,
-		}
+			softwares: softwares,
+		};
 	}
-
+	
 	return parse();
-})
+});
