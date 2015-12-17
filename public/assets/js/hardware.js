@@ -21,6 +21,7 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 			allowReshape: false,
 			// allowRelink: false,
 			allowLink: false,
+			maxSelectionCount: 1,
 
 			//可以撤消(Ctrl + Z)和重做(Ctrl + Y)
 			// "undoManager.isEnabled": true,
@@ -37,6 +38,8 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 			SelectionDeleting: onSelectionDeleting,
 			SelectionDeleted: onSelectionDeleted,
 		});
+		//禁止拖动选择
+		diagram.toolManager.dragSelectingTool.isEnabled = false;
 
 		//节点模版
 		for (var name in template.node) {
@@ -241,6 +244,7 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 				setNodePosition(nodeData, x, y + offsetY);
 				addLink(adapterData.key, nodeData.key, "T", "B");
 			} else {
+				//没有转接板
 				var adapterData = addNode("adapter", x, y);
 				var adapterOffsetY = -(adapterData.height / 2 + 40);
 				var offsetY = -(adapterData.height + 40 + nodeData.height / 2 + 40);
@@ -257,8 +261,10 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 				addLink(adapterData.key, nodeData.key, "T", "B");
 			}
 		} else {
+			//不需要转接板
 			var offsetY = -(nodeData.height / 2 + 40);
 			if(needTurn) {
+				//需要翻转
 				setNodeAngle(nodeData, 180);
 				offsetY = -offsetY;
 			}

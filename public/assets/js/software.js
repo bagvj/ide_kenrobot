@@ -23,6 +23,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 			allowReshape: false,
 			// allowRelink: false,
 			allowLink: false,
+			maxSelectionCount: 1,
 
 			//可以撤消(Ctrl + Z)和重做(Ctrl + Y)
 			// "undoManager.isEnabled": true,
@@ -33,12 +34,16 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 
 			//鼠标滑轮缩放
 			"toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom,
+			
+			
 			//禁止动画
 			"animationManager.isEnabled": false,
 
 			SelectionDeleting: onSelectionDeleting,
 			SelectionDeleted: onSelectionDeleted,
 		});
+		//禁止拖动选择
+		diagram.toolManager.dragSelectingTool.isEnabled = false;
 
 		//节点模版
 		for (var name in template.node) {
@@ -503,10 +508,14 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 		var startNode = findSpecNode("start");
 		var endNode = findSpecNode("end");
 		var point = go.Point.parse(startNode.data.location);
+		var model = diagram.model;
+		model.startTransaction("autoConnect");
 		visitNode(startNode, endNode, {
 			x: point.x,
 			y: point.y
 		});
+
+		model.commitTransaction("autoConnect");
 	}
 
 	function visitNode(node, endNode, param) {

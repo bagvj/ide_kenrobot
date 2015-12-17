@@ -23,6 +23,9 @@ define(["jquery", "kenrobotDialog", "EventManager"], function($, kenrobotDialog,
 	function init(containerId) {
 		container = $("#" + containerId);
 		vars = [];
+
+		EventManager.bind("hardware", "addNode", onHardwareAddNode);
+		EventManager.bind("hardware", "deleteNode", onHardwareDeleteNode);
 	}
 
 	function getVars() {
@@ -134,6 +137,14 @@ define(["jquery", "kenrobotDialog", "EventManager"], function($, kenrobotDialog,
 
 	function getFormatTR(varInfo) {
 		return "<td>" + varInfo.name + "</td><td>" + varInfo.type + "</td><td>" + varInfo.kind + "</td><td>" + varInfo.initial + "</td><td></td>"
+	}
+
+	function onHardwareAddNode(args) {
+		
+	}
+
+	function onHardwareDeleteNode(args) {
+		
 	}
 
 	return {
