@@ -926,7 +926,10 @@ body {
     float: left;
     left: 185px;
     bottom: 5px;
-    opacity: 0.5;
+    opacity: 0.8;
+    font-family: '黑体';
+    font-size: 14px;
+    color: #000;
     position: absolute;
 }
 

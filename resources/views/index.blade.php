@@ -157,9 +157,7 @@
 		<div class="btn2 download">下载</div>
 		<div class="btn2 feedback">反馈</div>
 	</div>
-	<div class="instro no-select">
-		<span>双击:编辑 右键:删除 滚轮:缩放</span>
-	</div>
+	<div class="instro no-select">双击:编辑 右键:删除 滚轮:缩放</div>
 	<div id="code-more" style="display:none">
 		<div class="closeBtn"></div>
 		<div class="code-wrap">
