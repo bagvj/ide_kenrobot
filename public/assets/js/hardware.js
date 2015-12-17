@@ -233,6 +233,11 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 				var adapterNode = findTargetNode(boardNode, port.portId);
 				var adapterData = adapterNode.data;
 				var offsetY = -(adapterData.height + 40 + nodeData.height / 2 + 40);
+				if(needTurn) {
+					//需要翻转
+					setNodeAngle(nodeData, 180);
+					offsetY = -offsetY;
+				}
 				setNodePosition(nodeData, x, y + offsetY);
 				addLink(adapterData.key, nodeData.key, "T", "B");
 			} else {
