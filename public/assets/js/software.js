@@ -3,7 +3,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 	var diagram;
 	var container;
 	var configs;
-	var defaultOffsetX = 100;
+	var defaultOffsetX = 80;
 	var defaultOffsetY = 70;
 
 	//记录特殊节点，如start、loopStart、loopEnd、end
@@ -82,11 +82,14 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 		var count = toNode.findLinksInto("T").iterator.count;
 		while (count < 2) {
 			var toNodeData = toNode.data;
-			var category = toNodeData.category;
-			if (category == "while") {
-				toNode = findTargetNode(toNode, "R");
-			} else if (category == "ifElse") {
-				toNode = findIfMergeNode(toNode);
+			var nodeTag = toNodeData.tag;
+			if (nodeTag == 2) {
+				var subTag = toNodeData.subTag;
+				if(subTag == 1) {
+					toNode = findIfMergeNode(toNode);
+				} else {
+					toNode = findTargetNode(toNode, "R");
+				}
 			} else {
 				toNode = findTargetNode(toNode, "B");
 			}
@@ -275,9 +278,11 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 
 		var nodeData = node.data;
 		var nodeTag = nodeData.tag;
+		var toNode;
 		if (nodeTag == 2) {
 			var subTag = nodeData.subTag;
 			if (subTag == 1) {
+				//if-else
 				var yesNode = findTargetNode(node, "L");
 				var noNode = findTargetNode(node, "R");
 				if (yesNode != noNode) {
@@ -285,33 +290,30 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 					alert("请先删除分支");
 					return;
 				}
-			} else if (subTag == 2) {
+				toNode = findIfMergeNode(node);
+			} else {
+				//循环
 				var bodyNode = findTargetNode(node, "B");
 				if (bodyNode != node) {
 					e.cancel = true;
 					alert("请先删除循环体");
 					return;
 				}
+				toNode = findTargetNode(node, "R");
 			}
+		} else {
+			toNode = findTargetNode(node, "B");
 		}
-
-		var fromKey, fromPort, toKey, toPort;
-		var links = node.linksConnected.iterator;
+		var toKey = toNode.data.key;
+		var fromLinks = node.findLinksInto("T");
 		var model = diagram.model;
-		while (links.next()) {
-			var link = links.value;
-			if (link.toNode !== link.fromNode) {
-				if (link.toNode === node) {
-					fromKey = model.getFromKeyForLinkData(link.data);
-					fromPort = model.getFromPortIdForLinkData(link.data);
-				} else {
-					toKey = model.getToKeyForLinkData(link.data);
-					toPort = model.getToPortIdForLinkData(link.data);
-				}
-			}
-		}
 		model.startTransaction("relink");
-		addLink(fromKey, toKey, fromPort, toPort);
+		fromLinks.each(function(fromLink){
+			var linkData = fromLink.data;
+			var fromKey = model.getFromKeyForLinkData(linkData);
+			var fromPort = model.getFromPortIdForLinkData(linkData);
+			addLink(fromKey, toKey, fromPort, "T");
+		});
 		model.commitTransaction("relink");
 	}
 
@@ -525,17 +527,18 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 					var mergeNode = findIfMergeNode(node);
 					var yesNode = findTargetNode(node, "L");
 					var noNode = findTargetNode(node, "R");
+					var ifOffsetY = 8;
 					var yesParam = visitNode(yesNode, mergeNode, {
 						x: param.x - defaultOffsetX,
-						y: param.y + defaultOffsetY
+						y: param.y + defaultOffsetY - ifOffsetY,
 					});
 					var noParam = visitNode(noNode, mergeNode, {
 						x: param.x + defaultOffsetX,
-						y: param.y + defaultOffsetY
+						y: param.y + defaultOffsetY - ifOffsetY,
 					});
 					var mergeY = Math.max(yesParam.y, noParam.y);
 
-					param.y = mergeY;
+					param.y = mergeY + ifOffsetY;
 					node = mergeNode;
 				} else if (subTag == 2) {
 					var bodyNode = findTargetNode(node, "B");
