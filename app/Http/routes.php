@@ -13,6 +13,7 @@
 
 Route::get('/home', 'HomeController@index');
 Route::get('/', 'Auth\WeixinAuthController@homeIndex');
+Route::get('/items', 'HomeController@items');
 
 Route::post('/build', 'HomeController@build');
 Route::get('/download', 'HomeController@download');
@@ -31,8 +32,3 @@ Route::get('/auth/snslogin', 'Auth\SnsAuthController@snsLogin');
 Route::any('/snspostlogin', 'Auth\SnsAuthController@snsPostLogin');
 Route::any('/weixinlogin', 'Auth\WeixinAuthController@weixinlogin');
 Route::get('/login', 'Auth\WeixinAuthController@index');
-
-//GetFlowchartItem.php
-Route::get('/flowchart/item', 'FlowChartController@item');
-
-Route::match(['get', 'post'], '/board/match', 'ConnectRuleController@getMatchComponent');

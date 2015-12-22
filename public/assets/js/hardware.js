@@ -32,14 +32,14 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 
 			//鼠标滑轮缩放
 			"toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom,
+			//禁止拖动选择
+			"dragSelectingTool.isEnabled": false,
 			//禁止动画
 			"animationManager.isEnabled": false,
 
 			SelectionDeleting: onSelectionDeleting,
 			SelectionDeleted: onSelectionDeleted,
 		});
-		//禁止拖动选择
-		diagram.toolManager.dragSelectingTool.isEnabled = false;
 
 		//节点模版
 		for (var name in template.node) {
@@ -97,7 +97,7 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 	}
 
 	function test() {
-		console.log(diagram.model.toJson());
+		// console.log(diagram.model.toJson());
 	}
 
 	function onCreateDrag(e) {
@@ -128,8 +128,8 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 		var bitsArray = result.split(" ");
 		var targetBits = "";
 		var replaceBits = "";
-		var needBit = nodeConfig.needBit;
-		for(var i = 0; i < needBit; i++) {
+		var need_bit = nodeConfig.need_bit;
+		for(var i = 0; i < need_bit; i++) {
 			targetBits += "1";
 			replaceBits += "0";
 		}
@@ -145,7 +145,7 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 					portIndex: i,
 					bitIndex: index,
 					replaceBits: replaceBits,
-					needBit: needBit,
+					need_bit: need_bit,
 					port: ports.get(i),
 				});
 			}
@@ -228,7 +228,7 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 
 		model.startTransaction("addNode");
 		var nodeData = addNode(name, x, y);
-		if(nodeData.needPinboard){
+		if(nodeData.need_pin_board){
 			//需要转接板
 			var hasPinboard = boardData.port.substr(targetInfo.portIndex * 9, 8) != "11111111";
 			if(hasPinboard){
@@ -272,7 +272,7 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 			addLink(boardData.key, nodeData.key, port.portId, "B");
 		}
 		var bitIndex = targetInfo.bitIndex;
-		var needBit = targetInfo.needBit;
+		var need_bit = targetInfo.need_bit;
 		var index = targetInfo.portIndex * 9 + targetInfo.bitIndex;
 		var oldPort = boardData.port;
 		boardData.port = oldPort.substr(0, index) + targetInfo.replaceBits + oldPort.substr(index + targetInfo.replaceBits.length);
@@ -283,7 +283,7 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 
 		EventManager.trigger("hardware", "addNode", {
 			name: name,
-			text: nodeData.alias + "(" + port.portId + (needBit > 1 ? bitIndex + "-" + (bitIndex + needBit - 1) : bitIndex) + ")",
+			text: nodeData.alias + "(" + port.portId + (need_bit > 1 ? bitIndex + "-" + (bitIndex + need_bit - 1) : bitIndex) + ")",
 			key: nodeData.key,
 		});
 	}
@@ -310,8 +310,8 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 		var nodeData = node.data;
 
 		var replaceBits = "";
-		var needBit = nodeData.needBit;
-		for(var i = 0; i < needBit; i++) {
+		var need_bit = nodeData.need_bit;
+		for(var i = 0; i < need_bit; i++) {
 			replaceBits += "1";
 		}
 		var index = nodeData.portIndex * 9 + nodeData.bitIndex;

@@ -170,8 +170,8 @@ define(["jquery", "hljs", "EventManager"], function($, hljs, EventManager) {
 		var params;
 
 		if (isInit) {
-			format = nodeData.initFormat;
-			params = nodeData.initParams;
+			format = nodeData.init_format;
+			params = nodeData.init_params;
 		} else {
 			format = nodeData.format;
 			params = nodeData.params;
@@ -180,7 +180,7 @@ define(["jquery", "hljs", "EventManager"], function($, hljs, EventManager) {
 		if (params) {
 			for (var i = 0; i < params.length; i++) {
 				var param = params[i];
-				var value = param.defaultValue;
+				var value = param.default;
 				if(param.name == "port") {
 					if(nodeData.portIndex != undefined){
 						value = nodeData.portIndex;

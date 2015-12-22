@@ -98,7 +98,68 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 			),
 	};
 
+	// function CustomLink(){
+	// 	go.Link.call(this);
+	// }
+	// go.Diagram.inherit(CustomLink, go.Link);
+
+	// CustomLink.prototype.computePoints = function() {
+	// 	var diagram = this.diagram;
+	// 	var model = diagram.model;
+	// 	if(model.name == "software") {
+	// 		var fromNodeData = this.fromNode.data;
+	// 		var toNodeData = this.toNode.data;
+	// 		if(fromNodeData.tag == 1 && toNodeData.tag == 1) {
+	// 			if(fromNodeData.subTag == 3 && toNodeData.subTag == 2) {
+	// 				var links = model.linkDataArray;
+	// 				var minX = Number.MAX_VALUE;
+	// 				for(var i = 0; i < links.length; i++) {
+	// 					var linkData = links[i];
+	// 					var points = linkData.points;
+	// 					if(points) {
+	// 						for(var j = 0; j < points.length; j++) {
+	// 							var x = points.get(j).x;
+	// 							if(minX > x) {
+	// 								minX = x;
+	// 							}
+	// 						}
+	// 					}
+	// 				}
+	// 				// var fromPort = model.getFromPortIdForLinkData(this.data);
+	// 				// var toPort = model.getToPortIdForLinkData(this.data);
+	// 				// console.log(fromPort, toPort);
+	// 				// var p1 = this.getLinkPoint(this.fromNode, fromPort, go.Spot.Left, true, false, this.toNode, toPort);
+	// 				// console.log(fromPort, toPort);
+	// 				// var p2 = this.getLinkPoint(this.fromNode, fromPort, go.Spot.Left, false, false, this.toNode, toPort);
+	// 				// console.log(fromPort, toPort);
+	// 				var p1 = fromNodeData.location;
+	// 				var p2 = toNodeData.location;
+	// 				p1 = new go.Point(p1.x, p1.y);
+	// 				p2 = new go.Point(p2.x, p2.y);
+	// 				// console.log(p1);
+	// 				// console.log(p2);
+	// 				// p1 = this.getLinkPointFromPoint(this.fromNode, this.fromPort, this.fromPort.getDocumentPoint(go.Spot.Left), p1, false);
+	// 				// p2 = this.getLinkPointFromPoint(this.toNode, this.toPort, this.toPort.getDocumentPoint(go.Spot.Left), p2, false);
+	// 				// console.log(p1);
+	// 				// console.log(p2);
+	// 				// console.log(minX);
+	// 				this.clearPoints();
+	// 				this.addPoint(p1);
+	// 				this.addPoint(new go.Point(minX - 30, p1.y));
+	// 				this.addPoint(new go.Point(minX - 30, p1.y));
+	// 				this.addPoint(new go.Point(minX - 30, p2.y));
+	// 				this.addPoint(new go.Point(minX - 30, p2.y));
+	// 				this.addPoint(p2);
+	// 				return true;
+	// 			}
+	// 		}
+	// 	}
+
+	// 	return go.Link.prototype.computePoints.call(this);
+	// };
+
 	//连线模版
+	// var linkTemplate = GO(CustomLink, {
 	var linkTemplate = GO(go.Link, {
 			routing: go.Link.AvoidsNodes,
 			corner: 5,

@@ -10,13 +10,13 @@ class CreateFeedbackTable extends Migration {
 	 * @return void
 	 */
 	public function up() {
-		Schema::create('ken_feedback', function (Blueprint $table) {
-			$table->increments('id');
+		Schema::create('feedbacks', function (Blueprint $table) {
+			$table->increments('id')->comment("ID");
 
-			$table->string('nickname');
-			$table->string('contact');
-			$table->string('content');
-			$table->integer('create_time');
+			$table->string('nickname')->comment("昵称");
+			$table->string('contact')->comment("联系方式");
+			$table->string('content')->comment("意见建议");
+			$table->integer('create_time')->comment("创建时间");
 		});
 	}
 
@@ -26,6 +26,6 @@ class CreateFeedbackTable extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::drop('ken_feedback');
+		Schema::drop('feedbacks');
 	}
 }

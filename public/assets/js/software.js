@@ -34,16 +34,14 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 
 			//鼠标滑轮缩放
 			"toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom,
-			
-			
+			//禁止拖动选择
+			"dragSelectingTool.isEnabled": false,
 			//禁止动画
 			"animationManager.isEnabled": false,
 
 			SelectionDeleting: onSelectionDeleting,
 			SelectionDeleted: onSelectionDeleted,
 		});
-		//禁止拖动选择
-		diagram.toolManager.dragSelectingTool.isEnabled = false;
 
 		//节点模版
 		for (var name in template.node) {
@@ -123,6 +121,8 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 
 	function test() {
 		console.log(diagram.model.toJson());
+		// var loopEndToLoopStartLink = specLinks["loopEnd_loopStart"];
+		// console.log(loopEndToLoopStartLink.data.points);
 	}
 
 	function liveHardwareDrag() {
@@ -151,7 +151,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 		var element = ui.helper.first();
 		var key = element.attr("data-key");
 		var hardwareNodeData = hardware.getNodeData(key);
-		if(hardwareNodeData && hardwareNodeData.isController) {
+		if(hardwareNodeData && hardwareNodeData.is_controller) {
 			return false;
 		}
 		var loopEndToLoopStartLink = specLinks["loopEnd_loopStart"];
@@ -507,6 +507,8 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 	function autoConnect() {
 		var startNode = findSpecNode("start");
 		var endNode = findSpecNode("end");
+		var link = specLinks["loopEnd_loopStart"];
+
 		var point = go.Point.parse(startNode.data.location);
 		var model = diagram.model;
 		model.startTransaction("autoConnect");
@@ -514,7 +516,6 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 			x: point.x,
 			y: point.y
 		});
-
 		model.commitTransaction("autoConnect");
 	}
 

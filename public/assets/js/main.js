@@ -110,18 +110,19 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 		var hardwareGroups = [];
 		for (var name in nodeConfig.hardwares) {
 			var config = nodeConfig.hardwares[name];
-			if (config.inUse) {
-				var tag = config.tag;
+			if (config.in_use) {
+				var module_id = config.module_id;
 				var group = null;
 				for (var i = 0; i < hardwareGroups.length; i++) {
-					if (hardwareGroups[i].tag == tag) {
+					if (hardwareGroups[i].module_id == module_id) {
 						group = hardwareGroups[i];
 						break;
 					}
 				}
 				if (!group) {
 					group = {
-						tag: tag,
+						module_id: module_id,
+						module: config.module,
 						hardwares: []
 					};
 					hardwareGroups.push(group);
@@ -130,17 +131,15 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 			}
 		}
 		hardwareGroups = hardwareGroups.sort(function(a, b) {
-			return a.tag > b.tag;
+			return a.module_id > b.module_id;
 		});
 
-		var categories = ['输入模块', '输出模块', '执行模块', '传感模块', '通讯模块'];
 		var hardwareNav = $('.nav-second>ul', mods[0]).empty();
 		for (var i = 0; i < hardwareGroups.length; i++) {
 			var group = hardwareGroups[i];
-			if (group.tag > 0) {
-				var tag = categories[group.tag - 1];
+			if (group.module_id > 1) {
 				var li = $('<li>').appendTo(hardwareNav);
-				$('<div>').addClass('tag').append(tag).append('<div class="arrow"></div>').appendTo(li);
+				$('<div>').addClass('tag').append(group.module).append('<div class="arrow"></div>').appendTo(li);
 				var ul = $('<ul>');
 				for (var j = 0; j < group.hardwares.length; j++) {
 					var config = group.hardwares[j];
@@ -550,8 +549,8 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 		});
 
 		$('.mod_btn .test').click(function(e) {
-			hardware.test();
-			software.test();
+			// hardware.test();
+			// software.test();
 		});
 
 		$('.mod_btn .feedback').click(function(e) {
