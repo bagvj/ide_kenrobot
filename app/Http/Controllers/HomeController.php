@@ -4,25 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Robot\Feedback;
+use App\User;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
 use ZipArchive;
 
 class HomeController extends Controller {
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
+
 	public function index() {
-		//
 		if (Auth::check()) {
 			$user = Auth::user();
-			var_dump($user);
 		}
 
 		return view('index', compact('user'));
+	}
+
+	public function index2() {
+		return view("index2");
 	}
 
 	public function download(Request $request) {
@@ -150,6 +149,11 @@ class HomeController extends Controller {
 	}
 
 	public function items() {
+		$config = $this->getConfig();
+		return collect($config)->toJson();
+	}
+
+	private function getConfig() {
 		$modules = DB::table('modules')->get();
 		$hardwares = DB::table('hardwares')->get();
 		$softwares = DB::table('softwares')->get();
@@ -160,18 +164,20 @@ class HomeController extends Controller {
 		}
 		$hardwareArray = array();
 		foreach ($hardwares as $key => $value) {
-			$value->module = $modules[$value->module_id]->name;
-			$value->in_use = $value->in_use == 1;
-			$value->deletable = $value->deletable == 1;
-			$value->is_controller = $value->is_controller == 1;
-			$value->need_pin_board = $value->need_pin_board == 1;
-			$value->need_drive_plate = $value->need_drive_plate == 1;
-			$value->textVisible = false;
-			$value->angle = 0;
-			$value->source = "assets/images/hardware/" . $value->name . ".png";
-			$value->location = "0 0";
+			if ($value->in_use) {
+				$value->module = $modules[$value->module_id]->name;
+				$value->in_use = $value->in_use == 1;
+				$value->deletable = $value->deletable == 1;
+				$value->is_controller = $value->is_controller == 1;
+				$value->need_pin_board = $value->need_pin_board == 1;
+				$value->need_drive_plate = $value->need_drive_plate == 1;
+				$value->textVisible = false;
+				$value->angle = 0;
+				$value->source = "assets/images/hardware/" . $value->name . ".png";
+				$value->location = "0 0";
 
-			$hardwareArray[$value->name] = $value;
+				$hardwareArray[$value->name] = $value;
+			}
 		}
 
 		$paramGroups = array();
@@ -185,39 +191,39 @@ class HomeController extends Controller {
 		}
 		$softwareArray = array();
 		foreach ($softwares as $key => $value) {
-			$software_id = $value->id;
-			$value->init_params = array();
-			$value->params = array();
-			if (isset($paramGroups[$software_id])) {
-				$params = $paramGroups[$software_id];
-				foreach ($params as $k => $param) {
-					if ($param->is_init) {
-						$value->init_params[] = $param;
-					} else {
-						$value->params[] = $param;
+			if ($value->in_use) {
+				$software_id = $value->id;
+				$value->init_params = array();
+				$value->params = array();
+				if (isset($paramGroups[$software_id])) {
+					$params = $paramGroups[$software_id];
+					foreach ($params as $k => $param) {
+						if ($param->is_init) {
+							$value->init_params[] = $param;
+						} else {
+							$value->params[] = $param;
+						}
 					}
 				}
-			}
-			if ($value->tag >= 4) {
-				$value->source = "assets/images/hardware/" . $value->name . "-small.png";
-			} else {
-				$value->source = "assets/images/software/" . $value->name . ".png";
-			}
-			$value->in_use = $value->in_use == 1;
-			$value->deletable = $value->deletable == 1;
-			$value->location = "0 0";
-			$value->textVisible = $value->tag < 4;
-			$value->angle = 0;
+				if ($value->tag >= 4) {
+					$value->source = "assets/images/hardware/" . $value->name . "-small.png";
+				} else {
+					$value->source = "assets/images/software/" . $value->name . ".png";
+				}
+				$value->in_use = $value->in_use == 1;
+				$value->deletable = $value->deletable == 1;
+				$value->location = "0 0";
+				$value->textVisible = $value->tag < 4;
+				$value->angle = 0;
 
-			$softwareArray[$value->name] = $value;
+				$softwareArray[$value->name] = $value;
+			}
 		}
-		$ret = array(
+
+		return array(
 			'hardwares' => $hardwareArray,
 			'softwares' => $softwareArray,
 		);
-
-		// echo json_encode($ret);
-		return collect($ret)->toJson();
 	}
 
 	private function fromCharCode($codes) {

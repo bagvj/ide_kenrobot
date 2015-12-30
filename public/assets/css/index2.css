@@ -1,0 +1,413 @@
+@charset "utf-8";
+@font-face {
+    font-family: 'iconfont';
+    src: url('../font/iconfont.eot');
+    /* IE9*/
+    src: url('../font/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../font/iconfont.woff') format('woff'), /* chrome、firefox */
+    url('../font/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('../font/iconfont.svg#iconfont') format('svg');
+    /* iOS 4.1- */
+}
+
+/* 代码用等宽字体 */
+@font-face{
+   font-family: 'SourceCodePro-Regular';
+   src:url('../font/SourceCodePro-Regular.ttf');
+}
+
+* {
+    -webkit-margin-before: 0px;
+    -webkit-margin-after: 0px;
+    -webkit-padding-start: 0px;
+    /*text-shadow: 0 0;*/
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+body {
+    font-family: "Microsoft YaHei", "Helvetica Neue";
+    font-size: 12px;
+    line-height: 1.5;
+    font-size-adjust: none;
+    font-kerning: auto;
+    font-synthesis: weight style;
+    color: #9c9c9c;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "liga", "kern";
+    /*letter-spacing: 2px;*/
+    background: #FFFFFF;
+}
+
+.x-panel-body-default {
+  border: none;
+}
+
+.statusBar {
+  background-color: #131313;
+  line-height: 24px;
+}
+
+.statusBar .x-panel-body-default {
+  background-color: #131313;
+  color: #9c9c9c;
+}
+
+.statusBarLeft {
+  background-color: #131313;
+  color: #9c9c9c;
+  padding-left: 8px;
+}
+
+.statusBarLeft .x-toolbar-text {
+  color: #9c9c9c;
+}
+
+.statusBarRight {
+  background-color: #131313;
+  color: #9c9c9c;
+  padding-right: 8px;
+}
+
+.statusBarRight .x-toolbar-text {
+  color: #9c9c9c;
+}
+
+.bottomBar {
+  background-color: #3B3E40;
+  border-left: 1px solid #2D2D2D;
+  border-right: 1px solid #2D2D2D;
+}
+
+.bottomBar .x-tab-default {
+  background-color: #3B3E40;
+}
+
+.bottomBar .x-tab-default .x-tab-inner {
+  font-weight: normal;
+  color: #9c9c9c;
+}
+
+.bottomBar .x-tab-default-active .x-tab-inner {
+  color: #9c9c9c;
+}
+
+.bottomBar .x-tab-default-active, .bottomBar .x-tab-default-over {
+  background-color: #333333;
+}
+
+.bottomBar .x-tab-default-active .x-tab-glyph {
+    color: #FFFFFF;
+}
+
+.bottomSubPanel {
+  border-left: 1px solid #2D2D2D;
+  border-right: 1px solid #2D2D2D;
+}
+
+.bottomSubPanel .x-tab-bar-default {
+  background-color: #3B3E40;
+}
+
+.bottomSubPanel .x-tab-bar-strip-default-top {
+  height: 0;
+}
+
+.bottomSubPanel .x-tab-bar-body-default-top {
+  padding: 0;
+}
+
+.bottomSubPanel .x-tab-bar-default-horizontal {
+  height: 30px;
+}
+
+.bottomSubPanel .x-tab-default-top {
+  border-radius: 0;
+  padding: 7px 12px 7px 12px;
+  border-right: 1px solid #333333;
+}
+
+.bottomSubPanel .x-tab-default {
+  background-color: #3B3E40;
+}
+
+.bottomSubPanel .x-tab-default .x-tab-inner {
+    color: #9c9c9c;
+    font-weight: normal;
+}
+
+.bottomSubPanel .x-tab-default-active {
+  background-color: #2B2B2B;
+}
+
+.bottomSubPanel .x-tab-default-active .x-tab-inner {
+    color: #FFFFFF;
+}
+
+.bottomSubPanel .x-tab-default .x-tab-close-btn {
+  opacity: 0;
+}
+
+.bottomSubPanel .x-tab-default .x-tab-close-btn:hover {
+  opacity: 1;
+}
+
+.bottomSubPanel .x-tab-default-active .x-tab-close-btn {
+  opacity: 1;
+}
+
+.bottomSubPanel .x-panel-body-default {
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+.bottomSubPanel-body {
+  position: relative;
+}
+
+.leftBar-body {
+  background-color: #3B3E40;
+  border-top: 1px solid #2D2D2D;
+}
+
+.leftBar .x-tab-default {
+  background-color: #3B3E40;
+}
+
+.leftBar .x-tab-default .x-tab-inner {
+  font-weight: normal;
+  color: #9c9c9c;
+}
+
+.leftBar .x-tab-default-active .x-tab-inner {
+  color: #9c9c9c;
+}
+
+.leftBar .x-tab-default-active, .leftBar .x-tab-default-over {
+  background-color: #333333;
+}
+
+.leftBar .x-tab-default-left {
+  padding: 4px 12px;
+}
+
+.leftBar .x-tab-default-active .x-tab-glyph {
+    color: #FFFFFF;
+}
+
+.leftPanel .x-panel-body-default {
+  background-color: #3B3E40;
+}
+
+.leftPanel-body {
+  background-color: #3B3E40;
+  border-left: 1px solid #2D2D2D;
+  border-top: 1px solid #2D2D2D;
+  border-bottom: 1px solid #2D2D2D;
+}
+
+.leftPanel-handle {
+  background-color: transparent;
+  background-image: none;
+  width: 4px;
+}
+
+.leftSubPanel .x-grid-header-ct {
+  display: none;
+}
+
+.leftSubPanel .x-grid-body {
+  background-color: #3B3E40;
+  border: none;
+}
+
+.leftSubPanel .x-grid-cell {
+  background-color: #3B3E40;
+  border: none;
+  color: #9c9c9c;
+}
+
+.leftSubPanel .x-grid-row-selected .x-grid-cell {
+  background-color: #1AAF5D;
+  color: #FFFFFF;
+}
+
+.quickFind .x-form-text {
+  background-color: #3B3E40;
+  color: #FFFFFF;
+  border-width: 0;
+}
+
+.quickFind .x-form-trigger {
+  background-color: #3B3E40;
+}
+
+.quickFind .x-form-trigger-wrap {
+  border-top: none;
+  border-right: none;
+  border-bottom: 1px solid #2D2D2D;
+  border-left: none;
+}
+
+.rightBar-body {
+  background-color: #3B3E40;
+  border-top: 1px solid #2D2D2D;
+}
+
+.rightBar .x-tab-default {
+  background-color: #3B3E40;
+}
+
+.rightBar .x-tab-default .x-tab-inner {
+  font-weight: normal;
+  color: #9c9c9c;
+}
+
+.rightBar .x-tab-default-active .x-tab-inner {
+  color: #9c9c9c;
+}
+
+.rightBar .x-tab-default-active, .rightBar .x-tab-default-over {
+  background-color: #333333;
+}
+
+.rightBar .x-tab-default-left {
+  padding: 4px 12px;
+}
+
+.rightBar .x-tab-default-active .x-tab-glyph {
+    color: #FFFFFF;
+}
+
+.rightPanel-body {
+  background-color: #131313;
+  border-left: 2px solid #3B3E40;
+  color: #FFFFFF;
+}
+
+.rightPanel-handle {
+  background-color: transparent;
+  background-image: none;
+  width: 4px;
+}
+
+.centerPanel-body {
+  background-color: #131313;
+}
+
+.topFirstPanel {
+  background-color: #131313;
+  line-height: 24px;
+}
+
+.topFirstPanel .x-panel-body-default {
+  background-color: #131313;
+  color: #9c9c9c;
+}
+
+.topMenu {
+  padding: 0;
+  background-color: #131313;
+}
+
+.topMenu .x-btn-default-toolbar-small {
+  background: none;
+  border: none;
+  border-radius: 0;
+  border-width: 0;
+}
+
+.topMenu .x-btn-arrow-right .x-btn-inner {
+  font-weight: normal;
+  font-size: 14px;
+  color: #9c9c9c;
+  padding: 0;
+}
+
+.topMenu .x-btn-default-toolbar-small .x-btn-arrow-right {
+  padding: 0;
+}
+
+.topMenu .x-btn-menu-active {
+  background-color: #1AAF5D;
+  background-image: none;
+  border: none;
+}
+
+.topMenu .x-btn-menu-active .x-btn-inner {
+  color: #FFFFFF;
+}
+
+.topMenu .x-btn-arrow {
+  background: none;
+}
+
+.topSubMenu {
+  border: 1px solid #7A7D7F;
+  padding: 3px 0;
+  background-color: #3B3E40;
+}
+
+.topSubMenu .x-menu-body {
+  background-color: #3B3E40;
+}
+
+.topSubMenu .x-menu-item-text {
+  color: #FFFFFF;
+}
+
+.topSubMenu .x-menu-item-active {
+  background-color: #1AAF5D;
+}
+
+.topSubMenu .x-menu-icon-separator {
+  background: none;
+  border: none;
+}
+
+.loginInfoPanel {
+  padding: 0;
+  background-color: #131313;
+}
+
+.loginInfoPanel .x-toolbar-text {
+  color: #337ab7;
+}
+
+.loginInfoPanel .x-toolbar-text {
+  color: #23527c;
+}
+
+.topSecondPanel {
+  background-color: #3B3E40;
+  line-height: 24px;
+}
+
+.topSecondPanel .x-panel-body-default {
+  background-color: #3B3E40;
+  color: #9c9c9c;
+}
+
+.topToolBar {
+  background-color: #3B3E40;
+}
+
+.topToolBar {
+  background-color: #3B3E40;
+}
+
+.topToolBar .x-btn-default-toolbar-small {
+  background: none;
+  border: none;
+  border-radius: 0;
+  border-width: 0;
+}
+
+.topToolBar .x-btn-glyph {
+  color: #9c9c9c;
+}
+
+.topToolBar .x-btn-over {
+  background-color: #333333;
+}
