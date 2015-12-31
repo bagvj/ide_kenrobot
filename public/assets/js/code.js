@@ -180,7 +180,7 @@ define(["jquery", "hljs", "EventManager"], function($, hljs, EventManager) {
 		if (params) {
 			for (var i = 0; i < params.length; i++) {
 				var param = params[i];
-				var value = param.default;
+				var value = param.default_value;
 				if(param.name == "port") {
 					if(nodeData.portIndex != undefined){
 						value = nodeData.portIndex;

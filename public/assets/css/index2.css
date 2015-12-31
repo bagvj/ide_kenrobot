@@ -101,6 +101,10 @@ body {
     color: #FFFFFF;
 }
 
+.bottomBar .x-tab-default-top {
+  padding: 4px 12px 4px 12px;
+}
+
 .bottomSubPanel {
   border-left: 1px solid #2D2D2D;
   border-right: 1px solid #2D2D2D;

@@ -1,10 +1,8 @@
 Ext.define('platform.view.BottomPanel', {
 	extend: 'Ext.panel.Panel',
 	xtype: 'bottomPanel',
-	id: 'myBottomPanel',
 	items: [{
 		xtype: 'tabpanel',
-		id: "myBottomSubPanel",
 		baseCls: 'bottomSubPanel',
 		height: 240,
 		header: false,
@@ -24,14 +22,6 @@ Ext.define('platform.view.BottomPanel', {
 		defaults: {
 			closable: true,
 			closeAction: 'hide',
-			listeners: {
-				removed: function(tab) {
-					var tabPanel = tab.ownerCt;
-					if(tabPanel.items.getCount() == 0 && !tabPanel.getCollapsed()) {
-						tabPanel.toggleCollapse();
-					}
-				}
-			},
 		},
 		items: [{
 			title: '~/workspace',
@@ -40,17 +30,11 @@ Ext.define('platform.view.BottomPanel', {
 		}],
 	}, {
 		xtype: 'tabbar',
-		height: 26,
+		height: 24,
 		orientation: "horizontal",
 		baseCls: 'bottomBar',
 		defaults: {
 			closable: false,
-			listeners: {
-				click: function() {
-					var bottomSubPanel = Ext.getCmp("myBottomSubPanel");
-					bottomSubPanel.toggleCollapse();
-				},
-			}
 		},
 		items: [{
 			text: "输出",

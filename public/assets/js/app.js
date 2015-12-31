@@ -1,14 +1,14 @@
 define(['extJS'], function() {
-	function init(callback) {
+	function init(baseUrl, callback) {
 		Ext.application({
 			name: 'platform',
-			appFolder: 'assets/js/app',
+			appFolder: baseUrl + '/app',
 			controllers: ["MainController"],
 			autoCreateViewport: true,
 
 			launch: function(){
 				callback && callback();
-			}
+			},
 		});
 	}
 	

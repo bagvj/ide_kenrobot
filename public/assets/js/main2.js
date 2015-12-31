@@ -1,17 +1,12 @@
+var baseUrl = "/assets/js";
 require.config({
-	baseUrl: "assets/js",
+	baseUrl: baseUrl,
 	paths: {
 		'extJS': "lib/ext-all-debug",
-
 		"app": "app",
 	},
-	shim: {
-		'extJS': {
-			exports: 'extJS'
-		},
-	}
 });
 
-require(['extJS', 'app'], function(_, app) {
-	app.init();
+require(['app'], function(app) {
+	app.init(baseUrl);
 });

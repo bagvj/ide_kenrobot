@@ -184,6 +184,7 @@ class HomeController extends Controller {
 		foreach ($params as $key => $value) {
 			$software_id = $value->software_id;
 			$value->is_init = $value->is_init == 1;
+			$value->auto_set = $value->auto_set == 1;
 			if (!isset($paramGroups[$software_id])) {
 				$paramGroups[$software_id] = array();
 			}

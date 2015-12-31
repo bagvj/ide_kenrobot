@@ -1,7 +1,6 @@
 Ext.define('platform.view.RightPanel', {
 	extend: 'Ext.panel.Panel',
 	xtype: 'rightPanel',
-	id: "myRightPanel",
 	baseCls: 'rightPanel',
 	layout: 'card',
 	width: 240,

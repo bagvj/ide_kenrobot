@@ -353,7 +353,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 		var node = args.node;
 		var nodeData = node.data;
 
-		if (!nodeData.initParams && !nodeData.params) {
+		if (!nodeData.init_params && !nodeData.params) {
 			//没有参数
 			return;
 		}
@@ -361,16 +361,17 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 		var nodeName = nodeData.name;
 		var contents = [];
 
-		var initParams = nodeData.initParams;
-		if (initParams) {
-			for (var i = 0; i < initParams.length; i++) {
-				var param = initParams[i];
-				if (!param.autoSet) {
+		var init_params = nodeData.init_params;
+		console.log(nodeData);
+		if (init_params) {
+			for (var i = 0; i < init_params.length; i++) {
+				var param = init_params[i];
+				if (!param.auto_set) {
 					contents.push({
-						"title": param.title,
-						"inputType": param.inputType,
-						"inputHolder": (param.inputHolder) ? param.inputHolder : "",
-						"inputInitValue": param.defaultValue,
+						"title": param.label,
+						"inputType": param.input_type,
+						"inputHolder": (param.placeholder) ? param.placeholder : "",
+						"inputInitValue": param.default_value,
 						"inputKey": "init_" + param.name,
 					});
 				}
@@ -381,17 +382,18 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 		if (params) {
 			for (var i = 0; i < params.length; i++) {
 				var param = params[i];
-				if (!param.autoSet) {
+				if (!param.auto_set) {
 					contents.push({
-						"title": param.title,
-						"inputType": param.inputType,
-						"inputHolder": (param.inputHolder) ? param.inputHolder : "",
-						"inputInitValue": param.defaultValue,
+						"title": param.label,
+						"inputType": param.input_type,
+						"inputHolder": (param.placeholder) ? param.placeholder : "",
+						"inputInitValue": param.default_value,
 						"inputKey": param.name
 					});
 				}
 			}
 		}
+		console.log(contents);
 
 		contents.push({
 			"title": "注释",
@@ -409,19 +411,22 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 	}
 
 	function onEditNodeSave(nodeData, data) {
+		console.log("onEditNodeSave");
+		console.log(nodeData);
+		console.log(data);
 		var params = nodeData.params;
-		var initParams = nodeData.initParams;
+		var init_params = nodeData.init_params;
 
 		for (var name in data) {
 			var value = data[name];
 			var param;
 			if (name.length > 5 && name.substr(0, 5) == "init_") {
 				name = name.substr(5);
-				param = findParam(initParams, name);
+				param = findParam(init_params, name);
 			} else {
 				param = findParam(params, name);
 			}
-			param.defaultValue = value;
+			param.default_value = value;
 		}
 		EventManager.trigger("code", "refresh");
 	}

@@ -1,7 +1,6 @@
 Ext.define('platform.view.LeftPanel', {
 	extend: 'Ext.panel.Panel',
 	xtype: 'leftPanel',
-	id: "myLeftPanel",
 	baseCls: 'leftPanel',
 	layout: 'card',
 	width: 240,
@@ -22,7 +21,6 @@ Ext.define('platform.view.LeftPanel', {
 		items: [{
 			xtype: 'combo',
 			region: 'north',
-			id: 'quickFind',
 			baseCls: 'quickFind',
 			hideLabel: true,
 			displayField: 'text',
@@ -36,7 +34,6 @@ Ext.define('platform.view.LeftPanel', {
 			xtype: 'treepanel',
 			region: 'center',
 			baseCls: 'leftSubPanel',
-			id: 'myLeftSubPanel',
 			header: false,
 			rootVisible: false,
 			useArrows: true,
@@ -44,7 +41,6 @@ Ext.define('platform.view.LeftPanel', {
 			root: {
 				expanded: true,
 				children: [{
-					id: 2,
 					text: "输入模块",
 					expanded: true,
 					children: [{
@@ -57,7 +53,6 @@ Ext.define('platform.view.LeftPanel', {
 						leaf: true
 					}]
 				}, {
-					id: 3,
 					text: "输出模块",
 					expanded: true,
 					children: [{
@@ -70,7 +65,6 @@ Ext.define('platform.view.LeftPanel', {
 						leaf: true
 					}]
 				}, {
-					id: 4,
 					text: "执行模块",
 					expanded: true,
 					children: [{
@@ -83,7 +77,6 @@ Ext.define('platform.view.LeftPanel', {
 						leaf: true
 					}]
 				}, {
-					id: 5,
 					text: "传感模块",
 					expanded: true,
 					children: [{
@@ -96,7 +89,6 @@ Ext.define('platform.view.LeftPanel', {
 						leaf: true
 					}]
 				}, {
-					id: 6,
 					text: "通讯模块",
 					expanded: true,
 					children: [{
@@ -129,7 +121,6 @@ Ext.define('platform.view.LeftPanel', {
 		root: {
 			expanded: true,
 			children: [{
-				id: 2,
 				text: "app",
 				expanded: true,
 				children: [{
@@ -142,7 +133,6 @@ Ext.define('platform.view.LeftPanel', {
 					leaf: true
 				}]
 			}, {
-				id: 3,
 				text: "config",
 				expanded: true,
 				children: [{
@@ -155,7 +145,6 @@ Ext.define('platform.view.LeftPanel', {
 					leaf: true
 				}]
 			}, {
-				id: 4,
 				text: "public",
 				expanded: true,
 				children: [{

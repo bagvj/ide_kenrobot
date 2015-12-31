@@ -1,7 +1,6 @@
 Ext.define('platform.view.StatusBar', {
 	extend: 'Ext.panel.Panel',
 	xtype: 'statusBar',
-	id: 'myStatusBar',
 	baseCls: 'statusBar',
 	cls: 'x-unselectable',
 	height: 24,
