@@ -98,8 +98,71 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 			),
 	};
 
+	function CustomLink() {
+		go.Link.call(this);
+	};
+	go.Diagram.inherit(CustomLink, go.Link);
+
+	CustomLink.prototype.findMinX = function(fromNode, toNode) {
+		var toVisitNodes = [fromNode];
+		var visitedNodes = [];
+		var targetNodes = [];
+		while(toVisitNodes.length > 0) {
+			visitedNodes.push(node);
+			if(targetNodes.indexOf(node) < 0) {
+				targetNodes.push(node);
+			}
+			var outNodes = node.findNodesOutOf();
+			var iter = outNodes.iterator;
+			while(iter.next()) {
+				if(visitedNodes.indexOf(iter.value) < 0){
+					toVisitNodes.push(iter.value);
+				}
+			}
+		}
+
+		console.log(targetNodes);
+		var minX = Number.MAX_VALUE;
+		for(var i = 0; i < targetNodes.length; i++) {
+			var node = targetNodes[i];
+			var bounds = node.actualBounds;
+			if(bounds.x < minX) {
+				minX = bounds.x;
+			}
+		}
+
+		return minX;
+	};
+
+	CustomLink.prototype.computePoints = function() {
+		var fromNode = this.fromNode;
+		var toNode = this.toNode;
+		var fromNodeData = fromNode.data;
+		var toNodeData = toNode.data;
+		if(fromNodeData.tag == 1 && toNodeData.tag == 1 && fromNodeData.subTag == 3 && toNodeData.subTag == 2) {
+			var minX = this.findMinX(toNode, fromNode);
+			minX = minX - 20;
+
+			var fromBounds = fromNode.actualBounds;
+			var toBounds = toNode.actualBounds;
+			var x1 = fromBounds.x;
+			var y1 = fromBounds.y + fromBounds.height / 2;
+			var x2 = toBounds.x;
+			var y2 = toBounds.y + toBounds.height / 2;
+
+			this.clearPoints();
+			this.addPoint(new go.Point(x1, y1));
+			this.addPoint(new go.Point(minX, y1));
+			this.addPoint(new go.Point(minX, y2));
+			this.addPoint(new go.Point(x2, y2));
+			return true;
+		} else {
+			return go.Link.prototype.computePoints.call(this);
+		}
+	};
+
 	//连线模版
-	var linkTemplate = GO(go.Link, {
+	var linkTemplate = GO(CustomLink, {
 			routing: go.Link.AvoidsNodes,
 			corner: 5,
 			relinkableFrom: false,
