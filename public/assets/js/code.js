@@ -67,7 +67,7 @@ define(["jquery", "hljs", "EventManager"], function($, hljs, EventManager) {
 		var str = "";
 		for (var i = 0; i < vars.length; i++) {
 			var varInfo = vars[i];
-			str += (varInfo.kind == "auto" ? "" : varInfo.kind + ' ') + varInfo.type + ' ' + varInfo.name + ' = ' + varInfo.initial + ';\n';
+			str += (varInfo.storage_type == "auto" ? "" : varInfo.storage_type + ' ') + varInfo.type + ' ' + varInfo.name + ' = ' + varInfo.default_value + ';\n';
 		}
 		return str;
 	}

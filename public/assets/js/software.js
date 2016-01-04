@@ -592,6 +592,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 		findIfMergeNode: findIfMergeNode,
 		findSpecNode: findSpecNode,
 		makeImage: makeImage,
+		getConfig: getConfig,
 		test: test,
 	}
 });

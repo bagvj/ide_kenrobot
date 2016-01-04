@@ -1,4 +1,4 @@
-define(["jquery", "kenrobotDialog", "EventManager"], function($, kenrobotDialog, EventManager) {
+define(["jquery", "kenrobotDialog", "hardware", "software", "EventManager"], function($, kenrobotDialog, hardware, software, EventManager) {
 	//C++关键字
 	var keywords = [
 		"asm", "do", "if", "return", "typedef", "auto", "double",
@@ -44,15 +44,16 @@ define(["jquery", "kenrobotDialog", "EventManager"], function($, kenrobotDialog,
 		}
 
 		varInfo.type = varInfo.type || "int";
-		varInfo.kind = varInfo.kind || "auto";
-		varInfo.initial = varInfo.initial || "";
-		varInfo.initial = varInfo.initial == "" ? (varInfo.type == "bool" ? "false" : (varInfo.type == "unsigned char" ? "''" : "0")) : varInfo.initial;
+		varInfo.storage_type = varInfo.storage_type || "auto";
+		varInfo.default_value = varInfo.default_value || "";
+		varInfo.default_value = varInfo.default_value == "" ? (varInfo.type == "bool" ? "false" : (varInfo.type == "unsigned char" ? "''" : "0")) : varInfo.default_value;
 		
 		vars.push({
 			name: varInfo.name,
 			type: varInfo.type,
-			kind: varInfo.kind,
-			initial: varInfo.initial
+			storage_type: varInfo.storage_type,
+			default_value: varInfo.default_value,
+			hardware_key: varInfo.hardware_key,
 		});
 
 		$("tbody tr.active", container).removeClass("active");
@@ -74,9 +75,9 @@ define(["jquery", "kenrobotDialog", "EventManager"], function($, kenrobotDialog,
 		var info = vars[index];
 		info.name = varInfo.name;
 		info.type = varInfo.type || "int";
-		info.kind = varInfo.kind || "auto";
-		info.initial = varInfo.initial || "";
-		info.initial = info.initial == "" ? (info.type == "bool" ? "false" : (info.type == "unsigned char" ? "''" : "0")) : info.initial;
+		info.storage_type = varInfo.storage_type || "auto";
+		info.default_value = varInfo.default_value || "";
+		info.default_value = info.default_value == "" ? (info.type == "bool" ? "false" : (info.type == "unsigned char" ? "''" : "0")) : info.default_value;
 		
 		$("tbody tr.active", container).removeClass("active");
 		$('tbody tr:eq(' + index + ')', container).addClass("active").html(getFormatTR(info));
@@ -136,15 +137,79 @@ define(["jquery", "kenrobotDialog", "EventManager"], function($, kenrobotDialog,
 	}
 
 	function getFormatTR(varInfo) {
-		return "<td>" + varInfo.name + "</td><td>" + varInfo.type + "</td><td>" + varInfo.kind + "</td><td>" + varInfo.initial + "</td><td></td>"
+		return "<td>" + varInfo.name + "</td><td>" + varInfo.type + "</td><td>" + varInfo.storage_type + "</td><td>" + varInfo.default_value + "</td><td></td>"
 	}
 
 	function onHardwareAddNode(args) {
-		
+		var key = args.key;
+		var nodeData = hardware.getNodeData(key);
+		if(!nodeData || nodeData.module_id != 2){
+			return;
+		}
+
+		var name = nodeData.name;
+		var nodeConfig = software.getConfig(name);
+		if(!nodeConfig) {
+			return;
+		}
+
+		var toAddVars = [];
+		var params = nodeConfig.init_params;
+		for(var i = 0; i < params.length; i++) {
+			var param = params[i];
+			if(!param.auto_set) {
+				toAddVars.push({
+					storage_type: param.storage_type,
+					type: param.type,
+					name: param.default_value,
+					hardware_key: key,
+				});
+			}
+		}
+
+		params = nodeConfig.params;
+		for(var i = 0; i < params.length; i++) {
+			var param = params[i];
+			if(!param.auto_set) {
+				toAddVars.push({
+					storage_type: param.storage_type,
+					type: param.type,
+					name: param.default_value,
+					hardware_key: key,
+				});
+			}
+		}
+
+		for(var i = 0; i < toAddVars.length; i++) {
+			var varInfo = toAddVars[i];
+			var name = varInfo.name;
+			var valid = checkVar(name);
+			var index = 1;
+			while(!valid.result) {
+				name = name + index;
+				valid = checkVar(name);
+			}
+			varInfo.name = name;
+			addVar(varInfo);
+		}
 	}
 
 	function onHardwareDeleteNode(args) {
-		
+		var key = args.key;
+		var index = -1;
+		for(var i = 0; i < vars.length; i++) {
+			var varInfo = vars[i];
+			console.log(varInfo);
+			if(varInfo.hardware_key == key) {
+				index = i;
+				break;
+			}
+		}
+		if(index >= 0) {
+			vars.splice(index, 1);
+			$("tbody tr:eq(" + index + ")", container).remove();
+			EventManager.trigger("code", "refresh");
+		}
 	}
 
 	return {

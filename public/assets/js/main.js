@@ -427,13 +427,13 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 						"text": "volatile"
 					}],
 					"inputInitValue": "auto",
-					"inputKey": "kind"
+					"inputKey": "storage_type"
 				}, {
 					"title": "变量初值",
 					"inputType": "text",
 					"inputHolder": "",
 					"inputInitValue": "",
-					"inputKey": "initial"
+					"inputKey": "default_value"
 				}]
 			}, function(info) {
 				variable.addVar(info);
@@ -495,14 +495,14 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 						"value": "volatile",
 						"text": "volatile"
 					}],
-					"inputInitValue": varInfo.kind,
-					"inputKey": "kind"
+					"inputInitValue": varInfo.storage_type,
+					"inputKey": "storage_type"
 				}, {
 					"title": "变量初值",
 					"inputType": "text",
 					"inputHolder": "",
-					"inputInitValue": varInfo.initial,
-					"inputKey": "initial"
+					"inputInitValue": varInfo.default_value,
+					"inputKey": "default_value"
 				}]
 			}, function(info) {
 				variable.saveVar(info, index);
