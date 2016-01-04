@@ -108,6 +108,7 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 		var visitedNodes = [];
 		var targetNodes = [];
 		while(toVisitNodes.length > 0) {
+			var node = toVisitNodes.pop();
 			visitedNodes.push(node);
 			if(targetNodes.indexOf(node) < 0) {
 				targetNodes.push(node);
@@ -120,8 +121,6 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 				}
 			}
 		}
-
-		console.log(targetNodes);
 		var minX = Number.MAX_VALUE;
 		for(var i = 0; i < targetNodes.length; i++) {
 			var node = targetNodes[i];
