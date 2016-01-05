@@ -2,8 +2,9 @@
 
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/jquery-ui.min.css')}}" />
-<link rel="stylesheet" type="text/css" href="{{asset('/assets/css/index.css')}} " />
 <link rel="stylesheet" type="text/css" href="{{asset('assets/highlight/styles/solarized_light.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('/assets/css/introjs.css')}} " />
+<link rel="stylesheet" type="text/css" href="{{asset('/assets/css/index.css')}} " />
 @stop
 
 @section('scripts')
@@ -153,11 +154,11 @@
 		<div class="foldBtn active"></div>
 	</div>
 	<div class="mod_btn no-select">
-		<!-- <div class="btn2 test">测试</div> -->
+		<!-- <div class="btn2 demo">演示</div> -->
 		<div class="btn2 download">下载</div>
 		<div class="btn2 feedback">反馈</div>
 	</div>
-	<div class="instro no-select">双击:编辑 右键:删除 滚轮:缩放</div>
+	<div class="instro no-select"></div>
 	<div id="code-more" style="display:none">
 		<div class="closeBtn"></div>
 		<div class="code-wrap">

@@ -5,6 +5,7 @@ require.config({
 		"jquery-ui": "lib/jquery-ui-1.11.3.min",
 		"goJS": "lib/go",
 		'hljs': "../highlight/highlight.pack",
+		// 'introJS': 'lib/intro',
 
 		"nodeConfig": "nodeConfig",
 		"nodeTemplate": "nodeTemplate",
@@ -15,18 +16,16 @@ require.config({
 		"code": "code",
 		"kenrobotDialog": "kenrobotDialog",
 		"EasterEgg": "EasterEgg",
+		// 'demo': 'demo',
 	},
 	shim: {
 		'jquery-ui': {
 			deps: ['jquery'],
-			exports: 'jquery-ui'
-		},
-		'goJS': {
-			exports: 'goJS'
 		},
 	}
 });
 
+// require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventManager", "hardware", "software", "variable", "code", "kenrobotDialog", "EasterEgg", 'introJS', 'demo'], function($, _, _, nodeConfig, nodeTemplate, EventManager, hardware, software, variable, code, kenrobotDialog, EasterEgg, introJS, demo) {
 require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventManager", "hardware", "software", "variable", "code", "kenrobotDialog", "EasterEgg"], function($, _, _, nodeConfig, nodeTemplate, EventManager, hardware, software, variable, code, kenrobotDialog, EasterEgg) {
 	$(function() {
 		initAjax();
@@ -53,6 +52,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 		EventManager.trigger("code", "refresh");
 
 		$('.tabs li:eq(0)').click();
+		// demo.init();
 	});
 
 	function initAjax(){
@@ -65,6 +65,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 
 	function initTabs() {
 		var first = true;
+		var instroes = ["右键:删除 滚轮:缩放", "右键:删除 滚轮:缩放 双击:编辑"];
 		$('.tabs li').click(function() {
 			if ($(this).hasClass("active")) {
 				return;
@@ -79,6 +80,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 				visibility: "visible"
 			});
 
+			$(".instro").text(instroes[index]);
 			if(first) {
 				first = false;
 				setTimeout(drawThumbnail(index), 1000);
