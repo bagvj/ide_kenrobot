@@ -15,14 +15,14 @@
 <div class="header no-select">
 	<div class="content">
 		<span><a href="{{$nav['self'] or '#'}}" class="logo"></a></span>
-		<div class="nav">
+<!-- 		<div class="nav">
 			<ul>
 				<li><a href="{{$nav['mainpage'] or '#'}}">我的主页</a></li>
 				<li><a href="{{$nav['develop'] or '#'}}" class="on">开发</a></li>
 				<li><a href="{{$nav['square'] or '#'}}">广场</a></li>
 				<li><a href="{{$nav['market'] or '#'}}">商城</a></li>
 			</ul>
-		</div>
+		</div> -->
 
 		<div class="login">
 			<ul>
