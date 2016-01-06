@@ -184,9 +184,10 @@ define(["jquery", "kenrobotDialog", "hardware", "software", "EventManager"], fun
 			var varInfo = toAddVars[i];
 			var name = varInfo.name;
 			var valid = checkVar(name);
-			var index = 1;
+			var index = 0;
 			while(!valid.result) {
-				name = name + index;
+				index = index + 1;
+				name = varInfo.name + index;
 				valid = checkVar(name);
 			}
 			varInfo.name = name;
@@ -199,7 +200,6 @@ define(["jquery", "kenrobotDialog", "hardware", "software", "EventManager"], fun
 		var index = -1;
 		for(var i = 0; i < vars.length; i++) {
 			var varInfo = vars[i];
-			console.log(varInfo);
 			if(varInfo.hardware_key == key) {
 				index = i;
 				break;

@@ -309,7 +309,17 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 		} else {
 			toNode = findTargetNode(node, "B");
 		}
-		var toKey = toNode.data.key;
+		var toNodeData = toNode.data;
+		var toKey = toNodeData.key;
+		var toPort;
+		if(toNodeData.tag == 2) {
+			if(toNodeData.subTag >= 2 && toNodeData.subTag <= 4) {
+				toPort = "L";
+			}
+		} else {
+			toPort = "T";
+		}
+
 		var fromLinks = node.findLinksInto("T");
 		var model = diagram.model;
 		model.startTransaction("relink");
@@ -317,7 +327,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 			var linkData = fromLink.data;
 			var fromKey = model.getFromKeyForLinkData(linkData);
 			var fromPort = model.getFromPortIdForLinkData(linkData);
-			addLink(fromKey, toKey, fromPort, "T");
+			addLink(fromKey, toKey, fromPort, toPort);
 		});
 		model.commitTransaction("relink");
 	}
