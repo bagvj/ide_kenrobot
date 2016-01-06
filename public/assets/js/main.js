@@ -5,7 +5,7 @@ require.config({
 		"jquery-ui": "lib/jquery-ui-1.11.3.min",
 		"goJS": "lib/go",
 		'hljs': "../highlight/highlight.pack",
-		// 'introJS': 'lib/intro',
+		'tour': 'lib/bootstrap-tour-standalone.min',
 
 		"nodeConfig": "nodeConfig",
 		"nodeTemplate": "nodeTemplate",
@@ -16,17 +16,19 @@ require.config({
 		"code": "code",
 		"kenrobotDialog": "kenrobotDialog",
 		"EasterEgg": "EasterEgg",
-		// 'demo': 'demo',
+		'demo': 'demo',
 	},
 	shim: {
 		'jquery-ui': {
 			deps: ['jquery'],
 		},
+		'tour': {
+			deps: ['jquery'],
+		}
 	}
 });
 
-// require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventManager", "hardware", "software", "variable", "code", "kenrobotDialog", "EasterEgg", 'introJS', 'demo'], function($, _, _, nodeConfig, nodeTemplate, EventManager, hardware, software, variable, code, kenrobotDialog, EasterEgg, introJS, demo) {
-require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventManager", "hardware", "software", "variable", "code", "kenrobotDialog", "EasterEgg"], function($, _, _, nodeConfig, nodeTemplate, EventManager, hardware, software, variable, code, kenrobotDialog, EasterEgg) {
+require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventManager", "hardware", "software", "variable", "code", "kenrobotDialog", "EasterEgg", 'tour', 'demo'], function($, _, _, nodeConfig, nodeTemplate, EventManager, hardware, software, variable, code, kenrobotDialog, EasterEgg, _, demo) {
 	$(function() {
 		initAjax();
 		initTabs();
@@ -52,7 +54,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 		EventManager.trigger("code", "refresh");
 
 		$('.tabs li:eq(0)').click();
-		// demo.init();
+		demo.init();
 	});
 
 	function initAjax(){
@@ -67,13 +69,15 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 		var first = true;
 		var instroes = ["右键:删除 滚轮:缩放", "右键:删除 滚轮:缩放 双击:编辑"];
 		$('.tabs li').click(function() {
+			var index = $(this).index();
+			var step = index == 0 ? 1 : 3
 			if ($(this).hasClass("active")) {
+				EventManager.trigger("demo", "finishStep", step);
 				return;
 			}
 
 			$(this).parent().find(".active").removeClass("active");
 			$(this).addClass("active");
-			var index = $(this).index();
 			$('.mod').css({
 				visibility: "hidden"
 			}).eq(index).css({
@@ -87,6 +91,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 			} else {
 				drawThumbnail(index)();
 			}
+			EventManager.trigger("demo", "finishStep", step);
 		});
 
 		function drawThumbnail(index) {
@@ -375,13 +380,16 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 				draggable: false,
 				modal: true,
 				resizable: false,
+				close: function() {
+					EventManager.trigger("demo", "finishStep", 6);
+				}
 			});
 		});
 	}
 
 	function initVars() {
 		var varContainer = $(".var-side");
-		$(".btn.add", varContainer).click(function() {
+		$(".var_btn.add", varContainer).click(function() {
 			kenrobotDialog.show(0, {
 				"title": "添加/更改变量",
 				"isSplit": 0,
@@ -442,7 +450,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 			});
 		});
 
-		$(".btn.modify", varContainer).click(function() {
+		$(".var_btn.modify", varContainer).click(function() {
 			var curRow = $("tbody tr.active", varContainer);
 			if(curRow.length == 0) {
 				return;
@@ -511,7 +519,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 			});
 		});
 
-		$(".btn.del", varContainer).click(function() {
+		$(".var_btn.del", varContainer).click(function() {
 			variable.deleteVar();
 		});
 	}
@@ -527,6 +535,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 			var projectName = "Rosys";
 			var buildType = "Rosys";
 
+			EventManager.trigger("demo", "finishStep", 7);
 			$.ajax({
 				type: "POST",
 				url: "./build",

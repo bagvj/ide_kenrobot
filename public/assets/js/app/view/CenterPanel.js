@@ -17,5 +17,6 @@ Ext.define('platform.view.CenterPanel', {
 	}, {
 		region: "center",
 		baseCls: 'centerPanel',
+		html: 'aaaa',
 	}],
 });

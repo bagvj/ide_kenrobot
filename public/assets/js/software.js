@@ -131,7 +131,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 			scope: "software",
 			revert: true,
 			revertDuration: 0,
-			zIndex: 999,
+			zIndex: 9999,
 			containment: "window",
 			cursorAt: {
 				top: 15,
@@ -272,6 +272,17 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 
 		autoConnect();
 		EventManager.trigger("code", "refresh");
+
+		if(name == "light") {
+			point = go.Point.parse(nodeData.location);
+			point = diagram.transformDocToView(point);
+			point = {x: point.x + offset.left, y: point.y + offset.top};
+			EventManager.trigger("demo", "finishStep", {
+				index: 4,
+				left: point.x + width,
+				top: point.y - 40,
+			});
+		}
 	}
 
 	function onSelectionDeleting(e) {
@@ -439,6 +450,10 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 			param.default_value = value;
 		}
 		EventManager.trigger("code", "refresh");
+
+		if(nodeData.name == "light") {
+			EventManager.trigger("demo", "finishStep", 5);
+		}
 	}
 
 	function findParam(params, name) {

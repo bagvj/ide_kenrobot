@@ -65,7 +65,7 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 			scope: "hardware",
 			revert: true,
 			revertDuration: 0,
-			zIndex: 999,
+			zIndex: 9999,
 			containment: "window",
 			cursorAt: {
 				top: 15,
@@ -286,6 +286,10 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 			text: nodeData.alias + "(" + port.portId + (need_bit > 1 ? bitIndex + "-" + (bitIndex + need_bit - 1) : bitIndex) + ")",
 			key: nodeData.key,
 		});
+
+		if(name == "light") {
+			EventManager.trigger("demo", "finishStep", 2);
+		}
 	}
 
 	function onSelectionDeleting(e) {

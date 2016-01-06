@@ -1010,7 +1010,7 @@ body {
     left: 0%;
 }
 
-.var-side .btn {
+.var-side .var_btn {
     float: left;
     margin-left: 20px;
 }
@@ -1628,7 +1628,7 @@ body {
     background-size: contain;
 }
 
-.main .btn {
+.main .var_btn {
     width: 54px;
     height: 24px;
     background-color: #4a5044;

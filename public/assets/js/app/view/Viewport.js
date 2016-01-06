@@ -1,6 +1,7 @@
 Ext.define('platform.view.Viewport', {
 	extend: 'Ext.container.Viewport',
 	layout: 'border',
+	cls: 'x-unselectable',
 	items: [{
 		region: 'north',
 		xtype: 'topPanel',

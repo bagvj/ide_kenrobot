@@ -3,7 +3,7 @@
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/jquery-ui.min.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('assets/highlight/styles/solarized_light.css')}}" />
-<link rel="stylesheet" type="text/css" href="{{asset('/assets/css/introjs.css')}} " />
+<link rel="stylesheet" type="text/css" href="{{asset('/assets/css/bootstrap-tour-standalone.min.css')}} " />
 <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/index.css')}} " />
 @stop
 
@@ -125,9 +125,9 @@
 		</table>
 		</div>
 		<div class="operator">
-		<div class="btn add">增加</div>
-		<div class="btn del">删除</div>
-		<div class="btn modify">修改</div>
+		<div class="var_btn add">增加</div>
+		<div class="var_btn del">删除</div>
+		<div class="var_btn modify">修改</div>
 		</div>
 		</div>
 		<div class="code-side">
@@ -154,7 +154,7 @@
 		<div class="foldBtn active"></div>
 	</div>
 	<div class="mod_btn no-select">
-		<!-- <div class="btn2 demo">演示</div> -->
+		<div class="btn2 demo">演示</div>
 		<div class="btn2 download">下载</div>
 		<div class="btn2 feedback">反馈</div>
 	</div>

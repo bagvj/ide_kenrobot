@@ -2,7 +2,6 @@ Ext.define('platform.view.TopPanel', {
 	extend: 'Ext.panel.Panel',
 	xtype: 'topPanel',
 	height: 48,
-	cls: 'x-unselectable',
 	items: [{
 		xtype: 'panel',
 		height: 24,

@@ -13,6 +13,7 @@ Ext.define('platform.controller.MainController', {
 
 	config: {
 		defaultBottomTabs: [],
+		toggleAll: true,
 	},
 
 	refs: [{
@@ -52,9 +53,9 @@ Ext.define('platform.controller.MainController', {
 			'bottomPanel > tabpanel > panel': {
 				close: this.onBottomPanelClosed,
 			},
-			// 'bottomPanel > tabpanel': {
-			// 	beforecollapse: this.onBottomPanelBeforeCollapse,
-			// }
+			'topPanel toolbar button': {
+				click: this.onTopToolItemClick,
+			}
 		});	
 	},
 
@@ -77,28 +78,8 @@ Ext.define('platform.controller.MainController', {
 		this.collapsePanel(tab, panel);
 	},
 
-	onBottomPanelClosed: function(panel) {
-		var tabPanel = this.getBottomSubPanel();
-		if(tabPanel.items.getCount() == 1 && !tabPanel.getCollapsed()) {
-			tabPanel.toggleCollapse();
-		}
-	},
-
-	onBottomPanelBeforeCollapse: function(tabPanel) {
-		console.log("onBottomPanelBeforeCollapse");
-		var tabs = this.defaultBottomTabs;
-		if(tabs.length == 0) {
-			tabPanel.items.each(function(tab) {
-				tabs.push(tab);
-			});
-		}
-
-		console.log("count " + tabPanel.items.getCount() + " " + tabs.length);
-		if(tabPanel.items.getCount() == 0) {
-			tabPanel.items.addAll(tabs);
-			console.log("count2 " + tabPanel.items.getCount());
-			tabPanel.getLayout().setActiveItem(0);
-		}
+	onTopToolItemClick: function(btn) {
+		this.toggleAllPanel();
 	},
 
 	collapsePanel: function(tab, panel) {
@@ -119,5 +100,39 @@ Ext.define('platform.controller.MainController', {
 				panel.getLayout().setActiveItem(tabIndex);
 			}
 		}
+	},
+
+	showAll: function(){
+		this.toggleAllPanel(true);
+	},
+
+	hideAll: function() {
+		this.toggleAllPanel(false);
+	},
+
+	toggleAllPanel: function(value) {
+		if(value === undefined) {
+			value = !this.toggleAll;
+		}
+		var leftBar = this.getLeftBar();
+		var leftPanel = this.getLeftPanel();
+		var rightBar = this.getRightBar();
+		var rightPanel = this.getRightPanel();
+		var bottomPanel = this.getBottomPanel()
+
+		if(value) {
+			leftBar.show();
+			leftPanel.show();
+			rightBar.show();
+			rightPanel.show();
+			bottomPanel.show();
+		} else {
+			leftBar.hide();
+			leftPanel.hide();
+			rightBar.hide();
+			rightPanel.hide();
+			bottomPanel.hide();
+		}
+		this.toggleAll = value;
 	}
 });

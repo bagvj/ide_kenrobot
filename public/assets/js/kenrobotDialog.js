@@ -125,7 +125,7 @@ define(['jquery', 'jquery-ui'], function($) {
 	function initDialog(callback) {
 		var width = dialogParams.width || 250;
 		var floatDiv = $('<div class="no-select"></div>').css({
-			"z-index": 1000,
+			"z-index": 9999,
 			"position": "absolute",
 			"width": width,
 			"height": dialogParams.height || "auto",
@@ -266,10 +266,10 @@ define(['jquery', 'jquery-ui'], function($) {
 			"-moz-opacity": 0.5,
 			"opacity": 0.5,
 			"background-color": "#EAEAEA",
-			"z-index": "999",
+			"z-index": 9999,
 			"position": "absolute",
-			"top": "0px",
-			"left": "0px"
+			"top": 0,
+			"left": 0
 		});
 		$("body").append(cover);
 		cover.width($(window).width()).height($(window).height());

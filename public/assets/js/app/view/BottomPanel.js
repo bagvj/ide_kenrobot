@@ -15,14 +15,10 @@ Ext.define('platform.view.BottomPanel', {
 		collapsible: true,
 		collapsed: true,
 		animCollapse: false,
-		placeholder: {},
-		collapseMode: "mini",
-		collapseDirection: "top",
-		hideCollapseTool: true,
-		defaults: {
-			closable: true,
-			closeAction: 'hide',
-		},
+		// defaults: {
+		// 	closable: true,
+		// 	closeAction: 'hide',
+		// },
 		items: [{
 			title: '~/workspace',
 		}, {

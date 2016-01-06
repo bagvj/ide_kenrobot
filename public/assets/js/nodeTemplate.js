@@ -103,7 +103,7 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 	};
 	go.Diagram.inherit(CustomLink, go.Link);
 
-	CustomLink.prototype.findMinX = function(fromNode, toNode) {
+	CustomLink.prototype.findBound = function(fromNode, toNode, boundType) {
 		var toVisitNodes = [fromNode];
 		var visitedNodes = [];
 		var targetNodes = [];
@@ -121,16 +121,29 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 				}
 			}
 		}
-		var minX = Number.MAX_VALUE;
-		for(var i = 0; i < targetNodes.length; i++) {
-			var node = targetNodes[i];
-			var bounds = node.actualBounds;
-			if(bounds.x < minX) {
-				minX = bounds.x;
+
+		var bound;
+		if(boundType == "minX") {
+			bound = Number.MAX_VALUE;
+			for(var i = 0; i < targetNodes.length; i++) {
+				var node = targetNodes[i];
+				var bounds = node.actualBounds;
+				if(bounds.x < bound) {
+					bound = bounds.x;
+				}
+			}
+		} else {
+			bound = Number.MIN_VALUE;
+			for(var i = 0; i < targetNodes.length; i++) {
+				var node = targetNodes[i];
+				var bounds = node.actualBounds;
+				if(bounds.x > bound) {
+					bound = bounds.x;
+				}
 			}
 		}
-
-		return minX;
+		
+		return bound;
 	};
 
 	CustomLink.prototype.computePoints = function() {
@@ -139,7 +152,7 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 		var fromNodeData = fromNode.data;
 		var toNodeData = toNode.data;
 		if(fromNodeData.tag == 1 && toNodeData.tag == 1 && fromNodeData.subTag == 3 && toNodeData.subTag == 2) {
-			var minX = this.findMinX(toNode, fromNode);
+			var minX = this.findBound(toNode, fromNode, "minX");
 			minX = minX - 20;
 
 			var fromBounds = fromNode.actualBounds;
@@ -155,6 +168,26 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 			this.addPoint(new go.Point(minX, y2));
 			this.addPoint(new go.Point(x2, y2));
 			return true;
+		// } else if(this.toPort.portId == "L" && toNodeData.tag == 2 && toNodeData.subTag >= 2 && toNodeData.subTag <= 4 && toNode != fromNode) {
+		// 	var minX = this.findBound(toNode, fromNode, "minX");
+		// 	minX = minX - 20;
+
+		// 	var fromBounds = fromNode.actualBounds;
+		// 	var toBounds = toNode.actualBounds;
+		// 	var x1 = fromBounds.x + fromBounds.width / 2;
+		// 	var y1 = fromBounds.y + fromBounds.height;
+		// 	var x2 = toBounds.x;
+		// 	var y2 = toBounds.y + toBounds.height / 2;
+
+		// 	this.clearPoints();
+		// 	this.addPoint(new go.Point(x1, y1));
+		// 	this.addPoint(new go.Point(x1, y1 + 10));
+		// 	this.addPoint(new go.Point(minX, y1 + 10));
+		// 	this.addPoint(new go.Point(minX, y2));
+		// 	this.addPoint(new go.Point(x2, y2));
+		// 	return true;
+		// } else if (this.fromPort.portId == "R" && fromNodeData.tag == 2 && fromNodeData.subTag >= 2 && fromNodeData.subTag <= 4) {
+
 		} else {
 			return go.Link.prototype.computePoints.call(this);
 		}
@@ -168,6 +201,7 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 			relinkableTo: false,
 			deletable: false,
 			selectable: false,
+			adjusting: go.Link.End,
 		},
 		new go.Binding("points").makeTwoWay(),
 		GO(go.Shape, {
