@@ -72,7 +72,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 			var index = $(this).index();
 			var step = index == 0 ? 1 : 3
 			if ($(this).hasClass("active")) {
-				EventManager.trigger("demo", "finishStep", step);
+				EventManager.trigger("demo", "finishStep", [[1, step], [2, step], [3, 1], [3, 4]]);
 				return;
 			}
 
@@ -91,7 +91,8 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 			} else {
 				drawThumbnail(index)();
 			}
-			EventManager.trigger("demo", "finishStep", step);
+
+			EventManager.trigger("demo", "finishStep", [[1, step], [2, step], [3, 1], [3, 4]]);
 		});
 
 		function drawThumbnail(index) {
@@ -381,7 +382,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 				modal: true,
 				resizable: false,
 				close: function() {
-					EventManager.trigger("demo", "finishStep", 6);
+					EventManager.trigger("demo", "finishStep", [[1, 6], [2, 9], [3, 9]]);
 				}
 			});
 		});
@@ -535,7 +536,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 			var projectName = "Rosys";
 			var buildType = "Rosys";
 
-			EventManager.trigger("demo", "finishStep", 7);
+			EventManager.trigger("demo", "finishStep", [[1, 7], [2, 10], [3, 10]]);
 			$.ajax({
 				type: "POST",
 				url: "./build",

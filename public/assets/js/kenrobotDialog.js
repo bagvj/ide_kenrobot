@@ -33,7 +33,7 @@ define(['jquery', 'jquery-ui'], function($) {
 	function show(mode, params, callback) {
 		if (params != null || params.length == 0) dialogParams = params;
 		showCover();
-		initDialog(callback);
+		var div = initDialog(callback);
 
 		var tmpWidth = (dialogParams.width) ? dialogParams.width : 250;
 
@@ -98,6 +98,7 @@ define(['jquery', 'jquery-ui'], function($) {
 			}
 		}
 		$("input:first", dialogBody).focus();
+		return div;
 	}
 
 	/**
@@ -204,7 +205,7 @@ define(['jquery', 'jquery-ui'], function($) {
 					"background-color": "#4a5044"
 				});
 			}
-		).html("保存").click(function(e) {
+		).html(dialogParams.okLabel || "保存").click(function(e) {
 			callSave(callback);
 		});
 		var cancelBtn = $("<span></span>").css({
@@ -225,7 +226,7 @@ define(['jquery', 'jquery-ui'], function($) {
 					"background-color": "#4a5044"
 				});
 			}
-		).html("取消").click(function(e) {
+		).html(dialogParams.cancelLabel || "取消").click(function(e) {
 			hide();
 		});
 		var tmpDiv = $("<div></div>").css({
@@ -255,6 +256,8 @@ define(['jquery', 'jquery-ui'], function($) {
 		floatDiv.draggable({
 			handle: headerDiv
 		});
+
+		return floatDiv;
 	}
 
 	/**

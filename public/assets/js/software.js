@@ -277,11 +277,16 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 			point = go.Point.parse(nodeData.location);
 			point = diagram.transformDocToView(point);
 			point = {x: point.x + offset.left, y: point.y + offset.top};
-			EventManager.trigger("demo", "finishStep", {
-				index: 4,
-				left: point.x + width,
-				top: point.y - 40,
-			});
+			var left = point.x + width;
+			var top = point.y - 40;
+			EventManager.trigger("demo", "finishStep", [[1, 4, left, top], [2, 4, left, top], [3, 7, left, top]]);
+		} else if(name == "switch") {
+			point = go.Point.parse(nodeData.location);
+			point = diagram.transformDocToView(point);
+			point = {x: point.x + offset.left, y: point.y + offset.top};
+			var left = point.x + width;
+			var top = point.y - 40;
+			EventManager.trigger("demo", "finishStep", [[3, 5, left, top]]);
 		}
 	}
 
@@ -383,7 +388,6 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 		var contents = [];
 
 		var init_params = nodeData.init_params;
-		console.log(nodeData);
 		if (init_params) {
 			for (var i = 0; i < init_params.length; i++) {
 				var param = init_params[i];
@@ -414,8 +418,6 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 				}
 			}
 		}
-		console.log(contents);
-
 		contents.push({
 			"title": "注释",
 			"inputType": "none",
@@ -432,9 +434,6 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 	}
 
 	function onEditNodeSave(nodeData, data) {
-		console.log("onEditNodeSave");
-		console.log(nodeData);
-		console.log(data);
 		var params = nodeData.params;
 		var init_params = nodeData.init_params;
 
@@ -452,7 +451,21 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 		EventManager.trigger("code", "refresh");
 
 		if(nodeData.name == "light") {
-			EventManager.trigger("demo", "finishStep", 5);
+			if(data.value == "1") {
+				EventManager.trigger("demo", "finishStep", [[1, 5], [2, 5]]);
+			} else if(data.value == "0") {
+				EventManager.trigger("demo", "finishStep", [[2, 7]]);
+			} else if(data.value == "Switch") {
+				EventManager.trigger("demo", "finishStep", [[3, 8]]);
+			}
+		} else if(nodeData.name == "delay") {
+			if(data.time == "1000") {
+				EventManager.trigger("demo", "finishStep", [[2, 6], [2, 8]]);
+			}
+		} else if(nodeData.name == "switch") {
+			if(data.value == "Switch") {
+				EventManager.trigger("demo", "finishStep", [[3, 6]]);
+			}
 		}
 	}
 

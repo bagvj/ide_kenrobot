@@ -288,7 +288,9 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 		});
 
 		if(name == "light") {
-			EventManager.trigger("demo", "finishStep", 2);
+			EventManager.trigger("demo", "finishStep", [[1, 2], [2, 2], [3, 2]]);
+		} else if(name == "switch") {
+			EventManager.trigger("demo", "finishStep", [[3, 3]]);
 		}
 	}
 
