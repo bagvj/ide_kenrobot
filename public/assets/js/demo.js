@@ -5,68 +5,62 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 	var demoConfigs = [{
 		desc: "点亮一个LED灯",
 		steps: [{
-			content: "Step: 1/7<br />硬件连接",
+			content: "Step: 1/6<br />点击硬件连接",
 		}, {
-			content: "Step: 2/7<br />拖一个LED灯到中间主板的端口(灰色矩形)上",
+			content: "Step: 2/6<br />拖一个LED灯到中间主板的端口(灰色矩形)上",
 		}, {
-			content: "Step: 3/7<br />软件编程",
+			content: "Step: 3/6<br />点击软件编程",
 		}, {
-			content: "Step: 4/7<br />把LED灯拖到loop开始和loop结束之间的连线上",
+			content: "Step: 4/6<br />把LED灯拖到loop开始和loop结束之间的连线上",
 		}, {
-			content: "Step: 5/7<br />双击LED灯，在属性设置里把输出值设为1，然后保存",
+			content: "Step: 5/6<br />双击LED灯，在属性设置里把输出值设为1，然后保存",
 		}, {
-			content: "Step: 6/7<br />查看源代码",
-			placement: "left",
-		}, {
-			content: "Step: 7/7<br />点击下载<br />(我们会把代码上传至服务器并编译。如果编译成功，你将会下载一个包括源代码.cpp和编译出来的.hex的zip压缩包)",
+			placement: "top",
+			content: "Step: 6/6<br />点击下载<br />(我们会把代码上传至服务器并编译。如果编译成功，你将会下载一个包括源代码.cpp和编译出来的.hex的zip压缩包)",
 		}],
 	}, {
 		desc: "点亮一个LED灯，并让其1秒闪1次",
 		steps: [{
-			content: "Step: 1/10<br />硬件连接",
+			content: "Step: 1/9<br />点击硬件连接",
 		}, {
-			content: "Step: 2/10<br />拖一个LED灯到中间主板的端口(灰色矩形)上",
+			content: "Step: 2/9<br />拖一个LED灯到中间主板的端口(灰色矩形)上",
 		}, {
-			content: "Step: 3/10<br />软件编程",
+			content: "Step: 3/9<br />点击软件编程",
 		}, {
-			content: "Step: 4/10<br />把LED拖到loop开始和loop结束之间的连线上",
+			content: "Step: 4/9<br />把LED拖到loop开始和loop结束之间的连线上",
 		}, {
-			content: "Step: 5/10<br />双击LED，在属性设置里把输出值设为1，然后保存",
+			content: "Step: 5/9<br />双击LED，在属性设置里把输出值设为1，然后保存",
 		}, {
-			content: "Step: 6/10<br />拖一个延时函数放到LED下面，双击把延时设置为1000(毫秒)，然后保存",
+			content: "Step: 6/9<br />拖一个延时函数放到LED下面，双击把延时设置为1000(毫秒)，然后保存",
 		}, {
-			content: "Step: 7/10<br />再拖一次LED灯放到延时函数下面，双击把输出值设为0，然后保存",
+			content: "Step: 7/9<br />再拖一次LED灯放到延时函数下面，双击把输出值设为0，然后保存",
 		}, {
-			content: "Step: 8/10<br />再拖一个延时函数放到第二个LED下面，双击把延时设置为1000(毫秒)，然后保存",
+			content: "Step: 8/9<br />再拖一个延时函数放到第二个LED下面，双击把延时设置为1000(毫秒)，然后保存",
 		}, {
-			content: "Step: 9/10<br />查看源代码",
-			placement: "left",
-		}, {
-			content: "Step: 10/10<br />点击下载<br />(我们会把代码上传至服务器并编译。如果编译成功，你将会下载一个包括源代码.cpp和编译出来的.hex的zip压缩包)",
+			placement: "top",
+			content: "Step: 9/9<br />点击下载<br />(我们会把代码上传至服务器并编译。如果编译成功，你将会下载一个包括源代码.cpp和编译出来的.hex的zip压缩包)",
 		}],
 	}, {
 		desc: "通过开关控制LED灯，开关开，灯亮；开关关，灯灭",
 		steps: [{
-			content: "Step: 1/10<br />硬件连接",
+			content: "Step: 1/9<br />点击硬件连接",
 		}, {
-			content: "Step: 2/10<br />拖一个LED到中间主板的端口(灰色矩形)上",
+			content: "Step: 2/9<br />拖一个LED到中间主板的端口(灰色矩形)上",
 		}, {
-			content: "Step: 3/10<br />再拖一个开关到中间主板的端口(灰色矩形)上",
+			content: "Step: 3/9<br />再拖一个开关到中间主板的端口(灰色矩形)上",
 		}, {
-			content: "Step: 4/10<br />软件编程",
+			content: "Step: 4/9<br />点击软件编程",
 		}, {
-			content: "Step: 5/10<br />把开关拖到loop开始和loop结束之间的连线上",
+			content: "Step: 5/9<br />把开关拖到loop开始和loop结束之间的连线上",
 		}, {
-			content: "Step: 6/10<br />双击开关，在属性设置里把读取到变量设为Switch，然后保存",
+			content: "Step: 6/9<br />双击开关，在属性设置里把读取到变量设为Switch，然后保存",
 		}, {
-			content: "Step: 7/10<br />把LED拖到开关下面",
+			content: "Step: 7/9<br />把LED拖到开关下面",
 		}, {
-			content: "Step: 8/10<br />双击LED，在属性设置里把输出值设为开关的读取变量Switch，然后保存",
+			content: "Step: 8/9<br />双击LED，在属性设置里把输出值设为开关的读取变量Switch，然后保存",
 		}, {
-			content: "Step: 9/10<br />查看源代码",
-			placement: "left",
-		}, {
-			content: "Step: 10/10<br />点击下载<br />(我们会把代码上传至服务器并编译。如果编译成功，你将会下载一个包括源代码.cpp和编译出来的.hex的zip压缩包)",
+			placement: "top",
+			content: "Step: 9/9<br />点击下载<br />(我们会把代码上传至服务器并编译。如果编译成功，你将会下载一个包括源代码.cpp和编译出来的.hex的zip压缩包)",
 		}],
 	}];
 
@@ -160,8 +154,6 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 				}
 				element = $("li div[data-name=light]:eq(0)", li).parent();
 			} else if (index == 5) {
-				element = $(".code_view");
-			} else if (index == 6) {
 				element = $(".mod_btn .download");
 			}
 		} else if(demoId == 2) {
@@ -206,8 +198,6 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 				}
 				element = $("li div[data-name=delay]", li).parent();
 			} else if (index == 8) {
-				element = $(".code_view");
-			} else if (index == 9) {
 				element = $(".mod_btn .download");
 			}
 		} else if(demoId == 3) {
@@ -252,8 +242,6 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 				}
 				element = $("li div[data-name=light]:eq(0)", li).parent();
 			} else if (index == 8) {
-				element = $(".code_view");
-			} else if (index == 9) {
 				element = $(".mod_btn .download");
 			}
 		}

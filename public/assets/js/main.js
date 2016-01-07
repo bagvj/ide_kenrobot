@@ -381,9 +381,6 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 				draggable: false,
 				modal: true,
 				resizable: false,
-				close: function() {
-					EventManager.trigger("demo", "finishStep", [[1, 6], [2, 9], [3, 9]]);
-				}
 			});
 		});
 	}
@@ -536,7 +533,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 			var projectName = "Rosys";
 			var buildType = "Rosys";
 
-			EventManager.trigger("demo", "finishStep", [[1, 7], [2, 10], [3, 10]]);
+			EventManager.trigger("demo", "finishStep", [[1, 6], [2, 9], [3, 9]]);
 			$.ajax({
 				type: "POST",
 				url: "./build",
