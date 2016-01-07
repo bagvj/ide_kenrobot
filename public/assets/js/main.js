@@ -549,7 +549,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 						window.open(result.url);
 					} else {
 						alert(result.msg);
-						console.log(result.output);
+						// console.log(result.output);
 					}
 				},
 				error: function(result) {
