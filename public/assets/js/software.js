@@ -237,8 +237,32 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 		}
 		if (key) {
 			nodeData.hardwareKey = key;
-			nodeData.portIndex = hardwareNodeData.portIndex;
-			nodeData.bitIndex = hardwareNodeData.bitIndex;
+			var params = nodeData.init_params;
+			for(var i = 0; i < params.length; i++) {
+				var param = params[i];
+				if(param.auto_set) {
+					if(param.name == "port") {
+						param.default_value = hardwareNodeData.portIndex;
+					} else if(param.name == "bit") {
+						param.default_value = hardwareNodeData.bitIndex;
+					} else if(param.name == "index") {
+						param.default_value = hardwareNodeData.index;
+					}
+				}
+			}
+			params = nodeData.params;
+			for(i = 0; i < params.length; i++) {
+				var param = params[i];
+				if(param.auto_set) {
+					if(param.name == "port") {
+						param.default_value = hardwareNodeData.portIndex;
+					} else if(param.name == "bit") {
+						param.default_value = hardwareNodeData.bitIndex;
+					} else if(param.name == "index") {
+						param.default_value = hardwareNodeData.index;
+					}
+				}
+			}
 		}
 
 		var nodeKey = nodeData.key;
@@ -274,19 +298,24 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 		EventManager.trigger("code", "refresh");
 
 		if(name == "light") {
-			point = go.Point.parse(nodeData.location);
-			point = diagram.transformDocToView(point);
-			point = {x: point.x + offset.left, y: point.y + offset.top};
-			var left = point.x + width;
-			var top = point.y - 40;
-			EventManager.trigger("demo", "finishStep", [[1, 4, left, top], [2, 4, left, top], [3, 7, left, top]]);
+			var pos = getStepPos(nodeData, offset);
+			EventManager.trigger("demo", "finishStep", [[1, 4, pos.left, pos.top], [2, 4, pos.left, pos.top], [3, 7, pos.left, pos.top]]);
 		} else if(name == "switch") {
-			point = go.Point.parse(nodeData.location);
-			point = diagram.transformDocToView(point);
-			point = {x: point.x + offset.left, y: point.y + offset.top};
-			var left = point.x + width;
-			var top = point.y - 40;
-			EventManager.trigger("demo", "finishStep", [[3, 5, left, top]]);
+			var pos = getStepPos(nodeData, offset);
+			EventManager.trigger("demo", "finishStep", [[3, 5, pos.left, pos.top]]);
+		} else if(name == "dcMotor") {
+			var pos = getStepPos(nodeData, offset);
+			EventManager.trigger("demo", "finishStep", [[4, 4, pos.left, pos.top]]);
+		}
+	}
+
+	function getStepPos(nodeData, offset) {
+		var point = go.Point.parse(nodeData.location);
+		point = diagram.transformDocToView(point);
+		point = {x: point.x + offset.left, y: point.y + offset.top};
+		return {
+			left: point.x + nodeData.width,
+			top: point.y - 40,
 		}
 	}
 
@@ -466,6 +495,8 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 			if(data.value == "Switch") {
 				EventManager.trigger("demo", "finishStep", [[3, 6]]);
 			}
+		} else if(nodeData.name == "dcMotor") {
+			EventManager.trigger("demo", "finishStep", [[4, 5]]);
 		}
 	}
 

@@ -128,6 +128,7 @@ class HomeController extends Controller {
 				}
 			} else {
 				$result['msg'] = "编译失败";
+				$result['output'] = $output;
 			}
 		} else {
 			$result['msg'] = "非法请求";

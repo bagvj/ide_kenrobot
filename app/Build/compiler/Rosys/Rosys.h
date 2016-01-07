@@ -2,6 +2,9 @@
 #define _ROSYS_H_
 
 #define __NUM_USE
+#define __Motor_USE
+#define __DC_USE
+#define __RC_USE
 #define __USART_USE
 #define F_CPU 14745600UL
 
@@ -9,7 +12,7 @@
 #include "avr/interrupt.h"
 #include "util/delay.h"
 
-enum P{A =0,B,C,D,E,F,G};
+enum P { A = 0, B, C, D, E, F, G };
 
 //typedef unsigned char ol;
 //const bool true=1;
@@ -20,28 +23,28 @@ void initTimer3();
 void InitNumLed(unsigned char Port);
 void ToLed(unsigned int l);
 void HC595_Send_Data(unsigned char byte);
-void HC595_Output_Data(unsigned char data,unsigned char Location);
+void HC595_Output_Data(unsigned char data, unsigned char Location);
 void delay_ms(unsigned long a);
-void DCMotor(int index,int speed);
+void DCMotor(int index, int speed);
 void InitMotor();
 void InitServo();
 void initKdm(unsigned char kdm);
 int  KeyScan();
-void Servo(unsigned char Index,int Degree);
+void Servo(unsigned char Index, int Degree);
 void initStep(unsigned char step);
-void goStep(unsigned char Index,unsigned int total,unsigned int speed, unsigned char mode, unsigned char );
-void i2c_Motor(unsigned char Index,unsigned int mode,unsigned int speed, unsigned char dir);
-void IoOutB(unsigned char address,int bit,unsigned char val);
-unsigned char IoInB(unsigned char address,int bit);
-void IoOut(unsigned char port,unsigned char value);
+void goStep(unsigned char Index, unsigned int total, unsigned int speed, unsigned char mode, unsigned char);
+void i2c_Motor(unsigned char Index, unsigned int mode, unsigned int speed, unsigned char dir);
+void IoOutB(unsigned char address, int bit, unsigned char val);
+unsigned char IoInB(unsigned char address, int bit);
+void IoOut(unsigned char port, unsigned char value);
 unsigned char IoIn(unsigned char port);
 unsigned int read_adc(unsigned char adc_input);
 unsigned int i2c_Ultr_Rag(unsigned char addr);
 unsigned char uGetChar(unsigned char id);
-void uPutChar(unsigned char id,unsigned char data);
-void InitInt(unsigned char index,unsigned char enabled,unsigned char mode);
-void InitLDM(unsigned char Line,unsigned char Red,unsigned char Green);
-void LDM(unsigned char Line,unsigned char Red,unsigned char Green);
+void uPutChar(unsigned char id, unsigned char data);
+void InitInt(unsigned char index, unsigned char enabled, unsigned char mode);
+void InitLDM(unsigned char Line, unsigned char Red, unsigned char Green);
+void LDM(unsigned char Line, unsigned char Red, unsigned char Green);
 unsigned char RemoteReceive(unsigned char address);
 unsigned int i2c_Ultr_Rag(unsigned char addr);
 //------------------------------------------------------------------------
@@ -51,7 +54,7 @@ void i2c_maste_transt(unsigned char addr, unsigned char data);
 //从从机地址读取一个数，输入地址，输出读到的数
 unsigned char i2c_maste_read(unsigned char addr);
 //初始化为主机
-void twi_master_init(unsigned char band,unsigned char twps);
+void twi_master_init(unsigned char band, unsigned char twps);
 
 #define SYSTEM_CLOCK 14745600L
 #define RC_CIRCLE  (20L*SYSTEM_CLOCK/1000L/8/2)
@@ -88,7 +91,7 @@ void twi_master_init(unsigned char band,unsigned char twps);
 #define TW_MT_DATA_ACK			0x28	//数据已发送接收到ACK
 #define TW_MT_DATA_NACK			0x30	//数据已发送接收到NOT ACK
 #define TW_MT_ARB_LOST			0x38	//SLA+W 或数据的仲裁失败
- 
+
 //主机接收状态码
 //#define TW_START				0x08	//START已发送
 //#define TW_REP_START			0x10	//重复START已发送
@@ -97,7 +100,7 @@ void twi_master_init(unsigned char band,unsigned char twps);
 #define TW_MR_SLA_NACK			0x48	//SLA+R 已发送接收到NOT ACK
 #define TW_MR_DATA_ACK			0x50	//接收到数据ACK 已返回
 #define TW_MR_DATA_NACK			0x58	//接收到数据NOT ACK已返回
- 
+
 //从机接收状态码
 #define TW_SR_SLA_ACK			0x60	//自己的SLA+W 已经被接收ACK已返回
 #define TW_SR_ARB_LOST_SLA_ACK	0x68	//SLA+R/W 作为主机的仲裁失败；自己的SLA+W 已经被接收ACK 已返回
@@ -108,16 +111,16 @@ void twi_master_init(unsigned char band,unsigned char twps);
 #define TW_SR_GCALL_DATA_ACK	0x90	//以前以广播方式被寻址；数据已经被接收ACK已返回
 #define TW_SR_GCALL_DATA_NACK	0x98	//以前以广播方式被寻址；数据已经被接收NOT ACK已返回
 #define TW_SR_STOP				0xA0	//在以从机工作时接收到STOP或重复START
- 
- 
+
+
 //从发送状态码
 #define TW_ST_SLA_ACK			0xA8	//自己的SLA+R 已经被接收ACK 已返回
 #define TW_ST_ARB_LOST_SLA_ACK	0xB0	//SLA+R/W 作为主机的仲裁失败；自己的SLA+R 已经被接收ACK 已返回
 #define TW_ST_DATA_ACK			0xB8	//TWDR 里数据已经发送接收到ACK
 #define TW_ST_DATA_NACK			0xC0	//TWDR 里数据已经发送接收到NOT ACK
 #define TW_ST_LAST_DATA			0xC8	//TWDR 的一字节数据已经发送(TWAE = “0”);接收到ACK
- 
- 
+
+
 //其它状态码
 #define TW_NO_INFO				0xF8	//没有相关的状态信息；TWINT = “0”
 #define TW_BUS_ERROR			0x00	//由于非法的START 或STOP 引起的总线错误
@@ -156,7 +159,7 @@ void  i2c_start(void);	    //总线上起动开始条件
 unsigned char i2c_write(unsigned char a);	//把一个字节数据输入器件, 返回TWI状态
 unsigned char i2c_read(void);		//i2c读
 void  i2c_stop(void);		//总线上起动停止条件 
-unsigned char i2c_write_addr(unsigned char addr,unsigned char r_w);
+unsigned char i2c_write_addr(unsigned char addr, unsigned char r_w);
 unsigned char i2c_write_data(unsigned char data);
 //------------------------------------------------------------------------
 //发送给指定从机一个数据

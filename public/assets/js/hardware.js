@@ -278,7 +278,10 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 		boardData.port = oldPort.substr(0, index) + targetInfo.replaceBits + oldPort.substr(index + targetInfo.replaceBits.length);
 		nodeData.portIndex = targetInfo.portIndex;
 		nodeData.bitIndex = targetInfo.bitIndex;
-
+		if(name == "streeringEngine" || name == "dcMotor") {
+			nodeData.index = getNodeCount(name) - 1;
+		}
+		
 		model.commitTransaction("addNode");
 
 		EventManager.trigger("hardware", "addNode", {
@@ -291,7 +294,21 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 			EventManager.trigger("demo", "finishStep", [[1, 2], [2, 2], [3, 2]]);
 		} else if(name == "switch") {
 			EventManager.trigger("demo", "finishStep", [[3, 3]]);
+		} else if(name == "dcMotor") {
+			EventManager.trigger("demo", "finishStep", [[4, 2]]);
 		}
+	}
+
+	function getNodeCount(name) {
+		var nodes = diagram.model.nodeDataArray;
+		var count = 0;
+		for(var i = 0; i < nodes.length; i++) {
+			var node = nodes[i];
+			if(node.name == name) {
+				count++;
+			}
+		}
+		return count;
 	}
 
 	function onSelectionDeleting(e) {

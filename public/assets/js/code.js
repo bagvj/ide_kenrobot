@@ -14,6 +14,9 @@ define(["jquery", "hljs", "EventManager"], function($, hljs, EventManager) {
 	var setupCode;
 	var loopCode;
 
+	var dcMotorUse;
+	// var streeringEngineUse;
+
 	function init(containerId, _configs, funcs) {
 		container = $("#" + containerId);
 		configs = _configs;
@@ -32,6 +35,7 @@ define(["jquery", "hljs", "EventManager"], function($, hljs, EventManager) {
 		loopInitCodes = [];
 		setupCode = "";
 		loopCode = "";
+		dcMotorUse = false;
 
 		visit();
 
@@ -58,7 +62,11 @@ define(["jquery", "hljs", "EventManager"], function($, hljs, EventManager) {
 
 	//生成头部
 	function genHead() {
-		var str = '#include "Rosys.h"\n';
+		var str = "";
+		// if(dcMotorUse) {
+		// 	str += '#define __Motor_USE\n#define __DC_USE\n';
+		// }
+		str += '#include "Rosys.h"\n';
 		return str;
 	}
 
@@ -119,6 +127,9 @@ define(["jquery", "hljs", "EventManager"], function($, hljs, EventManager) {
 		while(node != endNode) {
 			var nodeData = node.data;
 			var nodeName = nodeData.name;
+			if(!dcMotorUse && nodeName == "dcMotor") {
+				dcMotorUse = true;
+			}
 			var nodeTag = nodeData.tag;
 			if(nodeTag == 1) {
 				node = findTargetNode(node, "B");
@@ -181,15 +192,6 @@ define(["jquery", "hljs", "EventManager"], function($, hljs, EventManager) {
 			for (var i = 0; i < params.length; i++) {
 				var param = params[i];
 				var value = param.default_value;
-				if(param.name == "port") {
-					if(nodeData.portIndex != undefined){
-						value = nodeData.portIndex;
-					}
-				} else if(param.name == "bit") {
-					if(nodeData.bitIndex != undefined){
-						value = nodeData.bitIndex;
-					}
-				}
 				var regExp = new RegExp(param.name, "g");
 				format = format.replace(regExp, value);
 			}
