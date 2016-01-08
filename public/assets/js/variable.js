@@ -143,7 +143,7 @@ define(["jquery", "kenrobotDialog", "hardware", "software", "EventManager"], fun
 	function onHardwareAddNode(args) {
 		var key = args.key;
 		var nodeData = hardware.getNodeData(key);
-		if(!nodeData || nodeData.module_id != 2){
+		if(!nodeData){
 			return;
 		}
 
@@ -157,7 +157,7 @@ define(["jquery", "kenrobotDialog", "hardware", "software", "EventManager"], fun
 		var params = nodeConfig.init_params;
 		for(var i = 0; i < params.length; i++) {
 			var param = params[i];
-			if(!param.auto_set) {
+			if(!param.auto_set && param.is_input) {
 				toAddVars.push({
 					storage_type: param.storage_type,
 					type: param.type,
@@ -170,7 +170,7 @@ define(["jquery", "kenrobotDialog", "hardware", "software", "EventManager"], fun
 		params = nodeConfig.params;
 		for(var i = 0; i < params.length; i++) {
 			var param = params[i];
-			if(!param.auto_set) {
+			if(!param.auto_set && param.is_input) {
 				toAddVars.push({
 					storage_type: param.storage_type,
 					type: param.type,

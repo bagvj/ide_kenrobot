@@ -306,6 +306,12 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 		} else if(name == "dcMotor") {
 			var pos = getStepPos(nodeData, offset);
 			EventManager.trigger("demo", "finishStep", [[4, 4, pos.left, pos.top]]);
+		} else if(name == "digitalTube") {
+			var pos = getStepPos(nodeData, offset);
+			EventManager.trigger("demo", "finishStep", [[5, 4, pos.left, pos.top], [6, 7, pos.left, pos.top]]);
+		} else if(name == "temperatue") {
+			var pos = getStepPos(nodeData, offset);
+			EventManager.trigger("demo", "finishStep", [[6, 5, pos.left, pos.top]]);
 		}
 	}
 
@@ -497,6 +503,15 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 			}
 		} else if(nodeData.name == "dcMotor") {
 			EventManager.trigger("demo", "finishStep", [[4, 5]]);
+		} else if(nodeData.name == "digitalTube") {
+			EventManager.trigger("demo", "finishStep", [[5, 5]]);
+			if(data.num == "Tem") {
+				EventManager.trigger("demo", "finishStep", [[6, 8]]);
+			}
+		} else if(nodeData.name == "temperatue") {
+			if(data.value == "Tem") {
+				EventManager.trigger("demo", "finishStep", [[6, 6]]);
+			}
 		}
 	}
 

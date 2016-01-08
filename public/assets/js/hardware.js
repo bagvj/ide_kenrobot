@@ -296,6 +296,10 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 			EventManager.trigger("demo", "finishStep", [[3, 3]]);
 		} else if(name == "dcMotor") {
 			EventManager.trigger("demo", "finishStep", [[4, 2]]);
+		} else if(name == "digitalTube") {
+			EventManager.trigger("demo", "finishStep", [[5, 2], [6, 3]]);
+		} else if(name == "temperatue") {
+			EventManager.trigger("demo", "finishStep", [[6, 2]]);
 		}
 	}
 
