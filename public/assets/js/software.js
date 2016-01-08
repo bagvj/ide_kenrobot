@@ -299,7 +299,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 
 		if(name == "light") {
 			var pos = getStepPos(nodeData, offset);
-			EventManager.trigger("demo", "finishStep", [[1, 4, pos.left, pos.top], [2, 4, pos.left, pos.top], [3, 7, pos.left, pos.top]]);
+			EventManager.trigger("demo", "finishStep", [[1, 4, pos.left, pos.top], [2, 4, pos.left, pos.top], [3, 7, pos.left, pos.top], [7, 7, pos.left, pos.top]]);
 		} else if(name == "switch") {
 			var pos = getStepPos(nodeData, offset);
 			EventManager.trigger("demo", "finishStep", [[3, 5, pos.left, pos.top]]);
@@ -312,6 +312,9 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 		} else if(name == "temperatue") {
 			var pos = getStepPos(nodeData, offset);
 			EventManager.trigger("demo", "finishStep", [[6, 5, pos.left, pos.top]]);
+		} else if(name == "illumination") {
+			var pos = getStepPos(nodeData, offset);
+			EventManager.trigger("demo", "finishStep", [[7, 5, pos.left, pos.top]]);
 		}
 	}
 
@@ -492,6 +495,8 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 				EventManager.trigger("demo", "finishStep", [[2, 7]]);
 			} else if(data.value == "Switch") {
 				EventManager.trigger("demo", "finishStep", [[3, 8]]);
+			} else if(data.value == "Light") {
+				EventManager.trigger("demo", "finishStep", [[7, 8]]);
 			}
 		} else if(nodeData.name == "delay") {
 			if(data.time == "1000") {
@@ -511,6 +516,10 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 		} else if(nodeData.name == "temperatue") {
 			if(data.value == "Tem") {
 				EventManager.trigger("demo", "finishStep", [[6, 6]]);
+			}
+		} else if(nodeData.name == "illumination") {
+			if(data.value == "Light") {
+				EventManager.trigger("demo", "finishStep", [[7, 6]]);
 			}
 		}
 	}

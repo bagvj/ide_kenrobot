@@ -137,6 +137,30 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 			placement: "top",
 			content: "点击下载<br />(我们会把代码上传至服务器并编译。如果编译成功，你将会下载一个包括源代码.cpp和编译出来的.hex的zip压缩包)",
 		}],
+	}, {
+		id: 7,
+		name: "光照传感器 ",
+		desc: "使用LED灯显示光照传感器状态",
+		steps: [{
+			content: "点击硬件连接",
+		}, {
+			content: "拖一个光照传感器到中间主板的F端口上",
+		}, {
+			content: "拖一个LED到中间主板的端口(灰色矩形)上",
+		}, {
+			content: "点击软件编程",
+		}, {
+			content: "把光照传感器拖到loop开始和loop结束之间的连线上",
+		}, {
+			content: "双击光照传感器，在属性设置里把读取到变量设为Light，然后保存",
+		}, {
+			content: "把LED拖到光照传感器下面",
+		}, {
+			content: "双击LED，在属性设置里把输出值设为光照传感器的读取变量Light，然后保存",
+		}, {
+			placement: "top",
+			content: "点击下载<br />(我们会把代码上传至服务器并编译。如果编译成功，你将会下载一个包括源代码.cpp和编译出来的.hex的zip压缩包)",
+		}],
 	}];
 
 	function init() {
@@ -421,6 +445,52 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 					li.addClass("active");
 				}
 				element = $("li div[data-name=digitalTube]:eq(0)", li).parent();
+			} else if (index == 8) {
+				element = $(".mod_btn .download");
+			}
+		} else if(demoId == 7) {
+			if (index == 0) {
+				element = $(".tabs li:eq(0)");
+			} else if (index == 1) {
+				var li = $(".mod:eq(0) .nav-second>ul>li:eq(3)");
+				if (!li.hasClass("active")) {
+					li.addClass("active");
+				}
+				element = $("li div[data-name=illumination]", li).parent();
+				scrollToCenter(element);
+			} else if (index == 2) {
+				var li = $(".mod:eq(0) .nav-second>ul>li:eq(1)");
+				if (!li.hasClass("active")) {
+					li.addClass("active");
+				}
+				element = $("li div[data-name=light]", li).parent();
+				scrollToCenter(element);
+			} else if (index == 3) {
+				element = $(".tabs li:eq(1)");
+			} else if (index == 4) {
+				var li = $(".mod:eq(1) .nav-second>ul>li:eq(0)");
+				if (!li.hasClass("active")) {
+					li.addClass("active");
+				}
+				element = $("li div[data-name=illumination]:eq(0)", li).parent();
+			} else if(index == 5) {
+				var li = $(".mod:eq(1) .nav-second>ul>li:eq(0)");
+				if (!li.hasClass("active")) {
+					li.addClass("active");
+				}
+				element = $("li div[data-name=illumination]:eq(0)", li).parent();
+			} else if(index == 6) {
+				var li = $(".mod:eq(1) .nav-second>ul>li:eq(0)");
+				if (!li.hasClass("active")) {
+					li.addClass("active");
+				}
+				element = $("li div[data-name=light]:eq(0)", li).parent();
+			} else if(index == 7) {
+				var li = $(".mod:eq(1) .nav-second>ul>li:eq(0)");
+				if (!li.hasClass("active")) {
+					li.addClass("active");
+				}
+				element = $("li div[data-name=light]:eq(0)", li).parent();
 			} else if (index == 8) {
 				element = $(".mod_btn .download");
 			}

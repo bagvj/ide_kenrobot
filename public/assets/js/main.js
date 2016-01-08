@@ -72,7 +72,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 			var index = $(this).index();
 			var step = index == 0 ? 1 : 3
 			if ($(this).hasClass("active")) {
-				EventManager.trigger("demo", "finishStep", [[1, step], [2, step], [3, 1], [3, 4], [4, step], [5, step], [6, 1], [6, 4]]);
+				EventManager.trigger("demo", "finishStep", [[1, step], [2, step], [3, 1], [3, 4], [4, step], [5, step], [6, 1], [6, 4], [7, 1], [7, 4]]);
 				return;
 			}
 
@@ -92,7 +92,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 				drawThumbnail(index)();
 			}
 
-			EventManager.trigger("demo", "finishStep", [[1, step], [2, step], [3, 1], [3, 4], [4, step], [5, step], [6, 1], [6, 4]]);
+			EventManager.trigger("demo", "finishStep", [[1, step], [2, step], [3, 1], [3, 4], [4, step], [5, step], [6, 1], [6, 4], [7, 1], [7, 4]]);
 		});
 
 		function drawThumbnail(index) {
@@ -533,7 +533,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 			var projectName = "Rosys";
 			var buildType = "Rosys";
 
-			EventManager.trigger("demo", "finishStep", [[1, 6], [2, 9], [3, 9], [4, 6], [5, 6], [6, 9]]);
+			EventManager.trigger("demo", "finishStep", [[1, 6], [2, 9], [3, 9], [4, 6], [5, 6], [6, 9], [7, 9]]);
 			$.ajax({
 				type: "POST",
 				url: "./build",

@@ -291,7 +291,7 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 		});
 
 		if(name == "light") {
-			EventManager.trigger("demo", "finishStep", [[1, 2], [2, 2], [3, 2]]);
+			EventManager.trigger("demo", "finishStep", [[1, 2], [2, 2], [3, 2], [7, 3]]);
 		} else if(name == "switch") {
 			EventManager.trigger("demo", "finishStep", [[3, 3]]);
 		} else if(name == "dcMotor") {
@@ -300,6 +300,8 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 			EventManager.trigger("demo", "finishStep", [[5, 2], [6, 3]]);
 		} else if(name == "temperatue") {
 			EventManager.trigger("demo", "finishStep", [[6, 2]]);
+		} else if(name == "illumination") {
+			EventManager.trigger("demo", "finishStep", [[7, 2]]);
 		}
 	}
 
