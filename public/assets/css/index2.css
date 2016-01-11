@@ -48,6 +48,10 @@ img {
   border: none;
 }
 
+body.x-container {
+  background-color: #FFFFFF;
+}
+
 /*.x-resizable-proxy {
   border: 1px dashed #3b5a82;
 }*/
@@ -386,16 +390,25 @@ img {
   border: none;
 }
 
-.loginInfoPanel {
+.topNav {
   padding: 0;
   background-color: #131313;
 }
 
-.loginInfoPanel .x-toolbar-text {
-  color: #337ab7;
+.topNav .x-btn-default-toolbar-small {
+  background: none;
+  border: none;
+  border-radius: 0;
+  border-width: 0;
 }
 
-.loginInfoPanel .x-toolbar-text {
+.topNav .x-btn-inner {
+  color: #337ab7;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.topNav .x-btn-over .x-btn-inner {
   color: #23527c;
 }
 
@@ -428,6 +441,6 @@ img {
   color: #9c9c9c;
 }
 
-.topToolBar .x-btn-over {
-  background-color: #333333;
+.topToolBar .x-btn-over .x-btn-glyph {
+  color: #FFFFFF;
 }

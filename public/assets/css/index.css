@@ -811,11 +811,7 @@ img {
 
 .nav-second ul li li {
     border-bottom: 0px;
-    padding-left: 80px;
     color: #757575;
-}
-
-.nav-second ul li li {
     padding-left: 20px;
 }
 
@@ -951,7 +947,6 @@ img {
     right: 0px;
     position: absolute;
     overflow: auto;
-    height: 70%;
 }
 
 .trolley-side ul {
@@ -967,11 +962,15 @@ img {
     color: #828487;
     padding-left: 20px;
     border-bottom: 1px solid #f0f0f0;
-    cursor: pointer;
     position: relative;
     border-bottom: 0px;
 }
 
+.trolley-side .nav-button {
+    float:left;
+    height:30px;
+}
+    
 .trolley-side .buy {
     width: 80px;
     height: 24px;
@@ -1021,7 +1020,12 @@ img {
 }
 
 .var-side .content {
-    height: 70%;
+    top: 45px;
+    bottom: 40px;
+    left: 0px;
+    right: 0px;
+    position: absolute;
+    overflow: auto;
 }
 
 .var-side table {
@@ -1155,6 +1159,7 @@ img {
     float: left;
     margin-right: 12px;
     margin-top: 4.5px;
+    -ms-interpolation-mode: bicubic;
 }
 
 .hardware-board {
@@ -1697,4 +1702,21 @@ img {
 .main .sel {
     border: 1px solid #b7b7b7;
     width: 50%;
+}
+
+.popover {
+    background-color: #ff9a17;
+}
+
+.popover.fade.in {
+    opacity: 0.9;
+}
+
+.popover.right>.arrow:after {
+    border-right-color: #ff9a17
+}
+
+.popover-content {
+    background-color: #ff9a17;
+    color: #FFF;
 }

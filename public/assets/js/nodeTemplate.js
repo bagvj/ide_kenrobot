@@ -4,6 +4,9 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 	var defaultTextFont = "12px arial, Microsoft Yahei, Hiragino Sans GB, sans-serif";
 	var defaultTextStoke = "white";
 
+	var oldLinkColor;
+	var enterLinkColor = "orange";
+
 	//硬件节点模版
 	var hardwareNodeTemplates = {
 		"default": 
@@ -168,26 +171,6 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 			this.addPoint(new go.Point(minX, y2));
 			this.addPoint(new go.Point(x2, y2));
 			return true;
-		// } else if(this.toPort.portId == "L" && toNodeData.tag == 2 && toNodeData.subTag >= 2 && toNodeData.subTag <= 4 && toNode != fromNode) {
-		// 	var minX = this.findBound(toNode, fromNode, "minX");
-		// 	minX = minX - 20;
-
-		// 	var fromBounds = fromNode.actualBounds;
-		// 	var toBounds = toNode.actualBounds;
-		// 	var x1 = fromBounds.x + fromBounds.width / 2;
-		// 	var y1 = fromBounds.y + fromBounds.height;
-		// 	var x2 = toBounds.x;
-		// 	var y2 = toBounds.y + toBounds.height / 2;
-
-		// 	this.clearPoints();
-		// 	this.addPoint(new go.Point(x1, y1));
-		// 	this.addPoint(new go.Point(x1, y1 + 10));
-		// 	this.addPoint(new go.Point(minX, y1 + 10));
-		// 	this.addPoint(new go.Point(minX, y2));
-		// 	this.addPoint(new go.Point(x2, y2));
-		// 	return true;
-		// } else if (this.fromPort.portId == "R" && fromNodeData.tag == 2 && fromNodeData.subTag >= 2 && fromNodeData.subTag <= 4) {
-
 		} else {
 			return go.Link.prototype.computePoints.call(this);
 		}
@@ -196,12 +179,15 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 	//连线模版
 	var linkTemplate = GO(CustomLink, {
 			routing: go.Link.AvoidsNodes,
+			curve: go.Link.JumpOver,
 			corner: 5,
 			relinkableFrom: false,
 			relinkableTo: false,
 			deletable: false,
 			selectable: false,
 			adjusting: go.Link.End,
+			mouseEnter: onLinkMouseEnter,
+			mouseLeave: onLinkMouseLeave,
 		},
 		new go.Binding("points").makeTwoWay(),
 		GO(go.Shape, {
@@ -277,6 +263,17 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 			desiredSize: size || new go.Size(5, 5),
 			stroke: null,
 		});
+	}
+
+	function onLinkMouseEnter(e, link) {
+		oldLinkColor = link.findObject("ARROW").fill;
+		link.findObject("LINE").stroke = enterLinkColor;
+		link.findObject("ARROW").fill = enterLinkColor;
+	}
+
+	function onLinkMouseLeave(e, link) {
+		link.findObject("LINE").stroke = oldLinkColor;
+		link.findObject("ARROW").fill = oldLinkColor;
 	}
 
 	//双击，编辑节点

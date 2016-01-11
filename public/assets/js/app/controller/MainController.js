@@ -2,6 +2,7 @@ Ext.define('platform.controller.MainController', {
 	extend: 'Ext.app.Controller',
 	requires: [
 		'platform.view.TopMenu',
+		'platform.view.TopNav',
 		'platform.view.TopToolbar',
 		'platform.view.TopPanel',
 		'platform.view.LeftBar',
@@ -55,9 +56,15 @@ Ext.define('platform.controller.MainController', {
 			'bottomPanel > tabpanel > panel': {
 				close: this.onBottomPanelClosed,
 			},
-			'topPanel topToolbar button': {
-				click: this.onTopToolItemClick,
-			}
+			'topNav button[name=login]': {
+				click: this.onLoginClick,
+			},
+			'topToolbar button[name=find]': {
+				click: this.onFindClick,
+			},
+			'topToolbar button[name=setting]': {
+				click: this.onSettingClick,
+			},
 		});	
 	},
 
@@ -82,6 +89,18 @@ Ext.define('platform.controller.MainController', {
 
 	onTopToolItemClick: function(btn) {
 		this.toggleAllPanel();
+	},
+
+	onLoginClick: function(btn) {
+		
+	},
+
+	onSettingClick: function(btn) {
+
+	},
+
+	onFindClick: function(btn) {
+
 	},
 
 	collapsePanel: function(tab, panel) {

@@ -10,13 +10,7 @@ Ext.define('platform.view.TopPanel', {
 		items: [{
 			xtype: 'topMenu',
 		}, {
-			xtype: 'toolbar',
-			region: 'east',
-			baseCls: 'loginInfoPanel',
-			items: [{
-				text: '登录',
-				xtype: 'tbtext',
-			}],
+			xtype: 'topNav',
 		}, {
 			region: 'center',
 		}], 

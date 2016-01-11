@@ -103,11 +103,13 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 
 	//查找目标节点
 	function findTargetNode(node, port) {
-		var links = node.findLinksOutOf(port);
-		var linksIter = links.iterator;
-		linksIter.next();
-		var link = linksIter.value;
-		return link.toNode;
+		var nodes = node.findNodesOutOf(port);
+		var nodesIter = nodes.iterator;
+		if(nodesIter.count > 0) {
+			nodesIter.next();
+			return nodesIter.value;
+		}
+		return null;
 	}
 
 	//查找特殊节点
