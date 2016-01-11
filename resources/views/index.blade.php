@@ -69,16 +69,16 @@
 					<div>
 						<ul>
 							<li>
-								<div data-name="ifElse" class="software-item software-ifElse"></div>条件分支
+								<img src="/assets/images/software/ifElse-small.png" data-name="ifElse" class="software-item"></img>条件分支
 							</li>
 							<li>
-								<div data-name="conditionLoop" class="software-item software-conditionLoop"></div>条件循环
+								<img src="/assets/images/software/conditionLoop-small.png" data-name="conditionLoop" class="software-item"></img>条件循环
 							</li>
 							<li>
-								<div data-name="foreverLoop" class="software-item software-foreverLoop"></div>永远循环
+								<img src="/assets/images/software/foreverLoop-small.png" data-name="foreverLoop" class="software-item"></img>永远循环
 							</li>
 							<li>
-								<div data-name="countLoop"class="software-item software-countLoop"></div>计数循环
+								<img src="/assets/images/software/countLoop-small.png" data-name="countLoop" class="software-item"></img>计数循环
 							</li>
 						</ul>
 					</div>
@@ -88,10 +88,10 @@
 					<div>
 						<ul>
 							<li>
-								<div data-name="delay" class="software-item software-delay"></div>延时函数
+								<img src="/assets/images/software/delay-small.png" data-name="delay" class="software-item software-delay"></img>延时函数
 							</li>
 							<li>
-								<div data-name="assignment" class="software-item software-assignment"></div>赋值函数
+								<img src="/assets/images/software/assignment-small.png" data-name="assignment" class="software-item software-assignment"></img>赋值函数
 							</li>
 						</ul>
 					</div>

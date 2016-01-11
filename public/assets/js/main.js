@@ -152,7 +152,8 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 				for (var j = 0; j < group.hardwares.length; j++) {
 					var config = group.hardwares[j];
 					var name = config.name;
-					var itemDiv = $('<div>').addClass('hardware-item').addClass('hardware-' + name).attr('data-name', name);
+					var path = getSmallImgPath(name, "hardware");
+					var itemDiv = $('<img>').attr('src', path).addClass('hardware-item').attr('data-name', name);
 					$('<li>').attr("title", config.tips).append(itemDiv).append(config.alias).appendTo(ul);
 				}
 				$('<div>').append(ul).appendTo(li);
@@ -624,16 +625,19 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 		var name = args.name;
 		var text = args.text;
 		var key = args.key;
+		var path = getSmallImgPath(name, "hardware");
 		
 		var list = $(".nav-second .hardware-list ul");
-		var div = $('<div>').addClass('hardware-item').addClass('hardware-' + name).attr({
+		var div = $('<img>').addClass('hardware-item').attr({
+			'src': path,
 			'data-name': name,
 			'data-key': key,
 		});
 		$("<li>").append(div).append(text).appendTo(list);
 
 		list = $(".side .hardware-list ul");
-		div = $('<div>').addClass('hardware-item').addClass('hardware-' + name).attr({
+		div = $('<img>').addClass('hardware-item').attr({
+			'src': path,
 			'data-key': key,
 		});
 		$("<li>").append(div).append(text).appendTo(list);
@@ -646,5 +650,9 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 
 		list = $(".side .hardware-list ul");
 		$("li div[data-key=" + key + "]", list).parent().remove();
+	}
+
+	function getSmallImgPath(name, type) {
+		return "/assets/images/" + type + "/" + name + "-small.png";
 	}
 });

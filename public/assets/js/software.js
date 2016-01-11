@@ -146,7 +146,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 	}
 
 	function onCreateDrag(e) {
-		return $("div", this).clone();
+		return $("img", this).clone();
 	}
 
 	function onDragStart(e, ui) {
