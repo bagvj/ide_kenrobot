@@ -40,9 +40,17 @@ body {
     background: #FFFFFF;
 }
 
+img {
+  -ms-interpolation-mode: bicubic;
+}
+
 .x-panel-body-default {
   border: none;
 }
+
+/*.x-resizable-proxy {
+  border: 1px dashed #3b5a82;
+}*/
 
 .statusBar {
   background-color: #131313;
@@ -215,6 +223,14 @@ body {
   background-color: transparent;
   background-image: none;
   width: 4px;
+}
+
+.x-resizable-over .x-resizable-handle-east {
+  cursor: col-resize;
+}
+
+.x-resizable-over .x-resizable-handle-west {
+  cursor: col-resize;
 }
 
 .leftSubPanel .x-grid-header-ct {

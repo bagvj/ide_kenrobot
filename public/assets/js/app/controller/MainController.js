@@ -1,6 +1,8 @@
 Ext.define('platform.controller.MainController', {
 	extend: 'Ext.app.Controller',
 	requires: [
+		'platform.view.TopMenu',
+		'platform.view.TopToolbar',
 		'platform.view.TopPanel',
 		'platform.view.LeftBar',
 		'platform.view.LeftPanel',
@@ -53,7 +55,7 @@ Ext.define('platform.controller.MainController', {
 			'bottomPanel > tabpanel > panel': {
 				close: this.onBottomPanelClosed,
 			},
-			'topPanel toolbar button': {
+			'topPanel topToolbar button': {
 				click: this.onTopToolItemClick,
 			}
 		});	
