@@ -1712,7 +1712,7 @@ img {
     opacity: 0.9;
 }
 
-.popover.right>.arrow:after {
+.popover.top>.arrow:after, .popover.right>.arrow:after, .popover.bottom>.arrow:after, .popover.left>.arrow:after{
     border-right-color: #ff9a17
 }
 
