@@ -289,8 +289,32 @@ define(['jquery', 'jquery-ui'], function($) {
 		if (dialog != null) dialog.remove();
 	}
 
+	function message(args) {
+		$("div.message").stop(true).fadeOut(400, function() {
+			$(this).remove();
+		});
+
+		args = typeof args == "Object" ? args : {text: args};
+		var messageDiv = $('<div class="message"><div class="message-icon"></div><div class="message-content"></div><div class="message-close"></div></div>');
+		$(".message-content", messageDiv).text(args.text);
+		$(".message-close", messageDiv).click(function() {
+			messageDiv.fadeOut(400, function() {
+				$(this).remove();
+			});
+		});
+		messageDiv.appendTo($("body")).css({
+			left: ($(window).width() - messageDiv.width()) / 2,
+			top: -messageDiv.height(),
+		}).animate({
+			top: 150,
+		}, null, "easeOutExpo").delay(2000).fadeOut(400, function() {
+			$(this).remove();
+		});
+	}
+
 	return {
-		"show": show,
-		"hide": hide
+		show: show,
+		hide: hide,
+		message: message,
 	};
 });

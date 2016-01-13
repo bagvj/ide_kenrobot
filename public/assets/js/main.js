@@ -549,7 +549,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 					if (result.code == 0 && result.url) {
 						window.open(result.url);
 					} else {
-						alert(result.msg);
+						kenrobotDialog.message(result.msg);
 						// console.log(result.output);
 					}
 				},
@@ -562,6 +562,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 		$('.mod_btn .test').click(function(e) {
 			// hardware.test();
 			// software.test();
+			kenrobotDialog.message({text: "aaaaaaaaaaaa"});
 		});
 
 		$('.mod_btn .feedback').click(function(e) {
@@ -589,15 +590,15 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 				contents: contents
 			}, function(data) {
 				if(data.nickname == "") {
-					alert("请输入您的昵称");
+					kenrobotDialog.message("请输入您的昵称");
 					return false;
 				}
 				if(data.content == "") {
-					alert("意见不能为空");
+					kenrobotDialog.message("意见不能为空");
 					return false;
 				}
 				if(data.contact == "") {
-					alert("请输入您的联系方式");
+					kenrobotDialog.message("请输入您的联系方式");
 					return false;
 				}
 
