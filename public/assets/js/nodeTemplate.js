@@ -209,11 +209,15 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 			fill: "gray"
 		}),
 		GO(go.TextBlock, {
-				textAlign: "left",
 				font: defaultTextFont,
-				stroke: "#000",
+				stroke: "#17b7eb",
+				segmentIndex: 0,
+				segmentOrientation: go.Link.OrientUpright
 			},
-			new go.Binding("text"))
+			new go.Binding("text"),
+			new go.Binding("segmentOffset", "", function(data) {
+				return data.text == "Yes" ? new go.Point(10, 10): new go.Point(10, -10);
+			}))
 	);
 
 	//选中模版

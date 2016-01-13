@@ -591,17 +591,22 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 	}
 
 	//添加连接
-	function addLink(fromKey, toKey, fromPort, toPort, label) {
+	function addLink(fromKey, toKey, fromPort, toPort) {
 		var linkData = {
 			from: fromKey,
 			to: toKey,
 			fromPort: fromPort,
 			toPort: toPort,
-			text: label,
 		};
 		var model = diagram.model;
 		// model.startTransaction("addLink");
 		model.addLinkData(linkData);
+		var link = diagram.findLinkForData(linkData);
+		var fromNode = link.fromNode;
+		var fromNodeName = fromNode.data.name;
+		if(fromNodeName == "ifElse") {
+			diagram.model.setDataProperty(linkData, "text", fromPort == "L" ? "Yes" : "No");
+		}
 		// model.commitTransaction("addLink");
 		return linkData;
 	}
