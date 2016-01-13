@@ -497,13 +497,10 @@ define(["jquery", "tour", "util", "EventManager"], function($, _, util, EventMan
 		}
 		
 		if(!element) {
-			console.log("fffffff");
 			return;
 		}
-		console.log(element);
 
 		var demoConfig = getDemoConfig(demoId);
-		console.log(demoConfig);
 		var step = $.extend(true, {}, demoConfig.steps[index]);
 		var count = demoConfig.steps.length;
 		step.content = "Step: " + (index + 1) + "/" + count + "<br />" + step.content;
@@ -518,9 +515,7 @@ define(["jquery", "tour", "util", "EventManager"], function($, _, util, EventMan
 	}
 
 	function onFinishStep(args) {
-		console.log("onFinishStep", args);
 		if (!tour) {
-			console.log("aaaaaaa");
 			return;
 		}
 
@@ -537,13 +532,11 @@ define(["jquery", "tour", "util", "EventManager"], function($, _, util, EventMan
 		}
 
 		if (!demoArg) {
-			console.log("bbbbbbbb");
 			return;
 		}
 
 		var demoConfig = getDemoConfig(demoId);
 		if (step <= demoConfig.steps.length - 1) {
-			console.log("cccccccc");
 			onIntoStep(step);
 			if (demoArg.length >= 4) {
 				setTimeout(function() {
@@ -555,7 +548,6 @@ define(["jquery", "tour", "util", "EventManager"], function($, _, util, EventMan
 				}, 500);
 			}
 		} else {
-			console.log("ddddddddd");
 			tour.end();
 		}
 	}

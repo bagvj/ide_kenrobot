@@ -762,6 +762,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "util
 		specLinks["loopEnd_end"] = findSpecNode("loopEnd_end");
 
 		liveHardwareDrag();
+		EventManager.trigger("code", "refresh");
 	}
 
 	return {
