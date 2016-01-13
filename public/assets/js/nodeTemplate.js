@@ -2,7 +2,7 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 	var GO = go.GraphObject.make;
 
 	var defaultTextFont = "12px arial, Microsoft Yahei, Hiragino Sans GB, sans-serif";
-	var defaultTextStoke = "white";
+	var defaultTextStroke = "white";
 
 	var oldLinkColor;
 	var enterLinkColor = "orange";
@@ -43,13 +43,15 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 				nodeStyle(),
 				makeBody(),
 				makePort("T", 2, go.Spot.Top),
-				makePort("B", 1, go.Spot.Bottom)
+				makePort("B", 1, go.Spot.Bottom),
+				makeToolTip()
 			),
 		"start":
 			GO(go.Node, "Spot",
 				nodeStyle(),
 				makeBody(),
-				makePort("B", 1, go.Spot.Bottom)
+				makePort("B", 1, go.Spot.Bottom),
+				makeToolTip()
 			),
 		"loopStart":
 			GO(go.Node, "Spot",
@@ -57,7 +59,8 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 				makeBody(),
 				makePort("T", 2, go.Spot.Top),
 				makePort("B", 1, go.Spot.Bottom),
-				makePort("L", 2, go.Spot.Left)
+				makePort("L", 2, go.Spot.Left),
+				makeToolTip()
 			),
 		"loopEnd":
 			GO(go.Node, "Spot",
@@ -79,7 +82,8 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 				makeBody(),
 				makePort("T", 2, go.Spot.Top),
 				makePort("L", 1, go.Spot.Left),
-				makePort("R", 1, go.Spot.Right)
+				makePort("R", 1, go.Spot.Right),
+				makeToolTip()
 			),
 		"while":
 			GO(go.Node, "Spot",
@@ -88,7 +92,8 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 				makePort("T", 2, go.Spot.Top),
 				makePort("B", 1, go.Spot.Bottom),
 				makePort("L", 2, go.Spot.Left),
-				makePort("R", 1, go.Spot.Right)
+				makePort("R", 1, go.Spot.Right),
+				makeToolTip()
 			),
 		"doWhile":
 			GO(go.Node, "Spot",
@@ -97,7 +102,8 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 				makePort("T", 2, go.Spot.Top),
 				makePort("B", 1, go.Spot.Bottom),
 				makePort("R", 1, go.Spot.Right),
-				makePort("R", 1, go.Spot.Right)
+				makePort("R", 1, go.Spot.Right),
+				makeToolTip()
 			),
 	};
 
@@ -246,7 +252,7 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 			GO(go.TextBlock, 
 				{
 					font: defaultTextFont,
-					stroke: defaultTextStoke,
+					stroke: defaultTextStroke,
 				},
 				new go.Binding("text", "alias"),
 				new go.Binding("visible", "textVisible")
@@ -269,6 +275,21 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 			desiredSize: size || new go.Size(5, 5),
 			stroke: null,
 		});
+	}
+
+	function makeToolTip() {
+		return {
+			toolTip:
+				GO(go.Adornment, "Auto",
+					GO(go.Shape, {fill: "#dcdcdc", stroke: null}),
+					GO(go.TextBlock, { 
+							margin: 10,
+							font: "12px SourceCodePro-Regular",
+							stroke: "#666",
+						},
+						new go.Binding("text", "code"))
+				)
+		}
 	}
 
 	function onLinkMouseEnter(e, link) {

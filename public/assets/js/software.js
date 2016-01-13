@@ -34,6 +34,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 
 			//鼠标滑轮缩放
 			"toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom,
+			"toolManager.hoverDelay": 500,
 			//禁止拖动选择
 			"dragSelectingTool.isEnabled": false,
 			//禁止动画
@@ -263,6 +264,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 				}
 			}
 		}
+		nodeData.code = code.getFormatExp(nodeData);
 
 		var nodeKey = nodeData.key;
 
@@ -486,6 +488,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 			param.default_value = value;
 		}
 		EventManager.trigger("code", "refresh");
+		nodeData.code = code.getFormatExp(nodeData);
 
 		if(nodeData.name == "light") {
 			if(data.value == "1") {
@@ -535,9 +538,11 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 	//添加初始节点
 	function addInitNodes() {
 		var startData = addNode("start");
+		startData.code = "void setup()";
 		//hack，居中
 		setNodePosition(startData, 0, -120);
 		var loopStartData = addNode("loopStart", 0, -40);
+		loopStartData.code = "void loop()";
 		var loopEndData = addNode("loopEnd", 0, 40);
 		var endData = addNode("end", 0, 120);
 		var startToLoopStartLink = addLink(startData.key, loopStartData.key, "B", "T");

@@ -207,5 +207,6 @@ define(["jquery", "hljs", "EventManager"], function($, hljs, EventManager) {
 	return {
 		init: init,
 		gen: gen,
+		getFormatExp: getFormatExp,
 	}
 });
