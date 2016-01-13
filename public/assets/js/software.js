@@ -82,23 +82,48 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "util
 
 	//查找if-else合并的节点
 	function findIfMergeNode(node) {
-		var toNode = findTargetNode(node, "L");
-		var count = toNode.findLinksInto("T").iterator.count;
-		while (count < 2) {
-			var toNodeData = toNode.data;
-			var nodeTag = toNodeData.tag;
-			if (nodeTag == 2) {
-				var subTag = toNodeData.subTag;
-				if(subTag == 1) {
-					toNode = findIfMergeNode(toNode);
+		var preNode = node;
+		var toNode = findTargetNode(preNode, "L");
+		var iter;
+		var link;
+		var toNodeData;
+		var isFind = false;
+		do {
+			toNodeData = toNode.data;
+			if(toNodeData.tag == 2) {
+				if(toNodeData.subTag == 1) {
+					iter = toNode.findLinksInto("T").iterator;
+					if(iter.count >= 2) {
+						isFind = true;
+					} else {
+						preNode = toNode;
+						toNode = findIfMergeNode(toNode);
+					}
 				} else {
-					toNode = findTargetNode(toNode, "R");
+					link = findTargetLink(preNode, toNode);
+					if(link.toPort.portId == "T") {
+						iter = toNode.findLinksInto("T").iterator;
+						if(iter.count >= 2) {
+							isFind = true;
+						} else {
+							preNode = toNode;
+							toNode = findTargetNode(toNode, "R");
+						}
+					} else {
+						isFind = true;
+					}
 				}
 			} else {
-				toNode = findTargetNode(toNode, "B");
+				iter = toNode.findLinksInto("T").iterator;
+				if(iter.count >= 2) {
+					isFind = true;
+				} else {
+					preNode = toNode;
+					toNode = findTargetNode(toNode, "B");
+				}
 			}
-			count = toNode.findLinksInto("T").iterator.count;
-		}
+		} while(!isFind);
+
 		return toNode;
 	}
 
@@ -109,6 +134,16 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "util
 		if(nodesIter.count > 0) {
 			nodesIter.next();
 			return nodesIter.value;
+		}
+		return null;
+	}
+
+	function findTargetLink(node, otherNode, portId) {
+		var links = node.findLinksTo(otherNode, portId);
+		var linksIter = links.iterator;
+		if(linksIter.count > 0) {
+			linksIter.next();
+			return linksIter.value;
 		}
 		return null;
 	}
@@ -366,15 +401,8 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "util
 		}
 		var toNodeData = toNode.data;
 		var toKey = toNodeData.key;
-		var toPort;
-		if(toNodeData.tag == 2) {
-			if(toNodeData.subTag >= 2 && toNodeData.subTag <= 4) {
-				toPort = "L";
-			}
-		} else {
-			toPort = "T";
-		}
-
+		var link = findTargetLink(node, toNode);
+		var toPort = link.toPort.portId;
 		var fromLinks = node.findLinksInto("T");
 		var model = diagram.model;
 		model.startTransaction("relink");
