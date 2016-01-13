@@ -1159,7 +1159,6 @@ img {
     float: left;
     margin-right: 12px;
     margin-top: 4.5px;
-    -ms-interpolation-mode: bicubic;
 }
 
 .content-rotate {
@@ -1174,7 +1173,14 @@ img {
     margin-top: 4.5px;
 }
 
-.lckzmk1 .software-item,
+.lckzmk1 .software-item {
+    width: 40px;
+    height: 16px;
+    float: left;
+    margin-right: 20px;
+    margin-top: 12px;
+}
+
 .lckzmk2 .software-item {
     width: 30px;
     height: 16px;

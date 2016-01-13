@@ -122,9 +122,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 	}
 
 	function test() {
-		console.log(diagram.model.toJson());
-		// var loopEndToLoopStartLink = specLinks["loopEnd_loopStart"];
-		// console.log(loopEndToLoopStartLink.data.points);
+
 	}
 
 	function liveHardwareDrag() {
@@ -136,7 +134,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 			zIndex: 9999,
 			containment: "window",
 			cursorAt: {
-				top: 15,
+				top: 8,
 				left: 15
 			},
 			helper: onCreateDrag,
@@ -146,7 +144,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 	}
 
 	function onCreateDrag(e) {
-		return $("img", this).clone();
+		return $("img", this).clone().removeClass("software-item");
 	}
 
 	function onDragStart(e, ui) {
@@ -198,7 +196,6 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 
 	function onCanvasDrop(e, ui) {
 		var element = ui.helper.first();
-
 		var offset = $(diagram.div).offset();
 		var width = element.width();
 		var height = element.height();
@@ -291,7 +288,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 					addLink(nodeKey, toKey, "R", toPort);
 				}
 			} else {
-				addLink(nodeKey, toKey, "B", toPort);
+				addLink(nodeKey, toKey, "B", toPort, linkData.text);
 			}
 		});
 		model.commitTransaction("addNode");
@@ -589,12 +586,13 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 	}
 
 	//添加连接
-	function addLink(fromKey, toKey, fromPort, toPort) {
+	function addLink(fromKey, toKey, fromPort, toPort, label) {
 		var linkData = {
 			from: fromKey,
 			to: toKey,
 			fromPort: fromPort,
 			toPort: toPort,
+			text: label,
 		};
 		var model = diagram.model;
 		// model.startTransaction("addLink");

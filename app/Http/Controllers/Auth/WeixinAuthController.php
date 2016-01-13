@@ -36,8 +36,6 @@ class WeixinAuthController extends Controller
         Session::put('key',$key);
 
         $url = config('weixin.userinfo.url')."?key=$key";
-
-        $nav = config('navigation.master');
         if (Auth::check()) {
             $user = Auth::user();
         }

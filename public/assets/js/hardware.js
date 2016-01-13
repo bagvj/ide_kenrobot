@@ -105,9 +105,16 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 	}
 
 	function onDragStart(e, ui) {
+		targetPorts = [];
 		var element = ui.helper.first();
 		var name = element.attr("data-name");
 		var nodeConfig = getConfig(name);
+		if(nodeConfig.max > 0) {
+			var count = getNodeCount(name);
+			if(count == nodeConfig.max) {
+				return;
+			}
+		}
 		var nodePort = nodeConfig.port;
 	
 		var boardNode = specNodes["board"];
@@ -134,7 +141,6 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 			replaceBits += "0";
 		}
 
-		targetPorts = [];
 		var ports = new go.List(go.Shape);
 		ports.addAll(boardNode.ports);
 		for(var i = 0; i < ports.count; i++) {
@@ -188,7 +194,6 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 
 	function onCanvasDrop(e, ui) {
 		var element = ui.helper.first();
-
 		var offset = $(diagram.div).offset();
 		var width = element.width();
 		var height = element.height();
@@ -280,6 +285,7 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 		nodeData.bitIndex = targetInfo.bitIndex;
 		if(name == "streeringEngine" || name == "dcMotor") {
 			nodeData.index = getNodeCount(name) - 1;
+			console.log("index " + nodeData.index);
 		}
 		
 		model.commitTransaction("addNode");

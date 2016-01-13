@@ -201,7 +201,13 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 			toArrow: "standard",
 			stroke: null,
 			fill: "gray"
-		})
+		}),
+		GO(go.TextBlock, {
+				textAlign: "left",
+				font: defaultTextFont,
+				stroke: "#000",
+			},
+			new go.Binding("text"))
 	);
 
 	//选中模版

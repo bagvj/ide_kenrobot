@@ -8,6 +8,40 @@
 @stop
 
 @section('scripts')
+<script type="text/javascript">
+	var pageHeight = document.documentElement.clientHeight;
+	var pageWidth = document.documentElement.clientWidth;
+	var loadingTop = pageHeight > 61 ? (pageHeight - 61) / 2 : 0;
+	var loadingLeft = pageWidth > 215 ? (pageWidth - 215) / 2 : 0;
+	var loadingId = "loadingDiv";
+	var loadingHtml = '<div id="' + loadingId + '" style="position:absolute;left:0;width:100%;height:' + pageHeight + 'px;top:0;background:#f3f8ff;opacity:0.8;filter:alpha(opacity=80);z-index:10000;"><div style="position: absolute; cursor1: wait; left: ' + loadingLeft + 'px; top:' + loadingTop + 'px; width: auto; height: 57px; line-height: 57px; padding-left: 50px; padding-right: 5px; background: #fff url(/assets/images/loading.gif) no-repeat scroll 5px 10px; border: 2px solid #95B8E7; color: #696969; font-family:\'Microsoft YaHei\';">客官，打尖还是住店？</div></div>';
+	document.write(loadingHtml);
+	document.onreadystatechange = onDomComplete;
+
+	var isTimeout = false;
+	setTimeout(function() {
+		isTimeout = true;
+		if (document.readyState == "complete") {
+			removeLoading();
+		}
+	}, 1000);
+
+	function onDomComplete() {
+		if (document.readyState == "complete") {
+			removeLoading();
+		}
+	}
+
+	function removeLoading() {
+		if (!isTimeout) {
+			return;
+		}
+		var loadingDiv = document.getElementById(loadingId);
+		if (loadingDiv) {
+			loadingDiv.parentNode.removeChild(loadingDiv);
+		}
+	}
+</script>
 <script data-main="/assets/js/main" src="{{asset('/assets/js/lib/require.min.js')}}" type="text/javascript"></script>
 @stop
 
@@ -15,15 +49,6 @@
 <div class="header no-select">
 	<div class="content">
 		<span><a href="{{$nav['self'] or '#'}}" class="logo"></a></span>
-<!-- 		<div class="nav">
-			<ul>
-				<li><a href="{{$nav['mainpage'] or '#'}}">我的主页</a></li>
-				<li><a href="{{$nav['develop'] or '#'}}" class="on">开发</a></li>
-				<li><a href="{{$nav['square'] or '#'}}">广场</a></li>
-				<li><a href="{{$nav['market'] or '#'}}">商城</a></li>
-			</ul>
-		</div> -->
-
 		<div class="login">
 			<ul>
 				@if(isset($user))
