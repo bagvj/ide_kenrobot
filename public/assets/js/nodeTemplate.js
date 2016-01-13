@@ -185,7 +185,6 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 	//连线模版
 	var linkTemplate = GO(CustomLink, {
 			routing: go.Link.AvoidsNodes,
-			curve: go.Link.JumpOver,
 			corner: 5,
 			relinkableFrom: false,
 			relinkableTo: false,
