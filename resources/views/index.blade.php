@@ -21,6 +21,7 @@
 	var isTimeout = false;
 	setTimeout(function() {
 		isTimeout = true;
+		console.log("onTimeout");
 		if (document.readyState == "complete") {
 			removeLoading();
 		}
@@ -28,14 +29,45 @@
 
 	function onDomComplete() {
 		if (document.readyState == "complete") {
+			console.log("onDomComplete");
 			removeLoading();
 		}
 	}
 
+	var t_img; // 定时器
+	var isImgLoad = true; // 控制变量
+	checkImgLoaded(function(){
+	    console.log("*******************");
+	    removeLoading();
+	});
+
+	// 判断图片加载的函数
+	function checkImgLoaded(callback){
+		var imgs = document.getElementsByTagName("img");
+	    for(var i = 0; i < imgs.length; i++) {
+	    	var img = imgs[i];
+	        if(img.height === 0){
+	            isImgLoad = false;
+	            return false;
+	        }
+	    }
+
+	    if(isImgLoad){
+	        clearTimeout(t_img);
+	        callback();
+	    }else{
+	        isImgLoad = true;
+	        t_img = setTimeout(function(){
+	            checkImgLoaded(callback);
+	        }, 500);
+	    }
+	}
+
 	function removeLoading() {
-		if (!isTimeout) {
+		if (!isTimeout || !isImgLoad) {
 			return;
 		}
+		console.log("removeLoading");
 		var loadingDiv = document.getElementById(loadingId);
 		if (loadingDiv) {
 			loadingDiv.parentNode.removeChild(loadingDiv);
