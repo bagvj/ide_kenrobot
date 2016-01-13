@@ -19,30 +19,25 @@
 	document.onreadystatechange = onDomComplete;
 
 	var isTimeout = false;
+	var t_img;
+	var isImgLoad = true;
+
 	setTimeout(function() {
 		isTimeout = true;
 		console.log("onTimeout");
-		if (document.readyState == "complete") {
-			removeLoading();
-		}
+		checkImgLoaded(removeLoading);
 	}, 1000);
 
 	function onDomComplete() {
-		if (document.readyState == "complete") {
+		if(document.readyState == "complete") {
 			console.log("onDomComplete");
-			removeLoading();
+			checkImgLoaded(removeLoading);
 		}
 	}
-
-	var t_img; // 定时器
-	var isImgLoad = true; // 控制变量
-	checkImgLoaded(function(){
-	    console.log("*******************");
-	    removeLoading();
-	});
-
+	
 	// 判断图片加载的函数
 	function checkImgLoaded(callback){
+		console.log("checkImgLoaded");
 		var imgs = document.getElementsByTagName("img");
 	    for(var i = 0; i < imgs.length; i++) {
 	    	var img = imgs[i];
