@@ -562,7 +562,6 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 		$('.mod_btn .test').click(function(e) {
 			// hardware.test();
 			// software.test();
-			kenrobotDialog.message({text: "aaaaaaaaaaaa"});
 		});
 
 		$('.mod_btn .feedback').click(function(e) {
@@ -590,15 +589,15 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 				contents: contents
 			}, function(data) {
 				if(data.nickname == "") {
-					kenrobotDialog.message("请输入您的昵称");
+					kenrobotDialog.message("请输入您的昵称！");
 					return false;
 				}
 				if(data.content == "") {
-					kenrobotDialog.message("意见不能为空");
+					kenrobotDialog.message("意见不能为空！");
 					return false;
 				}
 				if(data.contact == "") {
-					kenrobotDialog.message("请输入您的联系方式");
+					kenrobotDialog.message("请输入您的联系方式！");
 					return false;
 				}
 
@@ -607,7 +606,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 					url: "./feedback",
 					data: data,
 					success: function(result) {
-						console.log("success");
+						kenrobotDialog.message("感谢您的使用和反馈！");
 					},
 					error: function(result) {
 						console.log("error");

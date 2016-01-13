@@ -1316,7 +1316,7 @@ img {
     border-radius:5px;
     margin: 0 auto;
     padding: 8px;
-    z-index: 999;
+    z-index: 99999;
     position: absolute;
 }
 
