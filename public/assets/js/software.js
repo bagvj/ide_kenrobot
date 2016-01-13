@@ -34,7 +34,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 
 			//鼠标滑轮缩放
 			"toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom,
-			"toolManager.hoverDelay": 500,
+			"toolManager.hoverDelay": 100,
 			//禁止拖动选择
 			"dragSelectingTool.isEnabled": false,
 			//禁止动画
