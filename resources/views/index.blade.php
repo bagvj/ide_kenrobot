@@ -19,54 +19,23 @@
 	document.onreadystatechange = onDomComplete;
 
 	var isTimeout = false;
-	var t_img;
-	var isImgLoad = true;
-
 	setTimeout(function() {
 		isTimeout = true;
-		console.log("onTimeout");
-		checkImgLoaded(removeLoading);
+		if(document.readyState == "complete") {
+			removeLoading();
+		}
 	}, 1000);
 
 	function onDomComplete() {
 		if(document.readyState == "complete") {
-			console.log("onDomComplete");
-			checkImgLoaded(removeLoading);
+			removeLoading();
 		}
 	}
 	
-	// 判断图片加载的函数
-	function checkImgLoaded(callback){
-		console.log("checkImgLoaded");
-		var imgs = document.getElementsByTagName("img");
-		var count = 0;
-	    for(var i = 0; i < imgs.length; i++) {
-	    	var img = imgs[i];
-	        if(img.height == 0){
-	            isImgLoad = false;
-	            return false;
-	        } else {
-	        	console.log(img.src + " " + img.width + "," + img.height);
-	        	count++;
-	        }
-	    }
-
-	    if(count == imgs.length){
-	    	isImgLoad = true;
-	        clearTimeout(t_img);
-	        callback();
-	    } else {
-	        t_img = setTimeout(function(){
-	            checkImgLoaded(callback);
-	        }, 500);
-	    }
-	}
-
 	function removeLoading() {
-		if (!isTimeout || !isImgLoad) {
+		if (!isTimeout) {
 			return;
 		}
-		console.log("removeLoading");
 		var loadingDiv = document.getElementById(loadingId);
 		if (loadingDiv) {
 			loadingDiv.parentNode.removeChild(loadingDiv);
