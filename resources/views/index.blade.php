@@ -39,19 +39,22 @@
 	function checkImgLoaded(callback){
 		console.log("checkImgLoaded");
 		var imgs = document.getElementsByTagName("img");
+		var count = 0;
 	    for(var i = 0; i < imgs.length; i++) {
 	    	var img = imgs[i];
-	        if(img.height === 0){
+	        if(img.height == 0){
 	            isImgLoad = false;
 	            return false;
+	        } else {
+	        	count++;
 	        }
 	    }
 
-	    if(isImgLoad){
+	    if(count == imgs.length){
+	    	isImgLoad = true;
 	        clearTimeout(t_img);
 	        callback();
-	    }else{
-	        isImgLoad = true;
+	    } else {
 	        t_img = setTimeout(function(){
 	            checkImgLoaded(callback);
 	        }, 500);
