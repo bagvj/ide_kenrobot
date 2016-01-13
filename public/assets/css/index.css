@@ -1298,10 +1298,13 @@ img {
     opacity: 0.9;
 }
 
-.popover.top>.arrow:after, .popover.right>.arrow:after, .popover.bottom>.arrow:after, .popover.left>.arrow:after{
+.popover.right>.arrow:after, .popover.bottom>.arrow:after, .popover.left>.arrow:after{
     border-right-color: #ff9a17
 }
 
+.popover.top>.arrow:after {
+    border-top-color: #ff9a17;
+}
 .popover-content {
     background-color: #ff9a17;
     color: #FFF;

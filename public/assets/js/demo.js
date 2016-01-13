@@ -242,7 +242,7 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=light]", li).parent();
+				element = $("li img[data-name=light]", li).parent();
 			} else if (index == 2) {
 				element = $(".tabs li:eq(1)");
 			} else if (index == 3) {
@@ -250,13 +250,13 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=light]:eq(0)", li).parent();
+				element = $("li img[data-name=light]:eq(0)", li).parent();
 			} else if (index == 4) {
 				var li = $(".mod:eq(1) .nav-second>ul>li:eq(0)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=light]:eq(0)", li).parent();
+				element = $("li img[data-name=light]:eq(0)", li).parent();
 			} else if (index == 5) {
 				element = $(".mod_btn .download");
 			}
@@ -268,7 +268,7 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=light]", li).parent();
+				element = $("li img[data-name=light]", li).parent();
 			} else if (index == 2) {
 				element = $(".tabs li:eq(1)");
 			} else if (index == 3) {
@@ -276,31 +276,31 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=light]:eq(0)", li).parent();
+				element = $("li img[data-name=light]:eq(0)", li).parent();
 			} else if (index == 4) {
 				var li = $(".mod:eq(1) .nav-second>ul>li:eq(0)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=light]:eq(0)", li).parent();
+				element = $("li img[data-name=light]:eq(0)", li).parent();
 			} else if(index == 5) {
 				var li = $(".mod:eq(1) .nav-second>ul>li:eq(2)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=delay]", li).parent();
+				element = $("li img[data-name=delay]", li).parent();
 			} else if(index == 6) {
 				var li = $(".mod:eq(1) .nav-second>ul>li:eq(0)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=light]:eq(0)", li).parent();
+				element = $("li img[data-name=light]:eq(0)", li).parent();
 			} else if(index == 7) {
 				var li = $(".mod:eq(1) .nav-second>ul>li:eq(2)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=delay]", li).parent();
+				element = $("li img[data-name=delay]", li).parent();
 			} else if (index == 8) {
 				element = $(".mod_btn .download");
 			}
@@ -312,13 +312,13 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=light]", li).parent();
+				element = $("li img[data-name=light]", li).parent();
 			} else if (index == 2) {
 				var li = $(".mod:eq(0) .nav-second>ul>li:eq(0)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=switch]", li).parent();
+				element = $("li img[data-name=switch]", li).parent();
 			} else if (index == 3) {
 				element = $(".tabs li:eq(1)");
 			} else if (index == 4) {
@@ -326,25 +326,25 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=switch]:eq(0)", li).parent();
+				element = $("li img[data-name=switch]:eq(0)", li).parent();
 			} else if(index == 5) {
 				var li = $(".mod:eq(1) .nav-second>ul>li:eq(0)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=switch]:eq(0)", li).parent();
+				element = $("li img[data-name=switch]:eq(0)", li).parent();
 			} else if(index == 6) {
 				var li = $(".mod:eq(1) .nav-second>ul>li:eq(0)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=light]:eq(0)", li).parent();
+				element = $("li img[data-name=light]:eq(0)", li).parent();
 			} else if(index == 7) {
 				var li = $(".mod:eq(1) .nav-second>ul>li:eq(0)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=light]:eq(0)", li).parent();
+				element = $("li img[data-name=light]:eq(0)", li).parent();
 			} else if (index == 8) {
 				element = $(".mod_btn .download");
 			}
@@ -356,7 +356,7 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=dcMotor]", li).parent();
+				element = $("li img[data-name=dcMotor]", li).parent();
 				var container = $(".mod:eq(0) .nav-second");
 				container.scrollTop(element.offset().top - container.offset().top + container.scrollTop());
 			} else if (index == 2) {
@@ -366,13 +366,13 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=dcMotor]:eq(0)", li).parent();
+				element = $("li img[data-name=dcMotor]:eq(0)", li).parent();
 			} else if (index == 4) {
 				var li = $(".mod:eq(1) .nav-second>ul>li:eq(0)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=dcMotor]:eq(0)", li).parent();
+				element = $("li img[data-name=dcMotor]:eq(0)", li).parent();
 			} else if (index == 5) {
 				element = $(".mod_btn .download");
 			}
@@ -384,7 +384,7 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=digitalTube]", li).parent();
+				element = $("li img[data-name=digitalTube]", li).parent();
 			} else if (index == 2) {
 				element = $(".tabs li:eq(1)");
 			} else if (index == 3) {
@@ -392,13 +392,13 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=digitalTube]:eq(0)", li).parent();
+				element = $("li img[data-name=digitalTube]:eq(0)", li).parent();
 			} else if (index == 4) {
 				var li = $(".mod:eq(1) .nav-second>ul>li:eq(0)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=digitalTube]:eq(0)", li).parent();
+				element = $("li img[data-name=digitalTube]:eq(0)", li).parent();
 			} else if (index == 5) {
 				element = $(".mod_btn .download");
 			}
@@ -410,14 +410,14 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=temperatue]", li).parent();
+				element = $("li img[data-name=temperatue]", li).parent();
 				scrollToCenter(element);
 			} else if (index == 2) {
 				var li = $(".mod:eq(0) .nav-second>ul>li:eq(1)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=digitalTube]", li).parent();
+				element = $("li img[data-name=digitalTube]", li).parent();
 				scrollToCenter(element);
 			} else if (index == 3) {
 				element = $(".tabs li:eq(1)");
@@ -426,25 +426,25 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=temperatue]:eq(0)", li).parent();
+				element = $("li img[data-name=temperatue]:eq(0)", li).parent();
 			} else if(index == 5) {
 				var li = $(".mod:eq(1) .nav-second>ul>li:eq(0)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=temperatue]:eq(0)", li).parent();
+				element = $("li img[data-name=temperatue]:eq(0)", li).parent();
 			} else if(index == 6) {
 				var li = $(".mod:eq(1) .nav-second>ul>li:eq(0)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=digitalTube]:eq(0)", li).parent();
+				element = $("li img[data-name=digitalTube]:eq(0)", li).parent();
 			} else if(index == 7) {
 				var li = $(".mod:eq(1) .nav-second>ul>li:eq(0)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=digitalTube]:eq(0)", li).parent();
+				element = $("li img[data-name=digitalTube]:eq(0)", li).parent();
 			} else if (index == 8) {
 				element = $(".mod_btn .download");
 			}
@@ -456,14 +456,14 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=illumination]", li).parent();
+				element = $("li img[data-name=illumination]", li).parent();
 				scrollToCenter(element);
 			} else if (index == 2) {
 				var li = $(".mod:eq(0) .nav-second>ul>li:eq(1)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=light]", li).parent();
+				element = $("li img[data-name=light]", li).parent();
 				scrollToCenter(element);
 			} else if (index == 3) {
 				element = $(".tabs li:eq(1)");
@@ -472,35 +472,38 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=illumination]:eq(0)", li).parent();
+				element = $("li img[data-name=illumination]:eq(0)", li).parent();
 			} else if(index == 5) {
 				var li = $(".mod:eq(1) .nav-second>ul>li:eq(0)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=illumination]:eq(0)", li).parent();
+				element = $("li img[data-name=illumination]:eq(0)", li).parent();
 			} else if(index == 6) {
 				var li = $(".mod:eq(1) .nav-second>ul>li:eq(0)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=light]:eq(0)", li).parent();
+				element = $("li img[data-name=light]:eq(0)", li).parent();
 			} else if(index == 7) {
 				var li = $(".mod:eq(1) .nav-second>ul>li:eq(0)");
 				if (!li.hasClass("active")) {
 					li.addClass("active");
 				}
-				element = $("li div[data-name=light]:eq(0)", li).parent();
+				element = $("li img[data-name=light]:eq(0)", li).parent();
 			} else if (index == 8) {
 				element = $(".mod_btn .download");
 			}
 		}
 		
 		if(!element) {
+			console.log("fffffff");
 			return;
 		}
+		console.log(element);
 
 		var demoConfig = getDemoConfig(demoId);
+		console.log(demoConfig);
 		var step = $.extend(true, {}, demoConfig.steps[index]);
 		var count = demoConfig.steps.length;
 		step.content = "Step: " + (index + 1) + "/" + count + "<br />" + step.content;
@@ -515,7 +518,9 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 	}
 
 	function onFinishStep(args) {
+		console.log("onFinishStep", args);
 		if (!tour) {
+			console.log("aaaaaaa");
 			return;
 		}
 
@@ -532,11 +537,13 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 		}
 
 		if (!demoArg) {
+			console.log("bbbbbbbb");
 			return;
 		}
 
 		var demoConfig = getDemoConfig(demoId);
 		if (step <= demoConfig.steps.length - 1) {
+			console.log("cccccccc");
 			onIntoStep(step);
 			if (demoArg.length >= 4) {
 				setTimeout(function() {
@@ -548,6 +555,7 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 				}, 500);
 			}
 		} else {
+			console.log("ddddddddd");
 			tour.end();
 		}
 	}
