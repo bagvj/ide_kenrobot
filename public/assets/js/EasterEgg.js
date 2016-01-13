@@ -1,10 +1,10 @@
-define(["jquery", "kenrobotDialog"], function($, kenrobotDialog) {
+define(["jquery", "util"], function($, util) {
 	//彩蛋列表
 	var list = [{
 		//上上下下左右左右BABA
 		keys: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 66, 65],
 		callback: function() {
-			kenrobotDialog.message("我不是魂斗罗，你也没有30条命");
+			util.message("我不是魂斗罗，你也没有30条命");
 		},
 	}];
 

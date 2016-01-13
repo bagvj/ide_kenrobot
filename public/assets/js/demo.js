@@ -1,4 +1,4 @@
-define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenrobotDialog, EventManager) {
+define(["jquery", "tour", "util", "EventManager"], function($, _, util, EventManager) {
 	var demoBtn;
 	var tour;
 	var demoId;
@@ -189,7 +189,7 @@ define(["jquery", "tour", "kenrobotDialog", "EventManager"], function($, _, kenr
 			inputKey: "desc",
 		});
 
-		var dialog = kenrobotDialog.show(0, {
+		var dialog = util.show(0, {
 			title: "Demo演示",
 			contents: contents,
 			okLabel: "确定",

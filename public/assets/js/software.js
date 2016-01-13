@@ -1,4 +1,4 @@
-define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenrobotDialog"], function($, _, _, hardware, code, EventManager, kenrobotDialog) {
+define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "util"], function($, _, _, hardware, code, EventManager, util) {
 	var GO;
 	var diagram;
 	var container;
@@ -464,7 +464,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "kenr
 			"showText": nodeData.desc || "暂无"
 		});
 
-		kenrobotDialog.show(0, {
+		util.show(0, {
 			"title": "属性设置",
 			"contents": contents
 		}, function(data) {

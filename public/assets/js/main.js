@@ -14,7 +14,7 @@ require.config({
 		"software": "software",
 		"variable": "variable",
 		"code": "code",
-		"kenrobotDialog": "kenrobotDialog",
+		"util": "util",
 		"EasterEgg": "EasterEgg",
 		'demo': 'demo',
 	},
@@ -28,7 +28,7 @@ require.config({
 	}
 });
 
-require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventManager", "hardware", "software", "variable", "code", "kenrobotDialog", "EasterEgg", 'tour', 'demo'], function($, _, _, nodeConfig, nodeTemplate, EventManager, hardware, software, variable, code, kenrobotDialog, EasterEgg, _, demo) {
+require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventManager", "hardware", "software", "variable", "code", "util", "EasterEgg", 'tour', 'demo'], function($, _, _, nodeConfig, nodeTemplate, EventManager, hardware, software, variable, code, util, EasterEgg, _, demo) {
 	$(function() {
 		initAjax();
 		initTabs();
@@ -389,7 +389,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 	function initVars() {
 		var varContainer = $(".var-side");
 		$(".var_btn.add", varContainer).click(function() {
-			kenrobotDialog.show(0, {
+			util.show(0, {
 				"title": "添加/更改变量",
 				"isSplit": 0,
 				"contents": [{
@@ -458,7 +458,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 			var index = curRow.index();
 			var varInfo = variable.getVar(index);
 
-			kenrobotDialog.show(0, {
+			util.show(0, {
 				"title": "添加/更改变量",
 				"isSplit": 0,
 				"contents": [{
@@ -549,7 +549,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 					if (result.code == 0 && result.url) {
 						window.open(result.url);
 					} else {
-						kenrobotDialog.message(result.msg);
+						util.message(result.msg);
 						// console.log(result.output);
 					}
 				},
@@ -584,20 +584,20 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 				inputHolder: "电话、邮箱或者其它联系方式"
 			});
 
-			kenrobotDialog.show(0, {
+			util.show(0, {
 				title: "反馈",
 				contents: contents
 			}, function(data) {
 				if(data.nickname == "") {
-					kenrobotDialog.message("请输入您的昵称！");
+					util.message("请输入您的昵称！");
 					return false;
 				}
 				if(data.content == "") {
-					kenrobotDialog.message("意见不能为空！");
+					util.message("意见不能为空！");
 					return false;
 				}
 				if(data.contact == "") {
-					kenrobotDialog.message("请输入您的联系方式！");
+					util.message("请输入您的联系方式！");
 					return false;
 				}
 
@@ -606,7 +606,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 					url: "./feedback",
 					data: data,
 					success: function(result) {
-						kenrobotDialog.message("感谢您的使用和反馈！");
+						util.message("感谢您的使用和反馈！");
 					},
 					error: function(result) {
 						console.log("error");

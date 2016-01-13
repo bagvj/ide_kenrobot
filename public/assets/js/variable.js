@@ -1,4 +1,4 @@
-define(["jquery", "kenrobotDialog", "hardware", "software", "EventManager"], function($, kenrobotDialog, hardware, software, EventManager) {
+define(["jquery", "util", "hardware", "software", "EventManager"], function($, util, hardware, software, EventManager) {
 	//C++关键字
 	var keywords = [
 		"asm", "do", "if", "return", "typedef", "auto", "double",
