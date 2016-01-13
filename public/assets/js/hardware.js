@@ -397,6 +397,30 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 		}, 100);
 	}
 
+	function findSpecNode(name) {
+		var iter = diagram.nodes.iterator;
+		var node;
+		while(iter.next()) {
+			node = iter.value;
+			if(node.data.name == name) {
+				break;
+			}
+		}
+		return node;
+	}
+
+	function findSpecLink(name) {
+		var iter = diagram.links.iterator;
+		var link;
+		while(iter.next()) {
+			link = iter.value;
+			if(link.data.name == name) {
+				break;
+			}
+		}
+		return link;
+	}
+
 	//添加节点
 	function addNode(name, x, y) {
 		var config = getConfig(name);
@@ -460,10 +484,24 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 		return configs[name];
 	}
 
+	function getModelData() {
+		return diagram.model.toJson();
+	}
+
+	function load(modelData) {
+		diagram.model = go.Model.fromJson(modelData);
+
+		specNodes = {};
+		targetPorts = [];
+
+		specNodes["board"] = findSpecNode("board");
+	}
+
 	return {
 		init: init,
 		makeImage: makeImage,
 		getNodeData: getNodeData,
-		test: test,
+		getModelData: getModelData,
+		load: load,
 	}
 });

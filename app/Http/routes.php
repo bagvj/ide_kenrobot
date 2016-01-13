@@ -14,11 +14,14 @@
 Route::get('/home', 'HomeController@index');
 Route::get('/v2', 'HomeController@index2');
 Route::get('/', 'Auth\WeixinAuthController@homeIndex');
-Route::get('/items', 'HomeController@items');
+
 
 Route::post('/build', 'HomeController@build');
 Route::get('/download', 'HomeController@download');
 Route::post('/feedback', 'HomeController@feedback');
+Route::get('/items', 'HomeController@items');
+Route::post('/project/save', 'HomeController@saveProject');
+Route::get('/project/{id}', 'HomeController@getProject')->where('id', '[0-9]+');
 
 // 登录验证
 Route::get('/auth/login', 'Auth\AuthController@getLogin');

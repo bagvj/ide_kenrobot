@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Robot\Feedback;
+use App\Robot\Project;
 use App\User;
 use Auth;
 use DB;
@@ -152,6 +153,32 @@ class HomeController extends Controller {
 	public function items() {
 		$config = $this->getConfig();
 		return collect($config)->toJson();
+	}
+
+	public function saveProject(Request $request) {
+		$data = $request->input('data');
+		$result = array();
+		if($data) {
+			$project = Project::create([
+				'data' => $request->input('data'),
+			]);
+			$result['msg'] = "保存成功";
+			$result['code'] = 0;
+		} else {
+			$result['msg'] = "非法请求";
+			$result['code'] = -1;
+		}
+		
+		return collect($result)->toJson();
+	}
+
+	public function getProject(Request $request, $id) {
+		if($id == 0) {
+			$project = DB::table('projects')->orderBy('id', 'desc')->first();
+		} else {
+			$project = DB::table('projects')->where('id', $id)->get();
+		}
+		return collect($project)->toJson();
 	}
 
 	private function getConfig() {

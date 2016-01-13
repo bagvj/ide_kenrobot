@@ -179,6 +179,8 @@
 		<div class="foldBtn active"></div>
 	</div>
 	<div class="mod_btn no-select">
+<!-- 		<div class="btn2 test">测试</div>
+		<div class="btn2 test2">测试2</div> -->
 		<div class="btn2 demo">演示</div>
 		<div class="btn2 download">下载</div>
 		<div class="btn2 feedback">反馈</div>

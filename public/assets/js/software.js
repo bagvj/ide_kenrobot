@@ -591,6 +591,30 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "util
 		specLinks["loopEnd_end"] = diagram.findLinkForData(loopEndToEndLink);
 	}
 
+	function findSpecNode(name) {
+		var iter = diagram.nodes.iterator;
+		var node;
+		while(iter.next()) {
+			node = iter.value;
+			if(node.data.name == name) {
+				break;
+			}
+		}
+		return node;
+	}
+
+	function findSpecLink(name) {
+		var iter = diagram.links.iterator;
+		var link;
+		while(iter.next()) {
+			link = iter.value;
+			if(link.data.name == name) {
+				break;
+			}
+		}
+		return link;
+	}
+
 	//添加节点
 	function addNode(name, x, y) {
 		var config = getConfig(name);
@@ -717,6 +741,29 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "util
 		return configs[name];
 	}
 
+	function getModelData() {
+		return diagram.model.toJson();
+	}
+
+	function load(modelData) {
+		diagram.model = go.Model.fromJson(modelData);
+
+		specNodes = {};
+		specLinks = {};
+
+		specNodes["start"] = findSpecNode("start");
+		specNodes["loopStart"] = findSpecNode("loopStart");
+		specNodes["loopEnd"] = findSpecNode("loopEnd");
+		specNodes["end"] = findSpecNode("end");
+
+		specLinks["start_loopStart"] = findSpecLink("start_loopStart");
+		specLinks["loopStart_loopEnd"] = findSpecNode("loopStart_loopEnd");
+		specLinks["loopEnd_loopStart"] = findSpecNode("loopEnd_loopStart");
+		specLinks["loopEnd_end"] = findSpecNode("loopEnd_end");
+
+		liveHardwareDrag();
+	}
+
 	return {
 		init: init,
 		findTargetNode: findTargetNode,
@@ -724,6 +771,7 @@ define(['jquery', 'jquery-ui', 'goJS', "hardware", "code", "EventManager", "util
 		findSpecNode: findSpecNode,
 		makeImage: makeImage,
 		getConfig: getConfig,
-		test: test,
+		getModelData: getModelData,
+		load: load,
 	}
 });

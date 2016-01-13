@@ -544,13 +544,11 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 					buildType: buildType
 				},
 				dataType: "json",
-				async: true, //异步
 				success: function(result) {
 					if (result.code == 0 && result.url) {
 						window.open(result.url);
 					} else {
 						util.message(result.msg);
-						// console.log(result.output);
 					}
 				},
 				error: function(result) {
@@ -560,8 +558,35 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 		});
 
 		$('.mod_btn .test').click(function(e) {
-			// hardware.test();
-			// software.test();
+			var projectData = {
+				hardwareList: getHardwareList(),
+				hardware: hardware.getModelData(),
+				variable: variable.getVars(),
+				software: software.getModelData(),
+			}
+			$.ajax({
+				type: 'POST',
+				url: 'project/save',
+				data: {
+					data: JSON.stringify(projectData),
+				},
+				dataType: 'json',
+				success: function(result) {
+					util.message(result.msg);
+				}
+			});
+		});
+
+		$('.mod_btn .test2').click(function(e) {
+			var id = 0;
+			$.ajax({
+				type: 'GET',
+				url: 'project/' + id,
+				dataType: 'json',
+				success: function(result) {
+					loadProject(result);
+				}
+			});
 		});
 
 		$('.mod_btn .feedback').click(function(e) {
@@ -621,10 +646,36 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 		EventManager.bind("hardware", "deleteNode", onHardwareDeleteNode);
 	}
 
+	function loadProject(project) {
+		var projectData = JSON.parse(project.data)
+		loadHardwareList(projectData.hardwareList);
+		variable.load(projectData.variable);
+		hardware.load(projectData.hardware);
+		software.load(projectData.software);
+	}
+
+	var hardwareList = [];
+	function getHardwareList() {
+		return hardwareList;
+	}
+
+	function loadHardwareList(_hardwareList) {
+		hardwareList = [];
+		var list = $(".nav-second .hardware-list ul").empty();
+		var list2 = $(".side .hardware-list ul").empty();
+
+		for(var i = 0; i < _hardwareList.length; i++) {
+			var hardwareArg = _hardwareList[i];
+			onHardwareAddNode(hardwareArg);
+		}
+	}
+
 	function onHardwareAddNode(args) {
 		var name = args.name;
 		var text = args.text;
 		var key = args.key;
+		hardwareList.push(args);
+
 		var path = getSmallImgPath(name, "hardware");
 		
 		var list = $(".nav-second .hardware-list ul");
@@ -650,6 +701,14 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 
 		list = $(".side .hardware-list ul");
 		$("li img[data-key=" + key + "]", list).parent().remove();
+
+		for(var i = 0; i < hardwareList.length; i++) {
+			var hardwareArg = hardwareList[i];
+			if(hardwareArg.key == args.key) {
+				hardwareList.splice(i, 1);
+				break;
+			}
+		}
 	}
 
 	function getSmallImgPath(name, type) {

@@ -39,7 +39,7 @@ define(["jquery", "util", "hardware", "software", "EventManager"], function($, u
 	function addVar(varInfo) {
 		var checkInfo = checkVar(varInfo.name);
 		if(!checkInfo.result) {
-			alert(checkInfo.message);
+			util.message(checkInfo.message);
 			return false;
 		}
 
@@ -68,7 +68,7 @@ define(["jquery", "util", "hardware", "software", "EventManager"], function($, u
 	function saveVar(varInfo, index) {
 		var checkInfo = checkVar(varInfo.name, index);
 		if(!checkInfo.result) {
-			alert(checkInfo.message);
+			util.message(checkInfo.message);
 			return false;
 		}
 
@@ -212,6 +212,15 @@ define(["jquery", "util", "hardware", "software", "EventManager"], function($, u
 		}
 	}
 
+	function load(_vars) {
+		vars = [];
+		$("tbody", container).empty();
+		for(var i = 0; i < _vars.length; i++) {
+			var varInfo = _vars[i];
+			addVar(varInfo);
+		}
+	}
+
 	return {
 		init: init,
 		getVars: getVars,
@@ -220,5 +229,6 @@ define(["jquery", "util", "hardware", "software", "EventManager"], function($, u
 		saveVar: saveVar,
 		deleteVar: deleteVar,
 		checkVar: checkVar,
+		load: load,
 	}
 });
