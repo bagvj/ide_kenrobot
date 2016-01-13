@@ -265,6 +265,26 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 				addLink(boardData.key, adapterData.key, port.portId, "B");
 				addLink(adapterData.key, nodeData.key, "T", "B");
 			}
+		} else if(nodeData.need_drive_plate) {
+			//需要驱动板
+			var hasDrivePlate = boardData.port.substr(targetInfo.portIndex * 9, 8) != "11111111";
+			if(hasDrivePlate) {
+				//有驱动板
+				var driveNode = findTargetNode(boardNode, port.portId);
+				var driveData = driveNode.data;
+				var offsetY = -(driveData.height + 40 + nodeData.height / 2 + 40);
+				setNodePosition(nodeData, x, y + offsetY);
+				addLink(driveData.key, nodeData.key, "T", "B");
+			} else {
+				//没有驱动板
+				var driveData = addNode("drivePlate", x, y);
+				var driveOffsetY = -(driveData.height / 2 + 40);
+				var offsetY = -(driveData.height + 40 + nodeData.height / 2 + 40);
+				setNodePosition(nodeData, x, y + offsetY);
+				setNodePosition(driveData, x, y + driveOffsetY);
+				addLink(boardData.key, driveData.key, port.portId, "B");
+				addLink(driveData.key, nodeData.key, "T", "B");
+			}
 		} else {
 			//不需要转接板
 			var offsetY = -(nodeData.height / 2 + 40);
