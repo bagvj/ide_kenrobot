@@ -285,7 +285,6 @@ define(['jquery', 'jquery-ui', 'goJS', "EventManager", "code"], function($, _, _
 		nodeData.bitIndex = targetInfo.bitIndex;
 		if(name == "streeringEngine" || name == "dcMotor") {
 			nodeData.index = getNodeCount(name) - 1;
-			console.log("index " + nodeData.index);
 		}
 		
 		model.commitTransaction("addNode");

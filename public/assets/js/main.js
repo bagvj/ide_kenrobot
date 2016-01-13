@@ -646,10 +646,10 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 	function onHardwareDeleteNode(args) {
 		var key = args.key;
 		var list = $(".nav-second .hardware-list ul");
-		$("li div[data-key=" + key + "]", list).parent().remove();
+		$("li img[data-key=" + key + "]", list).parent().remove();
 
 		list = $(".side .hardware-list ul");
-		$("li div[data-key=" + key + "]", list).parent().remove();
+		$("li img[data-key=" + key + "]", list).parent().remove();
 	}
 
 	function getSmallImgPath(name, type) {
