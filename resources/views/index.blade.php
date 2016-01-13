@@ -46,6 +46,7 @@
 	            isImgLoad = false;
 	            return false;
 	        } else {
+	        	console.log(img.src + " " + img.width + "," + img.height);
 	        	count++;
 	        }
 	    }
