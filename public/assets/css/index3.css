@@ -1,0 +1,452 @@
+@charset "utf-8";
+
+* {
+    -webkit-margin-before: 0px;
+    -webkit-margin-after: 0px;
+    -webkit-padding-start: 0px;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+li {
+	list-style: outside none none;
+}
+
+input {
+	outline: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+body {
+	font-family: 'Microsoft YaHei';
+	font-size: 62.5%;
+	color: white;
+}
+
+.clear:after {
+	content: "020";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+.clear {
+	zoom: 1;
+}
+
+.unselectable {
+	moz-user-select: -moz-none;
+	-moz-user-select: none;
+	-o-user-select:none;
+	-khtml-user-select:none;
+	-webkit-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+	cursor: default;
+}
+
+.selectable {
+	moz-user-select: -moz-text;
+	-moz-user-select: text;
+	-o-user-select:text;
+	-khtml-user-select:text;
+	-webkit-user-select:text;
+	-ms-user-select:text;
+	user-select:text;
+	cursor: auto;
+}
+
+.main {
+	margin: 0;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.main .header {
+	height: 60px;
+	background-color: #363636;
+}
+
+.header .left {
+	width: 280px;
+	height: 100%;
+	float: left;
+}
+
+.header .right {
+	height: 100%;
+	float: left;
+}
+
+.header .back {
+	margin-left: 33px;
+	height: 60px;
+	line-height: 60px;
+	color: #9B9B9B;
+	font-family: 'Microsoft YaHei';
+	font-size: 1.4em;
+	letter-spacing: 2px;
+	float: left;
+}
+
+.header .back:hover {
+	color: white;
+}
+
+.header .tab {
+	float: left;
+}
+
+.header .tab ul {
+	float: left;
+}
+
+.header .tab ul li{
+	width: 120px;
+	color: #9B9B9B;
+	line-height: 60px;
+	text-align: center;
+	font-size: 1.4em;
+	letter-spacing: 5px;
+	cursor: pointer;
+	float: left;
+}
+
+.header .tab ul li.active {
+	color: white;
+	background-color: #2E2E2E;
+}
+
+.header .tab ul li:hover {
+	color: white;
+	background-color: #2E2E2E;
+}
+
+.main .content {
+	top: 60px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	position: absolute;
+}
+
+.content .mod {
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	position: absolute;
+	visibility: hidden;
+}
+
+.content .mod.active {
+	visibility: visible;
+}
+
+.content .hardware .left {
+	width: 280px;
+	height: 100%;
+	background-color: #444444;
+}
+
+.content .hardware .right {
+	background-color: #6B6B6B;
+	top: 0;
+	bottom: 0;
+	left: 280px;
+	right: 0;
+	position: absolute;
+}
+
+.content .software .left {
+	width: 400px;
+	height: 100%;
+	background-color: #444444;
+}
+
+.content .software .right {
+	background-color: #6B6B6B;
+	top: 0;
+	bottom: 0;
+	left: 400px;
+	right: 0;
+	position: absolute;
+	float: left;
+}
+
+.content .tab {
+	width: 32px;
+	height: 100%;
+	float: left;
+}
+
+.content .panel {
+	position: relative;
+	height: 100%;
+	float: left;
+}
+
+.content .software .panel {
+	width: 368px;
+}
+
+.content .hardware .panel {
+	width: 248px;
+}
+
+.content .software .panel {
+	width: 368px;
+	float: left;
+}
+
+.content .tab ul li {
+	width: 24px;
+	justify-content:center;
+	align-items:center;
+	display:-webkit-flex;
+	display: flex;
+	cursor: pointer;
+}
+
+.content .hardware .tab ul li {
+	height: 124px;
+	margin: 24px 0;
+}
+
+.content .software .tab ul li {
+	height: 100px;
+	margin: 16px 0;
+}
+
+.content .tab ul li.active, .content .tab ul li:hover {
+	width: 32px;
+}
+
+.content .tab ul li a {
+	width: 1.2em;
+	font-size: 1.2em;
+	display: block;
+}
+
+.hardware .tag-1 {
+	background-color: #68D283;
+}
+
+.hardware .tag-2 {
+	background-color: #40AFE5;
+}
+
+.hardware .tag-3 {
+	background-color: #E8A34E;
+}
+
+.hardware .tag-4 {
+	background-color: #E9615F;
+}
+
+.hardware .tag-5 {
+	background-color: #E2559C;
+}
+
+.software .tag-1 {
+	background-color: #68D283;
+}
+
+.software .tag-2 {
+	background-color: #40AFE5;
+}
+
+.software .tag-3 {
+	background-color: #E8A34E;
+}
+
+.software .tag-4 {
+	background-color: #E9615F;
+}
+
+.software .tag-5 {
+	background-color: #E2559C;
+}
+
+.software .tag-6 {
+	background-color: #8D32E4;
+}
+
+.hardware .search {
+	margin: 24px 14px 14px 14px;
+	height: 36px;
+	border-radius: 40px;
+	background-color: #404040;
+	float: left;
+}
+
+.hardware .search input[name=key]{
+	height: 100%;
+	margin: 0 18px;
+	width: 184px;
+	color: white;
+	background-color: transparent;
+}
+
+.hardware .seperator {
+	width: 220px;
+	height: 2px;
+	background-color: #535353;
+	margin: 0 14px;
+	float: left;
+}
+
+.hardware .items {
+	left: 14px;
+	right: 14px;
+	top: 90px;
+	bottom: 24px;
+	background-color: #575757;
+	position: absolute;
+	float: left;
+}
+
+.software .items {
+	left: 14px;
+	right: 14px;
+	top: 24px;
+	bottom: 24px;
+	background-color: #575757;
+	position: absolute;
+	float: left;
+}
+
+.software .north {
+	height: 40px;
+	background-color: #555555;
+}
+
+.software .center {
+	top: 40px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	position: absolute;
+}
+
+.software-submenu{
+    position: relative;
+}
+
+.software-submenu-arrow {
+	display: none;
+}
+
+.software-menuitem{
+    width :120px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 1.4em;
+    letter-spacing: 5px;
+    text-align: center;
+    float: left;
+}
+
+.software-menuitem-hover{
+    background: #242424;
+    cursor: pointer;
+}
+
+.software-popupmenu{
+    width: 120px;
+    position: absolute;
+    background-color: #363636;
+    z-index: 9999;
+}
+
+.software-popupmenu .software-menuitem-hover{
+    background-color: #242424;
+}
+
+.software-popupmenu-hidden{
+    visibility: hidden;
+}
+
+.software-popupmenu .software-menuitem{
+    height: 40px;
+    line-height: 40px;
+}
+
+.software .sub-tab {
+	float: right;
+}
+
+.software .sub-tab ul {
+	float: left;
+}
+
+.software .sub-tab ul li{
+	width: 120px;
+	line-height: 40px;
+	text-align: center;
+	font-size: 1.4em;
+	letter-spacing: 5px;
+	cursor: pointer;
+	float: left;
+}
+
+.software .sub-tab ul li.active {
+	background-color: #303030;
+}
+
+.software .sub-tab ul li:hover {
+	background-color: #303030;
+}
+
+.software .sub-mod {
+	height: 100%;
+	display: none;
+}
+
+.software .sub-mod.active {
+	display: block;
+}
+
+.software .editor {
+	font-size: 1.8em;
+	height: 100%;
+}
+
+.message {
+    background-color: #373B44;
+    width: 400px;
+    border-radius:5px;
+    margin: 0 auto;
+    padding: 8px;
+    z-index: 99999;
+    position: absolute;
+}
+
+.message .message-icon {
+    width: 20px;
+    display: inline-block;
+}
+
+.message .message-content {
+    color: #fff;
+    height: 20px;
+    display: inline-block;
+}
+
+.message .message-close {
+    cursor: pointer;
+    width: 10px;
+    height: 20px;
+    background: url(../images/closeBtn.png) no-repeat center;
+    background-size: 10px 10px;
+    display: inline-block;
+    float: right;
+}

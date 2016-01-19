@@ -232,6 +232,7 @@ img {
 .header .login ul li {
     float: left;
     list-style: outside none none;
+    cursor: pointer;
 }
 
 .header .login ul li a {
@@ -243,6 +244,7 @@ img {
     letter-spacing: 2px;
     text-align: center;
     border: 0px;
+    cursor: pointer;
 }
 
 .header .login ul li a:hover {

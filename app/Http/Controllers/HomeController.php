@@ -25,6 +25,10 @@ class HomeController extends Controller {
 		return view("index2");
 	}
 
+	public function index3() {
+		return view("index3");
+	}
+
 	public function download(Request $request) {
 		$time = $request->input('time');
 		$projectName = $request->input('proj');
