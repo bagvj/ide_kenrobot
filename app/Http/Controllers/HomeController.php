@@ -161,11 +161,25 @@ class HomeController extends Controller {
 
 	public function saveProject(Request $request) {
 		$data = $request->input('data');
+		$user_id = $request->input('user_id');
+
 		$result = array();
-		if($data) {
-			$project = Project::create([
-				'data' => $request->input('data'),
-			]);
+		if($data && $user_id) {
+			$project = Project::where('user_id', $user_id)->first();
+			$time = time();
+			if($project) {
+				$project->data = $data;
+				$project->update_at = $time;
+				$project->save();
+			} else {
+				$project = Project::create([
+					'data' => $data,
+					'user_id' => $user_id,
+					'create_at' => $time,
+					'update_at' => $time,
+				]);
+			}
+			
 			$result['msg'] = "保存成功";
 			$result['code'] = 0;
 		} else {
