@@ -39,8 +39,11 @@ class WeixinAuthController extends Controller
         $nav = config('navigation.master');
         if (Auth::check()) {
             $user = Auth::user();
+
+            //明文设置一个假的
+            setcookie('plt_uid',$user->id,time()+3600, '','kenrobot.com');
         }
-    
+
         return view('index',compact('user','qrcode','qrcodeurl','key','nav'));
     }
 

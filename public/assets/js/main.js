@@ -218,7 +218,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 			var time1 = setInterval(function() {
 				var key = $('#qrcode_key').val();
 				$.get('/weixinlogin?key=' + key, function(result) {
-					// console.log(result.message);
+					console.log(result.message);
 					if (result.code == 0) {
 						//登录成功
 						clearInterval(time1);
