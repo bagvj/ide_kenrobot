@@ -32,8 +32,13 @@ define(function($){
 		}, 2000);
 	}
 
+	function dialog(args) {
+		
+	}
+
 	return {
 		message: message,
+		dialog: dialog,
 	}
 }, {
 	requires: ['node']
