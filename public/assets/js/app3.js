@@ -1,10 +1,11 @@
 define(function($, IO, Menu, util) {
 	var editor;
+	var loginCheckTimer;
 
 	function init() {
 		initSoftwareMenu();
 		initEditor();
-		// initLogin();
+		initLogin();
 
 		var headerTabItems = $('.header .tab li').on('click', onHeaderTabClick);
 
@@ -76,26 +77,6 @@ define(function($, IO, Menu, util) {
 	}
 
 	function initLogin() {
-		$('.login li a.loginBtn').on('click', function(e) {
-			$('#login_dialog').dialog({
-				draggable: false,
-				modal: true,
-				resizable: false,
-				show: {
-					effect: "blind",
-					duration: 200
-				},
-				hide: {
-					effect: "blind",
-					duration: 200
-				},
-				close: function(event, ui) {
-					$('.login li a.loginBtn').blur();
-					$('#use_weixin').removeClass("active");
-				}
-			});
-		});
-
 		$('.qrLoginBtn, .baseLoginBtn').on('click', function(e) {
 			var action = $(this).attr("data-action");
 			if (action == "qrLogin") {
@@ -107,6 +88,7 @@ define(function($, IO, Menu, util) {
 				$(".baseLoginBtn").css({
 					display: "block"
 				});
+				$('#use_weixin').removeClass("active");
 			} else {
 				$(".baseLoginBtn, .baseLogin").removeClass("active");
 				$(".qrLoginBtn, .qrLogin").addClass("active");
@@ -117,50 +99,42 @@ define(function($, IO, Menu, util) {
 					display: "block"
 				});
 			}
-
-			var time1 = setInterval(function() {
-				var key = $('#qrcode_key').val();
-				$.get('/weixinlogin?key=' + key, function(result) {
-					// console.log(result.message);
-					if (result.code == 0) {
-						//登录成功
-						clearInterval(time1);
-						window.location.href = "/";
-					} else if (result.code == 1) {
-						//已经登录
-						clearInterval(time1);
-					} else {
-						//登录失败
-					}
-				});
-			}, 3000);
 		});
 
 		$('#login_dialog .closeBtn').on('click', function(e) {
-			$('#login_dialog').dialog('close');
+			$('#login_dialog').slideUp(0.1, function(event, ui) {
+				$('#use_weixin').removeClass("active");
+			});
+			setLoginCheck(false);
 		});
 
 
 		$('.submitBtn').on('click', function() {
-			$.post('/snspostlogin', {
+			new IO({
+				url: '/snspostlogin', 
+				data: {
 					email: $('#email').val(),
 					password: $('#password').val()
 				},
-				function(result) {
+				headers: getHeaders(),
+				success: function(result) {
 					if (result.code == 0) {
 						//登录成功
-						window.location.href = "/";
+						// window.location.href = "/v3";
+						util.message(result.message);
+						$('#login_dialog .closeBtn').fire('click');
 					} else if (result.code == 1) {
 
 					} else {
-						$('.baseLogin .message span')
-							.html(result.message)
-							.delay(2000)
-							.queue(function() {
-								$(this).fadeOut().dequeue();
-							});
+						// $('.baseLogin .message span')
+						// 	.html(result.message)
+						// 	.delay(2000)
+						// 	.queue(function() {
+						// 		$(this).fadeOut().dequeue();
+						// 	});
 					}
-				});
+				}
+			});
 		});
 
 		$('.qrLogin .qrcode').on('mouseenter', function(e) {
@@ -215,16 +189,36 @@ define(function($, IO, Menu, util) {
 	}
 
 	function onSaveClick() {
-
+		new IO({
+			type: 'GET',
+			url: '/auth/check',
+			dataType: 'json',
+			success: function(result) {
+				if(result.code == 0) {
+					var projectData = {
+						source: getSource(),
+					}
+					new IO({
+						type: 'POST',
+						url: '/project/save',
+						data: {
+							data: JSON.stringify(projectData),
+							user_id: result.user.id,
+						},
+						headers: getHeaders(),
+						dataType: 'json',
+						success: function(res) {
+							util.message(res.msg);
+						}
+					});
+				} else {
+					showLogin();
+				}
+			}
+		});
 	}
 
 	function onDownloadClick() {
-		var source = editor.getValue();
-		var bytes = [];
-		for (var i = 0; i < source.length; ++i) {
-			bytes.push(source.charCodeAt(i));
-		}
-
 		var projectName = "Arduino";
 		var buildType = "Arduino";
 
@@ -232,14 +226,12 @@ define(function($, IO, Menu, util) {
 			type: "POST",
 			url: "./build",
 			data: {
-				source: bytes,
+				source: getSource(),
 				projectName: projectName,
 				buildType: buildType
 			},
 			dataType: "json",
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			},
+			headers: getHeaders(),
 			success: function(result) {
 				if (result.code == 0 && result.url) {
 					window.open(result.url);
@@ -248,7 +240,7 @@ define(function($, IO, Menu, util) {
 				}
 			},
 			error: function(result) {
-				console.log(result);
+				// console.log(result);
 			}
 		});
 	}
@@ -297,6 +289,64 @@ define(function($, IO, Menu, util) {
 		li.addClass("active");
 
 		return true;
+	}
+
+	function showLogin() {
+		$('#login_dialog').css({
+			top: -$(this).height(),
+		}).show().animate({
+			top: 100,
+		}, {
+			duration: 0.4,
+			easing: "swing",
+			complete: function() {
+				setLoginCheck(true);
+			},
+		});
+	}
+
+	function setLoginCheck(value) {
+		clearInterval(loginCheckTimer);
+		if(value) {
+			loginCheckTimer = setInterval(function() {
+				var key = $('#qrcode_key').val();
+				new IO({
+					url: '/weixinlogin?key=' + key, 
+					headers: getHeaders(),
+					success: function(result) {
+						// console.log(result.message);
+						if (result.code == 0) {
+							//登录成功
+							clearInterval(loginCheckTimer);
+							// window.location.href = "/";
+							util.message(result.message);
+							$('#login_dialog .closeBtn').fire('click');
+						} else if (result.code == 1) {
+							//已经登录
+							clearInterval(loginCheckTimer);
+							console.log(result.message);
+						} else {
+							//登录失败
+						}
+					},
+				});
+			}, 3000);
+		}
+	}
+
+	function getSource() {
+		var source = editor.getValue();
+		var bytes = [];
+		for (var i = 0; i < source.length; ++i) {
+			bytes.push(source.charCodeAt(i));
+		}
+		return bytes;
+	}
+
+	function getHeaders() {
+		return {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+		}
 	}
 
 	return {

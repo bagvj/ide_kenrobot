@@ -2,16 +2,14 @@
 <html>
 	<head>
 		<meta charset='utf-8'>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="user-scalable=no">
 		<title>啃萝卜智能硬件平台</title>
 		<meta name="description" content="啃萝卜智能硬件平台" />
 		<meta name="keywords" content="啃萝卜智能硬件平台" />
 		<meta name="csrf-token" content="{{csrf_token()}}" />
 
 		<link href="/assets/images/favicon.ico" type="image/x-icon" rel="shortcut icon" />
-		<link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
 		<link href="/assets/css/font-awesome.css" type="text/css" rel="stylesheet" />
 		<link href="/assets/css/index3.css" type="text/css" rel="stylesheet" />
 
@@ -76,21 +74,7 @@
 					</div>
 					<div class="right">
 						<div class="north">
-							<span>0</span>
-							<span>1</span>
-							<span>2</span>
-							<span>3</span>
-							<span>4</span>
-							<span>5</span>
-							<span>6</span>
-							<span>7</span>
-							<span>8</span>
-							<span>9</span>
-							<span>10</span>
-							<span>11</span>
-							<span>12</span>
-							<span>13</span>
-<!-- 							<ul>
+							<ul>
 								<li>0</li>
 								<li>1</li>
 								<li>2</li>
@@ -105,7 +89,7 @@
 								<li>11</li>
 								<li>12</li>
 								<li>13</li>
-							</ul> -->
+							</ul>
 						</div>
 						<div class="center">
 							
@@ -179,47 +163,47 @@
 				</div>
 			</div>
 			<div class="footer"></div>
-		</div>
-		<div id="login_dialog" style="display:none">
-			<div>
-				<a href="javascript:;" title="返回" class="qrLoginBtn active" data-action="qrLogin"></a>
-				<div class="qrLogin active">
-					<div class="tips">请使用微信扫一扫</div>
-					<div class="tips">扫码关注后即可直接登录</div>
-					<img class="qrcode" alt="微信扫码" src="{{ $qrcodeurl or '' }}" />
+			<div id="login_dialog" style="display:none">
+				<div>
+					<a href="javascript:;" title="返回" class="qrLoginBtn active" data-action="qrLogin"></a>
+					<div class="qrLogin active">
+						<div class="tips">请使用微信扫一扫</div>
+						<div class="tips">扫码关注后即可直接登录</div>
+						<img class="qrcode" alt="微信扫码" src="{{ $qrcodeurl or '' }}" />
+					</div>
+					<a href="javascript:;" title="返回" class="baseLoginBtn" data-action="baseLogin" style="display:none;"></a>
+					<div class="baseLogin">
+						<div class="tips">登录到啃萝卜</div>
+						<form>
+							{!! csrf_field() !!}
+							<div class="message">
+								<span></span>
+							</div>
+							<div class="field">
+								<label class="email">
+								<!-- <i class="iconauth"></i> -->
+								</label>
+								<input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="邮箱地址/手机号码" />
+							</div>
+							<div class="field">
+								<label class="password">
+								<!-- <i class="iconauth"></i> -->
+								</label>
+								<input type="password" name="password" id="password" />
+							</div>
+							<div class="remember"></div>
+							<div>
+								<input id="qrcode_key" type="hidden" value="{{$key or ''}}">
+								<input class="submitBtn" type="button" value="登录"/>
+							</div>
+						</form>
+					</div>
+					<div class="closeBtn"></div>
 				</div>
-				<a href="javascript:;" title="返回" class="baseLoginBtn" data-action="baseLogin" style="display:none;"></a>
-				<div class="baseLogin">
-					<div class="tips">登录到啃萝卜</div>
-					<form>
-						{!! csrf_field() !!}
-						<div class="message">
-							<span></span>
-						</div>
-						<div class="field">
-							<label class="email">
-							<!-- <i class="iconauth"></i> -->
-							</label>
-							<input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="邮箱地址/手机号码" />
-						</div>
-						<div class="field">
-							<label class="password">
-							<!-- <i class="iconauth"></i> -->
-							</label>
-							<input type="password" name="password" id="password" />
-						</div>
-						<div class="remember"></div>
-						<div>
-							<input id="qrcode_key" type="hidden" value="{{$key or ''}}">
-							<input class="submitBtn" type="button" value="登录"/>
-						</div>
-					</form>
-				</div>
-				<div class="closeBtn"></div>
 			</div>
-		</div>
-		<div id="use_weixin">
-			<img src="{{asset('/assets/images/use_weixin.png')}}" />
+			<div id="use_weixin">
+				<img src="{{asset('/assets/images/use_weixin.png')}}" />
+			</div>
 		</div>
 	</body>
 </html>

@@ -173,6 +173,8 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 	}
 
 	function initLogin() {
+		var time1;
+
 		$('.login li a.loginBtn').click(function(e) {
 			$('#login_dialog').dialog({
 				draggable: false,
@@ -189,8 +191,26 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 				close: function(event, ui) {
 					$('.login li a.loginBtn').blur();
 					$('#use_weixin').removeClass("active");
+					clearInterval(time1);
 				}
 			});
+
+			time1 = setInterval(function() {
+				var key = $('#qrcode_key').val();
+				$.get('/weixinlogin?key=' + key, function(result) {
+					console.log(result.message);
+					if (result.code == 0) {
+						//登录成功
+						clearInterval(time1);
+						window.location.href = "/";
+					} else if (result.code == 1) {
+						//已经登录
+						clearInterval(time1);
+					} else {
+						//登录失败
+					}
+				});
+			}, 3000);
 		});
 
 		$('.qrLoginBtn, .baseLoginBtn').click(function(e) {
@@ -214,23 +234,6 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 					display: "block"
 				});
 			}
-
-			var time1 = setInterval(function() {
-				var key = $('#qrcode_key').val();
-				$.get('/weixinlogin?key=' + key, function(result) {
-					console.log(result.message);
-					if (result.code == 0) {
-						//登录成功
-						clearInterval(time1);
-						window.location.href = "/";
-					} else if (result.code == 1) {
-						//已经登录
-						clearInterval(time1);
-					} else {
-						//登录失败
-					}
-				});
-			}, 3000);
 		});
 
 		$('#login_dialog .closeBtn').click(function(e) {
@@ -287,7 +290,7 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 						$(this).removeClass("active");
 					});
 			}
-		})
+		});
 	}
 
 	//缩略图

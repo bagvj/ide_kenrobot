@@ -73,6 +73,9 @@ class ReDesignConfig extends Migration {
 
 		Schema::create('projects', function (Blueprint $table) {
 			$table->increments('id')->comment("项目id");
+			$table->integer('user_id')->comment("用户id");
+			$table->integer('create_at')->comment("创建时间");
+			$table->integer('update_at')->comment("最后修改时间");
 			$table->binary('data')->comment("项目数据");
 		});
 

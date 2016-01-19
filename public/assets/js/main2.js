@@ -2,11 +2,13 @@ var baseUrl = "/assets/js";
 require.config({
 	baseUrl: baseUrl,
 	paths: {
-		'extJS': "lib/ext-all-debug",
-		"app": "app",
+		"jquery": "lib/jquery.min",
+		"bootstrap": "lib/bootstrap",
+		"ace": "lib/ace/ace",
+		"app": "app2",
 	},
 });
 
 require(['app'], function(app) {
-	app.init(baseUrl);
+	app.init();
 });

@@ -10,5 +10,5 @@ class Project extends Model {
 
 	public $timestamps = false;
 
-	protected $fillable = ['id', 'data'];
+	protected $fillable = ['id', 'user_id', 'data', 'create_at', 'update_at'];
 }
