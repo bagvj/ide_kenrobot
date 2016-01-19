@@ -1312,7 +1312,7 @@ img {
     color: #FFF;
 }
 
-.message {
+.x-message {
     background-color: #373B44;
     width: 400px;
     border-radius:5px;
@@ -1322,18 +1322,18 @@ img {
     position: absolute;
 }
 
-.message .message-icon {
+.x-message .message-icon {
     width: 20px;
     display: inline-block;
 }
 
-.message .message-content {
+.x-message .message-content {
     color: #fff;
     height: 20px;
     display: inline-block;
 }
 
-.message .message-close {
+.x-message .message-close {
     cursor: pointer;
     width: 10px;
     height: 20px;

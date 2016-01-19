@@ -295,7 +295,7 @@ define(['jquery', 'jquery-ui'], function($) {
 		});
 
 		args = typeof args == "Object" ? args : {text: args};
-		var messageDiv = $('<div class="message"><div class="message-icon"></div><div class="message-content"></div><div class="message-close"></div></div>');
+		var messageDiv = $('<div class="x-message"><div class="message-icon"></div><div class="message-content"></div><div class="message-close"></div></div>');
 		$(".message-content", messageDiv).text(args.text);
 		$(".message-close", messageDiv).click(function() {
 			messageDiv.fadeOut(400, function() {
