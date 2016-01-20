@@ -11,6 +11,10 @@ use DB;
 use Illuminate\Http\Request;
 use ZipArchive;
 
+use Curl\Curl;
+use Session;
+
+
 class HomeController extends Controller {
 
 	public function index() {
@@ -26,7 +30,16 @@ class HomeController extends Controller {
 	}
 
 	public function index3() {
-		return view("index3");
+
+		$qrcode = rand(70000,80000);
+        $qrcodeurl = $this->getQrcodeurl($qrcode);
+        $key = 'qrscene_'.$qrcode;
+        Session::put('key',$key);
+
+        $url = config('weixin.userinfo.url')."?key=$key";
+        $nav = config('navigation.master');
+
+		return view("index3",compact('qrcodeurl','key'));
 	}
 
 	public function download(Request $request) {
@@ -272,4 +285,16 @@ class HomeController extends Controller {
 
 		return $str;
 	}
+
+	private function getQrcodeurl($key = '')
+    {
+
+        $url = config('weixin.qrcode.url');
+        $url .="$key";
+        $curl = new Curl();
+        $qrcodeurl = $curl->get($url);
+
+        return $qrcodeurl;
+      //  return $userData;
+    }
 }
