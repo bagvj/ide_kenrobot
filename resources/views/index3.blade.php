@@ -201,7 +201,7 @@
 					<div class="closeBtn"></div>
 				</div>
 			</div>
-			<div id="use_weixin">
+			<div id="use_weixin" style="display:none;">
 				<img src="{{asset('/assets/images/use_weixin.png')}}" />
 			</div>
 		</div>

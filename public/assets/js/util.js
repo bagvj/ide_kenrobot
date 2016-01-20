@@ -290,7 +290,7 @@ define(['jquery', 'jquery-ui'], function($) {
 	}
 
 	function message(args) {
-		$("div.message").stop(true).fadeOut(400, function() {
+		$("div.x-message").stop(true).fadeOut(400, function() {
 			$(this).remove();
 		});
 
