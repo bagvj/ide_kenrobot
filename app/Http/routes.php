@@ -12,7 +12,7 @@
  */
 
 Route::get('/home', 'HomeController@index');
-Route::get('/v2', 'HomeController@index2');
+Route::get('/dev', 'HomeController@index2');
 Route::get('/', 'Auth\WeixinAuthController@homeIndex');
 
 
