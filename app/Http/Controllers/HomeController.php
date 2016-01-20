@@ -32,8 +32,9 @@ class HomeController extends Controller {
 		Session::put('key',$key);
 
 		$url = config('weixin.userinfo.url')."?key=$key";
+		$libraries = $this->getLibrariyConfig();
 
-		return view("index2", compact('qrcodeurl','key'));
+		return view("index2", compact('qrcodeurl','key', 'libraries'));
 	}
 
 	public function index3() {
@@ -173,7 +174,18 @@ class HomeController extends Controller {
 	}
 
 	public function items() {
-		$config = $this->getConfig();
+		$config = $this->getItemConfig();
+		return collect($config)->toJson();
+	}
+
+	public function config() {
+		$defaultCode = "void setup() {\n  // put your setup code here, to run once:\n\n}\n\nvoid loop() {\n  // put your main code here, to run repeatedly:\n\n}";
+
+		$config = array(
+			'defaultCode' => $defaultCode,
+			'libraries' => $this->getLibrariyConfig(),
+		);
+		
 		return collect($config)->toJson();
 	}
 
@@ -217,7 +229,7 @@ class HomeController extends Controller {
 		return collect($project)->toJson();
 	}
 
-	private function getConfig() {
+	private function getItemConfig() {
 		$modules = DB::table('modules')->get();
 		$hardwares = DB::table('hardwares')->get();
 		$softwares = DB::table('softwares')->get();
@@ -290,6 +302,10 @@ class HomeController extends Controller {
 			'hardwares' => $hardwareArray,
 			'softwares' => $softwareArray,
 		);
+	}
+
+	private function getLibrariyConfig() {
+		return DB::table('libraries')->get();
 	}
 
 	private function fromCharCode($codes) {

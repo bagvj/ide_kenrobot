@@ -21,6 +21,7 @@ Route::post('/build', 'HomeController@build');
 Route::get('/download', 'HomeController@download');
 Route::post('/feedback', 'HomeController@feedback');
 Route::get('/items', 'HomeController@items');
+Route::get('/config', 'HomeController@config');
 Route::post('/project/save', 'HomeController@saveProject');
 Route::get('/project/{id}', 'HomeController@getProject')->where('id', '[0-9]+');
 
