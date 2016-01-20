@@ -37,17 +37,6 @@ class HomeController extends Controller {
 		return view("index2", compact('qrcodeurl','key', 'libraries'));
 	}
 
-	public function index3() {
-		$qrcode = rand(70000,80000);
-        $qrcodeurl = $this->getQrcodeurl($qrcode);
-        $key = 'qrscene_'.$qrcode;
-        Session::put('key',$key);
-
-        $url = config('weixin.userinfo.url')."?key=$key";
-
-		return view("index3",compact('qrcodeurl','key'));
-	}
-
 	public function download(Request $request) {
 		$time = $request->input('time');
 		$projectName = $request->input('proj');
