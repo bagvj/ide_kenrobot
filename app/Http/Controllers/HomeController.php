@@ -168,7 +168,7 @@ class HomeController extends Controller {
 	}
 
 	public function config() {
-		$defaultCode = "void setup() {\n  // put your setup code here, to run once:\n\n}\n\nvoid loop() {\n  // put your main code here, to run repeatedly:\n\n}";
+		$defaultCode = "void setup() {\n\t// put your setup code here, to run once:\n\t\n}\n\nvoid loop() {\n\t// put your main code here, to run repeatedly:\n\t\n}";
 
 		$config = array(
 			'defaultCode' => $defaultCode,

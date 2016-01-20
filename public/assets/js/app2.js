@@ -1,4 +1,4 @@
-define(['jquery', 'bootstrap', 'ace', 'util'], function($, _, _, util){
+define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], function($, _, _, _, util) {
 	//默认代码
 	var platformConfig;
 
@@ -13,14 +13,14 @@ define(['jquery', 'bootstrap', 'ace', 'util'], function($, _, _, util){
 		initLogin();
 
 		$('.header .tab li').on('click', onHeaderTabClick).eq(0).click();
-		$('.hardware .tab li').on('click', onHardwareTabClick).hover(function(e){
+		$('.hardware .tab li').on('click', onHardwareTabClick).hover(function(e) {
 			toggleWidth(e, 32);
-		}, function(e){
+		}, function(e) {
 			toggleWidth(e, 24);
 		}).eq(0).click();
-		$('.software .tab li').on('click', onSoftwareTabClick).hover(function(e){
+		$('.software .tab li').on('click', onSoftwareTabClick).hover(function(e) {
 			toggleWidth(e, 32);
-		}, function(e){
+		}, function(e) {
 			toggleWidth(e, 24);
 		}).eq(0).click();
 		$('.software .sub-tab li').on('click', onSoftwareSubTabClick).eq(1).click();
@@ -34,7 +34,7 @@ define(['jquery', 'bootstrap', 'ace', 'util'], function($, _, _, util){
 		});
 	}
 
-	function onRequestConfigSuccess(result){
+	function onRequestConfigSuccess(result) {
 		platformConfig = result;
 		editor.setValue(platformConfig.defaultCode, 1);
 	}
@@ -53,6 +53,11 @@ define(['jquery', 'bootstrap', 'ace', 'util'], function($, _, _, util){
 
 	function initEditor() {
 		editor = ace.edit($(".software .editor")[0]);
+		editor.setOptions({
+			enableBasicAutocompletion: true,
+			enableSnippets: true,
+			enableLiveAutocompletion: true,
+		});
 		editor.setTheme("ace/theme/monokai");
 		editor.session.setMode("ace/mode/c_cpp");
 		editor.setShowPrintMargin(false);
@@ -94,7 +99,7 @@ define(['jquery', 'bootstrap', 'ace', 'util'], function($, _, _, util){
 
 		$('.submitBtn').on('click', function() {
 			$.ajax({
-				url: '/snspostlogin', 
+				url: '/snspostlogin',
 				data: {
 					email: $('#email').val(),
 					password: $('#password').val()
@@ -139,7 +144,7 @@ define(['jquery', 'bootstrap', 'ace', 'util'], function($, _, _, util){
 		}, function(e) {
 			var left = $(this).offset().left;
 			var use_weixin = $('#use_weixin')
-			if(!use_weixin.is(':animated')) {
+			if (!use_weixin.is(':animated')) {
 				use_weixin.animate({
 					left: left + 420,
 					opacity: 0,
@@ -178,7 +183,7 @@ define(['jquery', 'bootstrap', 'ace', 'util'], function($, _, _, util){
 			url: '/auth/check',
 			dataType: 'json',
 			success: function(result) {
-				if(result.code == 0) {
+				if (result.code == 0) {
 					var projectData = {
 						source: getSource(),
 					}
@@ -235,15 +240,15 @@ define(['jquery', 'bootstrap', 'ace', 'util'], function($, _, _, util){
 		var libraries = platformConfig.libraries;
 		var name = node.data('library');
 		var library;
-		for(var i = 0; i < libraries.length; i++) {
+		for (var i = 0; i < libraries.length; i++) {
 			var config = libraries[i];
-			if(config.name == name) {
+			if (config.name == name) {
 				library = config;
 				break;
 			}
 		}
 
-		if(!library) {
+		if (!library) {
 			return
 		}
 
@@ -295,7 +300,7 @@ define(['jquery', 'bootstrap', 'ace', 'util'], function($, _, _, util){
 
 	function toggleWidth(e, width) {
 		var li = $(e.target);
-		if(!li.is('li') || li.hasClass('active')) {
+		if (!li.is('li') || li.hasClass('active')) {
 			return;
 		}
 
@@ -321,11 +326,11 @@ define(['jquery', 'bootstrap', 'ace', 'util'], function($, _, _, util){
 
 	function setLoginCheck(value) {
 		clearInterval(loginCheckTimer);
-		if(value) {
+		if (value) {
 			loginCheckTimer = setInterval(function() {
 				var key = $('#qrcode_key').val();
 				$.ajax({
-					url: '/weixinlogin?key=' + key, 
+					url: '/weixinlogin?key=' + key,
 					success: function(result) {
 						if (result.code == 0) {
 							//登录成功
