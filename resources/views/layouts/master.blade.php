@@ -11,7 +11,6 @@
 
   <link href="{{ asset('/assets/images/favicon.ico') }}" type="image/x-icon" rel="shortcut icon" />
   <link rel="stylesheet" type="text/css" href="   {{ asset('/assets/css/base.css') }} " />
-  <link rel="stylesheet" type="text/css" href="   {{ asset('/assets/css/scroll.css') }} " />
   @yield('css')
   @yield('scripts')
  </head>

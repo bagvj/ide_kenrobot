@@ -36,6 +36,7 @@ class WeixinAuthController extends Controller
         Session::put('key',$key);
 
         $url = config('weixin.userinfo.url')."?key=$key";
+        $nav = config('navigation.master');
         if (Auth::check()) {
             $user = Auth::user();
 
@@ -95,8 +96,6 @@ class WeixinAuthController extends Controller
         }
         Auth::login($user,false);
         return response()->json(['code' => 0, 'message' => '登录成功']);
-
-
     }
 
    
