@@ -1,38 +1,61 @@
 #!/bin/bash
 #export PATH=/usr/local/avrtools/bin:$PATH
 if [ $# -ne 2 ];then
+	echo "参数个数必须为2"
     exit 1
 fi
 
-AVRBINPATH=/usr/local/avrtools/bin/
-PROJECTNAME=$1
-STAMP=$2
-SOURCEPATH=/tmp/"build"${STAMP}${PROJECTNAME}".tmp"/
-SOURCECPP=${SOURCEPATH}/${PROJECTNAME}".cpp"
-HEADERPATH=`dirname $(pwd)/${0}` #`pwd`
+#参数：
+#	1.项目目录
+#	2.主板类型
 
-${AVRBINPATH}/avr-g++ -c -g -Wall -Os -mmcu=atmega128 -I${HEADERPATH} -o ${SOURCEPATH}/${PROJECTNAME}.o ${SOURCEPATH}/${PROJECTNAME}.cpp 
-
-if [ $? -ne 0 ];then
+if [ ! -d "$1" ]; then
+	echo "文件夹\"$1\"不存在"
 	exit 2
 fi
 
-${AVRBINPATH}/avr-g++ -g -Wall -Os -mmcu=atmega128 -I${HEADERPATH} -o ${SOURCEPATH}/${PROJECTNAME}.elf ${HEADERPATH}/Rosys.cpp ${SOURCEPATH}/${PROJECTNAME}.o ${HEADERPATH}/main.o
+#MAKE路径
+MAKE_PATH=/usr/bin/make
 
+#项目目录
+PROJECT_PATH=$1
+#主板类型
+BOARD_TYPE=$2
+
+#当前目录
+DIR=`pwd`
+
+#进入项目目录
+cd ${PROJECT_PATH};
+
+#如果src文件夹不存在，则创建
+if [ ! -d "src" ]; then
+  mkdir src
+fi
+
+#lib同理src
+if [ ! -d "lib" ]; then
+  mkdir lib
+fi
+
+#把.ino源代码文件复制(移动)到src下
+cp *.ino src/
+# mv *.ino src/
+
+#开始编译
+ino build --make /usr/bin/make -m ${BOARD_TYPE}
+
+#编译出错
 if [ $? -ne 0 ];then
+	echo "编译出错"
+	#回到之前的目录
+	cd ${DIR}
 	exit 3
 fi
 
-${AVRBINPATH}/avr-objdump -h -S ${SOURCEPATH}/${PROJECTNAME}.elf  > ${SOURCEPATH}/${PROJECTNAME}.lst
-
-if [ $? -ne 0 ];then
-	exit 4
-fi
-
-${AVRBINPATH}/avr-objcopy -j .text -j .data -O ihex ${SOURCEPATH}/${PROJECTNAME}.elf ${SOURCEPATH}/${PROJECTNAME}.hex
-
-if [ $? -ne 0 ];then
-	exit 5
-fi
+#编译成功
+echo "编译成功"
+#回到之前的目录
+cd ${DIR}
 
 exit 0

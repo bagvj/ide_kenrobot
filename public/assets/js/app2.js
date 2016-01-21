@@ -207,16 +207,20 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 	}
 
 	function onDownloadClick(node, e) {
-		var projectName = "Arduino";
+		var project = "Arduino";
 		var buildType = "Arduino";
+		var userId = 1;
+		var board = "uno";
 
 		$.ajax({
 			type: "POST",
-			url: "/build",
+			url: "/build2",
 			data: {
 				source: getSource(),
-				projectName: projectName,
-				buildType: buildType
+				user_id: userId,
+				project: project,
+				build_type: buildType,
+				board: board,
 			},
 			dataType: "json",
 			success: function(result) {

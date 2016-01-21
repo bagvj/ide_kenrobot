@@ -95,6 +95,61 @@ class HomeController extends Controller {
 		}
 	}
 
+	public function download2(Request $request) {
+		$project = $request->input('project');
+		$board = $request->input('board');
+		$path = "/tmp/build/$project";
+
+		$srcPath = $path . "/src";
+		$srcNames = glob($srcPath . "/*.ino");
+		$hexName = $path . "/.build/$board/firmware.hex";
+		$eepName = $path . "/.build/$board/firmware.eep";
+		if (!$srcNames || count($srcNames) == 0  || !file_exists($hexName)) {
+			//源代码文件或者编译出来的hex文件不存在
+			header("content-type=text/html,charset=utf-8");
+			die("非法请求");
+		}
+
+		//打包
+		$zipName = $path . "/$project-$board.zip";
+		$zip = new ZipArchive();
+		if ($zip->open($zipName, ZipArchive::CREATE) === TRUE) {
+			foreach ($srcNames as $srcName) {
+				$zip->addFile($srcName, basename(($srcName)));
+			}
+			$zip->addFile($hexName, basename($hexName));
+			if(file_exists($eepName)) {
+				$zip->addFile($hexName, basename($eepName));
+			}
+			$zip->close();
+		}
+
+		$filename = $zipName;
+		//检查文件是否存在
+		if (file_exists($filename)) {
+			//返回的文件类型
+			header("Content-type: application/octet-stream");
+			//按照字节大小返回
+			header("Accept-Ranges: bytes");
+			//返回文件的大小
+			header("Accept-Length: " . filesize($filename));
+			//这里对客户端的弹出对话框，对应的文件名
+			Header("Content-Disposition: attachment; filename=" . basename($filename));
+			//一次只传输1024个字节的数据给客户端
+			//打开文件
+			$file = fopen($filename, "r");
+			$buffer = 1024; //
+			//判断文件是否读完
+			while (!feof($file)) {
+				//将文件读入内存, 每次向客户端回送1024个字节的数据
+				echo fread($file, $buffer);
+			}
+			fclose($file);
+		} else {
+			echo "<script>alert('对不起，您要下载的文件不存在！');</script>";
+		}
+	}
+
 	public function build(Request $request) {
 		$result = array();
 		$code = -1;
@@ -152,6 +207,55 @@ class HomeController extends Controller {
 		return collect($result)->toJson();
 	}
 
+	public function build2(Request $request) {
+		$result = array();
+		$code = -1;
+
+		//下载
+		$type = 0;
+
+		//代码的字节码
+		$bytes = $request->input('source');
+		//用户id
+		$user_id = $request->input('user_id');
+		//项目名字
+		$project = $request->input('project');
+		//编译类型
+		$build_type = $request->input('build_type');
+		//主板类型
+		$board = $request->input('board');
+
+		if ($bytes) {
+			$source = $this->fromCharCode($bytes);
+			$time = time();
+			$md5 = md5($user_id . $time . $project . $board);
+
+
+			$path = "/tmp/build/$md5";
+			mkdir($path, 0755, true);
+			$f = fopen($path . "/$project.ino", "wb");
+			fwrite($f, $source);
+			fclose($f);
+
+			$cmd = "sh ../app/Build/compiler/$build_type/build.sh $path $board 2>&1";
+			$output = array();
+			exec($cmd, $output, $code);
+			if ($code == 0) {
+				$result['msg'] = "编译成功";
+				$result['url'] = "/download2?project=$md5&board=$board";
+			} else {
+				$result['msg'] = "编译失败";
+				$result['output'] = $output;
+			}
+		} else {
+			$result['msg'] = "非法请求";
+		}
+		$result['code'] = $code;
+
+		// echo json_encode($result, true);
+		return collect($result)->toJson();
+	}
+
 	//平台建议&BUG反馈
 	public function feedback(Request $request) {
 		$feedback = Feedback::create([
@@ -168,7 +272,7 @@ class HomeController extends Controller {
 	}
 
 	public function config() {
-		$defaultCode = "void setup() {\n\t// put your setup code here, to run once:\n\t\n}\n\nvoid loop() {\n\t// put your main code here, to run repeatedly:\n\t\n}";
+		$defaultCode = "void setup() {\n    // put your setup code here, to run once:\n    \n}\n\nvoid loop() {\n    // put your main code here, to run repeatedly:\n    \n}";
 
 		$config = array(
 			'defaultCode' => $defaultCode,

@@ -67,7 +67,9 @@ var arduinoHighlightRules = function() {
 		"attachInterrupt|detachInterrupt|interrupts|noInterrupts"
 	);
 	//arduino的存储类型
-	var arduinoStorageType = "word|bit";
+	var arduinoStorageTypes = "word|bit";
+    //arduino的常量
+    var arduinoConstants = "INPUT|OUTPUT|HIGH|LOW";
 
     var keywordControls = (
         "break|case|continue|default|do|else|for|goto|if|_Pragma|" +
@@ -97,7 +99,8 @@ var arduinoHighlightRules = function() {
 
     var keywordMapper = this.$keywords = this.createKeywordMapper({
     	"support.function.arduino" : arduinoSupportFuncitons,
-    	"storage.type.arduino": arduinoStorageType,
+    	"storage.type.arduino": arduinoStorageTypes,
+        "constant.other.arduino": arduinoConstants,
         "keyword.control" : keywordControls,
         "storage.type" : storageType,
         "storage.modifier" : storageModifiers,
