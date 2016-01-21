@@ -13,10 +13,26 @@ class WeixinAuth implements WebAuth
 	protected $user;
 
 	protected $url;
+
+	protected $api_user_url;
+
+	protected $api_validate_url;
+
+	protected $curl;
+
+	/**
+	 * 用于获取用户信息的凭据
+	 */
+	protected $token;
 	
 	function __construct()
 	{
 		$this->url = config('weixin.userinfo.url');
+
+		$this->api_user_url = '';
+		$this->api_validate_url = '';
+
+		$this->curl = new Curl();
 	}
 
 	/**
@@ -25,6 +41,9 @@ class WeixinAuth implements WebAuth
 	 * @return array | null
 	 */
 	public function user(){
+		if (empty($this->user)) {
+			$this->user = $this->getUserFromServer();
+		}
 		return $this->user;
 	}
 
@@ -43,10 +62,10 @@ class WeixinAuth implements WebAuth
 			return false;
 		}
 
-		$userData = $this->getWeixinUser($key);
+		$userData = $this->getUserFromServer($key);
 		
 		if ($userData !== null) {
-			$userData = $this->transformUserData($userData);
+			$userData = $this->formatUserData($userData);
 			if ($userData !== null) {
 				$this->user = $userData;
 				return true;
@@ -59,9 +78,9 @@ class WeixinAuth implements WebAuth
 
 
 	/**
-	 * 
+	 * 格式化数据
 	 */
-	protected function transformUserData($rawuserdata)
+	protected function formatUserData($rawuserdata)
     {
        if (empty($rawuserdata)) {
            return null;
@@ -78,15 +97,30 @@ class WeixinAuth implements WebAuth
     }
 
     /**
-     * 远程调用
+     * 调用远程验证
+     *
+     * @param array $crendentials
+     *
+     * @return array
      */
-    protected function getWeixinUser($key = '')
+    protected function validUserFromServer($crendetials)
     {
-        $curl = new Curl();
-        $url = $this->url.'?key='.$key;
-        $data = $curl->get($url);
-        $userData = json_decode($data,true);
-        return $userData;
+    	$validate_url = $this->api_validate_url.'?'.http_build_query((array)$crendetials);
+
+    	$return = $this->curl->get($validate_url);
+
+    	return json_decode($return, true);
+    }
+
+    /**
+     * 远程用户接口
+     *
+     */
+    protected function getUserFromServer($params)
+    {
+    	$return = $this->curl->get($url);
+        $return = $this->curl->get($url);
+        return json_decode($return,true);
     }
 
 }

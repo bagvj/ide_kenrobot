@@ -60,9 +60,10 @@ class SnsAuthController extends Controller {
 		$email = $request->input('email');
 		$password = $request->input('password');
 
-		if (Auth::check()) {
-			return response()->json(['code' => 1, 'message' => '已经登录']);
-		}
+		//这段会拦截不同账号
+		// if (Auth::check()) {
+		// 	return response()->json(['code' => 1, 'message' => '已经登录']);
+		// }
 
 		// dd($request->all());
 
@@ -73,7 +74,7 @@ class SnsAuthController extends Controller {
 
 		if ($loginResult === false) {
 
-			return response()->json(['code' => 2, 'message' => '登录失败']);
+			return response()->json(['code' => 2, 'message' => $snsauth->getError()]);
 
 		}
 

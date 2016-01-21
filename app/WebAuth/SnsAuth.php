@@ -10,15 +10,35 @@ use Curl\Curl;
 class SnsAuth implements WebAuth
 {
 
+	/**
+	 * @var Curl/Curl
+	 */
+	protected $curl;
+
+	/**
+	 * user data
+	 */
 	protected $user = null;
-	
+
+	protected $api_valid = 'http://mars.kenrobot.com/?app=api&mod=UserCenter&act=validate';
+
+	protected $api_user = 'http://mars.kenrobot.com/?app=api&mod=UserCenter&act=baseinfo';
+
+
+		
+	/**
+	 * SNS验证调用网址
+	 */
+	protected $snshost;
+
 	function __construct()
 	{
-		# code...
+		$this->curl = new Curl();
 	}
 
 	/**
-	 * 
+	 * 获取用户信息
+	 *
 	 */
 	public function user()
 	{
@@ -26,33 +46,61 @@ class SnsAuth implements WebAuth
 	}
 
 	/**
+	 * 验证
+	 *
+	 * @param array $credentials 凭据
+	 * 
 	 * @return bool
 	 */
 	public function validate(array $credentials)
 	{
+
+		$this->error = '';
+
 		$email = $credentials['email'];
 		$password = $credentials['password'];
 
-		if (empty($email) || empty($email)) {
+		if (empty($email) || empty($password)) {
+			$this->error = '账号密码不能为空';
 			return false;
 		}
 
-		$userData = $this->validateSnsUser($email,$password);
-		if ($userData !== null) {
-			$userData = $this->transformUserData($userData);
-			if ($userData != null) {
-				$this->user = $userData;
-				return true;
-			}
+		$result = $this->validUserFromServer($email,$password);
+
+		//远端验证失败
+		if ($result['code'] != 0) {
+			$this->error = sprintf('%s:%s', $result['code'], $result['message']);
+			return false;
 		}
 
-		return false;
+		$token = $result['token'];
+		$userResult = $this->getUserFromServer($token);
+
+		if ($userResult['code'] != 0) {
+			$this->error = sprintf('%s:%s', $result['code'], $result['message']);
+			return false;
+		}
+
+		$this->user = $this->formatUserData($userResult['data']);;
+
+		return true;
 	}
 
 	/**
-	 * 
+	 * 获取调用错误
 	 */
-	protected function transformUserData($rawuserdata)
+	public function getError()
+	{
+		return $this->error;
+	}
+
+	/**
+	 * 格式化用户数据
+	 *
+	 * @param array $rawuserdata 用户数据
+	 *
+	 */
+	protected function formatUserData($rawuserdata)
     {
        if (empty($rawuserdata)) {
            return null;
@@ -64,6 +112,7 @@ class SnsAuth implements WebAuth
        $userdata['name'] = $rawuserdata['uname'];
        $userdata['email'] = $rawuserdata['email'];
        $userdata['avatar_url'] = isset($rawuserdata['avatar_big']) ? $rawuserdata['avatar_big'] : '';
+       empty($userdata['avatar_url']) && $userdata['avatar_url'] ='/assets/images/default_portrait.png';
        return $userdata;
     }
 
@@ -76,24 +125,26 @@ class SnsAuth implements WebAuth
      * @param string $email
      * @param string $password
      * 
-     * @return bool
+     * @return array
      */
-    protected function validateSnsUser($email,$password){
-
-        $url = config('sns.validate.url');
-        $referer = config('sns.validate.referer');
-        $key = config('sns.key');
-
-        $curl = new Curl();
-        $curl->setReferrer($referer);
-
-        $data = $curl->post($url,[
+    protected function validUserFromServer($email,$password)
+    {
+        $result = $this->curl->post($this->api_valid,[
             'email' => $email,
             'password' => $password
             ]);
        
-        $userData = json_decode($data,true);
-        return $userData;
+        return json_decode($result,true);
+    }
+
+    /**
+     * Sns服务器中获取用户
+     */
+    public function getUserFromServer($params)
+    {
+    	$result = $this->curl->post($this->api_user.'&'.http_build_query($params));
+
+        return json_decode($result,true);
     }
 
 }
