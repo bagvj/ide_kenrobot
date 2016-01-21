@@ -224,10 +224,9 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 			},
 			dataType: "json",
 			success: function(result) {
+				util.message(result.msg);
 				if (result.code == 0 && result.url) {
 					window.open(result.url);
-				} else {
-					util.message(result.msg);
 				}
 			},
 			error: function(result) {
