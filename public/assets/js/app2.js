@@ -59,7 +59,7 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 			enableLiveAutocompletion: true,
 		});
 		editor.setTheme("ace/theme/monokai");
-		editor.session.setMode("ace/mode/c_cpp");
+		editor.session.setMode("ace/mode/arduino");
 		editor.setShowPrintMargin(false);
 		editor.$blockScrolling = Infinity;
 	}

@@ -165,7 +165,8 @@ var supportedModes = {
     XML:         ["xml|rdf|rss|wsdl|xslt|atom|mathml|mml|xul|xbl|xaml"],
     XQuery:      ["xq"],
     YAML:        ["yaml|yml"],
-    Django:      ["html"]
+    Django:      ["html"],
+    Arduino:     ["ino"],
 };
 
 var nameOverrides = {

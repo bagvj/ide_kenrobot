@@ -1189,7 +1189,7 @@ dom.importCssString("\
 }\
 .ace_rightAlignedText {\
     color: gray;\
-    display: inline-block;\
+    display: none;\
     position: absolute;\
     right: 4px;\
     text-align: right;\

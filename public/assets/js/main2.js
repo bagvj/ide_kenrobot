@@ -8,6 +8,7 @@ require.config({
 		"ace-ext-language-tools": "lib/ace/ext-language_tools",
 		"app": "app2",
 		"util": "util2",
+
 	},
 	shim: {
 		"bootstrap": {
@@ -15,7 +16,7 @@ require.config({
 		},
 		"ace-ext-language-tools": {
 			deps: ['ace'],
-		}
+		},
 	}
 });
 
