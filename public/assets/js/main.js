@@ -253,12 +253,17 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 					} else if (result.code == 1) {
 
 					} else {
+						// $('.baseLogin .message span')
+						// 	.html(result.message)
+						// 	.delay(2000)
+						// 	.queue(function() {
+						// 		$(this).fadeOut().dequeue();
+						// 	});
+
 						$('.baseLogin .message span')
 							.html(result.message)
-							.delay(2000)
-							.queue(function() {
-								$(this).fadeOut().dequeue();
-							});
+							.show()
+							.fadeOut(4000);
 					}
 				});
 		});
