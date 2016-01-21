@@ -30,8 +30,7 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 		$.ajax({
 			url: '/config',
 			dataType: 'json',
-			success: onRequestConfigSuccess,
-		});
+		}).done(onRequestConfigSuccess);
 	}
 
 	function onRequestConfigSuccess(result) {
@@ -62,6 +61,13 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 		editor.session.setMode("ace/mode/arduino");
 		editor.setShowPrintMargin(false);
 		editor.$blockScrolling = Infinity;
+		editor.commands.addCommand({
+			name: "save",
+			bindKey: {win: "Ctrl-s", mac: "Command-s"},
+			exec: function() {
+				onSaveClick();
+			}
+		});
 	}
 
 	function initLogin() {
@@ -104,21 +110,20 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 					email: $('#email').val(),
 					password: $('#password').val()
 				},
-				success: function(result) {
-					if (result.code == 0) {
-						//登录成功
-						util.message(result.message);
-						$('#login_dialog .closeBtn').fire('click');
-					} else if (result.code == 1) {
+			}).done(function(result){
+				if (result.code == 0) {
+					//登录成功
+					util.message(result.message);
+					$('#login_dialog .closeBtn').fire('click');
+				} else if (result.code == 1) {
 
-					} else {
-						$('.baseLogin .message span')
-							.html(result.message)
-							.delay(2000)
-							.queue(function() {
-								$(this).fadeOut().dequeue();
-							});
-					}
+				} else {
+					$('.baseLogin .message span')
+						.html(result.message)
+						.delay(2000)
+						.queue(function() {
+							$(this).fadeOut().dequeue();
+						});
 				}
 			});
 		});
@@ -182,26 +187,24 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 			type: 'GET',
 			url: '/auth/check',
 			dataType: 'json',
-			success: function(result) {
-				if (result.code == 0) {
-					var projectData = {
-						source: getSource(),
-					}
-					$.ajax({
-						type: 'POST',
-						url: '/project/save',
-						data: {
-							data: JSON.stringify(projectData),
-							user_id: result.user.id,
-						},
-						dataType: 'json',
-						success: function(res) {
-							util.message(res.msg);
-						}
-					});
-				} else {
-					showLogin();
+		}).done(function(result){
+			if (result.code == 0) {
+				var projectData = {
+					source: getSource(),
 				}
+				$.ajax({
+					type: 'POST',
+					url: '/project/save',
+					data: {
+						data: JSON.stringify(projectData),
+						user_id: result.user.id,
+					},
+					dataType: 'json',
+				}).done(function(res) {
+					util.message(res.msg);
+				});
+			} else {
+				showLogin();
 			}
 		});
 	}
@@ -223,14 +226,10 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 				board: board,
 			},
 			dataType: "json",
-			success: function(result) {
-				util.message(result.msg);
-				if (result.code == 0 && result.url) {
-					window.open(result.url);
-				}
-			},
-			error: function(result) {
-
+		}).done(function(result){
+			util.message(result.msg);
+			if (result.code == 0 && result.url) {
+				window.open(result.url);
 			}
 		});
 	}
@@ -334,20 +333,19 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 				var key = $('#qrcode_key').val();
 				$.ajax({
 					url: '/weixinlogin?key=' + key,
-					success: function(result) {
-						if (result.code == 0) {
-							//登录成功
-							setLoginCheck(false);
-							util.message(result.message);
-							$('#login_dialog .closeBtn').click();
-						} else if (result.code == 1) {
-							//已经登录
-							setLoginCheck(false);
-							console.log(result.message);
-						} else {
-							//登录失败
-						}
-					},
+				}).done(function(result) {
+					if (result.code == 0) {
+						//登录成功
+						setLoginCheck(false);
+						util.message(result.message);
+						$('#login_dialog .closeBtn').click();
+					} else if (result.code == 1) {
+						//已经登录
+						setLoginCheck(false);
+						console.log(result.message);
+					} else {
+						//登录失败
+					}
 				});
 			}, 3000);
 		}

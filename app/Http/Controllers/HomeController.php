@@ -32,9 +32,10 @@ class HomeController extends Controller {
 		Session::put('key',$key);
 
 		$url = config('weixin.userinfo.url')."?key=$key";
+		$boards = $this->getBoardConfig();
 		$libraries = $this->getLibrariyConfig();
 
-		return view("index2", compact('qrcodeurl','key', 'libraries'));
+		return view("index2", compact('qrcodeurl','key', 'boards', 'libraries'));
 	}
 
 	public function download(Request $request) {
@@ -399,6 +400,10 @@ class HomeController extends Controller {
 
 	private function getLibrariyConfig() {
 		return DB::table('libraries')->get();
+	}
+
+	private function getBoardConfig() {
+		return DB::table('boards')->get();
 	}
 
 	private function fromCharCode($codes) {

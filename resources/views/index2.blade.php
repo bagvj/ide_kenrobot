@@ -20,15 +20,33 @@
 		<div class="main">
 			<div class="header">
 				<div class="left">
-					<a href="http://www.kenrobot.com/" class="back"><i class="fa fa-arrow-left"></i>&nbsp;返回</a>
+					<a href="http://www.kenrobot.com/" class="logo">&nbsp;</a>
 				</div>
-				<div class="right">
-					<div class="tab">
-						<ul>
-							<li><i class="fa fa-th-large"></i>&nbsp;硬件</li>
-							<li><i class="fa fa-terminal"></i>&nbsp;软件</li>
-							<li><i class="fa fa-info"></i>&nbsp;信息</li>
-						</ul>
+				<div class="tab">
+					<ul>
+						<li><i class="fa fa-th-large"></i>&nbsp;硬件</li>
+						<li><i class="fa fa-terminal"></i>&nbsp;软件</li>
+						<li><i class="fa fa-info"></i>&nbsp;信息</li>
+					</ul>
+				</div>
+				<div class="setting">
+					<div class="btn-group menu" role="group">
+						<div class="btn-group" role="group">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-reorder"></i>&nbsp;设置</button>
+							<ul class="dropdown-menu">
+								<li class="dropdown-submenu">
+									<a href="#">主板</a>
+									<ul class="board-list dropdown-menu">
+									@foreach($boards as $board)
+										<li data-action="selectBoard" data-board="{{$board->name}}"><a href="#"><img class="thumbnail" src="/assets/images/hardware/{{$board->thumbnail}}" /><span class="name">{{$board->name}}</span></a></li>
+									@endforeach
+									</ul>
+								</li>
+								<li data-action="save"><a href="#">保存</a></li>
+								<li data-action="share"><a href="#">分享</a></li>
+								<li data-action="setting"><a href="#">界面设置</a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -103,6 +121,9 @@
 								<li>19</li>
 								<li>20</li>
 							</ul>
+							<div class="copyright">
+								备案号：京ICP备15039570号<br />Copyright © 2014 KenRobot.com All Rights Reserved
+							</div>
 						</div>
 					</div>
 				</div>
@@ -151,7 +172,7 @@
 								<div class="btn-group" role="group">
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">项目</button>
 									<ul class="dropdown-menu">
-										<li class="dropdown-submenu" data-action="include">
+										<li class="dropdown-submenu">
 											<a href="#">加载库</a>
 											<ul class="dropdown-menu">
 											@foreach($libraries as $library)
