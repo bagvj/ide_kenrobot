@@ -17,7 +17,7 @@ require.config({
 		"ace-ext-language-tools": {
 			deps: ['ace'],
 		},
-	}
+	},
 });
 
 require(['app'], function(app) {
