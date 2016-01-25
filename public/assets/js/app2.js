@@ -88,7 +88,7 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 		});
 
 		$('#login_dialog .closeBtn').on('click', function(e) {
-			$('#login_dialog').slideUp(0.1, function(event, ui) {
+			$('#login_dialog').slideUp(100, function(event, ui) {
 				$('#use_weixin').removeClass("active");
 			});
 			setLoginCheck(false);
