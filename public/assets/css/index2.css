@@ -18,9 +18,14 @@ input {
   outline: none;
 }
 
-a, a:hover {
+a, a:hover{
   text-decoration: none;
   color: white;
+  outline: none;
+}
+
+a:focus {
+  outline: none;
 }
 
 body {
@@ -757,13 +762,11 @@ body {
   background-color: #737078;
 }
 
-
-
 #login_dialog {
     margin: 0 auto;
     background-color: rgba(0, 0, 0, 0.5);
     width: 280px;
-    height: 290px;
+    height: 280px;
     border: 1px solid transparent;
     position: relative;
     overflow: hidden;
@@ -821,7 +824,7 @@ body {
     font-style: normal;
     font-variant: normal;
     font-weight: normal;
-    height: 273px;
+    height: 280px;
     line-height: 18px;
     margin-bottom: 0px;
     margin-left: 0px;
@@ -866,7 +869,7 @@ body {
     font-variant: normal;
     font-weight: normal;
     font-family: "Microsoft YaHei", "Helvetica Neue";
-    height: 273px;
+    height: 280px;
     line-height: 18px;
     padding-bottom: 20px;
     position: relative;

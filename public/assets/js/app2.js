@@ -144,7 +144,7 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 					left: left + 420,
 					opacity: 0,
 				}, null, null, function() {
-					use_weixin.removeClass("active");
+					use_weixin.removeClass("active").hide();
 				});
 			}
 		});
