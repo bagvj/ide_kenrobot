@@ -174,7 +174,7 @@
 									<ul class="dropdown-menu">
 										<li class="dropdown-submenu">
 											<a href="#">加载库</a>
-											<ul class="dropdown-menu">
+											<ul class="include-library dropdown-menu">
 											@foreach($libraries as $library)
 												<li data-action="includeLibrary" data-library="{{$library->name}}"><a href="#">{{$library->name}}</a></li>
 											@endforeach

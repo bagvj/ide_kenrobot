@@ -7,7 +7,6 @@ require.config({
 		'hljs': "../highlight/highlight.pack",
 		'tour': 'lib/bootstrap-tour-standalone.min',
 
-		"nodeConfig": "nodeConfig",
 		"nodeTemplate": "nodeTemplate",
 		"EventManager": "EventManager",
 		"hardware": "hardware",
@@ -28,33 +27,38 @@ require.config({
 	}
 });
 
-require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventManager", "hardware", "software", "variable", "code", "util", "EasterEgg", 'tour', 'demo'], function($, _, _, nodeConfig, nodeTemplate, EventManager, hardware, software, variable, code, util, EasterEgg, _, demo) {
+require(['jquery', 'jquery-ui', 'goJS', "nodeTemplate", "EventManager", "hardware", "software", "variable", "code", "util", "EasterEgg", 'tour', 'demo'], function($, _, _, nodeTemplate, EventManager, hardware, software, variable, code, util, EasterEgg, _, demo) {
 	$(function() {
 		initAjax();
 		initTabs();
-		initNavSecond();
 		initLogin();
 		initThumbnail();
 		initCode();
 		initButtons();
 		initVars();
 		initEvent();
+		variable.init("var-table");
 
 		EasterEgg.init();
 
-		hardware.init("hardware-container", nodeTemplate.hardware, nodeConfig.hardwares);
-		software.init("software-container", nodeTemplate.software, nodeConfig.softwares);
-		variable.init("var-table");
-		code.init("src", nodeConfig.softwares, {
-			findSpecNode: software.findSpecNode,
-			findTargetNode: software.findTargetNode,
-			findIfMergeNode: software.findIfMergeNode,
-			getVars: variable.getVars,
-		});
-		EventManager.trigger("code", "refresh");
+		$.ajax({
+			url: './items',
+			dataType: 'json',
+		}).done(function(result) {
+			initNavSecond(result.hardwares);
+			hardware.init("hardware-container", nodeTemplate.hardware, result.hardwares);
+			software.init("software-container", nodeTemplate.software, result.softwares);
+			code.init("src", result.softwares, {
+				findSpecNode: software.findSpecNode,
+				findTargetNode: software.findTargetNode,
+				findIfMergeNode: software.findIfMergeNode,
+				getVars: variable.getVars,
+			});
+			EventManager.trigger("code", "refresh");
 
-		$('.tabs li:eq(0)').click();
-		demo.init();
+			$('.tabs li:eq(0)').click();
+			demo.init();
+		});
 	});
 
 	function initAjax(){
@@ -112,12 +116,12 @@ require(['jquery', 'jquery-ui', 'goJS', 'nodeConfig', "nodeTemplate", "EventMana
 		}
 	}
 
-	function initNavSecond() {
+	function initNavSecond(hardwares) {
 		var mods = $('.mod');
 
 		var hardwareGroups = [];
-		for (var name in nodeConfig.hardwares) {
-			var config = nodeConfig.hardwares[name];
+		for (var name in hardwares) {
+			var config = hardwares[name];
 			if (config.in_use) {
 				var module_id = config.module_id;
 				var group = null;

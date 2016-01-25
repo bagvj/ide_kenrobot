@@ -617,7 +617,7 @@ body {
 .software .menu .dropdown-menu > li:hover {
   background-color: #242424;
 }
-
+ 
 .software .menu .dropdown-menu > li > a {
   height: 40px;
   line-height: 40px;
@@ -643,6 +643,10 @@ body {
 
 .software .menu .dropdown-submenu:hover > .dropdown-menu {
     display: block;
+}
+
+.software .menu .include-library.dropdown-menu > li > a {
+  letter-spacing: 0;
 }
 
 .software .menu .dropdown-submenu > a:after {
