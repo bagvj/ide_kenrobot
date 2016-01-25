@@ -125,7 +125,7 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 			var left = $(this).offset().left;
 			var use_weixin = $('#use_weixin');
 			if (!use_weixin.is(':animated')) {
-				use_weixin.addClass("active")
+				use_weixin.addClass("active").show()
 					.css({
 						top: top - 160,
 						left: left + 50,
@@ -134,22 +134,17 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 					.animate({
 						left: left + 260,
 						opacity: 1,
-					}, {
-						duration: 0.3,
 					});
 			}
 		}, function(e) {
 			var left = $(this).offset().left;
-			var use_weixin = $('#use_weixin')
+			var use_weixin = $('#use_weixin');
 			if (!use_weixin.is(':animated')) {
 				use_weixin.animate({
 					left: left + 420,
 					opacity: 0,
-				}, {
-					duration: 0.3,
-					complete: function() {
-						use_weixin.removeClass("active");
-					},
+				}, null, null, function() {
+					use_weixin.removeClass("active");
 				});
 			}
 		});
@@ -308,13 +303,9 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 		$('#login_dialog').css({
 			top: -$(this).height(),
 		}).show().animate({
-			top: 100,
-		}, {
-			duration: 0.4,
-			easing: "swing",
-			complete: function() {
-				setLoginCheck(true);
-			},
+			top: 200,
+		}, 400, "swing", function() {
+			setLoginCheck(true);
 		});
 	}
 

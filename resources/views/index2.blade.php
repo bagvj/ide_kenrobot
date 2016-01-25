@@ -205,6 +205,8 @@
 				</div>
 			</div>
 			<div class="footer"></div>
+		</div>
+		<div>
 			<div id="login_dialog" style="display:none">
 				<div>
 					<a href="javascript:;" title="返回" class="qrLoginBtn active" data-action="qrLogin"></a>
