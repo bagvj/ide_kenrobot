@@ -13,16 +13,8 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 		initLogin();
 
 		$('.header .tab li').on('click', onHeaderTabClick).eq(0).click();
-		$('.hardware .tab li').on('click', onHardwareTabClick).hover(function(e) {
-			toggleWidth(e, 32);
-		}, function(e) {
-			toggleWidth(e, 24);
-		}).eq(0).click();
-		$('.software .tab li').on('click', onSoftwareTabClick).hover(function(e) {
-			toggleWidth(e, 32);
-		}, function(e) {
-			toggleWidth(e, 24);
-		}).eq(0).click();
+		$('.hardware .tab li').on('click', onHardwareTabClick).eq(0).click();
+		$('.software .tab li').on('click', onSoftwareTabClick).eq(0).click();
 		$('.software .sub-tab li').on('click', onSoftwareSubTabClick).eq(1).click();
 	}
 
@@ -270,7 +262,7 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 
 	function onHardwareTabClick(e) {
 		var li = $(this);
-		if (toggleActive(li)) {
+		if(toggleActive(li)) {
 
 		}
 	}

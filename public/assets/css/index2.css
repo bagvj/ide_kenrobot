@@ -338,7 +338,9 @@ body {
   margin: 16px 0;
 }
 
-.content .tab ul li.active {
+.content .tab ul li:hover,
+.content .tab ul li.active
+{
   width: 32px;
 }
 
