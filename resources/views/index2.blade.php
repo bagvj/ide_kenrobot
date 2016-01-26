@@ -38,7 +38,7 @@
 									<a href="#">主板</a>
 									<ul class="board-list dropdown-menu">
 									@foreach($boards as $board)
-										<li data-action="selectBoard" data-board="{{$board->name}}"><a href="#"><img class="thumbnail" src="/assets/images/hardware/{{$board->thumbnail}}" /><span class="name">{{$board->name}}</span></a></li>
+										<li data-action="selectBoard" data-board="{{$board->id}}"><a href="#"><img class="thumbnail" src="/assets/images/hardware/{{$board->thumbnail}}" /><span class="name">{{$board->name}}</span></a></li>
 									@endforeach
 									</ul>
 								</li>
@@ -64,33 +64,22 @@
 						</div>
 						<div class="tab-panel">
 							<div class="search">
-								<input type="text" name="key" placeholder="搜索" />
+								<input class="key" type="text" placeholder="搜索" spellcheck="false"/>
 							</div>
 							<div class="seperator"></div>
 							<div class="items x-scrollbar">
-								<ul>
-									<li class="item"><img class="image" src="/assets/images/hardware/test.png" /><span class="name">按键</span></li>
-									<li class="item"><img class="image" src="/assets/images/hardware/test.png" /><span class="name">按键</span></li>
-									<li class="item"><img class="image" src="/assets/images/hardware/test.png" /><span class="name">按键</span></li>
-									<li class="item"><img class="image" src="/assets/images/hardware/test.png" /><span class="name">按键</span></li>
-									<li class="item"><img class="image" src="/assets/images/hardware/test.png" /><span class="name">按键</span></li>
-									<li class="item"><img class="image" src="/assets/images/hardware/test.png" /><span class="name">按键</span></li>
-									<li class="item"><img class="image" src="/assets/images/hardware/test.png" /><span class="name">按键</span></li>
-									<li class="item"><img class="image" src="/assets/images/hardware/test.png" /><span class="name">按键</span></li>
-									<li class="item"><img class="image" src="/assets/images/hardware/test.png" /><span class="name">按键</span></li>
-									<li class="item"><img class="image" src="/assets/images/hardware/test.png" /><span class="name">按键</span></li>
-									<li class="item"><img class="image" src="/assets/images/hardware/test.png" /><span class="name">按键</span></li>
-									<li class="item"><img class="image" src="/assets/images/hardware/test.png" /><span class="name">按键</span></li>
-									<li class="item"><img class="image" src="/assets/images/hardware/test.png" /><span class="name">按键</span></li>
-									<li class="item"><img class="image" src="/assets/images/hardware/test.png" /><span class="name">按键</span></li>
-									<li class="item"><img class="image" src="/assets/images/hardware/test.png" /><span class="name">按键</span></li>
-									<li class="item"><img class="image" src="/assets/images/hardware/test.png" /><span class="name">按键</span></li>
+<!-- 							@foreach($components as $module_id => $group)
+								<ul class="list" data-module-id="{{$module_id}}">
+								@foreach($group as $k => $value)
+									<li class="item" data-component-id="{{$value->id}}"><img class="image" src="/assets/images/hardware/{{$value->image}}" /><span class="name">{{$value->name}}</span></li>
+								@endforeach
 								</ul>
+							@endforeach -->
 							</div>
 						</div>
 					</div>
 					<div class="right">
-						<div class="north">
+						<div class="north port">
 							<ul>
 								<li>0</li>
 								<li>1</li>
@@ -111,7 +100,7 @@
 						<div class="center">
 							
 						</div>
-						<div class="south">
+						<div class="south port">
 							<ul>
 								<li>14</li>
 								<li>15</li>
@@ -142,18 +131,6 @@
 						<div class="tab-panel">
 							<div class="items x-scrollbar">
 								<ul>
-									<li class="item1">LED1</li>
-									<li class="item2">LED2</li>
-									<li class="item3">LED3</li>
-									<li class="item1">LED1</li>
-									<li class="item2">LED2</li>
-									<li class="item3">LED3</li>
-									<li class="item1">LED1</li>
-									<li class="item2">LED2</li>
-									<li class="item3">LED3</li>
-									<li class="item1">LED1</li>
-									<li class="item2">LED2</li>
-									<li class="item3">LED3</li>
 								</ul>
 							</div>
 						</div>

@@ -1,20 +1,24 @@
-define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], function($, _, _, _, util) {
+define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'util'], function($, _, _, _, _, util) {
 	//默认代码
 	var platformConfig;
 
 	var editor;
 	var loginCheckTimer;
+	var board;
 
 	function init() {
 		requestPlatformConfig();
 		initAjax();
-		initSoftwareMenu();
 		initEditor();
 		initLogin();
+		initSearch();
 
 		$('.header .tab li').on('click', onHeaderTabClick).eq(0).click();
+		$('.header .setting li').on('click', onMenuClick);
 		$('.hardware .tab li').on('click', onHardwareTabClick).eq(0).click();
+		$('.hardware .items .list > li').on('click', onHardwareItemClick);
 		$('.software .tab li').on('click', onSoftwareTabClick).eq(0).click();
+		$('.software .menu li').on('click', onMenuClick);
 		$('.software .sub-tab li').on('click', onSoftwareSubTabClick).eq(1).click();
 	}
 
@@ -28,6 +32,8 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 	function onRequestConfigSuccess(result) {
 		platformConfig = result;
 		editor.setValue(platformConfig.defaultCode, 1);
+
+		$('.header .board-list > li').eq(0).click();
 	}
 
 	function initAjax() {
@@ -36,10 +42,6 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			}
 		});
-	}
-
-	function initSoftwareMenu() {
-		$('.software .menu li').on('click', onSoftwareMenuClick);
 	}
 
 	function initEditor() {
@@ -150,7 +152,24 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 		});
 	}
 
-	function onSoftwareMenuClick(e) {
+	function initSearch() {
+		$('.search .key').typeahead({
+			source: function(query, process) {
+				var index = $(".hardware .tab li.active").index();
+				var moduleId = $(".hardware .items .list").eq(index).data('module-id');
+				if(moduleId) {
+					var components = platformConfig.components[moduleId];
+					process(components);
+				}
+			},
+			updater: function(item) {
+				$('.hardware .items .list > li[data-component-id="' + item.id + '"').click();
+				return item;
+			}
+		});
+	}
+
+	function onMenuClick(e) {
 		var node = $(this);
 		var action = node.data('action');
 		switch (action) {
@@ -166,6 +185,12 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 			case 'includeLibrary':
 				onIncludeLibraryClick(node, e);
 				break;
+			case 'selectBoard':
+				onSelectBoardClick(node, e);
+				break;
+			case 'setting':
+				onSettingClick(node, e);
+				break;
 		}
 	}
 
@@ -178,6 +203,7 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 			if (result.code == 0) {
 				var projectData = {
 					source: getSource(),
+					boardId: board.id,
 				}
 				$.ajax({
 					type: 'POST',
@@ -200,7 +226,6 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 		var project = "Arduino";
 		var buildType = "Arduino";
 		var userId = 1;
-		var board = "uno";
 
 		$.ajax({
 			type: "POST",
@@ -209,8 +234,8 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 				source: getSource(),
 				user_id: userId,
 				project: project,
-				build_type: buildType,
-				board: board,
+				build_type: "Arduino",
+				board: board.board_type,
 			},
 			dataType: "json",
 		}).done(function(result){
@@ -245,6 +270,22 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 		doc.insert(doc.pos(0, 0), library.code);
 	}
 
+	function onSelectBoardClick(node, e) {
+		var boards = platformConfig.boards;
+		var id = parseInt(node.data("board"));
+		for(var i = 0; i < boards.length; i++) {
+			var b = boards[i];
+			if(b.id == id) {
+				board = b;
+				break;
+			}
+		}
+	}
+
+	function onSettingClick(node, e) {
+
+	}
+
 	function onHeaderTabClick(e) {
 		var li = $(this);
 		if (li.index() == 2) {
@@ -258,8 +299,13 @@ define(['jquery', 'bootstrap', 'ace', 'ace-ext-language-tools', 'util'], functio
 	function onHardwareTabClick(e) {
 		var li = $(this);
 		if(toggleActive(li)) {
-
+			$('.hardware .items .list').hide().removeClass("active").eq(li.index()).addClass("active").show();
 		}
+	}
+
+	function onHardwareItemClick(e) {
+		$(this).parent().find("li.active").removeClass("active");
+		$(this).addClass("active");
 	}
 
 	function onSoftwareTabClick(e) {

@@ -33,9 +33,11 @@ class HomeController extends Controller {
 
 		$url = config('weixin.userinfo.url')."?key=$key";
 		$boards = $this->getBoardConfig();
+
+		$components = $this->getComponentConfig(true);
 		$libraries = $this->getLibrariyConfig();
 
-		return view("index2", compact('qrcodeurl','key', 'boards', 'libraries'));
+		return view("index2", compact('qrcodeurl','key', 'boards', 'components', 'libraries'));
 	}
 
 	public function download(Request $request) {
@@ -278,6 +280,8 @@ class HomeController extends Controller {
 		$config = array(
 			'defaultCode' => $defaultCode,
 			'libraries' => $this->getLibrariyConfig(),
+			'boards' => $this->getBoardConfig(),
+			'components' => $this->getComponentConfig(true),
 		);
 		
 		return collect($config)->toJson();
@@ -403,7 +407,32 @@ class HomeController extends Controller {
 	}
 
 	private function getBoardConfig() {
-		return DB::table('boards')->get();
+		$boards = DB::table('boards')->get();
+		foreach($boards as $key => $value) {
+			$value->in_use = $value->in_use == 1;
+		}
+		return $boards;
+	}
+
+	private function getComponentConfig($isGroup = false) {
+		$components = DB::table('components')->orderBy("module_id")->get();
+		foreach($components as $key => $value) {
+			$value->in_use = $value->in_use == 1;
+		}
+
+		if($isGroup) {
+			$componentGroups = array();
+			foreach ($components as $key => $value) {
+				$module_id = $value->module_id;
+				if (!isset($componentGroups[$module_id])) {
+					$componentGroups[$module_id] = array();
+				}
+				$componentGroups[$module_id][] = $value;
+			}
+			return $componentGroups;
+		} else {
+			return $components;
+		}
 	}
 
 	private function fromCharCode($codes) {

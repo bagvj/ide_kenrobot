@@ -412,12 +412,11 @@ body {
   float: left;
 }
 
-.hardware .search input[name=key]{
+.hardware .search .key {
   height: 100%;
   margin: 0 18px;
   width: 184px;
   color: white;
-  letter-spacing: 2px;
   background-color: transparent;
 }
 
@@ -440,13 +439,14 @@ body {
   overflow-y: auto;
 }
 
-.hardware .items ul {
+.hardware .items .list {
   margin-right: 14px;
   margin-top: 12px;
   float: left;
+  display: none;
 }
 
-.hardware .items ul li {
+.hardware .items .list li {
   width: 85px;
   height: 110px;
   margin-left: 14px;
@@ -461,8 +461,12 @@ body {
   background-color: white;
 }
 
-.hardware .items .item .name {
-  letter-spacing: 5px;
+.hardware .items .list li.active .image {
+  background-color: blue;
+}
+
+.hardware .items .list li.active .name {
+  color: blue;
 }
 
 .hardware .north {
@@ -475,20 +479,17 @@ body {
   position: absolute;
 }
 
-.hardware .north span {
-  width: 36px;
-  height: 20px;
-  margin: 10px 20px;
-  background-color: #9B9B9B;
-  text-align: center;
-  /*float: left;*/
-  display: block;
+.hardware .port ul {
+  float: left;
+  margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.hardware .north ul li {
+.hardware .port ul li {
   width: 36px;
   height: 20px;
-  margin: 10px 20px;
+  margin: 7px 20px;
   background-color: #9B9B9B;
   text-align: center;
   float: left;
@@ -515,24 +516,14 @@ body {
   position: absolute;
 }
 
-.hardware .south ul li {
-  width: 36px;
-  height: 20px;
-  margin-left: 45px;
-  background-color: #9B9B9B;
-  text-align: center;
-  float: left;
-}
-
-.hardware .south ul li:first-child {
-  margin-left: 0;
-}
-
 .hardware .copyright {
-  float: right;
+  /*float: right;*/
   text-align: right;
   font-size: 12px;
   color: #71707A;
+  position: absolute;
+  right: 0;
+  bottom: 20px;
 }
 
 .software .items {
