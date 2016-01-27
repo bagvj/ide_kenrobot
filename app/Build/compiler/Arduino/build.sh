@@ -43,7 +43,7 @@ cp *.ino src/
 # mv *.ino src/
 
 #开始编译
-ino build --make /usr/bin/make -m ${BOARD_TYPE}
+ino build -m ${BOARD_TYPE} --make ${MAKE_PATH}
 
 #编译出错
 if [ $? -ne 0 ];then
