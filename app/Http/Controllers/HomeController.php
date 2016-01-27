@@ -248,7 +248,7 @@ class HomeController extends Controller {
 				$result['url'] = "/download2?project=$md5&board=$board";
 			} else {
 				$result['msg'] = "编译失败";
-				$result['output'] = $output;
+				// $result['output'] = $output;
 			}
 		} else {
 			$result['msg'] = "非法请求";
