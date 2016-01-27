@@ -594,11 +594,11 @@ body {
 
 .software .menu .open .btn {
   color: white;
-  background-color: #242424;
+  background-color: #5F5176;
 }
 
 .software .menu .btn:hover {
-  background-color: #242424;
+  background-color: #5F5176;
   color: white;
 }
 
@@ -606,7 +606,7 @@ body {
   margin-top: 0;
   padding-top: 0;
   padding-bottom: 0;
-  background-color: #3C3C3C;
+  background-color: #504C56;
   border: none;
   border-radius: 0;
   width: 120px;
@@ -614,7 +614,7 @@ body {
 }
 
 .software .menu .dropdown-menu > li:hover {
-  background-color: #242424;
+  background-color: #5F5176;
 }
  
 .software .menu .dropdown-menu > li > a {
