@@ -117,7 +117,7 @@
 					</div>
 				</div>
 				<div class="mod software">
-					<div class="left x-scrollbar">
+<!-- 					<div class="left x-scrollbar">
 						<div class="tab">
 							<ul>
 								<li class="tag-1"><a>硬件模块</a></li>
@@ -134,7 +134,7 @@
 								</ul>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<div class="right">
 						<div class="north">
 							<div class="btn-group menu" role="group">

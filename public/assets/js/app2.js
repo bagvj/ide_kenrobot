@@ -51,10 +51,10 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			enableSnippets: true,
 			enableLiveAutocompletion: true,
 		});
-		editor.setTheme("ace/theme/monokai");
-		editor.session.setMode("ace/mode/arduino");
 		editor.setShowPrintMargin(false);
 		editor.$blockScrolling = Infinity;
+		editor.setTheme("ace/theme/kenrobot");
+		editor.session.setMode("ace/mode/arduino");
 		editor.commands.addCommand({
 			name: "save",
 			bindKey: {win: "Ctrl-s", mac: "Command-s"},

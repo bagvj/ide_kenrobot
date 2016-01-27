@@ -281,7 +281,8 @@ body {
   background-color: #55545F;
   top: 0;
   bottom: 0;
-  left: 400px;
+  /*left: 400px;*/
+  left: 0;
   right: 0;
   position: absolute;
   float: left;
@@ -568,7 +569,7 @@ body {
 
 .software .north {
   height: 40px;
-  background-color: #555555;
+  background-color: #47434C;
 }
 
 .software .center {
@@ -582,7 +583,7 @@ body {
 .software .menu .btn {
   height: 40px;
   width: 120px;
-  background-color: #555555;
+  background-color: #47434C;
   border-radius: 0;
   border: none;
   color: #dfdfdf;
@@ -667,6 +668,7 @@ body {
 }
 
 .software .sub-tab {
+  margin-right: 30px;
   float: right;
 }
 
@@ -678,17 +680,16 @@ body {
   width: 120px;
   line-height: 40px;
   text-align: center;
-  letter-spacing: 5px;
   cursor: pointer;
   float: left;
 }
 
 .software .sub-tab ul li.active {
-  background-color: #303030;
+  background-color: #5F5176;
 }
 
 .software .sub-tab ul li:hover {
-  background-color: #303030;
+  background-color: #5F5176;
 }
 
 .software .sub-mod {
