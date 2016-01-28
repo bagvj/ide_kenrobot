@@ -99,35 +99,8 @@ class HomeController extends Controller {
 	}
 
 	public function download2(Request $request) {
-		$project = $request->input('project');
-		$board = $request->input('board');
-		$path = "/tmp/build/$project";
-
-		$srcPath = $path . "/src";
-		$srcNames = glob($srcPath . "/*.ino");
-		$hexName = $path . "/.build/$board/firmware.hex";
-		$eepName = $path . "/.build/$board/firmware.eep";
-		if (!$srcNames || count($srcNames) == 0  || !file_exists($hexName)) {
-			//源代码文件或者编译出来的hex文件不存在
-			header("content-type=text/html,charset=utf-8");
-			die("非法请求");
-		}
-
-		//打包
-		$zipName = $path . "/$project-$board.zip";
-		$zip = new ZipArchive();
-		if ($zip->open($zipName, ZipArchive::CREATE) === TRUE) {
-			foreach ($srcNames as $srcName) {
-				$zip->addFile($srcName, basename(($srcName)));
-			}
-			$zip->addFile($hexName, basename($hexName));
-			if(file_exists($eepName)) {
-				$zip->addFile($hexName, basename($eepName));
-			}
-			$zip->close();
-		}
-
-		$filename = $zipName;
+		$key = $request->input('key');
+		$filename = "/tmp/build/$key/build.zip";
 		//检查文件是否存在
 		if (file_exists($filename)) {
 			//返回的文件类型
@@ -137,7 +110,7 @@ class HomeController extends Controller {
 			//返回文件的大小
 			header("Accept-Length: " . filesize($filename));
 			//这里对客户端的弹出对话框，对应的文件名
-			Header("Content-Disposition: attachment; filename=" . basename($filename));
+			Header("Content-Disposition: attachment; filename=$key.zip");
 			//一次只传输1024个字节的数据给客户端
 			//打开文件
 			$file = fopen($filename, "r");
@@ -230,11 +203,9 @@ class HomeController extends Controller {
 
 		if ($bytes) {
 			$source = $this->fromCharCode($bytes);
-			$time = time();
-			$md5 = md5($user_id . $time . $project . $board);
-
-
-			$path = "/tmp/build/$md5";
+			$keys = $this->getShort($user_id . $project . $board);
+			$key = $keys[0];
+			$path = "/tmp/build/$key";
 			mkdir($path, 0755, true);
 			$f = fopen($path . "/$project.ino", "wb");
 			fwrite($f, $source);
@@ -245,7 +216,7 @@ class HomeController extends Controller {
 			exec($cmd, $output, $code);
 			if ($code == 0) {
 				$result['msg'] = "编译成功";
-				$result['url'] = "/download2?project=$md5&board=$board";
+				$result['url'] = "/download2?key=$key";
 			} else {
 				$result['msg'] = "编译失败";
 				// $result['output'] = $output;
@@ -458,5 +429,27 @@ class HomeController extends Controller {
 
         return $qrcodeurl;
       //  return $userData;
+    }
+
+    //生成短url
+    //返回：一个长度为4的数组，每个元素为长度为6的字符串
+    private function getShort($value) {
+    	$key = "HwpGAejoUOPr6DbKBlvRILmsq4z7X3TCtky8NVd5iWE0ga2MchSZxfn1Y9JQuF";
+    	
+    	$result = array();
+    	$time = time();
+		$salt = md5(rand(10000, 99999));
+		$md5 = md5($salt . $value . $time);
+		for($i = 0; $i < 4; $i++) {
+			$hex = 0x3FFFFFFF & intval(substr($md5, $i * 8, 8), 16);
+			$out = '';
+			for($j = 0; $j < 6; $j++) {
+				$index = 0x0000003D & $hex;
+				$out = $out . $key[$index];
+				$hex = $hex >> 5;
+			}
+			$result[$i] = $out;
+		}
+    	return $result;
     }
 }

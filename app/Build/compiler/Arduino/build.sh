@@ -55,6 +55,15 @@ fi
 
 #编译成功
 echo "编译成功"
+
+#打包
+zip -j ${PROJECT_PATH}/build.zip src/*.ino .build/${BOARD_TYPE}/firmware.hex
+
+#如果eep存在
+if [ ! -f ".build/${BOARD_TYPE}/firmware.eep" ]; then
+	zip -j ${PROJECT_PATH}/build.zip .build/${BOARD_TYPE}/firmware.eep
+fi
+
 #回到之前的目录
 cd ${DIR}
 
