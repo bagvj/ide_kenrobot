@@ -1,0 +1,238 @@
+.software .left {
+  width: 400px;
+  height: 100%;
+  background-color: #2D2B30;
+  overflow-y: auto;
+}
+
+.software .right {
+  background-color: #55545F;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  float: left;
+}
+
+.software .tab-panel {
+  width: 354px;
+  left: 32px;
+  right: 14px;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  float: left;
+}
+
+.software .tab ul {
+  margin-top: 8px;
+}
+
+.software .tab ul li {
+  height: 100px;
+  margin: 16px 0;
+}
+
+.software .tag-1 {
+  background-color: #68D283;
+}
+
+.software .tag-2 {
+  background-color: #40AFE5;
+}
+
+.software .tag-3 {
+  background-color: #E8A34E;
+}
+
+.software .tag-4 {
+  background-color: #E9615F;
+}
+
+.software .tag-5 {
+  background-color: #E2559C;
+}
+
+.software .tag-6 {
+  background-color: #8D32E4;
+}
+
+.software .items {
+  left: 14px;
+  right: 0;
+  top: 24px;
+  bottom: 24px;
+  background-color: #47434C;
+  position: absolute;
+  float: left;
+  overflow-y: auto;
+}
+
+.software .items ul {
+  margin-top: 20px;
+  margin-left: 15px;
+  float: left;
+}
+
+.software .items ul li {
+  margin-bottom: 15px;
+  vertical-align: middle;
+}
+
+.software .items .item1 {
+  height: 40px;
+  width: 250px;
+  background-color: #68D283;
+}
+
+.software .items .item2 {
+  height: 40px;
+  width: 250px;
+  background-color: #40AFE5;
+}
+
+.software .items .item3 {
+  height: 40px;
+  width: 250px;
+  background-color: #E8A34E;
+}
+
+.software .north {
+  height: 40px;
+  background-color: #47434C;
+}
+
+.software .center {
+  top: 40px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+}
+
+.software .menu .btn {
+  height: 40px;
+  width: 120px;
+  background-color: #47434C;
+  border-radius: 0;
+  border: none;
+  color: $font-color;
+  letter-spacing: 5px;
+  -webkit-box-shadow: none;
+   box-shadow: none; 
+}
+
+.software .menu .open .btn {
+  color: white;
+  background-color: $menu-color;
+}
+
+.software .menu .btn:hover {
+  background-color: $menu-color;
+  color: white;
+}
+
+.software .menu .dropdown-menu {
+  margin-top: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  background-color: #504C56;
+  border: none;
+  border-radius: 0;
+  width: 120px;
+  min-width: 120px;
+}
+
+.software .menu .dropdown-menu > li:hover {
+  background-color: $menu-color;
+}
+ 
+.software .menu .dropdown-menu > li > a {
+  height: 40px;
+  line-height: 40px;
+  padding: 0;
+  text-align: center;
+  color: $font-color;
+  letter-spacing: 5px;
+  background-color: transparent;
+}
+
+.software .menu .dropdown-menu > li:hover > a {
+  color: white;
+}
+
+.software .menu .dropdown-submenu {
+    position: relative;
+}
+
+.software .menu .dropdown-submenu > .dropdown-menu {
+    top: 0;
+    left: 100%;
+}
+
+.software .menu .dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+}
+
+.software .menu .include-library.dropdown-menu > li > a {
+  letter-spacing: 0;
+}
+
+.software .menu .dropdown-submenu > a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: white;
+    top: 15px;
+    right: 8px;
+    position: absolute;
+}
+
+.software .menu .dropdown-submenu:hover > a:after {
+  border-left-color: #9B9B9B;
+}
+
+.software .sub-tab {
+  margin-right: 30px;
+  float: right;
+}
+
+.software .sub-tab ul {
+  float: left;
+}
+
+.software .sub-tab ul li{
+  width: 120px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+  float: left;
+}
+
+.software .sub-tab ul li.active {
+  background-color: $menu-color;
+}
+
+.software .sub-tab ul li:hover {
+  background-color: $menu-color;
+}
+
+.software .sub-mod {
+  height: 100%;
+  display: none;
+}
+
+.software .sub-mod.active {
+  display: block;
+}
+
+.software .editor {
+  font-size: 16px;
+  height: 100%;
+}

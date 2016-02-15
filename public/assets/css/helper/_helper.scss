@@ -1,0 +1,19 @@
+.unselectable {
+  -moz-user-select: none;
+  -o-user-select:none;
+  -khtml-user-select:none;
+  -webkit-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  cursor: default;
+}
+
+.selectable {
+  -moz-user-select: text;
+  -o-user-select:text;
+  -khtml-user-select:text;
+  -webkit-user-select:text;
+  -ms-user-select:text;
+  user-select:text;
+  cursor: auto;
+}

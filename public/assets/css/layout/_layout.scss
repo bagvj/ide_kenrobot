@@ -33,3 +33,33 @@ $header-height: 60px;
 		}
 	}
 }
+
+.content .tab {
+	width: 32px;
+		float: left;
+
+	ul {
+		float: left;
+		li {
+			width: 24px;
+			justify-content:center;
+			align-items:center;
+			display:-webkit-flex;
+			display: flex;
+			cursor: pointer;
+
+			&:hover, &.active {
+				width: 32px;
+				a {
+					color: white;
+				}
+			}
+
+			a {
+				width: 14px;
+				color: $font-color;
+				display: block;
+			}
+		}
+	}
+}
