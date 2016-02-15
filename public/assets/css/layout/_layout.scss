@@ -1,10 +1,35 @@
-$primary-color: purple;
+$header-height: 60px;
 
-.rounded {
-	@include border-corner-radius(top, left, 5px);
-}
+.main {
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	position: absolute;
 
-#inline-block {
-	@include inline-block;
-	color: $primary-color;
+	.header {
+		height: $header-height;
+		background-color: #3E3D44;
+	}
+
+	.content {
+		top: $header-height;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		position: absolute;
+
+		.mod {
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			position: absolute;
+			visibility: hidden;
+
+			&.active {
+				visibility: visible;
+			}
+		}
+	}
 }

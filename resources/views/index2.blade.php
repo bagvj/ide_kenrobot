@@ -12,7 +12,7 @@
 		<link href="/assets/images/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 		<link href="/assets/css/bootstrap.css" rel="stylesheet" />
 		<link href="/assets/css/font-awesome.css" rel="stylesheet" />
-		<link href="/assets/css/index2.css" rel="stylesheet" />
+		<link href="/assets/css/dev.css" rel="stylesheet" />
 
 		<script src="/assets/js/lib/require.min.js" data-main="/assets/js/main2"></script>
 	</head>
@@ -68,13 +68,6 @@
 							</div>
 							<div class="seperator"></div>
 							<div class="items x-scrollbar">
-<!-- 							@foreach($components as $module_id => $group)
-								<ul class="list" data-module-id="{{$module_id}}">
-								@foreach($group as $k => $value)
-									<li class="item" data-component-id="{{$value->id}}"><img class="image" src="/assets/images/hardware/{{$value->image}}" /><span class="name">{{$value->name}}</span></li>
-								@endforeach
-								</ul>
-							@endforeach -->
 							</div>
 						</div>
 					</div>
@@ -117,24 +110,6 @@
 					</div>
 				</div>
 				<div class="mod software">
-<!-- 					<div class="left x-scrollbar">
-						<div class="tab">
-							<ul>
-								<li class="tag-1"><a>硬件模块</a></li>
-								<li class="tag-2"><a>函数</a></li>
-								<li class="tag-3"><a>变量</a></li>
-								<li class="tag-4"><a>文本代码</a></li>
-								<li class="tag-5"><a>控制</a></li>
-								<li class="tag-6"><a>数字逻辑</a></li>
-							</ul>
-						</div>
-						<div class="tab-panel">
-							<div class="items x-scrollbar">
-								<ul>
-								</ul>
-							</div>
-						</div>
-					</div> -->
 					<div class="right">
 						<div class="north">
 							<div class="btn-group menu" role="group">
@@ -178,10 +153,8 @@
 					</div>
 				</div>
 				<div class="mod info">
-
 				</div>
 			</div>
-			<div class="footer"></div>
 		</div>
 		<div>
 			<div id="login_dialog" style="display:none">

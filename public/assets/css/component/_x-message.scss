@@ -1,0 +1,30 @@
+.x-message {
+    background-color: #373B44;
+    width: 400px;
+    border-radius:5px;
+    margin: 0 auto;
+    padding: 8px;
+    z-index: 99999;
+    position: absolute;
+
+    .message-icon {
+        width: 20px;
+        display: inline-block;
+    }
+
+    .message-content {
+        color: #fff;
+        height: 20px;
+        display: inline-block;
+    }
+
+    .message-close {
+        cursor: pointer;
+        width: 10px;
+        height: 20px;
+        background: url(../images/closeBtn.png) no-repeat center;
+        background-size: 10px 10px;
+        display: inline-block;
+        float: right;
+    }
+}
