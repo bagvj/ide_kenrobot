@@ -1,0 +1,10 @@
+$primary-color: purple;
+
+.rounded {
+	@include border-corner-radius(top, left, 5px);
+}
+
+#inline-block {
+	@include inline-block;
+	color: $primary-color;
+}

@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+@import "compass/css3";
+
+ul {
+	font-size: 14px;
+	margin: 0 0 20px;
+	li {
+		margin-bottom: 20px;
+	}
+}
+
+@import "layout/_layout";
