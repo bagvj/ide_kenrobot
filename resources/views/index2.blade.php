@@ -73,14 +73,11 @@
 								<li class="interactive-mode" data-action="changeMode" data-mode="default">
 									<i class="fa fa-mouse-pointer"></i>
 								</li>
-								<li class="interactive-mode" data-action="changeMode" data-mode="place">
+								<li class="interactive-mode active" data-action="changeMode" data-mode="place">
 									<i class="fa fa-hand-pointer-o"></i>
 								</li>
 								<li class="interactive-mode" data-action="changeMode" data-mode="delete">
 									<i class="fa fa-close"></i>
-								</li>
-								<li class="debug" data-action="debug">
-									<i class="fa fa-bug"></i>
 								</li>
 							</ul>
 						</div>

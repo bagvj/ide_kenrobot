@@ -24,26 +24,6 @@
   float: left;
 }
 
-.hardware .tag-1 {
-  background-color: #68D283;
-}
-
-.hardware .tag-2 {
-  background-color: #40AFE5;
-}
-
-.hardware .tag-3 {
-  background-color: #E8A34E;
-}
-
-.hardware .tag-4 {
-  background-color: #E9615F;
-}
-
-.hardware .tag-5 {
-  background-color: #E2559C;
-}
-
 .hardware .search {
   margin: 24px 0 14px 0;
   height: 36px;
@@ -121,11 +101,12 @@
 
     &>li {
       background-color: rgba(45, 43, 48, 0.6);
-      cursor: pointer;
-      text-align: center;
-      color: #9b9b9b;
-      float: left;
       margin-right: 10px;
+      color: #9b9b9b;
+      text-align: center;
+      vertical-align: middle;
+      cursor: pointer;
+      float: left;
     }
 
     &>li:last-child {
@@ -143,13 +124,9 @@
     }
 
     .interactive-mode {
-      width: 20px;
-      height: 20px;
-    }
-
-    .debug {
-      width: 20px;
-      height: 20px;
+      width: 30px;
+      height: 30px;
+      font-size: 20px;
     }
   }
 }

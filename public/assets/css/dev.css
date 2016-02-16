@@ -311,31 +311,6 @@ body {
 }
 
 /* line 27, layout/_hardware.scss */
-.hardware .tag-1 {
-  background-color: #68D283;
-}
-
-/* line 31, layout/_hardware.scss */
-.hardware .tag-2 {
-  background-color: #40AFE5;
-}
-
-/* line 35, layout/_hardware.scss */
-.hardware .tag-3 {
-  background-color: #E8A34E;
-}
-
-/* line 39, layout/_hardware.scss */
-.hardware .tag-4 {
-  background-color: #E9615F;
-}
-
-/* line 43, layout/_hardware.scss */
-.hardware .tag-5 {
-  background-color: #E2559C;
-}
-
-/* line 47, layout/_hardware.scss */
 .hardware .search {
   margin: 24px 0 14px 0;
   height: 36px;
@@ -344,7 +319,7 @@ body {
   float: left;
 }
 
-/* line 55, layout/_hardware.scss */
+/* line 35, layout/_hardware.scss */
 .hardware .search .key {
   height: 100%;
   margin: 0 18px;
@@ -353,7 +328,7 @@ body {
   background-color: transparent;
 }
 
-/* line 63, layout/_hardware.scss */
+/* line 43, layout/_hardware.scss */
 .hardware .seperator {
   width: 220px;
   height: 2px;
@@ -361,7 +336,7 @@ body {
   float: left;
 }
 
-/* line 70, layout/_hardware.scss */
+/* line 50, layout/_hardware.scss */
 .hardware .items {
   left: 0;
   right: 0;
@@ -373,14 +348,14 @@ body {
   overflow-y: auto;
 }
 
-/* line 81, layout/_hardware.scss */
+/* line 61, layout/_hardware.scss */
 .hardware .items .list {
   margin-right: 14px;
   margin-top: 12px;
   float: left;
 }
 
-/* line 87, layout/_hardware.scss */
+/* line 67, layout/_hardware.scss */
 .hardware .items .list li {
   width: 85px;
   height: 110px;
@@ -390,24 +365,24 @@ body {
   text-align: center;
 }
 
-/* line 96, layout/_hardware.scss */
+/* line 76, layout/_hardware.scss */
 .hardware .items .item .image {
   width: 85px;
   height: 85px;
   background-color: white;
 }
 
-/* line 102, layout/_hardware.scss */
+/* line 82, layout/_hardware.scss */
 .hardware .items .list li.active .image {
   background-color: orange;
 }
 
-/* line 106, layout/_hardware.scss */
+/* line 86, layout/_hardware.scss */
 .hardware .items .list li.active .name {
   color: blue;
 }
 
-/* line 110, layout/_hardware.scss */
+/* line 90, layout/_hardware.scss */
 .hardware .north {
   margin-left: 30px;
   margin-right: 30px;
@@ -417,45 +392,42 @@ body {
   right: 0;
   position: absolute;
 }
-/* line 119, layout/_hardware.scss */
+/* line 99, layout/_hardware.scss */
 .hardware .north .tools {
   margin-top: 10px;
 }
-/* line 122, layout/_hardware.scss */
+/* line 102, layout/_hardware.scss */
 .hardware .north .tools > li {
   background-color: rgba(45, 43, 48, 0.6);
-  cursor: pointer;
-  text-align: center;
-  color: #9b9b9b;
-  float: left;
   margin-right: 10px;
+  color: #9b9b9b;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  float: left;
 }
-/* line 131, layout/_hardware.scss */
+/* line 112, layout/_hardware.scss */
 .hardware .north .tools > li:last-child {
   margin-right: 0;
 }
-/* line 135, layout/_hardware.scss */
+/* line 116, layout/_hardware.scss */
 .hardware .north .tools > li.active {
   color: #dfdfdf;
   background-color: #2d2b30;
 }
-/* line 140, layout/_hardware.scss */
+/* line 121, layout/_hardware.scss */
 .hardware .north .tools > li:hover {
   color: #dfdfdf;
   background-color: #2d2b30;
 }
-/* line 145, layout/_hardware.scss */
+/* line 126, layout/_hardware.scss */
 .hardware .north .tools .interactive-mode {
-  width: 20px;
-  height: 20px;
-}
-/* line 150, layout/_hardware.scss */
-.hardware .north .tools .debug {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
 }
 
-/* line 157, layout/_hardware.scss */
+/* line 134, layout/_hardware.scss */
 .hardware .center {
   top: 75px;
   bottom: 75px;
@@ -467,7 +439,7 @@ body {
   background-color: #2D2B30;
 }
 
-/* line 168, layout/_hardware.scss */
+/* line 145, layout/_hardware.scss */
 .hardware .south {
   margin-left: 30px;
   margin-right: 30px;
@@ -478,7 +450,7 @@ body {
   position: absolute;
 }
 
-/* line 178, layout/_hardware.scss */
+/* line 155, layout/_hardware.scss */
 .hardware .copyright {
   /*float: right;*/
   text-align: right;
@@ -489,7 +461,7 @@ body {
   bottom: 20px;
 }
 
-/* line 188, layout/_hardware.scss */
+/* line 165, layout/_hardware.scss */
 .hardware .name-dialog {
   z-index: 998;
   top: 90px;
@@ -497,7 +469,7 @@ body {
   margin: 0 auto;
   position: relative;
 }
-/* line 194, layout/_hardware.scss */
+/* line 171, layout/_hardware.scss */
 .hardware .name-dialog .name-label {
   display: block;
   background-color: #F1C933;
@@ -510,7 +482,7 @@ body {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
-/* line 207, layout/_hardware.scss */
+/* line 184, layout/_hardware.scss */
 .hardware .name-dialog .name {
   border: 2px solid #F1C933;
   border-top-right-radius: 4px;
@@ -523,14 +495,6 @@ body {
 }
 
 /* line 1, layout/_software.scss */
-.software .left {
-  width: 400px;
-  height: 100%;
-  background-color: #2D2B30;
-  overflow-y: auto;
-}
-
-/* line 8, layout/_software.scss */
 .software .right {
   background-color: #55545F;
   top: 0;
@@ -541,111 +505,13 @@ body {
   float: left;
 }
 
-/* line 18, layout/_software.scss */
-.software .tab-panel {
-  width: 354px;
-  left: 32px;
-  right: 14px;
-  top: 0;
-  bottom: 0;
-  position: absolute;
-  float: left;
-}
-
-/* line 28, layout/_software.scss */
-.software .tab ul {
-  margin-top: 8px;
-}
-
-/* line 32, layout/_software.scss */
-.software .tab ul li {
-  height: 100px;
-  margin: 16px 0;
-}
-
-/* line 37, layout/_software.scss */
-.software .tag-1 {
-  background-color: #68D283;
-}
-
-/* line 41, layout/_software.scss */
-.software .tag-2 {
-  background-color: #40AFE5;
-}
-
-/* line 45, layout/_software.scss */
-.software .tag-3 {
-  background-color: #E8A34E;
-}
-
-/* line 49, layout/_software.scss */
-.software .tag-4 {
-  background-color: #E9615F;
-}
-
-/* line 53, layout/_software.scss */
-.software .tag-5 {
-  background-color: #E2559C;
-}
-
-/* line 57, layout/_software.scss */
-.software .tag-6 {
-  background-color: #8D32E4;
-}
-
-/* line 61, layout/_software.scss */
-.software .items {
-  left: 14px;
-  right: 0;
-  top: 24px;
-  bottom: 24px;
-  background-color: #47434C;
-  position: absolute;
-  float: left;
-  overflow-y: auto;
-}
-
-/* line 72, layout/_software.scss */
-.software .items ul {
-  margin-top: 20px;
-  margin-left: 15px;
-  float: left;
-}
-
-/* line 78, layout/_software.scss */
-.software .items ul li {
-  margin-bottom: 15px;
-  vertical-align: middle;
-}
-
-/* line 83, layout/_software.scss */
-.software .items .item1 {
-  height: 40px;
-  width: 250px;
-  background-color: #68D283;
-}
-
-/* line 89, layout/_software.scss */
-.software .items .item2 {
-  height: 40px;
-  width: 250px;
-  background-color: #40AFE5;
-}
-
-/* line 95, layout/_software.scss */
-.software .items .item3 {
-  height: 40px;
-  width: 250px;
-  background-color: #E8A34E;
-}
-
-/* line 101, layout/_software.scss */
+/* line 11, layout/_software.scss */
 .software .north {
   height: 40px;
   background-color: #47434C;
 }
 
-/* line 106, layout/_software.scss */
+/* line 16, layout/_software.scss */
 .software .center {
   top: 40px;
   bottom: 0;
@@ -654,7 +520,7 @@ body {
   position: absolute;
 }
 
-/* line 114, layout/_software.scss */
+/* line 24, layout/_software.scss */
 .software .menu .btn {
   height: 40px;
   width: 120px;
@@ -667,19 +533,19 @@ body {
   box-shadow: none;
 }
 
-/* line 126, layout/_software.scss */
+/* line 36, layout/_software.scss */
 .software .menu .open .btn {
   color: white;
   background-color: #5f5176;
 }
 
-/* line 131, layout/_software.scss */
+/* line 41, layout/_software.scss */
 .software .menu .btn:hover {
   background-color: #5f5176;
   color: white;
 }
 
-/* line 136, layout/_software.scss */
+/* line 46, layout/_software.scss */
 .software .menu .dropdown-menu {
   margin-top: 0;
   padding-top: 0;
@@ -691,12 +557,12 @@ body {
   min-width: 120px;
 }
 
-/* line 147, layout/_software.scss */
+/* line 57, layout/_software.scss */
 .software .menu .dropdown-menu > li:hover {
   background-color: #5f5176;
 }
 
-/* line 151, layout/_software.scss */
+/* line 61, layout/_software.scss */
 .software .menu .dropdown-menu > li > a {
   height: 40px;
   line-height: 40px;
@@ -707,33 +573,33 @@ body {
   background-color: transparent;
 }
 
-/* line 161, layout/_software.scss */
+/* line 71, layout/_software.scss */
 .software .menu .dropdown-menu > li:hover > a {
   color: white;
 }
 
-/* line 165, layout/_software.scss */
+/* line 75, layout/_software.scss */
 .software .menu .dropdown-submenu {
   position: relative;
 }
 
-/* line 169, layout/_software.scss */
+/* line 79, layout/_software.scss */
 .software .menu .dropdown-submenu > .dropdown-menu {
   top: 0;
   left: 100%;
 }
 
-/* line 174, layout/_software.scss */
+/* line 84, layout/_software.scss */
 .software .menu .dropdown-submenu:hover > .dropdown-menu {
   display: block;
 }
 
-/* line 178, layout/_software.scss */
+/* line 88, layout/_software.scss */
 .software .menu .include-library.dropdown-menu > li > a {
   letter-spacing: 0;
 }
 
-/* line 182, layout/_software.scss */
+/* line 92, layout/_software.scss */
 .software .menu .dropdown-submenu > a:after {
   display: block;
   content: " ";
@@ -749,23 +615,23 @@ body {
   position: absolute;
 }
 
-/* line 197, layout/_software.scss */
+/* line 107, layout/_software.scss */
 .software .menu .dropdown-submenu:hover > a:after {
   border-left-color: #9B9B9B;
 }
 
-/* line 201, layout/_software.scss */
+/* line 111, layout/_software.scss */
 .software .sub-tab {
   margin-right: 30px;
   float: right;
 }
 
-/* line 206, layout/_software.scss */
+/* line 116, layout/_software.scss */
 .software .sub-tab ul {
   float: left;
 }
 
-/* line 210, layout/_software.scss */
+/* line 120, layout/_software.scss */
 .software .sub-tab ul li {
   width: 120px;
   line-height: 40px;
@@ -774,34 +640,34 @@ body {
   float: left;
 }
 
-/* line 218, layout/_software.scss */
+/* line 128, layout/_software.scss */
 .software .sub-tab ul li.active {
   background-color: #5f5176;
 }
 
-/* line 222, layout/_software.scss */
+/* line 132, layout/_software.scss */
 .software .sub-tab ul li:hover {
   background-color: #5f5176;
 }
 
-/* line 226, layout/_software.scss */
+/* line 136, layout/_software.scss */
 .software .sub-mod {
   height: 100%;
   display: none;
 }
 
-/* line 231, layout/_software.scss */
+/* line 141, layout/_software.scss */
 .software .sub-mod.active {
   display: block;
 }
 
-/* line 235, layout/_software.scss */
+/* line 145, layout/_software.scss */
 .software .editor {
   font-size: 16px;
   height: 100%;
 }
 
-/* line 240, layout/_software.scss */
+/* line 150, layout/_software.scss */
 .software .doEdit {
   cursor: pointer;
   z-index: 998;
@@ -809,7 +675,7 @@ body {
   top: 12px;
   position: absolute;
 }
-/* line 247, layout/_software.scss */
+/* line 157, layout/_software.scss */
 .software .doEdit > i {
   margin-right: 5px;
 }

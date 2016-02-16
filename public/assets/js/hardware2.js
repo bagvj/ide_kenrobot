@@ -23,8 +23,8 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 	var configs;
 	var specNodes;
 
-	//交互模式
-	var interactiveMode = "default";
+	//交互模式，默认放置模式
+	var interactiveMode = "place";
 
 	var selectedPort;
 	var selectedLink;
@@ -48,7 +48,6 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 			//可以撤消(Ctrl + Z)和重做(Ctrl + Y)
 			// "undoManager.isEnabled": true,
 
-			"clickCreatingTool.isEnabled": false,
 			//放置模式时，单击放置
 			"clickCreatingTool.isDoubleClick": false,
 
@@ -60,6 +59,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 			"animationManager.isEnabled": false,
 
 			"click": onBackgroundSingleClick,
+			"PartCreated": onPartCreated,
 		});
 
 		//节点模版
@@ -82,6 +82,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 		//重写
 		var tool = diagram.toolManager.clickCreatingTool;
 		tool.insertPart = function(loc) {
+
 			this.archetypeNodeData = genNodeData(this.archetypeNodeData.name);
 			return go.ClickCreatingTool.prototype.insertPart.call(this, loc);
 		}
@@ -214,6 +215,10 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 		hintTargetPort();
 		highlightLink();
 		showNameDialog(false);
+	}
+
+	function onPartCreated(e) {
+		EventManager.trigger("hardware", "changeInteractiveMode", "default");
 	}
 
 	function onNodeClick(node) {
@@ -392,13 +397,8 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 		return nodes;
 	}
 
-	function debug() {
-
-	}
-
 	return {
 		init: init,
-		debug: debug,
 		setPlaceComponent: setPlaceComponent,
 		setInteractiveMode: setInteractiveMode,
 		setVarName: setVarName,

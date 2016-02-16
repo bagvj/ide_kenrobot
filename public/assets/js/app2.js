@@ -12,7 +12,6 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		initAjax();
 		initEditor();
 		initLogin();
-		initSearch();
 
 		$('.header .tab li').on('click', onHeaderTabClick).eq(0).click();
 		$('.header .setting li').on('click', onMenuClick);
@@ -36,14 +35,18 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 
 	function onRequestConfigSuccess(result) {
 		platformConfig = result;
+
 		editor.setValue(platformConfig.defaultCode, 1);
+
 		hardware.init('hardware-container', {
 			boards: platformConfig.boards,
 			components: platformConfig.components,
 		});
-		$('.hardware .tools > li').eq(0).click();
+		// $('.hardware .tools > li').eq(1).click();
 
 		$('.header .board-list > li').eq(0).click();
+
+		initSearch();
 	}
 
 	function initAjax() {
@@ -166,17 +169,23 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 	}
 
 	function initSearch() {
-		// $('.search .key').typeahead({
-		// 	source: ,
-		// 	updater: function(item) {
-		// 		$('.hardware .items .list > li[data-component-name="' + item.name + '"').click();
-		// 		return item;
-		// 	}
-		// });
+		var components = platformConfig.components;
+		var sources = [];
+		for(var key in components) {
+			sources.push(components[key]);
+		}
+		$('.search .key').typeahead({
+			source: sources,
+			updater: function(item) {
+				$('.hardware .items .list > li[data-component-name="' + item.name + '"').click();
+				return item;
+			}
+		});
 	}
 
 	function initEvent() {
-		EventManager.bind("hardware", "showNameDialog", showNameDialog);
+		EventManager.bind("hardware", "showNameDialog", onShowNameDialog);
+		EventManager.bind("hardware", "changeInteractiveMode", onChangeInteractiveMode);
 	}
 
 	function onMenuClick(e) {
@@ -323,21 +332,22 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			var action = node.data('action');
 			switch (action) {
 				case 'changeMode':
-					onChangeInteractiveMode(node, e);
-					break;
-				case 'debug': 
-					hardware.debug();
+					onInteractiveModeClick(node, e);
 					break;
 			}
 		}
 	}
 
-	function onChangeInteractiveMode(node, e) {
+	function onInteractiveModeClick(node, e) {
 		var mode = node.data('mode');
 		hardware.setInteractiveMode(mode);
 		if(mode == "place") {
 			$('.hardware .items .list > li.active').click();
 		}
+	}
+
+	function onChangeInteractiveMode(mode) {
+		$('.hardware .tools > li[data-mode="' + mode + '"').click();
 	}
 
 	function onSoftwareSubTabClick(e) {
@@ -353,6 +363,31 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		editor.setHighlightActiveLine(true);
 		editor.setHighlightSelectedWord(true);
 		isSourceEditMode = true;
+	}
+
+	function onShowNameDialog(args) {
+		var dialog = $('.hardware .name-dialog');
+		if(args) {
+			var name = $('.name', dialog).val(args.varName).off('blur').on('blur', function(e) {
+				var result = hardware.setVarName(args.key, name.val());
+				if(!result.success) {
+					name.val(args.varName);
+					util.message(result.message);
+				}
+			});
+
+			if(dialog.css("display") == "block") {
+				var result = hardware.setVarName(args.key, name.val());
+				if(!result.success) {
+					name.val(args.varName);
+					util.message(result.message);
+				}
+			}
+			dialog.show();
+			name.focus();
+		} else {
+			dialog.hide();
+		}
 	}
 
 	function toggleActive(li) {
@@ -376,31 +411,6 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		li.animate({
 			width: width
 		}, duration);
-	}
-
-	function showNameDialog(args) {
-		var dialog = $('.hardware .name-dialog');
-		if(args) {
-			var name = $('.name', dialog).val(args.varName).off('blur').on('blur', function(e) {
-				var result = hardware.setVarName(args.key, name.val());
-				if(!result.success) {
-					name.val(args.varName);
-					util.message(result.message);
-				}
-			});
-
-			if(dialog.css("display") == "block") {
-				var result = hardware.setVarName(args.key, name.val());
-				if(!result.success) {
-					name.val(args.varName);
-					util.message(result.message);
-				}
-			}
-			dialog.show();
-			name.focus();
-		} else {
-			dialog.hide();
-		}
 	}
 
 	function showLoginDialog() {

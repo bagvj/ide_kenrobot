@@ -1,10 +1,3 @@
-.software .left {
-  width: 400px;
-  height: 100%;
-  background-color: #2D2B30;
-  overflow-y: auto;
-}
-
 .software .right {
   background-color: #55545F;
   top: 0;
@@ -13,89 +6,6 @@
   right: 0;
   position: absolute;
   float: left;
-}
-
-.software .tab-panel {
-  width: 354px;
-  left: 32px;
-  right: 14px;
-  top: 0;
-  bottom: 0;
-  position: absolute;
-  float: left;
-}
-
-.software .tab ul {
-  margin-top: 8px;
-}
-
-.software .tab ul li {
-  height: 100px;
-  margin: 16px 0;
-}
-
-.software .tag-1 {
-  background-color: #68D283;
-}
-
-.software .tag-2 {
-  background-color: #40AFE5;
-}
-
-.software .tag-3 {
-  background-color: #E8A34E;
-}
-
-.software .tag-4 {
-  background-color: #E9615F;
-}
-
-.software .tag-5 {
-  background-color: #E2559C;
-}
-
-.software .tag-6 {
-  background-color: #8D32E4;
-}
-
-.software .items {
-  left: 14px;
-  right: 0;
-  top: 24px;
-  bottom: 24px;
-  background-color: #47434C;
-  position: absolute;
-  float: left;
-  overflow-y: auto;
-}
-
-.software .items ul {
-  margin-top: 20px;
-  margin-left: 15px;
-  float: left;
-}
-
-.software .items ul li {
-  margin-bottom: 15px;
-  vertical-align: middle;
-}
-
-.software .items .item1 {
-  height: 40px;
-  width: 250px;
-  background-color: #68D283;
-}
-
-.software .items .item2 {
-  height: 40px;
-  width: 250px;
-  background-color: #40AFE5;
-}
-
-.software .items .item3 {
-  height: 40px;
-  width: 250px;
-  background-color: #E8A34E;
 }
 
 .software .north {
