@@ -23,6 +23,7 @@ class ReDesignConfig extends Migration {
 		Schema::dropIfExists('libraries');
 		Schema::dropIfExists('boards');
 		Schema::dropIfExists('components');
+		Schema::dropIfExists('prots');
 
 		Schema::create('modules', function (Blueprint $table) {
 			$table->increments('id')->comment("模块id");
