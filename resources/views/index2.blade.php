@@ -38,7 +38,7 @@
 									<a href="#">主板</a>
 									<ul class="board-list dropdown-menu">
 									@foreach($boards as $board)
-										<li data-action="selectBoard" data-board="{{$board->id}}"><a href="#"><img class="thumbnail" src="/assets/images/hardware/{{$board->thumbnail}}" /><span class="name">{{$board->name}}</span></a></li>
+										<li data-action="selectBoard" data-board-name="{{$board->name}}"><a href="#"><img class="thumbnail" src="/assets/images/hardware/arduino-uno-r3-small.png" /><span class="name">{{$board->label}}</span></a></li>
 									@endforeach
 									</ul>
 								</li>
@@ -52,60 +52,48 @@
 			</div>
 			<div class="content">
 				<div class="mod hardware">
-					<div class="left x-scrollbar">
-						<div class="tab">
-							<ul>
-								<li class="tag-1"><a>输入模块</a></li>
-								<li class="tag-2"><a>输出模块</a></li>
-								<li class="tag-3"><a>执行模块</a></li>
-								<li class="tag-4"><a>传感模块</a></li>
-								<li class="tag-5"><a>通讯模块</a></li>
-							</ul>
-						</div>
+					<div class="left">
 						<div class="tab-panel">
 							<div class="search">
 								<input class="key" type="text" placeholder="搜索" spellcheck="false"/>
 							</div>
 							<div class="seperator"></div>
 							<div class="items x-scrollbar">
+								<ul class="list">
+								@foreach($components as $component)
+									<li class="item" data-component-name="{{$component->name}}"><img class="image" src="{{$component->source}}" /></li>
+								@endforeach
+								</ul>
 							</div>
 						</div>
 					</div>
 					<div class="right">
-						<div class="north port">
-							<ul>
-								<li>0</li>
-								<li>1</li>
-								<li>2</li>
-								<li>3</li>
-								<li>4</li>
-								<li>5</li>
-								<li>6</li>
-								<li>7</li>
-								<li>8</li>
-								<li>9</li>
-								<li>10</li>
-								<li>11</li>
-								<li>12</li>
-								<li>13</li>
+						<div class="north">
+							<ul class="tools">
+								<li class="interactive-mode" data-action="changeMode" data-mode="default">
+									<i class="fa fa-mouse-pointer"></i>
+								</li>
+								<li class="interactive-mode" data-action="changeMode" data-mode="place">
+									<i class="fa fa-hand-pointer-o"></i>
+								</li>
+								<li class="interactive-mode" data-action="changeMode" data-mode="delete">
+									<i class="fa fa-close"></i>
+								</li>
+								<li class="debug" data-action="debug">
+									<i class="fa fa-bug"></i>
+								</li>
 							</ul>
 						</div>
-						<div class="center">
-							
+						<div class="center" id="hardware-container">
 						</div>
-						<div class="south port">
-							<ul>
-								<li>14</li>
-								<li>15</li>
-								<li>16</li>
-								<li>17</li>
-								<li>18</li>
-								<li>19</li>
-								<li>20</li>
-							</ul>
+						<div class="south">
 							<div class="copyright">
 								备案号：京ICP备15039570号<br />Copyright © 2014 KenRobot.com All Rights Reserved
 							</div>
+						</div>
+						<div class="name-dialog" style="display:none;">
+							<span class="name-label">名字</span>
+							<input class="name" type="text" />
 						</div>
 					</div>
 				</div>
@@ -148,6 +136,7 @@
 							</div>
 							<div class="sub-mod">
 								<div class="editor"></div>
+								<div class="doEdit"><i class="fa fa-pencil"></i>编辑</div>
 							</div>
 						</div>
 					</div>

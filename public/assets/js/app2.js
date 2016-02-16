@@ -1,10 +1,11 @@
-define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'util'], function($, _, _, _, _, util) {
+define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'util', 'hardware', 'EventManager', 'code'], function($, _, _, _, _, util, hardware, EventManager, code) {
 	//默认代码
 	var platformConfig;
 
 	var editor;
 	var loginCheckTimer;
 	var board;
+	var isSourceEditMode;
 
 	function init() {
 		requestPlatformConfig();
@@ -15,11 +16,15 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 
 		$('.header .tab li').on('click', onHeaderTabClick).eq(0).click();
 		$('.header .setting li').on('click', onMenuClick);
-		$('.hardware .tab li').on('click', onHardwareTabClick).eq(0).click();
 		$('.hardware .items .list > li').on('click', onHardwareItemClick);
-		$('.software .tab li').on('click', onSoftwareTabClick).eq(0).click();
+		$('.hardware .tools > li').on('click', onToolsClick);
+
 		$('.software .menu li').on('click', onMenuClick);
 		$('.software .sub-tab li').on('click', onSoftwareSubTabClick).eq(1).click();
+
+		$('.software .doEdit').on('click', onDoEditClick);
+
+		initEvent();
 	}
 
 	function requestPlatformConfig() {
@@ -32,6 +37,11 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 	function onRequestConfigSuccess(result) {
 		platformConfig = result;
 		editor.setValue(platformConfig.defaultCode, 1);
+		hardware.init('hardware-container', {
+			boards: platformConfig.boards,
+			components: platformConfig.components,
+		});
+		$('.hardware .tools > li').eq(0).click();
 
 		$('.header .board-list > li').eq(0).click();
 	}
@@ -51,6 +61,9 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			enableSnippets: true,
 			enableLiveAutocompletion: true,
 		});
+		editor.setReadOnly(true);
+		editor.setHighlightActiveLine(false);
+		editor.setHighlightSelectedWord(false);
 		editor.setShowPrintMargin(false);
 		editor.$blockScrolling = Infinity;
 		editor.setTheme("ace/theme/kenrobot");
@@ -153,20 +166,17 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 	}
 
 	function initSearch() {
-		$('.search .key').typeahead({
-			source: function(query, process) {
-				var index = $(".hardware .tab li.active").index();
-				var moduleId = $(".hardware .items .list").eq(index).data('module-id');
-				if(moduleId) {
-					var components = platformConfig.components[moduleId];
-					process(components);
-				}
-			},
-			updater: function(item) {
-				$('.hardware .items .list > li[data-component-id="' + item.id + '"').click();
-				return item;
-			}
-		});
+		// $('.search .key').typeahead({
+		// 	source: ,
+		// 	updater: function(item) {
+		// 		$('.hardware .items .list > li[data-component-name="' + item.name + '"').click();
+		// 		return item;
+		// 	}
+		// });
+	}
+
+	function initEvent() {
+		EventManager.bind("hardware", "showNameDialog", showNameDialog);
 	}
 
 	function onMenuClick(e) {
@@ -203,7 +213,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			if (result.code == 0) {
 				var projectData = {
 					source: getSource(),
-					boardId: board.id,
+					boardName: board.name,
 				}
 				$.ajax({
 					type: 'POST',
@@ -217,7 +227,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 					util.message(res.msg);
 				});
 			} else {
-				showLogin();
+				showLoginDialog();
 			}
 		});
 	}
@@ -231,7 +241,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			type: "POST",
 			url: "/build2",
 			data: {
-				source: getSource(),
+				source: JSON.stringify(getSource()),
 				user_id: userId,
 				project: project,
 				build_type: "Arduino",
@@ -251,35 +261,29 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 	}
 
 	function onIncludeLibraryClick(node, e) {
-		var libraries = platformConfig.libraries;
-		var name = node.data('library');
-		var library;
-		for (var i = 0; i < libraries.length; i++) {
-			var config = libraries[i];
-			if (config.name == name) {
-				library = config;
-				break;
-			}
+		if(!isSourceEditMode) {
+			util.message("未启用源码编辑模式");
+			return;
 		}
+
+		var name = node.data('library');
+		var libraries = platformConfig.libraries;
+		var library = libraries[name];
 
 		if (!library) {
 			return
 		}
 
-		var doc = editor.session.doc;
-		doc.insert(doc.pos(0, 0), library.code);
+		code.addLibrary(library.code);
+		var source = code.gen();
+		console.log(source);
+		editor.setValue(source, 1);
 	}
 
 	function onSelectBoardClick(node, e) {
 		var boards = platformConfig.boards;
-		var id = parseInt(node.data("board"));
-		for(var i = 0; i < boards.length; i++) {
-			var b = boards[i];
-			if(b.id == id) {
-				board = b;
-				break;
-			}
-		}
+		var name = node.data("board-name");
+		board = boards[name];
 	}
 
 	function onSettingClick(node, e) {
@@ -288,30 +292,51 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 
 	function onHeaderTabClick(e) {
 		var li = $(this);
-		if (li.index() == 2) {
+		var index = li.index();
+		if (index == 2) {
 			return;
+		} else if(index == 1) {
+			var source = code.gen();
+			editor.setValue(source, 1);
+		} else if(index == 0) {
+			if(isSourceEditMode) {
+				//启用的源码编辑模式
+				util.message("已启用源码编辑模式，不能再进行硬件连接和设置。")
+				return;
+			}
 		}
 		if (toggleActive(li)) {
-			$('.content .mod').removeClass("active").eq(li.index()).addClass("active");
-		}
-	}
-
-	function onHardwareTabClick(e) {
-		var li = $(this);
-		if(toggleActive(li)) {
-			$('.hardware .items .list').hide().removeClass("active").eq(li.index()).addClass("active").show();
+			$('.content .mod').removeClass("active").eq(index).addClass("active");
 		}
 	}
 
 	function onHardwareItemClick(e) {
 		$(this).parent().find("li.active").removeClass("active");
 		$(this).addClass("active");
+		hardware.setPlaceComponent($(this).data("component-name"));
 	}
 
-	function onSoftwareTabClick(e) {
+	function onToolsClick(e) {
 		var li = $(this);
 		if (toggleActive(li)) {
+			var node = li;
+			var action = node.data('action');
+			switch (action) {
+				case 'changeMode':
+					onChangeInteractiveMode(node, e);
+					break;
+				case 'debug': 
+					hardware.debug();
+					break;
+			}
+		}
+	}
 
+	function onChangeInteractiveMode(node, e) {
+		var mode = node.data('mode');
+		hardware.setInteractiveMode(mode);
+		if(mode == "place") {
+			$('.hardware .items .list > li.active').click();
 		}
 	}
 
@@ -320,6 +345,14 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		if (toggleActive(li)) {
 			$('.software .sub-mod').removeClass("active").eq(li.index()).addClass("active");
 		}
+	}
+
+	function onDoEditClick(e) {
+		$(this).hide();
+		editor.setReadOnly(false);
+		editor.setHighlightActiveLine(true);
+		editor.setHighlightSelectedWord(true);
+		isSourceEditMode = true;
 	}
 
 	function toggleActive(li) {
@@ -345,7 +378,32 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		}, duration);
 	}
 
-	function showLogin() {
+	function showNameDialog(args) {
+		var dialog = $('.hardware .name-dialog');
+		if(args) {
+			var name = $('.name', dialog).val(args.varName).off('blur').on('blur', function(e) {
+				var result = hardware.setVarName(args.key, name.val());
+				if(!result.success) {
+					name.val(args.varName);
+					util.message(result.message);
+				}
+			});
+
+			if(dialog.css("display") == "block") {
+				var result = hardware.setVarName(args.key, name.val());
+				if(!result.success) {
+					name.val(args.varName);
+					util.message(result.message);
+				}
+			}
+			dialog.show();
+			name.focus();
+		} else {
+			dialog.hide();
+		}
+	}
+
+	function showLoginDialog() {
 		$('#login_dialog').css({
 			top: -$(this).height(),
 		}).show().animate({
@@ -371,7 +429,6 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 					} else if (result.code == 1) {
 						//已经登录
 						setLoginCheck(false);
-						console.log(result.message);
 					} else {
 						//登录失败
 					}

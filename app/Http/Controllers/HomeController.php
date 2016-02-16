@@ -34,7 +34,7 @@ class HomeController extends Controller {
 		$url = config('weixin.userinfo.url')."?key=$key";
 		$boards = $this->getBoardConfig();
 
-		$components = $this->getComponentConfig(true);
+		$components = $this->getComponentConfig();
 		$libraries = $this->getLibrariyConfig();
 
 		return view("index2", compact('qrcodeurl','key', 'boards', 'components', 'libraries'));
@@ -136,7 +136,7 @@ class HomeController extends Controller {
 		// $type = 1;
 
 		//代码的字节码
-		$bytes = $request->input('source');
+		$bytes = json_decode($request->input('source'));
 		//编译类型
 		$buildType = $request->input('buildType');
 		//项目名字
@@ -191,7 +191,8 @@ class HomeController extends Controller {
 		$type = 0;
 
 		//代码的字节码
-		$bytes = $request->input('source');
+		$bytes = json_decode($request->input('source'));
+		// var_dump($bytes);
 		//用户id
 		$user_id = $request->input('user_id');
 		//项目名字
@@ -219,7 +220,7 @@ class HomeController extends Controller {
 				$result['url'] = "/download2?key=$key";
 			} else {
 				$result['msg'] = "编译失败";
-				// $result['output'] = $output;
+				$result['output'] = $output;
 			}
 		} else {
 			$result['msg'] = "非法请求";
@@ -250,8 +251,8 @@ class HomeController extends Controller {
 
 		$config = array(
 			'defaultCode' => $defaultCode,
-			'libraries' => $this->getLibrariyConfig(),
-			'boards' => $this->getBoardConfig(),
+			'libraries' => $this->getLibrariyConfig(true),
+			'boards' => $this->getBoardConfig(true),
 			'components' => $this->getComponentConfig(true),
 		);
 		
@@ -373,37 +374,62 @@ class HomeController extends Controller {
 		);
 	}
 
-	private function getLibrariyConfig() {
-		return DB::table('libraries')->get();
+	private function getLibrariyConfig($isDict = false) {
+		$libraries = DB::table('libraries')->get();
+		if($isDict) {
+			$result = array();
+			foreach ($libraries as $key => $value) {
+				$result[$value->name] = $value;
+			}
+		} else {
+			$result = $libraries;
+		}
+
+		return $result;
 	}
 
-	private function getBoardConfig() {
+	private function getBoardConfig($isDict = false) {
 		$boards = DB::table('boards')->get();
 		foreach($boards as $key => $value) {
 			$value->in_use = $value->in_use == 1;
+			$value->type = "board";
+			$value->deletable = false;
+			$value->selectable = false;
+			$value->source = "assets/images/board/" . $value->name . ".svg";
 		}
-		return $boards;
+
+		if($isDict) {
+			$result = array();
+			foreach ($boards as $key => $value) {
+				$result[$value->name] = $value;
+			}
+		} else {
+			$result = $boards;
+		}
+
+		return $result;
 	}
 
-	private function getComponentConfig($isGroup = false) {
-		$components = DB::table('components')->orderBy("module_id")->get();
+	private function getComponentConfig($isDict = false) {
+		$components = DB::table('components')->get();
 		foreach($components as $key => $value) {
 			$value->in_use = $value->in_use == 1;
+			$value->type = "component";
+			$value->deletable = true;
+			$value->selectable = true;
+			$value->source = "assets/images/component/" . $value->name . ".svg";
 		}
 
-		if($isGroup) {
-			$componentGroups = array();
+		if($isDict) {
+			$result = array();
 			foreach ($components as $key => $value) {
-				$module_id = $value->module_id;
-				if (!isset($componentGroups[$module_id])) {
-					$componentGroups[$module_id] = array();
-				}
-				$componentGroups[$module_id][] = $value;
+				$result[$value->name] = $value;
 			}
-			return $componentGroups;
 		} else {
-			return $components;
+			$result = $components;
 		}
+
+		return $result;
 	}
 
 	private function fromCharCode($codes) {

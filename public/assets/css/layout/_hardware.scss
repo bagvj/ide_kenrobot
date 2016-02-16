@@ -1,5 +1,5 @@
 .hardware .left {
-  width: 280px;
+  width: 248px;
   height: 100%;
   background-color: #2D2B30;
   overflow-y: auto;
@@ -9,28 +9,19 @@
   background-color: #55545F;
   top: 0;
   bottom: 0;
-  left: 280px;
+  left: 248px;
   right: 0;
   position: absolute;
 }
 
 .hardware .tab-panel {
-  width: 234px;
-  left: 32px;
+  width: 220px;
+  left: 14px;
   right: 14px;
   top: 0;
   bottom: 0;
   position: absolute;
   float: left;
-}
-
-.hardware .tab ul {
-  margin-top: 8px;
-}
-
-.hardware .tab ul li {
-  height: 124px;
-  margin: 16px 0;
 }
 
 .hardware .tag-1 {
@@ -54,7 +45,7 @@
 }
 
 .hardware .search {
-  margin: 24px 0 14px 14px;
+  margin: 24px 0 14px 0;
   height: 36px;
   border-radius: 40px;
   background-color: #47434C;
@@ -73,12 +64,11 @@
   width: 220px;
   height: 2px;
   background-color: #535353;
-  margin-left: 14px;
   float: left;
 }
 
 .hardware .items {
-  left: 14px;
+  left: 0;
   right: 0;
   top: 90px;
   bottom: 24px;
@@ -92,7 +82,6 @@
   margin-right: 14px;
   margin-top: 12px;
   float: left;
-  display: none;
 }
 
 .hardware .items .list li {
@@ -111,7 +100,7 @@
 }
 
 .hardware .items .list li.active .image {
-  background-color: blue;
+  background-color: orange;
 }
 
 .hardware .items .list li.active .name {
@@ -126,22 +115,43 @@
   left: 0;
   right: 0;
   position: absolute;
-}
 
-.hardware .port ul {
-  float: left;
-  margin-bottom: 0;
-  margin-left: auto;
-  margin-right: auto;
-}
+  .tools {
+    margin-top: 10px;
 
-.hardware .port ul li {
-  width: 36px;
-  height: 20px;
-  margin: 7px 20px;
-  background-color: #9B9B9B;
-  text-align: center;
-  float: left;
+    &>li {
+      background-color: rgba(45, 43, 48, 0.6);
+      cursor: pointer;
+      text-align: center;
+      color: #9b9b9b;
+      float: left;
+      margin-right: 10px;
+    }
+
+    &>li:last-child {
+      margin-right: 0;
+    }
+
+    &>li.active {
+      color: $font-color;
+      background-color: rgba(45, 43, 48, 1);
+    }
+
+    &>li:hover {
+      color: $font-color;
+      background-color: rgba(45, 43, 48, 1);
+    }
+
+    .interactive-mode {
+      width: 20px;
+      height: 20px;
+    }
+
+    .debug {
+      width: 20px;
+      height: 20px;
+    }
+  }
 }
 
 .hardware .center {
@@ -174,3 +184,34 @@
   right: 0;
   bottom: 20px;
 }
+
+.hardware .name-dialog {
+  z-index: 998;
+  top: 90px;
+  width: 250px;
+  margin: 0 auto;
+  position: relative;
+    .name-label {
+      display: block;
+      background-color: #F1C933;
+      float: left;
+      color: black;
+      width: 50px;
+      height: 36px;
+      line-height: 36px;
+      text-align: center;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+
+    .name {
+      border: 2px solid #F1C933;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      float: left;
+      color: black;
+      width: 200px;
+      height: 36px;
+      padding: 10px 8px;
+    }
+}  

@@ -45,6 +45,7 @@ require(['jquery', 'jquery-ui', 'goJS', "nodeTemplate", "EventManager", "hardwar
 			url: './items',
 			dataType: 'json',
 		}).done(function(result) {
+			console.dir(result);
 			initNavSecond(result.hardwares);
 			hardware.init("hardware-container", nodeTemplate.hardware, result.hardwares);
 			software.init("software-container", nodeTemplate.software, result.softwares);
@@ -551,7 +552,7 @@ require(['jquery', 'jquery-ui', 'goJS', "nodeTemplate", "EventManager", "hardwar
 				type: "POST",
 				url: "./build",
 				data: {
-					source: bytes,
+					source: JSON.stringify(bytes),
 					projectName: projectName,
 					buildType: buildType
 				},

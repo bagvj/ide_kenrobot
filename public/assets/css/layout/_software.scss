@@ -236,3 +236,15 @@
   font-size: 16px;
   height: 100%;
 }
+
+.software .doEdit {
+  cursor: pointer;
+  z-index: 998;
+  right: 24px;
+  top: 12px;
+  position: absolute;
+
+  &>i {
+    margin-right: 5px;
+  }
+}

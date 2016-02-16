@@ -9,8 +9,15 @@ require.config({
 		"ace": "lib/ace/ace",
 		"ace-ext-language-tools": "lib/ace/ext-language_tools",
 
+		"goJS": "lib/go",
+
 		"app": "app2",
 		"util": "util2",
+		"EventManager": "EventManager",
+		"hardwareConfigs": "hardwareConfigs",
+		"nodeTemplate": "nodeTemplate2",
+		"hardware": "hardware2",
+		"code": "code2",
 	},
 	shim: {
 		"bootstrap": {
