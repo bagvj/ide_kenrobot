@@ -61,7 +61,7 @@
 							<div class="items x-scrollbar">
 								<ul class="list">
 								@foreach($components as $component)
-									<li class="item" data-component-name="{{$component->name}}"><img class="image" src="{{$component->source}}" /></li>
+									<li class="item" data-component-name="{{$component->name}}"><img class="image" src="{{$component->source}}" /><span class="name">{{$component->label}}</span></li>
 								@endforeach
 								</ul>
 							</div>

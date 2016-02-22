@@ -174,6 +174,9 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		}
 		$('.search .key').typeahead({
 			source: sources,
+			displayText: function(item) {
+				return typeof item !== 'undefined' && typeof item.label != 'undefined' && item.label || item;
+			},
 			updater: function(item) {
 				$('.hardware .items .list > li[data-component-name="' + item.name + '"').click();
 				return item;
