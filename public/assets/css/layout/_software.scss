@@ -1,5 +1,4 @@
 .software .right {
-  background-color: #55545F;
   top: 0;
   bottom: 0;
   left: 0;
@@ -10,7 +9,6 @@
 
 .software .north {
   height: 40px;
-  background-color: #47434C;
 }
 
 .software .center {
@@ -24,52 +22,31 @@
 .software .menu .btn {
   height: 40px;
   width: 120px;
-  background-color: #47434C;
   border-radius: 0;
   border: none;
-  color: $font-color;
   letter-spacing: 5px;
   -webkit-box-shadow: none;
    box-shadow: none; 
-}
-
-.software .menu .open .btn {
-  color: white;
-  background-color: $menu-color;
-}
-
-.software .menu .btn:hover {
-  background-color: $menu-color;
-  color: white;
 }
 
 .software .menu .dropdown-menu {
   margin-top: 0;
   padding-top: 0;
   padding-bottom: 0;
-  background-color: #504C56;
+  
   border: none;
   border-radius: 0;
   width: 120px;
   min-width: 120px;
 }
 
-.software .menu .dropdown-menu > li:hover {
-  background-color: $menu-color;
-}
- 
 .software .menu .dropdown-menu > li > a {
   height: 40px;
   line-height: 40px;
   padding: 0;
   text-align: center;
-  color: $font-color;
   letter-spacing: 5px;
   background-color: transparent;
-}
-
-.software .menu .dropdown-menu > li:hover > a {
-  color: white;
 }
 
 .software .menu .dropdown-submenu {
@@ -123,14 +100,6 @@
   text-align: center;
   cursor: pointer;
   float: left;
-}
-
-.software .sub-tab ul li.active {
-  background-color: $menu-color;
-}
-
-.software .sub-tab ul li:hover {
-  background-color: $menu-color;
 }
 
 .software .sub-mod {

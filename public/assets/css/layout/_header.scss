@@ -9,8 +9,6 @@
   height: 60px;
   width: 103px;
   line-height: 60px;
-  background: url('../images/logo2.png') no-repeat center;
-  background-size: 103px 50px;
   float: left;
 }
 
@@ -29,35 +27,19 @@
   background-color: transparent;
   border-radius: 0;
   border: none;
-  color: $font-color;
   letter-spacing: 5px;
   -webkit-box-shadow: none;
    box-shadow: none; 
-}
-
-.header .menu .open .btn {
-  color: white;
-  background-color: $menu-color;
-}
-
-.header .menu .btn:hover {
-  background-color: $menu-color;
-  color: white;
 }
 
 .header .menu .dropdown-menu {
   margin-top: 0;
   padding-top: 0;
   padding-bottom: 0;
-  background-color: #504C56;
   border: none;
   border-radius: 0;
   width: 120px;
   min-width: 120px;
-}
-
-.header .menu .dropdown-menu > li:hover {
-  background-color: #8B7AA8;
 }
 
 .header .menu .dropdown-menu > li > a {
@@ -65,7 +47,6 @@
   line-height: 40px;
   padding: 0;
   text-align: center;
-  color: $font-color;
   letter-spacing: 5px;
   background-color: transparent;
 }
@@ -125,36 +106,20 @@
 	border-color: transparent;
 	border-style: solid;
 	border-width: 5px 5px 5px 0;
-	border-right-color: white;
 	top: 15px;
 	left: 8px;
 	position: absolute;
-}
-
-.header .menu .dropdown-submenu:hover > a:after {
-  border-right-color: #9B9B9B;
 }
 
 .header .tab ul {
   float: left;
 }
 
-.header .tab ul li{
+.header .tab ul li {
   width: 120px;
-  color: #9B9B9B;
   line-height: 60px;
   text-align: center;
   letter-spacing: 5px;
   cursor: pointer;
   float: left;
-}
-
-.header .tab ul li.active {
-  color: white;
-  background-color: $menu-color;
-}
-
-.header .tab ul li:hover {
-  color: white;
-  background-color: $menu-color;
 }

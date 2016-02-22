@@ -13,10 +13,12 @@
 		<link href="/assets/css/bootstrap.css" rel="stylesheet" />
 		<link href="/assets/css/font-awesome.css" rel="stylesheet" />
 		<link href="/assets/css/index.css" rel="stylesheet" />
+		<link href="/assets/css/theme/dark.css" rel="stylesheet" />
+		<link href="/assets/css/theme/bright.css" rel="stylesheet" />
 
 		<script src="/assets/js/lib/require.min.js" data-main="/assets/js/main"></script>
 	</head>
-	<body class="unselectable">
+	<body class="unselectable theme-dark" data-theme="dark">
 		<div class="main">
 			<div class="header">
 				<div class="left">
@@ -44,7 +46,13 @@
 								</li>
 								<li data-action="save"><a href="#">保存</a></li>
 								<li data-action="share"><a href="#">分享</a></li>
-								<li data-action="setting"><a href="#">界面设置</a></li>
+								<li class="dropdown-submenu">
+									<a href="#">主题</a>
+									<ul class="dropdown-menu">
+										<li data-action="changeTheme" data-theme="dark" class="active"><a href="#">深色</a></li>
+										<li data-action="changeTheme" data-theme="bright"><a href="#">浅色</a></li>
+									</ul>
+								</li>
 							</ul>
 						</div>
 					</div>
@@ -85,7 +93,7 @@
 						</div>
 						<div class="south">
 							<div class="copyright">
-								备案号：京ICP备15039570号<br />Copyright © 2014 KenRobot.com All Rights Reserved
+								备案号：京ICP备15039570号&nbsp;&nbsp;&nbsp;&nbsp;Copyright © 2014 KenRobot.com All Rights Reserved
 							</div>
 						</div>
 						<div class="name-dialog" style="display:none;">

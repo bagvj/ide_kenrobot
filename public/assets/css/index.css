@@ -34,7 +34,6 @@ a:focus {
 /* line 29, base/_reset.scss */
 body {
   font-family: 'Microsoft YaHei';
-  color: #dfdfdf;
   width: 100%;
   height: 100%;
 }
@@ -72,9 +71,8 @@ body {
 /* line 10, layout/_layout.scss */
 .main .header {
   height: 60px;
-  background-color: #3E3D44;
 }
-/* line 15, layout/_layout.scss */
+/* line 14, layout/_layout.scss */
 .main .content {
   top: 60px;
   bottom: 0;
@@ -82,7 +80,7 @@ body {
   right: 0;
   position: absolute;
 }
-/* line 22, layout/_layout.scss */
+/* line 21, layout/_layout.scss */
 .main .content .mod {
   top: 0;
   bottom: 0;
@@ -91,7 +89,7 @@ body {
   position: absolute;
   visibility: hidden;
 }
-/* line 30, layout/_layout.scss */
+/* line 29, layout/_layout.scss */
 .main .content .mod.active {
   visibility: visible;
 }
@@ -109,104 +107,82 @@ body {
   height: 60px;
   width: 103px;
   line-height: 60px;
-  background: url("../images/logo2.png") no-repeat center;
-  background-size: 103px 50px;
   float: left;
 }
 
-/* line 17, layout/_header.scss */
+/* line 15, layout/_header.scss */
 .header .tab {
   float: left;
 }
 
-/* line 21, layout/_header.scss */
+/* line 19, layout/_header.scss */
 .header .menu {
   float: right;
   margin-right: 30px;
 }
 
-/* line 26, layout/_header.scss */
+/* line 24, layout/_header.scss */
 .header .menu .btn {
   height: 60px;
   width: 120px;
   background-color: transparent;
   border-radius: 0;
   border: none;
-  color: #dfdfdf;
   letter-spacing: 5px;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
 
-/* line 38, layout/_header.scss */
-.header .menu .open .btn {
-  color: white;
-  background-color: #5f5176;
-}
-
-/* line 43, layout/_header.scss */
-.header .menu .btn:hover {
-  background-color: #5f5176;
-  color: white;
-}
-
-/* line 48, layout/_header.scss */
+/* line 35, layout/_header.scss */
 .header .menu .dropdown-menu {
   margin-top: 0;
   padding-top: 0;
   padding-bottom: 0;
-  background-color: #504C56;
   border: none;
   border-radius: 0;
   width: 120px;
   min-width: 120px;
 }
 
-/* line 59, layout/_header.scss */
-.header .menu .dropdown-menu > li:hover {
-  background-color: #8B7AA8;
-}
-
-/* line 63, layout/_header.scss */
+/* line 45, layout/_header.scss */
 .header .menu .dropdown-menu > li > a {
   height: 40px;
   line-height: 40px;
   padding: 0;
   text-align: center;
-  color: #dfdfdf;
   letter-spacing: 5px;
   background-color: transparent;
 }
 
-/* line 73, layout/_header.scss */
+/* line 54, layout/_header.scss */
 .header .menu .dropdown-menu > li:hover > a {
   color: white;
 }
 
-/* line 77, layout/_header.scss */
+/* line 58, layout/_header.scss */
 .header .menu .dropdown-submenu {
   position: relative;
 }
 
-/* line 81, layout/_header.scss */
+/* line 62, layout/_header.scss */
 .header .menu .dropdown-submenu > .dropdown-menu {
   top: 0;
   left: -100%;
 }
 
-/* line 86, layout/_header.scss */
+/* line 67, layout/_header.scss */
 .header .menu .dropdown-submenu:hover > .dropdown-menu {
   display: block;
 }
 
-/* line 90, layout/_header.scss */
+/* line 71, layout/_header.scss */
 .header .menu .board-list.dropdown-menu {
   width: 270px;
   min-width: 270px;
   left: -270px;
 }
 
-/* line 96, layout/_header.scss */
+/* line 77, layout/_header.scss */
 .header .menu .board-list.dropdown-menu > li > a {
   letter-spacing: 0;
   width: 270px;
@@ -214,7 +190,7 @@ body {
   line-height: 70px;
 }
 
-/* line 103, layout/_header.scss */
+/* line 84, layout/_header.scss */
 .header .menu .board-list .thumbnail {
   background-color: transparent;
   width: 60px;
@@ -225,14 +201,14 @@ body {
   padding: 0;
 }
 
-/* line 113, layout/_header.scss */
+/* line 94, layout/_header.scss */
 .header .menu .board-list .name {
   line-height: 70px;
   text-align: left;
   float: left;
 }
 
-/* line 119, layout/_header.scss */
+/* line 100, layout/_header.scss */
 .header .menu .dropdown-submenu > a:after {
   display: block;
   content: " ";
@@ -242,26 +218,19 @@ body {
   border-color: transparent;
   border-style: solid;
   border-width: 5px 5px 5px 0;
-  border-right-color: white;
   top: 15px;
   left: 8px;
   position: absolute;
 }
 
-/* line 134, layout/_header.scss */
-.header .menu .dropdown-submenu:hover > a:after {
-  border-right-color: #9B9B9B;
-}
-
-/* line 138, layout/_header.scss */
+/* line 114, layout/_header.scss */
 .header .tab ul {
   float: left;
 }
 
-/* line 142, layout/_header.scss */
+/* line 118, layout/_header.scss */
 .header .tab ul li {
   width: 120px;
-  color: #9B9B9B;
   line-height: 60px;
   text-align: center;
   letter-spacing: 5px;
@@ -269,29 +238,15 @@ body {
   float: left;
 }
 
-/* line 152, layout/_header.scss */
-.header .tab ul li.active {
-  color: white;
-  background-color: #5f5176;
-}
-
-/* line 157, layout/_header.scss */
-.header .tab ul li:hover {
-  color: white;
-  background-color: #5f5176;
-}
-
 /* line 1, layout/_hardware.scss */
 .hardware .left {
   width: 248px;
   height: 100%;
-  background-color: #2D2B30;
   overflow-y: auto;
 }
 
-/* line 8, layout/_hardware.scss */
+/* line 7, layout/_hardware.scss */
 .hardware .right {
-  background-color: #55545F;
   top: 0;
   bottom: 0;
   left: 248px;
@@ -299,7 +254,7 @@ body {
   position: absolute;
 }
 
-/* line 17, layout/_hardware.scss */
+/* line 15, layout/_hardware.scss */
 .hardware .tab-panel {
   width: 220px;
   left: 14px;
@@ -310,52 +265,48 @@ body {
   float: left;
 }
 
-/* line 27, layout/_hardware.scss */
+/* line 25, layout/_hardware.scss */
 .hardware .search {
   margin: 24px 0 14px 0;
   height: 36px;
   border-radius: 40px;
-  background-color: #47434C;
   float: left;
 }
 
-/* line 35, layout/_hardware.scss */
+/* line 32, layout/_hardware.scss */
 .hardware .search .key {
   height: 100%;
   margin: 0 18px;
   width: 184px;
-  color: white;
   background-color: transparent;
 }
 
-/* line 43, layout/_hardware.scss */
+/* line 39, layout/_hardware.scss */
 .hardware .seperator {
   width: 220px;
   height: 2px;
-  background-color: #535353;
   float: left;
 }
 
-/* line 50, layout/_hardware.scss */
+/* line 45, layout/_hardware.scss */
 .hardware .items {
   left: 0;
   right: 0;
   top: 90px;
   bottom: 24px;
-  background-color: #47434C;
   position: absolute;
   float: left;
   overflow-y: auto;
 }
 
-/* line 61, layout/_hardware.scss */
+/* line 55, layout/_hardware.scss */
 .hardware .items .list {
   margin-right: 14px;
   margin-top: 12px;
   float: left;
 }
 
-/* line 67, layout/_hardware.scss */
+/* line 61, layout/_hardware.scss */
 .hardware .items .list li {
   width: 85px;
   height: 110px;
@@ -365,108 +316,82 @@ body {
   text-align: center;
 }
 
-/* line 76, layout/_hardware.scss */
+/* line 70, layout/_hardware.scss */
 .hardware .items .item .image {
   width: 85px;
   height: 85px;
   background-color: white;
 }
 
-/* line 82, layout/_hardware.scss */
+/* line 76, layout/_hardware.scss */
 .hardware .items .list li.active .image {
   background-color: orange;
 }
 
-/* line 86, layout/_hardware.scss */
-.hardware .items .list li .name {
-  color: #dfdfdf;
-}
-
-/* line 90, layout/_hardware.scss */
-.hardware .items .list li.active .name {
-  color: white;
-}
-
-/* line 94, layout/_hardware.scss */
+/* line 80, layout/_hardware.scss */
 .hardware .north {
   margin-left: 30px;
   margin-right: 30px;
-  height: 75px;
+  height: 50px;
   top: 0;
   left: 0;
   right: 0;
   position: absolute;
 }
-/* line 103, layout/_hardware.scss */
+/* line 89, layout/_hardware.scss */
 .hardware .north .tools {
   margin-top: 10px;
 }
-/* line 106, layout/_hardware.scss */
+/* line 92, layout/_hardware.scss */
 .hardware .north .tools > li {
-  background-color: rgba(45, 43, 48, 0.6);
   margin-right: 10px;
-  color: #9b9b9b;
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
   float: left;
 }
-/* line 116, layout/_hardware.scss */
+/* line 100, layout/_hardware.scss */
 .hardware .north .tools > li:last-child {
   margin-right: 0;
 }
-/* line 120, layout/_hardware.scss */
-.hardware .north .tools > li.active {
-  color: #dfdfdf;
-  background-color: #2d2b30;
-}
-/* line 125, layout/_hardware.scss */
-.hardware .north .tools > li:hover {
-  color: #dfdfdf;
-  background-color: #2d2b30;
-}
-/* line 130, layout/_hardware.scss */
+/* line 104, layout/_hardware.scss */
 .hardware .north .tools .interactive-mode {
   width: 30px;
   height: 30px;
   font-size: 20px;
 }
 
-/* line 138, layout/_hardware.scss */
+/* line 112, layout/_hardware.scss */
 .hardware .center {
-  top: 75px;
-  bottom: 75px;
+  top: 50px;
+  bottom: 50px;
   left: 0;
   right: 0;
   margin-left: 30px;
   margin-right: 30px;
   position: absolute;
-  background-color: #2D2B30;
 }
 
-/* line 149, layout/_hardware.scss */
+/* line 122, layout/_hardware.scss */
 .hardware .south {
   margin-left: 30px;
   margin-right: 30px;
-  height: 75px;
+  height: 50px;
   bottom: 0;
   left: 0;
   right: 0;
   position: absolute;
 }
 
-/* line 159, layout/_hardware.scss */
+/* line 132, layout/_hardware.scss */
 .hardware .copyright {
-  /*float: right;*/
-  text-align: right;
+  margin: 15px auto 0 auto;
+  text-align: center;
   font-size: 12px;
-  color: #71707A;
-  position: absolute;
-  right: 0;
-  bottom: 20px;
+  position: relative;
 }
 
-/* line 169, layout/_hardware.scss */
+/* line 139, layout/_hardware.scss */
 .hardware .name-dialog {
   z-index: 998;
   top: 90px;
@@ -474,7 +399,7 @@ body {
   margin: 0 auto;
   position: relative;
 }
-/* line 175, layout/_hardware.scss */
+/* line 145, layout/_hardware.scss */
 .hardware .name-dialog .name-label {
   display: block;
   background-color: #F1C933;
@@ -487,7 +412,7 @@ body {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
-/* line 188, layout/_hardware.scss */
+/* line 158, layout/_hardware.scss */
 .hardware .name-dialog .name {
   border: 2px solid #F1C933;
   border-top-right-radius: 4px;
@@ -501,7 +426,6 @@ body {
 
 /* line 1, layout/_software.scss */
 .software .right {
-  background-color: #55545F;
   top: 0;
   bottom: 0;
   left: 0;
@@ -510,13 +434,12 @@ body {
   float: left;
 }
 
-/* line 11, layout/_software.scss */
+/* line 10, layout/_software.scss */
 .software .north {
   height: 40px;
-  background-color: #47434C;
 }
 
-/* line 16, layout/_software.scss */
+/* line 14, layout/_software.scss */
 .software .center {
   top: 40px;
   bottom: 0;
@@ -525,86 +448,60 @@ body {
   position: absolute;
 }
 
-/* line 24, layout/_software.scss */
+/* line 22, layout/_software.scss */
 .software .menu .btn {
   height: 40px;
   width: 120px;
-  background-color: #47434C;
   border-radius: 0;
   border: none;
-  color: #dfdfdf;
   letter-spacing: 5px;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
 
-/* line 36, layout/_software.scss */
-.software .menu .open .btn {
-  color: white;
-  background-color: #5f5176;
-}
-
-/* line 41, layout/_software.scss */
-.software .menu .btn:hover {
-  background-color: #5f5176;
-  color: white;
-}
-
-/* line 46, layout/_software.scss */
+/* line 32, layout/_software.scss */
 .software .menu .dropdown-menu {
   margin-top: 0;
   padding-top: 0;
   padding-bottom: 0;
-  background-color: #504C56;
   border: none;
   border-radius: 0;
   width: 120px;
   min-width: 120px;
 }
 
-/* line 57, layout/_software.scss */
-.software .menu .dropdown-menu > li:hover {
-  background-color: #5f5176;
-}
-
-/* line 61, layout/_software.scss */
+/* line 43, layout/_software.scss */
 .software .menu .dropdown-menu > li > a {
   height: 40px;
   line-height: 40px;
   padding: 0;
   text-align: center;
-  color: #dfdfdf;
   letter-spacing: 5px;
   background-color: transparent;
 }
 
-/* line 71, layout/_software.scss */
-.software .menu .dropdown-menu > li:hover > a {
-  color: white;
-}
-
-/* line 75, layout/_software.scss */
+/* line 52, layout/_software.scss */
 .software .menu .dropdown-submenu {
   position: relative;
 }
 
-/* line 79, layout/_software.scss */
+/* line 56, layout/_software.scss */
 .software .menu .dropdown-submenu > .dropdown-menu {
   top: 0;
   left: 100%;
 }
 
-/* line 84, layout/_software.scss */
+/* line 61, layout/_software.scss */
 .software .menu .dropdown-submenu:hover > .dropdown-menu {
   display: block;
 }
 
-/* line 88, layout/_software.scss */
+/* line 65, layout/_software.scss */
 .software .menu .include-library.dropdown-menu > li > a {
   letter-spacing: 0;
 }
 
-/* line 92, layout/_software.scss */
+/* line 69, layout/_software.scss */
 .software .menu .dropdown-submenu > a:after {
   display: block;
   content: " ";
@@ -620,23 +517,23 @@ body {
   position: absolute;
 }
 
-/* line 107, layout/_software.scss */
+/* line 84, layout/_software.scss */
 .software .menu .dropdown-submenu:hover > a:after {
   border-left-color: #9B9B9B;
 }
 
-/* line 111, layout/_software.scss */
+/* line 88, layout/_software.scss */
 .software .sub-tab {
   margin-right: 30px;
   float: right;
 }
 
-/* line 116, layout/_software.scss */
+/* line 93, layout/_software.scss */
 .software .sub-tab ul {
   float: left;
 }
 
-/* line 120, layout/_software.scss */
+/* line 97, layout/_software.scss */
 .software .sub-tab ul li {
   width: 120px;
   line-height: 40px;
@@ -645,34 +542,24 @@ body {
   float: left;
 }
 
-/* line 128, layout/_software.scss */
-.software .sub-tab ul li.active {
-  background-color: #5f5176;
-}
-
-/* line 132, layout/_software.scss */
-.software .sub-tab ul li:hover {
-  background-color: #5f5176;
-}
-
-/* line 136, layout/_software.scss */
+/* line 105, layout/_software.scss */
 .software .sub-mod {
   height: 100%;
   display: none;
 }
 
-/* line 141, layout/_software.scss */
+/* line 110, layout/_software.scss */
 .software .sub-mod.active {
   display: block;
 }
 
-/* line 145, layout/_software.scss */
+/* line 114, layout/_software.scss */
 .software .editor {
   font-size: 16px;
   height: 100%;
 }
 
-/* line 150, layout/_software.scss */
+/* line 119, layout/_software.scss */
 .software .doEdit {
   cursor: pointer;
   z-index: 998;
@@ -680,20 +567,20 @@ body {
   top: 12px;
   position: absolute;
 }
-/* line 157, layout/_software.scss */
+/* line 126, layout/_software.scss */
 .software .doEdit ul {
   float: left;
 }
-/* line 159, layout/_software.scss */
+/* line 128, layout/_software.scss */
 .software .doEdit ul > li {
   float: left;
   display: none;
 }
-/* line 163, layout/_software.scss */
+/* line 132, layout/_software.scss */
 .software .doEdit ul > li.active {
   display: block;
 }
-/* line 167, layout/_software.scss */
+/* line 136, layout/_software.scss */
 .software .doEdit ul > li > i {
   margin-right: 5px;
 }

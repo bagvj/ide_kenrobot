@@ -53,7 +53,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 			
 			//显示网格
 			"grid.visible": true,
-			"grid.gridCellSize": new go.Size(20, 20),
+			"grid.gridCellSize": new go.Size(40, 40),
 			"draggingTool.isGridSnapEnabled": true,
 			"resizingTool.isGridSnapEnabled": true,
 
@@ -67,14 +67,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 			"click": onBackgroundSingleClick,
 			"PartCreated": onPartCreated,
 		});
-
-		diagram.grid = GO(go.Panel, "Grid",
-			GO(go.Shape, "LineH", { stroke: "lightblue" }),
-			GO(go.Shape, "LineV", { stroke: "lightgreen" }),
-			GO(go.Shape, "LineH", { stroke: "blue", interval: 5 }),
-			GO(go.Shape, "LineV", { stroke: "green", interval: 5 })
-		);
-
+		
 		//节点模版
 		for (var name in template.node) {
 			var nodeTemplate = template.node[name];

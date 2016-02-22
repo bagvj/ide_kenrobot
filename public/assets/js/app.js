@@ -67,7 +67,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		editor.setHighlightSelectedWord(false);
 		editor.setShowPrintMargin(false);
 		editor.$blockScrolling = Infinity;
-		editor.setTheme("ace/theme/kenrobot");
+		editor.setTheme("ace/theme/dark");
 		editor.session.setMode("ace/mode/arduino");
 		// editor.commands.addCommand({
 		// 	name: "save",
@@ -208,8 +208,8 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			case 'selectBoard':
 				onSelectBoardClick(node, e);
 				break;
-			case 'setting':
-				onSettingClick(node, e);
+			case 'changeTheme':
+				onChangeThemeClick(node, e);
 				break;
 		}
 	}
@@ -295,8 +295,13 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		board = boards[name];
 	}
 
-	function onSettingClick(node, e) {
-
+	function onChangeThemeClick(node, e) {
+		if (toggleActive(node)) {
+			var newTheme = node.data('theme');
+			var oldTheme = $('body').data('theme');
+			$('body').removeClass('theme-' + oldTheme).addClass('theme-' + newTheme).data('theme', newTheme);
+			editor.setTheme("ace/theme/" + newTheme);
+		}
 	}
 
 	function onHeaderTabClick(e) {
