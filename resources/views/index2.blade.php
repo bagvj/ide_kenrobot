@@ -32,7 +32,7 @@
 				<div class="setting">
 					<div class="btn-group menu" role="group">
 						<div class="btn-group" role="group">
-							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-reorder"></i>&nbsp;设置</button>
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-navicon"></i>&nbsp;设置</button>
 							<ul class="dropdown-menu">
 								<li class="dropdown-submenu">
 									<a href="#">主板</a>
@@ -133,7 +133,12 @@
 							</div>
 							<div class="sub-mod">
 								<div class="editor"></div>
-								<div class="doEdit"><i class="fa fa-pencil"></i>编辑</div>
+								<div class="doEdit">
+									<ul>
+										<li class="active" data-action="enterEdit"><i class="fa fa-pencil"></i>编辑</li>
+										<li data-action="exitEdit"><i class="fa fa-close"></i>退出</li>
+									</ul>
+								</div>
 							</div>
 						</div>
 					</div>

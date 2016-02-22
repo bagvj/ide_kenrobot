@@ -154,7 +154,19 @@
   top: 12px;
   position: absolute;
 
-  &>i {
-    margin-right: 5px;
+  ul {
+    float: left;
+    & > li {
+      float: left;
+      display: none;
+
+      &.active {
+        display: block;
+      }
+
+      &>i {
+        margin-right: 5px;
+      }
+    }
   }
 }

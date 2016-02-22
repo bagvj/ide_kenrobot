@@ -133,6 +133,12 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 		return specNodes[name];
 	}
 
+	function getPortData(port) {
+		var part = port.part;
+		var ports = part.data.ports;
+		return ports[port.portId];
+	}
+
 	//暗示可以连接的port
 	function hintTargetPort(sourcePort) {
 		var board = findSpecNode("board");
@@ -150,9 +156,12 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 		if(selectedPort) {
 			selectedPort.fill = "#F19833";
 			iter.reset();
+			var nodePortData = getPortData(selectedPort);
+			var boardPortData;
 			while(iter.next()) {
 				port = iter.value;
-				if(!portHasLink(port)) {
+				boardPortData = getPortData(port);
+				if(!portHasLink(port) && nodePortData.type == boardPortData.type) {
 					port.opacity = 0.6;
 				}
 			}
@@ -390,7 +399,6 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 				setupCode: nodeData.setupCode,
 				varName: nodeData.varName,
 				ports: ports,
-
 			});
 		}
 

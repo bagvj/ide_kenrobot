@@ -21,7 +21,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		$('.software .menu li').on('click', onMenuClick);
 		$('.software .sub-tab li').on('click', onSoftwareSubTabClick).eq(1).click();
 
-		$('.software .doEdit').on('click', onDoEditClick);
+		$('.software .doEdit li').on('click', onDoEditClick);
 
 		initEvent();
 	}
@@ -35,14 +35,12 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 
 	function onRequestConfigSuccess(result) {
 		platformConfig = result;
-
 		editor.setValue(platformConfig.defaultCode, 1);
 
 		hardware.init('hardware-container', {
 			boards: platformConfig.boards,
 			components: platformConfig.components,
 		});
-		// $('.hardware .tools > li').eq(1).click();
 
 		$('.header .board-list > li').eq(0).click();
 
@@ -71,13 +69,13 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		editor.$blockScrolling = Infinity;
 		editor.setTheme("ace/theme/kenrobot");
 		editor.session.setMode("ace/mode/arduino");
-		editor.commands.addCommand({
-			name: "save",
-			bindKey: {win: "Ctrl-s", mac: "Command-s"},
-			exec: function() {
-				onSaveClick();
-			}
-		});
+		// editor.commands.addCommand({
+		// 	name: "save",
+		// 	bindKey: {win: "Ctrl-s", mac: "Command-s"},
+		// 	exec: function() {
+		// 		onSaveClick();
+		// 	}
+		// });
 	}
 
 	function initLogin() {
@@ -285,7 +283,6 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 
 		code.addLibrary(library.code);
 		var source = code.gen();
-		console.log(source);
 		editor.setValue(source, 1);
 	}
 
@@ -323,6 +320,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		$(this).parent().find("li.active").removeClass("active");
 		$(this).addClass("active");
 		hardware.setPlaceComponent($(this).data("component-name"));
+		EventManager.trigger("hardware", "changeInteractiveMode", "place");
 	}
 
 	function onToolsClick(e) {
@@ -358,11 +356,21 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 	}
 
 	function onDoEditClick(e) {
-		$(this).hide();
-		editor.setReadOnly(false);
-		editor.setHighlightActiveLine(true);
-		editor.setHighlightSelectedWord(true);
-		isSourceEditMode = true;
+		var li = $(this);
+		var action = li.data('action');
+		if(action == "enterEdit") {
+			editor.setReadOnly(false);
+			editor.setHighlightActiveLine(true);
+			editor.setHighlightSelectedWord(true);
+			isSourceEditMode = true;
+			li.removeClass('active').parent().find('li[data-action="exitEdit"]').addClass('active');
+		} else {
+			editor.setReadOnly(true);
+			editor.setHighlightActiveLine(false);
+			editor.setHighlightSelectedWord(false);
+			isSourceEditMode = false;
+			li.removeClass('active').parent().find('li[data-action="enterEdit"]').addClass('active');
+		}
 	}
 
 	function onShowNameDialog(args) {

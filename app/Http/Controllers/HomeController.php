@@ -252,8 +252,8 @@ class HomeController extends Controller {
 		$config = array(
 			'defaultCode' => $defaultCode,
 			'libraries' => $this->getLibrariyConfig(true),
-			'boards' => $this->getBoardConfig(true),
-			'components' => $this->getComponentConfig(true),
+			'boards' => $this->getBoardConfig(true, true),
+			'components' => $this->getComponentConfig(true, true),
 		);
 		
 		return collect($config)->toJson();
@@ -388,7 +388,7 @@ class HomeController extends Controller {
 		return $result;
 	}
 
-	private function getBoardConfig($isDict = false) {
+	private function getBoardConfig($isDict = false, $withPorts = false) {
 		$boards = DB::table('boards')->get();
 		foreach($boards as $key => $value) {
 			$value->in_use = $value->in_use == 1;
@@ -396,6 +396,18 @@ class HomeController extends Controller {
 			$value->deletable = false;
 			$value->selectable = false;
 			$value->source = "assets/images/board/" . $value->name . ".svg";
+		}
+
+		if($withPorts) {
+			$allPorts = DB::table('ports')->where('owner_type', 1)->get();
+			foreach ($boards as $key => $board) {
+				$board->ports = array();
+				foreach ($allPorts as $k => $port) {
+					if($port->owner_id == $board->id) {
+						$board->ports[$port->name] = $port;
+					}
+				}
+			}
 		}
 
 		if($isDict) {
@@ -410,7 +422,7 @@ class HomeController extends Controller {
 		return $result;
 	}
 
-	private function getComponentConfig($isDict = false) {
+	private function getComponentConfig($isDict = false, $withPorts = false) {
 		$components = DB::table('components')->get();
 		foreach($components as $key => $value) {
 			$value->in_use = $value->in_use == 1;
@@ -418,6 +430,18 @@ class HomeController extends Controller {
 			$value->deletable = true;
 			$value->selectable = true;
 			$value->source = "assets/images/component/" . $value->name . ".svg";
+		}
+
+		if($withPorts) {
+			$allPorts = DB::table('ports')->where('owner_type', 0)->get();
+			foreach ($components as $key => $component) {
+				$component->ports = array();
+				foreach ($allPorts as $k => $port) {
+					if($port->owner_id == $component->id) {
+						$component->ports[$port->name] = $port;
+					}
+				}
+			}
 		}
 
 		if($isDict) {

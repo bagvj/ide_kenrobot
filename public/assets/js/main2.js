@@ -14,7 +14,6 @@ require.config({
 		"app": "app2",
 		"util": "util2",
 		"EventManager": "EventManager",
-		"hardwareConfigs": "hardwareConfigs",
 		"nodeTemplate": "nodeTemplate2",
 		"hardware": "hardware2",
 		"code": "code2",

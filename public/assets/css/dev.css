@@ -676,7 +676,20 @@ body {
   position: absolute;
 }
 /* line 157, layout/_software.scss */
-.software .doEdit > i {
+.software .doEdit ul {
+  float: left;
+}
+/* line 159, layout/_software.scss */
+.software .doEdit ul > li {
+  float: left;
+  display: none;
+}
+/* line 163, layout/_software.scss */
+.software .doEdit ul > li.active {
+  display: block;
+}
+/* line 167, layout/_software.scss */
+.software .doEdit ul > li > i {
   margin-right: 5px;
 }
 

@@ -109,8 +109,8 @@ define(["EventManager", "hardware"], function(EventManager, hardware) {
 
 			if(nodeData.headCode != "") {
 				var codes = nodeData.headCode.split('\n');
-				for(var i = 0; i < codes.length; i++) {
-					var line = codes[i];
+				for(var j = 0; j < codes.length; j++) {
+					var line = codes[j];
 					if(line != "" && headCodes.indexOf(line) < 0) {
 						headCodes.push(line);
 					}
