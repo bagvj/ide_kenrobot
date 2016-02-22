@@ -10,10 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
  */
-
-Route::get('/home', 'HomeController@index');
-Route::get('/', 'Auth\WeixinAuthController@homeIndex');
-
+Route::get('/', 'HomeController@index');
 
 Route::post('/build', 'HomeController@build');
 Route::get('/download', 'HomeController@download');
@@ -27,7 +24,6 @@ Route::post('/auth/login', 'Auth\AuthController@postLogin');
 Route::get('/auth/logout', 'Auth\AuthController@getLogout');
 
 Route::get('/auth/check', 'Auth\AuthServerController@index');
-
 
 // 注册
 Route::get('/auth/register', 'Auth\AuthController@getRegister');
