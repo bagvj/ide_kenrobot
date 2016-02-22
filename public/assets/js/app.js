@@ -249,7 +249,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 
 		$.ajax({
 			type: "POST",
-			url: "/build2",
+			url: "/build",
 			data: {
 				source: JSON.stringify(getSource()),
 				user_id: userId,
