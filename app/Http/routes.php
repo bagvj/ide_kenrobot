@@ -12,16 +12,11 @@
  */
 
 Route::get('/home', 'HomeController@index');
-Route::get('/dev', 'HomeController@index2');
 Route::get('/', 'Auth\WeixinAuthController@homeIndex');
 
 
 Route::post('/build', 'HomeController@build');
-Route::post('/build2', 'HomeController@build2');
 Route::get('/download', 'HomeController@download');
-Route::get('/download2', 'HomeController@download2');
-Route::post('/feedback', 'HomeController@feedback');
-Route::get('/items', 'HomeController@items');
 Route::get('/config', 'HomeController@config');
 Route::post('/project/save', 'HomeController@saveProject');
 Route::get('/project/{id}', 'HomeController@getProject')->where('id', '[0-9]+');

@@ -1,96 +1,86 @@
-define(["jquery", "hljs", "EventManager"], function($, hljs, EventManager) {
-	var container;
+define(["EventManager", "hardware"], function(EventManager, hardware) {
+	var libraries = [];
 
-	var configs;
+	var headCodes;
+	var varCodes;
+	var setupCodes;
 
-	var findSpecNode;
-	var findTargetNode;
-	var findIfMergeNode;
-	var getVars;
+	function addLibrary(library) {
+		var codes = library.split("\n");
+		for(var i = 0; i < codes.length; i++) {
+			var line = codes[i];
+			if(line != "" && libraries.indexOf(line) < 0) {
+				libraries.push(line);
+			}
+		}
+	}
 
-	var vars;
-	var setupInitCodes;
-	var loopInitCodes;
-	var setupCode;
-	var loopCode;
-
-	var dcMotorUse;
-	// var streeringEngineUse;
-
-	function init(containerId, _configs, funcs) {
-		container = $("#" + containerId);
-		configs = _configs;
-		findSpecNode = funcs.findSpecNode;
-		findTargetNode = funcs.findTargetNode;
-		findIfMergeNode = funcs.findIfMergeNode;
-		getVars = funcs.getVars;
-
-		EventManager.bind("code", "refresh", onRefresh)
+	function reset() {
+		headCodes = [];
+		varCodes = [];
+		setupCodes = [];
+		libraries = [];
 	}
 
 	function gen() {
-		vars = getVars();
-
-		setupInitCodes = [];
-		loopInitCodes = [];
-		setupCode = "";
-		loopCode = "";
-		dcMotorUse = false;
+		headCodes = [];
+		varCodes = [];
+		setupCodes = [];
 
 		visit();
 
-		var str = genHead();
-		str += '\n';
+		var codeStr = "";
+		var headStr = genHead();
+		if(headStr != "") {
+			codeStr += headStr + '\n';
+		}
 		var varStr = genVar();
 		if (varStr != "") {
-			str += varStr + '\n';
+			codeStr += varStr + '\n';
 		}
-		str += genSetup();
-		str += '\n';
-		str += genLoop();
+		codeStr += genSetup();
+		codeStr += '\n';
+		codeStr += genLoop();
 
-		return str;
-	}
-
-	function onRefresh() {
-		var source = gen();
-		container.html(source);
-		$('pre code').each(function(i, block) {
-			hljs.highlightBlock(block);
-		});
+		return codeStr;
 	}
 
 	//生成头部
 	function genHead() {
+		for(var i = 0; i < libraries.length; i++) {
+			var line = libraries[i];
+			if(line != "" && headCodes.indexOf(line) < 0) {
+				headCodes.push(line);
+			}
+		}
+
+		headCodes = headCodes.sort(function(a, b) {
+			return a.localeCompare(b);
+		});
 		var str = "";
-		// if(dcMotorUse) {
-		// 	str += '#define __Motor_USE\n#define __DC_USE\n';
-		// }
-		str += '#include "Rosys.h"\n';
+		for(var i = 0; i < headCodes.length; i++) {
+			str += headCodes[i] + "\n";
+		}
 		return str;
 	}
 
 	//生成变量
 	function genVar() {
 		var str = "";
-		for (var i = 0; i < vars.length; i++) {
-			var varInfo = vars[i];
-			str += (varInfo.storage_type == "auto" ? "" : varInfo.storage_type + ' ') + varInfo.type + ' ' + varInfo.name + ' = ' + varInfo.default_value + ';\n';
+		for(var i = 0; i < varCodes.length; i++) {
+			str += varCodes[i];
 		}
 		return str;
 	}
 
 	//生成初始化函数
 	function genSetup() {
-		var initCodes = ["initTimer3();", "sei();"];
-		initCodes = initCodes.concat(setupInitCodes)
-		initCodes = initCodes.concat(loopInitCodes);
-
-		var str = "void setup(){\n";
-		for (var i = 0; i < initCodes.length; i++) {
-			str += genIndent(1) + initCodes[i] + "\n";
+		var str = "void setup() {\n";
+		var setupStr = "";
+		for (var i = 0; i < setupCodes.length; i++) {
+			setupStr += setupCodes[i];
 		};
-		str += setupCode;
+		str += setupStr == "" ? "    \n" : setupStr;
 		str += "}\n";
 
 		return str;
@@ -98,9 +88,8 @@ define(["jquery", "hljs", "EventManager"], function($, hljs, EventManager) {
 
 	//生成Main函数
 	function genLoop() {
-		var str = "void loop(){\n";
-		str += loopCode == "" ? '\n' : loopCode;
-		str += "}\n";
+		var str = "void loop() {\n    \n";
+		str += "}";
 
 		return str;
 	}
@@ -114,99 +103,49 @@ define(["jquery", "hljs", "EventManager"], function($, hljs, EventManager) {
 	}
 
 	function visit() {
-		var startNode = findSpecNode("start");
-		var loopStartNode = findSpecNode("loopStart");
-		var endNode = findSpecNode("end");
+		var nodes = hardware.getNodes();
+		for(var i = 0; i < nodes.length; i++) {
+			var nodeData = nodes[i];
 
-		setupCode = visitNode(startNode, loopStartNode, 1, setupInitCodes);
-		loopCode = visitNode(loopStartNode, endNode, 1, loopInitCodes);
-	}
-
-	function visitNode(node, endNode, index, initCodes) {
-		var str = "";
-		while(node != endNode) {
-			var nodeData = node.data;
-			var nodeName = nodeData.name;
-			if(!dcMotorUse && nodeName == "dcMotor") {
-				dcMotorUse = true;
-			}
-			var nodeTag = nodeData.tag;
-			if(nodeTag == 1) {
-				node = findTargetNode(node, "B");
-			} else if(nodeTag == 2) {
-				var subTag = nodeData.subTag;
-				if(subTag == 1) {
-					var mergeNode = findIfMergeNode(node);
-					var yesNode = findTargetNode(node, "L");
-					var noNode = findTargetNode(node, "R");
-					var yesCode = visitNode(yesNode, mergeNode, index + 1, initCodes);
-					var noCode = visitNode(noNode, mergeNode, index + 1, initCodes);
-					
-					str += genIndent(index) + getFormatExp(nodeData, false) + "{\n";
-					str += yesCode == "" ? "\n" : yesCode;
-					str += genIndent(index) + "} else {\n";
-					str += noCode == "" ? "\n" : noCode;
-					str += genIndent(index) + "}\n";
-
-					node = mergeNode;
-				} else if(subTag == 2) {
-					str += genIndent(index) + getFormatExp(nodeData, false) + "{\n";
-					var bodyNode = findTargetNode(node, "B");
-					var innerCode = visitNode(bodyNode, node, index + 1, initCodes);
-					str += innerCode == "" ? "\n" : innerCode;
-					str += genIndent(index) + "}\n";
-					node = findTargetNode(node, "R");
-				} else {
-					console.log("unknow node subTag: " + subTag);
-					break;
+			if(nodeData.headCode != "") {
+				var codes = nodeData.headCode.split('\n');
+				for(var j = 0; j < codes.length; j++) {
+					var line = codes[j];
+					if(line != "" && headCodes.indexOf(line) < 0) {
+						headCodes.push(line);
+					}
 				}
-			} else if (nodeTag == 3 || nodeTag == 4) {
-				//硬件节点或者函数节点
-				var initCode = getFormatExp(nodeData, true);
-				if (initCode && initCode != "") {
-					initCodes.push(initCode);
+			}
+
+			var ports = nodeData.ports;
+			var port;
+
+			var varCode = nodeData.varCode;
+			if(varCode != "") {
+				varCode = varCode.replace(/\$NAME/g, nodeData.varName);
+				for(var j = 0; j < ports.length; j++) {
+					port = ports[j];
+					varCode = varCode.replace("$" + port.source, port.target);
 				}
-				str += genIndent(index) + getFormatExp(nodeData, false) + "\n";
-				node = findTargetNode(node, "B");
-			} else {
-				console.log("unknow node type: " + nodeTag);
-				break;
+				varCodes.push(varCode);
+			}
+			
+			var setupCode = nodeData.setupCode;
+			if(setupCode != "") {
+				setupCode = setupCode.replace(/\$NAME/g, nodeData.varName);
+				for(var j = 0; j < ports.length; j++) {
+					port = ports[j];
+					setupCode = setupCode.replace("$" + port.source, port.target);
+				}
+				setupCode = setupCode.replace(/([^\n]*\n)/g , "    $1");
+				setupCodes.push(setupCode);
 			}
 		}
-		return str;
-	}
-
-	function getFormatExp(nodeData, isInit) {
-		var format = "";
-		var params;
-
-		if (isInit) {
-			format = nodeData.init_format;
-			params = nodeData.init_params;
-		} else {
-			format = nodeData.format;
-			params = nodeData.params;
-		}
-
-		if (params) {
-			for (var i = 0; i < params.length; i++) {
-				var param = params[i];
-				var value = param.default_value;
-				var regExp = new RegExp(param.name, "g");
-				format = format.replace(regExp, value);
-			}
-		}
-
-		return format === undefined ? "" : format;
-	}
-
-	function getConfig(name) {
-		return configs[name];
 	}
 
 	return {
-		init: init,
+		addLibrary: addLibrary,
 		gen: gen,
-		getFormatExp: getFormatExp,
+		reset: reset,
 	}
 });

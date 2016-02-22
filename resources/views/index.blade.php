@@ -1,196 +1,194 @@
-@extends('layouts.master')
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>啃萝卜智能硬件平台</title>
+		<meta name="description" content="啃萝卜智能硬件平台" />
+		<meta name="keywords" content="啃萝卜智能硬件平台" />
+		<meta name="csrf-token" content="{{csrf_token()}}" />
 
-@section('css')
-<link rel="stylesheet" type="text/css" href="{{asset('/assets/css/jquery-ui.min.css')}}" />
-<link rel="stylesheet" type="text/css" href="{{asset('assets/highlight/styles/solarized_light.css')}}" />
-<link rel="stylesheet" type="text/css" href="{{asset('/assets/css/bootstrap-tour-standalone.min.css')}} " />
-<link rel="stylesheet" type="text/css" href="{{asset('/assets/css/index.css')}} " />
-@stop
+		<link href="/assets/images/favicon.ico" type="image/x-icon" rel="shortcut icon" />
+		<link href="/assets/css/bootstrap.css" rel="stylesheet" />
+		<link href="/assets/css/font-awesome.css" rel="stylesheet" />
+		<link href="/assets/css/index.css" rel="stylesheet" />
 
-@section('scripts')
-<script type="text/javascript">
-	var pageHeight = document.documentElement.clientHeight;
-	var pageWidth = document.documentElement.clientWidth;
-	var loadingTop = pageHeight > 61 ? (pageHeight - 61) / 2 : 0;
-	var loadingLeft = pageWidth > 215 ? (pageWidth - 215) / 2 : 0;
-	var loadingId = "loadingDiv";
-	var loadingHtml = '<div id="' + loadingId + '" style="position:absolute;left:0;width:100%;height:' + pageHeight + 'px;top:0;background:#f3f8ff;opacity:0.8;filter:alpha(opacity=80);z-index:10000;"><div style="position: absolute; cursor1: wait; left: ' + loadingLeft + 'px; top:' + loadingTop + 'px; width: auto; height: 57px; line-height: 57px; padding-left: 50px; padding-right: 5px; background: #fff url(/assets/images/loading.gif) no-repeat scroll 5px 10px; border: 2px solid #95B8E7; color: #696969; font-family:\'Microsoft YaHei\';">客官，打尖还是住店？</div></div>';
-	document.write(loadingHtml);
-	document.onreadystatechange = onDomComplete;
-
-	var isTimeout = false;
-	setTimeout(function() {
-		isTimeout = true;
-		if(document.readyState == "complete") {
-			removeLoading();
-		}
-	}, 1000);
-
-	function onDomComplete() {
-		if(document.readyState == "complete") {
-			removeLoading();
-		}
-	}
-	
-	function removeLoading() {
-		if (!isTimeout) {
-			return;
-		}
-		var loadingDiv = document.getElementById(loadingId);
-		if (loadingDiv) {
-			loadingDiv.parentNode.removeChild(loadingDiv);
-		}
-	}
-</script>
-<script data-main="/assets/js/main" src="{{asset('/assets/js/lib/require.min.js')}}" type="text/javascript"></script>
-@stop
-
-@section('main')
-<div class="header no-select">
-	<div class="content">
-		<span><a href="{{$nav['self'] or '#'}}" class="logo"></a></span>
-		<div class="login">
-			<ul>
-				@if(isset($user))
-				<li><a href="/auth/logout" class="logoutBtn">退出</a></li>
-				@else
-				<li><a href="{{ $nav['register'] or '#'}}">注册</a></li>
-				<li><a href="javascript:;" class="loginBtn">登录</a></li>
-				@endif
-			</ul>
-		</div>
-
-		@if(isset($user))
-		<div class="person-wrap">
-			<div class="person">
-				<a href="{{$nav['mainpage'] or '#'}}" class="photo">
-				<img src="{{$user->avatar_url or asset('assets/images/photo.png')}}" />
-				</a>
-				<span class="welcome">Hi,{{$user->name}}</span>
+		<script src="/assets/js/lib/require.min.js" data-main="/assets/js/main"></script>
+	</head>
+	<body class="unselectable">
+		<div class="main">
+			<div class="header">
+				<div class="left">
+					<a href="http://www.kenrobot.com/" class="logo">&nbsp;</a>
+				</div>
+				<div class="tab">
+					<ul>
+						<li><i class="fa fa-th-large"></i>&nbsp;硬件</li>
+						<li><i class="fa fa-terminal"></i>&nbsp;软件</li>
+						<li><i class="fa fa-info"></i>&nbsp;信息</li>
+					</ul>
+				</div>
+				<div class="setting">
+					<div class="btn-group menu" role="group">
+						<div class="btn-group" role="group">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-navicon"></i>&nbsp;设置</button>
+							<ul class="dropdown-menu">
+								<li class="dropdown-submenu">
+									<a href="#">主板</a>
+									<ul class="board-list dropdown-menu">
+									@foreach($boards as $board)
+										<li data-action="selectBoard" data-board-name="{{$board->name}}"><a href="#"><img class="thumbnail" src="/assets/images/board/arduino-uno-r3-small.png" /><span class="name">{{$board->label}}</span></a></li>
+									@endforeach
+									</ul>
+								</li>
+								<li data-action="save"><a href="#">保存</a></li>
+								<li data-action="share"><a href="#">分享</a></li>
+								<li data-action="setting"><a href="#">界面设置</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="content">
+				<div class="mod hardware">
+					<div class="left">
+						<div class="tab-panel">
+							<div class="search">
+								<input class="key" type="text" placeholder="搜索" spellcheck="false"/>
+							</div>
+							<div class="seperator"></div>
+							<div class="items x-scrollbar">
+								<ul class="list">
+								@foreach($components as $component)
+									<li class="item" data-component-name="{{$component->name}}"><img class="image" src="{{$component->source}}" /><span class="name">{{$component->label}}</span></li>
+								@endforeach
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="right">
+						<div class="north">
+							<ul class="tools">
+								<li class="interactive-mode" data-action="changeMode" data-mode="default">
+									<i class="fa fa-mouse-pointer"></i>
+								</li>
+								<li class="interactive-mode active" data-action="changeMode" data-mode="place">
+									<i class="fa fa-hand-pointer-o"></i>
+								</li>
+								<li class="interactive-mode" data-action="changeMode" data-mode="delete">
+									<i class="fa fa-close"></i>
+								</li>
+							</ul>
+						</div>
+						<div class="center" id="hardware-container">
+						</div>
+						<div class="south">
+							<div class="copyright">
+								备案号：京ICP备15039570号<br />Copyright © 2014 KenRobot.com All Rights Reserved
+							</div>
+						</div>
+						<div class="name-dialog" style="display:none;">
+							<span class="name-label">名字</span>
+							<input class="name" type="text" />
+						</div>
+					</div>
+				</div>
+				<div class="mod software">
+					<div class="right">
+						<div class="north">
+							<div class="btn-group menu" role="group">
+								<div class="btn-group" role="group">
+									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">文件</button>
+									<ul class="dropdown-menu">
+										<li data-action="save"><a href="#">保存</a></li>
+										<li data-action="download"><a href="#">下载</a></li>
+										<li data-action="share"><a href="#">分享</a></li>
+									</ul>
+								</div>
+								<div class="btn-group" role="group">
+									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">项目</button>
+									<ul class="dropdown-menu">
+										<li class="dropdown-submenu">
+											<a href="#">加载库</a>
+											<ul class="include-library dropdown-menu">
+											@foreach($libraries as $library)
+												<li data-action="includeLibrary" data-library="{{$library->name}}"><a href="#">{{$library->name}}</a></li>
+											@endforeach
+											</ul>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="sub-tab">
+								<ul>
+									<li>模块编程</li>
+									<li>文本编程</li>
+								</ul>
+							</div>
+						</div>
+						<div class="center">
+							<div class="sub-mod">
+								
+							</div>
+							<div class="sub-mod">
+								<div class="editor"></div>
+								<div class="doEdit">
+									<ul>
+										<li class="active" data-action="enterEdit"><i class="fa fa-pencil"></i>编辑</li>
+										<li data-action="exitEdit"><i class="fa fa-close"></i>退出</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mod info">
+				</div>
 			</div>
 		</div>
-		@endif
-	</div>
-</div>
-
-<div class="main">
-	<div class="mod no-select">
-		<div class="nav-second">
-			<ul></ul>
-		</div>
-		<div class="canvas" id="hardware-container" style="z-index:-1:"></div>
-	</div>
-	<div class="mod no-select">
-		<div class="nav-second">
-			<ul>
-				<li class="ypzmk">
-					<div class="tag">已配置模块<div class="arrow"></div></div>
-					<div class="hardware-list">
-						<ul></ul>
+		<div>
+			<div id="login_dialog" style="display:none">
+				<div>
+					<a href="javascript:;" title="返回" class="qrLoginBtn active" data-action="qrLogin"></a>
+					<div class="qrLogin active">
+						<div class="tips">请使用微信扫一扫</div>
+						<div class="tips">扫码关注后即可直接登录</div>
+						<img class="qrcode" alt="微信扫码" src="{{ $qrcodeurl or '' }}" />
 					</div>
-				</li>
-				<li class="lckzmk1">
-					<div class="tag">流程控制模块<div class="arrow"></div></div>
-					<div>
-						<ul>
-							<li>
-								<img src="/assets/images/software/ifElse-small.png" data-name="ifElse" class="software-item"></img>条件分支
-							</li>
-							<li>
-								<img src="/assets/images/software/conditionLoop-small.png" data-name="conditionLoop" class="software-item"></img>条件循环
-							</li>
-							<li>
-								<img src="/assets/images/software/foreverLoop-small.png" data-name="foreverLoop" class="software-item"></img>永远循环
-							</li>
-							<li>
-								<img src="/assets/images/software/countLoop-small.png" data-name="countLoop" class="software-item"></img>计数循环
-							</li>
-						</ul>
+					<a href="javascript:;" title="返回" class="baseLoginBtn" data-action="baseLogin" style="display:none;"></a>
+					<div class="baseLogin">
+						<div class="tips">登录到啃萝卜</div>
+						<form>
+							{!! csrf_field() !!}
+							<div class="message">
+								<span></span>
+							</div>
+							<div class="field">
+								<label class="email">
+								<!-- <i class="iconauth"></i> -->
+								</label>
+								<input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="邮箱地址/手机号码" />
+							</div>
+							<div class="field">
+								<label class="password">
+								<!-- <i class="iconauth"></i> -->
+								</label>
+								<input type="password" name="password" id="password" />
+							</div>
+							<div class="remember"></div>
+							<div>
+								<input id="qrcode_key" type="hidden" value="{{$key or ''}}">
+								<input class="submitBtn" type="button" value="登录"/>
+							</div>
+						</form>
 					</div>
-				</li>
-				<li class="lckzmk2">
-					<div class="tag">函数控制模块<div class="arrow"></div></div>
-					<div>
-						<ul>
-							<li>
-								<img src="/assets/images/software/delay-small.png" data-name="delay" class="software-item software-delay"></img>延时函数
-							</li>
-							<li>
-								<img src="/assets/images/software/assignment-small.png" data-name="assignment" class="software-item software-assignment"></img>赋值函数
-							</li>
-						</ul>
-					</div>
-				</li>
-			</ul>
+					<div class="closeBtn"></div>
+				</div>
+			</div>
+			<div id="use_weixin" style="display:none;">
+				<img src="{{asset('/assets/images/use_weixin.png')}}" />
+			</div>
 		</div>
-		<div class="canvas" id="software-container"  style="z-index:-1:"></div>
-	</div>
-	<div class="side">
-		<div class="trolley-side no-select">
-		<div class="bar">已配置模块<div class="car"></div></div>
-		<div class="hardware-list">
-		<ul></ul>
-		</div>
-		<div class="buy" onclick="window.open('http://www.kenrobot.com/index.php?app=shop');">元件选购</div>
-		</div>
-		<div class="var-side no-select">
-		<div class="bar">变量</div>
-		<div class="content">
-		<table id="var-table">
-		<thead>
-		<tr>
-		<th>名称</th>
-		<th>种类</th>
-		<th>类型</th>
-		<th>初值</th>
-		<th>描述</th>
-		</tr>
-		</thead>
-		<tbody></tbody>
-		</table>
-		</div>
-		<div class="operator">
-		<div class="var_btn add">增加</div>
-		<div class="var_btn del">删除</div>
-		<div class="var_btn modify">修改</div>
-		</div>
-		</div>
-		<div class="code-side">
-		<div class="bar no-select">源代码</div>
-		<div class="content">
-		<div class="code-wrap">
-		<pre><code id="src"></code></pre>
-		</div>
-		</div>
-		<div class="code_view"></div>
-		</div>
-	</div>
-	<div class="tabs no-select">
-		<ul>
-			<li><span>硬件连接</span></li>
-			<li><span>软件编程</span></li>
-		</ul>
-	</div>
-	<div class="thumbnail no-select">
-		<div class="canvas-wrap" data-action="show">
-		<div class="canvas"></div>
-		</div>
-		<div class="scaleTip" disabled="true"></div>
-		<div class="foldBtn active"></div>
-	</div>
-	<div class="mod_btn no-select">
-<!-- 		<div class="btn2 test">测试</div>
-		<div class="btn2 test2">测试2</div> -->
-		<div class="btn2 demo">演示</div>
-		<div class="btn2 download">下载</div>
-		<div class="btn2 feedback">反馈</div>
-	</div>
-	<div class="instro no-select"></div>
-	<div id="code-more" style="display:none">
-		<div class="closeBtn"></div>
-		<div class="code-wrap">
-		<pre><code class="code"></code></pre>
-		</div>
-	</div>
-</div>
-@stop
+	</body>
+</html>
