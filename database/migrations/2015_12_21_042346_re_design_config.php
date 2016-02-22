@@ -14,6 +14,8 @@ class ReDesignConfig extends Migration {
 		Schema::dropIfExists('ken_flowchart');
 		Schema::dropIfExists('ken_rule');
 		Schema::dropIfExists('ken_project');
+		Schema::dropIfExists('ken_feedback');
+		Schema::dropIfExists('feedback');
 
 		Schema::dropIfExists('modules');
 		Schema::dropIfExists('hardwares');
