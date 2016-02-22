@@ -83,8 +83,12 @@
   background-color: orange;
 }
 
+.hardware .items .list li .name {
+  color: $font-color;
+}
+
 .hardware .items .list li.active .name {
-  color: blue;
+  color: white;
 }
 
 .hardware .north {

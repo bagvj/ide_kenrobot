@@ -378,11 +378,16 @@ body {
 }
 
 /* line 86, layout/_hardware.scss */
-.hardware .items .list li.active .name {
-  color: blue;
+.hardware .items .list li .name {
+  color: #dfdfdf;
 }
 
 /* line 90, layout/_hardware.scss */
+.hardware .items .list li.active .name {
+  color: white;
+}
+
+/* line 94, layout/_hardware.scss */
 .hardware .north {
   margin-left: 30px;
   margin-right: 30px;
@@ -392,11 +397,11 @@ body {
   right: 0;
   position: absolute;
 }
-/* line 99, layout/_hardware.scss */
+/* line 103, layout/_hardware.scss */
 .hardware .north .tools {
   margin-top: 10px;
 }
-/* line 102, layout/_hardware.scss */
+/* line 106, layout/_hardware.scss */
 .hardware .north .tools > li {
   background-color: rgba(45, 43, 48, 0.6);
   margin-right: 10px;
@@ -406,28 +411,28 @@ body {
   cursor: pointer;
   float: left;
 }
-/* line 112, layout/_hardware.scss */
+/* line 116, layout/_hardware.scss */
 .hardware .north .tools > li:last-child {
   margin-right: 0;
 }
-/* line 116, layout/_hardware.scss */
+/* line 120, layout/_hardware.scss */
 .hardware .north .tools > li.active {
   color: #dfdfdf;
   background-color: #2d2b30;
 }
-/* line 121, layout/_hardware.scss */
+/* line 125, layout/_hardware.scss */
 .hardware .north .tools > li:hover {
   color: #dfdfdf;
   background-color: #2d2b30;
 }
-/* line 126, layout/_hardware.scss */
+/* line 130, layout/_hardware.scss */
 .hardware .north .tools .interactive-mode {
   width: 30px;
   height: 30px;
   font-size: 20px;
 }
 
-/* line 134, layout/_hardware.scss */
+/* line 138, layout/_hardware.scss */
 .hardware .center {
   top: 75px;
   bottom: 75px;
@@ -439,7 +444,7 @@ body {
   background-color: #2D2B30;
 }
 
-/* line 145, layout/_hardware.scss */
+/* line 149, layout/_hardware.scss */
 .hardware .south {
   margin-left: 30px;
   margin-right: 30px;
@@ -450,7 +455,7 @@ body {
   position: absolute;
 }
 
-/* line 155, layout/_hardware.scss */
+/* line 159, layout/_hardware.scss */
 .hardware .copyright {
   /*float: right;*/
   text-align: right;
@@ -461,7 +466,7 @@ body {
   bottom: 20px;
 }
 
-/* line 165, layout/_hardware.scss */
+/* line 169, layout/_hardware.scss */
 .hardware .name-dialog {
   z-index: 998;
   top: 90px;
@@ -469,7 +474,7 @@ body {
   margin: 0 auto;
   position: relative;
 }
-/* line 171, layout/_hardware.scss */
+/* line 175, layout/_hardware.scss */
 .hardware .name-dialog .name-label {
   display: block;
   background-color: #F1C933;
@@ -482,7 +487,7 @@ body {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
-/* line 184, layout/_hardware.scss */
+/* line 188, layout/_hardware.scss */
 .hardware .name-dialog .name {
   border: 2px solid #F1C933;
   border-top-right-radius: 4px;
