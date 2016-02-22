@@ -5,3 +5,7 @@ Homestead.yaml
 Homestead.json
 .env
 /public/assets/.sass-cache
+.env.dev
+.env.test
+.env.master
+switch
