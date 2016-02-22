@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+git checkout $1
+if [ -e ".env.$1" ];then
+cp ".env.$1" .env
+fi
