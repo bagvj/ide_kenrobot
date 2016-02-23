@@ -78,13 +78,13 @@
 					<div class="right">
 						<div class="north">
 							<ul class="tools">
-								<li class="interactive-mode" data-action="changeMode" data-mode="default">
+								<li class="interactive-mode" data-action="changeMode" data-mode="default" title="默认模式">
 									<i class="fa fa-mouse-pointer"></i>
 								</li>
-								<li class="interactive-mode active" data-action="changeMode" data-mode="place">
+								<li class="interactive-mode active" data-action="changeMode" data-mode="place" title="摆放模式">
 									<i class="fa fa-hand-pointer-o"></i>
 								</li>
-								<li class="interactive-mode" data-action="changeMode" data-mode="delete">
+								<li class="interactive-mode" data-action="changeMode" data-mode="delete" title="删除模式">
 									<i class="fa fa-close"></i>
 								</li>
 							</ul>
@@ -107,7 +107,7 @@
 						<div class="north">
 							<div class="btn-group menu" role="group">
 								<div class="btn-group" role="group">
-									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">文件</button>
+									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">文件<b class="caret"></b></button>
 									<ul class="dropdown-menu">
 										<li data-action="save"><a href="#">保存</a></li>
 										<li data-action="download"><a href="#">下载</a></li>
@@ -115,7 +115,7 @@
 									</ul>
 								</div>
 								<div class="btn-group" role="group">
-									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">项目</button>
+									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">项目<b class="caret"></b></button>
 									<ul class="dropdown-menu">
 										<li class="dropdown-submenu">
 											<a href="#">加载库</a>

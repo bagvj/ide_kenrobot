@@ -6,6 +6,11 @@ $dark-menu-color: #5f5176;
 
 .theme-dark {
 	color: $dark-font-color;
+
+	.dropdown-menu {
+		box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.5);
+	}
+
 	.header {
 		background-color: #3e3d44;
 		.logo {
@@ -138,14 +143,25 @@ $dark-menu-color: #5f5176;
 			.dropdown-menu {
 				background-color: #504C56;
 				&>li {
+					&>a {
+						color: $dark-font-color;
+					}
 					&:hover {
 						background-color: $dark-menu-color;
 						&>a {
 							color: white;
 						}
 					}
-					&>a {
-						color: $dark-font-color;
+				}
+			}
+
+			.dropdown-submenu {
+				&>a:after {
+					border-left-color: #9b9b9b;
+				}
+				&:hover {
+					&>a:after {
+						border-left-color: #9b9b9b;
 					}
 				}
 			}

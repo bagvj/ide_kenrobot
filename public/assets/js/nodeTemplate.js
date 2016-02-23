@@ -1,9 +1,7 @@
 define(["goJS", "EventManager"], function(_, EventManager) {
 	var GO = go.GraphObject.make;
 
-	var defaultTextFont = "12px arial, Microsoft Yahei, Hiragino Sans GB, sans-serif";
-	var defaultTextStroke = "white";
-
+	var defaultTextFont = "14px Microsoft Yahei";
 	var oldLinkColor = "#F1C933";
 	var enterLinkColor = "#F19833";
 	var oldPortColor = "#F19833";
@@ -11,7 +9,8 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 
 	function init() {
 		var boardPortSize = new go.Size(9, 15);
-		var defaultPortSize = new go.Size(14, 14)
+		var defaultPortSize = new go.Size(14, 14);
+		var offset = 3;
 		//节点模版
 		var nodeTemplates = {
 			"ArduinoUNO":
@@ -47,41 +46,41 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 				GO(go.Node, "Spot",
 					nodeStyle(),
 					makeBody(),
-					makePort("P0", go.Spot.Top, null, "#F1C933", defaultPortSize, "#F19833")
+					makePort("P0", new go.Spot(0.5, 0, 0, -offset), null, "#F1C933", defaultPortSize, "#F19833")
 				),
 			"one-port-bottom": 
 				GO(go.Node, "Spot",
 					nodeStyle(),
 					makeBody(),
-					makePort("P0", go.Spot.Bottom, null, "#F1C933", defaultPortSize, "#F19833")
+					makePort("P0", new go.Spot(0.5, 1, 0, offset), null, "#F1C933", defaultPortSize, "#F19833")
 				),
 			"one-port-right": 
 				GO(go.Node, "Spot",
 					nodeStyle(),
 					makeBody(),
-					makePort("P0", go.Spot.Right, null, "#F1C933", defaultPortSize, "#F19833")
+					makePort("P0", new go.Spot(1, 0.5, offset, 0), null, "#F1C933", defaultPortSize, "#F19833")
 				),
 			"two-port-top": 
 				GO(go.Node, "Spot",
 					nodeStyle(),
 					makeBody(),
-					makePort("P0", new go.Spot(0.333, 0), null, "#F1C933", defaultPortSize, "#F19833"),
-					makePort("P1", new go.Spot(0.667, 0), null, "#F1C933", defaultPortSize, "#F19833")
+					makePort("P0", new go.Spot(0.333, 0, 0, -offset), null, "#F1C933", defaultPortSize, "#F19833"),
+					makePort("P1", new go.Spot(0.667, 0, 0, -offset), null, "#F1C933", defaultPortSize, "#F19833")
 				),
 			"two-port-bottom": 
 				GO(go.Node, "Spot",
 					nodeStyle(),
 					makeBody(),
-					makePort("P0", new go.Spot(0.333, 1), null, "#F1C933", defaultPortSize, "#F19833"),
-					makePort("P1", new go.Spot(0.667, 1), null, "#F1C933", defaultPortSize, "#F19833")
+					makePort("P0", new go.Spot(0.333, 1, 0, offset), null, "#F1C933", defaultPortSize, "#F19833"),
+					makePort("P1", new go.Spot(0.667, 1, 0, offset), null, "#F1C933", defaultPortSize, "#F19833")
 				),
 			"joystick": 
 				GO(go.Node, "Spot",
 					nodeStyle(),
 					makeBody(),
-					makePort("P0", new go.Spot(0.5, 0), null, "#F1C933", defaultPortSize, "#F19833"),
-					makePort("P1", new go.Spot(0.333, 1), null, "#F1C933", defaultPortSize, "#F19833"),
-					makePort("P2", new go.Spot(0.667, 1), null, "#F1C933", defaultPortSize, "#F19833")
+					makePort("P0", new go.Spot(0.5, 0, 0, -offset), null, "#F1C933", defaultPortSize, "#F19833"),
+					makePort("P1", new go.Spot(0.333, 1, 0, offset), null, "#F1C933", defaultPortSize, "#F19833"),
+					makePort("P2", new go.Spot(0.667, 1, 0, offset), null, "#F1C933", defaultPortSize, "#F19833")
 				),
 		};
 
@@ -103,11 +102,15 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 
 		//节点选中模版
 		var nodeSelectionTemplate = GO(go.Adornment, "Auto",
-			GO(go.Shape, {
-				fill: null,
-				stroke: "#F1C933",
-				strokeWidth: 2,
-			}),
+			// new go.Binding("width"),
+			// new go.Binding("height"),
+			GO(go.Shape, 
+				{
+					fill: null,
+					stroke: "#F1C933",
+					strokeWidth: 2,
+				}
+			),
 			GO(go.Placeholder)
 		);
 
@@ -132,8 +135,6 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 	function nodeStyle() {
 		return [
 			new go.Binding("location", "location", go.Point.parse).makeTwoWay(go.Point.stringify),
-			new go.Binding("width"),
-			new go.Binding("height"),
 			new go.Binding("selectable"),
 			new go.Binding("deletable"),
 			new go.Binding("angle").makeTwoWay(),
@@ -141,23 +142,31 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 				cursor: "pointer",
 				locationSpot: go.Spot.Center,
 				click: onNodeClick,
+				toolTip: GO(go.Adornment, "Auto",
+					GO(go.Shape, 
+						{
+							fill: "#F1C933",
+							stroke: null,
+						}
+					),
+					GO(go.TextBlock,
+						{
+							margin: 10,
+							font: defaultTextFont,
+							stroke: "#69550B",
+						},
+						new go.Binding("text", "label")
+					)
+				)
 			}
 		];
 	}
 
 	function makeBody(){
-		return GO(go.Panel, "Auto",
-			GO(go.Picture,
-				new go.Binding("source")
-			),
-			GO(go.TextBlock, 
-				{
-					font: defaultTextFont,
-					stroke: defaultTextStroke,
-				},
-				new go.Binding("text", "alias"),
-				new go.Binding("visible", "textVisible")
-			)
+		return GO(go.Picture,
+			new go.Binding("source"),
+			new go.Binding("width"),
+			new go.Binding("height")
 		);
 	}
 
@@ -174,6 +183,32 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 			desiredSize: size || new go.Size(5, 5),
 			stroke: stroke || null,
 			click: onPortClick,
+			mouseEnter: onPortMouseEnter,
+			mouseLeave: onPortMouseLeave,
+			toolTip: GO(go.Adornment, "Auto",
+				GO(go.Shape, 
+					{
+						fill: "#F1C933",
+						stroke: null,
+					}
+				),
+				GO(go.TextBlock,
+					{
+						margin: 10,
+						font: defaultTextFont,
+						stroke: "#69550B",
+					},
+					new go.Binding("text", "", function(nodeData) {
+						var ports = nodeData.ports;
+						var port = ports[portId];
+						if(nodeData.type == "component" || port.type == 3) {
+							return port.label;
+						} else {
+							return "Pin " + port.label;
+						}
+					})
+				)
+			)
 		});
 	}
 
@@ -190,6 +225,15 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 	function onPortClick(e, port) {
 		EventManager.trigger("hardware", "portClick", port);
 		e.handled = true;
+	}
+
+	function onPortMouseEnter(e, port) {
+		oldPortColor = port.fill;
+		port.fill = enterPortColor;
+	}
+
+	function onPortMouseLeave(e, port) {
+		port.fill = oldPortColor;
 	}
 
 	return init();

@@ -221,6 +221,8 @@ class HomeController extends Controller {
 			$value->deletable = true;
 			$value->selectable = true;
 			$value->source = "assets/images/component/" . $value->name . ".svg";
+			$value->offsetX = 0;
+			$value->offsetY = 3;
 		}
 
 		if($withPorts) {

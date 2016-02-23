@@ -511,29 +511,23 @@ body {
   border-color: transparent;
   border-style: solid;
   border-width: 5px 0 5px 5px;
-  border-left-color: white;
   top: 15px;
   right: 8px;
   position: absolute;
 }
 
-/* line 84, layout/_software.scss */
-.software .menu .dropdown-submenu:hover > a:after {
-  border-left-color: #9B9B9B;
-}
-
-/* line 88, layout/_software.scss */
+/* line 83, layout/_software.scss */
 .software .sub-tab {
   margin-right: 30px;
   float: right;
 }
 
-/* line 93, layout/_software.scss */
+/* line 88, layout/_software.scss */
 .software .sub-tab ul {
   float: left;
 }
 
-/* line 97, layout/_software.scss */
+/* line 92, layout/_software.scss */
 .software .sub-tab ul li {
   width: 120px;
   line-height: 40px;
@@ -542,24 +536,24 @@ body {
   float: left;
 }
 
-/* line 105, layout/_software.scss */
+/* line 100, layout/_software.scss */
 .software .sub-mod {
   height: 100%;
   display: none;
 }
 
-/* line 110, layout/_software.scss */
+/* line 105, layout/_software.scss */
 .software .sub-mod.active {
   display: block;
 }
 
-/* line 114, layout/_software.scss */
+/* line 109, layout/_software.scss */
 .software .editor {
   font-size: 16px;
   height: 100%;
 }
 
-/* line 119, layout/_software.scss */
+/* line 114, layout/_software.scss */
 .software .doEdit {
   cursor: pointer;
   z-index: 998;
@@ -567,20 +561,20 @@ body {
   top: 12px;
   position: absolute;
 }
-/* line 126, layout/_software.scss */
+/* line 121, layout/_software.scss */
 .software .doEdit ul {
   float: left;
 }
-/* line 128, layout/_software.scss */
+/* line 123, layout/_software.scss */
 .software .doEdit ul > li {
   float: left;
   display: none;
 }
-/* line 132, layout/_software.scss */
+/* line 127, layout/_software.scss */
 .software .doEdit ul > li.active {
   display: block;
 }
-/* line 136, layout/_software.scss */
+/* line 131, layout/_software.scss */
 .software .doEdit ul > li > i {
   margin-right: 5px;
 }
@@ -615,23 +609,6 @@ body {
   background-size: 10px 10px;
   display: inline-block;
   float: right;
-}
-
-/* line 1, component/_x-scrollbar.scss */
-.x-scrollbar::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #5E5B62;
-}
-
-/* line 7, component/_x-scrollbar.scss */
-.x-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  background-color: #5E5B62;
-}
-
-/* line 13, component/_x-scrollbar.scss */
-.x-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #737078;
 }
 
 /* line 1, component/_login.scss */

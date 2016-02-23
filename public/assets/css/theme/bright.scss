@@ -6,6 +6,11 @@ $bright-menu-color: #5592df;
 
 .theme-bright {
 	color: $bright-font-color;
+
+	.dropdown-menu {
+		box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.5);
+	}
+
 	.header {
 		background-color: #e4e9ef;
 		.logo {
@@ -39,13 +44,13 @@ $bright-menu-color: #5592df;
 			}
 
 			.dropdown-submenu {
+				&>a:after {
+					border-right-color: #9b9b9b;
+				}
 				&:hover {
 					&>a:after {
 						border-right-color: #9b9b9b;
 					}
-				}
-				&>a:after {
-					border-right-color: #9b9b9b;
 				}
 			}
 		}
@@ -151,6 +156,17 @@ $bright-menu-color: #5592df;
 					}
 					&>a {
 						color: $bright-font-color;
+					}
+				}
+			}
+
+			.dropdown-submenu {
+				&>a:after {
+					border-left-color: #9b9b9b;
+				}
+				&:hover {
+					&>a:after {
+						border-left-color: #9b9b9b;
 					}
 				}
 			}

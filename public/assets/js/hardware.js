@@ -48,6 +48,8 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 			//可以撤消(Ctrl + Z)和重做(Ctrl + Y)
 			// "undoManager.isEnabled": true,
 
+			"toolManager.hoverDelay": 300,
+
 			//放置模式时，单击放置
 			"clickCreatingTool.isDoubleClick": false,
 			
@@ -139,12 +141,6 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 		return specNodes[name];
 	}
 
-	function getPortData(port) {
-		var part = port.part;
-		var ports = part.data.ports;
-		return ports[port.portId];
-	}
-
 	//暗示可以连接的port
 	function hintTargetPort(sourcePort) {
 		var board = findSpecNode("board");
@@ -162,12 +158,9 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 		if(selectedPort) {
 			selectedPort.fill = "#F19833";
 			iter.reset();
-			var nodePortData = getPortData(selectedPort);
-			var boardPortData;
 			while(iter.next()) {
 				port = iter.value;
-				boardPortData = getPortData(port);
-				if(!portHasLink(port) && nodePortData.type == boardPortData.type) {
+				if(!portHasLink(port) && portTypeMatch(selectedPort, port)) {
 					port.opacity = 0.6;
 				}
 			}
@@ -192,11 +185,6 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 		EventManager.trigger("hardware", "showNameDialog", args);
 	}
 
-	function portHasLink(port) {
-		var part = port.part;
-		return part.findLinksConnected(port.portId).count > 0;
-	}
-
 	function getConfig(name, isBoard) {
 		return isBoard ? configs.boards[name]: configs.components[name];
 	}
@@ -212,6 +200,30 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 		componentCounts[name] = index;
 
 		return nodeData;
+	}
+
+	function getPortData(port) {
+		var part = port.part;
+		var ports = part.data.ports;
+		return ports[port.portId];
+	}
+
+	function getPortLink(port) {
+		var part = port.part;
+		var iter = part.findLinksConnected(port.portId).iterator;
+		iter.next();
+		return iter.value;
+	}
+
+	function portTypeMatch(port1, port2) {
+		var portData1 = getPortData(port1);
+		var portData2 = getPortData(port2);
+		return portData1.type == portData2.type;
+	}
+
+	function portHasLink(port) {
+		var part = port.part;
+		return part.findLinksConnected(port.portId).count > 0;
 	}
 
 	//设置放置组件
@@ -279,32 +291,58 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 		showNameDialog(false);
 		if(interactiveMode == "default") {
 			var part = port.part;
-			var type = part.data.type;
+			var nodeType = part.data.type;
 			if(!selectedPort) {
-				if(type != "component") {
+				if(nodeType != "component") {
 					//第一个必须是组件
-					return;
-				}
-				if(portHasLink(port)) {
-					//已经有连线
 					return;
 				}
 				hintTargetPort(port);
 			} else {
-				if(type != "board") {
-					//第二个必须是主板
+				if(nodeType == "component") {
 					if(portHasLink(port)) {
+						//另一个端口已经有连线
 						hintTargetPort();
-					} else if(port != selectedPort) {
+						return;
+					}
+
+					if(portHasLink(selectedPort)) {
+						var link = getPortLink(selectedPort);
+						var linkOtherPort = link.getOtherPort(selectedPort);
+						if(!portTypeMatch(port, linkOtherPort)) {
+							//端口类型不匹配
+							hintTargetPort();
+							return;
+						}
+						//用第二个port重连
+						diagram.remove(link);
+						var fromKey = linkOtherPort.part.data.key;
+						var toKey = port.part.data.key;
+						addLink(fromKey, toKey, linkOtherPort.portId, port.portId);
+
+						hintTargetPort();
+					} else {
 						hintTargetPort(port);
 					}
-					return;
-				}
-				var fromKey = selectedPort.part.data.key;
-				var toKey = port.part.data.key;
-				addLink(fromKey, toKey, selectedPort.portId, port.portId);
+				} else {
+					if(portHasLink(port) || !portTypeMatch(selectedPort, port)) {
+						//要连接的端口已经有连线或者端口类型不匹配
+						hintTargetPort();
+						return;
+					}
+					if(portHasLink(selectedPort)) {
+						//先删除已有连线
+						var link = getPortLink(selectedPort);
+						diagram.remove(link);
+					}
 
-				hintTargetPort();
+					//连线
+					var fromKey = selectedPort.part.data.key;
+					var toKey = port.part.data.key;
+					addLink(fromKey, toKey, selectedPort.portId, port.portId);
+
+					hintTargetPort();
+				}
 			}
 		} else {
 			hintTargetPort();
@@ -387,6 +425,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 		var ports;
 		var link;
 		var iter2;
+		var nodeType;
 		while(iter.next()) {
 			node = iter.value;
 			nodeData = node.data;
@@ -394,12 +433,21 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 			iter2 = board.findLinksBetween(node).iterator;
 			while(iter2.next()) {
 				link = iter2.value;
-				ports.push({
-					source: link.fromPort.portId,
-					target: link.toPort.portId,
-				});
+				nodeType = link.fromPort.part.data.type;
+				if(nodeType == "board") {
+					ports.push({
+						source: link.toPort.portId,
+						target: link.fromPort.portId,
+					});
+				} else {
+					ports.push({
+						source: link.fromPort.portId,
+						target: link.toPort.portId,
+					});
+				}
 			}
 			nodes.push({
+				name: nodeData.name,
 				headCode: nodeData.headCode,
 				varCode: nodeData.varCode,
 				setupCode: nodeData.setupCode,
@@ -407,8 +455,15 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 				ports: ports,
 			});
 		}
+		console.dir(nodes);
 
-		return nodes;
+		return nodes.sort(function(a, b){
+			var nameResult = a.name.localeCompare(b.name);
+			if(nameResult == 0) {
+				return a.varName.localeCompare(b.varName);
+			}
+			return nameResult;
+		});
 	}
 
 	return {

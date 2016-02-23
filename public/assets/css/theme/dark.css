@@ -2,161 +2,173 @@
 .theme-dark {
   color: #dfdfdf;
 }
-/* line 9, dark.scss */
+/* line 10, dark.scss */
+.theme-dark .dropdown-menu {
+  box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.5);
+}
+/* line 14, dark.scss */
 .theme-dark .header {
   background-color: #3e3d44;
 }
-/* line 11, dark.scss */
+/* line 16, dark.scss */
 .theme-dark .header .logo {
   background: url("/assets/images/logo.png") no-repeat center;
   background-size: 103px 50px;
 }
-/* line 16, dark.scss */
+/* line 21, dark.scss */
 .theme-dark .header .menu .dropdown-menu {
   background-color: #504C56;
 }
-/* line 19, dark.scss */
+/* line 24, dark.scss */
 .theme-dark .header .menu .dropdown-menu > li:hover {
   background-color: #8B7AA8;
 }
-/* line 22, dark.scss */
+/* line 27, dark.scss */
 .theme-dark .header .menu .dropdown-menu > li > a {
   color: #dfdfdf;
 }
-/* line 28, dark.scss */
+/* line 33, dark.scss */
 .theme-dark .header .menu .btn {
   color: #dfdfdf;
 }
-/* line 30, dark.scss */
+/* line 35, dark.scss */
 .theme-dark .header .menu .btn:hover {
   color: white;
   background-color: #5f5176;
 }
-/* line 36, dark.scss */
+/* line 41, dark.scss */
 .theme-dark .header .menu .open .btn {
   color: white;
   background-color: #5f5176;
 }
-/* line 43, dark.scss */
+/* line 48, dark.scss */
 .theme-dark .header .menu .dropdown-submenu:hover > a:after {
   border-right-color: #9b9b9b;
 }
-/* line 47, dark.scss */
+/* line 52, dark.scss */
 .theme-dark .header .menu .dropdown-submenu > a:after {
   border-right-color: #9b9b9b;
 }
-/* line 54, dark.scss */
+/* line 59, dark.scss */
 .theme-dark .header .tab ul li {
   color: #9B9B9B;
 }
-/* line 56, dark.scss */
+/* line 61, dark.scss */
 .theme-dark .header .tab ul li.active, .theme-dark .header .tab ul li:hover {
   color: white;
   background-color: #5f5176;
 }
-/* line 66, dark.scss */
+/* line 71, dark.scss */
 .theme-dark .hardware .left {
   background-color: #2d2b30;
 }
-/* line 70, dark.scss */
+/* line 75, dark.scss */
 .theme-dark .hardware .center {
   background-color: #2D2B30;
 }
-/* line 74, dark.scss */
+/* line 79, dark.scss */
 .theme-dark .hardware .right {
   background-color: #55545F;
 }
-/* line 78, dark.scss */
+/* line 83, dark.scss */
 .theme-dark .hardware .search {
   background-color: #47434C;
 }
-/* line 80, dark.scss */
+/* line 85, dark.scss */
 .theme-dark .hardware .search .key {
   color: white;
 }
-/* line 85, dark.scss */
+/* line 90, dark.scss */
 .theme-dark .hardware .seperator {
   background-color: #535353;
 }
-/* line 89, dark.scss */
+/* line 94, dark.scss */
 .theme-dark .hardware .items {
   background-color: #47434C;
 }
-/* line 92, dark.scss */
+/* line 97, dark.scss */
 .theme-dark .hardware .items .list li .name {
   color: #dfdfdf;
 }
-/* line 100, dark.scss */
+/* line 105, dark.scss */
 .theme-dark .hardware .north .tools > li {
   background-color: rgba(45, 43, 48, 0.6);
   color: #9b9b9b;
 }
-/* line 103, dark.scss */
+/* line 108, dark.scss */
 .theme-dark .hardware .north .tools > li.active {
   background-color: #2d2b30;
   color: #dfdfdf;
 }
-/* line 108, dark.scss */
+/* line 113, dark.scss */
 .theme-dark .hardware .north .tools > li:hover {
   color: #dfdfdf;
   background-color: #2d2b30;
 }
-/* line 116, dark.scss */
+/* line 121, dark.scss */
 .theme-dark .hardware .copyright {
   color: #71707A;
 }
-/* line 122, dark.scss */
+/* line 127, dark.scss */
 .theme-dark .software .north {
   background-color: #47434C;
 }
-/* line 126, dark.scss */
+/* line 131, dark.scss */
 .theme-dark .software .menu .btn {
   color: #dfdfdf;
   background-color: #47434C;
 }
-/* line 129, dark.scss */
+/* line 134, dark.scss */
 .theme-dark .software .menu .btn:hover {
   background-color: #5f5176;
 }
-/* line 134, dark.scss */
+/* line 139, dark.scss */
 .theme-dark .software .menu .open .btn {
   background-color: #5f5176;
 }
-/* line 138, dark.scss */
+/* line 143, dark.scss */
 .theme-dark .software .menu .dropdown-menu {
   background-color: #504C56;
 }
-/* line 141, dark.scss */
-.theme-dark .software .menu .dropdown-menu > li:hover {
-  background-color: #5f5176;
-}
-/* line 143, dark.scss */
-.theme-dark .software .menu .dropdown-menu > li:hover > a {
-  color: white;
-}
-/* line 147, dark.scss */
+/* line 146, dark.scss */
 .theme-dark .software .menu .dropdown-menu > li > a {
   color: #dfdfdf;
 }
-/* line 156, dark.scss */
+/* line 149, dark.scss */
+.theme-dark .software .menu .dropdown-menu > li:hover {
+  background-color: #5f5176;
+}
+/* line 151, dark.scss */
+.theme-dark .software .menu .dropdown-menu > li:hover > a {
+  color: white;
+}
+/* line 159, dark.scss */
+.theme-dark .software .menu .dropdown-submenu > a:after {
+  border-left-color: #9b9b9b;
+}
+/* line 163, dark.scss */
+.theme-dark .software .menu .dropdown-submenu:hover > a:after {
+  border-left-color: #9b9b9b;
+}
+/* line 172, dark.scss */
 .theme-dark .software .sub-tab ul li.active {
   background-color: #5f5176;
 }
-/* line 160, dark.scss */
+/* line 176, dark.scss */
 .theme-dark .software .sub-tab ul li:hover {
   background-color: #5f5176;
 }
-/* line 168, dark.scss */
+/* line 184, dark.scss */
 .theme-dark .x-scrollbar::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #5E5B62;
 }
-/* line 173, dark.scss */
+/* line 189, dark.scss */
 .theme-dark .x-scrollbar::-webkit-scrollbar {
   width: 6px;
   background-color: #5E5B62;
 }
-/* line 178, dark.scss */
+/* line 194, dark.scss */
 .theme-dark .x-scrollbar::-webkit-scrollbar-thumb {
   background-color: #737078;
 }

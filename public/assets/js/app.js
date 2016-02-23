@@ -358,8 +358,12 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 
 	function onSoftwareSubTabClick(e) {
 		var li = $(this);
+		var index = li.index();
+		if(index == 0) {
+			return;
+		}
 		if (toggleActive(li)) {
-			$('.software .sub-mod').removeClass("active").eq(li.index()).addClass("active");
+			$('.software .sub-mod').removeClass("active").eq(index).addClass("active");
 		}
 	}
 
