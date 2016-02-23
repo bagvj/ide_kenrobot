@@ -17,7 +17,7 @@
 
 		<script src="/assets/js/lib/require.min.js" data-main="/assets/js/main"></script>
 	</head>
-	<body class="unselectable theme-dark" data-theme="dark">
+	<body class="unselectable theme-default" data-theme="default">
 		<div class="main">
 			<div class="header">
 				<div class="left">
