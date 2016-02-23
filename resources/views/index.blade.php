@@ -14,7 +14,6 @@
 		<link href="/assets/css/font-awesome.css" rel="stylesheet" />
 		<link href="/assets/css/index.css" rel="stylesheet" />
 		<link href="/assets/css/theme/dark.css" rel="stylesheet" />
-		<link href="/assets/css/theme/bright.css" rel="stylesheet" />
 
 		<script src="/assets/js/lib/require.min.js" data-main="/assets/js/main"></script>
 	</head>
@@ -24,44 +23,57 @@
 				<div class="left">
 					<a href="http://www.kenrobot.com/" class="logo">&nbsp;</a>
 				</div>
-				<div class="tab">
-					<ul>
-						<li><i class="fa fa-th-large"></i>&nbsp;硬件</li>
-						<li><i class="fa fa-terminal"></i>&nbsp;软件</li>
-						<li><i class="fa fa-info"></i>&nbsp;信息</li>
-					</ul>
-				</div>
-				<div class="setting">
-					<div class="btn-group menu" role="group">
-						<div class="btn-group" role="group">
-							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-navicon"></i>&nbsp;设置</button>
-							<ul class="dropdown-menu">
-								<li class="dropdown-submenu">
-									<a href="#">主板</a>
-									<ul class="board-list dropdown-menu">
-									@foreach($boards as $board)
-										<li data-action="selectBoard" data-board-name="{{$board->name}}"><a href="#"><img class="thumbnail" src="/assets/images/board/arduino-uno-r3-small.png" /><span class="name">{{$board->label}}</span></a></li>
-									@endforeach
-									</ul>
-								</li>
-								<li data-action="save"><a href="#">保存</a></li>
-								<li data-action="share"><a href="#">分享</a></li>
-								<li class="dropdown-submenu">
-									<a href="#">主题</a>
-									<ul class="dropdown-menu">
-										<li data-action="changeTheme" data-theme="dark" class="active"><a href="#">深色</a></li>
-										<li data-action="changeTheme" data-theme="bright"><a href="#">浅色</a></li>
-									</ul>
-								</li>
+			</div>
+			<div class="content">
+				<div class="sidebar">
+					<div class="bar">
+						<ul>
+							<li data-action="project"><i class="fa fa-file"></i>项目</li>
+							<li data-action="board"><i class="fa fa-cloud"></i>主板</li>
+							<li data-action="component"><i class="fa fa-modx"></i>元器件</li>
+							<li class="hide" data-action="library"><i class="fa fa-link"></i>库</li>
+							<li data-action="save"><i class="fa fa-save"></i>保存</li>
+							<li data-action="download"><i class="fa fa-download"></i>下载</li>
+							<li data-action="share"><i class="fa fa-share"></i>分享</li>
+						</ul>
+					</div>
+					<div class="tab tab-project">
+						<div class="project">
+							<div class="operation">
+								<ul>
+									<li class="new"><i class="fa fa-plus fa-2x"></i></li>
+									<li class="delete"><i class="fa fa-trash fa-2x"></i></li>
+									<li class="cancel hide">取消</li>
+									<li class="confirm hide">确定</li>
+								</ul>
+							</div>
+							<div class="list" data-operation="default">
+								<ul>
+									<li>
+										<div class="title">
+											我的项目<i class="fa"></i>
+										</div>
+										<div class="view">
+											<div>我的项目.uno</div>
+											<div>我的项目.ino</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+							
+						</div>
+					</div>
+					<div class="tab tab-board">
+						<div class="board">
+							<ul class="list">
+							@foreach($boards as $board)
+								<li data-board="{{$board->name}}"><img class="image" src="/assets/images/board/arduino-uno-r3-small.png" /><span class="name">{{$board->label}}</span></li>
+							@endforeach
 							</ul>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class="content">
-				<div class="mod hardware">
-					<div class="left">
-						<div class="tab-panel">
+					<div class="tab tab-component">
+						<div class="component">
 							<div class="search">
 								<input class="key" type="text" placeholder="搜索" spellcheck="false"/>
 							</div>
@@ -75,111 +87,89 @@
 							</div>
 						</div>
 					</div>
-					<div class="right">
-						<div class="north">
-							<ul class="tools">
-								<li class="interactive-mode" data-action="changeMode" data-mode="default" title="默认模式">
-									<i class="fa fa-mouse-pointer"></i>
-								</li>
-								<li class="interactive-mode active" data-action="changeMode" data-mode="place" title="摆放模式">
-									<i class="fa fa-hand-pointer-o"></i>
-								</li>
-								<li class="interactive-mode" data-action="changeMode" data-mode="delete" title="删除模式">
-									<i class="fa fa-close"></i>
-								</li>
+					<div class="tab tab-library">
+						<div class="library">
+							<ul class="list">
+							@foreach($libraries as $library)
+								<li data-library="{{$library->name}}">{{$library->name}}</li>
+							@endforeach
 							</ul>
-						</div>
-						<div class="center" id="hardware-container">
-						</div>
-						<div class="south">
-							<div class="copyright">
-								备案号：京ICP备15039570号&nbsp;&nbsp;&nbsp;&nbsp;Copyright © 2014 KenRobot.com All Rights Reserved
-							</div>
-						</div>
-						<div class="name-dialog" style="display:none;">
-							<span class="name-label">名字</span>
-							<input class="name" type="text" />
 						</div>
 					</div>
 				</div>
-				<div class="mod software">
-					<div class="right">
-						<div class="north">
-							<div class="btn-group menu" role="group">
-								<div class="btn-group" role="group">
-									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">文件<b class="caret"></b></button>
-									<ul class="dropdown-menu">
-										<li data-action="save"><a href="#">保存</a></li>
-										<li data-action="download"><a href="#">下载</a></li>
-										<li data-action="share"><a href="#">分享</a></li>
-									</ul>
-								</div>
-								<div class="btn-group" role="group">
-									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">项目<b class="caret"></b></button>
-									<ul class="dropdown-menu">
-										<li class="dropdown-submenu">
-											<a href="#">加载库</a>
-											<ul class="include-library dropdown-menu">
-											@foreach($libraries as $library)
-												<li data-action="includeLibrary" data-library="{{$library->name}}"><a href="#">{{$library->name}}</a></li>
-											@endforeach
-											</ul>
-										</li>
-									</ul>
+				<div class="tabs">
+					<div class="tab active">
+						<div class="hardware">
+							<div class="center" id="hardware-container">
+							</div>
+							<div class="tools">
+								<ul>
+									<li class="interactive-mode" data-action="changeMode" data-mode="default" title="默认模式">
+										<i class="fa fa-mouse-pointer"></i>
+									</li>
+									<li class="interactive-mode active" data-action="changeMode" data-mode="place" title="摆放模式">
+										<i class="fa fa-hand-pointer-o"></i>
+									</li>
+									<li class="interactive-mode" data-action="changeMode" data-mode="delete" title="删除模式">
+										<i class="fa fa-close"></i>
+									</li>
+								</ul>
+							</div>
+							<div class="copyright">
+								<div class="alert alert-info alert-dismissible" role="alert">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									备案号：京ICP备15039570号&nbsp;&nbsp;&nbsp;&nbsp;Copyright © 2014 KenRobot.com All Rights Reserved
 								</div>
 							</div>
-							<div class="sub-tab">
+							<div class="name-dialog">
+								<span class="name-label">名字</span>
+								<input class="name" type="text" />
+							</div>
+						</div>
+					</div>
+					<div class="tab">
+						<div class="software">
+							<div class="editor"></div>
+							<div class="doEdit">
 								<ul>
-									<li>模块编程</li>
-									<li>文本编程</li>
+									<li class="active" data-action="enterEdit"><i class="fa fa-pencil"></i>编辑</li>
+									<li data-action="exitEdit"><i class="fa fa-close"></i>退出</li>
 								</ul>
 							</div>
 						</div>
-						<div class="center">
-							<div class="sub-mod">
-								
-							</div>
-							<div class="sub-mod">
-								<div class="editor"></div>
-								<div class="doEdit">
-									<ul>
-										<li class="active" data-action="enterEdit"><i class="fa fa-pencil"></i>编辑</li>
-										<li data-action="exitEdit"><i class="fa fa-close"></i>退出</li>
-									</ul>
-								</div>
+					</div>
+					<div class="tab">
+						<div class="info">
+							<div class="center">
+								<form class="form-horizontal">
+									<div class="form-group">
+										<label class="col-sm-2 control-label">项目名称：</label>
+										<div class="col-sm-10">
+											<input class="form-control" name="name" type="text" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label">项目简介：</label>
+										<div class="col-sm-10">
+											<textarea class="form-control" name="intro" rows="5"></textarea>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label">公开：</label>
+										<div class="col-sm-10">
+											<label class="checkbox-inline"><input type="radio" name="power" value="1" checked="true" />私有</label>
+											<label class="checkbox-inline"><input type="radio" name="power" value="2" />完全公开</label>
+											<label class="checkbox-inline"><input type="radio" name="power" value="3" />好友公开</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-offset-2 col-sm-10">
+											<input class="btn create pull-right" type="submit" value="创建项目" />
+										</div>
+									</div>
+								</form>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div class="mod info">
-					<div class="center">
-						<form class="form-horizontal">
-							<div class="form-group">
-								<label class="col-sm-2 control-label">项目名称：</label>
-								<div class="col-sm-10">
-									<input class="form-control" name="name" type="text" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">项目简介：</label>
-								<div class="col-sm-10">
-									<textarea class="form-control" name="intro" rows="5"></textarea>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">公开：</label>
-								<div class="col-sm-10">
-									<label class="checkbox-inline"><input type="radio" name="power" value="1" checked="true" />私有</label>
-									<label class="checkbox-inline"><input type="radio" name="power" value="2" />完全公开</label>
-									<label class="checkbox-inline"><input type="radio" name="power" value="3" />好友公开</label>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-offset-2 col-sm-10">
-									<input class="btn create pull-right" type="submit" value="创建项目" />
-								</div>
-							</div>
-						</form>
 					</div>
 				</div>
 			</div>

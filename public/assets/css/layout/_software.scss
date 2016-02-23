@@ -1,136 +1,30 @@
-.software .right {
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  position: absolute;
-  float: left;
-}
+.software {
+	.editor {
+		font-size: 16px;
+		height: 100%;
+	}
 
-.software .north {
-  height: 40px;
-}
+	.doEdit {
+		cursor: pointer;
+		z-index: 998;
+		right: 24px;
+		top: 12px;
+		position: absolute;
 
-.software .center {
-  top: 40px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  position: absolute;
-}
+		ul {
+			float: left;
+			& > li {
+				float: left;
+				display: none;
 
-.software .menu .btn {
-  height: 40px;
-  width: 120px;
-  border-radius: 0;
-  border: none;
-  letter-spacing: 5px;
-  -webkit-box-shadow: none;
-   box-shadow: none; 
-}
+				&.active {
+					display: block;
+				}
 
-.software .menu .dropdown-menu {
-  margin-top: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-  
-  border: none;
-  border-radius: 0;
-  width: 120px;
-  min-width: 120px;
-}
-
-.software .menu .dropdown-menu > li > a {
-  height: 40px;
-  line-height: 40px;
-  padding: 0;
-  text-align: center;
-  letter-spacing: 5px;
-  background-color: transparent;
-}
-
-.software .menu .dropdown-submenu {
-    position: relative;
-}
-
-.software .menu .dropdown-submenu > .dropdown-menu {
-    top: 0;
-    left: 100%;
-}
-
-.software .menu .dropdown-submenu:hover > .dropdown-menu {
-    display: block;
-}
-
-.software .menu .include-library.dropdown-menu > li > a {
-  letter-spacing: 0;
-}
-
-.software .menu .dropdown-submenu > a:after {
-    display: block;
-    content: " ";
-    float: right;
-    width: 0;
-    height: 0;
-    border-color: transparent;
-    border-style: solid;
-    border-width: 5px 0 5px 5px;
-    top: 15px;
-    right: 8px;
-    position: absolute;
-}
-
-.software .sub-tab {
-  margin-right: 30px;
-  float: right;
-}
-
-.software .sub-tab ul {
-  float: left;
-}
-
-.software .sub-tab ul li{
-  width: 120px;
-  line-height: 40px;
-  text-align: center;
-  cursor: pointer;
-  float: left;
-}
-
-.software .sub-mod {
-  height: 100%;
-  display: none;
-}
-
-.software .sub-mod.active {
-  display: block;
-}
-
-.software .editor {
-  font-size: 16px;
-  height: 100%;
-}
-
-.software .doEdit {
-  cursor: pointer;
-  z-index: 998;
-  right: 24px;
-  top: 12px;
-  position: absolute;
-
-  ul {
-    float: left;
-    & > li {
-      float: left;
-      display: none;
-
-      &.active {
-        display: block;
-      }
-
-      &>i {
-        margin-right: 5px;
-      }
-    }
-  }
+				&>i {
+					margin-right: 5px;
+				}
+			}
+		}
+	}
 }

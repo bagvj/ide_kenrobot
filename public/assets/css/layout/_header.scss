@@ -1,125 +1,14 @@
-.header .left {
-  width: 248px;
-  height: 100%;
-  float: left;
-}
-
-.header .logo {
-  margin-left: 15px;
-  height: 60px;
-  width: 103px;
-  line-height: 60px;
-  float: left;
-}
-
-.header .tab {
-  float: left;
-}
-
-.header .menu {
-  float: right;
-  margin-right: 30px;
-}
-
-.header .menu .btn {
-  height: 60px;
-  width: 120px;
-  background-color: transparent;
-  border-radius: 0;
-  border: none;
-  letter-spacing: 5px;
-  -webkit-box-shadow: none;
-   box-shadow: none; 
-}
-
-.header .menu .dropdown-menu {
-  margin-top: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-  border: none;
-  border-radius: 0;
-  width: 120px;
-  min-width: 120px;
-}
-
-.header .menu .dropdown-menu > li > a {
-  height: 40px;
-  line-height: 40px;
-  padding: 0;
-  text-align: center;
-  letter-spacing: 5px;
-  background-color: transparent;
-}
-
-.header .menu .dropdown-menu > li:hover > a {
-  color: white;
-}
-
-.header .menu .dropdown-submenu {
-  position: relative;
-}
-
-.header .menu .dropdown-submenu > .dropdown-menu {
-  top: 0;
-  left: -100%;
-}
-
-.header .menu .dropdown-submenu:hover > .dropdown-menu {
-  display: block;
-}
-
-.header .menu .board-list.dropdown-menu {
-  width: 270px;
-  min-width: 270px;
-  left: -270px;
-}
-
-.header .menu .board-list.dropdown-menu > li > a {
-  letter-spacing: 0;
-  width: 270px;
-  height: 70px;
-  line-height: 70px;
-}
-
-.header .menu .board-list .thumbnail {
-  background-color: transparent;
-  width: 60px;
-  height: 60px;
-  border: none;
-  margin: 5px 10px;
-  float: left;
-  padding: 0;
-}
-
-.header .menu .board-list .name {
-	line-height: 70px;
-	text-align: left;
-	float: left;
-}
-
-.header .menu .dropdown-submenu > a:after {
-	display: block;
-	content: " ";
-	float: left;
-	width: 0;
-	height: 0;
-	border-color: transparent;
-	border-style: solid;
-	border-width: 5px 5px 5px 0;
-	top: 15px;
-	left: 8px;
-	position: absolute;
-}
-
-.header .tab ul {
-  float: left;
-}
-
-.header .tab ul li {
-  width: 120px;
-  line-height: 60px;
-  text-align: center;
-  letter-spacing: 5px;
-  cursor: pointer;
-  float: left;
+.header {
+  .left {
+    width: 248px;
+    height: 100%;
+    float: left;
+    .logo {
+      margin-left: 10px;
+      height: 60px;
+      width: 103px;
+      line-height: 60px;
+      float: left;
+    }
+  }
 }

@@ -34,7 +34,10 @@ class ReDesignConfig extends Migration {
 			$table->integer('user_id')->comment("用户id");
 			$table->integer('create_at')->comment("创建时间");
 			$table->integer('update_at')->comment("最后修改时间");
-			$table->binary('data')->comment("项目数据");
+			$table->integer('public_type')->comment("公开类型 0私有, 1完全公开 2好友公开");
+			$table->string('project_name')->comment("项目名字");
+			$table->string('project_intro')->comment("项目简介");
+			$table->binary('project_data')->comment("项目数据");
 		});
 
 		//库

@@ -1,0 +1,230 @@
+//默认字体颜色
+$default-font-color: #dfdfdf;
+
+//菜单颜色
+$default-menu-color: #5f5176;
+
+.theme-default {
+	color: $default-font-color;
+
+	.dropdown-menu {
+		box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.5);
+	}
+
+	.header {
+		background-color: #1c242e;
+		.logo {
+			background: url('/assets/images/logo.png') no-repeat center;
+			background-size: 103px 50px;
+		}
+		.menu {
+			.dropdown-menu {
+				background-color: #504C56;
+				&>li {
+					&:hover{
+						background-color: #8B7AA8;
+					}
+					&>a {
+						color: #dfdfdf;
+					}
+				}
+			}
+
+			.btn {
+				color: $default-font-color;
+				&:hover {
+					color: white;
+					background-color: $default-menu-color;
+				}
+			}
+
+			.open .btn {
+				color: white;
+				background-color: $default-menu-color;
+			}
+
+			.dropdown-submenu {
+				&:hover {
+					&>a:after {
+						border-right-color: #9b9b9b;
+					}
+				}
+				&>a:after {
+					border-right-color: #9b9b9b;
+				}
+			}
+		}
+
+		.tab {
+			ul li {
+				color: #9B9B9B;
+				&.active,
+				&:hover {
+					color: white;
+					background-color: $default-menu-color;
+				}
+			}
+		}
+	}
+
+	.sidebar {
+		.bar {
+			background-color: #575F69;
+			ul {
+				background-color: #333C48;
+				li {
+					&.active {
+						color: white;
+						background-color: #38A1DB;
+					}
+					&:hover {
+						color: white;
+						background-color: #20B9EF;
+					}
+				}
+			}
+		}
+
+		.tab-component {
+			background-color: #2d2b30;
+		}
+
+		.component {
+			.search {
+				background-color: #47434C;
+				.key {
+					color: white;
+				}
+			}
+
+			.seperator {
+				background-color: #535353;
+			}
+
+			.items {
+				background-color: #47434C;
+				.list li {
+					.name {
+						color: $default-font-color;
+					}
+				}
+			}
+		}
+
+		.project {
+			.operation {
+				li {
+					background-color: #3E4959;
+					&:hover {
+						color: white;
+						background-color: #38A1DB;
+					}
+					
+					&.cancel {
+						background-color: #3E4959;
+					}
+
+					&.confirm {
+						background-color: #38A1DB;
+						color: white;
+					}
+				}
+			}
+		}
+	}
+
+	.hardware {		
+		.tools {
+			ul li {
+				background-color: #b9b9b6;
+				color: #9b9b9b;
+				&.active {
+					background-color: #76797f;
+					color: $default-font-color;
+				}
+
+				&:hover {
+					color: $default-font-color;
+					background-color: rgba(45, 43, 48, 1);
+				}
+			}
+		}
+
+		.center {
+			background-color: #f4f6fa;
+		}
+	}
+
+	.software {
+		.north {
+			background-color: #47434C;
+		}
+		.menu {
+			.btn {
+				color: $default-font-color;
+				background-color: #47434C;
+				&:hover {
+					background-color: $default-menu-color;
+				}
+			}
+
+			.open .btn {
+				background-color: $default-menu-color;
+			}
+
+			.dropdown-menu {
+				background-color: #504C56;
+				&>li {
+					&>a {
+						color: $default-font-color;
+					}
+					&:hover {
+						background-color: $default-menu-color;
+						&>a {
+							color: white;
+						}
+					}
+				}
+			}
+
+			.dropdown-submenu {
+				&>a:after {
+					border-left-color: #9b9b9b;
+				}
+				&:hover {
+					&>a:after {
+						border-left-color: #9b9b9b;
+					}
+				}
+			}
+		}
+
+		.sub-tab {
+			ul li {
+				&.active {
+					background-color: $default-menu-color;
+				}
+
+				&:hover {
+					background-color: $default-menu-color;
+				}
+			}
+		}
+	}
+
+	.x-scrollbar {
+		&::-webkit-scrollbar-track {
+			-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+			background-color: #5E5B62;
+		}
+
+		&::-webkit-scrollbar {
+			width: 6px;
+			background-color: #5E5B62;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: #737078;
+		}
+	}
+}

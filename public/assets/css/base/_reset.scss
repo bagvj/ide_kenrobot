@@ -12,6 +12,10 @@ li {
   list-style: outside none none;
 }
 
+ul, li {
+  margin: 0;
+}
+
 input {
   outline: none;
 }
@@ -23,6 +27,11 @@ a, a:hover{
 }
 
 a:focus {
+  outline: none;
+}
+
+a:visited {
+  text-decoration: none;
   outline: none;
 }
 

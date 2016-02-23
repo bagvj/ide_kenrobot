@@ -55,7 +55,6 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 			
 			//显示网格
 			"grid.visible": true,
-			"grid.gridCellSize": new go.Size(40, 40),
 			"draggingTool.isGridSnapEnabled": true,
 			"resizingTool.isGridSnapEnabled": true,
 
@@ -67,8 +66,17 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 			"animationManager.isEnabled": false,
 
 			"click": onBackgroundSingleClick,
+			"doubleClick": onBackgroundDoubleClick,
 			"PartCreated": onPartCreated,
 		});
+
+		diagram.grid = GO(go.Panel, "Grid",
+			{ gridCellSize: new go.Size(30, 30) },
+			GO(go.Shape, "LineH", { stroke: "#EBEFF7" }),
+			GO(go.Shape, "LineV", { stroke: "#EBEFF7" }),
+			GO(go.Shape, "LineH", { stroke: "#F0F3F8", interval: 5 }),
+			GO(go.Shape, "LineV", { stroke: "#F0F3F8", interval: 5 })
+		);
 		
 		//节点模版
 		for (var name in template.node) {
@@ -245,6 +253,10 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 		hintTargetPort();
 		highlightLink();
 		showNameDialog(false);
+	}
+
+	function onBackgroundDoubleClick(e) {
+		EventManager.trigger("hardware", "switchToSoftware");
 	}
 
 	function onPartCreated(e) {
@@ -480,7 +492,6 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 				ports: ports,
 			});
 		}
-		console.dir(nodes);
 
 		return nodes.sort(function(a, b){
 			var nameResult = a.name.localeCompare(b.name);

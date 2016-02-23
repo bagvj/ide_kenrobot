@@ -13,21 +13,24 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		initEditor();
 		initLogin();
 
-		$('.header .tab li').on('click', onHeaderTabClick).eq(0).click();
-		$('.header .setting li').on('click', onMenuClick);
-		$('.hardware .items .list > li').on('click', onHardwareItemClick);
-		$('.hardware .tools > li').on('click', onToolsClick);
+		$('.sidebar .bar ul > li').on('click', onSidebarClick).eq(0).click();
+		$('.project .list .view > div').on('click', onProjectFileClick);
+		$('.project .list .title').on('click', onProjectTitleClick).eq(0).click();
+		$('.board .list > li').on('click', onBoardClick);
+		$('.library .list > li').on('click', onLibraryClick);
+
+		$('.component .items .list > li').on('click', onComponentClick);
+		$('.hardware .tools li').on('click', onToolsClick);
 
 		$('.software .menu li').on('click', onMenuClick);
-		$('.software .sub-tab li').on('click', onSoftwareSubTabClick).eq(1).click();
 
 		$('.software .doEdit li').on('click', onDoEditClick);
 
 		initEvent();
 
-		$(window).bind('beforeunload', function(){
-			return '您输入的内容尚未保存，确定离开此页面吗？';
-		});
+		// $(window).bind('beforeunload', function(){
+		// 	return '您输入的内容尚未保存，确定离开此页面吗？';
+		// });
 	}
 
 	function requestPlatformConfig() {
@@ -46,7 +49,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			components: platformConfig.components,
 		});
 
-		$('.header .board-list > li').eq(0).click();
+		$('.board .list > li').eq(0).click();
 
 		initSearch();
 	}
@@ -182,7 +185,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 				return typeof item !== 'undefined' && typeof item.label != 'undefined' && item.label || item;
 			},
 			updater: function(item) {
-				$('.hardware .items .list > li[data-component-name="' + item.name + '"').click();
+				$('.component .items .list > li[data-component-name="' + item.name + '"').click();
 				return item;
 			}
 		});
@@ -191,6 +194,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 	function initEvent() {
 		EventManager.bind("hardware", "showNameDialog", onShowNameDialog);
 		EventManager.bind("hardware", "changeInteractiveMode", onChangeInteractiveMode);
+		EventManager.bind("hardware", "switchToSoftware", onSwitchToSoftware);
 	}
 
 	function onMenuClick(e) {
@@ -218,7 +222,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		}
 	}
 
-	function onSaveClick(node, e) {
+	function onSaveClick() {
 		$.ajax({
 			type: 'GET',
 			url: '/auth/check',
@@ -247,7 +251,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		});
 	}
 
-	function onDownloadClick(node, e) {
+	function onDownloadClick() {
 		var project = "Arduino";
 		var buildType = "Arduino";
 		var userId = 1;
@@ -271,17 +275,18 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		});
 	}
 
-	function onShareClick(node, e) {
+	function onShareClick() {
 
 	}
 
-	function onIncludeLibraryClick(node, e) {
+	function onLibraryClick(e) {
 		if(!isSourceEditMode) {
 			util.message("未启用源码编辑模式");
 			return;
 		}
 
-		var name = node.data('library');
+		var li = $(this);
+		var name = li.data('library');
 		var libraries = platformConfig.libraries;
 		var library = libraries[name];
 
@@ -294,10 +299,12 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		editor.setValue(source, 1);
 	}
 
-	function onSelectBoardClick(node, e) {
+	function onBoardClick(e) {
+		var li = $(this);
 		var boards = platformConfig.boards;
-		var name = node.data("board-name");
+		var name = li.data("board");
 		board = boards[name];
+		toggleActive(li);
 	}
 
 	function onChangeThemeClick(node, e) {
@@ -307,6 +314,36 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			$('body').removeClass('theme-' + oldTheme).addClass('theme-' + newTheme).data('theme', newTheme);
 			editor.setTheme("ace/theme/" + newTheme);
 		}
+	}
+
+	function onProjectTitleClick(e) {
+		var li = $(this).parent();
+		var operation = $('.sidebar .project .list').data('operation');
+		if(operation == "delete") {
+
+		} else {
+			toggleActive(li, null, true);
+			var divs = li.find(".view > div");
+			if(divs.filter(".active").length == 0) {
+				divs.eq(0).click();
+			}
+		}
+	}
+
+	function onProjectFileClick(e) {
+		var div = $(this);
+		$('.project .list .view div.active').removeClass("active");
+		toggleActive(div, 'div')
+		var index = div.index();
+		var list = $('.sidebar .bar ul > li');
+		if(index == 0) {
+			list.filter('[data-action="board"],[data-action="component"]').removeClass("hide");
+			list.filter('[data-action="library"]').addClass("hide");
+		} else {
+			list.filter('[data-action="board"],[data-action="component"]').addClass("hide");
+			list.filter('[data-action="library"]').removeClass("hide");
+		}
+		$('.content .tabs .tab').removeClass("active").eq(index).addClass("active");
 	}
 
 	function onHeaderTabClick(e) {
@@ -323,11 +360,36 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			}
 		}
 		if (toggleActive(li)) {
-			$('.content .mod').removeClass("active").eq(index).addClass("active");
+			$('.content .tabs .tab').removeClass("active").eq(index).addClass("active");
 		}
 	}
 
-	function onHardwareItemClick(e) {
+	function onSidebarClick(e) {
+		var li = $(this);
+		var index = li.index();
+		var action = li.data("action");
+		switch(action) {
+			case "save":
+				onSaveClick();
+				break;
+			case "download":
+				onDownloadClick();
+				break;
+			case "share":
+				onShareClick();
+				break;
+			default:
+				var tab = $('.sidebar .tab.tab-' + action);
+				toggleActive(li, null, true);
+				toggleActive(tab, ".tab", true);
+				$(".content .tabs").css({
+					'margin-left': $('.sidebar').width()
+				});
+				break;
+		}
+	}
+
+	function onComponentClick(e) {
 		$(this).parent().find("li.active").removeClass("active");
 		$(this).addClass("active");
 		hardware.setPlaceComponent($(this).data("component-name"));
@@ -351,12 +413,16 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		var mode = node.data('mode');
 		hardware.setInteractiveMode(mode);
 		if(mode == "place") {
-			$('.hardware .items .list > li.active').click();
+			$('.component .items .list > li.active').click();
 		}
 	}
 
 	function onChangeInteractiveMode(mode) {
 		$('.hardware .tools > li[data-mode="' + mode + '"').click();
+	}
+
+	function onSwitchToSoftware() {
+		$('.project .list .view > div').eq(1).click();
 	}
 
 	function onSoftwareSubTabClick(e) {
@@ -413,15 +479,27 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		}
 	}
 
-	function toggleActive(li) {
-		if (li.hasClass("active")) {
-			return false;
+	function toggleActive(target, tag, collapseMode) {
+		tag = tag || "li";
+		if(collapseMode) {
+			if(target.hasClass("active")) {
+				target.removeClass("active");
+				return false;
+			} else {
+				target.parent().find(tag + ".active").removeClass("active");
+				target.addClass("active");
+				return true;
+			}
+		} else {
+			if (target.hasClass("active")) {
+				return false;
+			}
+
+			target.parent().find(tag + ".active").removeClass("active");
+			target.addClass("active");
+
+			return true;
 		}
-
-		li.parent().find("li.active").removeClass("active");
-		li.addClass("active");
-
-		return true;
 	}
 
 	function toggleWidth(e, width) {

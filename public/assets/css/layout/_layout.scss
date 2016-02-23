@@ -18,16 +18,50 @@ $header-height: 60px;
 		right: 0;
 		position: absolute;
 
-		.mod {
-			top: 0;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			position: absolute;
-			visibility: hidden;
+		.sidebar {
+			height: 100%;
+			float: left;
+			.bar {
+				width: 60px;
+				height: 100%;
+				float: left;
+			}
 
-			&.active {
-				visibility: visible;
+			.tab {
+				height: 100%;
+				float: left;
+				position: relative;
+				display: none;
+
+				&.active {
+					display: block;
+				}
+
+				&>div {
+					height: 100%;
+				}
+			}
+		}
+
+		.tabs {
+			height: 100%;
+			margin-left: 60px;
+			.tab {
+				height: 100%;
+				position: relative;
+				display: none;
+
+				&.active {
+					display: block;
+				}
+
+				&>div {
+					top: 0;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					position: absolute;
+				}
 			}
 		}
 	}

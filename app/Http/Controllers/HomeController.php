@@ -165,6 +165,10 @@ class HomeController extends Controller {
 		return collect($project)->toJson();
 	}
 
+	public function getProjects(Request $request, $user_id) {
+		
+	}
+
 	private function getLibrariyConfig($isDict = false) {
 		$libraries = DB::table('libraries')->get();
 		if($isDict) {
