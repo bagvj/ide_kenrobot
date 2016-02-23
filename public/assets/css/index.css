@@ -71,7 +71,7 @@ body {
   cursor: auto;
 }
 
-/* line 3, layout/_layout.scss */
+/* line 1, layout/_layout.scss */
 .main {
   top: 0;
   bottom: 0;
@@ -79,61 +79,49 @@ body {
   right: 0;
   position: absolute;
 }
-/* line 10, layout/_layout.scss */
-.main .header {
-  height: 60px;
-}
-/* line 14, layout/_layout.scss */
-.main .content {
-  top: 60px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  position: absolute;
-}
-/* line 21, layout/_layout.scss */
-.main .content .sidebar {
+/* line 9, layout/_layout.scss */
+.main .sidebar {
   height: 100%;
   float: left;
 }
-/* line 24, layout/_layout.scss */
-.main .content .sidebar .bar {
+/* line 12, layout/_layout.scss */
+.main .sidebar .bar {
   width: 60px;
   height: 100%;
   float: left;
 }
-/* line 30, layout/_layout.scss */
-.main .content .sidebar .tab {
+/* line 18, layout/_layout.scss */
+.main .sidebar .tab {
   height: 100%;
   float: left;
   position: relative;
   display: none;
 }
-/* line 36, layout/_layout.scss */
-.main .content .sidebar .tab.active {
+/* line 24, layout/_layout.scss */
+.main .sidebar .tab.active {
   display: block;
 }
-/* line 40, layout/_layout.scss */
-.main .content .sidebar .tab > div {
+/* line 28, layout/_layout.scss */
+.main .sidebar .tab > div {
   height: 100%;
 }
-/* line 46, layout/_layout.scss */
-.main .content .tabs {
+/* line 34, layout/_layout.scss */
+.main .tabs {
   height: 100%;
   margin-left: 60px;
 }
-/* line 49, layout/_layout.scss */
-.main .content .tabs .tab {
+/* line 37, layout/_layout.scss */
+.main .tabs .tab {
   height: 100%;
   position: relative;
   display: none;
 }
-/* line 54, layout/_layout.scss */
-.main .content .tabs .tab.active {
+/* line 42, layout/_layout.scss */
+.main .tabs .tab.active {
   display: block;
 }
-/* line 58, layout/_layout.scss */
-.main .content .tabs .tab > div {
+/* line 46, layout/_layout.scss */
+.main .tabs .tab > div {
   top: 0;
   bottom: 0;
   left: 0;
@@ -141,22 +129,18 @@ body {
   position: absolute;
 }
 
-/* line 2, layout/_header.scss */
-.header .left {
-  width: 248px;
-  height: 100%;
-  float: left;
-}
-/* line 6, layout/_header.scss */
-.header .left .logo {
-  margin-left: 10px;
-  height: 60px;
-  width: 103px;
-  line-height: 60px;
-  float: left;
-}
-
 /* line 3, layout/_sidebar.scss */
+.sidebar .bar .logo {
+  height: 60px;
+  background: #323942 url("/assets/images/logo-single.png") no-repeat center;
+  background-size: 50px 50px;
+}
+/* line 7, layout/_sidebar.scss */
+.sidebar .bar .logo a {
+  display: block;
+  height: 60px;
+}
+/* line 13, layout/_sidebar.scss */
 .sidebar .bar ul li {
   height: 60px;
   text-align: center;
@@ -164,22 +148,22 @@ body {
   padding-top: 10px;
   font-size: 12px;
 }
-/* line 9, layout/_sidebar.scss */
+/* line 19, layout/_sidebar.scss */
 .sidebar .bar ul li i {
   font-size: 22px;
   margin-bottom: 3px;
   display: block;
 }
-/* line 17, layout/_sidebar.scss */
+/* line 27, layout/_sidebar.scss */
 .sidebar .project {
   width: 240px;
   position: relative;
 }
-/* line 21, layout/_sidebar.scss */
+/* line 31, layout/_sidebar.scss */
 .sidebar .project .operation {
   height: 60px;
 }
-/* line 23, layout/_sidebar.scss */
+/* line 33, layout/_sidebar.scss */
 .sidebar .project .operation li {
   float: left;
   width: 50%;
@@ -187,11 +171,11 @@ body {
   text-align: center;
   line-height: 60px;
 }
-/* line 30, layout/_sidebar.scss */
+/* line 40, layout/_sidebar.scss */
 .sidebar .project .operation li > i {
   margin-top: 16px;
 }
-/* line 36, layout/_sidebar.scss */
+/* line 46, layout/_sidebar.scss */
 .sidebar .project .list {
   background-color: #DEE1E5;
   overflow-y: auto;
@@ -201,7 +185,7 @@ body {
   right: 0;
   position: absolute;
 }
-/* line 46, layout/_sidebar.scss */
+/* line 56, layout/_sidebar.scss */
 .sidebar .project .list li .title {
   height: 36px;
   line-height: 36px;
@@ -212,25 +196,25 @@ body {
   color: white;
   margin-top: 1px;
 }
-/* line 55, layout/_sidebar.scss */
+/* line 65, layout/_sidebar.scss */
 .sidebar .project .list li .title > i {
   float: right;
   font-size: 20px;
   margin-top: 8px;
 }
-/* line 59, layout/_sidebar.scss */
+/* line 69, layout/_sidebar.scss */
 .sidebar .project .list li .title > i::before {
   content: "\f0d9";
 }
-/* line 65, layout/_sidebar.scss */
+/* line 75, layout/_sidebar.scss */
 .sidebar .project .list li:first-child .title {
   margin-top: 0;
 }
-/* line 69, layout/_sidebar.scss */
+/* line 79, layout/_sidebar.scss */
 .sidebar .project .list li .view {
   display: none;
 }
-/* line 71, layout/_sidebar.scss */
+/* line 81, layout/_sidebar.scss */
 .sidebar .project .list li .view > div {
   font-size: 12px;
   color: #515151;
@@ -239,58 +223,58 @@ body {
   line-height: 36px;
   cursor: pointer;
 }
-/* line 79, layout/_sidebar.scss */
+/* line 89, layout/_sidebar.scss */
 .sidebar .project .list li .view > div:hover {
   background-color: #C9CED4;
 }
-/* line 83, layout/_sidebar.scss */
+/* line 93, layout/_sidebar.scss */
 .sidebar .project .list li .view > div.active {
   background-color: #ECEFF3;
 }
-/* line 92, layout/_sidebar.scss */
+/* line 102, layout/_sidebar.scss */
 .sidebar .project .list li.active .title > i::before {
   content: "\f0d7";
 }
-/* line 98, layout/_sidebar.scss */
+/* line 108, layout/_sidebar.scss */
 .sidebar .project .list li.active .view {
   display: block;
 }
-/* line 106, layout/_sidebar.scss */
+/* line 116, layout/_sidebar.scss */
 .sidebar .project .list li.unselected .title > i::before {
   content: "\f10c";
 }
-/* line 112, layout/_sidebar.scss */
+/* line 122, layout/_sidebar.scss */
 .sidebar .project .list li.unselected .view {
   display: none;
 }
-/* line 120, layout/_sidebar.scss */
+/* line 130, layout/_sidebar.scss */
 .sidebar .project .list li.selected .title > i::before {
   content: "\f05d";
 }
-/* line 126, layout/_sidebar.scss */
+/* line 136, layout/_sidebar.scss */
 .sidebar .project .list li.selected .view {
   display: none;
 }
-/* line 134, layout/_sidebar.scss */
+/* line 144, layout/_sidebar.scss */
 .sidebar .component {
   width: 240px;
   position: relative;
 }
-/* line 138, layout/_sidebar.scss */
+/* line 148, layout/_sidebar.scss */
 .sidebar .component .search {
   margin: 24px 10px 14px 10px;
   height: 36px;
   border-radius: 40px;
   float: left;
 }
-/* line 144, layout/_sidebar.scss */
+/* line 154, layout/_sidebar.scss */
 .sidebar .component .search .key {
   height: 100%;
   margin: 0 18px;
   width: 184px;
   background-color: transparent;
 }
-/* line 152, layout/_sidebar.scss */
+/* line 162, layout/_sidebar.scss */
 .sidebar .component .seperator {
   height: 2px;
   margin-left: 10px;
@@ -298,7 +282,7 @@ body {
   width: 220px;
   float: left;
 }
-/* line 160, layout/_sidebar.scss */
+/* line 170, layout/_sidebar.scss */
 .sidebar .component .items {
   left: 10px;
   right: 10px;
@@ -308,13 +292,13 @@ body {
   float: left;
   overflow-y: auto;
 }
-/* line 169, layout/_sidebar.scss */
+/* line 179, layout/_sidebar.scss */
 .sidebar .component .items .list {
   margin-right: 14px;
   margin-top: 12px;
   float: left;
 }
-/* line 174, layout/_sidebar.scss */
+/* line 184, layout/_sidebar.scss */
 .sidebar .component .items .list li {
   width: 85px;
   height: 110px;
@@ -323,57 +307,57 @@ body {
   float: left;
   text-align: center;
 }
-/* line 182, layout/_sidebar.scss */
+/* line 192, layout/_sidebar.scss */
 .sidebar .component .items .list li.active .image {
   background-color: orange;
 }
-/* line 189, layout/_sidebar.scss */
+/* line 199, layout/_sidebar.scss */
 .sidebar .component .items .item .image {
   width: 85px;
   height: 85px;
   background-color: white;
 }
-/* line 198, layout/_sidebar.scss */
+/* line 208, layout/_sidebar.scss */
 .sidebar .board {
   width: 240px;
   position: relative;
   overflow-y: auto;
   background-color: #DEE1E5;
 }
-/* line 205, layout/_sidebar.scss */
+/* line 215, layout/_sidebar.scss */
 .sidebar .board .list li {
   cursor: pointer;
 }
-/* line 207, layout/_sidebar.scss */
+/* line 217, layout/_sidebar.scss */
 .sidebar .board .list li .image {
   width: 70px;
   height: 70px;
   display: block;
   margin: 0 auto;
 }
-/* line 214, layout/_sidebar.scss */
+/* line 224, layout/_sidebar.scss */
 .sidebar .board .list li .name {
   color: #515151;
   margin: 0 atuo;
   display: block;
   text-align: center;
 }
-/* line 221, layout/_sidebar.scss */
+/* line 231, layout/_sidebar.scss */
 .sidebar .board .list li:hover {
   background-color: #C9CED4;
 }
-/* line 225, layout/_sidebar.scss */
+/* line 235, layout/_sidebar.scss */
 .sidebar .board .list li.active {
   background-color: white;
 }
-/* line 232, layout/_sidebar.scss */
+/* line 242, layout/_sidebar.scss */
 .sidebar .library {
   width: 240px;
   position: relative;
   overflow-y: auto;
   background-color: #DEE1E5;
 }
-/* line 239, layout/_sidebar.scss */
+/* line 249, layout/_sidebar.scss */
 .sidebar .library .list li {
   cursor: pointer;
   color: #515151;
@@ -381,11 +365,11 @@ body {
   height: 36px;
   line-height: 36px;
 }
-/* line 246, layout/_sidebar.scss */
+/* line 256, layout/_sidebar.scss */
 .sidebar .library .list li:hover {
   background-color: #C9CED4;
 }
-/* line 250, layout/_sidebar.scss */
+/* line 260, layout/_sidebar.scss */
 .sidebar .library .list li.active {
   background-color: white;
 }
@@ -729,15 +713,16 @@ body {
 /* line 125, component/_login.scss */
 #use_weixin {
   display: none;
+  overflow: none;
 }
 
-/* line 129, component/_login.scss */
+/* line 130, component/_login.scss */
 #use_weixin img {
   height: 512px;
   width: 350px;
 }
 
-/* line 134, component/_login.scss */
+/* line 135, component/_login.scss */
 #use_weixin.active {
   position: absolute;
   height: auto;
@@ -748,7 +733,7 @@ body {
   z-index: 105;
 }
 
-/* line 144, component/_login.scss */
+/* line 145, component/_login.scss */
 .baseLogin .tips {
   color: white;
   display: block;
@@ -760,7 +745,7 @@ body {
   text-align: center;
 }
 
-/* line 155, component/_login.scss */
+/* line 156, component/_login.scss */
 .baseLogin .message {
   color: #f00;
   font-size: 14px;
@@ -769,7 +754,7 @@ body {
   text-align: center;
 }
 
-/* line 163, component/_login.scss */
+/* line 164, component/_login.scss */
 .baseLogin .field {
   color: black;
   display: block;
@@ -784,12 +769,12 @@ body {
   box-sizing: content-box;
 }
 
-/* line 177, component/_login.scss */
+/* line 178, component/_login.scss */
 .baseLogin .field:first-child {
   margin-top: 20px;
 }
 
-/* line 181, component/_login.scss */
+/* line 182, component/_login.scss */
 .baseLogin .field label {
   border-bottom-color: #a7a7a7;
   border-bottom-style: solid;
@@ -818,17 +803,17 @@ body {
   box-sizing: content-box;
 }
 
-/* line 209, component/_login.scss */
+/* line 210, component/_login.scss */
 .baseLogin .field .email {
   background: url("../images/email.png") no-repeat center;
 }
 
-/* line 213, component/_login.scss */
+/* line 214, component/_login.scss */
 .baseLogin .field .password {
   background: url("../images/password.png") no-repeat center;
 }
 
-/* line 218, component/_login.scss */
+/* line 219, component/_login.scss */
 .baseLogin .field input {
   -webkit-appearance: none;
   -webkit-rtl-ordering: logical;
@@ -877,12 +862,12 @@ body {
   box-sizing: content-box;
 }
 
-/* line 266, component/_login.scss */
+/* line 267, component/_login.scss */
 .baseLogin .remember {
   margin-bottom: 20px;
 }
 
-/* line 270, component/_login.scss */
+/* line 271, component/_login.scss */
 .baseLogin .remember input {
   width: 15px;
   height: 15px;
@@ -891,7 +876,7 @@ body {
   vertical-align: middle;
 }
 
-/* line 278, component/_login.scss */
+/* line 279, component/_login.scss */
 .baseLogin .remember label {
   margin-left: 27px;
   font-size: 12px;
@@ -900,7 +885,7 @@ body {
   line-height: 20px;
 }
 
-/* line 286, component/_login.scss */
+/* line 287, component/_login.scss */
 .baseLogin .submitBtn {
   -webkit-appearance: none;
   -webkit-rtl-ordering: logical;

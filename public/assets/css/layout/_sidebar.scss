@@ -1,5 +1,15 @@
 .sidebar {
 	.bar {
+		.logo {
+			height: 60px;
+			background: #323942 url('/assets/images/logo-single.png') no-repeat center;
+			background-size: 50px 50px;
+			a {
+				display: block;
+				height: 60px;
+			}
+		}
+
 		ul li {
 			height: 60px;
 			text-align: center;

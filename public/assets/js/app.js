@@ -343,7 +343,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			list.filter('[data-action="board"],[data-action="component"]').addClass("hide");
 			list.filter('[data-action="library"]').removeClass("hide");
 		}
-		$('.content .tabs .tab').removeClass("active").eq(index).addClass("active");
+		$('.main > .tabs .tab').removeClass("active").eq(index).addClass("active");
 	}
 
 	function onHeaderTabClick(e) {
@@ -360,7 +360,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			}
 		}
 		if (toggleActive(li)) {
-			$('.content .tabs .tab').removeClass("active").eq(index).addClass("active");
+			$('.main > .tabs .tab').removeClass("active").eq(index).addClass("active");
 		}
 	}
 
@@ -382,7 +382,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 				var tab = $('.sidebar .tab.tab-' + action);
 				toggleActive(li, null, true);
 				toggleActive(tab, ".tab", true);
-				$(".content .tabs").css({
+				$(".main > .tabs").css({
 					'margin-left': $('.sidebar').width()
 				});
 				break;
