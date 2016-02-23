@@ -1,0 +1,60 @@
+#save-dialog {
+	max-width: 1024px;
+	min-width: 500px;
+	height: 100%;
+	width: 720px;
+	background-color: white;
+	margin: 0 auto;
+	border: 1px solid transparent;
+	display: none;
+	z-index: 101;
+	color: #515151;
+
+	.close-btn {
+		color: #999;
+	}
+
+	.wrapper {
+		margin: 30px 60px 10px 20px;
+	}
+
+	.control-label {
+		font-weight: normal;
+	}
+
+	.form-control {
+		background-color: #FAFAFA;
+		border-radius: 0;
+		border: 1px solid #ccc;
+		&:focus {
+			box-shadow: none;
+			border: 1px solid #ccc;
+		}
+	}
+
+	.form-group:last-child {
+		margin-bottom: 30px;
+	}
+
+	.checkbox-inline {
+		input {
+			margin-right: 10px;
+		}
+		&:first-child {
+			padding-left: 0;
+		}
+	}
+
+	.save {
+		width: 100px;
+		height: 36px;
+		color: white;
+		background: #1FB6ED;
+		border: none;
+		border-radius: 0;
+
+		&:hover {
+			color: white;
+		}
+	}
+}

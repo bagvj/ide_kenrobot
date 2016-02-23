@@ -43,6 +43,11 @@ a:visited {
 }
 
 /* line 38, base/_reset.scss */
+textarea {
+  resize: none;
+}
+
+/* line 42, base/_reset.scss */
 body {
   font-family: 'Microsoft YaHei';
   width: 100%;
@@ -79,54 +84,68 @@ body {
   right: 0;
   position: absolute;
 }
-/* line 9, layout/_layout.scss */
+/* line 8, layout/_layout.scss */
 .main .sidebar {
   height: 100%;
   float: left;
 }
-/* line 12, layout/_layout.scss */
+/* line 11, layout/_layout.scss */
 .main .sidebar .bar {
   width: 60px;
   height: 100%;
   float: left;
 }
-/* line 18, layout/_layout.scss */
+/* line 17, layout/_layout.scss */
 .main .sidebar .tab {
   height: 100%;
   float: left;
   position: relative;
   display: none;
 }
-/* line 24, layout/_layout.scss */
+/* line 23, layout/_layout.scss */
 .main .sidebar .tab.active {
   display: block;
 }
-/* line 28, layout/_layout.scss */
+/* line 27, layout/_layout.scss */
 .main .sidebar .tab > div {
   height: 100%;
 }
-/* line 34, layout/_layout.scss */
+/* line 33, layout/_layout.scss */
 .main .tabs {
   height: 100%;
   margin-left: 60px;
 }
-/* line 37, layout/_layout.scss */
+/* line 36, layout/_layout.scss */
 .main .tabs .tab {
   height: 100%;
   position: relative;
   display: none;
 }
-/* line 42, layout/_layout.scss */
+/* line 41, layout/_layout.scss */
 .main .tabs .tab.active {
   display: block;
 }
-/* line 46, layout/_layout.scss */
+/* line 45, layout/_layout.scss */
 .main .tabs .tab > div {
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   position: absolute;
+}
+
+/* line 58, layout/_layout.scss */
+.dialog-layer.active {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  background-color: rgba(123, 133, 145, 0.6);
+}
+/* line 66, layout/_layout.scss */
+.dialog-layer .dialog {
+  display: none;
 }
 
 /* line 3, layout/_sidebar.scss */
@@ -170,6 +189,7 @@ body {
   height: 60px;
   text-align: center;
   line-height: 60px;
+  cursor: pointer;
 }
 /* line 40, layout/_sidebar.scss */
 .sidebar .project .operation li > i {
@@ -491,59 +511,6 @@ body {
   margin-right: 5px;
 }
 
-/* line 1, layout/_info.scss */
-.info {
-  background-color: #514E57;
-}
-/* line 3, layout/_info.scss */
-.info .center {
-  max-width: 1024px;
-  min-width: 500px;
-  height: 100%;
-  background-color: #6E6874;
-  margin: 0 auto;
-  padding: 30px 80px 30px 0;
-  overflow-x: auto;
-}
-/* line 12, layout/_info.scss */
-.info .center .control-label {
-  font-weight: normal;
-}
-/* line 16, layout/_info.scss */
-.info .center .form-control {
-  border-radius: 0;
-  border: none;
-}
-/* line 19, layout/_info.scss */
-.info .center .form-control:focus {
-  border: none;
-}
-/* line 24, layout/_info.scss */
-.info .center .form-group:last-child {
-  margin-bottom: 30px;
-}
-/* line 29, layout/_info.scss */
-.info .center .checkbox-inline input {
-  margin-right: 10px;
-}
-/* line 32, layout/_info.scss */
-.info .center .checkbox-inline:first-child {
-  padding-left: 0;
-}
-/* line 37, layout/_info.scss */
-.info .center .create {
-  width: 100px;
-  height: 36px;
-  color: white;
-  background: #4ED697;
-  border: none;
-  border-radius: 0;
-}
-/* line 45, layout/_info.scss */
-.info .center .create:hover {
-  color: white;
-}
-
 /* line 1, component/_x-message.scss */
 .x-message {
   background-color: #373B44;
@@ -576,41 +543,52 @@ body {
   float: right;
 }
 
-/* line 1, component/_login.scss */
+/* line 1, component/_dialog.scss */
+.dialog {
+  position: relative;
+}
+/* line 3, component/_dialog.scss */
+.dialog .close-btn {
+  font-size: 20px;
+  top: 0;
+  cursor: pointer;
+  z-index: 1;
+  display: block;
+  position: absolute;
+}
+/* line 11, component/_dialog.scss */
+.dialog .close-btn.left {
+  left: 10px;
+}
+/* line 14, component/_dialog.scss */
+.dialog .close-btn.right {
+  right: 10px;
+}
+
+/* line 1, component/_login-dialog.scss */
 #login_dialog {
   margin: 0 auto;
   background-color: rgba(0, 0, 0, 0.5);
   width: 280px;
   height: 280px;
   border: 1px solid transparent;
-  position: relative;
   overflow: hidden;
   z-index: 101;
 }
-
-/* line 12, component/_login.scss */
-#login_dialog .active {
+/* line 10, component/_login-dialog.scss */
+#login_dialog .close-btn {
+  color: white;
+}
+/* line 14, component/_login-dialog.scss */
+#login_dialog .tab {
+  display: none;
+}
+/* line 16, component/_login-dialog.scss */
+#login_dialog .tab.active {
   display: block;
 }
 
-/* line 16, component/_login.scss */
-.closeBtn {
-  cursor: pointer;
-  display: block;
-  height: 16px;
-  width: 16px;
-}
-
-/* line 23, component/_login.scss */
-#login_dialog .closeBtn {
-  background: url("../images/closeBtn.png") no-repeat center;
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  z-index: 200;
-}
-
-/* line 31, component/_login.scss */
+/* line 22, component/_login-dialog.scss */
 .qrLogin {
   background-color: rgba(0, 0, 0, 0.5);
   border: 1px solid transparent;
@@ -622,10 +600,9 @@ body {
   margin: 0;
   padding-bottom: 20px;
   position: relative;
-  display: none;
 }
 
-/* line 45, component/_login.scss */
+/* line 35, component/_login-dialog.scss */
 .baseLogin {
   background-color: rgba(0, 0, 0, 0.5);
   border: 1px solid transparent;
@@ -638,10 +615,9 @@ body {
   padding-bottom: 20px;
   position: relative;
   z-index: 10;
-  display: none;
 }
 
-/* line 60, component/_login.scss */
+/* line 49, component/_login-dialog.scss */
 .baseLoginBtn {
   display: none;
   outline-style: none;
@@ -666,7 +642,7 @@ body {
   z-index: 101;
 }
 
-/* line 84, component/_login.scss */
+/* line 73, component/_login-dialog.scss */
 .qrLoginBtn {
   display: none;
   border: 0;
@@ -690,7 +666,7 @@ body {
   z-index: 101;
 }
 
-/* line 107, component/_login.scss */
+/* line 96, component/_login-dialog.scss */
 .qrLogin .tips {
   font-family: "Microsoft YaHei", "Helvetica Neue";
   font-size: 14px;
@@ -701,7 +677,7 @@ body {
   padding: 6px 0;
 }
 
-/* line 117, component/_login.scss */
+/* line 106, component/_login-dialog.scss */
 .qrLogin .qrcode {
   padding-top: 10px;
   width: 200px;
@@ -710,19 +686,18 @@ body {
   margin: 0 auto;
 }
 
-/* line 125, component/_login.scss */
+/* line 114, component/_login-dialog.scss */
 #use_weixin {
   display: none;
-  overflow: none;
 }
 
-/* line 130, component/_login.scss */
+/* line 118, component/_login-dialog.scss */
 #use_weixin img {
   height: 512px;
   width: 350px;
 }
 
-/* line 135, component/_login.scss */
+/* line 123, component/_login-dialog.scss */
 #use_weixin.active {
   position: absolute;
   height: auto;
@@ -733,7 +708,7 @@ body {
   z-index: 105;
 }
 
-/* line 145, component/_login.scss */
+/* line 133, component/_login-dialog.scss */
 .baseLogin .tips {
   color: white;
   display: block;
@@ -745,7 +720,7 @@ body {
   text-align: center;
 }
 
-/* line 156, component/_login.scss */
+/* line 144, component/_login-dialog.scss */
 .baseLogin .message {
   color: #f00;
   font-size: 14px;
@@ -754,7 +729,7 @@ body {
   text-align: center;
 }
 
-/* line 164, component/_login.scss */
+/* line 152, component/_login-dialog.scss */
 .baseLogin .field {
   color: black;
   display: block;
@@ -769,12 +744,12 @@ body {
   box-sizing: content-box;
 }
 
-/* line 178, component/_login.scss */
+/* line 166, component/_login-dialog.scss */
 .baseLogin .field:first-child {
   margin-top: 20px;
 }
 
-/* line 182, component/_login.scss */
+/* line 170, component/_login-dialog.scss */
 .baseLogin .field label {
   border-bottom-color: #a7a7a7;
   border-bottom-style: solid;
@@ -803,17 +778,17 @@ body {
   box-sizing: content-box;
 }
 
-/* line 210, component/_login.scss */
+/* line 198, component/_login-dialog.scss */
 .baseLogin .field .email {
   background: url("../images/email.png") no-repeat center;
 }
 
-/* line 214, component/_login.scss */
+/* line 202, component/_login-dialog.scss */
 .baseLogin .field .password {
   background: url("../images/password.png") no-repeat center;
 }
 
-/* line 219, component/_login.scss */
+/* line 207, component/_login-dialog.scss */
 .baseLogin .field input {
   -webkit-appearance: none;
   -webkit-rtl-ordering: logical;
@@ -862,12 +837,12 @@ body {
   box-sizing: content-box;
 }
 
-/* line 267, component/_login.scss */
+/* line 255, component/_login-dialog.scss */
 .baseLogin .remember {
   margin-bottom: 20px;
 }
 
-/* line 271, component/_login.scss */
+/* line 259, component/_login-dialog.scss */
 .baseLogin .remember input {
   width: 15px;
   height: 15px;
@@ -876,7 +851,7 @@ body {
   vertical-align: middle;
 }
 
-/* line 279, component/_login.scss */
+/* line 267, component/_login-dialog.scss */
 .baseLogin .remember label {
   margin-left: 27px;
   font-size: 12px;
@@ -885,7 +860,7 @@ body {
   line-height: 20px;
 }
 
-/* line 287, component/_login.scss */
+/* line 275, component/_login-dialog.scss */
 .baseLogin .submitBtn {
   -webkit-appearance: none;
   -webkit-rtl-ordering: logical;
@@ -927,4 +902,66 @@ body {
   outline-style: none;
   margin: 0 auto;
   font-family: "Microsoft YaHei", "Helvetica Neue";
+}
+
+/* line 1, component/_save-dialog.scss */
+#save-dialog {
+  max-width: 1024px;
+  min-width: 500px;
+  height: 100%;
+  width: 720px;
+  background-color: white;
+  margin: 0 auto;
+  border: 1px solid transparent;
+  display: none;
+  z-index: 101;
+  color: #515151;
+}
+/* line 13, component/_save-dialog.scss */
+#save-dialog .close-btn {
+  color: #999;
+}
+/* line 17, component/_save-dialog.scss */
+#save-dialog .wrapper {
+  margin: 30px 60px 10px 20px;
+}
+/* line 21, component/_save-dialog.scss */
+#save-dialog .control-label {
+  font-weight: normal;
+}
+/* line 25, component/_save-dialog.scss */
+#save-dialog .form-control {
+  background-color: #FAFAFA;
+  border-radius: 0;
+  border: 1px solid #ccc;
+}
+/* line 29, component/_save-dialog.scss */
+#save-dialog .form-control:focus {
+  box-shadow: none;
+  border: 1px solid #ccc;
+}
+/* line 35, component/_save-dialog.scss */
+#save-dialog .form-group:last-child {
+  margin-bottom: 30px;
+}
+/* line 40, component/_save-dialog.scss */
+#save-dialog .checkbox-inline input {
+  margin-right: 10px;
+}
+/* line 43, component/_save-dialog.scss */
+#save-dialog .checkbox-inline:first-child {
+  padding-left: 0;
+}
+/* line 48, component/_save-dialog.scss */
+#save-dialog .save {
+  width: 100px;
+  height: 36px;
+  color: white;
+  background: #1FB6ED;
+  border: none;
+  border-radius: 0;
+}
+/* line 56, component/_save-dialog.scss */
+#save-dialog .save:hover {
+  color: white;
 }

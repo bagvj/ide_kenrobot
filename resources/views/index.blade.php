@@ -127,60 +127,24 @@
 				<div class="tab">
 					<div class="software">
 						<div class="editor"></div>
-						<div class="doEdit">
-							<ul>
-								<li class="active" data-action="enterEdit"><i class="fa fa-pencil"></i>编辑</li>
-								<li data-action="exitEdit"><i class="fa fa-close"></i>退出</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="tab">
-					<div class="info">
-						<div class="center">
-							<form class="form-horizontal">
-								<div class="form-group">
-									<label class="col-sm-2 control-label">项目名称：</label>
-									<div class="col-sm-10">
-										<input class="form-control" name="name" type="text" />
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 control-label">项目简介：</label>
-									<div class="col-sm-10">
-										<textarea class="form-control" name="intro" rows="5"></textarea>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 control-label">公开：</label>
-									<div class="col-sm-10">
-										<label class="checkbox-inline"><input type="radio" name="power" value="1" checked="true" />私有</label>
-										<label class="checkbox-inline"><input type="radio" name="power" value="2" />完全公开</label>
-										<label class="checkbox-inline"><input type="radio" name="power" value="3" />好友公开</label>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-offset-2 col-sm-10">
-										<input class="btn create pull-right" type="submit" value="创建项目" />
-									</div>
-								</div>
-							</form>
-						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div>
-			<div id="login_dialog" style="display:none">
+		<div class="dialog-layer">
+			<div id="login_dialog" class="dialog">
+				<div class="close-btn left">
+				<i class="fa fa-close"></i>
+			</div>
 				<div>
 					<a href="javascript:;" title="返回" class="qrLoginBtn active" data-action="qrLogin"></a>
-					<div class="qrLogin active">
+					<div class="tab active qrLogin">
 						<div class="tips">请使用微信扫一扫</div>
 						<div class="tips">扫码关注后即可直接登录</div>
 						<img class="qrcode" alt="微信扫码" src="{{ $qrcodeurl or '' }}" />
 					</div>
 					<a href="javascript:;" title="返回" class="baseLoginBtn" data-action="baseLogin" style="display:none;"></a>
-					<div class="baseLogin">
+					<div class="tab baseLogin">
 						<div class="tips">登录到啃萝卜</div>
 						<form>
 							{!! csrf_field() !!}
@@ -202,11 +166,44 @@
 							</div>
 						</form>
 					</div>
-					<div class="closeBtn"></div>
 				</div>
 			</div>
 			<div id="use_weixin" style="display:none;">
 				<img src="{{asset('/assets/images/use_weixin.png')}}" />
+			</div>
+		</div>
+		<div id="save-dialog" class="dialog">
+			<div class="close-btn right">
+				<i class="fa fa-close"></i>
+			</div>
+			<div class="wrapper">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">项目名称：</label>
+						<div class="col-sm-10">
+							<input class="form-control" name="name" type="text" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">项目简介：</label>
+						<div class="col-sm-10">
+							<textarea class="form-control" name="intro" rows="5"></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">公开：</label>
+						<div class="col-sm-10">
+							<label class="checkbox-inline"><input type="radio" name="public-type" value="1" checked="true" />私有</label>
+							<label class="checkbox-inline"><input type="radio" name="public-type" value="2" />完全公开</label>
+							<label class="checkbox-inline"><input type="radio" name="public-type" value="3" />好友公开</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<input class="btn save pull-right" type="button" value="创建项目" />
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</body>

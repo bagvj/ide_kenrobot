@@ -5,7 +5,6 @@
 	right: 0;
 	position: absolute;
 
-
 	.sidebar {
 		height: 100%;
 		float: left;
@@ -51,5 +50,20 @@
 				position: absolute;
 			}
 		}
+	}
+}
+
+.dialog-layer {
+	// height: 0;
+	&.active {
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		position: absolute;
+		background-color: rgba(123, 133, 145, 0.6);
+	}
+	.dialog {
+		display: none;
 	}
 }
