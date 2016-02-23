@@ -1,0 +1,50 @@
+.info {
+	background-color: #514E57;
+	.center {
+		max-width: 1024px;
+		min-width: 500px;
+		height: 100%;
+		background-color: #6E6874;
+		margin: 0 auto;
+		padding: 30px 80px 30px 0;
+		overflow-x: auto;
+
+		.control-label {
+			font-weight: normal;
+		}
+
+		.form-control {
+			border-radius: 0;
+			border: none;
+			&:focus {
+				border: none;
+			}
+		}
+
+		.form-group:last-child {
+			margin-bottom: 30px;
+		}
+
+		.checkbox-inline {
+			input {
+				margin-right: 10px;
+			}
+			&:first-child {
+				padding-left: 0;
+			}
+		}
+
+		.create {
+			width: 100px;
+			height: 36px;
+			color: white;
+			background: #4ED697;
+			border: none;
+			border-radius: 0;
+
+			&:hover {
+				color: white;
+			}
+		}
+	}
+}

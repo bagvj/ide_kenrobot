@@ -579,6 +579,59 @@ body {
   margin-right: 5px;
 }
 
+/* line 1, layout/_info.scss */
+.info {
+  background-color: #514E57;
+}
+/* line 3, layout/_info.scss */
+.info .center {
+  max-width: 1024px;
+  min-width: 500px;
+  height: 100%;
+  background-color: #6E6874;
+  margin: 0 auto;
+  padding: 30px 80px 30px 0;
+  overflow-x: auto;
+}
+/* line 12, layout/_info.scss */
+.info .center .control-label {
+  font-weight: normal;
+}
+/* line 16, layout/_info.scss */
+.info .center .form-control {
+  border-radius: 0;
+  border: none;
+}
+/* line 19, layout/_info.scss */
+.info .center .form-control:focus {
+  border: none;
+}
+/* line 24, layout/_info.scss */
+.info .center .form-group:last-child {
+  margin-bottom: 30px;
+}
+/* line 29, layout/_info.scss */
+.info .center .checkbox-inline input {
+  margin-right: 10px;
+}
+/* line 32, layout/_info.scss */
+.info .center .checkbox-inline:first-child {
+  padding-left: 0;
+}
+/* line 37, layout/_info.scss */
+.info .center .create {
+  width: 100px;
+  height: 36px;
+  color: white;
+  background: #4ED697;
+  border: none;
+  border-radius: 0;
+}
+/* line 45, layout/_info.scss */
+.info .center .create:hover {
+  color: white;
+}
+
 /* line 1, component/_x-message.scss */
 .x-message {
   background-color: #373B44;

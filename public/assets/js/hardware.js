@@ -48,7 +48,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 			//可以撤消(Ctrl + Z)和重做(Ctrl + Y)
 			// "undoManager.isEnabled": true,
 
-			"toolManager.hoverDelay": 300,
+			"toolManager.hoverDelay": 500,
 
 			//放置模式时，单击放置
 			"clickCreatingTool.isDoubleClick": false,

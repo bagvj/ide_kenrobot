@@ -13,7 +13,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		initEditor();
 		initLogin();
 
-		$('.header .tab li').on('click', onHeaderTabClick).eq(0).click();
+		$('.header .tab li').on('click', onHeaderTabClick).eq(2).click();
 		$('.header .setting li').on('click', onMenuClick);
 		$('.hardware .items .list > li').on('click', onHardwareItemClick);
 		$('.hardware .tools > li').on('click', onToolsClick);
@@ -24,6 +24,10 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		$('.software .doEdit li').on('click', onDoEditClick);
 
 		initEvent();
+
+		$(window).bind('beforeunload', function(){
+			return '您输入的内容尚未保存，确定离开此页面吗？';
+		});
 	}
 
 	function requestPlatformConfig() {
@@ -235,6 +239,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 					dataType: 'json',
 				}).done(function(res) {
 					util.message(res.msg);
+					$(window).unbind('beforeunload');
 				});
 			} else {
 				showLoginDialog();
@@ -307,9 +312,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 	function onHeaderTabClick(e) {
 		var li = $(this);
 		var index = li.index();
-		if (index == 2) {
-			return;
-		} else if(index == 1) {
+		if(index == 1) {
 			var source = code.gen();
 			editor.setValue(source, 1);
 		} else if(index == 0) {

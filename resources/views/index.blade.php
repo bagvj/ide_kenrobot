@@ -152,6 +152,35 @@
 					</div>
 				</div>
 				<div class="mod info">
+					<div class="center">
+						<form class="form-horizontal">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">项目名称：</label>
+								<div class="col-sm-10">
+									<input class="form-control" name="name" type="text" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">项目简介：</label>
+								<div class="col-sm-10">
+									<textarea class="form-control" name="intro" rows="5"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">公开：</label>
+								<div class="col-sm-10">
+									<label class="checkbox-inline"><input type="radio" name="power" value="1" checked="true" />私有</label>
+									<label class="checkbox-inline"><input type="radio" name="power" value="2" />完全公开</label>
+									<label class="checkbox-inline"><input type="radio" name="power" value="3" />好友公开</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10">
+									<input class="btn create pull-right" type="submit" value="创建项目" />
+								</div>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
