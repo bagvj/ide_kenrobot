@@ -13,7 +13,7 @@
 		<link href="/assets/css/bootstrap.css" rel="stylesheet" />
 		<link href="/assets/css/font-awesome.css" rel="stylesheet" />
 		<link href="/assets/css/index.css" rel="stylesheet" />
-		<link href="/assets/css/theme/dark.css" rel="stylesheet" />
+		<link href="/assets/css/theme/default.css" rel="stylesheet" />
 
 		<script src="/assets/js/lib/require.min.js" data-main="/assets/js/main"></script>
 	</head>
