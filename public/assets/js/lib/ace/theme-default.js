@@ -1,100 +1,100 @@
-ace.define("ace/theme/dark",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
+ace.define("ace/theme/default",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
 
-exports.isDark = true;
-exports.cssClass = "ace-dark";
-exports.cssText = ".ace-dark .ace_gutter {\
+exports.isdefault = true;
+exports.cssClass = "ace-default";
+exports.cssText = ".ace-default .ace_gutter {\
 background: #6B6979;\
 color: white\
 }\
-.ace-dark .ace_print-margin {\
+.ace-default .ace_print-margin {\
 width: 1px;\
 background: #555651\
 }\
-.ace-dark {\
+.ace-default {\
 background-color: #534F59;\
 color: #F8F8F2\
 }\
-.ace-dark .ace_cursor {\
+.ace-default .ace_cursor {\
 color: #F8F8F0\
 }\
-.ace-dark .ace_marker-layer .ace_selection {\
+.ace-default .ace_marker-layer .ace_selection {\
 background-color: rgba(255, 211, 197, 0.2)\
 }\
-.ace-dark.ace_multiselect .ace_selection.ace_start {\
+.ace-default.ace_multiselect .ace_selection.ace_start {\
 box-shadow: 0 0 3px 0px #534F59;\
 }\
-.ace-dark .ace_marker-layer .ace_step {\
+.ace-default .ace_marker-layer .ace_step {\
 background: rgb(102, 82, 0)\
 }\
-.ace-dark .ace_marker-layer .ace_bracket {\
+.ace-default .ace_marker-layer .ace_bracket {\
 margin: -1px 0 0 -1px;\
 border: 1px solid #49483E\
 }\
-.ace-dark .ace_marker-layer .ace_active-line {\
+.ace-default .ace_marker-layer .ace_active-line {\
 background: #3E3D44\
 }\
-.ace-dark .ace_gutter-active-line {\
+.ace-default .ace_gutter-active-line {\
 background-color: transparent;\
 }\
-.ace-dark .ace_marker-layer .ace_selected-word {\
+.ace-default .ace_marker-layer .ace_selected-word {\
 border: 1px solid #49483E\
 }\
-.ace-dark .ace_invisible {\
+.ace-default .ace_invisible {\
 color: #52524d\
 }\
-.ace-dark .ace_entity.ace_name.ace_tag,\
-.ace-dark .ace_keyword,\
-.ace-dark .ace_meta.ace_tag,\
-.ace-dark .ace_storage {\
+.ace-default .ace_entity.ace_name.ace_tag,\
+.ace-default .ace_keyword,\
+.ace-default .ace_meta.ace_tag,\
+.ace-default .ace_storage {\
 color: #FF5252\
 }\
-.ace-dark .ace_punctuation,\
-.ace-dark .ace_punctuation.ace_tag {\
+.ace-default .ace_punctuation,\
+.ace-default .ace_punctuation.ace_tag {\
 color: #fff\
 }\
-.ace-dark .ace_constant.ace_character,\
-.ace-dark .ace_constant.ace_language,\
-.ace-dark .ace_constant.ace_numeric,\
-.ace-dark .ace_constant.ace_other {\
+.ace-default .ace_constant.ace_character,\
+.ace-default .ace_constant.ace_language,\
+.ace-default .ace_constant.ace_numeric,\
+.ace-default .ace_constant.ace_other {\
 color: #AE81FF\
 }\
-.ace-dark .ace_invalid {\
+.ace-default .ace_invalid {\
 color: #F8F8F0;\
 background-color: #F92672\
 }\
-.ace-dark .ace_invalid.ace_deprecated {\
+.ace-default .ace_invalid.ace_deprecated {\
 color: #F8F8F0;\
 background-color: #AE81FF\
 }\
-.ace-dark .ace_support.ace_constant,\
-.ace-dark .ace_support.ace_function {\
+.ace-default .ace_support.ace_constant,\
+.ace-default .ace_support.ace_function {\
 color: #66D9EF\
 }\
-.ace-dark .ace_fold {\
+.ace-default .ace_fold {\
 background-color: #A6E22E;\
 border-color: #F8F8F2\
 }\
-.ace-dark .ace_storage.ace_type,\
-.ace-dark .ace_support.ace_class,\
-.ace-dark .ace_support.ace_type {\
+.ace-default .ace_storage.ace_type,\
+.ace-default .ace_support.ace_class,\
+.ace-default .ace_support.ace_type {\
 color: #66D9EF\
 }\
-.ace-dark .ace_entity.ace_name.ace_function,\
-.ace-dark .ace_entity.ace_other,\
-.ace-dark .ace_entity.ace_other.ace_attribute-name,\
-.ace-dark .ace_variable {\
+.ace-default .ace_entity.ace_name.ace_function,\
+.ace-default .ace_entity.ace_other,\
+.ace-default .ace_entity.ace_other.ace_attribute-name,\
+.ace-default .ace_variable {\
 color: #A6E22E\
 }\
-.ace-dark .ace_variable.ace_parameter {\
+.ace-default .ace_variable.ace_parameter {\
 color: #FD971F\
 }\
-.ace-dark .ace_string {\
+.ace-default .ace_string {\
 color: #E6DB74\
 }\
-.ace-dark .ace_comment {\
+.ace-default .ace_comment {\
 color: #827E89\
 }\
-.ace-dark .ace_indent-guide {\
+.ace-default .ace_indent-guide {\
 background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWPQ0FD0ZXBzd/wPAAjVAoxeSgNeAAAAAElFTkSuQmCC) right repeat-y\
 }\
 .ace_gutter-cell {\

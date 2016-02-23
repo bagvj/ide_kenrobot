@@ -22,8 +22,6 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		$('.component .items .list > li').on('click', onComponentClick);
 		$('.hardware .tools li').on('click', onToolsClick);
 
-		$('.software .menu li').on('click', onMenuClick);
-
 		$('.software .doEdit li').on('click', onDoEditClick);
 
 		initEvent();
@@ -74,15 +72,8 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		editor.setHighlightSelectedWord(false);
 		editor.setShowPrintMargin(false);
 		editor.$blockScrolling = Infinity;
-		editor.setTheme("ace/theme/dark");
+		editor.setTheme("ace/theme/default");
 		editor.session.setMode("ace/mode/arduino");
-		// editor.commands.addCommand({
-		// 	name: "save",
-		// 	bindKey: {win: "Ctrl-s", mac: "Command-s"},
-		// 	exec: function() {
-		// 		onSaveClick();
-		// 	}
-		// });
 	}
 
 	function initLogin() {
@@ -197,31 +188,6 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		EventManager.bind("hardware", "switchToSoftware", onSwitchToSoftware);
 	}
 
-	function onMenuClick(e) {
-		var node = $(this);
-		var action = node.data('action');
-		switch (action) {
-			case 'save':
-				onSaveClick(node, e);
-				break;
-			case 'download':
-				onDownloadClick(node, e);
-				break;
-			case 'share':
-				onShareClick(node, e);
-				break;
-			case 'includeLibrary':
-				onIncludeLibraryClick(node, e);
-				break;
-			case 'selectBoard':
-				onSelectBoardClick(node, e);
-				break;
-			case 'changeTheme':
-				onChangeThemeClick(node, e);
-				break;
-		}
-	}
-
 	function onSaveClick() {
 		$.ajax({
 			type: 'GET',
@@ -307,15 +273,6 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		toggleActive(li);
 	}
 
-	function onChangeThemeClick(node, e) {
-		if (toggleActive(node)) {
-			var newTheme = node.data('theme');
-			var oldTheme = $('body').data('theme');
-			$('body').removeClass('theme-' + oldTheme).addClass('theme-' + newTheme).data('theme', newTheme);
-			editor.setTheme("ace/theme/" + newTheme);
-		}
-	}
-
 	function onProjectTitleClick(e) {
 		var li = $(this).parent();
 		var operation = $('.sidebar .project .list').data('operation');
@@ -344,24 +301,6 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			list.filter('[data-action="library"]').removeClass("hide");
 		}
 		$('.main > .tabs .tab').removeClass("active").eq(index).addClass("active");
-	}
-
-	function onHeaderTabClick(e) {
-		var li = $(this);
-		var index = li.index();
-		if(index == 1) {
-			var source = code.gen();
-			editor.setValue(source, 1);
-		} else if(index == 0) {
-			if(isSourceEditMode) {
-				//启用的源码编辑模式
-				util.message("已启用源码编辑模式，不能再进行硬件连接和设置。")
-				return;
-			}
-		}
-		if (toggleActive(li)) {
-			$('.main > .tabs .tab').removeClass("active").eq(index).addClass("active");
-		}
 	}
 
 	function onSidebarClick(e) {
@@ -500,18 +439,6 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 
 			return true;
 		}
-	}
-
-	function toggleWidth(e, width) {
-		var li = $(e.target);
-		if (!li.is('li') || li.hasClass('active')) {
-			return;
-		}
-
-		var duration = 100;
-		li.animate({
-			width: width
-		}, duration);
 	}
 
 	function showLoginDialog() {
