@@ -157,11 +157,14 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 		selectedPort = sourcePort;
 		if(selectedPort) {
 			selectedPort.fill = "#F19833";
-			iter.reset();
-			while(iter.next()) {
-				port = iter.value;
-				if(!portHasLink(port) && portTypeMatch(selectedPort, port)) {
-					port.opacity = 0.6;
+			var selectedType = selectedPort.part.data.type;
+			if(selectedType == "component") {
+				iter.reset();
+				while(iter.next()) {
+					port = iter.value;
+					if(!portHasLink(port) && portTypeMatch(selectedPort, port)) {
+						port.opacity = 0.6;
+					}
 				}
 			}
 		}
@@ -293,20 +296,16 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 			var part = port.part;
 			var nodeType = part.data.type;
 			if(!selectedPort) {
-				if(nodeType != "component") {
-					//第一个必须是组件
-					return;
-				}
 				hintTargetPort(port);
 			} else {
-				if(nodeType == "component") {
-					if(portHasLink(port)) {
-						//另一个端口已经有连线
-						hintTargetPort();
-						return;
-					}
-
-					if(portHasLink(selectedPort)) {
+				var selectedType = selectedPort.part.data.type;
+				if(selectedType == "component") {
+					if(nodeType == "component") {
+						if(!portHasLink(selectedPort) || portHasLink(port)) {
+							//第一个端口没连线或者第二个端口已有连线
+							hintTargetPort();
+							return;	
+						}
 						var link = getPortLink(selectedPort);
 						var linkOtherPort = link.getOtherPort(selectedPort);
 						if(!portTypeMatch(port, linkOtherPort)) {
@@ -322,26 +321,52 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 
 						hintTargetPort();
 					} else {
-						hintTargetPort(port);
+						if(portHasLink(selectedPort) || portHasLink(port) || !portTypeMatch(selectedPort, port)) {
+							//要连接的端口已经有连线或者端口类型不匹配
+							hintTargetPort();
+							return;
+						}
+						//连线
+						var fromKey = selectedPort.part.data.key;
+						var toKey = port.part.data.key;
+						addLink(fromKey, toKey, selectedPort.portId, port.portId);
+
+						hintTargetPort();
 					}
 				} else {
-					if(portHasLink(port) || !portTypeMatch(selectedPort, port)) {
-						//要连接的端口已经有连线或者端口类型不匹配
+					if(nodeType == "component") {
+						if(portHasLink(selectedPort) || portHasLink(port) || !portTypeMatch(selectedPort, port)) {
+							//要连接的端口已经有连线或者端口类型不匹配
+							hintTargetPort();
+							return;
+						}
+						//连线
+						var fromKey = selectedPort.part.data.key;
+						var toKey = port.part.data.key;
+						addLink(fromKey, toKey, selectedPort.portId, port.portId);
+
 						hintTargetPort();
-						return;
-					}
-					if(portHasLink(selectedPort)) {
-						//先删除已有连线
+					} else {
+						if(!portHasLink(selectedPort) || portHasLink(port)) {
+							//第一个端口没连线或者第二个端口已有连线
+							hintTargetPort();
+							return;	
+						}
 						var link = getPortLink(selectedPort);
+						var linkOtherPort = link.getOtherPort(selectedPort);
+						if(!portTypeMatch(port, linkOtherPort)) {
+							//端口类型不匹配
+							hintTargetPort();
+							return;
+						}
+						//用第二个port重连
 						diagram.remove(link);
+						var fromKey = linkOtherPort.part.data.key;
+						var toKey = port.part.data.key;
+						addLink(fromKey, toKey, linkOtherPort.portId, port.portId);
+
+						hintTargetPort();
 					}
-
-					//连线
-					var fromKey = selectedPort.part.data.key;
-					var toKey = port.part.data.key;
-					addLink(fromKey, toKey, selectedPort.portId, port.portId);
-
-					hintTargetPort();
 				}
 			}
 		} else {
