@@ -13,7 +13,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		initEditor();
 		initLogin();
 
-		$('.header .tab li').on('click', onHeaderTabClick).eq(2).click();
+		$('.header .tab li').on('click', onHeaderTabClick).eq(0).click();
 		$('.header .setting li').on('click', onMenuClick);
 		$('.hardware .items .list > li').on('click', onHardwareItemClick);
 		$('.hardware .tools > li').on('click', onToolsClick);
