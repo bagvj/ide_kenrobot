@@ -16,6 +16,7 @@ Route::post('/build', 'HomeController@build');
 Route::get('/download', 'HomeController@download');
 Route::get('/config', 'HomeController@config');
 Route::post('/project/save', 'HomeController@saveProject');
+Route::post('/project/delete', 'HomeController@deleteProject');
 Route::get('/project/{id}', 'HomeController@getProject')->where('id', '[1-9][0-9]*');
 Route::get('/projects/{user_id}', 'HomeController@getProjects')->where('user_id', '[1-9][0-9]*');
 

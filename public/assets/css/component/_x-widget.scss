@@ -69,12 +69,13 @@
         position: absolute;
         cursor: pointer;
     }
-
+    
     .x-confirm-content {
         height: 110px;
         background-color: white;
-        vertical-align: middle;
-        padding: 10px 30px 20px 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .x-confirm-btns {

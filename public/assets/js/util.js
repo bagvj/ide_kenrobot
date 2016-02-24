@@ -33,7 +33,6 @@ define(['jquery'], function($){
 		var cancel = args.cancel || "取 消";
 		var okFunc = args.okFunc;
 		var cancelFunc = args.cancelFunc;
-		console.log(text, ok, cancel);
 
 		var template = '<div class="x-confirm x-confirm-' + type + '">\
 			<div class="x-confirm-title">' + title + '</div>\
@@ -65,8 +64,32 @@ define(['jquery'], function($){
 		$('.dialog-layer').addClass("active");
 	}
 
+	function toggleActive(target, tag, collapseMode) {
+		tag = tag || "li";
+		if(collapseMode) {
+			if(target.hasClass("active")) {
+				target.removeClass("active");
+				return false;
+			} else {
+				target.parent().find(tag + ".active").removeClass("active");
+				target.addClass("active");
+				return true;
+			}
+		} else {
+			if (target.hasClass("active")) {
+				return false;
+			}
+
+			target.parent().find(tag + ".active").removeClass("active");
+			target.addClass("active");
+
+			return true;
+		}
+	}
+
 	return {
 		message: message,
 		confirm: confirm,
+		toggleActive: toggleActive,
 	}
 });

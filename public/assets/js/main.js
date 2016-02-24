@@ -16,7 +16,14 @@ require.config({
 		"EventManager": "EventManager",
 		"nodeTemplate": "nodeTemplate",
 		"hardware": "hardware",
+		"software": "software",
 		"code": "code",
+		"user": "user",
+		"project": "project",
+		"sidebar": "sidebar",
+		"board": "board",
+		"component": "component",
+		// "library"
 	},
 	shim: {
 		"bootstrap": {

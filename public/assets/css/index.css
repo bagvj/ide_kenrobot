@@ -589,27 +589,28 @@ body {
 .x-confirm .x-confirm-content {
   height: 110px;
   background-color: white;
-  vertical-align: middle;
-  padding: 10px 30px 20px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-/* line 80, component/_x-widget.scss */
+/* line 81, component/_x-widget.scss */
 .x-confirm .x-confirm-btns {
   height: 50px;
   background-color: white;
   color: white;
 }
-/* line 85, component/_x-widget.scss */
+/* line 86, component/_x-widget.scss */
 .x-confirm .x-confirm-btns > button {
   width: 100px;
   height: 30px;
   float: right;
   margin-right: 20px;
 }
-/* line 92, component/_x-widget.scss */
+/* line 93, component/_x-widget.scss */
 .x-confirm .x-confirm-btns .confirm {
   background-color: #4bc1ec;
 }
-/* line 96, component/_x-widget.scss */
+/* line 97, component/_x-widget.scss */
 .x-confirm .x-confirm-btns .cancel {
   background-color: #ea9c68;
 }

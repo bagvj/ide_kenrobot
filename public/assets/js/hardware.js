@@ -1,4 +1,4 @@
-define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, template, EventManager) {
+define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util', 'project'], function($, _, template, EventManager, util, project) {
 	//C++关键字
 	var keywords = [
 		"asm", "do", "if", "return", "typedef", "auto", "double",
@@ -31,10 +31,9 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 
 	var componentCounts;
 
-	function init(containerId, _configs) {
-		configs = _configs,
+	function init() {
 		GO = go.GraphObject.make;
-		diagram = GO(go.Diagram, containerId, {
+		diagram = GO(go.Diagram, "hardware-container", {
 			initialContentAlignment: go.Spot.Center,
 			allowClipboard: false,
 			allowCopy: false,
@@ -106,12 +105,42 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 		specNodes = {};
 		componentCounts = {};
 
+		initEvent();
+	}
+
+	function load(_configs) {
+		configs = _configs;
+		//添加初始节点
+		addInitNodes();
+	}
+
+	function initEvent() {
+		$('.hardware .tools li').on('click', onToolsClick);
+		
 		EventManager.bind('hardware', 'nodeClick', onNodeClick);
 		EventManager.bind('hardware', 'linkClick', onLinkClick);
 		EventManager.bind('hardware', 'portClick', onPortClick);
+	}
 
-		//添加初始节点
-		addInitNodes();
+	function onToolsClick(e) {
+		var li = $(this);
+		if (util.toggleActive(li)) {
+			var node = li;
+			var action = node.data('action');
+			switch (action) {
+				case 'changeMode':
+					onInteractiveModeClick(node, e);
+					break;
+			}
+		}
+	}
+
+	function onInteractiveModeClick(node, e) {
+		var mode = node.data('mode');
+		setInteractiveMode(mode);
+		if(mode == "place") {
+			$('.component .items .list > li.active').click();
+		}
 	}
 
 	//添加初始节点
@@ -193,7 +222,28 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 	}
 
 	function showNameDialog(args) {
-		EventManager.trigger("hardware", "showNameDialog", args);
+		var dialog = $('.hardware .name-dialog');
+		if(args) {
+			var name = $('.name', dialog).val(args.varName).off('blur').on('blur', function(e) {
+				var result = setVarName(args.key, name.val());
+				if(!result.success) {
+					name.val(args.varName);
+					util.message(result.message);
+				}
+			});
+
+			if(dialog.css("display") == "block") {
+				var result = setVarName(args.key, name.val());
+				if(!result.success) {
+					name.val(args.varName);
+					util.message(result.message);
+				}
+			}
+			dialog.show();
+			name.focus();
+		} else {
+			dialog.hide();
+		}
 	}
 
 	function getConfig(name, isBoard) {
@@ -256,11 +306,15 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 	}
 
 	function onBackgroundDoubleClick(e) {
-		EventManager.trigger("hardware", "switchToSoftware");
+		project.switchPanel(1);
 	}
 
 	function onPartCreated(e) {
-		EventManager.trigger("hardware", "changeInteractiveMode", "default");
+		changeInteractiveMode("default");
+	}
+
+	function changeInteractiveMode(mode) {
+		$('.hardware .tools li[data-mode="' + mode + '"').click();
 	}
 
 	function onNodeClick(node) {
@@ -504,9 +558,9 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager'], function($, _, templa
 
 	return {
 		init: init,
+		load: load,
 		setPlaceComponent: setPlaceComponent,
-		setInteractiveMode: setInteractiveMode,
-		setVarName: setVarName,
+		changeInteractiveMode: changeInteractiveMode,
 		getNodes: getNodes,
 	}
 });
