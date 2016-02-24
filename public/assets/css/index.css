@@ -134,7 +134,11 @@ body {
   position: absolute;
 }
 
-/* line 58, layout/_layout.scss */
+/* line 56, layout/_layout.scss */
+.dialog-layer {
+  z-index: 25;
+}
+/* line 59, layout/_layout.scss */
 .dialog-layer.active {
   top: 0;
   bottom: 0;
@@ -143,7 +147,7 @@ body {
   position: absolute;
   background-color: rgba(123, 133, 145, 0.6);
 }
-/* line 66, layout/_layout.scss */
+/* line 67, layout/_layout.scss */
 .dialog-layer .dialog {
   display: none;
 }
@@ -368,7 +372,7 @@ body {
 }
 /* line 235, layout/_sidebar.scss */
 .sidebar .board .list li.active {
-  background-color: white;
+  background-color: #ECEFF4;
 }
 /* line 242, layout/_sidebar.scss */
 .sidebar .library {
@@ -391,7 +395,7 @@ body {
 }
 /* line 260, layout/_sidebar.scss */
 .sidebar .library .list li.active {
-  background-color: white;
+  background-color: #ECEFF4;
 }
 
 /* line 2, layout/_hardware.scss */
@@ -511,56 +515,124 @@ body {
   margin-right: 5px;
 }
 
-/* line 1, component/_x-message.scss */
+/* line 1, component/_x-widget.scss */
 .x-message {
-  background-color: #373B44;
-  width: 400px;
-  border-radius: 5px;
-  margin: 0 auto;
-  padding: 8px;
   z-index: 99999;
   position: absolute;
 }
-/* line 10, component/_x-message.scss */
-.x-message .message-icon {
-  width: 20px;
-  display: inline-block;
+
+/* line 6, component/_x-widget.scss */
+.alert {
+  border-radius: 0;
+  margin-bottom: 0;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
-/* line 15, component/_x-message.scss */
-.x-message .message-content {
-  color: #fff;
-  height: 20px;
-  display: inline-block;
+/* line 12, component/_x-widget.scss */
+.alert.alert-info {
+  color: #316b8e;
+  background-color: #d8edf7;
+  border-color: #b9d5e2;
 }
-/* line 21, component/_x-message.scss */
-.x-message .message-close {
-  cursor: pointer;
-  width: 10px;
-  height: 20px;
-  background: url(../images/closeBtn.png) no-repeat center;
-  background-size: 10px 10px;
-  display: inline-block;
+/* line 18, component/_x-widget.scss */
+.alert.alert-success {
+  color: #477a40;
+  background-color: #def0d7;
+  border-color: #bad9ae;
+}
+/* line 24, component/_x-widget.scss */
+.alert.alert-warning {
+  color: #836e3a;
+  background-color: #fdf8e2;
+  border-color: #eae3c2;
+}
+/* line 30, component/_x-widget.scss */
+.alert.alert-danger {
+  color: #a74345;
+  background-color: #f2dedf;
+  border-color: #e4c1c3;
+}
+
+/* line 37, component/_x-widget.scss */
+.x-confirm {
+  color: #515151;
+  width: 400px;
+  margin: 0 auto;
+  position: relative;
+}
+/* line 44, component/_x-widget.scss */
+.x-confirm.x-confirm-info .x-confirm-title {
+  background-color: #ECFBE6;
+}
+/* line 50, component/_x-widget.scss */
+.x-confirm.x-confirm-confirm .x-confirm-title {
+  background-color: #fdf1d8;
+}
+/* line 55, component/_x-widget.scss */
+.x-confirm .x-confirm-title {
+  font-size: 16px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+}
+/* line 63, component/_x-widget.scss */
+.x-confirm .x-confirm-close {
+  font-size: 20px;
+  right: 10px;
+  top: 5px;
+  z-index: 10;
   float: right;
+  position: absolute;
+  cursor: pointer;
+}
+/* line 73, component/_x-widget.scss */
+.x-confirm .x-confirm-content {
+  height: 110px;
+  background-color: white;
+  vertical-align: middle;
+  padding: 10px 30px 20px 30px;
+}
+/* line 80, component/_x-widget.scss */
+.x-confirm .x-confirm-btns {
+  height: 50px;
+  background-color: white;
+  color: white;
+}
+/* line 85, component/_x-widget.scss */
+.x-confirm .x-confirm-btns > button {
+  width: 100px;
+  height: 30px;
+  float: right;
+  margin-right: 20px;
+}
+/* line 92, component/_x-widget.scss */
+.x-confirm .x-confirm-btns .confirm {
+  background-color: #4bc1ec;
+}
+/* line 96, component/_x-widget.scss */
+.x-confirm .x-confirm-btns .cancel {
+  background-color: #ea9c68;
 }
 
 /* line 1, component/_dialog.scss */
 .dialog {
   position: relative;
+  z-index: 999;
 }
-/* line 3, component/_dialog.scss */
+/* line 4, component/_dialog.scss */
 .dialog .close-btn {
   font-size: 20px;
   top: 0;
   cursor: pointer;
-  z-index: 999;
+  z-index: 1000;
   display: block;
   position: absolute;
 }
-/* line 11, component/_dialog.scss */
+/* line 12, component/_dialog.scss */
 .dialog .close-btn.left {
   left: 10px;
 }
-/* line 14, component/_dialog.scss */
+/* line 15, component/_dialog.scss */
 .dialog .close-btn.right {
   right: 10px;
 }

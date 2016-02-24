@@ -6,48 +6,20 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 	var loginCheckTimer;
 	var board;
 	var user_id;
+	var projects;
 
 	function init() {
-		requestPlatformConfig();
 		initAjax();
 		initEditor();
 		initLogin();
 
-		$('.sidebar .bar ul > li').on('click', onSidebarClick).eq(0).click();
-		$('.project .list .view > div').on('click', onProjectFileClick);
-		$('.project .list .title').on('click', onProjectTitleClick).eq(0).click();
-		$('.board .list > li').on('click', onBoardClick);
-		$('.library .list > li').on('click', onLibraryClick);
-
-		$('.component .items .list > li').on('click', onComponentClick);
-		$('.hardware .tools li').on('click', onToolsClick);
-
 		initEvent();
+
+		requestData();
 
 		// $(window).bind('beforeunload', function(){
 		// 	return '您输入的内容尚未保存，确定离开此页面吗？';
 		// });
-	}
-
-	function requestPlatformConfig() {
-		$.ajax({
-			url: '/config',
-			dataType: 'json',
-		}).done(onRequestConfigSuccess);
-	}
-
-	function onRequestConfigSuccess(result) {
-		platformConfig = result;
-		editor.setValue(platformConfig.defaultCode, 1);
-
-		hardware.init('hardware-container', {
-			boards: platformConfig.boards,
-			components: platformConfig.components,
-		});
-
-		$('.board .list > li').eq(0).click();
-
-		initSearch();
 	}
 
 	function initAjax() {
@@ -178,13 +150,76 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		});
 	}
 
+	function initProjects() {
+		if(!projects) {
+			return;
+		}
+
+		var template = '<li data-project-id="{{id}}"><div class="title">{{project_name}}<i class="fa"></i></div><div class="view"><div>{{project_name}}.uno</div><div>{{project_name}}.ino</div></div></li>';
+		var ul = $(".project .list ul").empty();
+		for(var i = 0; i < projects.length; i++) {
+			var project = projects[i];
+			var li = template.replace(/\{\{project_name\}\}/g, project.project_name)
+							 .replace(/\{\{id\}\}/g, project.id);
+			ul.append(li);
+		}
+
+		$('.project .list .view > div').on('click', onProjectFileClick);
+		$('.project .list .title').on('click', onProjectTitleClick).eq(0).click();
+	}
+
 	function initEvent() {
+		$('.sidebar .bar ul > li').on('click', onSidebarClick).filter('[data-action="component"]').click();
+		$('.project .list .view > div').on('click', onProjectFileClick);
+		$('.project .list .title').on('click', onProjectTitleClick).eq(0).click();
+		$('.project .operation li').on('click', onProjectActionClick);
+		$('.board .list > li').on('click', onBoardClick);
+		$('.library .list > li').on('click', onLibraryClick);
+
+		$('.component .items .list > li').on('click', onComponentClick);
+		$('.hardware .tools li').on('click', onToolsClick);
+
 		EventManager.bind("hardware", "showNameDialog", onShowNameDialog);
 		EventManager.bind("hardware", "changeInteractiveMode", onChangeInteractiveMode);
 		EventManager.bind("hardware", "switchToSoftware", onSwitchToSoftware);
 	}
 
-	function onSaveClick() {
+	function requestData() {
+		$.ajax({
+			url: '/config',
+			dataType: 'json',
+		}).done(onReqConfigSuccess);
+
+		authCheck(function(){
+			$.ajax({
+				url: '/projects/' + user_id,
+				dataType: 'json',
+			}).done(onReqProjectsSuccess);
+		});
+	}
+
+	function onReqConfigSuccess(result) {
+		platformConfig = result;
+		editor.setValue(platformConfig.defaultCode, 1);
+
+		hardware.init('hardware-container', {
+			boards: platformConfig.boards,
+			components: platformConfig.components,
+		});
+
+		$('.board .list > li').eq(0).click();
+
+		initSearch();
+	}
+
+	function onReqProjectsSuccess(result) {
+		if(result.status == 0) {
+			projects = result.data;
+			initProjects();
+		}
+	}
+
+	function authCheck(authedCallback, unAuthedCallback) {
 		$.ajax({
 			type: 'GET',
 			url: '/auth/check',
@@ -192,10 +227,16 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		}).done(function(result){
 			if (result.code == 0) {
 				user_id = result.user.id;
-				showSaveDialog();
+				authedCallback && authedCallback();
 			} else {
-				showLoginDialog(showSaveDialog);
+				unAuthedCallback && unAuthedCallback();
 			}
+		});
+	}
+
+	function onSaveClick() {
+		authCheck(showSaveDialog, function() {
+			showLoginDialog(showSaveDialog);
 		});
 	}
 
@@ -278,6 +319,25 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			list.filter('[data-action="library"]').removeClass("hide");
 		}
 		$('.main > .tabs .tab').removeClass("active").eq(index).addClass("active");
+	}
+
+	function onProjectActionClick(e) {
+		var li = $(this);
+		var action = li.data("action");
+		switch(action) {
+			case "new":
+				showSaveDialog(true);
+				break;
+			case "delete":
+				onDownloadClick();
+				break;
+			case "cancel":
+				onShareClick();
+				break;
+			case "confirm":
+				onShareClick();
+				break;
+		}
 	}
 
 	function onSidebarClick(e) {
@@ -398,6 +458,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 				}).done(function(result) {
 					if (result.code == 0) {
 						//登录成功
+						user_id = result.data.userid;
 						setLoginCheck(false);
 						util.message(result.message);
 						$('#login_dialog .close-btn').click();
@@ -414,8 +475,27 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		}
 	}
 
-	function showSaveDialog() {
+	function showSaveDialog(isNew) { 
+		var project;
+		if(projects) {
+			var index = $('.project .list .view > div.active').parent().parent().index();
+			project = projects[index];
+		}
+		
 		var dialog = $('#save-dialog');
+		var form = $('form', dialog);
+		if(!isNew && project) {
+			$('input[name="name"]', form).val(project.project_name);
+			$('textarea[name="intro"]', form).val(project.project_intro);
+			$('input[name="public-type"]', form).val(project.public_type);
+		} else {
+			$('input[name="name"]', form).val("");
+			$('textarea[name="intro"]', form).val("");
+			$('input[name="public-type"]', form).val(1);
+		}
+		var text = isNew ? "创建项目" : "保存项目";
+		$('input[name="save"]', form).val(text);
+
 		$('.close-btn', dialog).off('click').on('click', function(e) {
 			dialog.slideUp(100);
 			$('.dialog-layer').removeClass("active");
@@ -435,12 +515,14 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			source: getSource(),
 			boardName: board.name,
 		}
+		var form = $('#save-dialog form');
 		var project = {
-			project_name: "",
+			id: 0,
+			project_name: $('input[name="name"]', form).val(),
 			user_id: user_id,
-			project_intro: "",
+			project_intro: $('textarea[name="intro"]', form).val(),
 			project_data: JSON.stringify(projectData),
-			public_type: "",
+			public_type: parseInt($('input[name="public-type"]', form).val()),
 		}
 		$('#save-dialog .close-btn').click();
 		$.ajax({
@@ -449,9 +531,9 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			data: project,
 			dataType: 'json',
 		}).done(function(result) {
-			util.message(result.msg);
+			util.message(result.message);
 		}).fail(function(result) {
-			util.message(result.msg);
+			util.message(result.message);
 		});
 	}
 

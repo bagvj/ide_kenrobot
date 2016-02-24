@@ -33,7 +33,7 @@ class HomeController extends Controller {
 		$components = $this->getComponentConfig();
 		$libraries = $this->getLibrariyConfig();
 
-		return view("index", compact('qrcodeurl','key', 'boards', 'components', 'libraries'));
+		return view("index", compact('user', 'qrcodeurl', 'key', 'boards', 'components', 'libraries'));
 	}
 
 	public function download(Request $request) {
@@ -113,7 +113,7 @@ class HomeController extends Controller {
 	}
 
 	public function config() {
-		$defaultCode = "void setup() {\n    // put your setup code here, to run once:\n    \n}\n\nvoid loop() {\n    // put your main code here, to run repeatedly:\n    \n}";
+		$defaultCode = "/************************************************************\n *Copyright(C), 2016-2038, KenRobot.com\n *FileName:  //文件名\n *Author:    //作者\n *Version:   //版本\n *Date:      //完成日期\n */\n\nvoid setup() {\n    // put your setup code here, to run once:\n    \n}\n\nvoid loop() {\n    // put your main code here, to run repeatedly:\n    \n}";
 
 		$config = array(
 			'defaultCode' => $defaultCode,
@@ -126,47 +126,33 @@ class HomeController extends Controller {
 	}
 
 	public function saveProject(Request $request) {
-		$data = $request->input('data');
-		$user_id = $request->input('user_id');
-
-		$result = array();
-		if($data && $user_id) {
-			$project = Project::where('user_id', $user_id)->first();
-			$time = time();
-			if($project) {
-				$project->data = $data;
-				$project->update_at = $time;
-				$project->save();
-			} else {
-				$project = Project::create([
-					'data' => $data,
-					'user_id' => $user_id,
-					'create_at' => $time,
-					'update_at' => $time,
-				]);
-			}
-			
-			$result['msg'] = "保存成功";
-			$result['code'] = 0;
-		} else {
-			$result['msg'] = "非法请求";
-			$result['code'] = -1;
-		}
-		
-		return collect($result)->toJson();
+		$url = config("platform.base").config("platform.url.saveProject");
+		$params = array(
+			'id' => $request->input('id'),
+			'project_name' => $request->input('project_name'),
+			'project_intro' => $request->input('project_intro'),
+			'project_data' => $request->input('project_data'),
+			'user_id' => $request->input('user_id'),
+			'public_type' => $request->input('public_type'),
+		);
+		$curl = new Curl();
+		return $curl->post($url, $params);
 	}
 
 	public function getProject(Request $request, $id) {
-		if($id == 0) {
-			$project = DB::table('projects')->orderBy('id', 'desc')->first();
-		} else {
-			$project = DB::table('projects')->where('id', $id)->get();
-		}
-		return collect($project)->toJson();
+		$url = config("platform.base").config("platform.url.getProject")."&id=".$id;
+		$curl = new Curl();
+		return $curl->get($url);
 	}
 
 	public function getProjects(Request $request, $user_id) {
-		
+		return $this->getUserProjects($user_id);
+	}
+
+	private function getUserProjects($user_id) {
+		$url = config("platform.base").config("platform.url.getUserProjects")."&user_id=".$user_id;
+		$curl = new Curl();
+		return $curl->get($url);
 	}
 
 	private function getLibrariyConfig($isDict = false) {

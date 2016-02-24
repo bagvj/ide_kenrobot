@@ -38,15 +38,15 @@
 					<div class="project">
 						<div class="operation">
 							<ul>
-								<li class="new"><i class="fa fa-plus fa-2x"></i></li>
-								<li class="delete"><i class="fa fa-trash fa-2x"></i></li>
-								<li class="cancel hide">取消</li>
-								<li class="confirm hide">确定</li>
+								<li class="new" data-action="new"><i class="fa fa-plus fa-2x"></i></li>
+								<li class="delete" data-action="delete"><i class="fa fa-trash fa-2x"></i></li>
+								<li class="cancel hide" data-action="cancel">取消</li>
+								<li class="confirm hide" data-action="confirm">确定</li>
 							</ul>
 						</div>
 						<div class="list" data-operation="default">
 							<ul>
-								<li>
+								<li data-project-id="0">
 									<div class="title">
 										我的项目<i class="fa"></i>
 									</div>
@@ -200,7 +200,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<input class="btn save pull-right" type="button" value="创建项目" />
+							<input class="btn save pull-right" type="button" name="save" value="保存项目" />
 						</div>
 					</div>
 				</form>

@@ -55,6 +55,7 @@
 
 .dialog-layer {
 	// height: 0;
+	z-index: 25;
 	&.active {
 		top: 0;
 		bottom: 0;
