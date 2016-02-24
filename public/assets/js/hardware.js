@@ -145,8 +145,9 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util', 'project'], fu
 
 	//添加初始节点
 	function addInitNodes() {
-		var boardData = addNode("ArduinoUNO", null, null, true);
+		var boardData = addNode("ArduinoUNO", 0, 0, true);
 		specNodes["board"] = diagram.findNodeForData(boardData);
+		console.dir(boardData);
 	}
 
 	//添加节点
