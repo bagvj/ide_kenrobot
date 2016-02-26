@@ -5,7 +5,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 	var editor;
 	var loginCheckTimer;
 	var board;
-	var isSourceEditMode;
+	var user_id;
 
 	function init() {
 		requestPlatformConfig();
@@ -21,8 +21,6 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 
 		$('.component .items .list > li').on('click', onComponentClick);
 		$('.hardware .tools li').on('click', onToolsClick);
-
-		$('.software .doEdit li').on('click', onDoEditClick);
 
 		initEvent();
 
@@ -67,9 +65,6 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			enableSnippets: true,
 			enableLiveAutocompletion: true,
 		});
-		editor.setReadOnly(true);
-		editor.setHighlightActiveLine(false);
-		editor.setHighlightSelectedWord(false);
 		editor.setShowPrintMargin(false);
 		editor.$blockScrolling = Infinity;
 		editor.setTheme("ace/theme/default");
@@ -101,9 +96,10 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			}
 		});
 
-		$('#login_dialog .closeBtn').on('click', function(e) {
+		$('#login_dialog .close-btn').on('click', function(e) {
 			$('#login_dialog').slideUp(100, function(event, ui) {
 				$('#use_weixin').removeClass("active");
+				$('.dialog-layer').removeClass("active");
 			});
 			setLoginCheck(false);
 		});
@@ -120,7 +116,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 				if (result.code == 0) {
 					//登录成功
 					util.message(result.message);
-					$('#login_dialog .closeBtn').fire('click');
+					$('#login_dialog .close-btn').fire('click');
 				} else if (result.code == 1) {
 
 				} else {
@@ -195,24 +191,10 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			dataType: 'json',
 		}).done(function(result){
 			if (result.code == 0) {
-				var projectData = {
-					source: getSource(),
-					boardName: board.name,
-				}
-				$.ajax({
-					type: 'POST',
-					url: '/project/save',
-					data: {
-						data: JSON.stringify(projectData),
-						user_id: result.user.id,
-					},
-					dataType: 'json',
-				}).done(function(res) {
-					util.message(res.msg);
-					$(window).unbind('beforeunload');
-				});
+				user_id = result.user.id;
+				showSaveDialog();
 			} else {
-				showLoginDialog();
+				showLoginDialog(showSaveDialog);
 			}
 		});
 	}
@@ -246,11 +228,6 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 	}
 
 	function onLibraryClick(e) {
-		if(!isSourceEditMode) {
-			util.message("未启用源码编辑模式");
-			return;
-		}
-
 		var li = $(this);
 		var name = li.data('library');
 		var libraries = platformConfig.libraries;
@@ -375,24 +352,6 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		}
 	}
 
-	function onDoEditClick(e) {
-		var li = $(this);
-		var action = li.data('action');
-		if(action == "enterEdit") {
-			editor.setReadOnly(false);
-			editor.setHighlightActiveLine(true);
-			editor.setHighlightSelectedWord(true);
-			isSourceEditMode = true;
-			li.removeClass('active').parent().find('li[data-action="exitEdit"]').addClass('active');
-		} else {
-			editor.setReadOnly(true);
-			editor.setHighlightActiveLine(false);
-			editor.setHighlightSelectedWord(false);
-			isSourceEditMode = false;
-			li.removeClass('active').parent().find('li[data-action="enterEdit"]').addClass('active');
-		}
-	}
-
 	function onShowNameDialog(args) {
 		var dialog = $('.hardware .name-dialog');
 		if(args) {
@@ -418,6 +377,84 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 		}
 	}
 
+	function showLoginDialog(callback) {
+		var dialog = $('#login_dialog').css({
+			top: -$(this).height(),
+		}).show().animate({
+			top: 200,
+		}, 400, "swing", function() {
+			setLoginCheck(true, callback);
+		});
+		$('.dialog-layer').addClass("active");
+	}
+
+	function setLoginCheck(value, callback) {
+		clearInterval(loginCheckTimer);
+		if (value) {
+			loginCheckTimer = setInterval(function() {
+				var key = $('#qrcode_key').val();
+				$.ajax({
+					url: '/weixinlogin?key=' + key,
+				}).done(function(result) {
+					if (result.code == 0) {
+						//登录成功
+						setLoginCheck(false);
+						util.message(result.message);
+						$('#login_dialog .close-btn').click();
+						//回调
+						callback && callback();
+					} else if (result.code == 1) {
+						//已经登录
+						setLoginCheck(false);
+					} else {
+						//登录失败
+					}
+				});
+			}, 3000);
+		}
+	}
+
+	function showSaveDialog() {
+		var dialog = $('#save-dialog');
+		$('.close-btn', dialog).off('click').on('click', function(e) {
+			dialog.slideUp(100);
+			$('.dialog-layer').removeClass("active");
+		});
+		$('.save', dialog).off('click').on('click', onProjectSave);
+
+		dialog.css({
+			top: -$(this).height(),
+		}).show().animate({
+			top: 200,
+		}, 400, "swing");
+		$('.dialog-layer').addClass("active");
+	}
+
+	function onProjectSave() {
+		var projectData = {
+			source: getSource(),
+			boardName: board.name,
+		}
+		var project = {
+			project_name: "",
+			user_id: user_id,
+			project_intro: "",
+			project_data: JSON.stringify(projectData),
+			public_type: "",
+		}
+		$('#save-dialog .close-btn').click();
+		$.ajax({
+			type: 'POST',
+			url: '/project/save',
+			data: project,
+			dataType: 'json',
+		}).done(function(result) {
+			util.message(result.msg);
+		}).fail(function(result) {
+			util.message(result.msg);
+		});
+	}
+
 	function toggleActive(target, tag, collapseMode) {
 		tag = tag || "li";
 		if(collapseMode) {
@@ -438,40 +475,6 @@ define(['jquery', 'bootstrap', 'typeahead', 'ace', 'ace-ext-language-tools', 'ut
 			target.addClass("active");
 
 			return true;
-		}
-	}
-
-	function showLoginDialog() {
-		$('#login_dialog').css({
-			top: -$(this).height(),
-		}).show().animate({
-			top: 200,
-		}, 400, "swing", function() {
-			setLoginCheck(true);
-		});
-	}
-
-	function setLoginCheck(value) {
-		clearInterval(loginCheckTimer);
-		if (value) {
-			loginCheckTimer = setInterval(function() {
-				var key = $('#qrcode_key').val();
-				$.ajax({
-					url: '/weixinlogin?key=' + key,
-				}).done(function(result) {
-					if (result.code == 0) {
-						//登录成功
-						setLoginCheck(false);
-						util.message(result.message);
-						$('#login_dialog .closeBtn').click();
-					} else if (result.code == 1) {
-						//已经登录
-						setLoginCheck(false);
-					} else {
-						//登录失败
-					}
-				});
-			}, 3000);
 		}
 	}
 

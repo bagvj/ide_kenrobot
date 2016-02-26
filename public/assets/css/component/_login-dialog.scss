@@ -4,28 +4,19 @@
     width: 280px;
     height: 280px;
     border: 1px solid transparent;
-    position: relative;
     overflow: hidden;
     z-index: 101;
-}
 
-#login_dialog .active {
-    display: block;
-}
+    .close-btn {
+        color: white;
+    }
 
-.closeBtn {
-    cursor: pointer;
-    display: block;
-    height: 16px;
-    width: 16px;
-}
-
-#login_dialog .closeBtn {
-    background: url('../images/closeBtn.png') no-repeat center;
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    z-index: 200;
+    .tab {
+        display: none;
+        &.active {
+            display: block;
+        }
+    }
 }
 
 .qrLogin {
@@ -39,7 +30,6 @@
     margin: 0;
     padding-bottom: 20px;
     position: relative;
-    display: none;
 }
 
 .baseLogin {
@@ -54,7 +44,6 @@
     padding-bottom: 20px;
     position: relative;
     z-index: 10;
-    display: none;
 }
 
 .baseLoginBtn {
@@ -124,7 +113,6 @@
 
 #use_weixin {
     display: none;
-    overflow: none;
 }
 
 #use_weixin img {
@@ -168,7 +156,7 @@
     height: 40px;
     line-height: 18px;
     padding-bottom: 10px;
-    padding-left: 37px;
+    padding-left: 28.5px;
     position: relative;
     width: 220px;
     -webkit-box-sizing: content-box;
