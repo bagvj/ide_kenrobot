@@ -139,8 +139,9 @@ body {
   position: absolute;
   top: 20px;
   right: 0;
+  display: none;
 }
-/* line 61, layout/_layout.scss */
+/* line 62, layout/_layout.scss */
 .main .user .dialog {
   margin-right: 20px;
   height: 60px;
@@ -148,25 +149,25 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
   color: #515151;
 }
-/* line 68, layout/_layout.scss */
+/* line 69, layout/_layout.scss */
 .main .user .dialog .photo {
   line-height: 60px;
   float: left;
   margin-left: 15px;
   margin-right: 10px;
 }
-/* line 73, layout/_layout.scss */
+/* line 74, layout/_layout.scss */
 .main .user .dialog .photo > img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
 }
-/* line 80, layout/_layout.scss */
+/* line 81, layout/_layout.scss */
 .main .user .dialog .welcome {
   line-height: 60px;
   float: left;
 }
-/* line 85, layout/_layout.scss */
+/* line 86, layout/_layout.scss */
 .main .user .dialog .logout {
   line-height: 60px;
   color: #515151;
@@ -175,11 +176,11 @@ body {
   margin-right: 15px;
   float: left;
 }
-/* line 93, layout/_layout.scss */
+/* line 94, layout/_layout.scss */
 .main .user .dialog .logout:hover {
   color: #323942;
 }
-/* line 98, layout/_layout.scss */
+/* line 99, layout/_layout.scss */
 .main .user .dialog .close-btn {
   cursor: pointer;
   top: 3px;
@@ -187,7 +188,7 @@ body {
   font-size: 14px;
   position: absolute;
 }
-/* line 107, layout/_layout.scss */
+/* line 108, layout/_layout.scss */
 .main .user .indent {
   display: none;
   width: 8px;
@@ -198,16 +199,20 @@ body {
   border-bottom: 1px solid #e1e4e8;
   cursor: pointer;
 }
-/* line 117, layout/_layout.scss */
+/* line 118, layout/_layout.scss */
 .main .user .indent > i {
   line-height: 36px;
 }
+/* line 123, layout/_layout.scss */
+.main .user.active {
+  display: block;
+}
 
-/* line 124, layout/_layout.scss */
+/* line 129, layout/_layout.scss */
 .dialog-layer {
   z-index: 25;
 }
-/* line 126, layout/_layout.scss */
+/* line 132, layout/_layout.scss */
 .dialog-layer.active {
   top: 0;
   bottom: 0;
@@ -216,7 +221,7 @@ body {
   position: absolute;
   background-color: rgba(123, 133, 145, 0.6);
 }
-/* line 134, layout/_layout.scss */
+/* line 140, layout/_layout.scss */
 .dialog-layer .dialog {
   display: none;
 }

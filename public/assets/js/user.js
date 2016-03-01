@@ -142,14 +142,12 @@ define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
 		var indent = $('.indent', user);
 		$('.close-btn', dialog).on('click', function() {
 			dialog.slideUp(200, function(e) {
-				user.removeClass("active");
 				indent.show();
 			});
 		});
 
 		indent.on('click', function() {
 			dialog.slideDown(400, function() {
-				user.addClass('active');
 				indent.hide();
 			});
 		});
