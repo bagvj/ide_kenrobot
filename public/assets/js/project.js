@@ -24,7 +24,6 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 	}
 
 	function onLoadSuccess(result) {
-		console.dir(result);
 		if(result.status != 0) {
 			projects = [];
 		} else {

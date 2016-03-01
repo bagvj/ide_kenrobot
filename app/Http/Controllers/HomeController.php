@@ -17,7 +17,7 @@ use Session;
 
 class HomeController extends Controller {
 
-	public function index() {
+	public function index(Request $request) {
 		if (Auth::check()) {
 			$user = Auth::user();
 		}
@@ -26,14 +26,15 @@ class HomeController extends Controller {
 		$qrcodeurl = $this->getQrcodeurl($qrcode);
 		$key = 'qrscene_'.$qrcode;
 		Session::put('key',$key);
+		$mainpage = config('master.mainpage');
 
-		$url = config('weixin.userinfo.url')."?key=$key";
+		$register_url = config('platform.url.register').'&redirect_uri='.urlencode($request->url());
 		$boards = $this->getBoardConfig();
 
 		$components = $this->getComponentConfig();
 		$libraries = $this->getLibrariyConfig();
 
-		return view("index", compact('user', 'qrcodeurl', 'key', 'boards', 'components', 'libraries'));
+		return view("index", compact('user', 'mainpage', 'qrcodeurl', 'register_url', 'key', 'boards', 'components', 'libraries'));
 	}
 
 	public function download(Request $request) {
@@ -122,7 +123,7 @@ class HomeController extends Controller {
 	}
 
 	public function saveProject(Request $request) {
-		$url = config("platform.base").config("platform.url.saveProject");
+		$url = config("platform.url.base").config("platform.url.saveProject");
 		$params = array(
 			'id' => $request->input('id'),
 			'project_name' => $request->input('project_name'),
@@ -136,7 +137,7 @@ class HomeController extends Controller {
 	}
 
 	public function getProject(Request $request, $id) {
-		$url = config("platform.base").config("platform.url.getProject")."&id=".$id;
+		$url = config("platform.url.base").config("platform.url.getProject")."&id=".$id;
 		$curl = new Curl();
 		return $curl->get($url);
 	}
@@ -146,7 +147,7 @@ class HomeController extends Controller {
 	}
 
 	public function deleteProject(Request $request) {
-		$url = config("platform.base").config("platform.url.deleteProject");
+		$url = config("platform.url.base").config("platform.url.deleteProject");
 		$params = array(
 			'id' => $request->input('id'),
 		);
@@ -155,7 +156,7 @@ class HomeController extends Controller {
 	}
 
 	private function getUserProjects($user_id) {
-		$url = config("platform.base").config("platform.url.getUserProjects")."&user_id=".$user_id;
+		$url = config("platform.url.base").config("platform.url.getUserProjects")."&user_id=".$user_id;
 		$curl = new Curl();
 		return $curl->get($url);
 	}

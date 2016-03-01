@@ -133,12 +133,46 @@ body {
   right: 0;
   position: absolute;
 }
+/* line 55, layout/_layout.scss */
+.main .user {
+  z-index: 999;
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #515151;
+}
+/* line 63, layout/_layout.scss */
+.main .user .photo {
+  float: left;
+}
+/* line 65, layout/_layout.scss */
+.main .user .photo > img {
+  width: 40px;
+  height: 40px;
+}
+/* line 71, layout/_layout.scss */
+.main .user .welcome {
+  float: left;
+}
+/* line 75, layout/_layout.scss */
+.main .user .logout {
+  color: #515151;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-right: 10px;
+  float: left;
+}
+/* line 84, layout/_layout.scss */
+.main .user.active {
+  display: block;
+}
 
-/* line 56, layout/_layout.scss */
+/* line 90, layout/_layout.scss */
 .dialog-layer {
   z-index: 25;
 }
-/* line 59, layout/_layout.scss */
+/* line 93, layout/_layout.scss */
 .dialog-layer.active {
   top: 0;
   bottom: 0;
@@ -147,7 +181,7 @@ body {
   position: absolute;
   background-color: rgba(123, 133, 145, 0.6);
 }
-/* line 67, layout/_layout.scss */
+/* line 101, layout/_layout.scss */
 .dialog-layer .dialog {
   display: none;
 }

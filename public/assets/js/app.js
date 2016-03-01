@@ -17,7 +17,7 @@ define(['jquery', 'bootstrap', 'util', 'EventManager', 'hardware', 'code', 'user
 		}).done(onLoadSuccess);
 
 		// $(window).bind('beforeunload', function(){
-		// 	return '您输入的内容尚未保存，确定离开此页面吗？';
+		// 	return '您的项目尚未保存，确定离开此页面吗？';
 		// });
 	}
 

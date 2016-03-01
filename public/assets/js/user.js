@@ -144,20 +144,37 @@ define(['jquery', 'util'], function($, util) {
 				}).done(function(result) {
 					if (result.code == 0) {
 						//登录成功
+						userInfo = result.data;
 						setLoginCheck(false);
 						util.message(result.message);
 						$('#login_dialog .close-btn').click();
+						doUpdateUser();
 						//回调
 						callback && callback();
 					} else if (result.code == 1) {
 						//已经登录
+						userInfo = result.data;
 						setLoginCheck(false);
+						doUpdateUser();
 					} else {
 						//登录失败
 
 					}
 				});
 			}, 3000);
+		}
+	}
+
+	function doUpdateUser() {
+		var user = $('.user');
+		if(userInfo) {
+			user.addClass("active");
+			$(".photo img", user).attr("src", userInfo.avatar_url);
+			$(".name", user).text(userInfo.name);
+		} else {
+			user.removeClass("active");
+			$(".name", user).text("");
+			$(".photo img", user).attr("src", "assets/images/photo.png");
 		}
 	}
 

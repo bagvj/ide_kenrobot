@@ -129,12 +129,33 @@
 					</div>
 				</div>
 			</div>
+			@if(isset($user))
+			<div class="user active">
+				<a class="photo" href="{{$mainpage}}">
+					<img src="{{$user->avatar_url}}" />
+				</a>
+				<div class="welcome">
+					Hi,<span class="name">{{$user->name}}</span>
+				</div>
+				<a class="logout" href="/auth/logout">退出</a>
+			</div>
+			@else
+			<div class="user">
+				<a class="photo" href="{{$mainpage}}">
+					<img src="{{asset('assets/images/photo.png')}}" />
+				</a>
+				<div class="welcome">
+					Hi,<span class="name"></span>
+				</div>
+				<a class="logout" href="/auth/logout">退出</a>
+			</div>
+			@endif
 		</div>
 		<div class="dialog-layer">
 			<div id="login_dialog" class="dialog">
 				<div class="close-btn left">
-				<i class="fa fa-close"></i>
-			</div>
+					<i class="fa fa-close"></i>
+				</div>
 				<div>
 					<a href="javascript:;" title="返回" class="baseLoginBtn" data-action="baseLogin active" style="display:none;"></a>
 					<div class="tab baseLogin active">
@@ -156,7 +177,7 @@
 							<div>
 								<input id="qrcode_key" type="hidden" value="{{$key or ''}}">
 								<a class="btn-login">登录</a>
-								<a class="btn-register" href="http://www.kenrobot.com/index.php?app=public&mod=Register&act=index">注册</a>
+								<a class="btn-register" href="{{$register_url}}">注册</a>
 							</div>
 						</form>
 					</div>

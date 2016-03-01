@@ -6,7 +6,9 @@ define(['jquery', 'util', 'user', 'project', 'board', 'software'], function($, u
 	}
 
 	function onLogoClick(e) {
-		user.showLoginDialog();
+		user.authCheck(function() {
+			util.message("你已登录");
+		}, user.showLoginDialog);
 	}
 
 	function onSidebarClick(e) {
