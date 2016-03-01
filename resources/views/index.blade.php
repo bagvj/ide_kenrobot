@@ -237,7 +237,7 @@
 		<div class="login-hint-layer mask">
 			<div class="login-hint">
 				<div class="title">提示：</div>
-				<div class="content">点击此处进行<span class="strong">【登录】</span>哦~</div>
+				<div class="content">点击此处进行<span class="strong">【登录】</span>哦~<br />推荐使用Google Chrome浏览器</div>
 			</div>
 		</div>
 		@endif
