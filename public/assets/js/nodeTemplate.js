@@ -182,6 +182,7 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 			fill: fill || "transparent",
 			desiredSize: size || new go.Size(5, 5),
 			stroke: stroke || null,
+			cursor: "crosshair",
 			click: onPortClick,
 			mouseEnter: onPortMouseEnter,
 			mouseLeave: onPortMouseLeave,
