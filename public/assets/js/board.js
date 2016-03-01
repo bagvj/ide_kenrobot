@@ -1,18 +1,30 @@
 define(['jquery', 'util'], function($, util) {
 	var current;
 	var boards;
+	var selector;
 
 	function init() {
-		$('.board .list > li').on('click', onBoardClick);
+		selector = ".board .list > li";
+		$(selector).on('click', onBoardClick);
 	}
 
 	function load(_boards) {
 		boards = _boards;
-		$('.board .list > li').eq(0).click();
+		$(selector).eq(0).click();
 	}
 
 	function getCurrentBoard() {
 		return current;
+	}
+
+	function setCurrentBoard(id) {
+		for(var name in boards) {
+			var board = boards[name];
+			if(board.id == id) {
+				$(selector).filter('[data-board="' + name + '"]').click();
+				break;
+			}
+		}
 	}
 
 	function onBoardClick(e) {
@@ -26,5 +38,6 @@ define(['jquery', 'util'], function($, util) {
 		init: init,
 		load: load,
 		getCurrentBoard: getCurrentBoard,
+		setCurrentBoard: setCurrentBoard,
 	}
 });

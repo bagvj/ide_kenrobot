@@ -15,7 +15,15 @@ define(['ace', 'ace-ext-language-tools', 'jquery', 'code'], function(_, _, $, co
 	}
 
 	function setSource(source) {
-		editor.setValue(source, 1);
+		if(!source || source.length == 0) {
+			editor.setValue(code.gen(), 1);
+		} else {
+			var chars = [];
+			for(var i = 0; i < source.length; i++) {
+				chars.push(String.fromCharCode(source[i]));
+			}
+			editor.setValue(chars.join(""), 1);
+		}	
 	}
 
 	function getSource() {

@@ -146,6 +146,15 @@ class HomeController extends Controller {
 		return $this->getUserProjects($user_id);
 	}
 
+	public function deleteProject(Request $request) {
+		$url = config("platform.base").config("platform.url.deleteProject");
+		$params = array(
+			'id' => $request->input('id'),
+		);
+		$curl = new Curl();
+		return $curl->post($url, $params);
+	}
+
 	private function getUserProjects($user_id) {
 		$url = config("platform.base").config("platform.url.getUserProjects")."&user_id=".$user_id;
 		$curl = new Curl();

@@ -111,7 +111,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	function load(_configs) {
 		configs = _configs;
 		//添加初始节点
-		addInitNodes();
+		// addInitNodes();
 	}
 
 	function initEvent() {
@@ -557,18 +557,26 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	}
 
 	function getModel() {
-		return diagram.model.toJson();
+		if(diagram && diagram.model) {
+			return diagram.model.toJson();
+		}
+		return "";
 	}
 
-	function loadModel(model) {
-		diagram.model = go.Model.fromJson(model);
+	function setModel(model) {
+		if(model) {
+			diagram.model = go.Model.fromJson(model);
+		} else {
+			diagram.model.clear();
+			addInitNodes();
+		}
 	}
 
 	return {
 		init: init,
 		load: load,
 		getModel: getModel,
-		loadModel: loadModel,
+		setModel: setModel,
 		setPlaceComponent: setPlaceComponent,
 		changeInteractiveMode: changeInteractiveMode,
 		getNodes: getNodes,

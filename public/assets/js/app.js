@@ -4,10 +4,10 @@ define(['jquery', 'bootstrap', 'util', 'EventManager', 'hardware', 'code', 'user
 
 		user.init();
 		sidebar.init();
-		project.init();
 		board.init();
 		component.init();
 		library.init();
+		project.init();
 		hardware.init();
 		software.init();
 		code.init(hardware.getNodes);
