@@ -7,6 +7,8 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 		$('.project .operation li').on('click', onProjectActionClick);
 
 		EventManager.bind("project", "switchPanel", onSwitchPanel);
+
+		load();
 	}
 
 	function load() {
@@ -15,10 +17,14 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 				url: '/projects/' + user.getUserId(),
 				dataType: 'json',
 			}).done(onLoadSuccess);
+		}, function() {
+			projects.push(getDefaultProject());
+			bindProjectEvent(true);
 		});
 	}
 
 	function onLoadSuccess(result) {
+		console.dir(result);
 		if(result.status != 0) {
 			projects = [];
 		} else {
@@ -135,7 +141,7 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 			}
 			if(util.toggleActive(li, null, true)) {
 				var id = li.data('project-id');
-				curProjectInfo = getProjectInfo(id);
+				curProjectInfo = id == 0 ? getDefaultProject() : getProjectInfo(id);
 				var projectData = curProjectInfo.project_data;
 
 				board.setCurrentBoard(projectData.boardId);
@@ -312,7 +318,6 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 
 	return {
 		init: init,
-		load: load,
 		showSaveDialog: showSaveDialog,
 	}
 });

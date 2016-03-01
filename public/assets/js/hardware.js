@@ -110,8 +110,6 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 
 	function load(_configs) {
 		configs = _configs;
-		//添加初始节点
-		// addInitNodes();
 	}
 
 	function initEvent() {
@@ -181,6 +179,9 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	//暗示可以连接的port
 	function hintTargetPort(sourcePort) {
 		var board = findSpecNode("board");
+		if(!board) {
+			return;
+		}
 		var iter = board.ports.iterator;
 		var port;
 		while(iter.next()) {
@@ -564,10 +565,10 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	}
 
 	function setModel(model) {
+		diagram.model.clear();
 		if(model) {
 			diagram.model = go.Model.fromJson(model);
 		} else {
-			diagram.model.clear();
 			addInitNodes();
 		}
 	}

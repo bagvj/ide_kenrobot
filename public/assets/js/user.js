@@ -30,7 +30,13 @@ define(['jquery', 'util'], function($, util) {
 		});
 	}
 
-	function showLoginDialog(callback) {
+	function showLoginDialog(callback, index) {
+		index = index || 0;
+		if(index == 0) {
+			$('.qrLoginBtn').click();
+		} else {
+			$('.baseLoginBtn').click();
+		}
 		var dialog = $('#login_dialog');
 		dialog.css({
 			top: -dialog.height(),
@@ -76,7 +82,7 @@ define(['jquery', 'util'], function($, util) {
 		});
 
 
-		$('.submitBtn').on('click', function() {
+		$('#login_dialog .btn-login').on('click', function() {
 			$.ajax({
 				url: '/snspostlogin',
 				data: {
@@ -91,12 +97,9 @@ define(['jquery', 'util'], function($, util) {
 				} else if (result.code == 1) {
 
 				} else {
-					$('.baseLogin .message span')
-						.html(result.message)
-						.delay(2000)
-						.queue(function() {
-							$(this).fadeOut().dequeue();
-						});
+					$('.baseLogin .message span').show().html(result.message).delay(2000).queue(function() {
+						$(this).fadeOut().dequeue();
+					});
 				}
 			});
 		});

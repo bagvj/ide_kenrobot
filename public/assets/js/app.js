@@ -7,12 +7,14 @@ define(['jquery', 'bootstrap', 'util', 'EventManager', 'hardware', 'code', 'user
 		board.init();
 		component.init();
 		library.init();
-		project.init();
 		hardware.init();
 		software.init();
 		code.init(hardware.getNodes);
 
-		load();
+		$.ajax({
+			url: '/config',
+			dataType: 'json',
+		}).done(onLoadSuccess);
 
 		// $(window).bind('beforeunload', function(){
 		// 	return '您输入的内容尚未保存，确定离开此页面吗？';
@@ -27,21 +29,14 @@ define(['jquery', 'bootstrap', 'util', 'EventManager', 'hardware', 'code', 'user
 		});
 	}
 
-	function load() {
-		$.ajax({
-			url: '/config',
-			dataType: 'json',
-		}).done(onLoadSuccess);
-
-		project.load();
-	}
-
 	function onLoadSuccess(result) {
 		board.load(result.boards);
 		component.load(result.components);
 		library.load(result.libraries);
 
 		hardware.load(result);
+
+		project.init();
 	}
 
 	return {

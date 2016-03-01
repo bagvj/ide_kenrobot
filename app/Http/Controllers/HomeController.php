@@ -72,8 +72,7 @@ class HomeController extends Controller {
 		$type = 0;
 
 		//代码的字节码
-		$bytes = json_decode($request->input('source'));
-		// var_dump($bytes);
+		$source = $request->input('source');
 		//用户id
 		$user_id = $request->input('user_id');
 		//项目名字
@@ -83,8 +82,8 @@ class HomeController extends Controller {
 		//主板类型
 		$board = $request->input('board');
 
-		if ($bytes) {
-			$source = $this->fromCharCode($bytes);
+		if ($source) {
+			// $source = $this->fromCharCode($bytes);
 			$keys = $this->getShort($user_id . $project . $board);
 			$key = $keys[0];
 			$path = "/tmp/build/$key";

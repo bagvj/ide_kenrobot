@@ -154,16 +154,12 @@ body {
 
 /* line 3, layout/_sidebar.scss */
 .sidebar .bar .logo {
+  cursor: pointer;
   height: 60px;
   background: #323942 url("/assets/images/logo-single.png") no-repeat center;
   background-size: 50px 50px;
 }
-/* line 7, layout/_sidebar.scss */
-.sidebar .bar .logo a {
-  display: block;
-  height: 60px;
-}
-/* line 13, layout/_sidebar.scss */
+/* line 10, layout/_sidebar.scss */
 .sidebar .bar ul li {
   height: 60px;
   text-align: center;
@@ -171,22 +167,22 @@ body {
   padding-top: 10px;
   font-size: 12px;
 }
-/* line 19, layout/_sidebar.scss */
+/* line 16, layout/_sidebar.scss */
 .sidebar .bar ul li i {
   font-size: 22px;
   margin-bottom: 3px;
   display: block;
 }
-/* line 27, layout/_sidebar.scss */
+/* line 24, layout/_sidebar.scss */
 .sidebar .project {
   width: 240px;
   position: relative;
 }
-/* line 31, layout/_sidebar.scss */
+/* line 28, layout/_sidebar.scss */
 .sidebar .project .operation {
   height: 60px;
 }
-/* line 33, layout/_sidebar.scss */
+/* line 30, layout/_sidebar.scss */
 .sidebar .project .operation li {
   float: left;
   width: 50%;
@@ -195,11 +191,11 @@ body {
   line-height: 60px;
   cursor: pointer;
 }
-/* line 40, layout/_sidebar.scss */
+/* line 37, layout/_sidebar.scss */
 .sidebar .project .operation li > i {
   margin-top: 16px;
 }
-/* line 46, layout/_sidebar.scss */
+/* line 43, layout/_sidebar.scss */
 .sidebar .project .list {
   background-color: #DEE1E5;
   overflow-y: auto;
@@ -209,7 +205,7 @@ body {
   right: 0;
   position: absolute;
 }
-/* line 56, layout/_sidebar.scss */
+/* line 53, layout/_sidebar.scss */
 .sidebar .project .list li .title {
   height: 36px;
   line-height: 36px;
@@ -220,25 +216,25 @@ body {
   color: white;
   margin-top: 1px;
 }
-/* line 65, layout/_sidebar.scss */
+/* line 62, layout/_sidebar.scss */
 .sidebar .project .list li .title > i {
   float: right;
   font-size: 20px;
   margin-top: 8px;
 }
-/* line 69, layout/_sidebar.scss */
+/* line 66, layout/_sidebar.scss */
 .sidebar .project .list li .title > i::before {
   content: "\f0d9";
 }
-/* line 75, layout/_sidebar.scss */
+/* line 72, layout/_sidebar.scss */
 .sidebar .project .list li:first-child .title {
   margin-top: 0;
 }
-/* line 79, layout/_sidebar.scss */
+/* line 76, layout/_sidebar.scss */
 .sidebar .project .list li .view {
   display: none;
 }
-/* line 81, layout/_sidebar.scss */
+/* line 78, layout/_sidebar.scss */
 .sidebar .project .list li .view > div {
   font-size: 12px;
   color: #515151;
@@ -247,58 +243,58 @@ body {
   line-height: 36px;
   cursor: pointer;
 }
-/* line 89, layout/_sidebar.scss */
+/* line 86, layout/_sidebar.scss */
 .sidebar .project .list li .view > div:hover {
   background-color: #C9CED4;
 }
-/* line 93, layout/_sidebar.scss */
+/* line 90, layout/_sidebar.scss */
 .sidebar .project .list li .view > div.active {
   background-color: #ECEFF3;
 }
-/* line 102, layout/_sidebar.scss */
+/* line 99, layout/_sidebar.scss */
 .sidebar .project .list li.active .title > i::before {
   content: "\f0d7";
 }
-/* line 108, layout/_sidebar.scss */
+/* line 105, layout/_sidebar.scss */
 .sidebar .project .list li.active .view {
   display: block;
 }
-/* line 116, layout/_sidebar.scss */
+/* line 113, layout/_sidebar.scss */
 .sidebar .project .list li.unselected .title > i::before {
   content: "\f10c";
 }
-/* line 122, layout/_sidebar.scss */
+/* line 119, layout/_sidebar.scss */
 .sidebar .project .list li.unselected .view {
   display: none;
 }
-/* line 130, layout/_sidebar.scss */
+/* line 127, layout/_sidebar.scss */
 .sidebar .project .list li.selected .title > i::before {
   content: "\f05d";
 }
-/* line 136, layout/_sidebar.scss */
+/* line 133, layout/_sidebar.scss */
 .sidebar .project .list li.selected .view {
   display: none;
 }
-/* line 144, layout/_sidebar.scss */
+/* line 141, layout/_sidebar.scss */
 .sidebar .component {
   width: 240px;
   position: relative;
 }
-/* line 148, layout/_sidebar.scss */
+/* line 145, layout/_sidebar.scss */
 .sidebar .component .search {
   margin: 24px 10px 14px 10px;
   height: 36px;
   border-radius: 40px;
   float: left;
 }
-/* line 154, layout/_sidebar.scss */
+/* line 151, layout/_sidebar.scss */
 .sidebar .component .search .key {
   height: 100%;
   margin: 0 18px;
   width: 184px;
   background-color: transparent;
 }
-/* line 162, layout/_sidebar.scss */
+/* line 159, layout/_sidebar.scss */
 .sidebar .component .seperator {
   height: 2px;
   margin-left: 10px;
@@ -306,7 +302,7 @@ body {
   width: 220px;
   float: left;
 }
-/* line 170, layout/_sidebar.scss */
+/* line 167, layout/_sidebar.scss */
 .sidebar .component .items {
   left: 10px;
   right: 10px;
@@ -316,13 +312,13 @@ body {
   float: left;
   overflow-y: auto;
 }
-/* line 179, layout/_sidebar.scss */
+/* line 176, layout/_sidebar.scss */
 .sidebar .component .items .list {
   margin-right: 14px;
   margin-top: 12px;
   float: left;
 }
-/* line 184, layout/_sidebar.scss */
+/* line 181, layout/_sidebar.scss */
 .sidebar .component .items .list li {
   width: 85px;
   height: 110px;
@@ -331,57 +327,57 @@ body {
   float: left;
   text-align: center;
 }
-/* line 192, layout/_sidebar.scss */
+/* line 189, layout/_sidebar.scss */
 .sidebar .component .items .list li.active .image {
   background-color: orange;
 }
-/* line 199, layout/_sidebar.scss */
+/* line 196, layout/_sidebar.scss */
 .sidebar .component .items .item .image {
   width: 85px;
   height: 85px;
   background-color: white;
 }
-/* line 208, layout/_sidebar.scss */
+/* line 205, layout/_sidebar.scss */
 .sidebar .board {
   width: 240px;
   position: relative;
   overflow-y: auto;
   background-color: #DEE1E5;
 }
-/* line 215, layout/_sidebar.scss */
+/* line 212, layout/_sidebar.scss */
 .sidebar .board .list li {
   cursor: pointer;
 }
-/* line 217, layout/_sidebar.scss */
+/* line 214, layout/_sidebar.scss */
 .sidebar .board .list li .image {
   width: 70px;
   height: 70px;
   display: block;
   margin: 0 auto;
 }
-/* line 224, layout/_sidebar.scss */
+/* line 221, layout/_sidebar.scss */
 .sidebar .board .list li .name {
   color: #515151;
   margin: 0 atuo;
   display: block;
   text-align: center;
 }
-/* line 231, layout/_sidebar.scss */
+/* line 228, layout/_sidebar.scss */
 .sidebar .board .list li:hover {
   background-color: #C9CED4;
 }
-/* line 235, layout/_sidebar.scss */
+/* line 232, layout/_sidebar.scss */
 .sidebar .board .list li.active {
   background-color: #ECEFF4;
 }
-/* line 242, layout/_sidebar.scss */
+/* line 239, layout/_sidebar.scss */
 .sidebar .library {
   width: 240px;
   position: relative;
   overflow-y: auto;
   background-color: #DEE1E5;
 }
-/* line 249, layout/_sidebar.scss */
+/* line 246, layout/_sidebar.scss */
 .sidebar .library .list li {
   cursor: pointer;
   color: #515151;
@@ -389,11 +385,11 @@ body {
   height: 36px;
   line-height: 36px;
 }
-/* line 256, layout/_sidebar.scss */
+/* line 253, layout/_sidebar.scss */
 .sidebar .library .list li:hover {
   background-color: #C9CED4;
 }
-/* line 260, layout/_sidebar.scss */
+/* line 257, layout/_sidebar.scss */
 .sidebar .library .list li.active {
   background-color: #ECEFF4;
 }
@@ -425,18 +421,22 @@ body {
   line-height: 30px;
   display: block;
 }
-/* line 29, layout/_hardware.scss */
+/* line 28, layout/_hardware.scss */
+.hardware .tools ul li:first-child > i {
+  margin-left: 3px;
+}
+/* line 35, layout/_hardware.scss */
 .hardware .center {
   height: 100%;
 }
-/* line 33, layout/_hardware.scss */
+/* line 39, layout/_hardware.scss */
 .hardware .copyright {
   width: 100%;
   bottom: 0;
   z-index: 99;
   position: absolute;
 }
-/* line 39, layout/_hardware.scss */
+/* line 45, layout/_hardware.scss */
 .hardware .copyright .alert {
   width: 560px;
   font-size: 12px;
@@ -450,7 +450,7 @@ body {
   margin: 0 auto;
   color: #676767;
 }
-/* line 54, layout/_hardware.scss */
+/* line 60, layout/_hardware.scss */
 .hardware .name-dialog {
   z-index: 998;
   top: 90px;
@@ -459,7 +459,7 @@ body {
   position: relative;
   display: none;
 }
-/* line 62, layout/_hardware.scss */
+/* line 68, layout/_hardware.scss */
 .hardware .name-dialog .name-label {
   display: block;
   background-color: #F1C933;
@@ -472,7 +472,7 @@ body {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
-/* line 75, layout/_hardware.scss */
+/* line 81, layout/_hardware.scss */
 .hardware .name-dialog .name {
   border: 2px solid #F1C933;
   border-top-right-radius: 4px;
@@ -934,46 +934,42 @@ body {
 }
 
 /* line 275, component/_login-dialog.scss */
-.baseLogin .submitBtn {
+.baseLogin .btn-login {
   -webkit-appearance: none;
   -webkit-rtl-ordering: logical;
   -webkit-user-select: none;
-  background-attachment: scroll;
-  background-clip: border-box;
+  border-radius: 4px;
   background-color: #00aaee;
-  background-image: none;
-  background-origin: padding-box;
-  background-size: auto;
-  border-bottom-color: white;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-  border-bottom-style: none;
-  border-bottom-width: 0px;
-  border-image-outset: 0px;
-  border-image-repeat: stretch;
-  border-image-slice: 100%;
-  border-image-source: none;
-  border-image-width: 1;
-  border-left-color: white;
-  border-left-style: none;
-  border-left-width: 0px;
-  border-right-color: white;
-  border-right-style: none;
-  border-right-width: 0px;
-  border-top-color: white;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  border-top-style: none;
-  border-top-width: 0px;
   color: white;
   cursor: pointer;
-  display: block;
+  text-align: center;
+  float: left;
   font-size: 18px;
   height: 40px;
-  width: 219px;
-  line-height: 36px;
+  width: 90px;
+  line-height: 40px;
   outline-style: none;
-  margin: 0 auto;
+  margin-left: 30px;
+  font-family: "Microsoft YaHei", "Helvetica Neue";
+}
+
+/* line 294, component/_login-dialog.scss */
+.baseLogin .btn-register {
+  -webkit-appearance: none;
+  -webkit-rtl-ordering: logical;
+  -webkit-user-select: none;
+  border-radius: 4px;
+  background-color: #00aaee;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  float: left;
+  font-size: 18px;
+  height: 40px;
+  width: 90px;
+  line-height: 40px;
+  outline-style: none;
+  margin-left: 35px;
   font-family: "Microsoft YaHei", "Helvetica Neue";
 }
 

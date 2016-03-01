@@ -1,6 +1,12 @@
 define(['jquery', 'util', 'user', 'project', 'board', 'software'], function($, util, user, project, board, software) {
 	function init() {
+		$('.sidebar .logo').on('click', onLogoClick);
+
 		$('.sidebar .bar ul > li').on('click', onSidebarClick).filter('[data-action="component"]').click();
+	}
+
+	function onLogoClick(e) {
+		user.showLoginDialog();
 	}
 
 	function onSidebarClick(e) {
@@ -42,7 +48,7 @@ define(['jquery', 'util', 'user', 'project', 'board', 'software'], function($, u
 			type: "POST",
 			url: "/build",
 			data: {
-				source: JSON.stringify(software.getSource()),
+				source: software.getSource(),
 				user_id: user.getUserId(),
 				project: projectName,
 				build_type: "Arduino",

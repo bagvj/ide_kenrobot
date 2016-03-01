@@ -18,21 +18,12 @@ define(['ace', 'ace-ext-language-tools', 'jquery', 'code'], function(_, _, $, co
 		if(!source || source.length == 0) {
 			editor.setValue(code.gen(), 1);
 		} else {
-			var chars = [];
-			for(var i = 0; i < source.length; i++) {
-				chars.push(String.fromCharCode(source[i]));
-			}
-			editor.setValue(chars.join(""), 1);
+			editor.setValue(source);
 		}	
 	}
 
 	function getSource() {
-		var source = editor.getValue();
-		var bytes = [];
-		for (var i = 0; i < source.length; ++i) {
-			bytes.push(source.charCodeAt(i));
-		}
-		return bytes;
+		return editor.getValue();
 	}
 
 	return {

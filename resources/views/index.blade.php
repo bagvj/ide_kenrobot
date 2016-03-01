@@ -22,7 +22,6 @@
 			<div class="sidebar">
 				<div class="bar">
 					<div class="logo">
-						<a href="http://www.kenrobot.com/">&nbsp;</a>
 					</div>
 					<ul>
 						<li data-action="project"><i class="fa fa-file"></i>项目</li>
@@ -137,14 +136,8 @@
 				<i class="fa fa-close"></i>
 			</div>
 				<div>
-					<a href="javascript:;" title="返回" class="qrLoginBtn active" data-action="qrLogin"></a>
-					<div class="tab active qrLogin">
-						<div class="tips">请使用微信扫一扫</div>
-						<div class="tips">扫码关注后即可直接登录</div>
-						<img class="qrcode" alt="微信扫码" src="{{ $qrcodeurl or '' }}" />
-					</div>
-					<a href="javascript:;" title="返回" class="baseLoginBtn" data-action="baseLogin" style="display:none;"></a>
-					<div class="tab baseLogin">
+					<a href="javascript:;" title="返回" class="baseLoginBtn" data-action="baseLogin active" style="display:none;"></a>
+					<div class="tab baseLogin active">
 						<div class="tips">登录到啃萝卜</div>
 						<form>
 							{!! csrf_field() !!}
@@ -162,9 +155,16 @@
 							<div class="remember"></div>
 							<div>
 								<input id="qrcode_key" type="hidden" value="{{$key or ''}}">
-								<input class="submitBtn" type="button" value="登录"/>
+								<a class="btn-login">登录</a>
+								<a class="btn-register" href="http://www.kenrobot.com/index.php?app=public&mod=Register&act=index">注册</a>
 							</div>
 						</form>
+					</div>
+					<a href="javascript:;" title="返回" class="qrLoginBtn" data-action="qrLogin"></a>
+					<div class="tab qrLogin">
+						<div class="tips">请使用微信扫一扫</div>
+						<div class="tips">扫码关注后即可直接登录</div>
+						<img class="qrcode" alt="微信扫码" src="{{ $qrcodeurl or '' }}" />
 					</div>
 				</div>
 			</div>
