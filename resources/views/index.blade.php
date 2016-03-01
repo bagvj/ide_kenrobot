@@ -129,27 +129,39 @@
 					</div>
 				</div>
 			</div>
-			@if(isset($user))
-			<div class="user active">
-				<a class="photo" href="{{$mainpage}}">
-					<img src="{{$user->avatar_url}}" />
-				</a>
-				<div class="welcome">
-					Hi,<span class="name">{{$user->name}}</span>
+			<!-- @if(isset($user)) -->
+			<div class="user{{$user ? ' active' : ''}}">
+				<div class="dialog">
+					<a class="photo" href="{{$mainpage}}">
+						<img src="{{$user ? $user->avatar_url : '#'}}" />
+					</a>
+					<div class="welcome">
+						Hi,<span class="name">{{$user ? $user->name : ''}}</span>
+					</div>
+					<a class="logout" href="/auth/logout">退出</a>
+					<i class="fa fa-close close-btn"></i>
 				</div>
-				<a class="logout" href="/auth/logout">退出</a>
+				<div class="indent">
+					<i class="fa fa-caret-left"></i>
+				</div>
 			</div>
-			@else
+<!-- 			@else
 			<div class="user">
-				<a class="photo" href="{{$mainpage}}">
-					<img src="{{asset('assets/images/photo.png')}}" />
-				</a>
-				<div class="welcome">
-					Hi,<span class="name"></span>
+				<div class="dialog">
+					<a class="photo" href="{{$mainpage}}">
+						<img src="{{asset('assets/images/photo.png')}}" />
+					</a>
+					<div class="welcome">
+						Hi,<span class="name"></span>
+					</div>
+					<a class="logout" href="/auth/logo/ut">退出</a>
+					<i class="fa fa-close close-btn"></i>
 				</div>
-				<a class="logout" href="/auth/logout">退出</a>
+				<div class="indent">
+					<i class="fa fa-caret-left"></i>
+				</div>
 			</div>
-			@endif
+			@endif -->
 		</div>
 		<div class="dialog-layer">
 			<div id="login_dialog" class="dialog">

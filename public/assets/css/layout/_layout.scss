@@ -54,35 +54,81 @@
 
 	.user {
 		z-index: 999;
-		display: none;
 		position: absolute;
-		top: 0;
+		top: 20px;
 		right: 0;
+		
+		.dialog {
+			margin-right: 20px;
 
-		color: #515151;
-		.photo {
-			float: left;
-			&>img {
-				width: 40px;
-				height: 40px;
+			display: none;
+			height: 60px;
+			background-color: white;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
+			color: #515151;
+
+			.photo {
+				line-height: 60px;
+				float: left;
+				margin-left: 15px;
+				margin-right: 10px;
+				& > img {
+					width: 40px;
+					height: 40px;
+					border-radius: 50%;
+				}
+			}
+
+			.welcome {
+				line-height: 60px;
+				float: left;
+			}
+
+			.logout {
+				line-height: 60px;
+				color: #515151;
+				cursor: pointer;
+				margin-left: 20px;
+				margin-right: 15px;
+				float: left;
+
+				&:hover {
+					color: #323942;
+				}
+			}
+
+			.close-btn {
+				cursor: pointer;
+				top: 3px;
+				right: 7px;
+				font-size: 14px;
+				position: absolute;
 			}
 		}
 
-		.welcome {
-			float: left;
-		}
+		.indent {
+			display: block;
+			width: 8px;
+			height: 36px;
+			background-color: white;
+			border-left: 1px solid #e1e4e8;
+			border-top: 1px solid #e1e4e8;
+			border-bottom: 1px solid #e1e4e8;
 
-		.logout {
-			color: #515151;
 			cursor: pointer;
-			margin-left: 10px;
-			margin-right: 10px;
-			float: left;
+			& > i{
+				line-height: 36px;
+			}
 		}
-
 
 		&.active {
-			display: block;
+			.dialog {
+				display: block;
+			}
+
+			.indent {
+				display: none;
+			}
 		}
 	}
 }

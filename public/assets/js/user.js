@@ -1,9 +1,11 @@
-define(['jquery', 'util'], function($, util) {
+define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
 	var userInfo;
 	var loginCheckTimer;
 
 	function init() {
-		initLogin();
+		initLoginDialog();
+
+		initUserDialog();
 	}
 
 	function getUserId() {
@@ -48,7 +50,7 @@ define(['jquery', 'util'], function($, util) {
 		$('.dialog-layer').addClass("active");
 	}
 
-	function initLogin() {
+	function initLoginDialog() {
 		$('.qrLoginBtn, .baseLoginBtn').on('click', function(e) {
 			var action = $(this).attr("data-action");
 			if (action == "qrLogin") {
@@ -134,6 +136,25 @@ define(['jquery', 'util'], function($, util) {
 		});
 	}
 
+	function initUserDialog() {
+		var user = $('.user');
+		var dialog = $('.dialog', user);
+		var indent = $('.indent', user);
+		$('.close-btn', dialog).on('click', function() {
+			dialog.slideUp(200, function(e) {
+				user.removeClass("active");
+				indent.show();
+			});
+		});
+
+		indent.on('click', function() {
+			dialog.slideDown(400, function() {
+				user.addClass('active');
+				indent.hide();
+			});
+		});
+	}
+
 	function setLoginCheck(value, callback) {
 		clearInterval(loginCheckTimer);
 		if (value) {
@@ -151,6 +172,7 @@ define(['jquery', 'util'], function($, util) {
 						doUpdateUser();
 						//回调
 						callback && callback();
+						EventManager.trigger("user", "login");
 					} else if (result.code == 1) {
 						//已经登录
 						userInfo = result.data;

@@ -7,6 +7,7 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 		$('.project .operation li').on('click', onProjectActionClick);
 
 		EventManager.bind("project", "switchPanel", onSwitchPanel);
+		EventManager.bind("user", "login", onLogin);
 
 		load();
 	}
@@ -275,6 +276,13 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 
 	function onSwitchPanel(index) {
 		$('.project .list .view > div.active').parent().find("div").eq(index).click();
+	}
+
+	function onLogin() {
+		$.ajax({
+			url: '/projects/' + user.getUserId(),
+			dataType: 'json',
+		}).done(onLoadSuccess);
 	}
 
 	function getProjectData() {

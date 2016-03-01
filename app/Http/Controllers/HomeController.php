@@ -26,7 +26,7 @@ class HomeController extends Controller {
 		$qrcodeurl = $this->getQrcodeurl($qrcode);
 		$key = 'qrscene_'.$qrcode;
 		Session::put('key',$key);
-		$mainpage = config('master.mainpage');
+		$mainpage = config('navigation.master.mainpage');
 
 		$register_url = config('platform.url.register').'&redirect_uri='.urlencode($request->url());
 		$boards = $this->getBoardConfig();
