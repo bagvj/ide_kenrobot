@@ -169,6 +169,11 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 			bars.filter('[data-action="library"]').addClass("hide");
 			list.filter('.tab-board,.tab-component').removeClass("hide");
 			list.filter('.tab-library').addClass("hide");
+
+			var componentBar = bars.filter('[data-action="component"]');
+			if(!componentBar.hasClass("active")) {
+				componentBar.click();
+			}
 		} else {
 			bars.filter('[data-action="board"],[data-action="component"]').addClass("hide");
 			bars.filter('[data-action="library"]').removeClass("hide");
@@ -179,6 +184,8 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 			if(!projectBar.hasClass("active")) {
 				projectBar.click();
 			}
+
+			software.setSource(code.gen());
 		}
 		$(".main > .tabs").css({
 			'margin-left': $('.sidebar').width()

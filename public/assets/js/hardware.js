@@ -54,8 +54,6 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 			
 			//显示网格
 			"grid.visible": true,
-			"draggingTool.isGridSnapEnabled": true,
-			"resizingTool.isGridSnapEnabled": true,
 
 			//鼠标滑轮缩放
 			"toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom,
@@ -70,7 +68,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		});
 
 		diagram.grid = GO(go.Panel, "Grid",
-			{ gridCellSize: new go.Size(30, 30) },
+			// { gridCellSize: new go.Size(10, 30) },
 			GO(go.Shape, "LineH", { stroke: "#EBEFF7" }),
 			GO(go.Shape, "LineV", { stroke: "#EBEFF7" }),
 			GO(go.Shape, "LineH", { stroke: "#F0F3F8", interval: 5 }),
@@ -97,7 +95,6 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		//重写
 		var tool = diagram.toolManager.clickCreatingTool;
 		tool.insertPart = function(loc) {
-
 			this.archetypeNodeData = genNodeData(this.archetypeNodeData.name);
 			return go.ClickCreatingTool.prototype.insertPart.call(this, loc);
 		}
@@ -131,6 +128,24 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 					break;
 			}
 		}
+	}
+
+	function checkComponentFollow() {
+		var container = $('#hardware-container').off('mousemove', onContainerMouseMove);
+
+		if(interactiveMode != "place") {
+			return;
+		}
+
+		if($('.component .items .list > li.active').length == 0) {
+			return;
+		}
+
+		container.on('mousemove', onContainerMouseMove);
+	}
+
+	function onContainerMouseMove(e) {
+		// console.log("onContainerMouseMove");
 	}
 
 	function onInteractiveModeClick(node, e) {
@@ -297,6 +312,9 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		
 		tool.archetypeNodeData = {name: name};
 
+		// var config = getConfig(name);
+		// $('.hardware .follow .follower')
+
 		return true;
 	}
 
@@ -316,6 +334,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 
 	function changeInteractiveMode(mode) {
 		$('.hardware .tools li[data-mode="' + mode + '"').click();
+		checkComponentFollow();
 	}
 
 	function onNodeClick(node) {

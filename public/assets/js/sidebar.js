@@ -1,4 +1,4 @@
-define(['jquery', 'util', 'user', 'project', 'board', 'software'], function($, util, user, project, board, software) {
+define(['jquery', 'EventManager', 'util', 'user', 'project', 'board', 'software'], function($, EventManager, util, user, project, board, software) {
 	function init() {
 		$('.sidebar .logo').on('click', onLogoClick);
 
@@ -30,7 +30,7 @@ define(['jquery', 'util', 'user', 'project', 'board', 'software'], function($, u
 			default:
 				var tab = $('.sidebar .tab.tab-' + action);
 				util.toggleActive(li, null, true);
-				util.toggleActive(tab, ".tab", true);
+				var collapse = util.toggleActive(tab, ".tab", true);
 				$(".main > .tabs").css({
 					'margin-left': $('.sidebar').width()
 				});

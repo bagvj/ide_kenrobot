@@ -1,4 +1,4 @@
-define(['jquery', 'bootstrap', 'typeahead', 'hardware'], function($, _, _, hardware) {
+define(['jquery', 'bootstrap', 'typeahead', 'util', 'hardware'], function($, _, _, util, hardware) {
 	var current;
 	var components;
 
@@ -12,9 +12,10 @@ define(['jquery', 'bootstrap', 'typeahead', 'hardware'], function($, _, _, hardw
 	}
 
 	function onComponentClick(e) {
-		$(this).parent().find("li.active").removeClass("active");
-		$(this).addClass("active");
-		hardware.setPlaceComponent($(this).data("component-name"));
+		var li = $(this);
+		util.toggleActive(li);
+
+		hardware.setPlaceComponent(li.data("component-name"));
 		hardware.changeInteractiveMode("place");
 	}
 

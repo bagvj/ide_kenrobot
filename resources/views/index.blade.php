@@ -103,7 +103,9 @@
 			<div class="tabs">
 				<div class="tab active">
 					<div class="hardware">
-						<div class="center" id="hardware-container">
+						<div class="center" id="hardware-container"></div>
+						<div class="follow">
+							<img class="follower" />
 						</div>
 						<div class="tools">
 							<ul>

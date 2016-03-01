@@ -22,7 +22,7 @@ define(['ace', 'ace-ext-language-tools', 'jquery', 'EventManager', 'code'], func
 		if(!source || source.length == 0) {
 			editor.setValue(code.gen(), 1);
 		} else {
-			editor.setValue(source);
+			editor.setValue(source, 1);
 		}	
 	}
 
