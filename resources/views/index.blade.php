@@ -62,8 +62,12 @@
 				<div class="tab tab-board">
 					<div class="board">
 						<ul class="list">
-						@foreach($boards as $board)
-							<li data-board="{{$board->name}}"><img class="image" src="/assets/images/board/arduino-uno-r3-small.png" /><span class="name">{{$board->label}}</span></li>
+						@foreach($boards as $index => $board)
+						@if($index == 0)
+							<li class="normal" data-board="{{$board->name}}"><img class="image" src="/assets/images/board/arduino-uno-r3-small.png" /><span class="name">{{$board->label}}</span></li>
+						@else
+							<li class="forward" data-board="{{$board->name}}"><img class="image" src="/assets/images/board/arduino-uno-r3-small.png" /><span class="name">{{$board->label}}</span></li>
+						@endif
 						@endforeach
 						</ul>
 					</div>
@@ -131,7 +135,7 @@
 			</div>
 			<div class="user{{isset($user) ? ' active' : ''}}">
 				<div class="dialog">
-					<a class="photo" href="{{$mainpage}}">
+					<a class="photo" href="{{$mainpage}}" target="_blank">
 						<img src="{{isset($user) ? $user->avatar_url : '#'}}" />
 					</a>
 					<div class="welcome">
@@ -145,7 +149,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="dialog-layer">
+		<div class="dialog-layer mask">
 			<div id="login_dialog" class="dialog">
 				<div class="close-btn left">
 					<i class="fa fa-close"></i>
@@ -219,6 +223,12 @@
 						</div>
 					</div>
 				</form>
+			</div>
+		</div>
+		<div class="login-hint-layer mask">
+			<div class="login-hint">
+				<div class="title">提示：</div>
+				<div class="content">点击此处进行<span class="strong">【登录】</span>哦~</div>
 			</div>
 		</div>
 	</body>

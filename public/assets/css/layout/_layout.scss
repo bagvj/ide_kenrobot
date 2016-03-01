@@ -127,17 +127,52 @@
 }
 
 .dialog-layer {
-	// height: 0;
 	z-index: 25;
+	display: none;
+
 	&.active {
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		position: absolute;
-		background-color: rgba(123, 133, 145, 0.6);
+		display: block;
 	}
+	
 	.dialog {
 		display: none;
+	}
+}
+
+.login-hint-layer {
+	z-index: 100;
+
+	.login-hint {
+		top: 10px;
+		left: 70px;
+		position: absolute;
+		background-color: white;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
+
+		.title {
+			margin-top: 10px;
+			margin-left: 15px;
+			color: #fa764a;
+		}
+
+		.content {
+			margin: 10px 15px 10px 15px;
+			color: #515151;
+			.strong {
+				color: #19c3f1;
+			}
+		}
+
+		&:before {
+			border: solid transparent;
+			content: ' ';
+			height: 0;
+			width: 0;
+			border-width: 9px;
+			border-right-color: white;
+			left: -18px;
+			top: 15px;
+			position: absolute;
+		}
 	}
 }

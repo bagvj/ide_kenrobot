@@ -76,6 +76,16 @@ body {
   cursor: auto;
 }
 
+/* line 21, helper/_helper.scss */
+.mask {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  background-color: rgba(123, 133, 145, 0.6);
+}
+
 /* line 1, layout/_layout.scss */
 .main {
   top: 0;
@@ -211,19 +221,55 @@ body {
 /* line 129, layout/_layout.scss */
 .dialog-layer {
   z-index: 25;
+  display: none;
 }
-/* line 132, layout/_layout.scss */
+/* line 133, layout/_layout.scss */
 .dialog-layer.active {
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  position: absolute;
-  background-color: rgba(123, 133, 145, 0.6);
+  display: block;
 }
-/* line 140, layout/_layout.scss */
+/* line 137, layout/_layout.scss */
 .dialog-layer .dialog {
   display: none;
+}
+
+/* line 142, layout/_layout.scss */
+.login-hint-layer {
+  z-index: 100;
+}
+/* line 145, layout/_layout.scss */
+.login-hint-layer .login-hint {
+  top: 10px;
+  left: 70px;
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
+}
+/* line 152, layout/_layout.scss */
+.login-hint-layer .login-hint .title {
+  margin-top: 10px;
+  margin-left: 15px;
+  color: #fa764a;
+}
+/* line 158, layout/_layout.scss */
+.login-hint-layer .login-hint .content {
+  margin: 10px 15px 10px 15px;
+  color: #515151;
+}
+/* line 161, layout/_layout.scss */
+.login-hint-layer .login-hint .content .strong {
+  color: #19c3f1;
+}
+/* line 166, layout/_layout.scss */
+.login-hint-layer .login-hint:before {
+  border: solid transparent;
+  content: ' ';
+  height: 0;
+  width: 0;
+  border-width: 9px;
+  border-right-color: white;
+  left: -18px;
+  top: 15px;
+  position: absolute;
 }
 
 /* line 3, layout/_sidebar.scss */

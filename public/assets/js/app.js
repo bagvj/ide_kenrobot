@@ -11,14 +11,18 @@ define(['jquery', 'bootstrap', 'util', 'EventManager', 'hardware', 'code', 'user
 		software.init();
 		code.init(hardware.getNodes);
 
+		// $(window).bind('beforeunload', function(){
+		// 	return '您的项目尚未保存，确定离开此页面吗？';
+		// });
+
+		$('.login-hint-layer').on('click', function(){
+			$(this).remove();
+		});
+
 		$.ajax({
 			url: '/config',
 			dataType: 'json',
 		}).done(onLoadSuccess);
-
-		// $(window).bind('beforeunload', function(){
-		// 	return '您的项目尚未保存，确定离开此页面吗？';
-		// });
 	}
 
 	function initAjax() {
