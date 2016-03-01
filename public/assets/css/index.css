@@ -295,7 +295,7 @@ body {
 }
 /* line 24, layout/_sidebar.scss */
 .sidebar .project {
-  width: 240px;
+  width: 200px;
   position: relative;
 }
 /* line 28, layout/_sidebar.scss */
@@ -481,7 +481,7 @@ body {
 }
 /* line 230, layout/_sidebar.scss */
 .sidebar .board {
-  width: 240px;
+  width: 200px;
   position: relative;
   overflow-y: auto;
   background-color: #DEE1E5;
@@ -523,12 +523,12 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  background: url(/assets/images/stamps.png) no-repeat 125px 10px;
+  background: url(/assets/images/stamps.png) no-repeat 115px 10px;
   background-size: 50px 50px;
 }
 /* line 280, layout/_sidebar.scss */
 .sidebar .library {
-  width: 240px;
+  width: 200px;
   position: relative;
   overflow-y: auto;
   background-color: #DEE1E5;

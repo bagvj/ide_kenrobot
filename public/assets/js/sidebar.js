@@ -69,7 +69,7 @@ define(['jquery', 'util', 'user', 'project', 'board', 'software'], function($, u
 	}
 
 	function onShareClick() {
-
+		util.message("敬请期待");
 	}
 
 	return {
