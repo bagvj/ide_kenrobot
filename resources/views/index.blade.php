@@ -43,7 +43,7 @@
 								<li class="confirm hide" data-action="confirm">确定</li>
 							</ul>
 						</div>
-						<div class="list" data-operation="default">
+						<div class="list x-scrollbar" data-operation="default">
 							<ul>
 								<li data-project-id="0">
 									<div class="title">
@@ -60,7 +60,7 @@
 					</div>
 				</div>
 				<div class="tab tab-board">
-					<div class="board">
+					<div class="board x-scrollbar">
 						<ul class="list">
 						@foreach($boards as $index => $board)
 						@if($index == 0)
@@ -91,7 +91,7 @@
 					</div>
 				</div>
 				<div class="tab tab-library">
-					<div class="library">
+					<div class="library x-scrollbar">
 						<ul class="list">
 						@foreach($libraries as $library)
 							<li data-library="{{$library->name}}">{{$library->name}}</li>
@@ -108,13 +108,13 @@
 						<div class="tools">
 							<ul>
 								<li class="interactive-mode" data-action="changeMode" data-mode="default" title="默认模式">
-									<i class="fa fa-mouse-pointer"></i>
+									<i class="fa fa-arrows"></i>
 								</li>
 								<li class="interactive-mode active" data-action="changeMode" data-mode="place" title="摆放模式">
 									<i class="fa fa-hand-pointer-o"></i>
 								</li>
 								<li class="interactive-mode" data-action="changeMode" data-mode="delete" title="删除模式">
-									<i class="fa fa-close"></i>
+									<i class="fa fa-trash-o"></i>
 								</li>
 							</ul>
 						</div>
@@ -237,7 +237,7 @@
 		<div class="login-hint-layer mask">
 			<div class="login-hint">
 				<div class="title">提示：</div>
-				<div class="content">点击此处进行<span class="strong">【登录】</span>哦~<br />推荐使用Google Chrome浏览器</div>
+				<div class="content">点击此处即可弹出<span class="strong">【登录】</span>窗口<br />登录后可解锁更多功能哦<br />推荐使用Google Chrome浏览器</div>
 			</div>
 		</div>
 		@endif
