@@ -23,7 +23,7 @@ require.config({
 		"sidebar": "sidebar",
 		"board": "board",
 		"component": "component",
-		// "library"
+		"library": "library",
 	},
 	shim: {
 		"bootstrap": {

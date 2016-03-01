@@ -54,7 +54,6 @@ define(['jquery', 'util', 'user'], function($, util, user) {
 	function onLoadSuccess(result) {
 		if(result.status == 0) {
 			projects = result.data;
-			console.dir(projects);
 			initProjects();
 		}
 	}

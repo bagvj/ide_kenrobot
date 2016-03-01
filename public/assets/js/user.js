@@ -1,4 +1,4 @@
-define(['jquery'], function($) {
+define(['jquery', 'util'], function($, util) {
 	var userInfo;
 	var loginCheckTimer;
 
@@ -31,8 +31,9 @@ define(['jquery'], function($) {
 	}
 
 	function showLoginDialog(callback) {
-		var dialog = $('#login_dialog').css({
-			top: -$(this).height(),
+		var dialog = $('#login_dialog');
+		dialog.css({
+			top: -dialog.height(),
 		}).show().animate({
 			top: 200,
 		}, 400, "swing", function() {
