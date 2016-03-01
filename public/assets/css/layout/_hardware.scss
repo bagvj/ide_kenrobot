@@ -1,12 +1,12 @@
 .hardware {
 	.tools {
     	z-index: 98;
-		top: 10px;
-		left: 10px;
+		top: 30px;
+		left: 30px;
 		position: absolute;
 
 		ul li {
-			margin-bottom: 10px;
+			margin-bottom: 20px;
 			text-align: center;
 			cursor: pointer;
 			width: 30px;
@@ -60,10 +60,14 @@
 	.name-dialog {
 		z-index: 998;
 		top: 90px;
-		width: 250px;
-		margin: 0 auto;
-		position: relative;
+		width: 100%;
+		position: absolute;
 		display: none;
+
+		.wrap {
+			margin: 0 auto;
+			width: 250px;
+		}
 		
 		.name-label {
 			display: block;

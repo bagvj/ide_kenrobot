@@ -397,107 +397,143 @@ body {
 }
 /* line 141, layout/_sidebar.scss */
 .sidebar .component {
-  width: 240px;
+  width: 200px;
   position: relative;
+  background-color: #e1e4e8;
+  float: left;
 }
-/* line 145, layout/_sidebar.scss */
+/* line 147, layout/_sidebar.scss */
 .sidebar .component .search {
-  margin: 24px 10px 14px 10px;
-  height: 36px;
-  border-radius: 40px;
-  float: left;
+  margin-top: 12px;
+  margin-bottom: 20px;
+  margin-left: 12px;
+  background-color: #e1e4e8;
 }
-/* line 151, layout/_sidebar.scss */
+/* line 153, layout/_sidebar.scss */
 .sidebar .component .search .key {
-  height: 100%;
-  margin: 0 18px;
-  width: 184px;
-  background-color: transparent;
-}
-/* line 159, layout/_sidebar.scss */
-.sidebar .component .seperator {
-  height: 2px;
-  margin-left: 10px;
-  margin-right: 10px;
-  width: 220px;
-  float: left;
+  height: 24px;
+  width: 164px;
+  font-size: 12px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #515151;
+  background-color: white;
+  border-radius: 12px;
+  border: 1px solid #bac4d0;
 }
 /* line 167, layout/_sidebar.scss */
 .sidebar .component .items {
-  left: 10px;
-  right: 10px;
-  top: 90px;
-  bottom: 24px;
+  top: 56px;
+  left: 0;
+  bottom: 20px;
+  right: 0;
+  background-color: #e1e4e8;
   position: absolute;
   float: left;
   overflow-y: auto;
 }
-/* line 176, layout/_sidebar.scss */
+/* line 177, layout/_sidebar.scss */
 .sidebar .component .items .list {
-  margin-right: 14px;
-  margin-top: 12px;
+  margin-left: 12px;
   float: left;
 }
 /* line 181, layout/_sidebar.scss */
 .sidebar .component .items .list li {
-  width: 85px;
-  height: 110px;
-  margin-left: 14px;
-  margin-bottom: 12px;
-  float: left;
+  width: 72px;
   text-align: center;
+  float: left;
 }
-/* line 189, layout/_sidebar.scss */
+/* line 186, layout/_sidebar.scss */
+.sidebar .component .items .list li:nth-child(odd) {
+  margin-right: 20px;
+}
+/* line 190, layout/_sidebar.scss */
 .sidebar .component .items .list li.active .image {
-  background-color: orange;
+  border: 2px solid #4cc1fc;
 }
-/* line 196, layout/_sidebar.scss */
+/* line 197, layout/_sidebar.scss */
 .sidebar .component .items .item .image {
-  width: 85px;
-  height: 85px;
+  width: 72px;
+  height: 72px;
   background-color: white;
+  border: 1px solid #bac4d0;
 }
-/* line 205, layout/_sidebar.scss */
+/* line 204, layout/_sidebar.scss */
+.sidebar .component .items .item .name {
+  font-size: 12px;
+  color: #515151;
+  margin-top: 5px;
+  margin-bottom: 12px;
+}
+/* line 213, layout/_sidebar.scss */
+.sidebar .component .items .x-scrollbar::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3);
+  background-color: #C1C3C6;
+}
+/* line 218, layout/_sidebar.scss */
+.sidebar .component .items .x-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  background-color: #C1C3C6;
+}
+/* line 223, layout/_sidebar.scss */
+.sidebar .component .items .x-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #ADAEB0;
+}
+/* line 230, layout/_sidebar.scss */
 .sidebar .board {
   width: 240px;
   position: relative;
   overflow-y: auto;
   background-color: #DEE1E5;
 }
-/* line 212, layout/_sidebar.scss */
+/* line 237, layout/_sidebar.scss */
 .sidebar .board .list li {
-  cursor: pointer;
+  position: relative;
 }
-/* line 214, layout/_sidebar.scss */
+/* line 239, layout/_sidebar.scss */
 .sidebar .board .list li .image {
   width: 70px;
   height: 70px;
   display: block;
   margin: 0 auto;
 }
-/* line 221, layout/_sidebar.scss */
+/* line 246, layout/_sidebar.scss */
 .sidebar .board .list li .name {
   color: #515151;
   margin: 0 atuo;
   display: block;
   text-align: center;
 }
-/* line 228, layout/_sidebar.scss */
-.sidebar .board .list li:hover {
+/* line 253, layout/_sidebar.scss */
+.sidebar .board .list li.normal {
+  cursor: pointer;
+}
+/* line 256, layout/_sidebar.scss */
+.sidebar .board .list li.normal:hover {
   background-color: #C9CED4;
 }
-/* line 232, layout/_sidebar.scss */
-.sidebar .board .list li.active {
+/* line 260, layout/_sidebar.scss */
+.sidebar .board .list li.normal.active {
   background-color: #ECEFF4;
 }
-/* line 239, layout/_sidebar.scss */
+/* line 266, layout/_sidebar.scss */
+.sidebar .board .list li.forward .stamps {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: url(/assets/images/stamps.png) no-repeat 125px 10px;
+  background-size: 50px 50px;
+}
+/* line 280, layout/_sidebar.scss */
 .sidebar .library {
   width: 240px;
   position: relative;
   overflow-y: auto;
   background-color: #DEE1E5;
 }
-/* line 246, layout/_sidebar.scss */
+/* line 287, layout/_sidebar.scss */
 .sidebar .library .list li {
   cursor: pointer;
   color: #515151;
@@ -505,11 +541,11 @@ body {
   height: 36px;
   line-height: 36px;
 }
-/* line 253, layout/_sidebar.scss */
+/* line 294, layout/_sidebar.scss */
 .sidebar .library .list li:hover {
   background-color: #C9CED4;
 }
-/* line 257, layout/_sidebar.scss */
+/* line 298, layout/_sidebar.scss */
 .sidebar .library .list li.active {
   background-color: #ECEFF4;
 }
@@ -517,13 +553,13 @@ body {
 /* line 2, layout/_hardware.scss */
 .hardware .tools {
   z-index: 98;
-  top: 10px;
-  left: 10px;
+  top: 30px;
+  left: 30px;
   position: absolute;
 }
 /* line 8, layout/_hardware.scss */
 .hardware .tools ul li {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   text-align: center;
   cursor: pointer;
   width: 30px;
@@ -574,12 +610,16 @@ body {
 .hardware .name-dialog {
   z-index: 998;
   top: 90px;
-  width: 250px;
-  margin: 0 auto;
-  position: relative;
+  width: 100%;
+  position: absolute;
   display: none;
 }
-/* line 68, layout/_hardware.scss */
+/* line 67, layout/_hardware.scss */
+.hardware .name-dialog .wrap {
+  margin: 0 auto;
+  width: 250px;
+}
+/* line 72, layout/_hardware.scss */
 .hardware .name-dialog .name-label {
   display: block;
   background-color: #F1C933;
@@ -592,7 +632,7 @@ body {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
-/* line 81, layout/_hardware.scss */
+/* line 85, layout/_hardware.scss */
 .hardware .name-dialog .name {
   border: 2px solid #F1C933;
   border-top-right-radius: 4px;
@@ -610,29 +650,41 @@ body {
   height: 100%;
 }
 /* line 7, layout/_software.scss */
-.software .doEdit {
+.software .back {
+  right: 20px;
+  bottom: 25px;
   cursor: pointer;
-  z-index: 998;
-  right: 24px;
-  top: 12px;
   position: absolute;
 }
 /* line 14, layout/_software.scss */
-.software .doEdit ul {
-  float: left;
-}
-/* line 16, layout/_software.scss */
-.software .doEdit ul > li {
-  float: left;
+.software .back:hover .icon {
   display: none;
 }
-/* line 20, layout/_software.scss */
-.software .doEdit ul > li.active {
+/* line 18, layout/_software.scss */
+.software .back:hover .text {
   display: block;
 }
-/* line 24, layout/_software.scss */
-.software .doEdit ul > li > i {
-  margin-right: 5px;
+/* line 23, layout/_software.scss */
+.software .back .icon {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  color: #a0a1a4;
+  font-size: 20px;
+  background-color: #cbced3;
+  border: 1px solid #a6a9af;
+  display: block;
+}
+/* line 35, layout/_software.scss */
+.software .back .text {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  color: white;
+  background-color: #a0a1a4;
+  display: none;
 }
 
 /* line 1, component/_x-widget.scss */

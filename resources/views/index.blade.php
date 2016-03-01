@@ -66,7 +66,11 @@
 						@if($index == 0)
 							<li class="normal" data-board="{{$board->name}}"><img class="image" src="/assets/images/board/arduino-uno-r3-small.png" /><span class="name">{{$board->label}}</span></li>
 						@else
-							<li class="forward" data-board="{{$board->name}}"><img class="image" src="/assets/images/board/arduino-uno-r3-small.png" /><span class="name">{{$board->label}}</span></li>
+							<li class="forward" data-board="{{$board->name}}">
+								<img class="image" src="/assets/images/board/arduino-uno-r3-small.png" />
+								<span class="name">{{$board->label}}</span>
+								<div class="stamps"></div>
+							</li>
 						@endif
 						@endforeach
 						</ul>
@@ -77,11 +81,10 @@
 						<div class="search">
 							<input class="key" type="text" placeholder="搜索" spellcheck="false"/>
 						</div>
-						<div class="seperator"></div>
 						<div class="items x-scrollbar">
 							<ul class="list">
 							@foreach($components as $component)
-								<li class="item" data-component-name="{{$component->name}}"><img class="image" src="{{$component->source}}" /><span class="name">{{$component->label}}</span></li>
+								<li class="item" data-component-name="{{$component->name}}"><img class="image" src="{{$component->source}}" /><div class="name">{{$component->label}}</div></li>
 							@endforeach
 							</ul>
 						</div>
@@ -122,14 +125,20 @@
 							</div>
 						</div>
 						<div class="name-dialog">
-							<span class="name-label">名字</span>
-							<input class="name" type="text" />
+							<div class="wrap">
+								<span class="name-label">名字</span>
+								<input class="name" type="text" />
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="tab">
 					<div class="software">
 						<div class="editor"></div>
+						<div class="back">
+							<div class="icon"><i class="fa fa-level-up"></i></div>
+							<div class="text">返回</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -225,11 +234,13 @@
 				</form>
 			</div>
 		</div>
+		@if(!isset($user))
 		<div class="login-hint-layer mask">
 			<div class="login-hint">
 				<div class="title">提示：</div>
 				<div class="content">点击此处进行<span class="strong">【登录】</span>哦~</div>
 			</div>
 		</div>
+		@endif
 	</body>
 </html>

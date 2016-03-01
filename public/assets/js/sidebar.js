@@ -8,7 +8,9 @@ define(['jquery', 'util', 'user', 'project', 'board', 'software'], function($, u
 	function onLogoClick(e) {
 		user.authCheck(function() {
 			util.message("你已登录");
-		}, user.showLoginDialog);
+		}, function() {
+			user.showLoginDialog(null, 1);
+		});
 	}
 
 	function onSidebarClick(e) {
@@ -37,9 +39,10 @@ define(['jquery', 'util', 'user', 'project', 'board', 'software'], function($, u
 	}
 
 	function onSaveClick() {
-		user.authCheck(project.showSaveDialog, function() {
-			user.showLoginDialog(project.showSaveDialog);
-		});
+		util.message("敬请期待");
+		// user.authCheck(project.showSaveDialog, function() {
+		// 	user.showLoginDialog(project.showSaveDialog);
+		// });
 	}
 
 	function onDownloadClick() {

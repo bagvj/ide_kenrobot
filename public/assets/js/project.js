@@ -174,6 +174,11 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 			bars.filter('[data-action="library"]').removeClass("hide");
 			list.filter('.tab-board,.tab-component').addClass("hide");
 			list.filter('.tab-library').removeClass("hide");
+
+			var projectBar = bars.filter('[data-action="project"]');
+			if(!projectBar.hasClass("active")) {
+				projectBar.click();
+			}
 		}
 		$(".main > .tabs").css({
 			'margin-left': $('.sidebar').width()

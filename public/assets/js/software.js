@@ -1,4 +1,4 @@
-define(['ace', 'ace-ext-language-tools', 'jquery', 'code'], function(_, _, $, code) {
+define(['ace', 'ace-ext-language-tools', 'jquery', 'EventManager', 'code'], function(_, _, $, EventManager, code) {
 	var editor;
 
 	function init() {
@@ -12,6 +12,10 @@ define(['ace', 'ace-ext-language-tools', 'jquery', 'code'], function(_, _, $, co
 		editor.$blockScrolling = Infinity;
 		editor.setTheme("ace/theme/default");
 		editor.session.setMode("ace/mode/arduino");
+
+		$('.software .back').on('click', function(e) {
+			EventManager.trigger("project", "switchPanel", 0);
+		});
 	}
 
 	function setSource(source) {

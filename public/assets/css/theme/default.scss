@@ -33,28 +33,6 @@ $default-menu-color: #5f5176;
 			background-color: #2d2b30;
 		}
 
-		.component {
-			.search {
-				background-color: #47434C;
-				.key {
-					color: white;
-				}
-			}
-
-			.seperator {
-				background-color: #535353;
-			}
-
-			.items {
-				background-color: #47434C;
-				.list li {
-					.name {
-						color: $default-font-color;
-					}
-				}
-			}
-		}
-
 		.project {
 			.operation {
 				li {
@@ -81,15 +59,15 @@ $default-menu-color: #5f5176;
 		.tools {
 			ul li {
 				background-color: #b9b9b6;
-				color: #9b9b9b;
+				color: #666;
 				&.active {
 					background-color: #76797f;
-					color: $default-font-color;
+					color: white;
 				}
 
 				&:hover {
-					color: $default-font-color;
-					background-color: rgba(45, 43, 48, 1);
+					color: white;
+					background-color: #76797f;
 				}
 			}
 		}

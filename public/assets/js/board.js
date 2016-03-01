@@ -4,7 +4,7 @@ define(['jquery', 'util'], function($, util) {
 	var selector;
 
 	function init() {
-		selector = ".board .list > li";
+		selector = ".board .list > li.normal";
 		$(selector).on('click', onBoardClick);
 	}
 

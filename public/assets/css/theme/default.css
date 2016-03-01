@@ -28,123 +28,103 @@
 .theme-default .sidebar .tab-component {
   background-color: #2d2b30;
 }
-/* line 37, default.scss */
-.theme-default .sidebar .component .search {
-  background-color: #47434C;
-}
-/* line 39, default.scss */
-.theme-default .sidebar .component .search .key {
-  color: white;
-}
-/* line 44, default.scss */
-.theme-default .sidebar .component .seperator {
-  background-color: #535353;
-}
-/* line 48, default.scss */
-.theme-default .sidebar .component .items {
-  background-color: #47434C;
-}
-/* line 51, default.scss */
-.theme-default .sidebar .component .items .list li .name {
-  color: #dfdfdf;
-}
-/* line 60, default.scss */
+/* line 38, default.scss */
 .theme-default .sidebar .project .operation li {
   background-color: #3E4959;
 }
-/* line 62, default.scss */
+/* line 40, default.scss */
 .theme-default .sidebar .project .operation li:hover {
   color: white;
   background-color: #38A1DB;
 }
-/* line 67, default.scss */
+/* line 45, default.scss */
 .theme-default .sidebar .project .operation li.cancel {
   background-color: #3E4959;
 }
-/* line 71, default.scss */
+/* line 49, default.scss */
 .theme-default .sidebar .project .operation li.confirm {
   background-color: #38A1DB;
   color: white;
 }
-/* line 82, default.scss */
+/* line 60, default.scss */
 .theme-default .hardware .tools ul li {
   background-color: #b9b9b6;
-  color: #9b9b9b;
+  color: #666;
 }
-/* line 85, default.scss */
+/* line 63, default.scss */
 .theme-default .hardware .tools ul li.active {
   background-color: #76797f;
-  color: #dfdfdf;
+  color: white;
 }
-/* line 90, default.scss */
+/* line 68, default.scss */
 .theme-default .hardware .tools ul li:hover {
-  color: #dfdfdf;
-  background-color: #2d2b30;
+  color: white;
+  background-color: #76797f;
 }
-/* line 97, default.scss */
+/* line 75, default.scss */
 .theme-default .hardware .center {
   background-color: #f4f6fa;
 }
-/* line 103, default.scss */
+/* line 81, default.scss */
 .theme-default .software .north {
   background-color: #47434C;
 }
-/* line 107, default.scss */
+/* line 85, default.scss */
 .theme-default .software .menu .btn {
   color: #dfdfdf;
   background-color: #47434C;
 }
-/* line 110, default.scss */
+/* line 88, default.scss */
 .theme-default .software .menu .btn:hover {
   background-color: #5f5176;
 }
-/* line 115, default.scss */
+/* line 93, default.scss */
 .theme-default .software .menu .open .btn {
   background-color: #5f5176;
 }
-/* line 119, default.scss */
+/* line 97, default.scss */
 .theme-default .software .menu .dropdown-menu {
   background-color: #504C56;
 }
-/* line 122, default.scss */
+/* line 100, default.scss */
 .theme-default .software .menu .dropdown-menu > li > a {
   color: #dfdfdf;
 }
-/* line 125, default.scss */
+/* line 103, default.scss */
 .theme-default .software .menu .dropdown-menu > li:hover {
   background-color: #5f5176;
 }
-/* line 127, default.scss */
+/* line 105, default.scss */
 .theme-default .software .menu .dropdown-menu > li:hover > a {
   color: white;
 }
-/* line 135, default.scss */
+/* line 113, default.scss */
 .theme-default .software .menu .dropdown-submenu > a:after {
   border-left-color: #9b9b9b;
 }
-/* line 139, default.scss */
+/* line 117, default.scss */
 .theme-default .software .menu .dropdown-submenu:hover > a:after {
   border-left-color: #9b9b9b;
 }
-/* line 148, default.scss */
+/* line 126, default.scss */
 .theme-default .software .sub-tab ul li.active {
   background-color: #5f5176;
 }
-/* line 152, default.scss */
+/* line 130, default.scss */
 .theme-default .software .sub-tab ul li:hover {
   background-color: #5f5176;
 }
-/* line 160, default.scss */
+/* line 138, default.scss */
 .theme-default .x-scrollbar::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #5E5B62;
 }
-/* line 165, default.scss */
+/* line 143, default.scss */
 .theme-default .x-scrollbar::-webkit-scrollbar {
   width: 6px;
   background-color: #5E5B62;
 }
-/* line 170, default.scss */
+/* line 148, default.scss */
 .theme-default .x-scrollbar::-webkit-scrollbar-thumb {
   background-color: #737078;
 }

@@ -17,6 +17,8 @@ define(['jquery', 'bootstrap', 'util', 'EventManager', 'hardware', 'code', 'user
 
 		$('.login-hint-layer').on('click', function(){
 			$(this).remove();
+		}).delay(3000).queue(function() {
+			$(this).remove();
 		});
 
 		$.ajax({
