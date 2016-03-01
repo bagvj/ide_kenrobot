@@ -136,8 +136,7 @@
 					<div class="software">
 						<div class="editor"></div>
 						<div class="back">
-							<div class="icon"><i class="fa fa-level-up"></i></div>
-							<div class="text">返回</div>
+							返回<br />硬件设计
 						</div>
 					</div>
 				</div>
