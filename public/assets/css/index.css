@@ -651,6 +651,7 @@ body {
 }
 /* line 7, layout/_software.scss */
 .software .back {
+  z-index: 99;
   right: 20px;
   bottom: 25px;
   cursor: pointer;

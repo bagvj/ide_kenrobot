@@ -64,6 +64,9 @@ define(function() {
 			return a.localeCompare(b);
 		});
 		var str = "/************************************************************\n *Copyright(C), 2016-2038, KenRobot.com\n *FileName:  //文件名\n *Author:    //作者\n *Version:   //版本\n *Date:      //完成日期\n */\n";
+		if(headCodes.length > 0) {
+			str += "\n";
+		}
 		for(var i = 0; i < headCodes.length; i++) {
 			str += headCodes[i] + "\n";
 		}
