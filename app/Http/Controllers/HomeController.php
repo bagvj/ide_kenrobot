@@ -113,10 +113,7 @@ class HomeController extends Controller {
 	}
 
 	public function config() {
-		$defaultCode = "/************************************************************\n *Copyright(C), 2016-2038, KenRobot.com\n *FileName:  //文件名\n *Author:    //作者\n *Version:   //版本\n *Date:      //完成日期\n */\n\nvoid setup() {\n    // put your setup code here, to run once:\n    \n}\n\nvoid loop() {\n    // put your main code here, to run repeatedly:\n    \n}";
-
 		$config = array(
-			'defaultCode' => $defaultCode,
 			'libraries' => $this->getLibrariyConfig(true),
 			'boards' => $this->getBoardConfig(true, true),
 			'components' => $this->getComponentConfig(true, true),

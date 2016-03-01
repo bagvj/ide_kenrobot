@@ -48,11 +48,11 @@
 							<ul>
 								<li data-project-id="0">
 									<div class="title">
-										我的项目<i class="fa"></i>
+										<span class="name">我的项目</span><i class="fa"></i>
 									</div>
 									<div class="view">
-										<div>我的项目.uno</div>
-										<div>我的项目.ino</div>
+										<div><span class="name">我的项目</span>.uno</div>
+										<div><span class="name">我的项目</span>.ino</div>
 									</div>
 								</li>
 							</ul>

@@ -10,6 +10,7 @@ define(['jquery', 'bootstrap', 'util', 'EventManager', 'hardware', 'code', 'user
 		library.init();
 		hardware.init();
 		software.init();
+		code.init(hardware.getNodes);
 
 		load();
 
@@ -41,7 +42,6 @@ define(['jquery', 'bootstrap', 'util', 'EventManager', 'hardware', 'code', 'user
 		library.load(result.libraries);
 
 		hardware.load(result);
-		software.setSource(result.defaultCode);
 	}
 
 	return {

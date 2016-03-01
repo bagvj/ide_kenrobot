@@ -1,4 +1,4 @@
-define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util', 'project'], function($, _, template, EventManager, util, project) {
+define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _, template, EventManager, util) {
 	//C++关键字
 	var keywords = [
 		"asm", "do", "if", "return", "typedef", "auto", "double",
@@ -306,7 +306,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util', 'project'], fu
 	}
 
 	function onBackgroundDoubleClick(e) {
-		project.switchPanel(1);
+		EventManager.trigger("project", "switchPanel", 1);
 	}
 
 	function onPartCreated(e) {
@@ -556,9 +556,19 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util', 'project'], fu
 		});
 	}
 
+	function getModel() {
+		return diagram.model.toJson();
+	}
+
+	function loadModel(model) {
+		diagram.model = go.Model.fromJson(model);
+	}
+
 	return {
 		init: init,
 		load: load,
+		getModel: getModel,
+		loadModel: loadModel,
 		setPlaceComponent: setPlaceComponent,
 		changeInteractiveMode: changeInteractiveMode,
 		getNodes: getNodes,

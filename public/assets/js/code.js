@@ -1,9 +1,15 @@
-define(["EventManager", "hardware"], function(EventManager, hardware) {
+define(function() {
 	var libraries = [];
+
+	var getNodes;
 
 	var headCodes;
 	var varCodes;
 	var setupCodes;
+
+	function init(_getNodes) {
+		getNodes = _getNodes;
+	}
 
 	function addLibrary(library) {
 		var codes = library.split("\n");
@@ -57,7 +63,7 @@ define(["EventManager", "hardware"], function(EventManager, hardware) {
 		headCodes = headCodes.sort(function(a, b) {
 			return a.localeCompare(b);
 		});
-		var str = "";
+		var str = "/************************************************************\n *Copyright(C), 2016-2038, KenRobot.com\n *FileName:  //文件名\n *Author:    //作者\n *Version:   //版本\n *Date:      //完成日期\n */\n";
 		for(var i = 0; i < headCodes.length; i++) {
 			str += headCodes[i] + "\n";
 		}
@@ -103,7 +109,7 @@ define(["EventManager", "hardware"], function(EventManager, hardware) {
 	}
 
 	function visit() {
-		var nodes = hardware.getNodes();
+		var nodes = getNodes();
 		for(var i = 0; i < nodes.length; i++) {
 			var nodeData = nodes[i];
 
@@ -144,6 +150,7 @@ define(["EventManager", "hardware"], function(EventManager, hardware) {
 	}
 
 	return {
+		init: init,
 		addLibrary: addLibrary,
 		gen: gen,
 		reset: reset,
