@@ -196,7 +196,7 @@ define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
 		} else {
 			user.removeClass("active");
 			$(".name", user).text("");
-			$(".photo img", user).attr("src", "assets/images/photo.png");
+			$(".photo img", user).attr("src", "#");
 		}
 	}
 

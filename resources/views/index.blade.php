@@ -129,14 +129,13 @@
 					</div>
 				</div>
 			</div>
-			<!-- @if(isset($user)) -->
-			<div class="user{{$user ? ' active' : ''}}">
+			<div class="user{{isset($user) ? ' active' : ''}}">
 				<div class="dialog">
 					<a class="photo" href="{{$mainpage}}">
-						<img src="{{$user ? $user->avatar_url : '#'}}" />
+						<img src="{{isset($user) ? $user->avatar_url : '#'}}" />
 					</a>
 					<div class="welcome">
-						Hi,<span class="name">{{$user ? $user->name : ''}}</span>
+						Hi,<span class="name">{{isset($user) ? $user->name : ''}}</span>
 					</div>
 					<a class="logout" href="/auth/logout">退出</a>
 					<i class="fa fa-close close-btn"></i>
@@ -145,23 +144,6 @@
 					<i class="fa fa-caret-left"></i>
 				</div>
 			</div>
-<!-- 			@else
-			<div class="user">
-				<div class="dialog">
-					<a class="photo" href="{{$mainpage}}">
-						<img src="{{asset('assets/images/photo.png')}}" />
-					</a>
-					<div class="welcome">
-						Hi,<span class="name"></span>
-					</div>
-					<a class="logout" href="/auth/logo/ut">退出</a>
-					<i class="fa fa-close close-btn"></i>
-				</div>
-				<div class="indent">
-					<i class="fa fa-caret-left"></i>
-				</div>
-			</div>
-			@endif -->
 		</div>
 		<div class="dialog-layer">
 			<div id="login_dialog" class="dialog">
