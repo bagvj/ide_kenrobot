@@ -583,16 +583,23 @@ body {
 }
 /* line 33, layout/_hardware.scss */
 .hardware .follow {
+  top: 0;
+  left: 0;
   position: absolute;
 }
 /* line 37, layout/_hardware.scss */
+.hardware .follow .follower {
+  opacity: 0.5;
+  position: absolute;
+}
+/* line 43, layout/_hardware.scss */
 .hardware .copyright {
   width: 100%;
   bottom: 0;
   z-index: 99;
   position: absolute;
 }
-/* line 43, layout/_hardware.scss */
+/* line 49, layout/_hardware.scss */
 .hardware .copyright .alert {
   width: 560px;
   font-size: 12px;
@@ -606,7 +613,7 @@ body {
   margin: 0 auto;
   color: #676767;
 }
-/* line 58, layout/_hardware.scss */
+/* line 64, layout/_hardware.scss */
 .hardware .name-dialog {
   z-index: 998;
   top: 90px;
@@ -614,12 +621,12 @@ body {
   position: absolute;
   display: none;
 }
-/* line 65, layout/_hardware.scss */
+/* line 71, layout/_hardware.scss */
 .hardware .name-dialog .wrap {
   margin: 0 auto;
   width: 250px;
 }
-/* line 70, layout/_hardware.scss */
+/* line 76, layout/_hardware.scss */
 .hardware .name-dialog .name-label {
   display: block;
   background-color: #F1C933;
@@ -632,7 +639,7 @@ body {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
-/* line 83, layout/_hardware.scss */
+/* line 89, layout/_hardware.scss */
 .hardware .name-dialog .name {
   border: 2px solid #F1C933;
   border-top-right-radius: 4px;

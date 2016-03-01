@@ -30,6 +30,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	var selectedLink;
 
 	var componentCounts;
+	var follower;
 
 	function init() {
 		GO = go.GraphObject.make;
@@ -111,6 +112,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 
 	function initEvent() {
 		$('.hardware .tools li').on('click', onToolsClick);
+		follower = $('.hardware .follow .follower');
 		
 		EventManager.bind('hardware', 'nodeClick', onNodeClick);
 		EventManager.bind('hardware', 'linkClick', onLinkClick);
@@ -132,6 +134,9 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 
 	function checkComponentFollow() {
 		var container = $('#hardware-container').off('mousemove', onContainerMouseMove);
+		follower.css({
+			left: -999,
+		});
 
 		if(interactiveMode != "place") {
 			return;
@@ -145,7 +150,10 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	}
 
 	function onContainerMouseMove(e) {
-		// console.log("onContainerMouseMove");
+		follower.css({
+			top: e.offsetY - follower.height() / 2,
+			left: e.offsetX  - follower.width() / 2,
+		});
 	}
 
 	function onInteractiveModeClick(node, e) {
@@ -312,8 +320,12 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		
 		tool.archetypeNodeData = {name: name};
 
-		// var config = getConfig(name);
-		// $('.hardware .follow .follower')
+		var config = getConfig(name);
+		follower.attr('src', config.source).css({
+			width: config.width,
+			height: config.height,
+			left: -999,
+		});
 
 		return true;
 	}
@@ -523,6 +535,9 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 			default:
 				diagram.toolManager.clickCreatingTool.isEnabled = false;
 				break;
+		}
+		if(interactiveMode != "place") {
+			checkComponentFollow();
 		}
 	}
 

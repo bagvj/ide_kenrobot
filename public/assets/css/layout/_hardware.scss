@@ -31,7 +31,13 @@
 	}
 
 	.follow {
+		top: 0;
+		left: 0;
 		position: absolute;
+		.follower {
+			opacity: 0.5;
+			position: absolute;
+		}
 	}
 
 	.copyright {
