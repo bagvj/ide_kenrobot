@@ -9,3 +9,4 @@ Homestead.json
 .env.test
 .env.master
 switch
+/public/assets/js/config.js
