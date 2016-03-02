@@ -11,17 +11,50 @@
 			cursor: pointer;
 			width: 30px;
 			height: 30px;
-			font-size: 20px;
 			border-radius: 50%;
+			position: relative;
 
 			&:last-child {
 				margin-bottom: 0;
 			}
 
-      		&>i {
+      		& > i {
 				font-size: 20px;
 				line-height: 30px;
 				display: block;
+			}
+
+			&:hover {
+				.tips {
+					display: block;
+				}
+			}
+
+			.tips {
+				font-size: 12px;
+				width: 64px;
+				height: 30px;
+				line-height: 30px;
+				right: -80px;
+				top: 0;
+				color: white;
+				background-color: #1fb6ed;
+				// box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
+
+				position: absolute;
+				display: none;
+
+				&:before {
+					border: solid transparent;
+					content: ' ';
+					height: 0;
+					width: 0;
+					border-width: 6px;
+					border-right-color: #1fb6ed;
+					left: -12px;
+					top: 9px;
+					position: absolute;
+				}
 			}
 		}
 	}

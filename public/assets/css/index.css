@@ -417,13 +417,24 @@ body {
   width: 164px;
   font-size: 12px;
   padding-left: 10px;
-  padding-right: 10px;
+  padding-right: 20px;
   color: #515151;
   background-color: white;
   border-radius: 12px;
   border: 1px solid #bac4d0;
 }
-/* line 167, layout/_sidebar.scss */
+/* line 165, layout/_sidebar.scss */
+.sidebar .component .search > i {
+  line-height: 24px;
+  right: 30px;
+  color: #b9b9b6;
+  position: absolute;
+}
+/* line 170, layout/_sidebar.scss */
+.sidebar .component .search > i::before {
+  content: "\f002";
+}
+/* line 176, layout/_sidebar.scss */
 .sidebar .component .items {
   top: 56px;
   left: 0;
@@ -434,77 +445,77 @@ body {
   float: left;
   overflow-y: auto;
 }
-/* line 177, layout/_sidebar.scss */
+/* line 186, layout/_sidebar.scss */
 .sidebar .component .items .list {
   margin-left: 12px;
   float: left;
 }
-/* line 181, layout/_sidebar.scss */
+/* line 190, layout/_sidebar.scss */
 .sidebar .component .items .list li {
   width: 72px;
   text-align: center;
   float: left;
 }
-/* line 186, layout/_sidebar.scss */
+/* line 195, layout/_sidebar.scss */
 .sidebar .component .items .list li:nth-child(odd) {
   margin-right: 20px;
 }
-/* line 190, layout/_sidebar.scss */
+/* line 199, layout/_sidebar.scss */
 .sidebar .component .items .list li.active .image {
   border: 2px solid #4cc1fc;
 }
-/* line 197, layout/_sidebar.scss */
+/* line 206, layout/_sidebar.scss */
 .sidebar .component .items .item .image {
   width: 72px;
   height: 72px;
   background-color: white;
   border: 1px solid #bac4d0;
 }
-/* line 204, layout/_sidebar.scss */
+/* line 213, layout/_sidebar.scss */
 .sidebar .component .items .item .name {
   font-size: 12px;
   color: #515151;
   margin-top: 5px;
   margin-bottom: 12px;
 }
-/* line 214, layout/_sidebar.scss */
+/* line 223, layout/_sidebar.scss */
 .sidebar .board {
   width: 200px;
   position: relative;
   overflow-y: auto;
   background-color: #DEE1E5;
 }
-/* line 221, layout/_sidebar.scss */
+/* line 230, layout/_sidebar.scss */
 .sidebar .board .list li {
   position: relative;
 }
-/* line 223, layout/_sidebar.scss */
+/* line 232, layout/_sidebar.scss */
 .sidebar .board .list li .image {
   width: 70px;
   height: 70px;
   display: block;
   margin: 0 auto;
 }
-/* line 230, layout/_sidebar.scss */
+/* line 239, layout/_sidebar.scss */
 .sidebar .board .list li .name {
   color: #515151;
   margin: 0 atuo;
   display: block;
   text-align: center;
 }
-/* line 237, layout/_sidebar.scss */
+/* line 246, layout/_sidebar.scss */
 .sidebar .board .list li.normal {
   cursor: pointer;
 }
-/* line 240, layout/_sidebar.scss */
+/* line 249, layout/_sidebar.scss */
 .sidebar .board .list li.normal:hover {
   background-color: #C9CED4;
 }
-/* line 244, layout/_sidebar.scss */
+/* line 253, layout/_sidebar.scss */
 .sidebar .board .list li.normal.active {
   background-color: #ECEFF4;
 }
-/* line 250, layout/_sidebar.scss */
+/* line 259, layout/_sidebar.scss */
 .sidebar .board .list li.forward .stamps {
   position: absolute;
   top: 0;
@@ -514,14 +525,14 @@ body {
   background: url(/assets/images/stamps.png) no-repeat 115px 10px;
   background-size: 50px 50px;
 }
-/* line 264, layout/_sidebar.scss */
+/* line 273, layout/_sidebar.scss */
 .sidebar .library {
   width: 200px;
   position: relative;
   overflow-y: auto;
   background-color: #DEE1E5;
 }
-/* line 271, layout/_sidebar.scss */
+/* line 280, layout/_sidebar.scss */
 .sidebar .library .list li {
   cursor: pointer;
   color: #515151;
@@ -529,25 +540,25 @@ body {
   height: 36px;
   line-height: 36px;
 }
-/* line 278, layout/_sidebar.scss */
+/* line 287, layout/_sidebar.scss */
 .sidebar .library .list li:hover {
   background-color: #C9CED4;
 }
-/* line 282, layout/_sidebar.scss */
+/* line 291, layout/_sidebar.scss */
 .sidebar .library .list li.active {
   background-color: #ECEFF4;
 }
-/* line 290, layout/_sidebar.scss */
+/* line 299, layout/_sidebar.scss */
 .sidebar .x-scrollbar::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3);
   background-color: #DEE1E5;
 }
-/* line 295, layout/_sidebar.scss */
+/* line 304, layout/_sidebar.scss */
 .sidebar .x-scrollbar::-webkit-scrollbar {
   width: 8px;
   background-color: #DEE1E5;
 }
-/* line 300, layout/_sidebar.scss */
+/* line 309, layout/_sidebar.scss */
 .sidebar .x-scrollbar::-webkit-scrollbar-thumb {
   background-color: #BABCC0;
 }
@@ -566,8 +577,8 @@ body {
   cursor: pointer;
   width: 30px;
   height: 30px;
-  font-size: 20px;
   border-radius: 50%;
+  position: relative;
 }
 /* line 17, layout/_hardware.scss */
 .hardware .tools ul li:last-child {
@@ -579,29 +590,58 @@ body {
   line-height: 30px;
   display: block;
 }
-/* line 29, layout/_hardware.scss */
+/* line 28, layout/_hardware.scss */
+.hardware .tools ul li:hover .tips {
+  display: block;
+}
+/* line 33, layout/_hardware.scss */
+.hardware .tools ul li .tips {
+  font-size: 12px;
+  width: 64px;
+  height: 30px;
+  line-height: 30px;
+  right: -80px;
+  top: 0;
+  color: white;
+  background-color: #1fb6ed;
+  position: absolute;
+  display: none;
+}
+/* line 47, layout/_hardware.scss */
+.hardware .tools ul li .tips:before {
+  border: solid transparent;
+  content: ' ';
+  height: 0;
+  width: 0;
+  border-width: 6px;
+  border-right-color: #1fb6ed;
+  left: -12px;
+  top: 9px;
+  position: absolute;
+}
+/* line 62, layout/_hardware.scss */
 .hardware .center {
   height: 100%;
 }
-/* line 33, layout/_hardware.scss */
+/* line 66, layout/_hardware.scss */
 .hardware .follow {
   top: 0;
   left: 0;
   position: absolute;
 }
-/* line 37, layout/_hardware.scss */
+/* line 70, layout/_hardware.scss */
 .hardware .follow .follower {
   opacity: 0.5;
   position: absolute;
 }
-/* line 43, layout/_hardware.scss */
+/* line 76, layout/_hardware.scss */
 .hardware .copyright {
   width: 100%;
   bottom: 0;
   z-index: 99;
   position: absolute;
 }
-/* line 49, layout/_hardware.scss */
+/* line 82, layout/_hardware.scss */
 .hardware .copyright .alert {
   width: 560px;
   font-size: 12px;
@@ -615,7 +655,7 @@ body {
   margin: 0 auto;
   color: #676767;
 }
-/* line 64, layout/_hardware.scss */
+/* line 97, layout/_hardware.scss */
 .hardware .name-dialog {
   z-index: 998;
   top: 90px;
@@ -623,12 +663,12 @@ body {
   position: absolute;
   display: none;
 }
-/* line 71, layout/_hardware.scss */
+/* line 104, layout/_hardware.scss */
 .hardware .name-dialog .wrap {
   margin: 0 auto;
   width: 250px;
 }
-/* line 76, layout/_hardware.scss */
+/* line 109, layout/_hardware.scss */
 .hardware .name-dialog .name-label {
   display: block;
   background-color: #F1C933;
@@ -641,7 +681,7 @@ body {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
-/* line 89, layout/_hardware.scss */
+/* line 122, layout/_hardware.scss */
 .hardware .name-dialog .name {
   border: 2px solid #F1C933;
   border-top-right-radius: 4px;

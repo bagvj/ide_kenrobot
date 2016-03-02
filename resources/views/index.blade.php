@@ -80,6 +80,7 @@
 					<div class="component">
 						<div class="search">
 							<input class="key" type="text" placeholder="搜索" spellcheck="false"/>
+							<i class="fa"></i>
 						</div>
 						<div class="items x-scrollbar">
 							<ul class="list">
@@ -109,14 +110,17 @@
 						</div>
 						<div class="tools">
 							<ul>
-								<li class="interactive-mode" data-action="changeMode" data-mode="default" title="默认模式">
+								<li class="interactive-mode" data-action="changeMode" data-mode="default">
 									<i class="fa fa-arrows"></i>
+									<div class="tips">默认</div>
 								</li>
-								<li class="interactive-mode active" data-action="changeMode" data-mode="place" title="摆放模式">
+								<li class="interactive-mode active" data-action="changeMode" data-mode="place">
 									<i class="fa fa-hand-pointer-o"></i>
+									<div class="tips">克隆</div>
 								</li>
-								<li class="interactive-mode" data-action="changeMode" data-mode="delete" title="删除模式">
+								<li class="interactive-mode" data-action="changeMode" data-mode="delete">
 									<i class="fa fa-trash-o"></i>
+									<div class="tips">删除</div>
 								</li>
 							</ul>
 						</div>
