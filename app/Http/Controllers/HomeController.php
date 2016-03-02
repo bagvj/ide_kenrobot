@@ -17,6 +17,11 @@ use Session;
 
 class HomeController extends Controller {
 
+	public function __construct()
+	{
+		$this->middleware('snspassport');
+	}
+
 	public function index(Request $request) {
 		if (Auth::check()) {
 			$user = Auth::user();

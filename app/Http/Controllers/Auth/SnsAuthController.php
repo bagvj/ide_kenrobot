@@ -79,7 +79,7 @@ class SnsAuthController extends Controller {
 		}
 
 		$userInfo = $snsauth->user();
-
+		dd($userInfo);
 		//这部分逻辑移到UserRepository里面
 		$user = $this->getUser($userInfo);
 		if ($user == null) {
@@ -88,7 +88,11 @@ class SnsAuthController extends Controller {
 		//成功后，先调用推出
 		Auth::logout();
 		Auth::login($user, true);
-		return response()->json(['code' => 0, 'message' => '登录成功']);
+
+		//kenrobot_id cookie
+		$kenrobot_id = WebAuthHelper::encryptKenrobotId($user->uid);
+		return response()->json(['code' => 0, 'message' => '登录成功'])->withCookie(cookie('kenrobot_id', $kenrobot_id));
+		// return response()->json(['code' => 0, 'message' => '登录成功']);
 
 	}
 

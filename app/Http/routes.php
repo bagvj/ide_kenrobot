@@ -23,7 +23,7 @@ Route::get('/projects/{user_id}', 'HomeController@getProjects')->where('user_id'
 // 登录验证
 Route::get('/auth/login', 'Auth\AuthController@getLogin');
 Route::post('/auth/login', 'Auth\AuthController@postLogin');
-Route::get('/auth/logout', 'Auth\AuthController@getLogout');
+Route::get('/auth/logout', 'Auth\AuthController@getLogout2');
 
 Route::get('/auth/check', 'Auth\AuthServerController@index');
 
@@ -35,3 +35,4 @@ Route::get('/auth/snslogin', 'Auth\SnsAuthController@snsLogin');
 Route::any('/snspostlogin', 'Auth\SnsAuthController@snsPostLogin');
 Route::any('/weixinlogin', 'Auth\WeixinAuthController@weixinlogin');
 Route::get('/login', 'Auth\WeixinAuthController@index');
+

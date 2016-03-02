@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
+use Cookie;
+
 class AuthController extends Controller
 {
     /*
@@ -34,9 +36,16 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'getLogout','getLogin']);
+        $this->middleware('guest', ['except' => 'getLogout2','getLogin']);
 
         $this->loginPath = '/auth/login';        
+    }
+
+    public function getLogout2()
+    {
+        return $this->getLogout()->withCookie(Cookie::forget('kenrobot_id'))
+                ->withCookie(Cookie::forget(config('session.cookie')))
+                ->withCookie(Cookie::forget('PHPSESSID'));
     }
 
     /**
