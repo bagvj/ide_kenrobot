@@ -104,15 +104,16 @@ define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
 	}
 
 	function initLoginDialog() {
-		$('#login_dialog .close-btn').on('click', function(e) {
-			$('#login_dialog').slideUp(100, function(event, ui) {
-				$('#use_weixin').removeClass("active");
+		var dialog = $('#login_dialog');
+		var use_weixin = $('#use_weixin');
+		$('.close-btn', dialog).on('click', function(e) {
+			dialog.slideUp(100, function(event, ui) {
+				use_weixin.removeClass("active");
 				$('.dialog-layer').removeClass("active");
 			});
 			setWeixinLoginCheck(false);
 		});
 
-		var use_weixin = $('#use_weixin');
 		$('.qrLogin .qrcode').hover(function(e) {
 			var top = $(this).offset().top;
 			var left = $(this).offset().left;
@@ -137,6 +138,14 @@ define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
 				}, null, null, function() {
 					use_weixin.removeClass("active").hide();
 				});
+			}
+		});
+
+		$('form', dialog).on('keyup', function(e){
+			if(e.keyCode == 13) {
+				if($('.baseLogin', dialog).hasClass("active")){
+					$(".btn-login", dialog).trigger("click");
+				}
 			}
 		});
 	}
