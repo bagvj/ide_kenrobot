@@ -50,7 +50,7 @@ color: #FF5252\
 }\
 .ace-default .ace_punctuation,\
 .ace-default .ace_punctuation.ace_tag {\
-color: #fff\
+color: #515151\
 }\
 .ace-default .ace_constant.ace_character,\
 .ace-default .ace_constant.ace_language,\
