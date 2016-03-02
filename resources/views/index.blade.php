@@ -235,7 +235,7 @@
 				</form>
 			</div>
 		</div>
-		@if(!isset($user))
+		@if(!$first_visit)
 		<div class="login-hint-layer mask">
 			<div class="login-hint">
 				<div class="title">提示：</div>

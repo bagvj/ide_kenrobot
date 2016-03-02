@@ -147,12 +147,19 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		}
 
 		container.on('mousemove', onContainerMouseMove);
+		container.on('mouseout', onContainerMouseOut);
 	}
 
 	function onContainerMouseMove(e) {
 		follower.css({
 			top: e.offsetY - follower.height() / 2,
 			left: e.offsetX  - follower.width() / 2,
+		});
+	}
+
+	function onContainerMouseOut(e) {
+		follower.css({
+			left: -999,
 		});
 	}
 
