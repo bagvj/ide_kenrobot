@@ -618,12 +618,31 @@ define(['jquery', 'jquery-ui', 'goJS', 'nodeTemplate', 'EventManager', 'util'], 
 
 	function onContainerDrop(e, ui) {
 		var element = ui.helper.first();
-		var offset = $(diagram.div).offset();
+		var name = element.data('component-name');
 		var width = element.width();
 		var height = element.height();
-		var point = new go.Point(e.pageX - offset.left, e.pageY - offset.top);
+		var offset = $(diagram.div).offset();
+		var centerX = element.offset().left + width / 2;
+		var centerY = element.offset().top + height / 2;
+
+		var config = getConfig(name);
+		switch(config.category) {
+			case "one-port-top":
+			case "two-port-top": 
+				centerY -= 3.5;
+				break;
+			case "one-port-bottom": 
+			case "two-port-bottom":
+				centerY += 3.5;
+				break;
+			case "one-port-right": 
+				centerX += 3.5;
+				break;
+		}
+
+		var point = new go.Point(centerX - offset.left, centerY - offset.top);
 		point = diagram.transformViewToDoc(point);
-		var name = element.data('component-name');
+
 		addNode(name, point.x, point.y);
 	}
 
