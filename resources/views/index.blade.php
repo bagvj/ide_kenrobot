@@ -173,6 +173,7 @@
 				</div>
 			</div>
 		</div>
+		<div class="drag-layer"></div>
 		<div class="dialog-layer mask">
 			<div id="login_dialog" class="dialog">
 				<div class="close-btn left">

@@ -3,13 +3,15 @@ require.config({
 	baseUrl: baseUrl,
 	paths: {
 		"jquery": "lib/jquery.min",
-		"bootstrap": "lib/bootstrap",
+		"bootstrap": "lib/bootstrap.min",
 		"typeahead": "lib/bootstrap-typeahead.min",
+		"goJS": "lib/go.min",
+
+		"jquery-ui": "lib/jquery-ui.min",
 
 		"ace": "lib/ace/ace",
 		"ace-ext-language-tools": "lib/ace/ext-language_tools",
 
-		"goJS": "lib/go",
 
 		"config": "config",
 		"app": "app",
@@ -36,6 +38,9 @@ require.config({
 		"ace-ext-language-tools": {
 			deps: ['ace'],
 		},
+		"jquery-ui": {
+			deps: ['jquery'],
+		}
 	},
 });
 

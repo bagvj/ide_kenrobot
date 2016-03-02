@@ -1,9 +1,20 @@
-define(['jquery', 'bootstrap', 'typeahead', 'EventManager', 'util', 'hardware'], function($, _, _, EventManager, util, hardware) {
+define(['jquery', 'jquery-ui', 'bootstrap', 'typeahead', 'EventManager', 'util', 'hardware'], function($, _, _, _, EventManager, util, hardware) {
 	var current;
 	var components;
+	var list;
 
 	function init() {
-		$('.component .items .list > li').on('click', onComponentClick);
+		list = $('.component .items .list > li').on('click', onComponentClick)
+		.draggable({
+			disabled: true,
+			appendTo: ".drag-layer",
+			scope: "hardware",
+			revert: true,
+			revertDuration: 0,
+			zIndex: 9999,
+			containment: "window",
+			helper: onCreateDrag,
+		});
 		EventManager.bind("hardware", "changeInteractiveMode", onChangeInteractiveMode);
 	}
 
@@ -13,12 +24,7 @@ define(['jquery', 'bootstrap', 'typeahead', 'EventManager', 'util', 'hardware'],
 	}
 
 	function onChangeInteractiveMode(mode) {
-		// var list = $('.component .items .list > li').off("click");
-		if(mode == "drag") {
-
-		} else {
-			
-		}
+		list.draggable("option", "disabled", mode != "drag");
 	}
 
 	function onComponentClick(e) {
@@ -26,6 +32,15 @@ define(['jquery', 'bootstrap', 'typeahead', 'EventManager', 'util', 'hardware'],
 		util.toggleActive(li);
 
 		hardware.setPlaceComponent(li.data("component-name"));
+	}
+
+	function onCreateDrag(e) {
+		var name = $(this).data('component-name');
+		var component = components[name];
+		return $(".image", this).clone().css({
+			width: component.width,
+			height: component.height,
+		}).data('component-name', name);
 	}
 
 	function initSearch() {

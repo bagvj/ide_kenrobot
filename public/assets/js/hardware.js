@@ -1,4 +1,4 @@
-define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _, template, EventManager, util) {
+define(['jquery', 'jquery-ui', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _, _, template, EventManager, util) {
 	//C++关键字
 	var keywords = [
 		"asm", "do", "if", "return", "typedef", "auto", "double",
@@ -19,9 +19,11 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 
 	var GO;
 	var diagram;
-	var container;
 	var configs;
-	var specNodes;
+
+	var container;
+	var containerId = "hardware-container";
+	var follower;
 
 	//交互模式
 	var interactiveMode = "modern";
@@ -32,11 +34,10 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	var selectedLink;
 
 	var componentCounts;
-	var follower;
 
 	function init() {
 		GO = go.GraphObject.make;
-		diagram = GO(go.Diagram, "hardware-container", {
+		diagram = GO(go.Diagram, containerId, {
 			initialContentAlignment: go.Spot.Center,
 			allowClipboard: false,
 			allowCopy: false,
@@ -104,7 +105,6 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 			return go.ClickCreatingTool.prototype.insertPart.call(this, loc);
 		}
 
-		specNodes = {};
 		componentCounts = {};
 
 		initEvent();
@@ -212,9 +212,15 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	}
 
 	function initEvent() {
+		container = $('#' + containerId).droppable({
+			disabled: true,
+			scope: "hardware",
+			drop: onContainerDrop,
+		});
+		follower = $('.hardware .follow .follower');
+
 		$('.hardware .tools .interactive-mode > li').on('click', onInteractiveModeClick);
 		$('.hardware .tools .mode > li').on('click', onModeClick);
-		follower = $('.hardware .follow .follower');
 		
 		EventManager.bind('hardware', 'nodeClick', onNodeClick);
 		EventManager.bind('hardware', 'linkClick', onLinkClick);
@@ -234,7 +240,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	}
 
 	function setComponentFollow(value) {
-		var container = $('#hardware-container').off('mousemove', onContainerMouseMove);
+		container.off('mousemove', onContainerMouseMove);
 		follower.css({
 			left: -999,
 		});
@@ -265,7 +271,6 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		follower.css({
 			left: -999,
 		});
-		$('#hardware-container').off('mouseout');
 	}
 
 	function onModeClick(e) {
@@ -295,21 +300,23 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	function onInteractiveModeClick(node, e) {
 		var li = $(this);
 		var mode = li.data('mode');
-		if(mode == "modern") {
-			util.message("敬请期待");
-			return;
-		}
+		// if(mode == "modern") {
+		// 	util.message("敬请期待");
+		// 	return;
+		// }
 
 		li.addClass("hide");
+		var clone = $('.hardware .tools .mode li[data-mode="clone"]');
 		if(mode == "drag") {
 			interactiveMode = "modern";
-			li.parent().find('li[data-mode="modern"]').removeClass("hide");
-			$('.hardware .tools .mode li[data-mode="clone"]').removeClass("hide");
+			li.parent().find('li[data-mode="' + interactiveMode + '"]').removeClass("hide");
+			clone.removeClass("hide");
 		} else {
 			interactiveMode = "drag";
-			li.parent().find('li[data-mode="drag"]').removeClass("hide");
-			$('.hardware .tools .mode li[data-mode="clone"]').addClass("hide");
+			li.parent().find('li[data-mode="' + interactiveMode + '"]').removeClass("hide");
+			clone.addClass("hide");
 		}
+		container.droppable("option", "disabled", interactiveMode != "drag");
 		setMode("default");
 
 		EventManager.trigger("hardware", "changeInteractiveMode", interactiveMode);
@@ -317,8 +324,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 
 	//添加初始节点
 	function addInitNodes() {
-		var boardData = addNode("ArduinoUNO", 0, 0, true);
-		specNodes["board"] = diagram.findNodeForData(boardData);
+		addNode("ArduinoUNO", 0, 0, true);
 	}
 
 	//添加节点
@@ -614,6 +620,17 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		} else {
 			hintTargetPort();
 		}
+	}
+
+	function onContainerDrop(e, ui) {
+		var element = ui.helper.first();
+		var offset = $(diagram.div).offset();
+		var width = element.width();
+		var height = element.height();
+		var point = new go.Point(e.pageX - offset.left, e.pageY - offset.top);
+		point = diagram.transformViewToDoc(point);
+		var name = element.data('component-name');
+		addNode(name, point.x, point.y);
 	}
 
 	function setVarName(nodeKey, name) {
