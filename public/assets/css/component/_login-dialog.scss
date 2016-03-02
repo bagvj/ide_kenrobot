@@ -195,14 +195,13 @@
     box-sizing: content-box;
 }
 
-.baseLogin .field .email {
+.baseLogin .field .email-icon {
     background: url('../images/email.png') no-repeat center;
 }
 
-.baseLogin .field .password {
+.baseLogin .field .password-icon {
     background: url('../images/password.png') no-repeat center;
 }
-
 
 .baseLogin .field input {
     -webkit-appearance: none;

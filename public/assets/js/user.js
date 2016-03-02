@@ -68,8 +68,8 @@ define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
 				url: '/snspostlogin',
 				dataType: 'json',
 				data: {
-					email: $('#email').val(),
-					password: $('#password').val()
+					email: $('.email', dialog).val(),
+					password: $('.password', dialog).val()
 				},
 			}).done(function(result){
 				if (result.code == 0) {

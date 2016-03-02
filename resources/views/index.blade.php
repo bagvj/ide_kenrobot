@@ -189,12 +189,12 @@
 								<span></span>
 							</div>
 							<div class="field">
-								<label class="email"></label>
-								<input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="邮箱地址/手机号码" />
+								<label class="email-icon"></label>
+								<input class="email" type="email" name="email" value="{{ old('email') }}" placeholder="邮箱地址/手机号码" autocomplete="off" />
 							</div>
 							<div class="field">
-								<label class="password"></label>
-								<input type="password" name="password" id="password" />
+								<label class="password-icon"></label>
+								<input class="password" type="password" name="password" />
 							</div>
 							<div class="remember"></div>
 							<div>
