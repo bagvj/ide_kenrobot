@@ -146,7 +146,7 @@
 			<div class="user{{isset($user) ? ' active' : ''}}">
 				<div class="dialog">
 					<a class="photo" href="{{$mainpage}}" target="_blank">
-						<img src="{{isset($user) ? $user->avatar_url : '#'}}" />
+						<img src="{{$user->avatar_url or asset('assets/images/default_portrait.png')}}" />
 					</a>
 					<div class="welcome">
 						Hi,<span class="name">{{isset($user) ? $user->name : ''}}</span>
