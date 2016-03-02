@@ -79,7 +79,6 @@ class SnsAuthController extends Controller {
 		}
 
 		$userInfo = $snsauth->user();
-		dd($userInfo);
 		//这部分逻辑移到UserRepository里面
 		$user = $this->getUser($userInfo);
 		if ($user == null) {
