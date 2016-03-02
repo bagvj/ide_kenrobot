@@ -348,7 +348,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	function highlightLink(link) {
 		if(selectedLink && selectedLink.diagram) {
 			selectedLink.fromPort.fill = "#F1C933";
-			selectedLink.toPort.fill = "#F1C933";
+			selectedLink.toPort.fill = "#4891ed";
 		}
 		
 		selectedLink = link;
