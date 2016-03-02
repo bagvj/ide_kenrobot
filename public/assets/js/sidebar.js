@@ -47,17 +47,18 @@ define(['jquery', 'EventManager', 'util', 'user', 'project', 'board', 'software'
 
 	function onDownloadClick() {
 		var projectName = "Arduino";
-		var currentBoard = board.getCurrentBoard();
+		var boardInfo = board.getData();
+		var softwareData = software.getData();
 
 		$.ajax({
 			type: "POST",
 			url: "/build",
 			data: {
-				source: software.getSource(),
+				source: softwareData.source,
 				user_id: user.getUserId(),
 				project: projectName,
 				build_type: "Arduino",
-				board: currentBoard.board_type,
+				board: boardInfo.board_type,
 			},
 			dataType: "json",
 		}).done(function(result){

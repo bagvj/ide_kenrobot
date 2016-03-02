@@ -1,4 +1,4 @@
-define(['jquery', 'bootstrap', 'config', 'util', 'EventManager', 'hardware', 'code', 'user', 'project', 'software', 'sidebar', 'board', 'component', 'library'], function($, _, config, util, EventManager, hardware, code, user, project, software, sidebar, board, component, library) {
+define(['jquery', 'bootstrap', 'config', 'util', 'EventManager', 'hardware', 'user', 'project', 'software', 'sidebar', 'board', 'component', 'library'], function($, _, config, util, EventManager, hardware, user, project, software, sidebar, board, component, library) {
 	function init() {
 		initAjax();
 
@@ -8,8 +8,7 @@ define(['jquery', 'bootstrap', 'config', 'util', 'EventManager', 'hardware', 'co
 		component.init();
 		library.init();
 		hardware.init();
-		software.init();
-		code.init(hardware.getNodes);
+		software.init(hardware.getNodes);
 
 		if(config.showUnloadDialog) {
 			$(window).bind('beforeunload', function(){

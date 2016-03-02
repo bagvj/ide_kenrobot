@@ -33,26 +33,9 @@ define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
 	}
 
 	function showLoginDialog(callback, index) {
-		index = index || 0;
-		if(index == 0) {
-			$('.qrLoginBtn').click();
-		} else {
-			$('.baseLoginBtn').click();
-		}
 		var dialog = $('#login_dialog');
-		dialog.css({
-			top: -dialog.height(),
-		}).show().animate({
-			top: 200,
-		}, 400, "swing", function() {
-			setLoginCheck(true, callback);
-		});
-		$('.dialog-layer').addClass("active");
-	}
-
-	function initLoginDialog() {
-		$('.qrLoginBtn, .baseLoginBtn').on('click', function(e) {
-			var action = $(this).attr("data-action");
+		$('.qrLoginBtn, .baseLoginBtn', dialog).off('click').on('click', function(e) {
+			var action = $(this).data("action");
 			if (action == "qrLogin") {
 				$(".qrLoginBtn, .qrLogin").removeClass("active");
 				$(".baseLoginBtn, .baseLogin").addClass("active");
@@ -63,6 +46,8 @@ define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
 					display: "block"
 				});
 				$('#use_weixin').removeClass("active");
+
+				setWeixinLoginCheck(false);
 			} else {
 				$(".baseLoginBtn, .baseLogin").removeClass("active");
 				$(".qrLoginBtn, .qrLogin").addClass("active");
@@ -72,21 +57,16 @@ define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
 				$(".qrLoginBtn").css({
 					display: "block"
 				});
+
+				setWeixinLoginCheck(true, callback);
 			}
 		});
 
-		$('#login_dialog .close-btn').on('click', function(e) {
-			$('#login_dialog').slideUp(100, function(event, ui) {
-				$('#use_weixin').removeClass("active");
-				$('.dialog-layer').removeClass("active");
-			});
-			setLoginCheck(false);
-		});
-
-
-		$('#login_dialog .btn-login').on('click', function() {
+		$('.btn-login', dialog).off('click').on('click', function() {
 			$.ajax({
+				type: 'POST',
 				url: '/snspostlogin',
+				dataType: 'json',
 				data: {
 					email: $('#email').val(),
 					password: $('#password').val()
@@ -96,6 +76,8 @@ define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
 					//登录成功
 					util.message(result.message);
 					$('#login_dialog .close-btn').click();
+
+					callback && callback();
 				} else if (result.code == 1) {
 
 				} else {
@@ -106,10 +88,34 @@ define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
 			});
 		});
 
+		index = index || 0;
+		if(index == 0) {
+			$('.qrLoginBtn').click();
+		} else {
+			$('.baseLoginBtn').click();
+		}
+
+		dialog.css({
+			top: -dialog.height(),
+		}).show().animate({
+			top: 200,
+		}, 400, "swing");
+		$('.dialog-layer').addClass("active");
+	}
+
+	function initLoginDialog() {
+		$('#login_dialog .close-btn').on('click', function(e) {
+			$('#login_dialog').slideUp(100, function(event, ui) {
+				$('#use_weixin').removeClass("active");
+				$('.dialog-layer').removeClass("active");
+			});
+			setWeixinLoginCheck(false);
+		});
+
+		var use_weixin = $('#use_weixin');
 		$('.qrLogin .qrcode').hover(function(e) {
 			var top = $(this).offset().top;
 			var left = $(this).offset().left;
-			var use_weixin = $('#use_weixin');
 			if (!use_weixin.is(':animated')) {
 				use_weixin.addClass("active").show()
 					.css({
@@ -124,7 +130,6 @@ define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
 			}
 		}, function(e) {
 			var left = $(this).offset().left;
-			var use_weixin = $('#use_weixin');
 			if (!use_weixin.is(':animated')) {
 				use_weixin.animate({
 					left: left + 420,
@@ -140,31 +145,35 @@ define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
 		var user = $('.user');
 		var dialog = $('.dialog', user);
 		var indent = $('.indent', user);
+		var back = $('.software .back');
 		$('.close-btn', dialog).on('click', function() {
 			dialog.slideUp(200, function(e) {
 				indent.show();
 			});
+			back.removeClass("active");
 		});
 
 		indent.on('click', function() {
 			dialog.slideDown(400, function() {
 				indent.hide();
 			});
+			back.addClass("active");
 		});
 	}
 
-	function setLoginCheck(value, callback) {
+	function setWeixinLoginCheck(value, callback) {
 		clearInterval(loginCheckTimer);
 		if (value) {
 			loginCheckTimer = setInterval(function() {
 				var key = $('#qrcode_key').val();
 				$.ajax({
 					url: '/weixinlogin?key=' + key,
+					dataType: 'json',
 				}).done(function(result) {
 					if (result.code == 0) {
 						//登录成功
 						userInfo = result.data;
-						setLoginCheck(false);
+						setWeixinLoginCheck(false);
 						util.message(result.message);
 						$('#login_dialog .close-btn').click();
 						doUpdateUser();
@@ -174,7 +183,7 @@ define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
 					} else if (result.code == 1) {
 						//已经登录
 						userInfo = result.data;
-						setLoginCheck(false);
+						setWeixinLoginCheck(false);
 						doUpdateUser();
 					} else {
 						//登录失败
@@ -187,12 +196,15 @@ define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
 
 	function doUpdateUser() {
 		var user = $('.user');
+		var back = $('.software .back');
 		if(userInfo) {
 			user.addClass("active");
+			back.addClass("active");
 			$(".photo img", user).attr("src", userInfo.avatar_url);
 			$(".name", user).text(userInfo.name);
 		} else {
 			user.removeClass("active");
+			back.removeClass("active");
 			$(".name", user).text("");
 			$(".photo img", user).attr("src", "#");
 		}

@@ -13,11 +13,18 @@ define(['jquery', 'util'], function($, util) {
 		$(selector).eq(0).click();
 	}
 
-	function getCurrentBoard() {
-		return current;
+	function getData() {
+		return {
+			id: current.id,
+			name: current.name,
+			board_type: current.board_type,
+		};
 	}
 
-	function setCurrentBoard(id) {
+	function setData(data) {
+		data = data || {};
+		var id = data.id || 1;
+
 		for(var name in boards) {
 			var board = boards[name];
 			if(board.id == id) {
@@ -37,7 +44,7 @@ define(['jquery', 'util'], function($, util) {
 	return {
 		init: init,
 		load: load,
-		getCurrentBoard: getCurrentBoard,
-		setCurrentBoard: setCurrentBoard,
+		getData: getData,
+		setData: setData,
 	}
 });

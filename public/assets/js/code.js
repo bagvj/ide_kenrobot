@@ -7,6 +7,9 @@ define(function() {
 	var varCodes;
 	var setupCodes;
 
+	var codeDeclare = "/************************************************************\n *Copyright(C), 2016-2038, KenRobot.com\n *FileName:  //文件名\n *Author:    //作者\n *Version:   //版本\n *Date:      //完成日期\n */\n";
+	var autoGenDeclare = "/***自动生成，请勿修改***/\n";
+
 	function init(_getNodes) {
 		getNodes = _getNodes;
 	}
@@ -19,13 +22,6 @@ define(function() {
 				libraries.push(line);
 			}
 		}
-	}
-
-	function reset() {
-		headCodes = [];
-		varCodes = [];
-		setupCodes = [];
-		libraries = [];
 	}
 
 	function gen() {
@@ -63,21 +59,31 @@ define(function() {
 		headCodes = headCodes.sort(function(a, b) {
 			return a.localeCompare(b);
 		});
-		var str = "/************************************************************\n *Copyright(C), 2016-2038, KenRobot.com\n *FileName:  //文件名\n *Author:    //作者\n *Version:   //版本\n *Date:      //完成日期\n */\n";
+
+		var str = codeDeclare;
 		if(headCodes.length > 0) {
 			str += "\n";
 		}
+		var headStr = "";
 		for(var i = 0; i < headCodes.length; i++) {
-			str += headCodes[i] + "\n";
+			headStr += headCodes[i] + "\n";
 		}
+		if(headCodes.length > 0) {
+			str += autoGenDeclare + headStr + autoGenDeclare;
+		}
+
 		return str;
 	}
 
 	//生成变量
 	function genVar() {
 		var str = "";
+		var varStr = "";
 		for(var i = 0; i < varCodes.length; i++) {
-			str += varCodes[i];
+			varStr += varCodes[i];
+		}
+		if(varCodes.length > 0) {
+			str += autoGenDeclare + varStr + autoGenDeclare;
 		}
 		return str;
 	}
@@ -89,7 +95,11 @@ define(function() {
 		for (var i = 0; i < setupCodes.length; i++) {
 			setupStr += setupCodes[i];
 		};
-		str += setupStr == "" ? "    \n" : setupStr;
+		if(setupCodes.length > 0) {
+			str += "    " + autoGenDeclare + setupStr + "    " + autoGenDeclare + "    \n";
+		} else {
+			str += "    \n";
+		}
 		str += "}\n";
 
 		return str;
@@ -105,6 +115,7 @@ define(function() {
 
 	//生成缩进
 	function genIndent(count) {
+		count = count || 1;
 		var indent = "";
 		for (var i = 0; i < count; i++)
 			indent += "    ";
@@ -154,8 +165,7 @@ define(function() {
 
 	return {
 		init: init,
-		addLibrary: addLibrary,
 		gen: gen,
-		reset: reset,
+		addLibrary: addLibrary,
 	}
 });

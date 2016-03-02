@@ -137,7 +137,7 @@
 				<div class="tab">
 					<div class="software">
 						<div class="editor"></div>
-						<div class="back">
+						<div class="back{{isset($user) ? ' active' : ''}}">
 							返回<br />硬件设计
 						</div>
 					</div>

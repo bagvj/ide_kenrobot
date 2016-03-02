@@ -1,7 +1,7 @@
 define(['ace', 'ace-ext-language-tools', 'jquery', 'EventManager', 'code'], function(_, _, $, EventManager, code) {
 	var editor;
 
-	function init() {
+	function init(getNodes) {
 		editor = ace.edit($(".software .editor")[0]);
 		editor.setOptions({
 			enableBasicAutocompletion: true,
@@ -16,23 +16,35 @@ define(['ace', 'ace-ext-language-tools', 'jquery', 'EventManager', 'code'], func
 		$('.software .back').on('click', function(e) {
 			EventManager.trigger("project", "switchPanel", 0);
 		});
+
+		code.init(getNodes);
 	}
 
-	function setSource(source) {
-		if(!source || source.length == 0) {
-			editor.setValue(code.gen(), 1);
-		} else {
-			editor.setValue(source, 1);
-		}	
+	function setData(data) {
+		data = data || {};
+		var source = data.source || code.gen();
+		editor.setValue(source, 1);
 	}
 
-	function getSource() {
-		return editor.getValue();
+	function getData() {
+		return {
+			source: editor.getValue(),
+		};
+	}
+
+	function gen() {
+		editor.setValue(code.gen(), 1);
+	}
+
+	function addLibrary(library) {
+		code.addLibrary(library.code);
 	}
 
 	return {
 		init: init,
-		getSource: getSource,
-		setSource: setSource,
+		getData: getData,
+		setData: setData,
+		gen: gen,
+		addLibrary: addLibrary,
 	};
 });

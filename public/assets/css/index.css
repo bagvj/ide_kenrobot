@@ -674,6 +674,10 @@ body {
   align-items: center;
   position: absolute;
 }
+/* line 23, layout/_software.scss */
+.software .back.active {
+  top: 90px;
+}
 
 /* line 1, component/_x-widget.scss */
 .x-message {

@@ -1,4 +1,4 @@
-define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software', 'board'], function($, EventManager, util, user, code, hardware, software, board) {
+define(['jquery', 'EventManager', 'util', 'user', 'hardware', 'software', 'board'], function($, EventManager, util, user, hardware, software, board) {
 	var projects = [];
 	var projectTemplate = '<li data-project-id="{{id}}"><div class="title"><span class="name">{{project_name}}</span><i class="fa"></i></div><div class="view"><div><span class="name">{{project_name}}</span>.uno</div><div><span class="name">{{project_name}}</span>.ino</div></div></li>';
 	var curProjectInfo;
@@ -20,7 +20,7 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 			}).done(onLoadSuccess);
 		}, function() {
 			projects.push(getDefaultProject());
-			bindProjectEvent(true);
+			bindProjectEvent(0);
 		});
 	}
 
@@ -38,9 +38,15 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 		var ul = $(".project .list ul").empty();
 		for(var i = 0; i < projects.length; i++) {
 			var projectInfo = projects[i];
+			try {
+				projectInfo.project_data = JSON.parse(projectInfo.project_data);
+			} catch(ex) {
+				console.log(ex.message);
+				projectInfo.project_data = {};
+			}
 			ul.append(getProjectHtml(projectInfo));
 		}
-		bindProjectEvent(true);
+		bindProjectEvent(-1);
 	}
 
 	function showSaveDialog(isNew) { 
@@ -113,7 +119,7 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 			list.find('> li[data-project-id="0"]').remove();
 			projects.push(projectInfo);
 			list.append(getProjectHtml(projectInfo));
-			bindProjectEvent(true);
+			bindProjectEvent(-1);
 		} else {
 			//save
 			var index = -1;
@@ -144,9 +150,9 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 				curProjectInfo = id == 0 ? getDefaultProject() : getProjectInfo(id);
 				var projectData = curProjectInfo.project_data;
 
-				board.setCurrentBoard(projectData.boardId);
-				hardware.setModel(projectData.model);
-				software.setSource(projectData.source);
+				board.setData(projectData.board);
+				hardware.setData(projectData.hardware);
+				software.setData(projectData.software);
 
 				var divs = li.find(".view > div");
 				if(divs.filter(".active").length == 0) {
@@ -159,6 +165,7 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 	}
 
 	function onProjectFileClick(e) {
+		var projectData = curProjectInfo.project_data;
 		var div = $(this);
 		util.toggleActive(div, 'div')
 		var index = div.index();
@@ -174,6 +181,8 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 			if(!componentBar.hasClass("active")) {
 				componentBar.click();
 			}
+
+			projectData.software = software.getData();
 		} else {
 			bars.filter('[data-action="board"],[data-action="component"]').addClass("hide");
 			bars.filter('[data-action="library"]').removeClass("hide");
@@ -185,7 +194,8 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 				projectBar.click();
 			}
 
-			software.setSource(code.gen());
+			projectData.hardware = hardware.getData();
+			software.gen();
 		}
 		$(".main > .tabs").css({
 			'margin-left': $('.sidebar').width()
@@ -261,10 +271,10 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 					var defaultProjectInfo = getDefaultProject();
 					projects.push(defaultProjectInfo);
 					$(".project .list > ul").append(getProjectHtml(defaultProjectInfo));
-					bindProjectEvent(true);
+					bindProjectEvent(-1);
 				} else {
-					var tiltes = $(".project .list .title");
-					tiltes.eq(tiltes.length - 1).click();
+					var titles = $(".project .list .title");
+					titles.eq(titles.length - 1).click();
 				}
 			}
 		});
@@ -278,11 +288,15 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 
 	}
 
-	function bindProjectEvent(isInit) {
+	function bindProjectEvent(id) {
 		$('.project .list .view > div').off('click').on('click', onProjectFileClick);
-		var tiltes = $('.project .list .title').off('click').on('click', onProjectTitleClick);
-		if(isInit) {
-			tiltes.eq(tiltes.length - 1).click();
+		var titles = $('.project .list .title').off('click').on('click', onProjectTitleClick);
+		if(typeof id == "number") {
+			if(id == -1) {
+				titles.eq(titles.length - 1).click();
+			} else {
+				$('.project .list >  ul > li[data-project-id="' + id + '"] .title').click();
+			}
 		}
 	}
 
@@ -298,11 +312,10 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 	}
 
 	function getProjectData() {
-		var boardInfo = board.getCurrentBoard();
 		return {
-			model: hardware.getModel(),
-			source: software.getSource(),
-			boardId: boardInfo.id,
+			board: board.getData(),
+			hardware: hardware.getData(),
+			source: software.getData(),
 		};
 	}
 
@@ -318,11 +331,7 @@ define(['jquery', 'EventManager', 'util', 'user', 'code', 'hardware', 'software'
 			project_name: "我的项目",
 			project_intro: "我的项目简介",
 			public_type: 1,
-			project_data: {
-				boardId: 1,
-				source: [],
-				model: null,
-			},
+			project_data: {},
 		};
 	}
 

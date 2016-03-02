@@ -201,14 +201,20 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		return linkData;
 	}
 
-	//查找特殊节点
-	function findSpecNode(name) {
-		return specNodes[name];
+	function findBoard() {
+		var iter = diagram.nodes.iterator;
+		var node;
+		while(iter.next()) {
+			node = iter.value;
+			if(node.data.type == "board") {
+				return node;
+			}
+		}
 	}
 
 	//暗示可以连接的port
 	function hintTargetPort(sourcePort) {
-		var board = findSpecNode("board");
+		var board = findBoard();
 		if(!board) {
 			return;
 		}
@@ -319,13 +325,13 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	}
 
 	//设置放置组件
-	function setPlaceComponent(name) {
+	function setPlaceComponent(name) {	
 		var tool = diagram.toolManager.clickCreatingTool;
 		if(!tool.isEnabled) {
 			return false;
 		}
-		
-		tool.archetypeNodeData = {name: name};
+
+		tool.archetypeNodeData = {name: name};	
 
 		var config = getConfig(name);
 		follower.attr('src', config.source).css({
@@ -333,8 +339,6 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 			height: config.height,
 			left: -999,
 		});
-
-		return true;
 	}
 
 	function onBackgroundSingleClick(e) {
@@ -551,7 +555,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	function getNodes() {
 		var nodes = [];
 
-		var board = findSpecNode("board");
+		var board = findBoard();
 		var iter = board.findNodesConnected().iterator;
 		var node;
 		var nodeData;
@@ -598,27 +602,33 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		});
 	}
 
-	function getModel() {
-		if(diagram && diagram.model) {
-			return diagram.model.toJson();
-		}
-		return "";
+	function getData() {
+		return {
+			model: diagram.model.toJson(),
+			componentConuts: componentConuts,
+		};
 	}
 
-	function setModel(model) {
-		diagram.model.clear();
-		if(model) {
-			diagram.model = go.Model.fromJson(model);
+	function setData(data) {
+		data = data || {};
+		if(data.model) {
+			diagram.model = go.Model.fromJson(data.model);
 		} else {
+			diagram.clear();
 			addInitNodes();
 		}
+		componentConuts = data.componentConuts || [];
+
+		hintTargetPort();
+		highlightLink();
+		showNameDialog(false);
 	}
 
 	return {
 		init: init,
 		load: load,
-		getModel: getModel,
-		setModel: setModel,
+		getData: getData,
+		setData: setData,
 		setPlaceComponent: setPlaceComponent,
 		changeInteractiveMode: changeInteractiveMode,
 		getNodes: getNodes,

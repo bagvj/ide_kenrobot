@@ -1,4 +1,4 @@
-define(['jquery', 'code', 'software'], function($, code, software) {
+define(['jquery', 'software'], function($, software) {
 	var libraries;
 
 	function init() {
@@ -18,8 +18,8 @@ define(['jquery', 'code', 'software'], function($, code, software) {
 			return
 		}
 
-		code.addLibrary(library.code);
-		software.setSource(code.gen());
+		software.addLibrary(library);
+		software.gen();
 	}
 
 	return {
