@@ -1,14 +1,24 @@
-define(['jquery', 'bootstrap', 'typeahead', 'util', 'hardware'], function($, _, _, util, hardware) {
+define(['jquery', 'bootstrap', 'typeahead', 'EventManager', 'util', 'hardware'], function($, _, _, EventManager, util, hardware) {
 	var current;
 	var components;
 
 	function init() {
 		$('.component .items .list > li').on('click', onComponentClick);
+		EventManager.bind("hardware", "changeInteractiveMode", onChangeInteractiveMode);
 	}
 
 	function load(_components) {
 		components = _components;
 		initSearch();
+	}
+
+	function onChangeInteractiveMode(mode) {
+		// var list = $('.component .items .list > li').off("click");
+		if(mode == "drag") {
+
+		} else {
+			
+		}
 	}
 
 	function onComponentClick(e) {

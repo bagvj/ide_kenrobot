@@ -571,7 +571,7 @@ body {
   position: absolute;
 }
 /* line 8, layout/_hardware.scss */
-.hardware .tools ul li {
+.hardware .tools li {
   margin-bottom: 20px;
   text-align: center;
   cursor: pointer;
@@ -581,34 +581,30 @@ body {
   position: relative;
 }
 /* line 17, layout/_hardware.scss */
-.hardware .tools ul li:last-child {
-  margin-bottom: 0;
-}
-/* line 21, layout/_hardware.scss */
-.hardware .tools ul li > i {
+.hardware .tools li > i {
   font-size: 20px;
   line-height: 30px;
   display: block;
 }
-/* line 28, layout/_hardware.scss */
-.hardware .tools ul li:hover .tips {
+/* line 24, layout/_hardware.scss */
+.hardware .tools li:hover .tips {
   display: block;
 }
-/* line 33, layout/_hardware.scss */
-.hardware .tools ul li .tips {
+/* line 29, layout/_hardware.scss */
+.hardware .tools li .tips {
   font-size: 12px;
-  width: 64px;
   height: 30px;
   line-height: 30px;
   right: -80px;
+  width: 64px;
   top: 0;
   color: white;
   background-color: #1fb6ed;
   position: absolute;
   display: none;
 }
-/* line 47, layout/_hardware.scss */
-.hardware .tools ul li .tips:before {
+/* line 42, layout/_hardware.scss */
+.hardware .tools li .tips:before {
   border: solid transparent;
   content: ' ';
   height: 0;
@@ -619,29 +615,38 @@ body {
   top: 9px;
   position: absolute;
 }
-/* line 62, layout/_hardware.scss */
+/* line 57, layout/_hardware.scss */
+.hardware .tools .interactive-mode .tips {
+  width: 100px;
+  right: -116px;
+}
+/* line 64, layout/_hardware.scss */
+.hardware .tools .mode:last-child {
+  margin-bottom: 0;
+}
+/* line 70, layout/_hardware.scss */
 .hardware .center {
   height: 100%;
 }
-/* line 66, layout/_hardware.scss */
+/* line 74, layout/_hardware.scss */
 .hardware .follow {
   top: 0;
   left: 0;
   position: absolute;
 }
-/* line 70, layout/_hardware.scss */
+/* line 78, layout/_hardware.scss */
 .hardware .follow .follower {
   opacity: 0.5;
   position: absolute;
 }
-/* line 76, layout/_hardware.scss */
+/* line 84, layout/_hardware.scss */
 .hardware .copyright {
   width: 100%;
   bottom: 0;
   z-index: 99;
   position: absolute;
 }
-/* line 82, layout/_hardware.scss */
+/* line 90, layout/_hardware.scss */
 .hardware .copyright .alert {
   width: 560px;
   font-size: 12px;
@@ -655,7 +660,7 @@ body {
   margin: 0 auto;
   color: #676767;
 }
-/* line 97, layout/_hardware.scss */
+/* line 105, layout/_hardware.scss */
 .hardware .name-dialog {
   z-index: 998;
   top: 90px;
@@ -663,12 +668,12 @@ body {
   position: absolute;
   display: none;
 }
-/* line 104, layout/_hardware.scss */
+/* line 112, layout/_hardware.scss */
 .hardware .name-dialog .wrap {
   margin: 0 auto;
   width: 250px;
 }
-/* line 109, layout/_hardware.scss */
+/* line 117, layout/_hardware.scss */
 .hardware .name-dialog .name-label {
   display: block;
   background-color: #F1C933;
@@ -681,7 +686,7 @@ body {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
-/* line 122, layout/_hardware.scss */
+/* line 130, layout/_hardware.scss */
 .hardware .name-dialog .name {
   border: 2px solid #F1C933;
   border-top-right-radius: 4px;

@@ -109,16 +109,26 @@
 							<img class="follower" />
 						</div>
 						<div class="tools">
-							<ul>
-								<li class="interactive-mode active" data-action="changeMode" data-mode="default">
+							<ul class="interactive-mode">
+								<li data-action="changeInteractiveMode" data-mode="modern">
+									<i class="fa fa-unlock"></i>
+									<div class="tips">切换拖拽模式</div>
+								</li>
+								<li class="hide" data-action="changeInteractiveMode" data-mode="drag">
+									<i class="fa fa-lock"></i>
+									<div class="tips">切换现代模式</div>
+								</li>
+							</ul>
+							<ul class="mode">
+								<li class="active" data-action="changeMode" data-mode="default">
 									<i class="fa fa-arrows"></i>
 									<div class="tips">默认</div>
 								</li>
-								<li class="interactive-mode" data-action="changeMode" data-mode="clone">
+								<li data-action="changeMode" data-mode="clone">
 									<i class="fa fa-clone"></i>
 									<div class="tips">克隆</div>
 								</li>
-								<li class="interactive-mode" data-action="changeMode" data-mode="delete">
+								<li data-action="changeMode" data-mode="delete">
 									<i class="fa fa-trash-o"></i>
 									<div class="tips">删除</div>
 								</li>

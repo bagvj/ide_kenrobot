@@ -23,8 +23,10 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	var configs;
 	var specNodes;
 
-	//交互模式，默认放置模式
-	var interactiveMode = "default";
+	//交互模式
+	var interactiveMode = "modern";
+	//模式
+	var mode = "default";
 
 	var selectedPort;
 	var selectedLink;
@@ -106,15 +108,57 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		componentCounts = {};
 
 		initEvent();
-		setInteractiveMode("default");
+		setInteractiveMode(interactiveMode);
 	}
 
 	function load(_configs) {
 		configs = _configs;
 	}
 
-	function setInteractiveMode(mode) {
-		$('.hardware .tools li[data-mode="' + mode + '"').click();
+	function getData() {
+		return {
+			model: diagram.model.toJson(),
+			componentConuts: componentConuts,
+		};
+	}
+
+	function setData(data) {
+		data = data || {};
+		if(data.model) {
+			diagram.model = go.Model.fromJson(data.model);
+		} else {
+			diagram.clear();
+			addInitNodes();
+		}
+		componentConuts = data.componentConuts || [];
+
+		hintTargetPort();
+		highlightLink();
+		showNameDialog(false);
+	}
+
+	function getInteractiveMode() {
+		return interactiveMode;
+	}
+
+	//设置放置组件
+	function setPlaceComponent(name) {
+		if(interactiveMode != "modern") {
+			return;
+		}
+
+		var tool = diagram.toolManager.clickCreatingTool;
+		tool.isEnabled = true;
+		tool.archetypeNodeData = {name: name};	
+
+		var config = getConfig(name);
+		follower.attr('src', config.source).css({
+			width: config.width,
+			height: config.height,
+			left: -999,
+		});
+
+		setComponentFollow()
 	}
 
 	function getNodes() {
@@ -167,30 +211,9 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		});
 	}
 
-	function getData() {
-		return {
-			model: diagram.model.toJson(),
-			componentConuts: componentConuts,
-		};
-	}
-
-	function setData(data) {
-		data = data || {};
-		if(data.model) {
-			diagram.model = go.Model.fromJson(data.model);
-		} else {
-			diagram.clear();
-			addInitNodes();
-		}
-		componentConuts = data.componentConuts || [];
-
-		hintTargetPort();
-		highlightLink();
-		showNameDialog(false);
-	}
-
 	function initEvent() {
-		$('.hardware .tools li').on('click', onToolsClick);
+		$('.hardware .tools .interactive-mode > li').on('click', onInteractiveModeClick);
+		$('.hardware .tools .mode > li').on('click', onModeClick);
 		follower = $('.hardware .follow .follower');
 		
 		EventManager.bind('hardware', 'nodeClick', onNodeClick);
@@ -198,15 +221,15 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		EventManager.bind('hardware', 'portClick', onPortClick);
 	}
 
-	function onToolsClick(e) {
-		var li = $(this);
-		util.toggleActive(li)
-		var node = li;
-		var action = node.data('action');
-		switch (action) {
-			case 'changeMode':
-				onInteractiveModeClick(node, e);
-				break;
+	function setMode(mode) {
+		$('.hardware .tools .mode li[data-mode="' + mode + '"').click();
+	}
+
+	function setInteractiveMode(mode) {
+		if(mode == "drag") {
+			$('.hardware .tools .interactive-mode li[data-mode="modern"]').click();
+		} else {
+			$('.hardware .tools .interactive-mode li[data-mode="drag"]').click();
 		}
 	}
 
@@ -216,7 +239,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 			left: -999,
 		});
 
-		if(interactiveMode != "default" && interactiveMode != "clone") {
+		if(interactiveMode != "modern" || (mode != "default" && mode != "clone")) {
 			return;
 		}
 
@@ -245,26 +268,51 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		$('#hardware-container').off('mouseout');
 	}
 
-	function onInteractiveModeClick(node, e) {
-		var mode = node.data('mode');
-		interactiveMode = mode;
-		switch(interactiveMode) {
+	function onModeClick(e) {
+		var li = $(this);
+		util.toggleActive(li);
+		mode = li.data('mode');
+		var tool = diagram.toolManager.clickCreatingTool;
+		var value = interactiveMode == "modern";
+		switch(mode) {
+			//默认模式
+			case "default":
+				tool.isEnabled = value;
+				break;
 			//克隆模式
 			case "clone":
-				diagram.toolManager.clickCreatingTool.isEnabled = true;
+				tool.isEnabled = value;
 				break;
 			//删除模式
 			case "delete":
-				diagram.toolManager.clickCreatingTool.isEnabled = false;
-				break;
-			//默认模式
-			case "default":
-			default:
-				diagram.toolManager.clickCreatingTool.isEnabled = true;
+				tool.isEnabled = false;
 				break;
 		}
 
 		setComponentFollow();
+	}
+
+	function onInteractiveModeClick(node, e) {
+		var li = $(this);
+		var mode = li.data('mode');
+		if(mode == "modern") {
+			util.message("敬请期待");
+			return;
+		}
+
+		li.addClass("hide");
+		if(mode == "drag") {
+			interactiveMode = "modern";
+			li.parent().find('li[data-mode="modern"]').removeClass("hide");
+			$('.hardware .tools .mode li[data-mode="clone"]').removeClass("hide");
+		} else {
+			interactiveMode = "drag";
+			li.parent().find('li[data-mode="drag"]').removeClass("hide");
+			$('.hardware .tools .mode li[data-mode="clone"]').addClass("hide");
+		}
+		setMode("default");
+
+		EventManager.trigger("hardware", "changeInteractiveMode", interactiveMode);
 	}
 
 	//添加初始节点
@@ -423,22 +471,6 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		return part.findLinksConnected(port.portId).count > 0;
 	}
 
-	//设置放置组件
-	function setPlaceComponent(name) {	
-		var tool = diagram.toolManager.clickCreatingTool;
-		tool.isEnabled = true;
-		tool.archetypeNodeData = {name: name};	
-
-		var config = getConfig(name);
-		follower.attr('src', config.source).css({
-			width: config.width,
-			height: config.height,
-			left: -999,
-		});
-
-		setComponentFollow()
-	}
-
 	function onBackgroundSingleClick(e) {
 		hintTargetPort();
 		highlightLink();
@@ -450,12 +482,12 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	}
 
 	function onBackgroundContextClick(e) {
-		setInteractiveMode("default");
+		setMode("default");
 		setComponentFollow(false);
 	}
 
 	function onPartCreated(e) {
-		if(interactiveMode == "default") {
+		if(mode == "default") {
 			diagram.toolManager.clickCreatingTool.isEnabled = false;
 		}
 		setComponentFollow();
@@ -464,7 +496,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	function onNodeClick(node) {
 		hintTargetPort();
 		highlightLink();
-		if(interactiveMode == "default") {
+		if(mode == "default") {
 			var nodeData = node.data;
 			var type = nodeData.type;
 			if(type == "component") {
@@ -475,7 +507,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 			} else {
 				showNameDialog(false);
 			}
-		} else if(interactiveMode == "delete") {
+		} else if(mode == "delete") {
 			showNameDialog(false);
 			if(node.deletable) {
 				diagram.remove(node);
@@ -488,13 +520,13 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	function onLinkClick(link) {
 		hintTargetPort();
 		showNameDialog(false);
-		if(interactiveMode == "delete") {
+		if(mode == "delete") {
 			if(link == selectedLink) {
 				highlightLink();
 				selectedLink = null;
 			}
 			diagram.remove(link);
-		} else if(interactiveMode == "default" || interactiveMode == "clone") {
+		} else if(mode == "default" || mode == "clone") {
 			highlightLink(link);
 		}
 	}
@@ -502,7 +534,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	function onPortClick(port) {
 		highlightLink();
 		showNameDialog(false);
-		if(interactiveMode == "default") {
+		if(mode == "default") {
 			var part = port.part;
 			var nodeType = part.data.type;
 			if(!selectedPort) {
@@ -636,8 +668,8 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		load: load,
 		getData: getData,
 		setData: setData,
+		getInteractiveMode: getInteractiveMode,
 		setPlaceComponent: setPlaceComponent,
-		setInteractiveMode: setInteractiveMode,
 		getNodes: getNodes,
 	}
 });
