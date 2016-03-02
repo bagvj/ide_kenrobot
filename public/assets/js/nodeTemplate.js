@@ -4,7 +4,7 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 	var defaultTextFont = "14px Microsoft Yahei";
 	var oldLinkColor = "#F1C933";
 	var enterLinkColor = "#F19833";
-	var oldPortColor = "#F19833";
+	var oldPortColor = "#ffe42b";
 	var enterPortColor = "#F19833";
 
 	function init() {
@@ -94,9 +94,9 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 			GO(go.Shape, {
 				name: "LINE",
 				isPanelMain: true,
-				fill: "#F19833",
-				stroke: "#F1C933",
-				strokeWidth: 4,
+				fill: "#95a3ad",
+				stroke: "#95a3ad",
+				strokeWidth: 3,
 			})
 		);
 
@@ -107,7 +107,7 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 			GO(go.Shape, 
 				{
 					fill: null,
-					stroke: "#F1C933",
+					stroke: "#1ca8f8",
 					strokeWidth: 2,
 				}
 			),

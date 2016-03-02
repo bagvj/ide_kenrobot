@@ -53,10 +53,14 @@ color: #FF5252\
 color: #515151\
 }\
 .ace-default .ace_constant.ace_character,\
-.ace-default .ace_constant.ace_language,\
-.ace-default .ace_constant.ace_numeric,\
-.ace-default .ace_constant.ace_other {\
+.ace-default .ace_constant.ace_language {\
 color: #AE81FF\
+}\
+.ace-default .ace_constant.ace_other {\
+color: #12a9df;\
+}\
+.ace-default .ace_constant.ace_numeric{\
+color: #b12aeb;\
 }\
 .ace-default .ace_invalid {\
 color: #F8F8F0;\
@@ -68,7 +72,7 @@ background-color: #AE81FF\
 }\
 .ace-default .ace_support.ace_constant,\
 .ace-default .ace_support.ace_function {\
-color: #66D9EF\
+color: #ffa24d\
 }\
 .ace-default .ace_fold {\
 background-color: #A6E22E;\
@@ -89,7 +93,7 @@ color: #A6E22E\
 color: #FD971F\
 }\
 .ace-default .ace_string {\
-color: #E6DB74\
+color: #C07E45;\
 }\
 .ace-default .ace_comment {\
 color: #999\

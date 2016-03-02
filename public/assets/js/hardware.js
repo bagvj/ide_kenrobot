@@ -222,7 +222,11 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		var port;
 		while(iter.next()) {
 			port = iter.value;
-			port.opacity = 1;
+			if(portHasLink(port)) {
+				port.fill = "#4891ed";
+			} else {
+				port.fill ="#ffe42b";
+			}
 		}
 		if(selectedPort && selectedPort.diagram) {
 			selectedPort.fill = "#F1C933";
@@ -236,8 +240,8 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 				iter.reset();
 				while(iter.next()) {
 					port = iter.value;
-					if(!portHasLink(port) && portTypeMatch(selectedPort, port)) {
-						port.opacity = 0.6;
+					if(portHasLink(port) || !portTypeMatch(selectedPort, port)) {
+						port.fill = "#4891ed";
 					}
 				}
 			}
