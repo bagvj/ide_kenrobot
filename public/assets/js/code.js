@@ -8,7 +8,7 @@ define(function() {
 	var setupCodes;
 
 	var codeDeclare = "/************************************************************\n *Copyright(C), 2016-2038, KenRobot.com\n *FileName:  //文件名\n *Author:    //作者\n *Version:   //版本\n *Date:      //完成日期\n */\n";
-	var autoGenDeclare = "{{indent}}/**********auto generate**********/\n{{code}}{{indent}}/**********block tag: {{tag}}***********/\n";
+	var autoGenDeclare = "{{indent}}//auto generate\n{{indent}}//warning: please don't modify\n{{code}}{{indent}}//end auto generate. block tag: {{tag}}\n";
 
 	function init(_getNodes) {
 		getNodes = _getNodes;
@@ -31,15 +31,15 @@ define(function() {
 
 		visit();
 
-		// if(!oldSource) {
+		if(!oldSource) {
 			var codeStr = codeDeclare;
 			var headStr = genHead();
 			if(headStr != "") {
-				codeStr += "\n" + headStr + '\n';
+				codeStr += "\n" + headStr;
 			}
 			var varStr = genVar();
 			if (varStr != "") {
-				codeStr += varStr + '\n';
+				codeStr += "\n" + varStr + '\n';
 			}
 			codeStr += "void setup() {\n";
 			var setupStr = genSetup();
@@ -50,13 +50,13 @@ define(function() {
 			codeStr += "void loop() {\n    \n}";
 
 			return codeStr;
-		// } else {
-		// 	oldSource = replaceAuto(oldSource, genHead(), 1);
-		// 	oldSource = replaceAuto(oldSource, genVar(), 2);
-		// 	oldSource = replaceAuto(oldSource, genSetup(), 3);
+		} else {
+			oldSource = replaceAuto(oldSource, genHead(), "head");
+			oldSource = replaceAuto(oldSource, genVar(), "variable");
+			oldSource = replaceAuto(oldSource, genSetup(), "setup");
 
-		// 	return oldSource;
-		// }
+			return oldSource;
+		}
 	}
 
 	//生成头部
@@ -77,9 +77,7 @@ define(function() {
 		for(var i = 0; i < headCodes.length; i++) {
 			headStr += headCodes[i] + "\n";
 		}
-		if(headCodes.length > 0) {
-			str += genAuto(headStr, 1);
-		}
+		str += genAuto(headStr, "head");
 
 		return str;
 	}
@@ -91,9 +89,8 @@ define(function() {
 		for(var i = 0; i < varCodes.length; i++) {
 			varStr += varCodes[i];
 		}
-		if(varCodes.length > 0) {
-			str += genAuto(varStr, 2);
-		}
+		str += genAuto(varStr, "variable");
+
 		return str;
 	}
 
@@ -104,9 +101,7 @@ define(function() {
 		for (var i = 0; i < setupCodes.length; i++) {
 			setupStr += setupCodes[i];
 		};
-		if(setupCodes.length > 0) {
-			str += genAuto(setupStr, 3, "    ");
-		}
+		str += genAuto(setupStr, "setup", "    ");
 
 		return str;
 	}
@@ -126,32 +121,21 @@ define(function() {
 	}
 
 	function replaceAuto(source, autoCode, tag) {
-		var endFlag = "/**********block tag: " + tag + "***********/";
+		var endFlag = "//end auto generate. block tag: " + tag;
 		var endIndex = source.indexOf(endFlag);
 		if(endIndex < 0) {
-			return insertAuto(source, autoCode, tag);
+			return source;
 		}
 
-		var startFlag = "/**********auto generate**********/";
+		var startFlag = "//auto generate";
 		var startIndex = source.lastIndexOf(startFlag, endIndex);
 		if(startIndex < 0) {
-			return insertAuto(source, autoCode, tag);
+			return source;
 		}
 
 		startIndex = source.lastIndexOf("\n", startIndex) + 1;
 		endIndex = endIndex + endFlag.length + 1;
 		return source.replace(source.substring(startIndex, endIndex), autoCode);
-	}
-
-	function insertAuto(source, autoCode, tag) {
-		if(tag == 1) {
-
-		} else if (tag == 2) {
-
-		} else if(tag == 3) {
-
-		}
-		return source;
 	}
 
 	function visit() {
