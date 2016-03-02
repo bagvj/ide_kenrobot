@@ -235,7 +235,7 @@
 				</form>
 			</div>
 		</div>
-		@if(!$first_visit)
+		@if(!$has_visit)
 		<div class="login-hint-layer mask">
 			<div class="login-hint">
 				<div class="title">提示：</div>

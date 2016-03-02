@@ -34,13 +34,13 @@ class HomeController extends Controller {
 		$components = $this->getComponentConfig();
 		$libraries = $this->getLibrariyConfig();
 
-		$first_visit = 1;
-		if (empty($_COOKIE['first_visit'])) {
+		$has_visit = 1;
+		if (empty($_COOKIE['has_visit'])) {
 			$has_visit = 0;
 		}
-		setcookie('first_visit', 1);
+		setcookie('has_visit', 1);
 
-		return view("index", compact('user', 'mainpage', 'qrcodeurl', 'register_url', 'key', 'boards', 'components', 'libraries', 'first_visit'));
+		return view("index", compact('user', 'mainpage', 'qrcodeurl', 'register_url', 'key', 'boards', 'components', 'libraries', 'has_visit'));
 	}
 
 	public function download(Request $request) {
