@@ -31,7 +31,7 @@ define(function() {
 
 		visit();
 
-		if(!oldSource) {
+		// if(!oldSource) {
 			var codeStr = codeDeclare;
 			var headStr = genHead();
 			if(headStr != "") {
@@ -50,13 +50,13 @@ define(function() {
 			codeStr += "void loop() {\n    \n}";
 
 			return codeStr;
-		} else {
-			oldSource = replaceAuto(oldSource, genHead(), 1);
-			oldSource = replaceAuto(oldSource, genVar(), 2);
-			oldSource = replaceAuto(oldSource, genSetup(), 3);
+		// } else {
+		// 	oldSource = replaceAuto(oldSource, genHead(), 1);
+		// 	oldSource = replaceAuto(oldSource, genVar(), 2);
+		// 	oldSource = replaceAuto(oldSource, genSetup(), 3);
 
-			return oldSource;
-		}
+		// 	return oldSource;
+		// }
 	}
 
 	//生成头部
@@ -129,18 +129,29 @@ define(function() {
 		var endFlag = "/**********block tag: " + tag + "***********/";
 		var endIndex = source.indexOf(endFlag);
 		if(endIndex < 0) {
-			return source;
+			return insertAuto(source, autoCode, tag);
 		}
 
 		var startFlag = "/**********auto generate**********/";
 		var startIndex = source.lastIndexOf(startFlag, endIndex);
 		if(startIndex < 0) {
-			return source;
+			return insertAuto(source, autoCode, tag);
 		}
 
 		startIndex = source.lastIndexOf("\n", startIndex) + 1;
 		endIndex = endIndex + endFlag.length + 1;
 		return source.replace(source.substring(startIndex, endIndex), autoCode);
+	}
+
+	function insertAuto(source, autoCode, tag) {
+		if(tag == 1) {
+
+		} else if (tag == 2) {
+
+		} else if(tag == 3) {
+
+		}
+		return source;
 	}
 
 	function visit() {

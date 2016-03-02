@@ -142,6 +142,7 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 				cursor: "pointer",
 				locationSpot: go.Spot.Center,
 				click: onNodeClick,
+				doubleClick: onNodeDoubleClick,
 				toolTip: GO(go.Adornment, "Auto",
 					GO(go.Shape, 
 						{
@@ -216,6 +217,12 @@ define(["goJS", "EventManager"], function(_, EventManager) {
 	function onNodeClick(e, node) {
 		EventManager.trigger("hardware", "nodeClick", node);
 		e.handled = true;
+	}
+
+	function onNodeDoubleClick(e, node) {
+		if(node.data.type == "board") {
+			EventManager.trigger("project", "switchPanel", 1);
+		}
 	}
 
 	function onLinkClick(e, link) {
