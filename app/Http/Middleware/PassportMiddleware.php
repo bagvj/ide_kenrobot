@@ -23,7 +23,6 @@ class PassportMiddleware
         $kenrobot_id = $request->cookie('kenrobot_id');
         $kenrobot_id = WebAuthHelper::decryptKenrobotId($kenrobot_id);
         $kenrobot_id = intval($kenrobot_id);
-        var_dump($kenrobot_id);
 
         //kenrobot_id为空，直接返回
         if (empty($kenrobot_id)) {
