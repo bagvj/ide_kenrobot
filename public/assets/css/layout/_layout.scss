@@ -67,11 +67,12 @@
 			color: #515151;
 
 			.photo {
-				line-height: 60px;
+				// line-height: 60px;
 				float: left;
 				margin-left: 15px;
 				margin-right: 10px;
 				& > img {
+					margin-top: 10px;
 					width: 40px;
 					height: 40px;
 					border-radius: 50%;
