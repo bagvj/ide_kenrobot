@@ -33,7 +33,7 @@ define(['ace', 'ace-ext-language-tools', 'jquery', 'EventManager', 'code'], func
 	}
 
 	function gen() {
-		editor.setValue(code.gen(), 1);
+		editor.setValue(code.gen(editor.getValue()), 1);
 	}
 
 	function addLibrary(library) {

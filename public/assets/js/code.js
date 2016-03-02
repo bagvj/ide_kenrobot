@@ -8,7 +8,7 @@ define(function() {
 	var setupCodes;
 
 	var codeDeclare = "/************************************************************\n *Copyright(C), 2016-2038, KenRobot.com\n *FileName:  //文件名\n *Author:    //作者\n *Version:   //版本\n *Date:      //完成日期\n */\n";
-	var autoGenDeclare = "/***自动生成，请勿修改***/\n";
+	var autoGenDeclare = "{{indent}}/**********auto generate**********/\n{{code}}{{indent}}/**********block tag: {{tag}}***********/\n";
 
 	function init(_getNodes) {
 		getNodes = _getNodes;
@@ -24,27 +24,39 @@ define(function() {
 		}
 	}
 
-	function gen() {
+	function gen(oldSource) {
 		headCodes = [];
 		varCodes = [];
 		setupCodes = [];
 
 		visit();
 
-		var codeStr = "";
-		var headStr = genHead();
-		if(headStr != "") {
-			codeStr += headStr + '\n';
-		}
-		var varStr = genVar();
-		if (varStr != "") {
-			codeStr += varStr + '\n';
-		}
-		codeStr += genSetup();
-		codeStr += '\n';
-		codeStr += genLoop();
+		if(!oldSource) {
+			var codeStr = codeDeclare;
+			var headStr = genHead();
+			if(headStr != "") {
+				codeStr += "\n" + headStr + '\n';
+			}
+			var varStr = genVar();
+			if (varStr != "") {
+				codeStr += varStr + '\n';
+			}
+			codeStr += "void setup() {\n";
+			var setupStr = genSetup();
+			if(setupStr != "") {
+				codeStr += setupStr;
+			}
+			codeStr += '    \n}\n\n';
+			codeStr += "void loop() {\n    \n}";
 
-		return codeStr;
+			return codeStr;
+		} else {
+			oldSource = replaceAuto(oldSource, genHead(), 1);
+			oldSource = replaceAuto(oldSource, genVar(), 2);
+			oldSource = replaceAuto(oldSource, genSetup(), 3);
+
+			return oldSource;
+		}
 	}
 
 	//生成头部
@@ -60,16 +72,13 @@ define(function() {
 			return a.localeCompare(b);
 		});
 
-		var str = codeDeclare;
-		if(headCodes.length > 0) {
-			str += "\n";
-		}
+		var str = "";
 		var headStr = "";
 		for(var i = 0; i < headCodes.length; i++) {
 			headStr += headCodes[i] + "\n";
 		}
 		if(headCodes.length > 0) {
-			str += autoGenDeclare + headStr + autoGenDeclare;
+			str += genAuto(headStr, 1);
 		}
 
 		return str;
@@ -83,32 +92,21 @@ define(function() {
 			varStr += varCodes[i];
 		}
 		if(varCodes.length > 0) {
-			str += autoGenDeclare + varStr + autoGenDeclare;
+			str += genAuto(varStr, 2);
 		}
 		return str;
 	}
 
 	//生成初始化函数
 	function genSetup() {
-		var str = "void setup() {\n";
+		var str = "";
 		var setupStr = "";
 		for (var i = 0; i < setupCodes.length; i++) {
 			setupStr += setupCodes[i];
 		};
 		if(setupCodes.length > 0) {
-			str += "    " + autoGenDeclare + setupStr + "    " + autoGenDeclare + "    \n";
-		} else {
-			str += "    \n";
+			str += genAuto(setupStr, 3, "    ");
 		}
-		str += "}\n";
-
-		return str;
-	}
-
-	//生成Main函数
-	function genLoop() {
-		var str = "void loop() {\n    \n";
-		str += "}";
 
 		return str;
 	}
@@ -120,6 +118,29 @@ define(function() {
 		for (var i = 0; i < count; i++)
 			indent += "    ";
 		return indent
+	}
+
+	function genAuto(value, tag, indent) {
+		indent = indent || "";
+		return autoGenDeclare.replace("{{code}}", value).replace("{{tag}}", tag).replace(/\{\{indent\}\}/g, indent);
+	}
+
+	function replaceAuto(source, autoCode, tag) {
+		var endFlag = "/**********block tag: " + tag + "***********/";
+		var endIndex = source.indexOf(endFlag);
+		if(endIndex < 0) {
+			return source;
+		}
+
+		var startFlag = "/**********auto generate**********/";
+		var startIndex = source.lastIndexOf(startFlag, endIndex);
+		if(startIndex < 0) {
+			return source;
+		}
+
+		startIndex = source.lastIndexOf("\n", startIndex) + 1;
+		endIndex = endIndex + endFlag.length + 1;
+		return source.replace(source.substring(startIndex, endIndex), autoCode);
 	}
 
 	function visit() {

@@ -315,7 +315,7 @@ define(['jquery', 'EventManager', 'util', 'user', 'hardware', 'software', 'board
 		return {
 			board: board.getData(),
 			hardware: hardware.getData(),
-			source: software.getData(),
+			software: software.getData(),
 		};
 	}
 

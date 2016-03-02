@@ -39,10 +39,9 @@ define(['jquery', 'EventManager', 'util', 'user', 'project', 'board', 'software'
 	}
 
 	function onSaveClick() {
-		util.message("敬请期待");
-		// user.authCheck(project.showSaveDialog, function() {
-		// 	user.showLoginDialog(project.showSaveDialog);
-		// });
+		user.authCheck(project.showSaveDialog, function() {
+			user.showLoginDialog(project.showSaveDialog);
+		});
 	}
 
 	function onDownloadClick() {
