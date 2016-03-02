@@ -16,7 +16,6 @@ define(['jquery', 'bootstrap', 'typeahead', 'util', 'hardware'], function($, _, 
 		util.toggleActive(li);
 
 		hardware.setPlaceComponent(li.data("component-name"));
-		hardware.changeInteractiveMode("place");
 	}
 
 	function initSearch() {

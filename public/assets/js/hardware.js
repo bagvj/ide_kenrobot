@@ -24,7 +24,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	var specNodes;
 
 	//交互模式，默认放置模式
-	var interactiveMode = "place";
+	var interactiveMode = "default";
 
 	var selectedPort;
 	var selectedLink;
@@ -51,6 +51,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 			"toolManager.hoverDelay": 500,
 
 			//放置模式时，单击放置
+			"clickCreatingTool.isEnabled": false,
 			"clickCreatingTool.isDoubleClick": false,
 			
 			//显示网格
@@ -65,6 +66,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 
 			"click": onBackgroundSingleClick,
 			"doubleClick": onBackgroundDoubleClick,
+			"contextClick": onBackgroundContextClick,
 			"PartCreated": onPartCreated,
 		});
 
@@ -104,10 +106,87 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		componentCounts = {};
 
 		initEvent();
+		setInteractiveMode("default");
 	}
 
 	function load(_configs) {
 		configs = _configs;
+	}
+
+	function setInteractiveMode(mode) {
+		$('.hardware .tools li[data-mode="' + mode + '"').click();
+	}
+
+	function getNodes() {
+		var nodes = [];
+
+		var board = findBoard();
+		var iter = board.findNodesConnected().iterator;
+		var node;
+		var nodeData;
+		var ports;
+		var link;
+		var iter2;
+		var nodeType;
+		while(iter.next()) {
+			node = iter.value;
+			nodeData = node.data;
+			ports = [];
+			iter2 = board.findLinksBetween(node).iterator;
+			while(iter2.next()) {
+				link = iter2.value;
+				nodeType = link.fromPort.part.data.type;
+				if(nodeType == "board") {
+					ports.push({
+						source: link.toPort.portId,
+						target: link.fromPort.portId,
+					});
+				} else {
+					ports.push({
+						source: link.fromPort.portId,
+						target: link.toPort.portId,
+					});
+				}
+			}
+			nodes.push({
+				name: nodeData.name,
+				headCode: nodeData.headCode,
+				varCode: nodeData.varCode,
+				setupCode: nodeData.setupCode,
+				varName: nodeData.varName,
+				ports: ports,
+			});
+		}
+
+		return nodes.sort(function(a, b){
+			var nameResult = a.name.localeCompare(b.name);
+			if(nameResult == 0) {
+				return a.varName.localeCompare(b.varName);
+			}
+			return nameResult;
+		});
+	}
+
+	function getData() {
+		return {
+			model: diagram.model.toJson(),
+			componentConuts: componentConuts,
+		};
+	}
+
+	function setData(data) {
+		data = data || {};
+		if(data.model) {
+			diagram.model = go.Model.fromJson(data.model);
+		} else {
+			diagram.clear();
+			addInitNodes();
+		}
+		componentConuts = data.componentConuts || [];
+
+		hintTargetPort();
+		highlightLink();
+		showNameDialog(false);
 	}
 
 	function initEvent() {
@@ -121,33 +200,35 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 
 	function onToolsClick(e) {
 		var li = $(this);
-		if (util.toggleActive(li)) {
-			var node = li;
-			var action = node.data('action');
-			switch (action) {
-				case 'changeMode':
-					onInteractiveModeClick(node, e);
-					break;
-			}
+		util.toggleActive(li)
+		var node = li;
+		var action = node.data('action');
+		switch (action) {
+			case 'changeMode':
+				onInteractiveModeClick(node, e);
+				break;
 		}
 	}
 
-	function checkComponentFollow() {
+	function setComponentFollow(value) {
 		var container = $('#hardware-container').off('mousemove', onContainerMouseMove);
 		follower.css({
 			left: -999,
 		});
 
-		if(interactiveMode != "place") {
+		if(interactiveMode != "default" && interactiveMode != "clone") {
 			return;
 		}
 
-		if($('.component .items .list > li.active').length == 0) {
+		if(value === undefined && !diagram.toolManager.clickCreatingTool.isEnabled) {
+			return;
+		} else if(value == false) {
+			diagram.toolManager.clickCreatingTool.isEnabled = false;
 			return;
 		}
 
 		container.on('mousemove', onContainerMouseMove);
-		container.on('mouseout', onContainerMouseOut);
+		container.off('mouseout').on('mouseout',  onContainerMouseOut);
 	}
 
 	function onContainerMouseMove(e) {
@@ -161,14 +242,29 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		follower.css({
 			left: -999,
 		});
+		$('#hardware-container').off('mouseout');
 	}
 
 	function onInteractiveModeClick(node, e) {
 		var mode = node.data('mode');
-		setInteractiveMode(mode);
-		if(mode == "place") {
-			$('.component .items .list > li.active').click();
+		interactiveMode = mode;
+		switch(interactiveMode) {
+			//克隆模式
+			case "clone":
+				diagram.toolManager.clickCreatingTool.isEnabled = true;
+				break;
+			//删除模式
+			case "delete":
+				diagram.toolManager.clickCreatingTool.isEnabled = false;
+				break;
+			//默认模式
+			case "default":
+			default:
+				diagram.toolManager.clickCreatingTool.isEnabled = true;
+				break;
 		}
+
+		setComponentFollow();
 	}
 
 	//添加初始节点
@@ -281,7 +377,6 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 				}
 			}
 			dialog.show();
-			name.focus();
 		} else {
 			dialog.hide();
 		}
@@ -331,10 +426,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 	//设置放置组件
 	function setPlaceComponent(name) {	
 		var tool = diagram.toolManager.clickCreatingTool;
-		if(!tool.isEnabled) {
-			return false;
-		}
-
+		tool.isEnabled = true;
 		tool.archetypeNodeData = {name: name};	
 
 		var config = getConfig(name);
@@ -343,6 +435,8 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 			height: config.height,
 			left: -999,
 		});
+
+		setComponentFollow()
 	}
 
 	function onBackgroundSingleClick(e) {
@@ -355,13 +449,16 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		EventManager.trigger("project", "switchPanel", 1);
 	}
 
-	function onPartCreated(e) {
-		changeInteractiveMode("default");
+	function onBackgroundContextClick(e) {
+		setInteractiveMode("default");
+		setComponentFollow(false);
 	}
 
-	function changeInteractiveMode(mode) {
-		$('.hardware .tools li[data-mode="' + mode + '"').click();
-		checkComponentFollow();
+	function onPartCreated(e) {
+		if(interactiveMode == "default") {
+			diagram.toolManager.clickCreatingTool.isEnabled = false;
+		}
+		setComponentFollow();
 	}
 
 	function onNodeClick(node) {
@@ -397,7 +494,7 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 				selectedLink = null;
 			}
 			diagram.remove(link);
-		} else if(interactiveMode == "default" || interactiveMode == "place") {
+		} else if(interactiveMode == "default" || interactiveMode == "clone") {
 			highlightLink(link);
 		}
 	}
@@ -534,107 +631,13 @@ define(['jquery', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _
 		};
 	}
 
-	function setInteractiveMode(mode) {
-		interactiveMode = mode;
-		switch(interactiveMode) {
-			//放置模式
-			case "place":
-				diagram.toolManager.clickCreatingTool.isEnabled = true;
-				break;
-			//删除模式
-			case "delete":
-				diagram.toolManager.clickCreatingTool.isEnabled = false;
-				break;
-			//默认模式
-			case "default":
-			default:
-				diagram.toolManager.clickCreatingTool.isEnabled = false;
-				break;
-		}
-		if(interactiveMode != "place") {
-			checkComponentFollow();
-		}
-	}
-
-	function getNodes() {
-		var nodes = [];
-
-		var board = findBoard();
-		var iter = board.findNodesConnected().iterator;
-		var node;
-		var nodeData;
-		var ports;
-		var link;
-		var iter2;
-		var nodeType;
-		while(iter.next()) {
-			node = iter.value;
-			nodeData = node.data;
-			ports = [];
-			iter2 = board.findLinksBetween(node).iterator;
-			while(iter2.next()) {
-				link = iter2.value;
-				nodeType = link.fromPort.part.data.type;
-				if(nodeType == "board") {
-					ports.push({
-						source: link.toPort.portId,
-						target: link.fromPort.portId,
-					});
-				} else {
-					ports.push({
-						source: link.fromPort.portId,
-						target: link.toPort.portId,
-					});
-				}
-			}
-			nodes.push({
-				name: nodeData.name,
-				headCode: nodeData.headCode,
-				varCode: nodeData.varCode,
-				setupCode: nodeData.setupCode,
-				varName: nodeData.varName,
-				ports: ports,
-			});
-		}
-
-		return nodes.sort(function(a, b){
-			var nameResult = a.name.localeCompare(b.name);
-			if(nameResult == 0) {
-				return a.varName.localeCompare(b.varName);
-			}
-			return nameResult;
-		});
-	}
-
-	function getData() {
-		return {
-			model: diagram.model.toJson(),
-			componentConuts: componentConuts,
-		};
-	}
-
-	function setData(data) {
-		data = data || {};
-		if(data.model) {
-			diagram.model = go.Model.fromJson(data.model);
-		} else {
-			diagram.clear();
-			addInitNodes();
-		}
-		componentConuts = data.componentConuts || [];
-
-		hintTargetPort();
-		highlightLink();
-		showNameDialog(false);
-	}
-
 	return {
 		init: init,
 		load: load,
 		getData: getData,
 		setData: setData,
 		setPlaceComponent: setPlaceComponent,
-		changeInteractiveMode: changeInteractiveMode,
+		setInteractiveMode: setInteractiveMode,
 		getNodes: getNodes,
 	}
 });

@@ -110,12 +110,12 @@
 						</div>
 						<div class="tools">
 							<ul>
-								<li class="interactive-mode" data-action="changeMode" data-mode="default">
+								<li class="interactive-mode active" data-action="changeMode" data-mode="default">
 									<i class="fa fa-arrows"></i>
 									<div class="tips">默认</div>
 								</li>
-								<li class="interactive-mode active" data-action="changeMode" data-mode="place">
-									<i class="fa fa-hand-pointer-o"></i>
+								<li class="interactive-mode" data-action="changeMode" data-mode="clone">
+									<i class="fa fa-clone"></i>
 									<div class="tips">克隆</div>
 								</li>
 								<li class="interactive-mode" data-action="changeMode" data-mode="delete">
