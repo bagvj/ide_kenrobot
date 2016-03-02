@@ -236,8 +236,9 @@ body {
 /* line 143, layout/_layout.scss */
 .login-hint-layer {
   z-index: 100;
+  display: none;
 }
-/* line 146, layout/_layout.scss */
+/* line 147, layout/_layout.scss */
 .login-hint-layer .login-hint {
   top: 10px;
   left: 70px;
@@ -245,22 +246,22 @@ body {
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
 }
-/* line 153, layout/_layout.scss */
+/* line 154, layout/_layout.scss */
 .login-hint-layer .login-hint .title {
   margin-top: 10px;
   margin-left: 15px;
   color: #fa764a;
 }
-/* line 159, layout/_layout.scss */
+/* line 160, layout/_layout.scss */
 .login-hint-layer .login-hint .content {
   margin: 10px 15px 10px 15px;
   color: #515151;
 }
-/* line 162, layout/_layout.scss */
+/* line 163, layout/_layout.scss */
 .login-hint-layer .login-hint .content .strong {
   color: #19c3f1;
 }
-/* line 167, layout/_layout.scss */
+/* line 168, layout/_layout.scss */
 .login-hint-layer .login-hint:before {
   border: solid transparent;
   content: ' ';
@@ -660,7 +661,7 @@ body {
 /* line 7, layout/_software.scss */
 .software .back {
   z-index: 99;
-  right: 20px;
+  right: 25px;
   top: 25px;
   cursor: pointer;
   width: 80px;

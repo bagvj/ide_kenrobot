@@ -1,4 +1,4 @@
-define(['jquery', 'bootstrap', 'util', 'EventManager', 'hardware', 'code', 'user', 'project', 'software', 'sidebar', 'board', 'component', 'library'], function($, _, util, EventManager, hardware, code, user, project, software, sidebar, board, component, library) {
+define(['jquery', 'bootstrap', 'config', 'util', 'EventManager', 'hardware', 'code', 'user', 'project', 'software', 'sidebar', 'board', 'component', 'library'], function($, _, config, util, EventManager, hardware, code, user, project, software, sidebar, board, component, library) {
 	function init() {
 		initAjax();
 
@@ -11,15 +11,21 @@ define(['jquery', 'bootstrap', 'util', 'EventManager', 'hardware', 'code', 'user
 		software.init();
 		code.init(hardware.getNodes);
 
-		// $(window).bind('beforeunload', function(){
-		// 	return '您的项目尚未保存，确定离开此页面吗？';
-		// });
-
-		$('.login-hint-layer').on('click', function(){
-			$(this).remove();
-		}).delay(3000).queue(function() {
-			$(this).remove();
-		});
+		if(config.showUnloadDialog) {
+			$(window).bind('beforeunload', function(){
+				return '您的项目尚未保存，确定离开此页面吗？';
+			});
+		}
+		
+		if(config.showFirstVisitHint) {
+			$('.login-hint-layer').on('click', function(){
+				$(this).remove();
+			}).show().delay(3000).queue(function() {
+				$(this).remove();
+			});
+		} else {
+			$('.login-hint-layer').remove();
+		}
 
 		$.ajax({
 			url: '/config',

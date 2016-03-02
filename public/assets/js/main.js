@@ -11,6 +11,7 @@ require.config({
 
 		"goJS": "lib/go",
 
+		"config": "config",
 		"app": "app",
 		"util": "util",
 		"EventManager": "EventManager",
