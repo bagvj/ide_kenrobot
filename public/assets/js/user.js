@@ -95,7 +95,7 @@ define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
 				if (result.code == 0) {
 					//登录成功
 					util.message(result.message);
-					$('#login_dialog .close-btn').fire('click');
+					$('#login_dialog .close-btn').click();
 				} else if (result.code == 1) {
 
 				} else {
