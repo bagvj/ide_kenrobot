@@ -9,6 +9,8 @@ use Auth;
 use Curl\Curl;
 use Illuminate\Http\Request;
 
+use App\WebAuth\Helper as WebAuthHelper;
+
 class SnsAuthController extends Controller {
 
 	/**
