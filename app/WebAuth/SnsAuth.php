@@ -3,7 +3,7 @@
 namespace App\WebAuth;
 
 use Curl\Curl;
-
+ 
 /**
 * 
 */
@@ -132,9 +132,9 @@ class SnsAuth implements WebAuth
        $userdata = [];
 
        $userdata['uid'] = $rawuserdata['uid'];
-       $userdata['name'] = $rawuserdata['uname'];
-       $userdata['email'] = $rawuserdata['email'];
-       $userdata['avatar_url'] = isset($rawuserdata['avatar_big']) ? $rawuserdata['avatar_big'] : '';
+       $userdata['name'] = !empty($rawuserdata['uname']) ? $rawuserdata['uname'] : '';
+       $userdata['email'] = !empty($rawuserdata['email']) ? $rawuserdata['email'] : '';
+       $userdata['avatar_url'] = isset($rawuserdata['avatar_original']) ? $rawuserdata['avatar_original'] : '';
        empty($userdata['avatar_url']) && $userdata['avatar_url'] ='/assets/images/default_portrait.png';
        return $userdata;
     }
