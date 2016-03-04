@@ -135,11 +135,17 @@ class SnsAuth implements WebAuth
        if (empty($rawuserdata)) {
            return null;
        }
-
        $userdata = [];
 
        $userdata['uid'] = $rawuserdata['uid'];
        $userdata['name'] = !empty($rawuserdata['uname']) ? $rawuserdata['uname'] : '';
+
+       if (empty($userdata['name']) ) {
+           if (empty($rawuserdata['email']) && !empty($rawuserdata['phone'])) {
+                $userdata['name'] = $rawuserdata['phone'];
+           }
+       }
+
        $userdata['email'] = !empty($rawuserdata['email']) ? $rawuserdata['email'] : '';
        $userdata['avatar_url'] = isset($rawuserdata['avatar_original']) ? $rawuserdata['avatar_original'] : '';
        empty($userdata['avatar_url']) && $userdata['avatar_url'] ='/assets/images/default_portrait.png';
