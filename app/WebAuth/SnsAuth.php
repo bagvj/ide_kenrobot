@@ -28,6 +28,7 @@ class SnsAuth implements WebAuth
 
     protected $api_user = '';
 
+    protected $errorcode = -1;
         
     /**
      * SNS验证调用网址
@@ -92,7 +93,8 @@ class SnsAuth implements WebAuth
 
         //远端验证失败
         if ($result['code'] != 0) {
-            $this->error = sprintf('%s:%s', $result['code'], $result['message']);
+            $this->error = sprintf('%s',$result['message']);
+            $this->errorcode = $result['code'];
             return false;
         }
 
@@ -100,12 +102,12 @@ class SnsAuth implements WebAuth
         $userResult = $this->getUserFromServer($token);
 
         if ($userResult['code'] != 0) {
-            $this->error = sprintf('%s:%s', $result['code'], $result['message']);
+            $this->error = sprintf('%s', $result['message']);
             return false;
         }
 
         $this->user = $this->formatUserData($userResult['data']);;
-
+        $this->errorcode = 0;
         return true;
     }
 
@@ -115,6 +117,11 @@ class SnsAuth implements WebAuth
     public function getError()
     {
         return $this->error;
+    }
+
+    public function getErrorCode()
+    {
+        return $this->errorcode;
     }
 
     /**

@@ -76,7 +76,7 @@ class SnsAuthController extends Controller {
 
 		if ($loginResult === false) {
 
-			return response()->json(['code' => 2, 'message' => $snsauth->getError()]);
+			return response()->json(['code' => $snsauth->getErrorCode(), 'message' => $snsauth->getError()]);
 
 		}
 
