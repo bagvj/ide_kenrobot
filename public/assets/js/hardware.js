@@ -298,14 +298,8 @@ define(['jquery', 'jquery-ui', 'goJS', 'nodeTemplate', 'EventManager', 'util'], 
 	}
 
 	function onInteractiveModeClick(node, e) {
-		var li = $(this);
+		var li = $(this).addClass("hide");
 		var mode = li.data('mode');
-		// if(mode == "modern") {
-		// 	util.message("敬请期待");
-		// 	return;
-		// }
-
-		li.addClass("hide");
 		var clone = $('.hardware .tools .mode li[data-mode="clone"]');
 		if(mode == "drag") {
 			interactiveMode = "modern";
