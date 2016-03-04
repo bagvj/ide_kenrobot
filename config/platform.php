@@ -2,7 +2,7 @@
 
 return [
     'url' => [
-    	'base' => "http://mars.kenrobot.com/",
+    	'base' => env("PLATFORM_URL_BASE", "http://www.kenrobot.com/"),
 
     	'register' => "http://www.kenrobot.com/index.php?app=public&mod=Register&act=index",
 
