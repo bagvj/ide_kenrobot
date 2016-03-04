@@ -1061,16 +1061,16 @@ body {
 }
 
 /* line 198, component/_login-dialog.scss */
-.baseLogin .field .email {
+.baseLogin .field .email-icon {
   background: url("../images/email.png") no-repeat center;
 }
 
 /* line 202, component/_login-dialog.scss */
-.baseLogin .field .password {
+.baseLogin .field .password-icon {
   background: url("../images/password.png") no-repeat center;
 }
 
-/* line 207, component/_login-dialog.scss */
+/* line 206, component/_login-dialog.scss */
 .baseLogin .field input {
   -webkit-appearance: none;
   -webkit-rtl-ordering: logical;
@@ -1119,12 +1119,12 @@ body {
   box-sizing: content-box;
 }
 
-/* line 255, component/_login-dialog.scss */
+/* line 254, component/_login-dialog.scss */
 .baseLogin .remember {
   margin-bottom: 20px;
 }
 
-/* line 259, component/_login-dialog.scss */
+/* line 258, component/_login-dialog.scss */
 .baseLogin .remember input {
   width: 15px;
   height: 15px;
@@ -1133,7 +1133,7 @@ body {
   vertical-align: middle;
 }
 
-/* line 267, component/_login-dialog.scss */
+/* line 266, component/_login-dialog.scss */
 .baseLogin .remember label {
   margin-left: 27px;
   font-size: 12px;
@@ -1142,7 +1142,7 @@ body {
   line-height: 20px;
 }
 
-/* line 275, component/_login-dialog.scss */
+/* line 274, component/_login-dialog.scss */
 .baseLogin .btn-login {
   -webkit-appearance: none;
   -webkit-rtl-ordering: logical;
@@ -1162,7 +1162,7 @@ body {
   font-family: "Microsoft YaHei", "Helvetica Neue";
 }
 
-/* line 294, component/_login-dialog.scss */
+/* line 293, component/_login-dialog.scss */
 .baseLogin .btn-register {
   -webkit-appearance: none;
   -webkit-rtl-ordering: logical;
