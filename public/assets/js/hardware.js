@@ -26,7 +26,7 @@ define(['jquery', 'jquery-ui', 'goJS', 'nodeTemplate', 'EventManager', 'util'], 
 	var follower;
 
 	//交互模式
-	var interactiveMode = "modern";
+	var interactiveMode = "drag";
 	//模式
 	var mode = "default";
 
@@ -41,21 +41,22 @@ define(['jquery', 'jquery-ui', 'goJS', 'nodeTemplate', 'EventManager', 'util'], 
 			initialContentAlignment: go.Spot.Center,
 			allowClipboard: false,
 			allowCopy: false,
-			// allowSelect: false,
 			allowTextEdit: false,
 			allowReshape: false,
 			allowRelink: false,
-			allowLink: false,
+			allowLink: true,
 			maxSelectionCount: 1,
-
-			//可以撤消(Ctrl + Z)和重做(Ctrl + Y)
-			// "undoManager.isEnabled": true,
 
 			"toolManager.hoverDelay": 500,
 
-			//放置模式时，单击放置
+			//克模式时，单击放置
 			"clickCreatingTool.isEnabled": false,
 			"clickCreatingTool.isDoubleClick": false,
+
+			//拖拽
+			"linkingTool.portGravity": 50,
+			"linkingTool.linkValidation": linkValidation,
+			"relinkingTool.linkValidation": linkValidation,
 			
 			//显示网格
 			"grid.visible": true,
@@ -92,11 +93,24 @@ define(['jquery', 'jquery-ui', 'goJS', 'nodeTemplate', 'EventManager', 'util'], 
 		diagram.nodeSelectionAdornmentTemplate = template.nodeSelection;
 		diagram.linkSelectionAdornmentTemplate = template.linkSelection;
 
-		var model = GO(go.GraphLinksModel, {
-			linkFromPortIdProperty: "fromPort",
-			linkToPortIdProperty: "toPort",
-		});
-		diagram.model = model;
+		diagram.toolManager.linkingTool.temporaryLink =
+			GO(go.Link, GO(go.Shape, 
+				{stroke: "#95a3ad", strokeWidth: 2})
+			);
+
+		var tempfromnode =
+			GO(go.Node, GO(go.Shape, 
+				{stroke: null, fill: null, portId: "", width: 0, height: 0 })
+			);
+		diagram.toolManager.linkingTool.temporaryFromNode = tempfromnode;
+		diagram.toolManager.linkingTool.temporaryFromPort = tempfromnode.port;
+
+		var temptonode = 
+			GO(go.Node, GO(go.Shape, 
+				{stroke: null, fill: null, portId: "", width: 0, height: 0 })
+			);
+		diagram.toolManager.linkingTool.temporaryToNode = temptonode;
+		diagram.toolManager.linkingTool.temporaryToPort = temptonode.port;
 
 		//重写
 		var tool = diagram.toolManager.clickCreatingTool;
@@ -104,6 +118,25 @@ define(['jquery', 'jquery-ui', 'goJS', 'nodeTemplate', 'EventManager', 'util'], 
 			this.archetypeNodeData = genNodeData(this.archetypeNodeData.name);
 			return go.ClickCreatingTool.prototype.insertPart.call(this, loc);
 		}
+
+		tool = diagram.toolManager.linkingTool;
+		tool.doActivate = function() {
+			var port = this.findLinkablePort();
+			hintTargetPort(port);
+			return go.LinkingTool.prototype.doActivate.call(this);
+		}
+
+		tool.doDeactivate = function() {
+			var result = go.LinkingTool.prototype.doDeactivate.call(this);
+			hintTargetPort();
+			return result;
+		}
+
+		var model = GO(go.GraphLinksModel, {
+			linkFromPortIdProperty: "fromPort",
+			linkToPortIdProperty: "toPort",
+		});
+		diagram.model = model;
 
 		componentCounts = {};
 
@@ -534,7 +567,7 @@ define(['jquery', 'jquery-ui', 'goJS', 'nodeTemplate', 'EventManager', 'util'], 
 	function onPortClick(port) {
 		highlightLink();
 		showNameDialog(false);
-		if(mode == "default") {
+		if(interactiveMode == "modern" && mode == "default") {
 			var part = port.part;
 			var nodeType = part.data.type;
 			if(!selectedPort) {
@@ -616,12 +649,15 @@ define(['jquery', 'jquery-ui', 'goJS', 'nodeTemplate', 'EventManager', 'util'], 
 		}
 	}
 
+	function linkValidation(fromNode, fromPort, toNode, toPort) {
+		return !portHasLink(fromPort) && !portHasLink(toPort) && portTypeMatch(fromPort, toPort);
+	}
+
 	function onContainerDrop(e, ui) {
 		var element = ui.helper.first();
 		var name = element.data('component-name');
 		var width = element.width();
 		var height = element.height();
-		var offset = $(diagram.div).offset();
 		var centerX = element.offset().left + width / 2;
 		var centerY = element.offset().top + height / 2;
 
@@ -640,6 +676,7 @@ define(['jquery', 'jquery-ui', 'goJS', 'nodeTemplate', 'EventManager', 'util'], 
 				break;
 		}
 
+		var offset = $(diagram.div).offset();
 		var point = new go.Point(centerX - offset.left, centerY - offset.top);
 		point = diagram.transformViewToDoc(point);
 
