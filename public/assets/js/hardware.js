@@ -26,7 +26,7 @@ define(['jquery', 'jquery-ui', 'jquery-cookie', 'goJS', 'nodeTemplate', 'EventMa
 	var follower;
 
 	//交互模式
-	var interactiveMode = "modern";
+	var interactiveMode = $.cookie("interactiveMode") || "modern";
 	//模式
 	var mode = "default";
 
@@ -345,6 +345,8 @@ define(['jquery', 'jquery-ui', 'jquery-cookie', 'goJS', 'nodeTemplate', 'EventMa
 		}
 		container.droppable("option", "disabled", interactiveMode != "drag");
 		setMode("default");
+		//cookie记录交互模式
+		$.cookie("interactiveMode", interactiveMode);
 
 		EventManager.trigger("hardware", "changeInteractiveMode", interactiveMode);
 	}
