@@ -1,4 +1,4 @@
-define(['jquery', 'jquery-ui', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _, _, template, EventManager, util) {
+define(['jquery', 'jquery-ui', 'jquery-cookie', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _, _, _, template, EventManager, util) {
 	//C++关键字
 	var keywords = [
 		"asm", "do", "if", "return", "typedef", "auto", "double",
@@ -26,7 +26,7 @@ define(['jquery', 'jquery-ui', 'goJS', 'nodeTemplate', 'EventManager', 'util'], 
 	var follower;
 
 	//交互模式
-	var interactiveMode = "drag";
+	var interactiveMode = "modern";
 	//模式
 	var mode = "default";
 

@@ -1,4 +1,4 @@
-define(['jquery', 'bootstrap', 'config', 'util', 'EventManager', 'hardware', 'user', 'project', 'software', 'sidebar', 'board', 'component', 'library'], function($, _, config, util, EventManager, hardware, user, project, software, sidebar, board, component, library) {
+define(['jquery', 'config', 'hardware', 'user', 'project', 'software', 'sidebar', 'board', 'component', 'library'], function($, config, hardware, user, project, software, sidebar, board, component, library) {
 	function init() {
 		initAjax();
 

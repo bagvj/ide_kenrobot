@@ -8,6 +8,7 @@ require.config({
 		"goJS": "lib/go.min",
 
 		"jquery-ui": "lib/jquery-ui.min",
+		"jquery-cookie": "lib/jquery.cookie.min",
 
 		"ace": "lib/ace/ace",
 		"ace-ext-language-tools": "lib/ace/ext-language_tools",
@@ -35,12 +36,15 @@ require.config({
 		"typeahead": {
 			deps: ['jquery'],
 		},
-		"ace-ext-language-tools": {
-			deps: ['ace'],
+		"jquery-cookie": {
+			deps: ['jquery'],
 		},
 		"jquery-ui": {
 			deps: ['jquery'],
-		}
+		},
+		"ace-ext-language-tools": {
+			deps: ['ace'],
+		},
 	},
 });
 
