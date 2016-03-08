@@ -560,7 +560,7 @@ body {
 
 /* line 2, layout/_hardware.scss */
 .hardware .tools {
-  z-index: 98;
+  z-index: 3;
   top: 30px;
   left: 30px;
   position: absolute;
