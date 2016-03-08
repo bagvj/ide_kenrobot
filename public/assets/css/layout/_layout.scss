@@ -57,17 +57,20 @@
 		position: absolute;
 		top: 20px;
 		right: 0;
+		height: 60px;
 		display: none;
 		
 		.dialog {
+			// right: 20px;
+			// top: 0;
 			margin-right: 20px;
 			height: 60px;
 			background-color: white;
 			box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
 			color: #515151;
+			// position: absolute;
 
 			.photo {
-				// line-height: 60px;
 				float: left;
 				margin-left: 15px;
 				margin-right: 10px;
@@ -99,25 +102,29 @@
 
 			.close-btn {
 				cursor: pointer;
-				top: 3px;
-				right: 7px;
-				font-size: 14px;
+				top: 0;
+				right: 2px;
+				font-size: 16px;
 				position: absolute;
 			}
 		}
 
 		.indent {
+			right: 0;
+			top: 0;
+			position: absolute;
 			display: none;
-			width: 8px;
+			width: 10px;
 			height: 36px;
 			background-color: white;
 			border-left: 1px solid #e1e4e8;
 			border-top: 1px solid #e1e4e8;
 			border-bottom: 1px solid #e1e4e8;
-
 			cursor: pointer;
-			& > i{
+
+			& > i {
 				line-height: 36px;
+				color: #515151;
 			}
 		}
 

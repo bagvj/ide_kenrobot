@@ -11,7 +11,7 @@
 
 		<link href="/assets/images/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 		<link href="/assets/css/bootstrap.css" rel="stylesheet" />
-		<link href="/assets/css/font-awesome.css" rel="stylesheet" />
+		<link href="/assets/css/iconfont.css" rel="stylesheet" />
 		<link href="/assets/css/index.css" rel="stylesheet" />
 		<link href="/assets/css/theme/default.css" rel="stylesheet" />
 
@@ -24,21 +24,21 @@
 					<div class="logo">
 					</div>
 					<ul>
-						<li data-action="project"><i class="fa fa-file"></i>项目</li>
-						<li data-action="board"><i class="fa fa-cloud"></i>主板</li>
-						<li data-action="component"><i class="fa fa-modx"></i>元器件</li>
-						<li class="hide" data-action="library"><i class="fa fa-link"></i>库</li>
-						<li data-action="save"><i class="fa fa-save"></i>保存</li>
-						<li data-action="download"><i class="fa fa-download"></i>下载</li>
-						<li data-action="share"><i class="fa fa-share"></i>分享</li>
+						<li data-action="project"><i class="iconfont icon-xiangmu"></i>项目</li>
+						<li data-action="board"><i class="iconfont icon-miniboard"></i>主板</li>
+						<li data-action="component"><i class="iconfont icon-icon23"></i>元件</li>
+						<li class="hide" data-action="library"><i class="iconfont icon-zhanshigongcheng"></i>库</li>
+						<li data-action="save"><i class="iconfont icon-baocun"></i>保存</li>
+						<li data-action="download"><i class="iconfont icon-download"></i>下载</li>
+						<li data-action="share"><i class="iconfont icon-share"></i>分享</li>
 					</ul>
 				</div>
 				<div class="tab tab-project">
 					<div class="project">
 						<div class="operation">
 							<ul>
-								<li class="new" data-action="new"><i class="fa fa-plus fa-2x"></i></li>
-								<li class="delete" data-action="delete"><i class="fa fa-trash fa-2x"></i></li>
+								<li class="new" data-action="new"><i class="iconfont icon-plus"></i></li>
+								<li class="delete" data-action="delete"><i class="iconfont icon-iconfonttrash"></i></li>
 								<li class="cancel hide" data-action="cancel">取消</li>
 								<li class="confirm hide" data-action="confirm">确定</li>
 							</ul>
@@ -47,7 +47,7 @@
 							<ul>
 								<li data-project-id="0">
 									<div class="title">
-										<span class="name">我的项目</span><i class="fa"></i>
+										<span class="name">我的项目</span><i class="iconfont icon-lashenkuangxiangxia"></i>
 									</div>
 									<div class="view">
 										<div><span class="name">我的项目</span>.uno</div>
@@ -80,7 +80,7 @@
 					<div class="component">
 						<div class="search">
 							<input class="key" type="text" placeholder="搜索" spellcheck="false"/>
-							<i class="fa"></i>
+							<i class="iconfont icon-search"></i>
 						</div>
 						<div class="items x-scrollbar">
 							<ul class="list">
@@ -111,25 +111,25 @@
 						<div class="tools">
 							<ul class="interactive-mode">
 								<li data-action="changeInteractiveMode" data-mode="modern">
-									<i class="fa fa-unlock"></i>
+									<i class="iconfont icon-suotoukai"></i>
 									<div class="tips">切换拖拽模式</div>
 								</li>
 								<li class="hide" data-action="changeInteractiveMode" data-mode="drag">
-									<i class="fa fa-lock"></i>
+									<i class="iconfont icon-suotouguan"></i>
 									<div class="tips">切换现代模式</div>
 								</li>
 							</ul>
 							<ul class="mode">
 								<li class="active" data-action="changeMode" data-mode="default">
-									<i class="fa fa-arrows"></i>
+									<i class="iconfont icon-move"></i>
 									<div class="tips">默认</div>
 								</li>
 								<li data-action="changeMode" data-mode="clone">
-									<i class="fa fa-clone"></i>
+									<i class="iconfont icon-clone"></i>
 									<div class="tips">克隆</div>
 								</li>
 								<li data-action="changeMode" data-mode="delete">
-									<i class="fa fa-trash-o"></i>
+									<i class="iconfont icon-iconfonttrash"></i>
 									<div class="tips">删除</div>
 								</li>
 							</ul>
@@ -166,10 +166,10 @@
 						Hi,<span class="name">{{isset($user) ? $user->name : ''}}</span>
 					</div>
 					<a class="logout" href="/auth/logout">退出</a>
-					<i class="fa fa-close close-btn"></i>
+					<i class="iconfont icon-close1 close-btn"></i>
 				</div>
 				<div class="indent">
-					<i class="fa fa-caret-left"></i>
+					<i class="iconfont icon-lashenkuangxiangxia"></i>
 				</div>
 			</div>
 		</div>
@@ -177,7 +177,7 @@
 		<div class="dialog-layer mask">
 			<div id="login_dialog" class="dialog">
 				<div class="close-btn left">
-					<i class="fa fa-close"></i>
+					<i class="iconfont icon-close1"></i>
 				</div>
 				<div>
 					<a href="javascript:;" title="返回" class="baseLoginBtn" data-action="baseLogin active" style="display:none;"></a>
@@ -218,7 +218,7 @@
 		</div>
 		<div id="save-dialog" class="dialog">
 			<div class="close-btn right">
-				<i class="fa fa-close"></i>
+				<i class="iconfont icon-close1"></i>
 			</div>
 			<div class="wrapper">
 				<form class="form-horizontal">

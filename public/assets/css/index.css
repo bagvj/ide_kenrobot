@@ -150,9 +150,10 @@ body {
   position: absolute;
   top: 20px;
   right: 0;
+  height: 60px;
   display: none;
 }
-/* line 62, layout/_layout.scss */
+/* line 63, layout/_layout.scss */
 .main .user .dialog {
   margin-right: 20px;
   height: 60px;
@@ -160,25 +161,25 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
   color: #515151;
 }
-/* line 69, layout/_layout.scss */
+/* line 73, layout/_layout.scss */
 .main .user .dialog .photo {
   float: left;
   margin-left: 15px;
   margin-right: 10px;
 }
-/* line 74, layout/_layout.scss */
+/* line 77, layout/_layout.scss */
 .main .user .dialog .photo > img {
   margin-top: 10px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
 }
-/* line 82, layout/_layout.scss */
+/* line 85, layout/_layout.scss */
 .main .user .dialog .welcome {
   line-height: 60px;
   float: left;
 }
-/* line 87, layout/_layout.scss */
+/* line 90, layout/_layout.scss */
 .main .user .dialog .logout {
   line-height: 60px;
   color: #515151;
@@ -187,22 +188,25 @@ body {
   margin-right: 15px;
   float: left;
 }
-/* line 95, layout/_layout.scss */
+/* line 98, layout/_layout.scss */
 .main .user .dialog .logout:hover {
   color: #323942;
 }
-/* line 100, layout/_layout.scss */
+/* line 103, layout/_layout.scss */
 .main .user .dialog .close-btn {
   cursor: pointer;
-  top: 3px;
-  right: 7px;
-  font-size: 14px;
+  top: 0;
+  right: 2px;
+  font-size: 16px;
   position: absolute;
 }
-/* line 109, layout/_layout.scss */
+/* line 112, layout/_layout.scss */
 .main .user .indent {
+  right: 0;
+  top: 0;
+  position: absolute;
   display: none;
-  width: 8px;
+  width: 10px;
   height: 36px;
   background-color: white;
   border-left: 1px solid #e1e4e8;
@@ -210,35 +214,36 @@ body {
   border-bottom: 1px solid #e1e4e8;
   cursor: pointer;
 }
-/* line 119, layout/_layout.scss */
+/* line 125, layout/_layout.scss */
 .main .user .indent > i {
   line-height: 36px;
+  color: #515151;
 }
-/* line 124, layout/_layout.scss */
+/* line 131, layout/_layout.scss */
 .main .user.active {
   display: block;
 }
 
-/* line 130, layout/_layout.scss */
+/* line 137, layout/_layout.scss */
 .dialog-layer {
   z-index: 25;
   display: none;
 }
-/* line 134, layout/_layout.scss */
+/* line 141, layout/_layout.scss */
 .dialog-layer.active {
   display: block;
 }
-/* line 138, layout/_layout.scss */
+/* line 145, layout/_layout.scss */
 .dialog-layer .dialog {
   display: none;
 }
 
-/* line 143, layout/_layout.scss */
+/* line 150, layout/_layout.scss */
 .login-hint-layer {
   z-index: 100;
   display: none;
 }
-/* line 147, layout/_layout.scss */
+/* line 154, layout/_layout.scss */
 .login-hint-layer .login-hint {
   top: 10px;
   left: 70px;
@@ -246,22 +251,22 @@ body {
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
 }
-/* line 154, layout/_layout.scss */
+/* line 161, layout/_layout.scss */
 .login-hint-layer .login-hint .title {
   margin-top: 10px;
   margin-left: 15px;
   color: #fa764a;
 }
-/* line 160, layout/_layout.scss */
+/* line 167, layout/_layout.scss */
 .login-hint-layer .login-hint .content {
   margin: 10px 15px 10px 15px;
   color: #515151;
 }
-/* line 163, layout/_layout.scss */
+/* line 170, layout/_layout.scss */
 .login-hint-layer .login-hint .content .strong {
   color: #19c3f1;
 }
-/* line 168, layout/_layout.scss */
+/* line 175, layout/_layout.scss */
 .login-hint-layer .login-hint:before {
   border: solid transparent;
   content: ' ';
@@ -286,25 +291,29 @@ body {
   height: 60px;
   text-align: center;
   cursor: pointer;
-  padding-top: 10px;
   font-size: 12px;
 }
-/* line 16, layout/_sidebar.scss */
+/* line 15, layout/_sidebar.scss */
 .sidebar .bar ul li i {
   font-size: 22px;
   margin-bottom: 3px;
   display: block;
 }
-/* line 24, layout/_sidebar.scss */
+/* line 22, layout/_sidebar.scss */
+.sidebar .bar ul li[data-action="board"] i {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+/* line 30, layout/_sidebar.scss */
 .sidebar .project {
   width: 200px;
   position: relative;
 }
-/* line 28, layout/_sidebar.scss */
+/* line 34, layout/_sidebar.scss */
 .sidebar .project .operation {
   height: 60px;
 }
-/* line 30, layout/_sidebar.scss */
+/* line 36, layout/_sidebar.scss */
 .sidebar .project .operation li {
   float: left;
   width: 50%;
@@ -313,11 +322,12 @@ body {
   line-height: 60px;
   cursor: pointer;
 }
-/* line 37, layout/_sidebar.scss */
+/* line 43, layout/_sidebar.scss */
 .sidebar .project .operation li > i {
   margin-top: 16px;
+  font-size: 24px;
 }
-/* line 43, layout/_sidebar.scss */
+/* line 50, layout/_sidebar.scss */
 .sidebar .project .list {
   background-color: #DEE1E5;
   overflow-y: auto;
@@ -327,36 +337,37 @@ body {
   right: 0;
   position: absolute;
 }
-/* line 53, layout/_sidebar.scss */
+/* line 60, layout/_sidebar.scss */
 .sidebar .project .list li .title {
   height: 36px;
   line-height: 36px;
   background-color: #7D899B;
   padding-left: 14px;
-  padding-right: 14px;
+  padding-right: 4px;
   cursor: pointer;
   color: white;
   margin-top: 1px;
 }
-/* line 62, layout/_sidebar.scss */
+/* line 69, layout/_sidebar.scss */
 .sidebar .project .list li .title > i {
   float: right;
-  font-size: 20px;
-  margin-top: 8px;
+  font-size: 24px;
+  margin-top: 4px;
+  margin-right: 6px;
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
-/* line 66, layout/_sidebar.scss */
-.sidebar .project .list li .title > i::before {
-  content: "\f0d9";
-}
-/* line 72, layout/_sidebar.scss */
+/* line 78, layout/_sidebar.scss */
 .sidebar .project .list li:first-child .title {
   margin-top: 0;
 }
-/* line 76, layout/_sidebar.scss */
+/* line 82, layout/_sidebar.scss */
 .sidebar .project .list li .view {
   display: none;
 }
-/* line 78, layout/_sidebar.scss */
+/* line 84, layout/_sidebar.scss */
 .sidebar .project .list li .view > div {
   font-size: 12px;
   color: #515151;
@@ -365,53 +376,41 @@ body {
   line-height: 36px;
   cursor: pointer;
 }
-/* line 86, layout/_sidebar.scss */
+/* line 92, layout/_sidebar.scss */
 .sidebar .project .list li .view > div:hover {
   background-color: #C9CED4;
 }
-/* line 90, layout/_sidebar.scss */
+/* line 96, layout/_sidebar.scss */
 .sidebar .project .list li .view > div.active {
   background-color: #ECEFF3;
 }
-/* line 99, layout/_sidebar.scss */
-.sidebar .project .list li.active .title > i::before {
-  content: "\f0d7";
+/* line 104, layout/_sidebar.scss */
+.sidebar .project .list li.active .title > i {
+  -moz-transform: rotate(0);
+  -ms-transform: rotate(0);
+  -webkit-transform: rotate(0);
+  transform: rotate(0);
+  margin-right: 0;
 }
-/* line 105, layout/_sidebar.scss */
+/* line 110, layout/_sidebar.scss */
 .sidebar .project .list li.active .view {
   display: block;
 }
-/* line 113, layout/_sidebar.scss */
-.sidebar .project .list li.unselected .title > i::before {
-  content: "\f10c";
-}
-/* line 119, layout/_sidebar.scss */
-.sidebar .project .list li.unselected .view {
-  display: none;
-}
-/* line 127, layout/_sidebar.scss */
-.sidebar .project .list li.selected .title > i::before {
-  content: "\f05d";
-}
-/* line 133, layout/_sidebar.scss */
-.sidebar .project .list li.selected .view {
-  display: none;
-}
-/* line 141, layout/_sidebar.scss */
+/* line 118, layout/_sidebar.scss */
 .sidebar .component {
   width: 200px;
   position: relative;
   background-color: #e1e4e8;
   float: left;
 }
-/* line 147, layout/_sidebar.scss */
+/* line 124, layout/_sidebar.scss */
 .sidebar .component .search {
   margin-top: 12px;
   margin-bottom: 20px;
   margin-left: 12px;
   background-color: #e1e4e8;
 }
-/* line 153, layout/_sidebar.scss */
+/* line 130, layout/_sidebar.scss */
 .sidebar .component .search .key {
   height: 24px;
   width: 164px;
@@ -423,18 +422,14 @@ body {
   border-radius: 12px;
   border: 1px solid #bac4d0;
 }
-/* line 165, layout/_sidebar.scss */
+/* line 142, layout/_sidebar.scss */
 .sidebar .component .search > i {
   line-height: 24px;
   right: 30px;
   color: #b9b9b6;
   position: absolute;
 }
-/* line 170, layout/_sidebar.scss */
-.sidebar .component .search > i::before {
-  content: "\f002";
-}
-/* line 176, layout/_sidebar.scss */
+/* line 150, layout/_sidebar.scss */
 .sidebar .component .items {
   top: 56px;
   left: 0;
@@ -445,77 +440,77 @@ body {
   float: left;
   overflow-y: auto;
 }
-/* line 186, layout/_sidebar.scss */
+/* line 160, layout/_sidebar.scss */
 .sidebar .component .items .list {
   margin-left: 12px;
   float: left;
 }
-/* line 190, layout/_sidebar.scss */
+/* line 164, layout/_sidebar.scss */
 .sidebar .component .items .list li {
   width: 72px;
   text-align: center;
   float: left;
 }
-/* line 195, layout/_sidebar.scss */
+/* line 169, layout/_sidebar.scss */
 .sidebar .component .items .list li:nth-child(odd) {
   margin-right: 20px;
 }
-/* line 199, layout/_sidebar.scss */
+/* line 173, layout/_sidebar.scss */
 .sidebar .component .items .list li.active .image {
   border: 2px solid #4cc1fc;
 }
-/* line 206, layout/_sidebar.scss */
+/* line 180, layout/_sidebar.scss */
 .sidebar .component .items .item .image {
   width: 72px;
   height: 72px;
   background-color: white;
   border: 1px solid #bac4d0;
 }
-/* line 213, layout/_sidebar.scss */
+/* line 187, layout/_sidebar.scss */
 .sidebar .component .items .item .name {
   font-size: 12px;
   color: #515151;
   margin-top: 5px;
   margin-bottom: 12px;
 }
-/* line 223, layout/_sidebar.scss */
+/* line 197, layout/_sidebar.scss */
 .sidebar .board {
   width: 200px;
   position: relative;
   overflow-y: auto;
   background-color: #DEE1E5;
 }
-/* line 230, layout/_sidebar.scss */
+/* line 204, layout/_sidebar.scss */
 .sidebar .board .list li {
   position: relative;
 }
-/* line 232, layout/_sidebar.scss */
+/* line 206, layout/_sidebar.scss */
 .sidebar .board .list li .image {
   width: 70px;
   height: 70px;
   display: block;
   margin: 0 auto;
 }
-/* line 239, layout/_sidebar.scss */
+/* line 213, layout/_sidebar.scss */
 .sidebar .board .list li .name {
   color: #515151;
   margin: 0 atuo;
   display: block;
   text-align: center;
 }
-/* line 246, layout/_sidebar.scss */
+/* line 220, layout/_sidebar.scss */
 .sidebar .board .list li.normal {
   cursor: pointer;
 }
-/* line 249, layout/_sidebar.scss */
+/* line 223, layout/_sidebar.scss */
 .sidebar .board .list li.normal:hover {
   background-color: #C9CED4;
 }
-/* line 253, layout/_sidebar.scss */
+/* line 227, layout/_sidebar.scss */
 .sidebar .board .list li.normal.active {
   background-color: #ECEFF4;
 }
-/* line 259, layout/_sidebar.scss */
+/* line 233, layout/_sidebar.scss */
 .sidebar .board .list li.forward .stamps {
   position: absolute;
   top: 0;
@@ -525,14 +520,14 @@ body {
   background: url(/assets/images/stamps.png) no-repeat 115px 10px;
   background-size: 50px 50px;
 }
-/* line 273, layout/_sidebar.scss */
+/* line 247, layout/_sidebar.scss */
 .sidebar .library {
   width: 200px;
   position: relative;
   overflow-y: auto;
   background-color: #DEE1E5;
 }
-/* line 280, layout/_sidebar.scss */
+/* line 254, layout/_sidebar.scss */
 .sidebar .library .list li {
   cursor: pointer;
   color: #515151;
@@ -540,25 +535,25 @@ body {
   height: 36px;
   line-height: 36px;
 }
-/* line 287, layout/_sidebar.scss */
+/* line 261, layout/_sidebar.scss */
 .sidebar .library .list li:hover {
   background-color: #C9CED4;
 }
-/* line 291, layout/_sidebar.scss */
+/* line 265, layout/_sidebar.scss */
 .sidebar .library .list li.active {
   background-color: #ECEFF4;
 }
-/* line 299, layout/_sidebar.scss */
+/* line 273, layout/_sidebar.scss */
 .sidebar .x-scrollbar::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3);
   background-color: #DEE1E5;
 }
-/* line 304, layout/_sidebar.scss */
+/* line 278, layout/_sidebar.scss */
 .sidebar .x-scrollbar::-webkit-scrollbar {
   width: 8px;
   background-color: #DEE1E5;
 }
-/* line 309, layout/_sidebar.scss */
+/* line 283, layout/_sidebar.scss */
 .sidebar .x-scrollbar::-webkit-scrollbar-thumb {
   background-color: #BABCC0;
 }
@@ -587,10 +582,18 @@ body {
   display: block;
 }
 /* line 24, layout/_hardware.scss */
+.hardware .tools li[data-mode="modern"] > i, .hardware .tools li[data-mode="drag"] > i {
+  font-size: 22px;
+}
+/* line 30, layout/_hardware.scss */
+.hardware .tools li[data-mode="clone"] > i {
+  font-size: 18px;
+}
+/* line 36, layout/_hardware.scss */
 .hardware .tools li:hover .tips {
   display: block;
 }
-/* line 29, layout/_hardware.scss */
+/* line 41, layout/_hardware.scss */
 .hardware .tools li .tips {
   font-size: 12px;
   height: 30px;
@@ -603,7 +606,7 @@ body {
   position: absolute;
   display: none;
 }
-/* line 42, layout/_hardware.scss */
+/* line 54, layout/_hardware.scss */
 .hardware .tools li .tips:before {
   border: solid transparent;
   content: ' ';
@@ -615,38 +618,38 @@ body {
   top: 9px;
   position: absolute;
 }
-/* line 57, layout/_hardware.scss */
+/* line 69, layout/_hardware.scss */
 .hardware .tools .interactive-mode .tips {
   width: 100px;
   right: -116px;
 }
-/* line 64, layout/_hardware.scss */
+/* line 76, layout/_hardware.scss */
 .hardware .tools .mode:last-child {
   margin-bottom: 0;
 }
-/* line 70, layout/_hardware.scss */
+/* line 82, layout/_hardware.scss */
 .hardware .center {
   height: 100%;
 }
-/* line 74, layout/_hardware.scss */
+/* line 86, layout/_hardware.scss */
 .hardware .follow {
   top: 0;
   left: 0;
   position: absolute;
 }
-/* line 78, layout/_hardware.scss */
+/* line 90, layout/_hardware.scss */
 .hardware .follow .follower {
   opacity: 0.5;
   position: absolute;
 }
-/* line 84, layout/_hardware.scss */
+/* line 96, layout/_hardware.scss */
 .hardware .copyright {
   width: 100%;
   bottom: 0;
   z-index: 99;
   position: absolute;
 }
-/* line 90, layout/_hardware.scss */
+/* line 102, layout/_hardware.scss */
 .hardware .copyright .alert {
   width: 560px;
   font-size: 12px;
@@ -660,7 +663,7 @@ body {
   margin: 0 auto;
   color: #676767;
 }
-/* line 105, layout/_hardware.scss */
+/* line 117, layout/_hardware.scss */
 .hardware .name-dialog {
   z-index: 998;
   top: 90px;
@@ -668,12 +671,12 @@ body {
   position: absolute;
   display: none;
 }
-/* line 112, layout/_hardware.scss */
+/* line 124, layout/_hardware.scss */
 .hardware .name-dialog .wrap {
   margin: 0 auto;
   width: 250px;
 }
-/* line 117, layout/_hardware.scss */
+/* line 129, layout/_hardware.scss */
 .hardware .name-dialog .name-label {
   display: block;
   background-color: #F1C933;
@@ -686,7 +689,7 @@ body {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
-/* line 130, layout/_hardware.scss */
+/* line 142, layout/_hardware.scss */
 .hardware .name-dialog .name {
   border: 2px solid #F1C933;
   border-top-right-radius: 4px;
@@ -839,12 +842,16 @@ body {
   position: absolute;
 }
 /* line 12, component/_dialog.scss */
-.dialog .close-btn.left {
-  left: 10px;
+.dialog .close-btn > i {
+  font-size: 20px;
 }
-/* line 15, component/_dialog.scss */
+/* line 16, component/_dialog.scss */
+.dialog .close-btn.left {
+  left: 8px;
+}
+/* line 19, component/_dialog.scss */
 .dialog .close-btn.right {
-  right: 10px;
+  right: 4px;
 }
 
 /* line 1, component/_login-dialog.scss */

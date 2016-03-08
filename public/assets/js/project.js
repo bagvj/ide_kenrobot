@@ -1,6 +1,6 @@
 define(['jquery', 'EventManager', 'util', 'user', 'hardware', 'software', 'board'], function($, EventManager, util, user, hardware, software, board) {
 	var projects = [];
-	var projectTemplate = '<li data-project-id="{{id}}"><div class="title"><span class="name">{{project_name}}</span><i class="fa"></i></div><div class="view"><div><span class="name">{{project_name}}</span>.uno</div><div><span class="name">{{project_name}}</span>.ino</div></div></li>';
+	var projectTemplate = '<li data-project-id="{{id}}"><div class="title"><span class="name">{{project_name}}</span><i class="iconfont icon-lashenkuangxiangxia"></i></div><div class="view"><div><span class="name">{{project_name}}</span>.uno</div><div><span class="name">{{project_name}}</span>.ino</div></div></li>';
 	var curProjectInfo;
 
 	function init() {

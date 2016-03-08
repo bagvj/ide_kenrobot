@@ -20,6 +20,18 @@
 				display: block;
 			}
 
+			&[data-mode="modern"], &[data-mode="drag"] {
+				& > i {
+					font-size: 22px;
+				}
+			}
+
+			&[data-mode="clone"] {
+				& > i {
+					font-size: 18px;
+				}
+			}
+
 			&:hover {
 				.tips {
 					display: block;
