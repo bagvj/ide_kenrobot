@@ -72,12 +72,13 @@ define(['jquery', 'EventManager', 'util', 'user', 'project', 'board', 'software'
 	}
 
 	function onSerialClick() {
-		if(!window.chrome) {
-			util.message("串口调试目前只支持Google Chrome浏览器，其它浏览器敬请期待！");
-			return;
-		}
+		util.message("敬请期待");
+		// if(!window.chrome) {
+		// 	util.message("串口调试目前只支持Google Chrome浏览器，其它浏览器敬请期待！");
+		// 	return;
+		// }
 
-		
+		// window.location = "http://platform.kenrobot.com/serial/debug";
 	}
 
 	function onShareClick() {

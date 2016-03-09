@@ -14,11 +14,16 @@ Route::get('/', 'HomeController@index');
 
 Route::post('/build', 'HomeController@build');
 Route::get('/download/{key}', 'HomeController@download')->where('key', '[.0-9a-zA-Z_-]+');
+
 Route::get('/config', 'HomeController@config');
-Route::post('/project/save', 'HomeController@saveProject');
-Route::post('/project/delete', 'HomeController@deleteProject');
-Route::get('/project/{id}', 'HomeController@getProject')->where('id', '[1-9][0-9]*');
-Route::get('/projects/{user_id}', 'HomeController@getProjects')->where('user_id', '[1-9][0-9]*');
+
+Route::post('/project/save', 'ProjectController@saveProject');
+Route::post('/project/delete', 'ProjectController@deleteProject');
+Route::get('/project/{id}', 'ProjectController@getProject')->where('id', '[1-9][0-9]*');
+Route::get('/projects/{user_id}', 'ProjectController@getProjects')->where('user_id', '[1-9][0-9]*');
+
+Route::get('/serial', 'SerialController@index');
+Route::get('/serial/debug', 'SerialController@index');
 
 // 登录验证
 Route::get('/auth/login', 'Auth\AuthController@getLogin');

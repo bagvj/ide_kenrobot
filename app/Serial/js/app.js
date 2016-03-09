@@ -23,6 +23,8 @@ define(['jquery'], function($) {
 		} else if(tab == "debug") {
 			$('.tab-debug .input').val('').focus();
 			$('.tab-debug .output').val('');
+		} else if(tab == "burn") {
+
 		}
 	}
 
@@ -139,6 +141,11 @@ define(['jquery'], function($) {
 
 	function bufferToString(buf) {
 		return String.fromCharCode.apply(null, new Uint8Array(buf));
+	}
+
+	function initTabBurn() {
+		$('.tab-burn .selectFile').on('click', onSelectFileClick);
+		$('.tab-burn .selectFile').on('click', onSelectFileClick);
 	}
 
 	function disconnect(back) {
