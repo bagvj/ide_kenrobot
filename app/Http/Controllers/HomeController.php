@@ -50,8 +50,8 @@ class HomeController extends Controller {
 
 	public function download(Request $request, $key) {
 		if($key == "serial-debugger.crx") {
-			$filename = "../app/Serial/pack.crx";
-			$this->doDownload($filename, $key);
+			$filename = "download/$key";
+			$this->doDownload($filename);
 		} else {
 			$filename = "/tmp/build/".basename($key, ".zip")."/build.zip";
 			$this->doDownload($filename, $key);
@@ -148,7 +148,7 @@ class HomeController extends Controller {
 		return $curl->post($url, $params);
 	}
 
-	private function doDownload($filename, $downloadName) {
+	private function doDownload($filename, $downloadName = null) {
 		//检查文件是否存在
 		if (file_exists($filename)) {
 			$downloadName = isset($downloadName) ? $downloadName : basename($filename);
