@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<link href="/css/index.css" rel="stylesheet" />
+	<script src="/js/require.min.js" data-main="js/main"></script>
+</head>
+<body>
+	<div class="main">
+		<div class="tab tab-connect active">
+			<div class="wrap">
+				<div class="message-wrap">
+					<span class="message"></span>
+				</div>
+				<div>
+					<span class="port-label">端口:</span>
+					<select class="port">
+					</select>
+					<span class="bitRate-label">波特率:</span>
+					<select class="bitRate">
+					</select>
+					<input class="connect" type="button" value="连接" />
+				</div>
+			</div>
+		</div>
+		<div class="tab tab-debug">
+			<div class="wrap">
+				<div class="input-label">输入:</div>
+				<div class="send-wrap">
+					<input class="input" type="text" /><input class="send" type="button" value="发送" />
+				</div>
+				<div class="output-label">输出:</div>
+				<div>
+					<textarea class="output" rows="8" spellcheck="false"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="tab tab-burn">
+
+		</div>
+	</div>
+</body>
+</html>

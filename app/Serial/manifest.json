@@ -1,0 +1,26 @@
+{
+	"name": "Arduino Serial Debug",
+	"description": "Arduino串口调试",
+	"version": "0.1",
+	"app": {
+		"background": {
+			"scripts": ["js/background.js"]
+		}
+	},
+	"icons": {
+		"16": "images/icon.png",
+		"128": "images/icon.png"
+	},
+	"permissions": [
+		"serial",
+		"http://platform.kenrobot.com/"
+	],
+	"url_handlers": {
+		"debug": {
+			"matches": [
+				"http://platform.kenrobot.com/serial/debug/*"
+			],
+			"title": "串口调试"
+		}
+	}
+}
