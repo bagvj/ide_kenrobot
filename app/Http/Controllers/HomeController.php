@@ -49,7 +49,7 @@ class HomeController extends Controller {
 	}
 
 	public function download(Request $request, $key) {
-		if($key == "serial-debugger.crx") {
+		if($key == "serial-debugger.zip") {
 			$filename = "download/$key";
 			$this->doDownload($filename);
 		} else {
