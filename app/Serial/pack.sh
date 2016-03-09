@@ -6,8 +6,10 @@ cd `dirname $0`
 
 if [ -d "pack" ]; then
 	rm -rf pack
-	mkdir pack
 fi
+mkdir pack
+
+rm -rf pack.pem
 cp -R css images js index.html manifest.json pack/
 
 #回到之前的目录
