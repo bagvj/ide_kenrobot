@@ -48,31 +48,13 @@ class HomeController extends Controller {
 		return view("index", compact('user', 'mainpage', 'qrcodeurl', 'register_url', 'key', 'boards', 'components', 'libraries', 'has_visit'));
 	}
 
-	public function download(Request $request) {
-		$key = $request->input('key');
-		$filename = "/tmp/build/$key/build.zip";
-		//检查文件是否存在
-		if (file_exists($filename)) {
-			//返回的文件类型
-			header("Content-type: application/octet-stream");
-			//按照字节大小返回
-			header("Accept-Ranges: bytes");
-			//返回文件的大小
-			header("Accept-Length: " . filesize($filename));
-			//这里对客户端的弹出对话框，对应的文件名
-			Header("Content-Disposition: attachment; filename=$key.zip");
-			//一次只传输1024个字节的数据给客户端
-			//打开文件
-			$file = fopen($filename, "r");
-			$buffer = 1024; //
-			//判断文件是否读完
-			while (!feof($file)) {
-				//将文件读入内存, 每次向客户端回送1024个字节的数据
-				echo fread($file, $buffer);
-			}
-			fclose($file);
+	public function download(Request $request, $key) {
+		if($key == "serial-debugger.crx") {
+			$filename = "../app/Serial/pack.crx";
+			$this->doDownload($filename, $key);
 		} else {
-			echo "<script>alert('对不起，您要下载的文件不存在！');</script>";
+			$filename = "/tmp/build/".basename($key, ".zip")."/build.zip";
+			$this->doDownload($filename, $key);
 		}
 	}
 
@@ -109,7 +91,7 @@ class HomeController extends Controller {
 			exec($cmd, $output, $code);
 			if ($code == 0) {
 				$result['msg'] = "编译成功";
-				$result['url'] = "/download?key=$key";
+				$result['url'] = "/download/$key.zip";
 			} else {
 				$result['msg'] = "编译失败";
 				$result['output'] = $output;
@@ -164,6 +146,33 @@ class HomeController extends Controller {
 		);
 		$curl = new Curl();
 		return $curl->post($url, $params);
+	}
+
+	private function doDownload($filename, $downloadName) {
+		//检查文件是否存在
+		if (file_exists($filename)) {
+			$downloadName = isset($downloadName) ? $downloadName : basename($filename);
+			//返回的文件类型
+			header("Content-type: application/octet-stream");
+			//按照字节大小返回
+			header("Accept-Ranges: bytes");
+			//返回文件的大小
+			header("Accept-Length: " . filesize($filename));
+			//这里对客户端的弹出对话框，对应的文件名
+			Header("Content-Disposition: attachment; filename=$downloadName");
+			//一次只传输4096个字节的数据给客户端
+			//打开文件
+			$file = fopen($filename, "r");
+			$buffer = 4096; //
+			//判断文件是否读完
+			while (!feof($file)) {
+				//将文件读入内存, 每次向客户端回送1024个字节的数据
+				echo fread($file, $buffer);
+			}
+			fclose($file);
+		} else {
+			echo "<script>alert('对不起，您要下载的文件" . $filename . "不存在！');</script>";
+		}
 	}
 
 	private function getUserProjects($user_id) {

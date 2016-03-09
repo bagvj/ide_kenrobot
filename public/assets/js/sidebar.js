@@ -24,6 +24,9 @@ define(['jquery', 'EventManager', 'util', 'user', 'project', 'board', 'software'
 			case "download":
 				onDownloadClick();
 				break;
+			case "serial":
+				onSerialClick();
+				break;
 			case "share":
 				onShareClick();
 				break;
@@ -66,6 +69,15 @@ define(['jquery', 'EventManager', 'util', 'user', 'project', 'board', 'software'
 				window.open(result.url);
 			}
 		});
+	}
+
+	function onSerialClick() {
+		if(!window.chrome) {
+			util.message("串口调试目前只支持Google Chrome浏览器，其它浏览器敬请期待！");
+			return;
+		}
+
+		
 	}
 
 	function onShareClick() {

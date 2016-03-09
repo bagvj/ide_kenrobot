@@ -4,9 +4,10 @@ DIR=`pwd`
 
 cd `dirname $0`
 
-rm -rf pack
-chmod 777 pack.crx pack.pem
-chown root:root pack.crx pack.pem
+rm -rf pack pack.pem
+chmod 755 pack.crx
+chown root:root pack.crx
+mv pack.crx ../../public/download/
 
 #回到之前的目录
 cd ${DIR}
