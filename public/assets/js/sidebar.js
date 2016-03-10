@@ -46,22 +46,11 @@ define(['jquery', 'EventManager', 'util', 'user', 'project', 'board', 'software'
 	}
 
 	function onDownloadClick() {
-		user.authCheck(function(success) {
-			var doDownload = function() {
-				project.build(function(result) {
-					util.message(result.msg);
-					if (result.code == 0 && result.url) {
-						window.open(result.url);
-					}
-				});
+		project.build(function(result) {
+			util.message(result.message);
+			if (result.status == 0 && result.url) {
+				window.open(result.url);
 			}
-
-			if(!success) {
-				user.showLoginDialog(doDownload);
-				return;
-			}
-
-			doDownload();
 		});
 	}
 

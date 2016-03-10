@@ -59,46 +59,39 @@ class HomeController extends Controller {
 
 	public function build(Request $request) {
 		$result = array();
-		$code = -1;
-
-		//下载
-		$type = 0;
+		$status = -1;
 
 		//代码的字节码
 		$source = $request->input('source');
-		//用户id
-		$user_id = $request->input('user_id');
 		//项目名字
-		$project = $request->input('project');
+		$project_name = $request->input('project_name');
 		//编译类型
 		$build_type = $request->input('build_type');
 		//主板类型
-		$board = $request->input('board');
+		$board_type = $request->input('board_type');
 
 		if ($source) {
-			// $source = $this->fromCharCode($bytes);
-			$keys = $this->getShort($user_id . $project . $board);
-			$key = $keys[0];
-			$path = "/tmp/build/$key";
+			$uri = $this->getShort();
+			$path = "/tmp/build/$uri";
 			mkdir($path, 0755, true);
-			$f = fopen($path . "/$project.ino", "wb");
+			$f = fopen($path . "/main.ino", "wb");
 			fwrite($f, $source);
 			fclose($f);
 
-			$cmd = "sh ../app/Build/compiler/$build_type/build.sh $path $board $project 2>&1";
+			$cmd = "sh ../app/Build/compiler/$build_type/build.sh $path $board_type $project_name 2>&1";
 			$output = array();
-			exec($cmd, $output, $code);
-			if ($code == 0) {
-				$result['msg'] = "编译成功";
-				$result['url'] = "/download/$key";
+			exec($cmd, $output, $status);
+			if ($status == 0) {
+				$result['message'] = "编译成功";
+				$result['url'] = "/download/$uri";
 			} else {
-				$result['msg'] = "编译失败";
-				$result['output'] = $output;
+				$result['message'] = "编译失败";
+				// $result['output'] = $output;
 			}
 		} else {
-			$result['msg'] = "非法请求";
+			$result['message'] = "非法请求";
 		}
-		$result['code'] = $code;
+		$result['status'] = $status;
 
 		// echo json_encode($result, true);
 		return collect($result)->toJson();
@@ -250,7 +243,7 @@ class HomeController extends Controller {
 
     //生成短url
     //返回：一个长度为4的数组，每个元素为长度为6的字符串
-    private function getShort($value) {
+    private function getShort($value = "") {
     	$key = "HwpGAejoUOPr6DbKBlvRILmsq4z7X3TCtky8NVd5iWE0ga2MchSZxfn1Y9JQuF";
     	
     	$result = array();
@@ -267,6 +260,6 @@ class HomeController extends Controller {
 			}
 			$result[$i] = $out;
 		}
-    	return $result;
+    	return $result[0];
     }
 }

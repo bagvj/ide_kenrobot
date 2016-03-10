@@ -44,8 +44,8 @@ if [ ! -d "lib" ]; then
 fi
 
 #把.ino源代码文件复制(移动)到src下
-cp *.ino src/
-# mv *.ino src/
+# cp *.ino src/
+mv *.ino src/
 
 #开始编译
 ino build -m ${BOARD_TYPE} --make ${MAKE_PATH}
@@ -63,9 +63,10 @@ echo "编译成功"
 
 #复制文件
 cp .build/${BOARD_TYPE}/firmware.hex .build/${BOARD_TYPE}/${PROJECT_NAME}.hex
+cp src/main.ino ./${PROJECT_NAME}.ino
 
 #打包
-zip -j build.zip src/*.ino .build/${BOARD_TYPE}/${PROJECT_NAME}.hex
+zip -j build.zip ${PROJECT_NAME}.ino .build/${BOARD_TYPE}/${PROJECT_NAME}.hex
 mv .build/${BOARD_TYPE}/${PROJECT_NAME}.hex ./build.hex
 
 #如果eep存在

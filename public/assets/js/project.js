@@ -1,4 +1,4 @@
-define(['jquery', 'EventManager', 'util', 'user', 'hardware', 'software', 'board'], function($, EventManager, util, user, hardware, software, board) {
+define(['jquery', 'EventManager', 'util', 'config', 'user', 'hardware', 'software', 'board'], function($, EventManager, util, config, user, hardware, software, board) {
 	var projects = [];
 	var projectTemplate = '<li data-project-id="{{id}}"><div class="title"><span class="name">{{project_name}}</span><i class="iconfont icon-lashenkuangxiangxia"></i></div><div class="view"><div><span class="name">{{project_name}}</span>.uno</div><div><span class="name">{{project_name}}</span>.ino</div></div></li>';
 	var curProjectInfo;
@@ -13,24 +13,38 @@ define(['jquery', 'EventManager', 'util', 'user', 'hardware', 'software', 'board
 	}
 
 	function build(callback) {
-		var projectName = curProjectInfo.project_name;
-		var boardInfo = board.getData();
-		var softwareData = software.getData();
+		var doBuild = function() {
+			var projectName = curProjectInfo.project_name;
+			var boardInfo = board.getData();
+			var softwareData = software.getData();
 
-		$.ajax({
-			type: "POST",
-			url: "/build",
-			data: {
-				source: softwareData.source,
-				user_id: user.getUserId(),
-				project: projectName,
-				build_type: "Arduino",
-				board: boardInfo.board_type,
-			},
-			dataType: "json",
-		}).done(function(result){
-			callback && callback(result);
-		});
+			$.ajax({
+				type: "POST",
+				url: "/build",
+				data: {
+					source: softwareData.source,
+					project_name: projectName,
+					build_type: "Arduino",
+					board_type: boardInfo.board_type,
+				},
+				dataType: "json",
+			}).done(function(result){
+				callback && callback(result);
+			});
+		};
+
+		if(config.buildAuth) {
+			user.authCheck(function(success) {
+				if(!success) {
+					user.showLoginDialog(doBuild);
+					return;
+				}
+
+				doBuild();
+			});
+		} else {
+			doBuild();
+		}
 	}
 
 	function showSaveDialog(isNew) { 
