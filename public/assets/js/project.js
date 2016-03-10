@@ -13,7 +13,7 @@ define(['jquery', 'EventManager', 'util', 'user', 'hardware', 'software', 'board
 	}
 
 	function build(callback) {
-		var projectName = "Arduino";
+		var projectName = curProjectInfo.project_name;
 		var boardInfo = board.getData();
 		var softwareData = software.getData();
 
