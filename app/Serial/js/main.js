@@ -4,6 +4,7 @@ require.config({
 	paths: {
 		"jquery": "jquery.min",
 		"app": "app",
+		"upload": "upload",
 	},
 });
 

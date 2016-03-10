@@ -12,41 +12,25 @@ define(['jquery', 'EventManager', 'util', 'user', 'hardware', 'software', 'board
 		load();
 	}
 
-	function load() {
-		user.authCheck(function() {
-			$.ajax({
-				url: '/projects/' + user.getUserId(),
-				dataType: 'json',
-			}).done(onLoadSuccess);
-		}, function() {
-			projects.push(getDefaultProject());
-			bindProjectEvent(0);
+	function build(callback) {
+		var projectName = "Arduino";
+		var boardInfo = board.getData();
+		var softwareData = software.getData();
+
+		$.ajax({
+			type: "POST",
+			url: "/build",
+			data: {
+				source: softwareData.source,
+				user_id: user.getUserId(),
+				project: projectName,
+				build_type: "Arduino",
+				board: boardInfo.board_type,
+			},
+			dataType: "json",
+		}).done(function(result){
+			callback && callback(result);
 		});
-	}
-
-	function onLoadSuccess(result) {
-		if(result.status != 0) {
-			projects = [];
-		} else {
-			projects = result.data;
-		}
-
-		if(projects.length == 0) {
-			projects.push(getDefaultProject());
-		}
-
-		var ul = $(".project .list ul").empty();
-		for(var i = 0; i < projects.length; i++) {
-			var projectInfo = projects[i];
-			try {
-				projectInfo.project_data = JSON.parse(projectInfo.project_data);
-			} catch(ex) {
-				console.log(ex.message);
-				projectInfo.project_data = {};
-			}
-			ul.append(getProjectHtml(projectInfo));
-		}
-		bindProjectEvent(-1);
 	}
 
 	function showSaveDialog(isNew) { 
@@ -74,6 +58,45 @@ define(['jquery', 'EventManager', 'util', 'user', 'hardware', 'software', 'board
 			top: 200,
 		}, 400, "swing");
 		$('.dialog-layer').addClass("active");
+	}
+
+	function load() {
+		user.authCheck(function(success) {
+			if(success) {
+				$.ajax({
+					url: '/projects/' + user.getUserId(),
+					dataType: 'json',
+				}).done(onLoadSuccess);
+			} else {
+				projects.push(getDefaultProject());
+				bindProjectEvent(0);
+			}
+		});
+	}
+
+	function onLoadSuccess(result) {
+		if(result.status != 0) {
+			projects = [];
+		} else {
+			projects = result.data;
+		}
+
+		if(projects.length == 0) {
+			projects.push(getDefaultProject());
+		}
+
+		var ul = $(".project .list ul").empty();
+		for(var i = 0; i < projects.length; i++) {
+			var projectInfo = projects[i];
+			try {
+				projectInfo.project_data = JSON.parse(projectInfo.project_data);
+			} catch(ex) {
+				console.log(ex.message);
+				projectInfo.project_data = {};
+			}
+			ul.append(getProjectHtml(projectInfo));
+		}
+		bindProjectEvent(-1);
 	}
 
 	function doProjectSave(id) {
@@ -223,9 +246,9 @@ define(['jquery', 'EventManager', 'util', 'user', 'hardware', 'software', 'board
 	}
 
 	function onProjectNewClick(e) {
-		user.authCheck(function() {
-			showSaveDialog(true);
-		}, user.showLoginDialog);
+		user.authCheck(function(success) {
+			success ? showSaveDialog(true) : user.showLoginDialog();
+		});
 	}
 
 	function onProjectDeleteClick(e) {
@@ -233,17 +256,21 @@ define(['jquery', 'EventManager', 'util', 'user', 'hardware', 'software', 'board
 			util.message("你的项目尚未保存");
 			return;
 		}
-		var callback = function() {
-			var okFunc = function() {
-				doProjectDelete(curProjectInfo.id);
-			};
-			util.confirm({
-				title: "删除确认",
-				text: "删除后不可恢复，确定要删除该项目吗？",
-				okFunc: okFunc,
-			});
-		};
-		user.authCheck(callback, user.showLoginDialog);
+		
+		user.authCheck(function(success) {
+			if(success) {
+				var okFunc = function() {
+					doProjectDelete(curProjectInfo.id);
+				};
+				util.confirm({
+					title: "删除确认",
+					text: "删除后不可恢复，确定要删除该项目吗？",
+					okFunc: okFunc,
+				});
+			} else {
+				user.showLoginDialog();
+			}
+		});
 	}
 
 	function doProjectDelete(id) {
@@ -346,6 +373,7 @@ define(['jquery', 'EventManager', 'util', 'user', 'hardware', 'software', 'board
 
 	return {
 		init: init,
+		build: build,
 		showSaveDialog: showSaveDialog,
 	}
 });

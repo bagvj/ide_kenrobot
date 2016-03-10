@@ -19,7 +19,7 @@
 					<span class="bitRate-label">波特率:</span>
 					<select class="bitRate">
 					</select>
-					<input class="connect" type="button" value="连接" />
+					<input class="btn connect" type="button" value="连接" />
 				</div>
 			</div>
 		</div>
@@ -27,7 +27,7 @@
 			<div class="wrap">
 				<div class="input-label">输入:</div>
 				<div class="send-wrap">
-					<input class="input" type="text" /><input class="send" type="button" value="发送" />
+					<input class="input" type="text" /><input class="btn send" type="button" value="发送" />
 				</div>
 				<div class="output-label">输出:</div>
 				<div>
@@ -37,7 +37,12 @@
 		</div>
 		<div class="tab tab-burn">
 			<div class="wrap">
-				<input class="selectFile" type="button" value="选择hex文件" /><input class="burn" type="button" value="烧写" />
+				<div class="message-wrap">
+					<span class="message"></span>
+				</div>
+				<div>
+					<input class="btn selectFile" type="button" value="文件" /><input class="btn burn" type="button" value="烧写" />
+				</div>
 			</div>
 		</div>
 	</div>

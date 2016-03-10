@@ -1,8 +1,11 @@
-define(['jquery'], function($) {
+define(['jquery', 'upload'], function($, upload) {
 	var appWindow;
 	var windowId = "kenrobot";
-
+	
 	var connectionId;
+	var hexFileData;
+	var messages;
+	var host;
 
 	function init() {
 		appWindow = chrome.app.window.get(windowId);
@@ -10,6 +13,10 @@ define(['jquery'], function($) {
 		
 		initTabConnect();
 		initTabDebug();
+		initTabBurn();
+
+		messages = [];
+		chrome.runtime.onMessageExternal.addListener(onMessageExternal);
 	}
 
 	function onAppClosed() {
@@ -33,7 +40,7 @@ define(['jquery'], function($) {
 			var portList = $('.tab-connect .port').empty();
 			for(var i = 0; i < ports.length; i++) {
 				var port = ports[i];
-				$('<option>').text(port.path).appendTo(portList);
+				$('<option>').text(port.path).attr("title", port.displayName).appendTo(portList);
 			}
 		});
 
@@ -58,19 +65,20 @@ define(['jquery'], function($) {
 			}, function(connectionInfo) {
 				if(connectionInfo && connectionInfo.connectionId) {
 					connectionId = connectionInfo.connectionId;
-					switchTab("debug");
+					// switchTab("debug");
+					switchTab("burn");
 				} else {
-					showMessage("连接失败");
+					showMessage("连接失败", "connect");
 				}
 			});
 		} catch(ex) {
-			showMessage("连接失败");
+			showMessage("连接失败", "connect");
 			console.dir(ex);
-		}	
+		}
 	}
 
-	function showMessage(text) {
-		var message = $(".tab-connect .message").text(text).stop().show();
+	function showMessage(text, tab) {
+		var message = $(".tab-" + tab + " .message").text(text).stop().show();
 		message.delay(2000).queue(function() {
 			message.hide();
 			message.dequeue();
@@ -145,7 +153,33 @@ define(['jquery'], function($) {
 
 	function initTabBurn() {
 		$('.tab-burn .selectFile').on('click', onSelectFileClick);
-		$('.tab-burn .selectFile').on('click', onSelectFileClick);
+		$('.tab-burn .burn').on('click', onBurnClick);
+	}
+
+	function onSelectFileClick(e) {
+		// chrome.fileSystem.chooseEntry({type: 'openFile'}, function(entry) {
+		// 	entry.file(function(file) {
+		// 		var reader = new FileReader();
+		// 		reader.onloadend = function(e) {
+		// 			hexFileData = e.target.result;
+		// 		};
+
+		// 		reader.readAsText(file);
+		// 	});
+		// });
+	}
+
+	function onBurnClick(e) {
+		// if(!hexFileData) {
+		// 	console.log("没有数据");
+		// 	return;
+		// }
+		// upload.exec(connectionId, hexFileData);
+
+		messages.push({
+			action: "authCheck",
+			callbacks: ["build", "upload"],
+		});
 	}
 
 	function disconnect(back) {
@@ -184,6 +218,41 @@ define(['jquery'], function($) {
 
 			return true;
 		}
+	}
+
+	function onMessageExternal(message, sender, sendResponse) {
+		if(message == "nothing") {
+			if(messages.length > 0) {
+				sendResponse(messages);
+			}
+		} else {
+			var action = message.action;
+			var result = message.result;
+			if(action == "init") {
+				host = result.host;
+			} else if(action == "authCheck") {
+				if(!result) {
+					showMessage("请先登录");
+				}
+			} else if(action == "upload") {
+
+			}
+
+			doCallbacks(message.callbacks, sendResponse);
+		}
+	}
+
+	function doCallbacks(callbacks, sendResponse) {
+		if(!callbacks || callbacks.length == 0) {
+			return;
+		}
+
+		var action = callbacks.shift();
+		var message = {
+			action: action,
+			callbacks: callbacks,
+		};
+		sendResponse(message);
 	}
 
 	return {

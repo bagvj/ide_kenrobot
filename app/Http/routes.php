@@ -13,7 +13,7 @@
 Route::get('/', 'HomeController@index');
 
 Route::post('/build', 'HomeController@build');
-Route::get('/download/{key}', 'HomeController@download')->where('key', '[.0-9a-zA-Z_-]+');
+Route::get('/download/{uri}/{type?}', 'HomeController@download')->where('uri', '[.0-9a-zA-Z_-]+');
 
 Route::get('/config', 'HomeController@config');
 

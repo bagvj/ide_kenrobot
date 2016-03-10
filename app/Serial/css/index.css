@@ -66,11 +66,18 @@ input, textarea {
 .main .tab.active {
   display: block;
 }
-/* line 65, index.scss */
+/* line 63, index.scss */
+.main .tab .btn {
+  background-color: white;
+  color: #4891ed;
+  border: 1px solid #4891ed;
+  cursor: pointer;
+}
+/* line 72, index.scss */
 .main .tab-connect .wrap {
   text-align: center;
 }
-/* line 68, index.scss */
+/* line 75, index.scss */
 .main .tab-connect .wrap .message-wrap {
   height: 30px;
   line-height: 30px;
@@ -79,46 +86,43 @@ input, textarea {
   margin-bottom: 20px;
   color: red;
 }
-/* line 77, index.scss */
+/* line 84, index.scss */
 .main .tab-connect .wrap select {
   height: 30px;
   line-height: 30px;
   border: 1px solid #4891ed;
   padding-left: 5px;
 }
-/* line 84, index.scss */
+/* line 91, index.scss */
 .main .tab-connect .wrap .port {
   margin-left: 10px;
   margin-right: 20px;
   width: 80px;
 }
-/* line 90, index.scss */
+/* line 97, index.scss */
 .main .tab-connect .wrap .bitRate {
   margin-left: 10px;
   width: 100px;
 }
-/* line 95, index.scss */
+/* line 102, index.scss */
 .main .tab-connect .wrap .connect {
   width: 80px;
   height: 30px;
   margin-left: 20px;
-  background-color: white;
-  color: #4891ed;
-  border: 1px solid #4891ed;
 }
-/* line 107, index.scss */
+/* line 111, index.scss */
 .main .tab-debug .wrap {
   padding: 15px;
 }
-/* line 109, index.scss */
+/* line 113, index.scss */
 .main .tab-debug .wrap .input-label {
   margin-bottom: 6px;
 }
-/* line 113, index.scss */
+/* line 117, index.scss */
 .main .tab-debug .wrap .send-wrap {
   height: 30px;
 }
-/* line 117, index.scss */
+/* line 121, index.scss */
 .main .tab-debug .wrap .input {
   border: 1px solid #4891ed;
   width: 354px;
@@ -127,24 +131,45 @@ input, textarea {
   padding-right: 5px;
   line-height: 30px;
 }
-/* line 126, index.scss */
+/* line 130, index.scss */
 .main .tab-debug .wrap .send {
-  border: 1px solid #4891ed;
   border-left: none;
-  background-color: white;
-  color: #4891ed;
   width: 80px;
   height: 30px;
 }
-/* line 135, index.scss */
+/* line 136, index.scss */
 .main .tab-debug .wrap .output-label {
   margin-top: 14px;
   margin-bottom: 6px;
 }
-/* line 140, index.scss */
+/* line 141, index.scss */
 .main .tab-debug .wrap .output {
   resize: none;
   width: 100%;
   padding: 5px;
   border: 1px solid #4891ed;
+}
+/* line 151, index.scss */
+.main .tab-burn .wrap {
+  text-align: center;
+}
+/* line 154, index.scss */
+.main .tab-burn .wrap .message-wrap {
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  margin-top: 80px;
+  margin-bottom: 20px;
+  color: red;
+}
+/* line 163, index.scss */
+.main .tab-burn .wrap .selectFile {
+  width: 80px;
+  height: 30px;
+}
+/* line 168, index.scss */
+.main .tab-burn .wrap .burn {
+  width: 80px;
+  height: 30px;
+  margin-left: 30px;
 }

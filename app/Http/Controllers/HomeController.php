@@ -39,18 +39,21 @@ class HomeController extends Controller {
 		if (empty($_COOKIE['has_visit'])) {
 			$has_visit = 0;
 		}
-		setcookie('has_visit', 1);
+		setcookie('has_visit', 1, null, "", ".kenrobot.com");
 
 		return view("index", compact('user', 'mainpage', 'qrcodeurl', 'register_url', 'key', 'boards', 'components', 'libraries', 'has_visit'));
 	}
 
-	public function download(Request $request, $key) {
-		if($key == "serial-debugger.zip") {
-			$filename = "download/$key";
+	public function download(Request $request, $uri, $type = "0") {
+		if($uri == "serial-debugger.zip") {
+			$filename = "download/$uri";
 			$this->doDownload($filename);
 		} else {
-			$filename = "/tmp/build/".basename($key, ".zip")."/build.zip";
-			$this->doDownload($filename, $key);
+			$ext = $type == "0" ? ".zip" : "." . $type;
+			$filename = "/tmp/build/$uri/build$ext";
+			$projectName = file_get_contents(dirname($filename)."/.project");
+
+			$this->doDownload($filename, $projectName.$ext);
 		}
 	}
 
@@ -82,12 +85,12 @@ class HomeController extends Controller {
 			fwrite($f, $source);
 			fclose($f);
 
-			$cmd = "sh ../app/Build/compiler/$build_type/build.sh $path $board 2>&1";
+			$cmd = "sh ../app/Build/compiler/$build_type/build.sh $path $board $project 2>&1";
 			$output = array();
 			exec($cmd, $output, $code);
 			if ($code == 0) {
 				$result['msg'] = "编译成功";
-				$result['url'] = "/download/$key.zip";
+				$result['url'] = "/download/$key";
 			} else {
 				$result['msg'] = "编译失败";
 				$result['output'] = $output;
@@ -134,7 +137,7 @@ class HomeController extends Controller {
 			}
 			fclose($file);
 		} else {
-			echo "<script>alert('对不起，您要下载的文件" . $filename . "不存在！');</script>";
+			echo "<script>alert('对不起，您要下载的文件不存在！');</script>";
 		}
 	}
 

@@ -13,7 +13,8 @@
 	},
 	"permissions": [
 		"serial",
-		"http://platform.kenrobot.com/"
+		"fileSystem",
+		"*://*.kenrobot.com/"
 	],
 	"url_handlers": {
 		"debug": {
@@ -22,5 +23,8 @@
 			],
 			"title": "串口调试"
 		}
+	},
+	"externally_connectable": {
+  		"matches": ["*://*.kenrobot.com/*"]
 	}
 }

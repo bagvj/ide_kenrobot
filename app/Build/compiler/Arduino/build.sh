@@ -1,13 +1,14 @@
 #!/bin/bash
 #export PATH=/usr/local/avrtools/bin:$PATH
-if [ $# -ne 2 ];then
-	echo "参数个数必须为2"
+if [ $# -ne 3 ];then
+	echo "参数个数必须为3"
     exit 1
 fi
 
 #参数：
-#	1.项目目录
-#	2.主板类型
+#   1.项目名字
+#	2.项目目录
+#	3.主板类型
 
 if [ ! -d "$1" ]; then
 	echo "文件夹\"$1\"不存在"
@@ -21,12 +22,16 @@ MAKE_PATH=/usr/bin/make
 PROJECT_PATH=$1
 #主板类型
 BOARD_TYPE=$2
+#项目名字
+PROJECT_NAME=$3
 
 #当前目录
 DIR=`pwd`
 
 #进入项目目录
 cd ${PROJECT_PATH};
+
+echo -n ${PROJECT_NAME}>.project
 
 #如果src文件夹不存在，则创建
 if [ ! -d "src" ]; then
@@ -56,12 +61,18 @@ fi
 #编译成功
 echo "编译成功"
 
+#复制文件
+cp .build/${BOARD_TYPE}/firmware.hex .build/${BOARD_TYPE}/${PROJECT_NAME}.hex
+
 #打包
-zip -j ${PROJECT_PATH}/build.zip src/*.ino .build/${BOARD_TYPE}/firmware.hex
+zip -j build.zip src/*.ino .build/${BOARD_TYPE}/${PROJECT_NAME}.hex
+mv .build/${BOARD_TYPE}/${PROJECT_NAME}.hex ./build.hex
 
 #如果eep存在
 if [ -f ".build/${BOARD_TYPE}/firmware.eep" ]; then
-	zip -j ${PROJECT_PATH}/build.zip .build/${BOARD_TYPE}/firmware.eep
+	cp .build/${BOARD_TYPE}/firmware.eep .build/${BOARD_TYPE}/${PROJECT_NAME}.eep
+	zip -j build.zip .build/${BOARD_TYPE}/${PROJECT_NAME}.eep
+	mv .build/${BOARD_TYPE}/${PROJECT_NAME}.eep ./build.eep
 fi
 
 #回到之前的目录

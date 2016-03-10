@@ -16,19 +16,15 @@ define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
 		return userInfo;
 	}
 
-	function authCheck(authedCallback, unAuthedCallback) {
+	function authCheck(callback) {
 		$.ajax({
 			type: 'GET',
 			url: '/auth/check',
 			dataType: 'json',
 		}).done(function(result){
-			if (result.code == 0) {
-				userInfo = result.user;
-				authedCallback && authedCallback();
-			} else {
-				userInfo = null;
-				unAuthedCallback && unAuthedCallback();
-			}
+			var success = result.code == 0;
+			userInfo = success ? result.user : null;
+			callback && callback(success);
 		});
 	}
 

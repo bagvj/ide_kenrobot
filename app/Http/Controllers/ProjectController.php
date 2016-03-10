@@ -13,11 +13,6 @@ use Session;
 
 class ProjectController extends Controller {
 
-	public function __construct()
-	{
-		$this->middleware('snspassport');
-	}
-
 	public function saveProject(Request $request) {
 		$url = config("platform.url.base").config("platform.url.saveProject");
 		$params = array(
@@ -39,7 +34,9 @@ class ProjectController extends Controller {
 	}
 
 	public function getProjects(Request $request, $user_id) {
-		return $this->getUserProjects($user_id);
+		$url = config("platform.url.base").config("platform.url.getUserProjects")."&user_id=".$user_id;
+		$curl = new Curl();
+		return $curl->get($url);
 	}
 
 	public function deleteProject(Request $request) {
@@ -49,11 +46,5 @@ class ProjectController extends Controller {
 		);
 		$curl = new Curl();
 		return $curl->post($url, $params);
-	}
-
-	private function getUserProjects($user_id) {
-		$url = config("platform.url.base").config("platform.url.getUserProjects")."&user_id=".$user_id;
-		$curl = new Curl();
-		return $curl->get($url);
 	}
 }

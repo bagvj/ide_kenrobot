@@ -28,6 +28,7 @@ require.config({
 		"board": "board",
 		"component": "component",
 		"library": "library",
+		"serialApp": "serialApp",
 	},
 	shim: {
 		"bootstrap": {
