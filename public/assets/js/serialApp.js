@@ -1,4 +1,4 @@
-define(['config', 'user'], function(config, user) {
+define(['config', 'user', 'project'], function(config, user, project) {
 	var timer;
 
 	var messages;
@@ -10,13 +10,6 @@ define(['config', 'user'], function(config, user) {
 
 		messages = [];
 		timer = setInterval(tick, 1000);
-
-		sendMessage({
-			action: "init",
-			result: {
-				host: window.location.host,
-			},
-		})
 	}
 
 	function sendMessage(message) {
@@ -32,34 +25,35 @@ define(['config', 'user'], function(config, user) {
 		for(var i = 0; i < requests.length; i++) {
 			var request = requests[i];
 			var action = request.action;
-			if(action == "authCheck") {
-				authCheck(request.callbacks);
+			if(action == "init") {
+				doInit();
 			} else if(action == "build") {
-
+				doBuild();
 			}
 		}
+	}
+
+	function doInit() {
+		messages.push({
+			action: "init",
+			result: {
+				host: window.location.protocol + "//" + window.location.host,
+			},
+		});
+	}
+
+	function doBuild() {
+		project.build(function(result) {
+			messages.push({
+				action: "build",
+				result: result,
+			});
+		});
 	}
 
 	function tick() {
 		var message = messages.length > 0 ? messages.shift() : "nothing";
 		sendMessage(message);
-	}
-
-	function authCheck(callback) {
-		user.authCheck(function(success) {
-			if(success) {
-				messages.push({
-					action: "authCheck",
-					result: true,
-					callbacks: callbacks,
-				});
-			} else {
-				messages.push({
-					action: "authCheck",
-					result: false,
-				});
-			}
-		});
 	}
 
 	return {

@@ -15,7 +15,9 @@ define(['jquery', 'upload'], function($, upload) {
 		initTabDebug();
 		initTabBurn();
 
-		messages = [];
+		messages = [{
+			action: "init",
+		}];
 		chrome.runtime.onMessageExternal.addListener(onMessageExternal);
 	}
 
@@ -77,12 +79,15 @@ define(['jquery', 'upload'], function($, upload) {
 		}
 	}
 
-	function showMessage(text, tab) {
+	function showMessage(text, tab, delay) {
 		var message = $(".tab-" + tab + " .message").text(text).stop().show();
-		message.delay(2000).queue(function() {
-			message.hide();
-			message.dequeue();
-		});
+		if(delay != 0) {
+			delay = delay || 2000
+			message.delay(delay).queue(function() {
+				message.hide();
+				message.dequeue();
+			});
+		}
 	}
 
 	function initTabDebug() {
@@ -152,33 +157,12 @@ define(['jquery', 'upload'], function($, upload) {
 	}
 
 	function initTabBurn() {
-		$('.tab-burn .selectFile').on('click', onSelectFileClick);
 		$('.tab-burn .burn').on('click', onBurnClick);
 	}
 
-	function onSelectFileClick(e) {
-		// chrome.fileSystem.chooseEntry({type: 'openFile'}, function(entry) {
-		// 	entry.file(function(file) {
-		// 		var reader = new FileReader();
-		// 		reader.onloadend = function(e) {
-		// 			hexFileData = e.target.result;
-		// 		};
-
-		// 		reader.readAsText(file);
-		// 	});
-		// });
-	}
-
 	function onBurnClick(e) {
-		// if(!hexFileData) {
-		// 	console.log("没有数据");
-		// 	return;
-		// }
-		// upload.exec(connectionId, hexFileData);
-
 		messages.push({
-			action: "authCheck",
-			callbacks: ["build", "upload"],
+			action: "build",
 		});
 	}
 
@@ -224,35 +208,36 @@ define(['jquery', 'upload'], function($, upload) {
 		if(message == "nothing") {
 			if(messages.length > 0) {
 				sendResponse(messages);
+				messages = [];
 			}
 		} else {
 			var action = message.action;
 			var result = message.result;
 			if(action == "init") {
-				host = result.host;
-			} else if(action == "authCheck") {
-				if(!result) {
-					showMessage("请先登录");
-				}
-			} else if(action == "upload") {
-
+				doInit(init);
+			} else if(action == "build") {
+				doUpload(result);
 			}
-
-			doCallbacks(message.callbacks, sendResponse);
 		}
 	}
 
-	function doCallbacks(callbacks, sendResponse) {
-		if(!callbacks || callbacks.length == 0) {
-			return;
-		}
+	function doInit(result) {
+		host = result.host;
+	}
 
-		var action = callbacks.shift();
-		var message = {
-			action: action,
-			callbacks: callbacks,
-		};
-		sendResponse(message);
+	function doUpload(result) {
+		if(result.status == 0) {
+			$.ajax({
+				url: host + result.url + "/hex",
+			}).done(function(hexData) {
+				showMessage("正在烧写", "burn", 0);
+				upload.exec(connectionId, hexData, function() {
+					showMessage("烧写成功", "burn");
+				});
+			});
+		} else {
+			showMessage(result.message, "burn");
+		}
 	}
 
 	return {

@@ -37,7 +37,7 @@ define(function() {
 		"READ_OSCCAL_EXT" : 0x78
 	};
 
-	function exec(connId, data) {
+	function exec(connId, data, callback) {
 		connectionId = connId;
 		timer = 0;
 
