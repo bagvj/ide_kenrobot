@@ -3,8 +3,9 @@ define(['jquery', 'upload'], function($, upload) {
 	var windowId = "kenrobot";
 	
 	var connectionId;
-	var hexFileData;
 	var messages;
+
+	var isInit;
 	var host;
 
 	function init() {
@@ -158,9 +159,21 @@ define(['jquery', 'upload'], function($, upload) {
 
 	function initTabBurn() {
 		$('.tab-burn .burn').on('click', onBurnClick);
+		var ul = $('.tab-burn .progress ul');
+		for(var i = 0; i < 20; i++) {
+			ul.append('<li></li>');
+		}
 	}
 
 	function onBurnClick(e) {
+		if(!isInit) {
+			return;
+		}
+
+		$('.tab-burn .burn').addClass("burning").attr("disabled", true);
+		$('.tab-burn .progress ul li.ins').removeClass("ins");
+		showMessage("正在编译", "burn", 0);
+		updateProgress(0);
 		messages.push({
 			action: "build",
 		});
@@ -214,7 +227,7 @@ define(['jquery', 'upload'], function($, upload) {
 			var action = message.action;
 			var result = message.result;
 			if(action == "init") {
-				doInit(init);
+				doInit(result);
 			} else if(action == "build") {
 				doUpload(result);
 			}
@@ -223,6 +236,7 @@ define(['jquery', 'upload'], function($, upload) {
 
 	function doInit(result) {
 		host = result.host;
+		isInit = true;
 	}
 
 	function doUpload(result) {
@@ -230,14 +244,22 @@ define(['jquery', 'upload'], function($, upload) {
 			$.ajax({
 				url: host + result.url + "/hex",
 			}).done(function(hexData) {
+				updateProgress(5);
 				showMessage("正在烧写", "burn", 0);
-				upload.exec(connectionId, hexData, function() {
-					showMessage("烧写成功", "burn");
-				});
+				upload.exec(connectionId, hexData, function(success) {
+					$('.tab-burn .burn').removeClass("burning").attr("disabled", false);
+					showMessage("烧写" + (success ? "成功" : "失败"), "burn", 5000);
+				}, updateProgress);
 			});
 		} else {
 			showMessage(result.message, "burn");
 		}
+	}
+
+	function updateProgress(progress) {
+		var list = $('.tab-burn .progress ul li');
+		var index = Math.floor(progress / 100 * list.length);
+		list.eq(index).addClass("ins");
 	}
 
 	return {

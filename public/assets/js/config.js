@@ -9,6 +9,9 @@ define(function() {
 		//编译是否需要登录
 		buildAuth: true,
 
+		//烧写是否需要登录
+		uploadAuth: true,
+
 		//Chrome app id
 		chromeAppId: "ifpoaeabmakgihbkpodllibdgddjehgm",
 

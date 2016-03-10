@@ -171,5 +171,45 @@ input, textarea {
 .main .tab-burn .wrap .burn {
   width: 80px;
   height: 30px;
-  margin-left: 30px;
+}
+/* line 172, index.scss */
+.main .tab-burn .wrap .burn.burning {
+  border-color: #ccc;
+  color: #ccc;
+}
+/* line 178, index.scss */
+.main .tab-burn .wrap .progress {
+  margin-top: 70px;
+}
+/* line 181, index.scss */
+.main .tab-burn .wrap .progress ul {
+  margin-left: 14px;
+  height: 32px;
+}
+/* line 185, index.scss */
+.main .tab-burn .wrap .progress ul li {
+  float: left;
+  width: 20px;
+  height: 32px;
+  margin-left: 2px;
+  border-left: 1px solid #111;
+  border: none;
+  opacity: 0;
+  background-color: green;
+}
+/* line 195, index.scss */
+.main .tab-burn .wrap .progress ul li:first-child {
+  margin-left: 0;
+}
+/* line 199, index.scss */
+.main .tab-burn .wrap .progress ul li.ins {
+  animation: fill 0.5s linear forwards;
+}
+@keyframes fill {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

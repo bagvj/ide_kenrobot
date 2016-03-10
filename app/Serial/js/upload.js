@@ -1,7 +1,12 @@
 define(function() {
 	var connectionId;
-	var timer;
 	var hexData;
+	var completeCallback;
+	var progressCallback;
+
+	var timer;
+	var burnCount;
+	var burnTotal;
 
 	var DTRRTSOn = {dtr: true, rts: true}; 
 	var DTRRTSOff = {dtr: false, rts: false};
@@ -37,23 +42,32 @@ define(function() {
 		"READ_OSCCAL_EXT" : 0x78
 	};
 
-	function exec(connId, data, callback) {
+	function exec(connId, data, complete, progress) {
 		connectionId = connId;
 		timer = 0;
+		completeCallback = complete;
+		progressCallback = progress;
+		burnTotal = 0;
+		burnCount = 0;
 
-		//准备数据
-		prepare(data);
+		try {
+			//准备数据
+			prepare(data);
+			updateProgress(10);
 
-		//先关，等50ms后再开。然后200ms后正式发送数据
-		chrome.serial.setControlSignals(connectionId, DTRRTSOff, function(result) {
-			setTimeout(function() {
-				chrome.serial.setControlSignals(connectionId, DTRRTSOn, function(result) {
-					setTimeout(function() {
-						doUpload();
-					}, 200);
-				});
-			}, 50);
-		});
+			//先关，等50ms后再开。然后200ms后正式发送数据
+			chrome.serial.setControlSignals(connectionId, DTRRTSOff, function(result) {
+				setTimeout(function() {
+					chrome.serial.setControlSignals(connectionId, DTRRTSOn, function(result) {
+						setTimeout(function() {
+							doUpload();
+						}, 200);
+					});
+				}, 50);
+			});
+		} catch(ex) {
+			doComplete(false);
+		}
 	}
 
 	function prepare(data) {
@@ -71,15 +85,27 @@ define(function() {
 	}
 
 	function doUpload() {
-		transmitPacket(d2b(command.ENTER_PROGMODE) + d2b(command.Sync_CRC_EOP), 50);
+		updateProgress(15);
 		var blockSize = 128;
+		var count = Math.ceil(hexData.length / blockSize);
+		burnTotal = 1 + count * 2;
+
+		transmitPacket(d2b(command.ENTER_PROGMODE) + d2b(command.Sync_CRC_EOP), 50);
 		var address = 0;
-		for (var i = 0; i < Math.ceil(hexData.length / blockSize); i++) {
+		for (var i = 0; i < count; i++) {
 			var block = hexData.substr(blockSize * i, blockSize);
 			transmitPage(address, block, 250);
 			address += 64;
 		}
 		timer = 0;
+	}
+
+	function updateProgress(value) {
+		progressCallback && progressCallback(value);
+	}
+
+	function doComplete(value) {
+		completeCallback && completeCallback(value);
 	}
 
 	function transmitPage(address, block, delay) {
@@ -92,9 +118,19 @@ define(function() {
 
 	function transmitPacket(msg, delay) {
 		setTimeout(function() {
-			chrome.serial.send(connectionId, stringToBuffer(msg), function() {});
+			chrome.serial.send(connectionId, stringToBuffer(msg), checkComplete);
 		}, delay + timer);
 		timer = timer + delay;
+	}
+
+	function checkComplete() {
+		burnCount++;
+		if(burnCount == burnTotal) {
+			updateProgress(100);
+			doComplete(true);
+		} else {
+			updateProgress(15 + Math.round((burnCount / burnTotal) * 85));
+		}
 	}
 
 	function bufferToString(buf) {
