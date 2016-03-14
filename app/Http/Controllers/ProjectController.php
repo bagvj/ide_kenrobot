@@ -23,6 +23,17 @@ class ProjectController extends Controller {
 			'user_id' => $request->input('user_id'),
 			'public_type' => $request->input('public_type'),
 		);
+
+		//传递默认参数
+		$user_id = $request->input('user_id');
+		$user = User::find($user_id);
+		$uid = 0;
+		if (!empty($user)) {
+			$uid = $user->uid;
+		}
+		$params['uid'] = $uid;
+
+
 		$curl = new Curl();
 		return $curl->post($url, $params);
 	}
