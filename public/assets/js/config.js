@@ -1,21 +1,32 @@
 define(function() {
 	return {
 		// 离开页面时，是否显示unload对话框
-		showUnloadDialog: true,
+		// showUnloadDialog: true,
 
 		//第一次访问时，是否显示引导
-		showFirstVisitHint: true,
+		// showFirstVisitHint: true,
 
 		//编译是否需要登录
-		buildAuth: true,
+		// buildAuth: true,
 
 		//烧写是否需要登录
-		uploadAuth: true,
+		// uploadAuth: true,
 
-		//Chrome app id
-		chromeAppId: "ifpoaeabmakgihbkpodllibdgddjehgm",
 
-		//Chrome app url
-		chromeAppUrl: "http://platform.kenrobot.com/serial/debug"
+		serial: {
+			//Chrome app id
+			appId: "ifpoaeabmakgihbkpodllibdgddjehgm",
+
+			//Chrome app debug url
+			debugAppUrl: "http://platform.kenrobot.com/serial/debug",
+
+			//Chrome app burn url
+			burnAppUrl: "http://platform.kenrobot.com/serial/burn",
+
+			arduinoDriverUrl: "http://platform.kenrobot.com/arduino/driver",
+
+			//烧写速度
+			burnDelay: 150,
+		}
 	};
 });

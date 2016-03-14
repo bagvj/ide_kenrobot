@@ -3,7 +3,7 @@ require.config({
 	baseUrl: baseUrl,
 	paths: {
 		"jquery": "jquery.min",
-		"app": "app",
+		"app": "app-burn",
 		"upload": "upload",
 	},
 });

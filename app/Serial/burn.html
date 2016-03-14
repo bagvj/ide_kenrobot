@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<link href="/css/burn.css" rel="stylesheet" />
+	<script src="/js/require.min.js" data-main="js/main-burn"></script>
+</head>
+<body>
+	<div class="main">
+		<div class="tab tab-init active">
+			<div class="wrap">
+				<div class="message">
+					正在初始化，请稍候
+				</div>
+			</div>
+		</div>
+		<div class="tab tab-no-serial">
+			<div class="wrap">
+				<div class="message">
+					未检测到有Arduino开发板或其它串口设备插入<br />
+					<a class="arduinoDriverUrl" href="#">驱动问题?</a>解决后请关闭本窗口，然后重新点击烧写图标
+				</div>
+			</div>
+		</div>
+		<div class="tab tab-connect">
+			<div class="wrap">
+				<div class="tips">
+					未检测到Arduino开发板连接或您已连接多个<br />请手动设置串口
+				</div>
+				<div class="field">
+					<label>端口:</label>
+					<select class="port">
+					</select>
+					<label>波特率:</label>
+					<select class="bitRate">
+					</select>
+				</div>
+				<div>
+					<input class="btn connect" type="button" value="连接" />
+				</div>
+				<div class="message"></div>
+			</div>
+		</div>
+		<div class="tab tab-burn">
+			<div class="wrap">
+				<div class="burn-wrap">
+					<input class="btn burn" type="button" value="烧写" />
+					<div class="message"></div>
+				</div>
+				<div class="progress">
+					<ul>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

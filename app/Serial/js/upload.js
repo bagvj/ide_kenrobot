@@ -42,7 +42,7 @@ define(function() {
 		"READ_OSCCAL_EXT" : 0x78
 	};
 
-	function exec(connId, data, complete, progress) {
+	function exec(connId, data, burnDelay, complete, progress) {
 		connectionId = connId;
 		timer = 0;
 		completeCallback = complete;
@@ -60,7 +60,7 @@ define(function() {
 				setTimeout(function() {
 					chrome.serial.setControlSignals(connectionId, DTRRTSOn, function(result) {
 						setTimeout(function() {
-							doUpload();
+							doUpload(burnDelay);
 						}, 200);
 					});
 				}, 50);
@@ -84,7 +84,7 @@ define(function() {
 		}
 	}
 
-	function doUpload() {
+	function doUpload(burnDelay) {
 		updateProgress(15);
 		var blockSize = 128;
 		var count = Math.ceil(hexData.length / blockSize);
@@ -94,7 +94,7 @@ define(function() {
 		var address = 0;
 		for (var i = 0; i < count; i++) {
 			var block = hexData.substr(blockSize * i, blockSize);
-			transmitPage(address, block, 250);
+			transmitPage(address, block, burnDelay);
 			address += 64;
 		}
 		timer = 0;

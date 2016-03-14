@@ -4,13 +4,20 @@ DIR=`pwd`
 
 cd `dirname $0`
 
+EXT_NAME="kenrobot-ext"
+
 rm -rf pack pack.pem
+
 chmod 755 pack.crx
 chown root:root pack.crx
-mv pack.crx serial-debugger.crx
-zip serial-debugger.zip serial-debugger.crx
-rm -rf serial-debugger.crx
-mv serial-debugger.zip ../../public/download/
+
+mv pack.crx ${EXT_NAME}.crx
+
+zip ${EXT_NAME}.zip ${EXT_NAME}.crx
+mv ${EXT_NAME}.zip ../../public/download/
+mv ${EXT_NAME}.crx ../../public/download/
+
+rm -rf ${EXT_NAME}.crx
 
 #回到之前的目录
 cd ${DIR}

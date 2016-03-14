@@ -1,0 +1,209 @@
+/* line 1, burn.scss */
+* {
+  -webkit-margin-before: 0px;
+  -webkit-margin-after: 0px;
+  -webkit-padding-start: 0px;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 14, burn.scss */
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 21, burn.scss */
+li {
+  list-style: outside none none;
+}
+
+/* line 25, burn.scss */
+ul, li {
+  margin: 0;
+}
+
+/* line 29, burn.scss */
+input {
+  outline: none;
+}
+
+/* line 33, burn.scss */
+body {
+  font-family: 'Microsoft YaHei';
+  color: #515151;
+  font-size: 14px;
+}
+
+/* line 41, burn.scss */
+input, textarea {
+  font-family: 'Microsoft YaHei';
+  font-size: 14px;
+}
+
+/* line 46, burn.scss */
+.hide {
+  display: none;
+}
+
+/* line 50, burn.scss */
+.main {
+  width: 340px;
+  height: 200px;
+}
+/* line 53, burn.scss */
+.main .tab {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  display: none;
+}
+/* line 61, burn.scss */
+.main .tab.active {
+  display: block;
+}
+/* line 65, burn.scss */
+.main .tab .btn {
+  background-color: white;
+  color: #4891ed;
+  border: 1px solid #4891ed;
+  cursor: pointer;
+}
+/* line 72, burn.scss */
+.main .tab .wrap {
+  position: relative;
+}
+/* line 78, burn.scss */
+.main .tab-init .message {
+  text-align: center;
+  margin-top: 75px;
+}
+/* line 85, burn.scss */
+.main .tab-no-serial .message {
+  margin-top: 60px;
+  margin-left: 20px;
+  margin-right: 20px;
+  line-height: 22px;
+  text-align: center;
+}
+/* line 95, burn.scss */
+.main .tab-connect .tips {
+  margin: 15px;
+  line-height: 22px;
+  text-align: center;
+}
+/* line 101, burn.scss */
+.main .tab-connect .field {
+  margin-bottom: 20px;
+}
+/* line 104, burn.scss */
+.main .tab-connect .field label {
+  margin-left: 15px;
+  margin-right: 10px;
+  height: 30px;
+  line-height: 30px;
+}
+/* line 111, burn.scss */
+.main .tab-connect .field select {
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #4891ed;
+  padding-left: 5px;
+}
+/* line 118, burn.scss */
+.main .tab-connect .field .port {
+  width: 80px;
+  margin-right: 10px;
+}
+/* line 123, burn.scss */
+.main .tab-connect .field .bitRate {
+  width: 80px;
+}
+/* line 128, burn.scss */
+.main .tab-connect .connect {
+  display: block;
+  width: 100px;
+  height: 30px;
+  margin: 0 auto;
+}
+/* line 135, burn.scss */
+.main .tab-connect .message {
+  color: red;
+  text-align: center;
+  height: 20px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+/* line 145, burn.scss */
+.main .tab-burn .burn-wrap {
+  height: 80px;
+  margin-top: 35px;
+}
+/* line 150, burn.scss */
+.main .tab-burn .burn {
+  float: left;
+  width: 80px;
+  height: 80px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+/* line 157, burn.scss */
+.main .tab-burn .burn.burning {
+  border-color: #ccc;
+  color: #ccc;
+  cursor: default;
+}
+/* line 164, burn.scss */
+.main .tab-burn .message {
+  float: left;
+  width: 200px;
+  height: 80px;
+  line-height: 80px;
+  text-align: center;
+  border: 1px solid #ccc;
+  color: red;
+}
+/* line 174, burn.scss */
+.main .tab-burn .progress {
+  margin-top: 35px;
+}
+/* line 176, burn.scss */
+.main .tab-burn .progress ul {
+  margin-left: 20px;
+  height: 20px;
+}
+/* line 180, burn.scss */
+.main .tab-burn .progress ul li {
+  float: left;
+  width: 5px;
+  height: 20px;
+  margin-left: 1px;
+  background-color: #ccc;
+}
+/* line 188, burn.scss */
+.main .tab-burn .progress ul li:first-child {
+  margin-left: 0;
+}
+/* line 195, burn.scss */
+.main .tab-burn .progress.active li.ins {
+  animation: fill 0.3s linear forwards;
+}
+@keyframes fill {
+  0% {
+    opacity: 0;
+    background-color: #ccc;
+  }
+  100% {
+    opacity: 1;
+    background-color: green;
+  }
+}

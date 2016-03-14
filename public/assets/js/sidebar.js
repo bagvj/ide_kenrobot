@@ -1,4 +1,4 @@
-define(['jquery', 'EventManager', 'util', 'user', 'project', 'board', 'software', 'serialApp'], function($, EventManager, util, user, project, board, software, serialApp) {
+define(['jquery', 'EventManager', 'util', 'config', 'user', 'project', 'board', 'software', 'serialApp'], function($, EventManager, util, config, user, project, board, software, serialApp) {
 	function init() {
 		$('.sidebar .logo').on('click', onLogoClick);
 
@@ -25,8 +25,8 @@ define(['jquery', 'EventManager', 'util', 'user', 'project', 'board', 'software'
 			case "serial":
 				onSerialClick();
 				break;
-			case "share":
-				onShareClick();
+			case "burn":
+				onBurnClick();
 				break;
 			default:
 				var tab = $('.sidebar .tab.tab-' + action);
@@ -55,19 +55,25 @@ define(['jquery', 'EventManager', 'util', 'user', 'project', 'board', 'software'
 	}
 
 	function onSerialClick() {
-		// util.message("敬请期待");
+		checkSerial(config.serial.debugAppUrl);
+	}
+
+	function onBurnClick() {
+		checkSerial(config.serial.burnAppUrl);
+	}
+
+	function checkSerial(launchUrl) {
 		if(!window.chrome) {
 			util.message("串口调试目前只支持Google Chrome浏览器，其它浏览器敬请期待！");
 			return;
 		}
 
+		var launchSerial = function() {
+			serialApp.init(launchUrl);
+		}
 		user.authCheck(function(success) {
-			success ? serialApp.init() : user.showLoginDialog(serialApp.init);
+			success ? launchSerial() : user.showLoginDialog(launchSerial);
 		});
-	}
-
-	function onShareClick() {
-		util.message("敬请期待");
 	}
 
 	return {

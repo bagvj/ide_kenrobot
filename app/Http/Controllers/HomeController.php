@@ -45,14 +45,20 @@ class HomeController extends Controller {
 	}
 
 	public function download(Request $request, $uri, $type = "0") {
-		if($uri == "serial-debugger.zip") {
+		if($uri == "kenrobot-ext.zip" || $uri == "kenrobot-ext.crx") {
 			$filename = "download/$uri";
 			$this->doDownload($filename);
 		} else {
 			$ext = $type == "0" ? ".zip" : "." . $type;
 			$filename = "/tmp/build/$uri/build$ext";
-			$projectName = file_get_contents(dirname($filename)."/.project");
+			$path = dirname($filename)."/.project";
+			
+			if(!file_exists($path)) {
+				$this->fileNotExist();
+				return;
+			}
 
+			$projectName = file_get_contents();
 			$this->doDownload($filename, $projectName.$ext);
 		}
 	}
@@ -130,8 +136,12 @@ class HomeController extends Controller {
 			}
 			fclose($file);
 		} else {
-			echo "<script>alert('对不起，您要下载的文件不存在！');</script>";
+			$this->fileNotExist();
 		}
+	}
+
+	private function fileNotExist() {
+		echo "<script>alert('对不起，您要下载的文件不存在！');</script>";
 	}
 
 	private function getLibrariyConfig($isDict = false) {

@@ -30,8 +30,9 @@
 						<li class="hide" data-action="library"><i class="iconfont icon-zhanshigongcheng"></i>库</li>
 						<li data-action="save"><i class="iconfont icon-baocun"></i>保存</li>
 						<li data-action="download"><i class="iconfont icon-download"></i>下载</li>
-						<li data-action="serial"><i class="iconfont icon-paixu"></i>串口</li>
-						<li data-action="share"><i class="iconfont icon-share"></i>分享</li>
+						<li data-action="burn"><i class="iconfont icon-paixu"></i>烧写</li>
+						<li data-action="serial"><i class="iconfont icon-paixu"></i>串口助手</li>
+						<!-- <li data-action="share"><i class="iconfont icon-share"></i>分享</li> -->
 					</ul>
 				</div>
 				<div class="tab tab-project">

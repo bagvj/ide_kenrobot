@@ -1,6 +1,6 @@
 {
-	"name": "Arduino Serial Debug",
-	"description": "Arduino串口调试",
+	"name": "Kenrobot平台扩展",
+	"description": "Kenrobot平台扩展",
 	"version": "0.1",
 	"app": {
 		"background": {
@@ -22,9 +22,16 @@
 				"http://platform.kenrobot.com/serial/debug/*"
 			],
 			"title": "串口调试"
+		},
+		"burn": {
+			"matches": [
+				"http://platform.kenrobot.com/serial/burn/*"
+			],
+			"title": "烧写"
 		}
 	},
 	"externally_connectable": {
   		"matches": ["*://*.kenrobot.com/*"]
-	}
+	},
+	"update_url": "http://platform.kenrobot.com/serial/update.xml"
 }
