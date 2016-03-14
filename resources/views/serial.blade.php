@@ -13,13 +13,12 @@
 	</head>
 	<body>
 		<div>
-			如果你看到此页面，说明你没有安装serial-dubugger串口调试插件。<br />
+			如果你看到此页面，说明你没有安装kenrobot-ext.crx插件<br />
 			请按以下步骤操作：<br />
-			Step1: 请使用Google Chrome浏览器<br />
-			Step2: 点击下载并解压<br />
-			Step3: 点击浏览器右上的菜单-><br />
-			Step4: 点击下载<br />
-			Step1: 点击下载<br />
+			Step1: 点击<a href="http://platform.kenrobot.com/download/kenrobot-ext.zip">下载</a>并解压<br />
+			Step2: 打开Chrome浏览器，在地址栏输入chrome://extensions<br />
+			Step3: 把kenrobot-ext.crx拖入浏览器<br />
+			Step4: 完成安装<br />
 		</div>
 	</body>
 </html>
