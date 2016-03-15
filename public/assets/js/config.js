@@ -1,21 +1,21 @@
 define(function() {
 	return {
 		// 离开页面时，是否显示unload对话框
-		// showUnloadDialog: true,
+		showUnloadDialog: true,
 
 		//第一次访问时，是否显示引导
-		// showFirstVisitHint: true,
+		showFirstVisitHint: true,
 
 		//编译是否需要登录
-		// buildAuth: true,
+		buildAuth: true,
 
 		//烧写是否需要登录
-		// uploadAuth: true,
+		uploadAuth: true,
 
 
 		serial: {
 			//Chrome app id
-			appId: "ifpoaeabmakgihbkpodllibdgddjehgm",
+			appId: "kllcakemjghaolghdkhofbehahlnhdjp",
 
 			//Chrome app debug url
 			debugAppUrl: "http://platform.kenrobot.com/serial/debug",

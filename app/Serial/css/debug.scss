@@ -70,7 +70,7 @@ input, textarea {
 
 	.tab-connect {
 		.wrap {
-			text-align: center;
+			// text-align: center;
 
 			.message-wrap {
 				height: 30px;
@@ -143,69 +143,6 @@ input, textarea {
 				width: 100%;
 				padding: 5px;
 				border: 1px solid $blue;
-			}
-		}
-	}
-
-	.tab-burn {
-		.wrap {
-			text-align: center;
-
-			.message-wrap {
-				height: 30px;
-				line-height: 30px;
-				text-align: center;
-				margin-top: 80px;
-				margin-bottom: 20px;
-				color: red;
-			}
-
-			.selectFile {
-				width: 80px;
-				height: 30px;
-			}
-
-			.burn {
-				width: 80px;
-				height: 30px;
-
-				&.burning {
-					border-color: #ccc;
-					color: #ccc;
-				}
-			}
-
-			.progress {
-				margin-top: 70px;
-
-				ul {
-					margin-left: 14px;
-
-					height: 32px;
-					li {
-						float:left;
-						width: 20px;
-						height: 32px;
-						margin-left:2px;
-						border-left:1px solid #111;
-						border: none;
-						opacity: 0;
-						background-color:green;
-
-						&:first-child {
-							margin-left: 0;
-						}
-
-						&.ins {
-							animation: fill 0.5s linear forwards;
-						}
-
-						@keyframes fill {
-							0%{ opacity:0; }
-							100%{ opacity:1; }	
-						}
-					}
-				}
 			}
 		}
 	}
