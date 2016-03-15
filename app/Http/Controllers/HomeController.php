@@ -58,7 +58,7 @@ class HomeController extends Controller {
 				return;
 			}
 
-			$projectName = file_get_contents();
+			$projectName = file_get_contents($path);
 			$this->doDownload($filename, $projectName.$ext);
 		}
 	}

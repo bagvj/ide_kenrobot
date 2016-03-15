@@ -15,7 +15,7 @@ define(function() {
 
 		serial: {
 			//Chrome app id
-			appId: "kllcakemjghaolghdkhofbehahlnhdjp",
+			appId: "jklackhahonikmlagokmoehpiekdaflf",
 
 			//Chrome app debug url
 			debugAppUrl: "http://platform.kenrobot.com/serial/debug",
