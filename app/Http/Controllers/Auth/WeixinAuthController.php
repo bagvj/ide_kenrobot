@@ -156,9 +156,12 @@ class WeixinAuthController extends Controller
         }
 
         $user = User::where('openid',$data['openid'])->first();
-        $user->name = $data['name'];
-        $user->avatar_url = $data['avatar_url'];
-        $user->save();
+        if (!empty($user)) {
+            $user->name = $data['name'];
+            $user->avatar_url = $data['avatar_url'];
+            $user->save();
+
+        }
         return $user;
     }
 
