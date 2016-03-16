@@ -114,8 +114,11 @@ background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgb
 	border: none;\
 }\
 .ace_editor.ace_autocomplete .ace_completion-highlight {\
-    color: #32e620;\
+    color: #12a9df;\
     text-shadow: none;\
+}\
+.ace_editor.ace_autocomplete .ace_selected .ace_completion-highlight {\
+  color: #42d3fb;\
 }\
 .ace_editor.ace_autocomplete .ace_line-hover {\
     border: none;\
