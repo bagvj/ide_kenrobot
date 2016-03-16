@@ -22,8 +22,6 @@ Route::post('/project/delete', 'ProjectController@deleteProject');
 Route::get('/project/{id}', 'ProjectController@getProject')->where('id', '[1-9][0-9]*');
 Route::get('/projects/{user_id}', 'ProjectController@getProjects')->where('user_id', '[1-9][0-9]*');
 
-
-Route::get('/serial/update.xml', 'SerialController@update');
 Route::get('/serial/{any}', function(){
 	return redirect(url('/help/serial'));
 });
