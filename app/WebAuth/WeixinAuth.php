@@ -118,7 +118,6 @@ class WeixinAuth implements WebAuth
      */
     protected function getUserFromServer($params)
     {
-    	$return = $this->curl->get($url);
         $return = $this->curl->get($url);
         return json_decode($return,true);
     }

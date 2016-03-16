@@ -41,7 +41,6 @@ class WeixinAuthController extends Controller
             $user = Auth::user();
 
             //明文设置一个假的
-            setcookie('plt_uid',$user->id,time()+3600, '','kenrobot.com');
         }
 
         return view('index',compact('user','qrcode','qrcodeurl','key','nav'));
@@ -96,6 +95,7 @@ class WeixinAuthController extends Controller
 
         }
         Auth::login($user,false);
+
         return response()->json(['code' => 0, 'message' => '登录成功','data' => $user]);
     }
 
@@ -106,11 +106,12 @@ class WeixinAuthController extends Controller
        if (empty($userInfo)) {
            return null;
        }
+
        $userdata = [];
        $userdata['openid'] = $userInfo['openid'];
        $userdata['name'] = $userInfo['nickname'];
        $userdata['email'] = $userInfo['openid'].'@kenrobot.com';
-       $userdata['avatar_url'] = $userInfo['headimgurl'];
+       $userdata['avatar_url'] = $userInfo['avatar'];
        return $userdata;
     }
 
@@ -122,7 +123,12 @@ class WeixinAuthController extends Controller
         $url .="?key=$key";
         $curl = new Curl();
         $data = $curl->get($url);
-        $userData = json_decode($data,true);
+        if (is_string($data)) {
+            $userData = json_decode($data, true);
+        } else {
+            $userData = (array) $data;
+        }
+
         return $this->wrapUserinfo($userData);
       //  return $userData;
     }
@@ -150,6 +156,9 @@ class WeixinAuthController extends Controller
         }
 
         $user = User::where('openid',$data['openid'])->first();
+        $user->name = $data['name'];
+        $user->avatar_url = $data['avatar_url'];
+        $user->save();
         return $user;
     }
 
