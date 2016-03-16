@@ -66,11 +66,12 @@
 					cursor: pointer;
 					color: white;
 					margin-top: 1px;
+					position: relative;
 					&>i {
-						float: right;
 						font-size: 24px;
-						margin-top: 4px;
-						margin-right: 6px;
+						top: 4px;
+						right: 6px;
+						position: absolute;
 						@include rotate(90deg);
 					}
 				}
@@ -103,7 +104,7 @@
 					.title {
 						&>i {
 							@include rotate(0);
-							margin-right: 0;
+							right: 0;
 						}
 					}
 

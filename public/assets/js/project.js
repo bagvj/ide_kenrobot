@@ -154,8 +154,18 @@ define(['jquery', 'EventManager', 'util', 'config', 'user', 'hardware', 'softwar
 		if(id == 0) {
 			//new
 			list.find('> li[data-project-id="0"]').remove();
+			for(var i = 0; i < projects.length; i++){
+				var info = projects[i];
+				if(info.id == 0) {
+					projects.splice(i, 1);
+					break;
+				}
+			}
 			projects.push(projectInfo);
 			list.append(getProjectHtml(projectInfo));
+
+			curProjectInfo = projectInfo;
+
 			bindProjectEvent(-1);
 		} else {
 			//save
@@ -169,8 +179,8 @@ define(['jquery', 'EventManager', 'util', 'config', 'user', 'hardware', 'softwar
 			}
 			projects[index] = projectInfo;
 			list.find('> li[data-project-id="' + projectInfo.id + '"]').find(".name").text(projectInfo.project_name);
+			curProjectInfo = projectInfo;
 		}
-		curProjectInfo = projectInfo;
 	}
 
 	function onProjectTitleClick(e) {
@@ -308,6 +318,7 @@ define(['jquery', 'EventManager', 'util', 'config', 'user', 'hardware', 'softwar
 					}
 				}
 
+				console.log("aaaaaaaa" + projects.length);
 				if(projects.length == 0) {
 					var defaultProjectInfo = getDefaultProject();
 					projects.push(defaultProjectInfo);

@@ -347,27 +347,28 @@ body {
   cursor: pointer;
   color: white;
   margin-top: 1px;
+  position: relative;
 }
-/* line 69, layout/_sidebar.scss */
+/* line 70, layout/_sidebar.scss */
 .sidebar .project .list li .title > i {
-  float: right;
   font-size: 24px;
-  margin-top: 4px;
-  margin-right: 6px;
+  top: 4px;
+  right: 6px;
+  position: absolute;
   -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   -webkit-transform: rotate(90deg);
   transform: rotate(90deg);
 }
-/* line 78, layout/_sidebar.scss */
+/* line 79, layout/_sidebar.scss */
 .sidebar .project .list li:first-child .title {
   margin-top: 0;
 }
-/* line 82, layout/_sidebar.scss */
+/* line 83, layout/_sidebar.scss */
 .sidebar .project .list li .view {
   display: none;
 }
-/* line 84, layout/_sidebar.scss */
+/* line 85, layout/_sidebar.scss */
 .sidebar .project .list li .view > div {
   font-size: 12px;
   color: #515151;
@@ -376,41 +377,41 @@ body {
   line-height: 36px;
   cursor: pointer;
 }
-/* line 92, layout/_sidebar.scss */
+/* line 93, layout/_sidebar.scss */
 .sidebar .project .list li .view > div:hover {
   background-color: #C9CED4;
 }
-/* line 96, layout/_sidebar.scss */
+/* line 97, layout/_sidebar.scss */
 .sidebar .project .list li .view > div.active {
   background-color: #ECEFF3;
 }
-/* line 104, layout/_sidebar.scss */
+/* line 105, layout/_sidebar.scss */
 .sidebar .project .list li.active .title > i {
   -moz-transform: rotate(0);
   -ms-transform: rotate(0);
   -webkit-transform: rotate(0);
   transform: rotate(0);
-  margin-right: 0;
+  right: 0;
 }
-/* line 110, layout/_sidebar.scss */
+/* line 111, layout/_sidebar.scss */
 .sidebar .project .list li.active .view {
   display: block;
 }
-/* line 118, layout/_sidebar.scss */
+/* line 119, layout/_sidebar.scss */
 .sidebar .component {
   width: 200px;
   position: relative;
   background-color: #e1e4e8;
   float: left;
 }
-/* line 124, layout/_sidebar.scss */
+/* line 125, layout/_sidebar.scss */
 .sidebar .component .search {
   margin-top: 12px;
   margin-bottom: 20px;
   margin-left: 12px;
   background-color: #e1e4e8;
 }
-/* line 130, layout/_sidebar.scss */
+/* line 131, layout/_sidebar.scss */
 .sidebar .component .search .key {
   height: 24px;
   width: 164px;
@@ -422,14 +423,14 @@ body {
   border-radius: 12px;
   border: 1px solid #bac4d0;
 }
-/* line 142, layout/_sidebar.scss */
+/* line 143, layout/_sidebar.scss */
 .sidebar .component .search > i {
   line-height: 24px;
   right: 30px;
   color: #b9b9b6;
   position: absolute;
 }
-/* line 150, layout/_sidebar.scss */
+/* line 151, layout/_sidebar.scss */
 .sidebar .component .items {
   top: 56px;
   left: 0;
@@ -440,77 +441,77 @@ body {
   float: left;
   overflow-y: auto;
 }
-/* line 160, layout/_sidebar.scss */
+/* line 161, layout/_sidebar.scss */
 .sidebar .component .items .list {
   margin-left: 12px;
   float: left;
 }
-/* line 164, layout/_sidebar.scss */
+/* line 165, layout/_sidebar.scss */
 .sidebar .component .items .list li {
   width: 72px;
   text-align: center;
   float: left;
 }
-/* line 169, layout/_sidebar.scss */
+/* line 170, layout/_sidebar.scss */
 .sidebar .component .items .list li:nth-child(odd) {
   margin-right: 20px;
 }
-/* line 173, layout/_sidebar.scss */
+/* line 174, layout/_sidebar.scss */
 .sidebar .component .items .list li.active .image {
   border: 2px solid #4cc1fc;
 }
-/* line 180, layout/_sidebar.scss */
+/* line 181, layout/_sidebar.scss */
 .sidebar .component .items .item .image {
   width: 72px;
   height: 72px;
   background-color: white;
   border: 1px solid #bac4d0;
 }
-/* line 187, layout/_sidebar.scss */
+/* line 188, layout/_sidebar.scss */
 .sidebar .component .items .item .name {
   font-size: 12px;
   color: #515151;
   margin-top: 5px;
   margin-bottom: 12px;
 }
-/* line 197, layout/_sidebar.scss */
+/* line 198, layout/_sidebar.scss */
 .sidebar .board {
   width: 200px;
   position: relative;
   overflow-y: auto;
   background-color: #DEE1E5;
 }
-/* line 204, layout/_sidebar.scss */
+/* line 205, layout/_sidebar.scss */
 .sidebar .board .list li {
   position: relative;
 }
-/* line 206, layout/_sidebar.scss */
+/* line 207, layout/_sidebar.scss */
 .sidebar .board .list li .image {
   width: 70px;
   height: 70px;
   display: block;
   margin: 0 auto;
 }
-/* line 213, layout/_sidebar.scss */
+/* line 214, layout/_sidebar.scss */
 .sidebar .board .list li .name {
   color: #515151;
   margin: 0 atuo;
   display: block;
   text-align: center;
 }
-/* line 220, layout/_sidebar.scss */
+/* line 221, layout/_sidebar.scss */
 .sidebar .board .list li.normal {
   cursor: pointer;
 }
-/* line 223, layout/_sidebar.scss */
+/* line 224, layout/_sidebar.scss */
 .sidebar .board .list li.normal:hover {
   background-color: #C9CED4;
 }
-/* line 227, layout/_sidebar.scss */
+/* line 228, layout/_sidebar.scss */
 .sidebar .board .list li.normal.active {
   background-color: #ECEFF4;
 }
-/* line 233, layout/_sidebar.scss */
+/* line 234, layout/_sidebar.scss */
 .sidebar .board .list li.forward .stamps {
   position: absolute;
   top: 0;
@@ -520,14 +521,14 @@ body {
   background: url(/assets/images/stamps.png) no-repeat 115px 10px;
   background-size: 50px 50px;
 }
-/* line 247, layout/_sidebar.scss */
+/* line 248, layout/_sidebar.scss */
 .sidebar .library {
   width: 200px;
   position: relative;
   overflow-y: auto;
   background-color: #DEE1E5;
 }
-/* line 254, layout/_sidebar.scss */
+/* line 255, layout/_sidebar.scss */
 .sidebar .library .list li {
   cursor: pointer;
   color: #515151;
@@ -535,25 +536,25 @@ body {
   height: 36px;
   line-height: 36px;
 }
-/* line 261, layout/_sidebar.scss */
+/* line 262, layout/_sidebar.scss */
 .sidebar .library .list li:hover {
   background-color: #C9CED4;
 }
-/* line 265, layout/_sidebar.scss */
+/* line 266, layout/_sidebar.scss */
 .sidebar .library .list li.active {
   background-color: #ECEFF4;
 }
-/* line 273, layout/_sidebar.scss */
+/* line 274, layout/_sidebar.scss */
 .sidebar .x-scrollbar::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3);
   background-color: #DEE1E5;
 }
-/* line 278, layout/_sidebar.scss */
+/* line 279, layout/_sidebar.scss */
 .sidebar .x-scrollbar::-webkit-scrollbar {
   width: 8px;
   background-color: #DEE1E5;
 }
-/* line 283, layout/_sidebar.scss */
+/* line 284, layout/_sidebar.scss */
 .sidebar .x-scrollbar::-webkit-scrollbar-thumb {
   background-color: #BABCC0;
 }
