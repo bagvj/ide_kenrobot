@@ -44,12 +44,12 @@ class HomeController extends Controller {
 		return view("index", compact('user', 'mainpage', 'qrcodeurl', 'register_url', 'key', 'boards', 'components', 'libraries', 'has_visit'));
 	}
 
-	public function download(Request $request, $uri, $type = "0") {
-		if($uri == "kenrobot-ext.zip" || $uri == "kenrobot-ext.crx") {
-			$filename = "download/$uri";
+	public function download(Request $request, $uri, $ext = "zip") {
+		$filename = "download/$uri";
+		if(file_exists($filename)) {
 			$this->doDownload($filename);
 		} else {
-			$ext = $type == "0" ? ".zip" : "." . $type;
+			$ext = "." . $ext;
 			$filename = "/tmp/build/$uri/build$ext";
 			$path = dirname($filename)."/.project";
 			

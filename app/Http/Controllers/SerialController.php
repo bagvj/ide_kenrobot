@@ -11,10 +11,6 @@ class SerialController extends Controller {
 	{
 	}
 
-	public function index(Request $request) {
-		return view("serial");
-	}
-
 	public function update(Request $request) {
 		$content = file_get_contents("../app/Serial/update.xml");
 		return response($content)->header('Content-Type', 'text/xml');

@@ -43,7 +43,6 @@ define(['jquery', 'upload'], function($, upload) {
 				var port = ports[i];
 				$('<option>').text(port.path).attr("title", port.displayName).appendTo(portList);
 				if(port.displayName && port.displayName.toLowerCase().indexOf("arduino") > -1) {
-					console.dir(port);
 					count++;
 				}
 			}
@@ -222,6 +221,7 @@ define(['jquery', 'upload'], function($, upload) {
 
 		isInit = true;
 
+		$('.tab-no-serial .arduinoDriverUrl').attr("href", config.arduinoDriverUrl);
 		checkSerial();
 	}
 
