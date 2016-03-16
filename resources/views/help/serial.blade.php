@@ -15,7 +15,7 @@
 		<div>
 			如果你看到此页面，说明你没有安装kenrobot-ext.crx插件<br />
 			请按以下步骤操作：<br />
-			Step1: 点击<a href="http://platform.kenrobot.com/download/kenrobot-ext.zip">下载</a>并解压<br />
+			Step1: 点击<a href="http://platform.kenrobot.com/download/kenrobot-ext.zip">插件下载</a>并解压<br />
 			Step2: 打开Chrome浏览器，在地址栏输入chrome://extensions<br />
 			Step3: 把kenrobot-ext.crx拖入浏览器<br />
 			Step4: 完成安装，<a href="http://platform.kenrobot.com/">返回主页</a>

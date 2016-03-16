@@ -72,7 +72,8 @@ define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
 					//登录成功
 					util.message(result.message);
 					$('#login_dialog .close-btn').click();
-
+					userInfo = result.data;
+					doUpdateUser();
 					callback && callback();
 				} else if (result.code == 1) {
 

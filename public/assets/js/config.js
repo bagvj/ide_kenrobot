@@ -9,24 +9,23 @@ define(function() {
 		//编译是否需要登录
 		buildAuth: true,
 
-		//烧写是否需要登录
-		uploadAuth: true,
-
-
 		serial: {
 			//Chrome app id
-			appId: "jklackhahonikmlagokmoehpiekdaflf",
+			appId: "hhgmonhbodfiplppmcangkmlfkcnilpd",
+
+			//Chrome app启动时是否需要登录
+			launchAuth: true,
 
 			//Chrome app debug url
-			debugAppUrl: "http://platform.kenrobot.com/serial/debug",
+			debugUrl: "http://platform.kenrobot.com/serial/debug",
 
 			//Chrome app burn url
-			burnAppUrl: "http://platform.kenrobot.com/serial/burn",
+			burnUrl: "http://platform.kenrobot.com/serial/burn",
 
-			arduinoDriverUrl: "http://platform.kenrobot.com/arduino/driver",
+			arduinoDriverUrl: "http://platform.kenrobot.com/help/arduino-driver",
 
 			//烧写速度
-			burnDelay: 150,
+			burnDelay: 250,
 		}
 	};
 });

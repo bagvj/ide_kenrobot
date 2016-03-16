@@ -1,15 +1,15 @@
 {
 	"name": "Kenrobot平台扩展",
 	"description": "Kenrobot平台扩展",
-	"version": "0.1",
+	"version": "0.1.4",
 	"app": {
 		"background": {
 			"scripts": ["js/background.js"]
 		}
 	},
 	"icons": {
-		"16": "images/icon.png",
-		"128": "images/icon.png"
+		"16": "images/logo.png",
+		"128": "images/logo.png"
 	},
 	"permissions": [
 		"serial",

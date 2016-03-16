@@ -13,7 +13,7 @@
 Route::get('/', 'HomeController@index');
 
 Route::post('/build', 'HomeController@build');
-Route::get('/download/{uri}/{type?}', 'HomeController@download')->where('uri', '[.0-9a-zA-Z_-]+');
+Route::get('/download/{uri}/{ext?}', 'HomeController@download')->where('uri', '[.0-9a-zA-Z_-]+');
 
 Route::get('/config', 'HomeController@config');
 
@@ -23,11 +23,12 @@ Route::get('/project/{id}', 'ProjectController@getProject')->where('id', '[1-9][
 Route::get('/projects/{user_id}', 'ProjectController@getProjects')->where('user_id', '[1-9][0-9]*');
 
 
-Route::get('/serial', 'SerialController@index');
 Route::get('/serial/update.xml', 'SerialController@update');
 Route::get('/serial/{any}', function(){
-	return redirect(url('/serial'));
+	return redirect(url('/help/serial'));
 });
+
+Route::get('/help/{uri?}', 'HelpController@index')->where('uri', '[0-9a-zA-Z-]*');
 
 // 登录验证
 Route::get('/auth/login', 'Auth\AuthController@getLogin');
