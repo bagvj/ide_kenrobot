@@ -165,10 +165,13 @@ class SnsAuthController extends Controller {
 		}
 
 		$user = User::where('uid', $data['uid'])->first();
+		
+     	if (!empty($user)) {
+            $user->name = $data['name'];
+            $user->avatar_url = $data['avatar_url'];
+            $user->save();
 
-		$user->name = $data['name'];
-		$user->avatar_url = $data['avatar_url'];
-		$user->save();
+        }
 		return $user;
 	}
 
