@@ -1,0 +1,153 @@
+.hardware {
+	.tools {
+    	z-index: 3;
+		top: 30px;
+		left: 30px;
+		position: absolute;
+
+		li {
+			margin-bottom: 20px;
+			text-align: center;
+			cursor: pointer;
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			position: relative;
+
+      		& > i {
+				font-size: 20px;
+				line-height: 30px;
+				display: block;
+			}
+
+			&[data-mode="modern"], &[data-mode="drag"] {
+				& > i {
+					font-size: 22px;
+				}
+			}
+
+			&[data-mode="clone"] {
+				& > i {
+					font-size: 18px;
+				}
+			}
+
+			&:hover {
+				.tips {
+					display: block;
+				}
+			}
+
+			.tips {
+				font-size: 12px;
+				height: 30px;
+				line-height: 30px;
+				right: -80px;
+				width: 64px;
+				top: 0;
+				color: white;
+				background-color: #1fb6ed;
+
+				position: absolute;
+				display: none;
+
+				&:before {
+					border: solid transparent;
+					content: ' ';
+					height: 0;
+					width: 0;
+					border-width: 6px;
+					border-right-color: #1fb6ed;
+					left: -12px;
+					top: 9px;
+					position: absolute;
+				}
+			}
+		}
+
+		.interactive-mode {
+			.tips {
+				width: 100px;
+				right: -116px;
+			}
+		}
+
+		.mode {
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	.center {
+		height: 100%;
+	}
+
+	.follow {
+		top: 0;
+		left: 0;
+		position: absolute;
+		.follower {
+			opacity: 0.5;
+			position: absolute;
+		}
+	}
+
+	.copyright {
+		width: 100%;
+		bottom: 0;
+		z-index: 99;
+		position: absolute;
+
+		.alert {
+			width: 560px;
+			font-size: 12px;
+			margin-bottom: 0;
+			padding-top: 4px;
+			padding-bottom: 4px;
+			border-radius: 0;
+			border: none;
+			line-height: 20px;
+			text-align: center;
+			margin: 0 auto;
+			color: #676767;
+		}    
+	}
+
+	.name-dialog {
+		z-index: 998;
+		top: 90px;
+		width: 100%;
+		position: absolute;
+		display: none;
+
+		.wrap {
+			margin: 0 auto;
+			width: 250px;
+		}
+		
+		.name-label {
+			display: block;
+			background-color: #F1C933;
+			float: left;
+			color: black;
+			width: 50px;
+			height: 36px;
+			line-height: 36px;
+			text-align: center;
+			border-top-left-radius: 4px;
+			border-bottom-left-radius: 4px;
+		}
+
+		.name {
+			border: 2px solid #F1C933;
+			border-top-right-radius: 4px;
+			border-bottom-right-radius: 4px;
+			float: left;
+			color: black;
+			width: 200px;
+			height: 36px;
+			padding: 10px 8px;
+		}
+	}
+}

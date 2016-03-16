@@ -1,0 +1,23 @@
+.dialog {
+	position: relative;
+	z-index: 999;
+	.close-btn {
+		font-size: 20px;
+		top: 0;
+		cursor: pointer;
+		z-index: 1000;
+		display: block;
+		position: absolute;
+
+		& > i {
+			font-size: 20px;
+		}
+
+		&.left {
+			left: 8px;
+		}
+		&.right {
+			right: 4px;
+		}
+	}
+}

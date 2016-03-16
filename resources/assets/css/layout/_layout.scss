@@ -1,0 +1,188 @@
+.main {
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	position: absolute;
+
+	.sidebar {
+		height: 100%;
+		float: left;
+		
+		.bar {
+			width: 60px;
+			height: 100%;
+			float: left;
+		}
+
+		.tab {
+			height: 100%;
+			float: left;
+			position: relative;
+			display: none;
+
+			&.active {
+				display: block;
+			}
+
+			&>div {
+				height: 100%;
+			}
+		}
+	}
+
+	.tabs {
+		height: 100%;
+		margin-left: 60px;
+		.tab {
+			height: 100%;
+			position: relative;
+			display: none;
+
+			&.active {
+				display: block;
+			}
+
+			&>div {
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				position: absolute;
+			}
+		}
+	}
+
+	.user {
+		z-index: 999;
+		position: absolute;
+		top: 20px;
+		right: 0;
+		height: 60px;
+		display: none;
+		
+		.dialog {
+			// right: 20px;
+			// top: 0;
+			margin-right: 20px;
+			height: 60px;
+			background-color: white;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
+			color: #515151;
+			// position: absolute;
+
+			.photo {
+				float: left;
+				margin-left: 15px;
+				margin-right: 10px;
+				& > img {
+					margin-top: 10px;
+					width: 40px;
+					height: 40px;
+					border-radius: 50%;
+				}
+			}
+
+			.welcome {
+				line-height: 60px;
+				float: left;
+			}
+
+			.logout {
+				line-height: 60px;
+				color: #515151;
+				cursor: pointer;
+				margin-left: 20px;
+				margin-right: 15px;
+				float: left;
+
+				&:hover {
+					color: #323942;
+				}
+			}
+
+			.close-btn {
+				cursor: pointer;
+				top: 0;
+				right: 2px;
+				font-size: 16px;
+				position: absolute;
+			}
+		}
+
+		.indent {
+			right: 0;
+			top: 0;
+			position: absolute;
+			display: none;
+			width: 10px;
+			height: 36px;
+			background-color: white;
+			border-left: 1px solid #e1e4e8;
+			border-top: 1px solid #e1e4e8;
+			border-bottom: 1px solid #e1e4e8;
+			cursor: pointer;
+
+			& > i {
+				line-height: 36px;
+				color: #515151;
+			}
+		}
+
+		&.active {
+			display: block;
+		}
+	}
+}
+
+.dialog-layer {
+	z-index: 25;
+	display: none;
+
+	&.active {
+		display: block;
+	}
+	
+	.dialog {
+		display: none;
+	}
+}
+
+.login-hint-layer {
+	z-index: 100;
+	display: none;
+
+	.login-hint {
+		top: 10px;
+		left: 70px;
+		position: absolute;
+		background-color: white;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
+
+		.title {
+			margin-top: 10px;
+			margin-left: 15px;
+			color: #fa764a;
+		}
+
+		.content {
+			margin: 10px 15px 10px 15px;
+			color: #515151;
+			.strong {
+				color: #19c3f1;
+			}
+		}
+
+		&:before {
+			border: solid transparent;
+			content: ' ';
+			height: 0;
+			width: 0;
+			border-width: 9px;
+			border-right-color: white;
+			left: -18px;
+			top: 15px;
+			position: absolute;
+		}
+	}
+}
