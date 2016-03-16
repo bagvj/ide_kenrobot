@@ -1,7 +1,7 @@
 {
 	"name": "Kenrobot平台扩展",
 	"description": "Kenrobot平台扩展",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"app": {
 		"background": {
 			"scripts": ["js/background.js"]
@@ -19,13 +19,13 @@
 	"url_handlers": {
 		"debug": {
 			"matches": [
-				"http://platform.kenrobot.com/serial/debug/*"
+				"http://platform.kenrobot.com/extention/debug/*"
 			],
 			"title": "串口调试"
 		},
 		"burn": {
 			"matches": [
-				"http://platform.kenrobot.com/serial/burn/*"
+				"http://platform.kenrobot.com/extention/burn/*"
 			],
 			"title": "烧写"
 		}
@@ -33,5 +33,5 @@
 	"externally_connectable": {
   		"matches": ["*://*.kenrobot.com/*"]
 	},
-	"update_url": "http://platform.kenrobot.com/serial/update.xml"
+	"update_url": "http://platform.kenrobot.com/extention-update.xml"
 }

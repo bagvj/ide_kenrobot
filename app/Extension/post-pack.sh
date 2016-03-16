@@ -6,7 +6,7 @@ cd `dirname $0`
 
 EXT_NAME="kenrobot-ext"
 
-rm -rf pack
+rm -rf pack pack.pem
 
 chmod 755 pack.crx
 chown root:root pack.crx
@@ -18,6 +18,10 @@ mv ${EXT_NAME}.zip ../../public/download/
 mv ${EXT_NAME}.crx ../../public/download/
 
 rm -rf ${EXT_NAME}.crx
+
+if [ $# -ge 1 -a "$1" = "update" ];then
+	cp update.xml ../../public/extention-update.xml
+fi
 
 #回到之前的目录
 cd ${DIR}
