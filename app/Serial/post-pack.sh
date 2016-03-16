@@ -6,7 +6,7 @@ cd `dirname $0`
 
 EXT_NAME="kenrobot-ext"
 
-rm -rf pack pack.pem
+rm -rf pack
 
 chmod 755 pack.crx
 chown root:root pack.crx

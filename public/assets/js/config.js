@@ -11,7 +11,7 @@ define(function() {
 
 		serial: {
 			//Chrome app id
-			appId: "mfbnaojpghblnkmjipacgpjjhjddeiph",
+			appId: "hhgmonhbodfiplppmcangkmlfkcnilpd",
 
 			//Chrome app启动时是否需要登录
 			launchAuth: true,
@@ -22,7 +22,7 @@ define(function() {
 			//Chrome app burn url
 			burnUrl: "http://platform.kenrobot.com/serial/burn",
 
-			arduinoDriverUrl: "http://platform.kenrobot.com/arduino/driver",
+			arduinoDriverUrl: "http://platform.kenrobot.com/help/arduino-driver",
 
 			//烧写速度
 			burnDelay: 250,
