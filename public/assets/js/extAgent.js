@@ -1,15 +1,50 @@
-define(['jquery-cookie', 'config', 'user', 'project'], function(_, config, user, project) {
+define(['jquery-cookie', 'config', 'util', 'user', 'project'], function(_, config, util, user, project) {
 	var timer;
 
 	var messages;
 
 	function init(launchUrl) {
+		var isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+		if(!isChrome && !window.chrome) {
+			util.message("Kenrobot平台扩展目前只支持Chrome浏览器，其它浏览器敬请期待！");
+			return;
+		}
+
+
+		checkIsIntalled(function(installed) {
+			if(!installed) {
+				window.open(launchUrl);
+				return;
+			}
+
+			var callback = function() {
+				launch(launchUrl);
+			}
+			if(config.extension.launchAuth) {
+				user.authCheck(function(success) {
+					success ? callback() : user.showLoginDialog(callback);
+				});
+			} else {
+				callback();
+			}			
+		});
+	}
+
+	function launch(launchUrl) {
 		clearInterval(timer);
-
 		window.location = launchUrl;
-
 		messages = [];
 		timer = setInterval(tick, 1000);
+	}
+
+	function checkIsIntalled(callback) {
+		chrome.runtime.sendMessage(config.extension.appId, "isInstalled", function(response) {
+			if(response && response.action == "isInstalled" && response.result == true) {
+				callback(true);
+			} else {
+				callback(false);
+			}
+		});
 	}
 
 	function tick() {

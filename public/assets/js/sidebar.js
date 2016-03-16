@@ -1,4 +1,4 @@
-define(['jquery', 'EventManager', 'util', 'config', 'user', 'project', 'board', 'software', 'serialApp'], function($, EventManager, util, config, user, project, board, software, serialApp) {
+define(['jquery', 'EventManager', 'util', 'config', 'user', 'project', 'board', 'software', 'extAgent'], function($, EventManager, util, config, user, project, board, software, extAgent) {
 	function init() {
 		$('.sidebar .logo').on('click', onLogoClick);
 
@@ -55,29 +55,11 @@ define(['jquery', 'EventManager', 'util', 'config', 'user', 'project', 'board', 
 	}
 
 	function onSerialClick() {
-		checkSerial(config.extension.debugUrl);
+		extAgent.init(config.extension.debugUrl);
 	}
 
 	function onBurnClick() {
-		checkSerial(config.extension.burnUrl);
-	}
-
-	function checkSerial(launchUrl) {
-		if(!window.chrome) {
-			util.message("串口调试目前只支持Google Chrome浏览器，其它浏览器敬请期待！");
-			return;
-		}
-
-		var launchSerial = function() {
-			serialApp.init(launchUrl);
-		}
-		if(config.extension.launchAuth) {
-			user.authCheck(function(success) {
-				success ? launchSerial() : user.showLoginDialog(launchSerial);
-			});
-		} else {
-			launchSerial();
-		}
+		extAgent.init(config.extension.burnUrl);
 	}
 
 	return {

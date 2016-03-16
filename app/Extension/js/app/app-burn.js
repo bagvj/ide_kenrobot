@@ -11,7 +11,7 @@ define(['jquery', 'upload'], function($, upload) {
 	var config;
 
 	function init() {
-		appWindow = chrome.app.window.get(windowId);
+		appWindow = chrome.app.window.current();
 		appWindow.onClosed.addListener(onAppClosed);
 		
 		initTabConnect();

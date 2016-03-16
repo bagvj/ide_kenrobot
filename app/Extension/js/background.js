@@ -1,8 +1,4 @@
 chrome.app.runtime.onLaunched.addListener(function(launchData) {
-	function withLaunchData(win) {
-		win.launchData = launchData;
-	}
-
 	var id = launchData.id;
 	if(id == "debug") {
 		chrome.app.window.create('debug.html', {
@@ -12,7 +8,7 @@ chrome.app.runtime.onLaunched.addListener(function(launchData) {
 				'width': 480,
 				'height': 300,
 			}
-		}, withLaunchData);
+		});
 	} else {
 		chrome.app.window.create('burn.html', {
 			'id': 'burn',
@@ -21,6 +17,15 @@ chrome.app.runtime.onLaunched.addListener(function(launchData) {
 				'width': 340,
 				'height': 200,
 			}
-		}, withLaunchData);
+		});
+	}
+});
+
+chrome.runtime.onMessageExternal.addListener(function(message, sender, sendResponse) {
+	if(message && message == "isInstalled") {
+		sendResponse({
+			action: "isInstalled",
+			result: true,
+		});
 	}
 });
