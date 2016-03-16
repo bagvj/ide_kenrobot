@@ -1,9 +1,6 @@
 require.config({
-	baseUrl: "js",
+	baseUrl: "js/lib",
 	paths: {
-		"jquery": "lib/jquery.min",
-		"app-burn": "app/app-burn",
-		"app-debug": "app/app-debug",
-		"upload": "app/upload",
-	},
+		app: '../app',
+	}
 });

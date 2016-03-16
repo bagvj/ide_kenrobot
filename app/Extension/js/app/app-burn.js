@@ -1,4 +1,4 @@
-define(['jquery', 'upload'], function($, upload) {
+define(['jquery', './upload'], function($, upload) {
 	var appWindow;
 	var windowId = "burn";
 	
