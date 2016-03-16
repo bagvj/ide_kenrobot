@@ -22,8 +22,8 @@ Route::post('/project/delete', 'ProjectController@deleteProject');
 Route::get('/project/{id}', 'ProjectController@getProject')->where('id', '[1-9][0-9]*');
 Route::get('/projects/{user_id}', 'ProjectController@getProjects')->where('user_id', '[1-9][0-9]*');
 
-Route::get('/serial/{any}', function(){
-	return redirect(url('/help/serial'));
+Route::get('/extension/{any}', function(){
+	return redirect(url('/help/extension'));
 });
 
 Route::get('/help/{uri?}', 'HelpController@index')->where('uri', '[0-9a-zA-Z-]*');
