@@ -9,7 +9,7 @@ define(function() {
 		//编译是否需要登录
 		buildAuth: true,
 
-		serial: {
+		extension: {
 			//Chrome app id
 			appId: "hhgmonhbodfiplppmcangkmlfkcnilpd",
 
@@ -17,10 +17,10 @@ define(function() {
 			launchAuth: true,
 
 			//Chrome app debug url
-			debugUrl: "http://platform.kenrobot.com/serial/debug",
+			debugUrl: "http://platform.kenrobot.com/extension/debug",
 
 			//Chrome app burn url
-			burnUrl: "http://platform.kenrobot.com/serial/burn",
+			burnUrl: "http://platform.kenrobot.com/extension/burn",
 
 			arduinoDriverUrl: "http://platform.kenrobot.com/help/arduino-driver",
 

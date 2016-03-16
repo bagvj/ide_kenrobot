@@ -20,7 +20,7 @@ mv ${EXT_NAME}.crx ../../public/download/
 rm -rf ${EXT_NAME}.crx
 
 if [ $# -ge 1 -a "$1" = "update" ];then
-	cp update.xml ../../public/extention-update.xml
+	cp update.xml ../../public/extension-update.xml
 fi
 
 #回到之前的目录

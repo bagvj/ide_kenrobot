@@ -18,7 +18,7 @@ define(['jquery-cookie', 'config', 'user', 'project'], function(_, config, user,
 	}
 
 	function sendMessage(message) {
-		chrome.runtime.sendMessage(config.serial.appId, message, onResponse);
+		chrome.runtime.sendMessage(config.extension.appId, message, onResponse);
 	}
 
 	function onResponse(response) {
@@ -53,8 +53,8 @@ define(['jquery-cookie', 'config', 'user', 'project'], function(_, config, user,
 				host: window.location.protocol + "//" + window.location.host,
 				cookie: cookie,
 				config: {
-					arduinoDriverUrl: config.serial.arduinoDriverUrl,
-					burnDelay: config.serial.burnDelay,
+					arduinoDriverUrl: config.extension.arduinoDriverUrl,
+					burnDelay: config.extension.burnDelay,
 				}
 			},
 		});

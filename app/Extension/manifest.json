@@ -19,13 +19,13 @@
 	"url_handlers": {
 		"debug": {
 			"matches": [
-				"http://platform.kenrobot.com/extention/debug/*"
+				"http://platform.kenrobot.com/extension/debug/*"
 			],
 			"title": "串口调试"
 		},
 		"burn": {
 			"matches": [
-				"http://platform.kenrobot.com/extention/burn/*"
+				"http://platform.kenrobot.com/extension/burn/*"
 			],
 			"title": "烧写"
 		}
@@ -33,5 +33,5 @@
 	"externally_connectable": {
   		"matches": ["*://*.kenrobot.com/*"]
 	},
-	"update_url": "http://platform.kenrobot.com/extention-update.xml"
+	"update_url": "http://platform.kenrobot.com/extension-update.xml"
 }

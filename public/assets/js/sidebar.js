@@ -55,11 +55,11 @@ define(['jquery', 'EventManager', 'util', 'config', 'user', 'project', 'board', 
 	}
 
 	function onSerialClick() {
-		checkSerial(config.serial.debugUrl);
+		checkSerial(config.extension.debugUrl);
 	}
 
 	function onBurnClick() {
-		checkSerial(config.serial.burnUrl);
+		checkSerial(config.extension.burnUrl);
 	}
 
 	function checkSerial(launchUrl) {
@@ -71,7 +71,7 @@ define(['jquery', 'EventManager', 'util', 'config', 'user', 'project', 'board', 
 		var launchSerial = function() {
 			serialApp.init(launchUrl);
 		}
-		if(config.serial.launchAuth) {
+		if(config.extension.launchAuth) {
 			user.authCheck(function(success) {
 				success ? launchSerial() : user.showLoginDialog(launchSerial);
 			});
