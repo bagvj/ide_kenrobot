@@ -3,7 +3,7 @@
 namespace App\WebAuth;
 
 use Curl\Curl;
-
+use App\User;
 /**
 * 
 */
@@ -35,46 +35,71 @@ class WeixinAuth implements WebAuth
 		$this->curl = new Curl();
 	}
 
+    /**
+     * 验证是登录是否成功
+     *
+     * @param array $crendetials
+     * @return bool
+     */
+    public function validate(array $credentials){
+
+        $key = $credentials['key'];
+        
+        //验证参数条件
+        if ($key == null) {
+            return false;
+        }
+
+        $userData = $this->getUserFromServer($credentials);
+        
+        if ($userData !== null) {
+            $userData = $this->formatUserData($userData);
+            if ($userData !== null) {
+                $this->user = $userData;
+                return true;
+            }
+
+        }
+        return false;
+
+    }
+
 	/**
 	 * 获取用户信息，登录失败的时候返回null
 	 * 
 	 * @return array | null
 	 */
 	public function user(){
-		if (empty($this->user)) {
-			$this->user = $this->getUserFromServer();
-		}
 		return $this->user;
 	}
 
-	/**
-	 * 验证是登录是否成功
-	 *
-	 * @param array $crendetials
-	 * @return bool
-	 */
-	public function validate(array $credentials){
+    /**
+     * 本地用户
+     */
+    public function localUser()
+    {
+        if (empty($this->user) || empty($this->user['openid'])) {
+            return null;
+        }
 
-		$key = $credentials['key'];
-		
-		//验证参数条件
-		if ($key == null) {
-			return false;
-		}
-
-		$userData = $this->getUserFromServer($key);
-		
-		if ($userData !== null) {
-			$userData = $this->formatUserData($userData);
-			if ($userData !== null) {
-				$this->user = $userData;
-				return true;
-			}
-
-		}
-		return false;
-
-	}
+        $user = User::where('openid',$this->user['openid'])->first();
+        if (!empty($user)) {
+            $user->name = $this->user['name'];
+            $user->avatar_url = $this->user['avatar_url'];
+            $user->save();
+        } else {
+             $user = User::create([
+                'name' => $this->user['name'],
+                'email' => $this->user['email'],
+                'password' => bcrypt($this->user['email'].'321'),
+                'openid'   => $this->user['openid'],
+                'avatar_url' => $this->user['avatar_url'],
+                'source'   => 'weixin'
+            ]);
+        }
+        
+        return $user;
+    }
 
 
 	/**
@@ -91,7 +116,7 @@ class WeixinAuth implements WebAuth
        $userdata['openid'] = $rawuserdata['openid'];
        $userdata['name'] = $rawuserdata['nickname'];
        $userdata['email'] = $rawuserdata['openid'].'@kenrobot.com';
-       $userdata['avatar_url'] = $rawuserdata['headimgurl'];
+       $userdata['avatar_url'] = $rawuserdata['avatar'];
 
        return $userdata;
     }
@@ -109,6 +134,8 @@ class WeixinAuth implements WebAuth
 
     	$return = $this->curl->get($validate_url);
 
+
+
     	return json_decode($return, true);
     }
 
@@ -118,8 +145,15 @@ class WeixinAuth implements WebAuth
      */
     protected function getUserFromServer($params)
     {
-        $return = $this->curl->get($url);
-        return json_decode($return,true);
+        $data = $this->curl->get($this->url,$params);
+
+        if (is_string($data)) {
+            $userData = json_decode($data, true);
+        } else {
+            $userData = (array) $data;
+        }
+
+        return $userData;
     }
 
 }

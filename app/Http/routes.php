@@ -36,12 +36,10 @@ Route::get('/auth/logout', 'Auth\AuthController@getLogout2');
 
 Route::get('/auth/check', 'Auth\AuthServerController@index');
 
-// 注册
-Route::get('/auth/register', 'Auth\AuthController@getRegister');
-Route::post('/auth/register', 'Auth\AuthController@postRegister');
+// 注册 暂时关闭
+// Route::get('/auth/register', 'Auth\AuthController@getRegister');
+// Route::post('/auth/register', 'Auth\AuthController@postRegister');
 
-Route::get('/auth/snslogin', 'Auth\SnsAuthController@snsLogin');
-Route::any('/snspostlogin', 'Auth\SnsAuthController@snsPostLogin');
-Route::any('/weixinlogin', 'Auth\WeixinAuthController@weixinlogin');
-Route::get('/login', 'Auth\WeixinAuthController@index');
+Route::any('/snspostlogin', 'Auth\WebAuthController@snsPostLogin');
+Route::any('/weixinlogin', 'Auth\WebAuthController@weixinlogin');
 

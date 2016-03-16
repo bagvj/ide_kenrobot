@@ -3,7 +3,8 @@
 namespace App\WebAuth;
 
 use Curl\Curl;
- 
+use App\User;
+
 /**
 * 
 */
@@ -19,10 +20,6 @@ class SnsAuth implements WebAuth
      * user data
      */
     protected $user = null;
-
-    //protected $api_valid = 'http://mars.kenrobot.com/?app=api&mod=UserCenter&act=validate';
-
-    //protected $api_user = 'http://mars.kenrobot.com/?app=api&mod=UserCenter&act=baseinfo';
 
     protected $api_valid = '';
 
@@ -40,33 +37,6 @@ class SnsAuth implements WebAuth
         $this->curl = new Curl();
         $this->api_valid = env('SNS_API_VAlID');
         $this->api_user = env('SNS_APID_USER');
-    }
-
-    /**
-     * 获取用户信息
-     *
-     */
-    public function user()
-    {
-        return $this->user;
-    }
-
-    /**
-     * 获取用户数据
-     * 封装的不好，这只是个临时的方法
-     */
-    public function fetchUserFromServer($uid = 0)
-    {
-        $token = array('uid' => $uid);
-        $userResult = $this->getUserFromServer($token);
-
-        if ($userResult['code'] != 0) {
-            $this->error = sprintf('%s:%s', $result['code'], $result['message']);
-            return false;
-        }
-
-        $this->user = $this->formatUserData($userResult['data']);;
-        return $this->user;
     }
 
     /**
@@ -110,6 +80,59 @@ class SnsAuth implements WebAuth
         $this->errorcode = 0;
         return true;
     }
+
+    /**
+     * 获取用户信息
+     *
+     */
+    public function user()
+    {
+        return $this->user;
+    }
+
+    public function localUser()
+    {
+        if (empty($this->user) || empty($this->user['uid'])) {
+            return null;
+        }
+
+        $user = User::where('uid',$this->user['uid'])->first();
+        if (!empty($user)) {
+            $user->name = $this->user['name'];
+            $user->avatar_url = $this->user['avatar_url'];
+            $user->save();
+        } else {
+             $user = User::create([
+                'name' => $this->user['name'],
+                'email' => $this->user['email'],
+                'password' => bcrypt($this->user['email'].'321'),
+                'uid' => $this->user['uid'],
+                'avatar_url' => $this->user['avatar_url'],
+                'source' => 'sns',
+            ]);
+        }
+        
+        return $user;
+    }
+
+    /**
+     * 获取用户数据
+     * 封装的不好，这只是个临时的方法
+     */
+    public function fetchUserFromServer($uid = 0)
+    {
+        $token = array('uid' => $uid);
+        $userResult = $this->getUserFromServer($token);
+
+        if ($userResult['code'] != 0) {
+            $this->error = sprintf('%s:%s', $result['code'], $result['message']);
+            return false;
+        }
+
+        $this->user = $this->formatUserData($userResult['data']);;
+        return $this->user;
+    }
+
 
     /**
      * 获取调用错误

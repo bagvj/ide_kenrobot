@@ -20,4 +20,9 @@ interface WebAuth
 	 * @return bool
 	 */
 	public function validate(array $credentials);
+
+	/**
+	 * 本地用户
+	 */
+	public function localUser();
 }
