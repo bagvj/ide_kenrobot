@@ -55,11 +55,11 @@ define(['jquery', 'EventManager', 'util', 'config', 'user', 'project', 'board', 
 	}
 
 	function onSerialClick() {
-		checkSerial(config.serial.debugAppUrl);
+		checkSerial(config.serial.debugUrl);
 	}
 
 	function onBurnClick() {
-		checkSerial(config.serial.burnAppUrl);
+		checkSerial(config.serial.burnUrl);
 	}
 
 	function checkSerial(launchUrl) {
@@ -71,9 +71,13 @@ define(['jquery', 'EventManager', 'util', 'config', 'user', 'project', 'board', 
 		var launchSerial = function() {
 			serialApp.init(launchUrl);
 		}
-		user.authCheck(function(success) {
-			success ? launchSerial() : user.showLoginDialog(launchSerial);
-		});
+		if(config.serial.launchAuth) {
+			user.authCheck(function(success) {
+				success ? launchSerial() : user.showLoginDialog(launchSerial);
+			});
+		} else {
+			launchSerial();
+		}
 	}
 
 	return {

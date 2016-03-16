@@ -1,9 +1,11 @@
 {
-    baseUrl: "js",
-    dir: "pack/js",
-    mainConfigFile: "js/common.js",
+    appDir: "./",
+    baseUrl: "./js",
+    dir: "./pack",
+    mainConfigFile: "./js/common.js",
+    fileExclusionRegExp: /build\.(js|txt)/,
     removeCombined: true,
-    fileExclusionRegExp: /.min.js/,
+    optimizeCss: 'standard',
     // modules: [
     //     {
     //         name: "common",
@@ -21,5 +23,5 @@
     //         include: ['app/app-debug'],
     //         exclude: ['common']
     //     }
-    // ]
+    // ],
 }

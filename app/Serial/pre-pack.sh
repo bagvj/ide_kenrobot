@@ -5,13 +5,11 @@ DIR=`pwd`
 cd `dirname $0`
 
 rm -rf pack.pem pack.crx pack
-mkdir pack
 
 r.js -o build.js
-rm -rf pack/js/build.txt
 
-cp -R css images *.html manifest.json pack/
-cp -R js/lib pack/js/lib
+cd pack
+rm -rf build.* *.rb *.sh update.xml css/*.scss .sass-cache
 
 #回到之前的目录
 cd ${DIR}
