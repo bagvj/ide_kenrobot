@@ -2,13 +2,13 @@ var baseUrl = "/assets/js";
 require.config({
 	baseUrl: baseUrl,
 	paths: {
-		"jquery": "lib/jquery.min",
-		"bootstrap": "lib/bootstrap.min",
-		"typeahead": "lib/bootstrap-typeahead.min",
-		"goJS": "lib/go.min",
+		"jquery": "lib/jquery",
+		"bootstrap": "lib/bootstrap",
+		"typeahead": "lib/bootstrap-typeahead",
+		"goJS": "lib/go",
 
-		"jquery-ui": "lib/jquery-ui.min",
-		"jquery-cookie": "lib/jquery.cookie.min",
+		"jquery-ui": "lib/jquery-ui",
+		"jquery-cookie": "lib/jquery.cookie",
 
 		"ace": "lib/ace/ace",
 		"ace-ext-language-tools": "lib/ace/ext-language_tools",
