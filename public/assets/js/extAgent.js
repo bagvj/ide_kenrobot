@@ -14,7 +14,6 @@ define(['jquery-cookie', 'config', 'util', 'user', 'project'], function(_, confi
 			if(!installed) {
 				var w = window.open("_blank");
 				w.location = launchUrl;
-				// window.open(launchUrl);
 				return;
 			}
 
