@@ -1304,3 +1304,30 @@ body {
 .extension-dialog .x-confirm-content .des .helpless {
   font-size: 18px;
 }
+
+/* line 1, component/_arduino-driver-dialog.scss */
+.arduino-driver-dialog {
+  width: 500px;
+}
+/* line 4, component/_arduino-driver-dialog.scss */
+.arduino-driver-dialog .x-confirm-title {
+  color: white;
+  background-color: #939ba4;
+}
+/* line 9, component/_arduino-driver-dialog.scss */
+.arduino-driver-dialog .x-confirm-content {
+  height: 150px;
+  display: block;
+  padding: 15px;
+}
+/* line 14, component/_arduino-driver-dialog.scss */
+.arduino-driver-dialog .x-confirm-content .step {
+  margin-top: 10px;
+  margin-left: 24px;
+  line-height: 24px;
+}
+/* line 18, component/_arduino-driver-dialog.scss */
+.arduino-driver-dialog .x-confirm-content .step a {
+  color: #4bc1ec;
+  text-decoration: none;
+}

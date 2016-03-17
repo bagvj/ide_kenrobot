@@ -14,6 +14,7 @@ define(['jquery', './upload'], function($, upload) {
 		appWindow = chrome.app.window.current();
 		appWindow.onClosed.addListener(onAppClosed);
 		
+		initTabNoSerial();
 		initTabConnect();
 		initTabBurn();
 
@@ -64,6 +65,16 @@ define(['jquery', './upload'], function($, upload) {
 			showMessage("准备就绪", "burn", 0);
 			$('.tab-burn .progress').removeClass("active");
 		}
+	}
+
+	function initTabNoSerial() {
+		$('.tab-no-serial .driver').on('click', onDriverClick);
+	}
+
+	function onDriverClick(e) {
+		sendMessage({
+			action: "arduinoDriver",
+		});
 	}
 
 	function initTabConnect() {
@@ -221,7 +232,6 @@ define(['jquery', './upload'], function($, upload) {
 
 		isInit = true;
 
-		$('.tab-no-serial .arduinoDriverUrl').attr("href", config.arduinoDriverUrl);
 		checkSerial();
 	}
 

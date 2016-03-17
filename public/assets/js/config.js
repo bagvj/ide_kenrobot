@@ -19,8 +19,6 @@ define(function() {
 			//Chrome app burn url
 			burnUrl: "http://platform.kenrobot.com/extension/burn",
 
-			arduinoDriverUrl: "http://platform.kenrobot.com/help/arduino-driver",
-
 			//烧写速度
 			burnDelay: 250,
 		}
