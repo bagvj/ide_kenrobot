@@ -22,10 +22,6 @@ Route::post('/project/delete', 'ProjectController@deleteProject');
 Route::get('/project/{id}', 'ProjectController@getProject')->where('id', '[1-9][0-9]*');
 Route::get('/projects/{user_id}', 'ProjectController@getProjects')->where('user_id', '[1-9][0-9]*');
 
-Route::get('/extension/{any}', function(){
-	return redirect(url('/'));
-});
-
 // 登录验证
 Route::get('/auth/login', 'Auth\AuthController@getLogin');
 Route::post('/auth/login', 'Auth\AuthController@postLogin');
