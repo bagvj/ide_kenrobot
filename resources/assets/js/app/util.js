@@ -33,6 +33,7 @@ define(['jquery'], function($){
 		var cancel = args.cancel || "取 消";
 		var okFunc = args.okFunc;
 		var cancelFunc = args.cancelFunc;
+		var closeFunc = args.closeFunc;
 
 		var template = '<div class="x-confirm x-confirm-' + type + '">\
 			<div class="x-confirm-title">' + title + '</div>\
@@ -55,6 +56,7 @@ define(['jquery'], function($){
 			dialog.slideUp(200, function() {
 				dialog.remove();
 				$('.dialog-layer').removeClass("active");
+				closeFunc && closeFunc();
 			});
 		}
 
@@ -74,6 +76,8 @@ define(['jquery'], function($){
 			top: 200,
 		}, 400, "swing");
 		$('.dialog-layer').addClass("active");
+
+		return dialog;
 	}
 
 	function toggleActive(target, tag, collapseMode) {

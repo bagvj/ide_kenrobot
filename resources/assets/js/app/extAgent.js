@@ -143,7 +143,7 @@ define(['jquery.cookie', './config', './util', './user', './project'], function(
 			contentCls: "selectable",
 			type: "info",
 			text: '如果你遇到了Arduino<span class="strong">驱动问题</span>，请按以下步骤操作:<div class="step">Step 1: 点击<a href="' + driverUrl + '" title="Arduino驱动">下载</a>并解压<br />Step 2: 运行<span class="strong">arduino驱动安装.exe</span><br />Step 3: 完成安装</div>',
-			cancelFunc: function() {
+			closeFunc: function() {
 				isDialogShow = false;
 			}
 		});

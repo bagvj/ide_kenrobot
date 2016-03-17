@@ -6,8 +6,8 @@ PACK="../../public/assets"
 
 cd `dirname $0`
 
-rm -rf ${PACK}/js
-cp -r js ${PACK}
+rm -rf ${PACK}/js ${PACK}/css
+cp -r js css ${PACK}
 
 #回到之前的目录
 cd ${DIR}

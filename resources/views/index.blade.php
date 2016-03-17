@@ -248,7 +248,7 @@
 			</div>
 		</div>
 		@if(!$has_visit)
-		<div class="login-hint-layer mask">
+		<div class="guide-layer mask">
 			<div class="login-hint">
 				<div class="title">提示：</div>
 				<div class="content">点击此处即可弹出<span class="strong">【登录】</span>窗口<br />登录后可解锁更多功能哦<br />推荐使用Google Chrome浏览器</div>

@@ -11229,12 +11229,12 @@ body {
 }
 
 /* line 151, layout/_layout.scss */
-.login-hint-layer {
+.guide-layer {
   z-index: 100;
   display: none;
 }
 /* line 155, layout/_layout.scss */
-.login-hint-layer .login-hint {
+.guide-layer .login-hint {
   top: 10px;
   left: 70px;
   position: absolute;
@@ -11242,22 +11242,22 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
 }
 /* line 162, layout/_layout.scss */
-.login-hint-layer .login-hint .title {
+.guide-layer .login-hint .title {
   margin-top: 10px;
   margin-left: 15px;
   color: #fa764a;
 }
 /* line 168, layout/_layout.scss */
-.login-hint-layer .login-hint .content {
+.guide-layer .login-hint .content {
   margin: 10px 15px 10px 15px;
   color: #515151;
 }
 /* line 171, layout/_layout.scss */
-.login-hint-layer .login-hint .content .strong {
+.guide-layer .login-hint .content .strong {
   color: #19c3f1;
 }
 /* line 176, layout/_layout.scss */
-.login-hint-layer .login-hint:before {
+.guide-layer .login-hint:before {
   border: solid transparent;
   content: ' ';
   height: 0;

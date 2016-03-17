@@ -6,6 +6,13 @@ define(function() {
 		//编译是否需要登录
 		buildAuth: true,
 
+		//引导配置
+		guide: {
+			showIfFirstVisit: true,
+			autoNextDelay: 3000,
+		},
+
+		//chrome扩展app配置
 		extension: {
 			//Chrome app id
 			appId: "hhgmonhbodfiplppmcangkmlfkcnilpd",
@@ -21,6 +28,6 @@ define(function() {
 
 			//烧写速度
 			burnDelay: 250,
-		}
+		},
 	};
 });

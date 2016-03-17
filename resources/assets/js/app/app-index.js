@@ -1,4 +1,4 @@
-define(['jquery', './config', './hardware', './user', './project', './software', './sidebar', './board', './component', './library'], function($, config, hardware, user, project, software, sidebar, board, component, library) {
+define(['jquery', './config', './hardware', './user', './project', './software', './sidebar', './board', './component', './library', './guide'], function($, config, hardware, user, project, software, sidebar, board, component, library, guide) {
 	function init() {
 		initPV();
 		initAjax();
@@ -10,16 +10,8 @@ define(['jquery', './config', './hardware', './user', './project', './software',
 		library.init();
 		hardware.init();
 		software.init(hardware.getNodes);
-		
-		if(config.showFirstVisitHint) {
-			$('.login-hint-layer').on('click', function(){
-				$(this).remove();
-			}).show().delay(3000).queue(function() {
-				$(this).remove();
-			});
-		} else {
-			$('.login-hint-layer').remove();
-		}
+
+		guide.init();
 
 		$.ajax({
 			url: '/config',
