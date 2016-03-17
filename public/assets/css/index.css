@@ -1300,3 +1300,7 @@ body {
   margin-top: 10px;
   font-size: 12px;
 }
+/* line 29, component/_extension-dialog.scss */
+.extension-dialog .x-confirm-content .des .helpless {
+  font-size: 18px;
+}

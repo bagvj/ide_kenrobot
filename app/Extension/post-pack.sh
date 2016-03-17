@@ -4,7 +4,7 @@ DIR=`pwd`
 
 cd `dirname $0`
 
-EXT_NAME="kenrobot-ext"
+EXT_NAME="KenExt"
 
 rm -rf pack pack.pem
 

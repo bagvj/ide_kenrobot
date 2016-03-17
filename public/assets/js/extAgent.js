@@ -12,15 +12,12 @@ define(['jquery-cookie', 'config', 'util', 'user', 'project'], function(_, confi
 
 		checkIsIntalled(function(installed) {
 			if(!installed) {
-				// var w = window.open("_blank");
-				// w.location = launchUrl;
-
 				util.confirm({
 					title: "安装",
 					cls: "extension-dialog",
 					contentCls: "selectable",
 					type: "info",
-					text: '你没有安装啃萝卜平台扩展插件<span class="strong">kenrobot-ext.crx</span>，请按以下步骤操作:<div class="step">Step 1: 点击<a href="http://platform.kenrobot.com/download/kenrobot-ext.crx" title="啃萝卜平台扩展插件">下载</a><br />Step 2: 打开chrome浏览器，在地址栏输入<span class="strong">chrome://extensions</span><br />Step 3: 把<span class="strong">kenrobot-ext.crx</span>拖入浏览器<br />Step 4: 完成安装</div><div class="des">说明: 如果顶部弹出“无法添加来自此网站的应用...”，请点击确定。由于一些你懂的原因，我们不能把插件发布到google应用商店。就算能发布，部分用户也不能...，所以...</div>',
+					text: '你没有安装啃萝卜<span class="strong">KenExt.crx</span>，请按以下步骤操作:<div class="step">Step 1: 点击<a href="http://platform.kenrobot.com/download/KenExt.crx" title="啃萝卜">下载</a><br />Step 2: 打开chrome浏览器，在地址栏输入<span class="strong">chrome://extensions</span><br />Step 3: 把<span class="strong">KenExt.crx</span>拖入浏览器<br />Step 4: 完成安装</div><div class="des">说明: 如果顶部弹出“无法添加来自此网站的应用...”，请点击确定。由于一些你懂的原因，我们不能把插件发布到google应用商店。就算能发布，部分用户也不能...，所以<span class="helpless">╮(╯▽╰)╭</span></div>',
 				});
 				return;
 			}
