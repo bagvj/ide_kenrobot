@@ -39,20 +39,32 @@ define(['jquery'], function($){
 			<div class="x-confirm-close">&times;</div>\
 			<div class="x-confirm-content">' + text + '</div>\
 			<div class="x-confirm-btns">' +
-				(type == "confirm" ? '<button class="cancel">' + cancel + '</button>' : '') + '<button class="confirm">' + ok + '</button>\
+				(type == "confirm" ? '<button class="x-confirm-btn cancel">' + cancel + '</button>' : '') + '<button class="x-confirm-btn confirm">' + ok + '</button>\
 			</div>\
 		</div>';
 		var dialog = $(template);
+		if(args.cls) {
+			dialog.addClass(args.cls);
+		}
+
+		if(args.contentCls) {
+			$('.x-confirm-content', dialog).addClass(args.contentCls);
+		}
+
+		var doClose = function() {
+			dialog.slideUp(200, function() {
+				dialog.remove();
+				$('.dialog-layer').removeClass("active");
+			});
+		}
 
 		$('.x-confirm-btns .confirm', dialog).on('click', function(){
-			dialog.slideUp(100);
-			$('.dialog-layer').removeClass("active");
+			doClose();
 			okFunc && okFunc();
 		});	
 
 		$('.x-confirm-close,.x-confirm-btns .cancel', dialog).on('click', function(){
-			dialog.slideUp(100);
-			$('.dialog-layer').removeClass("active");
+			doClose();
 			cancelFunc && cancelFunc();
 		});
 

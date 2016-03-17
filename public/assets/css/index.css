@@ -87,6 +87,11 @@ body {
   background-color: rgba(123, 133, 145, 0.6);
 }
 
+/* line 30, helper/_helper.scss */
+.strong {
+  font-weight: bold;
+}
+
 /* line 1, layout/_layout.scss */
 .main {
   top: 0;
@@ -773,32 +778,24 @@ body {
   margin: 0 auto;
   position: relative;
 }
-/* line 44, component/_x-widget.scss */
-.x-confirm.x-confirm-info .x-confirm-title {
-  background-color: #ECFBE6;
-}
-/* line 50, component/_x-widget.scss */
-.x-confirm.x-confirm-confirm .x-confirm-title {
-  background-color: #fdf1d8;
-}
-/* line 55, component/_x-widget.scss */
+/* line 43, component/_x-widget.scss */
 .x-confirm .x-confirm-title {
   font-size: 16px;
   height: 36px;
   line-height: 36px;
   text-align: center;
 }
-/* line 63, component/_x-widget.scss */
+/* line 51, component/_x-widget.scss */
 .x-confirm .x-confirm-close {
   font-size: 20px;
   right: 10px;
-  top: 5px;
+  top: 3px;
   z-index: 10;
   float: right;
   position: absolute;
   cursor: pointer;
 }
-/* line 73, component/_x-widget.scss */
+/* line 61, component/_x-widget.scss */
 .x-confirm .x-confirm-content {
   height: 110px;
   background-color: white;
@@ -806,26 +803,45 @@ body {
   justify-content: center;
   align-items: center;
 }
-/* line 81, component/_x-widget.scss */
+/* line 69, component/_x-widget.scss */
 .x-confirm .x-confirm-btns {
   height: 50px;
   background-color: white;
   color: white;
+  position: relative;
 }
-/* line 86, component/_x-widget.scss */
-.x-confirm .x-confirm-btns > button {
+/* line 75, component/_x-widget.scss */
+.x-confirm .x-confirm-btns .x-confirm-btn {
   width: 100px;
   height: 30px;
-  float: right;
-  margin-right: 20px;
+  display: block;
 }
-/* line 93, component/_x-widget.scss */
-.x-confirm .x-confirm-btns .confirm {
+/* line 80, component/_x-widget.scss */
+.x-confirm .x-confirm-btns .x-confirm-btn.confirm {
   background-color: #4bc1ec;
 }
-/* line 97, component/_x-widget.scss */
-.x-confirm .x-confirm-btns .cancel {
+/* line 84, component/_x-widget.scss */
+.x-confirm .x-confirm-btns .x-confirm-btn.cancel {
   background-color: #ea9c68;
+}
+
+/* line 92, component/_x-widget.scss */
+.x-confirm-info .x-confirm-title {
+  background-color: #ECFBE6;
+}
+/* line 96, component/_x-widget.scss */
+.x-confirm-info .x-confirm-btn {
+  margin: 0 auto;
+}
+
+/* line 102, component/_x-widget.scss */
+.x-confirm-confirm .x-confirm-title {
+  background-color: #fdf1d8;
+}
+/* line 106, component/_x-widget.scss */
+.x-confirm-confirm .x-confirm-btn {
+  float: right;
+  margin-right: 20px;
 }
 
 /* line 1, component/_dialog.scss */
@@ -1250,4 +1266,37 @@ body {
 /* line 56, component/_save-dialog.scss */
 #save-dialog .save:hover {
   color: white;
+}
+
+/* line 1, component/_extension-dialog.scss */
+.extension-dialog {
+  width: 500px;
+}
+/* line 4, component/_extension-dialog.scss */
+.extension-dialog .x-confirm-title {
+  color: white;
+  background-color: #939ba4;
+}
+/* line 9, component/_extension-dialog.scss */
+.extension-dialog .x-confirm-content {
+  height: 220px;
+  display: block;
+  padding: 15px;
+}
+/* line 14, component/_extension-dialog.scss */
+.extension-dialog .x-confirm-content .step {
+  margin-top: 10px;
+  margin-left: 24px;
+  line-height: 24px;
+}
+/* line 18, component/_extension-dialog.scss */
+.extension-dialog .x-confirm-content .step a {
+  color: #4bc1ec;
+  text-decoration: none;
+}
+/* line 24, component/_extension-dialog.scss */
+.extension-dialog .x-confirm-content .des {
+  margin-left: 24px;
+  margin-top: 10px;
+  font-size: 12px;
 }
