@@ -10,10 +10,11 @@ define(['jquery-cookie', 'config', 'util', 'user', 'project'], function(_, confi
 			return;
 		}
 
-
 		checkIsIntalled(function(installed) {
 			if(!installed) {
-				window.open(launchUrl);
+				var w = window.open("_blank");
+				w.location = launchUrl;
+				// window.open(launchUrl);
 				return;
 			}
 
