@@ -10,12 +10,6 @@ define(['jquery', 'config', 'hardware', 'user', 'project', 'software', 'sidebar'
 		library.init();
 		hardware.init();
 		software.init(hardware.getNodes);
-
-		if(config.showUnloadDialog) {
-			$(window).bind('beforeunload', function(){
-				return '您的项目尚未保存，确定离开此页面吗？';
-			});
-		}
 		
 		if(config.showFirstVisitHint) {
 			$('.login-hint-layer').on('click', function(){
