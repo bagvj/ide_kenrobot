@@ -39,7 +39,7 @@ class HomeController extends Controller {
 		if (empty($_COOKIE['has_visit'])) {
 			$has_visit = 0;
 		}
-		setcookie('has_visit', 1, null, "", ".kenrobot.com");
+		// setcookie('has_visit', 1, null, "", ".kenrobot.com");
 
 		return view("index", compact('user', 'mainpage', 'qrcodeurl', 'register_url', 'key', 'boards', 'components', 'libraries', 'has_visit'));
 	}
@@ -92,7 +92,7 @@ class HomeController extends Controller {
 				$result['url'] = "/download/$uri";
 			} else {
 				$result['message'] = "编译失败";
-				// $result['output'] = $output;
+				$result['output'] = $output;
 			}
 		} else {
 			$result['message'] = "非法请求";
