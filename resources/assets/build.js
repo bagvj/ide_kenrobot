@@ -1,6 +1,6 @@
 {
 	appDir: "./",
-	dir: "../../public/assets",
+	dir: "../../public/test",
 	mainConfigFile: "./js/common.js",
 	baseUrl: "./js/lib",
 	fileExclusionRegExp: /build\.(js|txt)/,

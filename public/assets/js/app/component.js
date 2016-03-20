@@ -1,4 +1,4 @@
-define(['jquery', 'jquery-ui', 'typeahead', 'EventManager', 'util', 'hardware'], function($, _, _, EventManager, util, hardware) {
+define(['jquery', 'jquery-ui', 'bootstrap-typeahead', './EventManager', './util', './hardware'], function($, _, _, EventManager, util, hardware) {
 	var current;
 	var components;
 	var list;

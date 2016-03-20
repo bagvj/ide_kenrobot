@@ -1,0 +1,24 @@
+.arduino-driver-dialog {
+	width: 500px;
+
+	.x-confirm-title {
+		color: white;
+	    background-color: #939ba4;
+	}
+	
+	.x-confirm-content {
+		height: 150px;
+		display: block;
+		padding: 15px;
+
+		.step {
+			margin-top: 10px;
+			margin-left: 24px;
+			line-height: 24px;
+			a {
+				color: #4bc1ec;
+				text-decoration: none;
+			}
+		}
+	}
+}

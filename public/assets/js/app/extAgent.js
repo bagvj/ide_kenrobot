@@ -1,4 +1,4 @@
-define(['jquery-cookie', 'config', 'util', 'user', 'project'], function(_, config, util, user, project) {
+define(['jquery.cookie', './config', './util', './user', './project'], function(_, config, util, user, project) {
 	var timer;
 
 	var messages;

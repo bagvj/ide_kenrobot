@@ -1,4 +1,4 @@
-define(['ace', 'ace-ext-language-tools', 'jquery', 'EventManager', 'code'], function(_, _, $, EventManager, code) {
+define(['ace/ace', 'ace/ext-language_tools', 'jquery', './EventManager', './code'], function(_, _, $, EventManager, code) {
 	var editor;
 
 	function init(getNodes) {

@@ -1,4 +1,4 @@
-define(['jquery', 'jquery-ui', 'jquery-cookie', 'goJS', 'nodeTemplate', 'EventManager', 'util'], function($, _, _, _, template, EventManager, util) {
+define(['jquery', 'jquery-ui', 'jquery.cookie', 'go', './nodeTemplate', './EventManager', './util'], function($, _, _, _, template, EventManager, util) {
 	//C++关键字
 	var keywords = [
 		"asm", "do", "if", "return", "typedef", "auto", "double",

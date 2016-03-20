@@ -10,10 +10,9 @@ define(['jquery.cookie', './config', './util', './user', './project'], function(
 			return;
 		}
 
-
 		checkIsIntalled(function(installed) {
 			if(!installed) {
-				window.open(launchUrl);
+				showInstallDialog();
 				return;
 			}
 
@@ -71,6 +70,8 @@ define(['jquery.cookie', './config', './util', './user', './project'], function(
 				doBuild(request);
 			} else if(action == "setCookie") {
 				doSetCookie(request);
+			} else if(action == "arduinoDriver") {
+				showArduinoDriverDialog();
 			}
 		}
 	}
@@ -110,6 +111,43 @@ define(['jquery.cookie', './config', './util', './user', './project'], function(
 			action: request.action,
 			result: true,
 		});
+	}
+
+	function showInstallDialog() {
+		util.confirm({
+			title: "安装",
+			cls: "extension-dialog",
+			contentCls: "selectable",
+			type: "info",
+			text: '你没有安装啃萝卜<span class="strong">KenExt.crx</span>，请按以下步骤操作:<div class="step">Step 1: 点击<a href="http://platform.kenrobot.com/download/KenExt.crx" title="啃萝卜">下载</a><br />Step 2: 打开chrome浏览器，在地址栏输入<span class="strong">chrome://extensions</span><br />Step 3: 把<span class="strong">KenExt.crx</span>拖入浏览器<br />Step 4: 完成安装</div><div class="des">说明: 如果顶部弹出“无法添加来自此网站的应用...”，请点击确定。由于一些你懂的原因，我们不能把插件发布到google应用商店。就算能发布，部分用户也不能...，所以<span class="helpless">╮(╯▽╰)╭</span></div>',
+		});
+	}
+
+	var isDialogShow;
+	function showArduinoDriverDialog() {
+		if(isDialogShow) {
+			return;
+		}
+		
+		var bit;
+		if (navigator.userAgent.indexOf("WOW64") != -1 || navigator.userAgent.indexOf("Win64") != -1) {
+			bit = 64;
+		} else {
+			bit = 32;
+		}
+		var driverUrl = "http://platform.kenrobot.com/download/arduino-driver-x" + bit + ".zip";
+
+		util.confirm({
+			title: "驱动问题",
+			cls: "arduino-driver-dialog",
+			contentCls: "selectable",
+			type: "info",
+			text: '如果你遇到了Arduino<span class="strong">驱动问题</span>，请按以下步骤操作:<div class="step">Step 1: 点击<a href="' + driverUrl + '" title="Arduino驱动">下载</a>并解压<br />Step 2: 运行<span class="strong">arduino驱动安装.exe</span><br />Step 3: 完成安装</div>',
+			cancelFunc: function() {
+				isDialogShow = false;
+			}
+		});
+		isDialogShow = true;
 	}
 
 	return {

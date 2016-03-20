@@ -15,7 +15,7 @@
 		<link href="/assets/css/index.css" rel="stylesheet" />
 		<link href="/assets/css/theme/default.css" rel="stylesheet" />
 
-		<script src="/assets/js/lib/require.js" data-main="/assets/js/main"></script>
+		<script src="/assets/js/lib/require.js" data-main="/assets/js/index"></script>
 	</head>
 	<body class="unselectable theme-default" data-theme="default">
 		<div class="main">

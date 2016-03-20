@@ -1,5 +1,6 @@
 define(['jquery', './config', './hardware', './user', './project', './software', './sidebar', './board', './component', './library'], function($, config, hardware, user, project, software, sidebar, board, component, library) {
 	function init() {
+		initPV();
 		initAjax();
 
 		user.init();
@@ -9,12 +10,6 @@ define(['jquery', './config', './hardware', './user', './project', './software',
 		library.init();
 		hardware.init();
 		software.init(hardware.getNodes);
-
-		if(config.showUnloadDialog) {
-			$(window).bind('beforeunload', function(){
-				return '您的项目尚未保存，确定离开此页面吗？';
-			});
-		}
 		
 		if(config.showFirstVisitHint) {
 			$('.login-hint-layer').on('click', function(){
@@ -38,6 +33,14 @@ define(['jquery', './config', './hardware', './user', './project', './software',
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			}
 		});
+	}
+
+	//pv统计
+	function initPV() {
+		var hm = document.createElement("script");
+		hm.src = "//hm.baidu.com/hm.js?6518098de0bee39bef219952dbbae669";
+		var s = document.getElementsByTagName("script")[0]; 
+		s.parentNode.insertBefore(hm, s);
 	}
 
 	function onLoadSuccess(result) {

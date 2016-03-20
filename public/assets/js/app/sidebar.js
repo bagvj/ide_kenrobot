@@ -1,4 +1,4 @@
-define(['jquery', 'EventManager', 'util', 'config', 'user', 'project', 'board', 'software', 'extAgent'], function($, EventManager, util, config, user, project, board, software, extAgent) {
+define(['jquery', './EventManager', './util', './config', './user', './project', './board', './software', './extAgent'], function($, EventManager, util, config, user, project, board, software, extAgent) {
 	function init() {
 		$('.sidebar .logo').on('click', onLogoClick);
 

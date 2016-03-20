@@ -1,4 +1,4 @@
-define(['jquery', 'EventManager', 'util'], function($, EventManager, util) {
+define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 	var userInfo;
 	var loginCheckTimer;
 

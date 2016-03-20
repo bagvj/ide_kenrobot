@@ -49,7 +49,7 @@ define(['jquery', './EventManager', './util', './config', './user', './project',
 		project.build(function(result) {
 			util.message(result.message);
 			if (result.status == 0 && result.url) {
-				window.open(result.url);
+				window.location.href = result.url;
 			}
 		});
 	}
