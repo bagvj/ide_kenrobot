@@ -2,7 +2,7 @@
 
 DIR=`pwd`
 
-PACK="../../public/test"
+PACK="../../public/assets"
 
 cd `dirname $0`
 

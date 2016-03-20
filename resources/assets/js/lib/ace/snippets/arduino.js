@@ -1,4 +1,4 @@
-define("ace/snippets/c_cpp",["require","exports","module"], function(require, exports, module) {
+ace.define("ace/snippets/arduino",["require","exports","module"], function(require, exports, module) {
 "use strict";
 
 exports.snippetText = "## STL Collections\n\
@@ -133,6 +133,6 @@ snippet lld\n\
 		${3:/* code */}\n\
 	}${4}\n\
 ";
-exports.scope = "c_cpp";
+exports.scope = "arduino";
 
 });

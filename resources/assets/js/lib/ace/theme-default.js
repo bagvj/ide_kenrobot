@@ -1,4 +1,4 @@
-define("ace/theme/default",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
+ace.define("ace/theme/default",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
 
 exports.isdefault = true;
 exports.cssClass = "ace-default";
@@ -124,6 +124,9 @@ background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgb
     border: none;\
     margin-top: 0;\
     background: #dfeafa;\
+}\
+.ace_rightAlignedText {\
+    display: none;\
 }\
 .ace_scrollbar.ace_scrollbar-v::-webkit-scrollbar-track {\
   -webkit-box-shadow: none;\
