@@ -10,10 +10,7 @@
 		<meta name="csrf-token" content="{{csrf_token()}}" />
 
 		<link href="/assets/images/favicon.ico" type="image/x-icon" rel="shortcut icon" />
-		<link href="/assets/css/bootstrap.css" rel="stylesheet" />
-		<link href="/assets/css/iconfont.css" rel="stylesheet" />
 		<link href="/assets/css/index.css" rel="stylesheet" />
-		<link href="/assets/css/theme/default.css" rel="stylesheet" />
 
 		<script src="/assets/js/lib/require.js" data-main="/assets/js/index"></script>
 	</head>

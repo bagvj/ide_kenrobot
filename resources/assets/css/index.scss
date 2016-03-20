@@ -1,5 +1,8 @@
 @charset "utf-8";
 
+@import "_bootstrap.scss";
+@import "_iconfont.scss";
+
 @import "compass/css3";
 @import "base/_reset.scss";
 
@@ -16,3 +19,5 @@
 @import "component/_save-dialog.scss";
 @import "component/_extension-dialog.scss";
 @import "component/_arduino-driver-dialog.scss";
+
+@import "theme/_default.scss";
