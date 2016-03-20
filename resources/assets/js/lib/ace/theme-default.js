@@ -1,4 +1,4 @@
-ace.define("ace/theme/default",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
+define("ace/theme/default",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
 
 exports.isdefault = true;
 exports.cssClass = "ace-default";
