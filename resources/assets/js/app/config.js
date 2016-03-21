@@ -1,7 +1,7 @@
 define(function() {
 	return {
 		//第一次访问时，是否显示引导
-		showFirstVisitHint: true,
+		// needPV: true,
 
 		//编译是否需要登录
 		buildAuth: true,

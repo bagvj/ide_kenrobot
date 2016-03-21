@@ -1,14 +1,29 @@
-define(['jquery', './config'], function($, config) {
+define(['jquery', './config', './util'], function($, config, util) {
 	var guideConfig;
 	function init() {
 		guideConfig = config.guide;
 
+		var guideLayer = $('.guide-layer');
 		if(guideConfig.showIfFirstVisit) {
-			$('.guide-layer').on('click', function(){
-				$(this).remove();
-			}).show().delay(3000).queue(function() {
-				$(this).remove();
-			});
+			guideLayer.on('click', next).show();
+			next();
+		} else {
+			guideLayer.remove();
+		}
+	}
+
+	function next() {
+		var steps = $('.guide-step');
+		var index = steps.filter('.active').index();
+		if(index + 1 < steps.length) {
+			index = index + 1;
+			var nextStep = steps.eq(index);
+			util.toggleActive(nextStep, 'div');
+			if(index + 1 == steps.length) {
+				nextStep.css({
+					left: ($(window).width() - nextStep.width()) / 2,
+				});
+			}
 		} else {
 			$('.guide-layer').remove();
 		}

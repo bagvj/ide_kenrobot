@@ -149,40 +149,6 @@
 }
 
 .guide-layer {
-	z-index: 100;
 	display: none;
-
-	.login-hint {
-		top: 10px;
-		left: 70px;
-		position: absolute;
-		background-color: white;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
-
-		.title {
-			margin-top: 10px;
-			margin-left: 15px;
-			color: #fa764a;
-		}
-
-		.content {
-			margin: 10px 15px 10px 15px;
-			color: #515151;
-			.strong {
-				color: #19c3f1;
-			}
-		}
-
-		&:before {
-			border: solid transparent;
-			content: ' ';
-			height: 0;
-			width: 0;
-			border-width: 9px;
-			border-right-color: white;
-			left: -18px;
-			top: 15px;
-			position: absolute;
-		}
-	}
+	z-index: 4;
 }

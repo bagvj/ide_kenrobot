@@ -29,10 +29,12 @@ define(['jquery', './config', './hardware', './user', './project', './software',
 
 	//pv统计
 	function initPV() {
-		var hm = document.createElement("script");
-		hm.src = "//hm.baidu.com/hm.js?6518098de0bee39bef219952dbbae669";
-		var s = document.getElementsByTagName("script")[0]; 
-		s.parentNode.insertBefore(hm, s);
+		if(config.needPV) {
+			var hm = document.createElement("script");
+			hm.src = "//hm.baidu.com/hm.js?6518098de0bee39bef219952dbbae669";
+			var s = document.getElementsByTagName("script")[0]; 
+			s.parentNode.insertBefore(hm, s);
+		}
 	}
 
 	function onLoadSuccess(result) {

@@ -5,6 +5,10 @@
 		left: 30px;
 		position: absolute;
 
+		.wrap {
+			position: relative;
+		}
+
 		li {
 			margin-bottom: 20px;
 			text-align: center;
@@ -30,6 +34,10 @@
 				& > i {
 					font-size: 18px;
 				}
+			}
+
+			&:last-child {
+				margin-bottom: 0;
 			}
 
 			&:hover {
@@ -66,6 +74,12 @@
 		}
 
 		.interactive-mode {
+			margin-bottom: 20px;
+			
+			li {
+				margin-bottom: 0;
+			}
+
 			.tips {
 				width: 100px;
 				right: -116px;
@@ -73,9 +87,7 @@
 		}
 
 		.mode {
-			&:last-child {
-				margin-bottom: 0;
-			}
+			
 		}
 	}
 
@@ -96,7 +108,7 @@
 	.copyright {
 		width: 100%;
 		bottom: 0;
-		z-index: 99;
+		z-index: 3;
 		position: absolute;
 
 		.alert {
@@ -115,7 +127,7 @@
 	}
 
 	.name-dialog {
-		z-index: 998;
+		z-index: 4;
 		top: 90px;
 		width: 100%;
 		position: absolute;

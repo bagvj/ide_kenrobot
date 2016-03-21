@@ -11230,43 +11230,8 @@ body {
 
 /* line 151, layout/_layout.scss */
 .guide-layer {
-  z-index: 100;
   display: none;
-}
-/* line 155, layout/_layout.scss */
-.guide-layer .login-hint {
-  top: 10px;
-  left: 70px;
-  position: absolute;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
-}
-/* line 162, layout/_layout.scss */
-.guide-layer .login-hint .title {
-  margin-top: 10px;
-  margin-left: 15px;
-  color: #fa764a;
-}
-/* line 168, layout/_layout.scss */
-.guide-layer .login-hint .content {
-  margin: 10px 15px 10px 15px;
-  color: #515151;
-}
-/* line 171, layout/_layout.scss */
-.guide-layer .login-hint .content .strong {
-  color: #19c3f1;
-}
-/* line 176, layout/_layout.scss */
-.guide-layer .login-hint:before {
-  border: solid transparent;
-  content: ' ';
-  height: 0;
-  width: 0;
-  border-width: 9px;
-  border-right-color: white;
-  left: -18px;
-  top: 15px;
-  position: absolute;
+  z-index: 4;
 }
 
 /* line 3, layout/_sidebar.scss */
@@ -11557,6 +11522,10 @@ body {
   position: absolute;
 }
 /* line 8, layout/_hardware.scss */
+.hardware .tools .wrap {
+  position: relative;
+}
+/* line 12, layout/_hardware.scss */
 .hardware .tools li {
   margin-bottom: 20px;
   text-align: center;
@@ -11566,25 +11535,29 @@ body {
   border-radius: 50%;
   position: relative;
 }
-/* line 17, layout/_hardware.scss */
+/* line 21, layout/_hardware.scss */
 .hardware .tools li > i {
   font-size: 20px;
   line-height: 30px;
   display: block;
 }
-/* line 24, layout/_hardware.scss */
+/* line 28, layout/_hardware.scss */
 .hardware .tools li[data-mode="modern"] > i, .hardware .tools li[data-mode="drag"] > i {
   font-size: 22px;
 }
-/* line 30, layout/_hardware.scss */
+/* line 34, layout/_hardware.scss */
 .hardware .tools li[data-mode="clone"] > i {
   font-size: 18px;
 }
-/* line 36, layout/_hardware.scss */
+/* line 39, layout/_hardware.scss */
+.hardware .tools li:last-child {
+  margin-bottom: 0;
+}
+/* line 44, layout/_hardware.scss */
 .hardware .tools li:hover .tips {
   display: block;
 }
-/* line 41, layout/_hardware.scss */
+/* line 49, layout/_hardware.scss */
 .hardware .tools li .tips {
   font-size: 12px;
   height: 30px;
@@ -11597,7 +11570,7 @@ body {
   position: absolute;
   display: none;
 }
-/* line 54, layout/_hardware.scss */
+/* line 62, layout/_hardware.scss */
 .hardware .tools li .tips:before {
   border: solid transparent;
   content: ' ';
@@ -11609,38 +11582,42 @@ body {
   top: 9px;
   position: absolute;
 }
-/* line 69, layout/_hardware.scss */
+/* line 76, layout/_hardware.scss */
+.hardware .tools .interactive-mode {
+  margin-bottom: 20px;
+}
+/* line 79, layout/_hardware.scss */
+.hardware .tools .interactive-mode li {
+  margin-bottom: 0;
+}
+/* line 83, layout/_hardware.scss */
 .hardware .tools .interactive-mode .tips {
   width: 100px;
   right: -116px;
 }
-/* line 76, layout/_hardware.scss */
-.hardware .tools .mode:last-child {
-  margin-bottom: 0;
-}
-/* line 82, layout/_hardware.scss */
+/* line 94, layout/_hardware.scss */
 .hardware .center {
   height: 100%;
 }
-/* line 86, layout/_hardware.scss */
+/* line 98, layout/_hardware.scss */
 .hardware .follow {
   top: 0;
   left: 0;
   position: absolute;
 }
-/* line 90, layout/_hardware.scss */
+/* line 102, layout/_hardware.scss */
 .hardware .follow .follower {
   opacity: 0.5;
   position: absolute;
 }
-/* line 96, layout/_hardware.scss */
+/* line 108, layout/_hardware.scss */
 .hardware .copyright {
   width: 100%;
   bottom: 0;
-  z-index: 99;
+  z-index: 3;
   position: absolute;
 }
-/* line 102, layout/_hardware.scss */
+/* line 114, layout/_hardware.scss */
 .hardware .copyright .alert {
   width: 560px;
   font-size: 12px;
@@ -11654,20 +11631,20 @@ body {
   margin: 0 auto;
   color: #676767;
 }
-/* line 117, layout/_hardware.scss */
+/* line 129, layout/_hardware.scss */
 .hardware .name-dialog {
-  z-index: 998;
+  z-index: 4;
   top: 90px;
   width: 100%;
   position: absolute;
   display: none;
 }
-/* line 124, layout/_hardware.scss */
+/* line 136, layout/_hardware.scss */
 .hardware .name-dialog .wrap {
   margin: 0 auto;
   width: 250px;
 }
-/* line 129, layout/_hardware.scss */
+/* line 141, layout/_hardware.scss */
 .hardware .name-dialog .name-label {
   display: block;
   background-color: #F1C933;
@@ -11680,7 +11657,7 @@ body {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
-/* line 142, layout/_hardware.scss */
+/* line 154, layout/_hardware.scss */
 .hardware .name-dialog .name {
   border: 2px solid #F1C933;
   border-top-right-radius: 4px;
@@ -12315,6 +12292,109 @@ body {
 .arduino-driver-dialog .x-confirm-content .step a {
   color: #4bc1ec;
   text-decoration: none;
+}
+
+/* line 1, component/_guide.scss */
+.guide-highlight {
+  z-index: 998;
+  position: relative;
+}
+
+/* line 6, component/_guide.scss */
+.guide-step {
+  display: none;
+  background-color: white;
+  position: absolute;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
+  padding: 10px 15px;
+  z-index: 999;
+}
+/* line 14, component/_guide.scss */
+.guide-step.active {
+  display: block;
+}
+/* line 18, component/_guide.scss */
+.guide-step .guide-title {
+  margin-bottom: 10px;
+  color: #fa764a;
+}
+/* line 23, component/_guide.scss */
+.guide-step .guide-content {
+  color: #515151;
+}
+/* line 25, component/_guide.scss */
+.guide-step .guide-content .strong {
+  color: #19c3f1;
+}
+/* line 30, component/_guide.scss */
+.guide-step:before {
+  border: solid transparent;
+  content: ' ';
+  height: 0;
+  width: 0;
+  border-width: 9px;
+  border-right-color: white;
+  position: absolute;
+}
+
+/* line 41, component/_guide.scss */
+.guide-login {
+  top: 10px;
+  left: 70px;
+}
+/* line 45, component/_guide.scss */
+.guide-login:before {
+  left: -18px;
+  top: 15px;
+}
+
+/* line 51, component/_guide.scss */
+.guide-interactive-mode {
+  top: 20px;
+  left: 350px;
+}
+/* line 55, component/_guide.scss */
+.guide-interactive-mode:before {
+  left: -18px;
+  top: 15px;
+}
+
+/* line 61, component/_guide.scss */
+.guide-code-edit {
+  top: 20px;
+  left: 350px;
+}
+/* line 65, component/_guide.scss */
+.guide-code-edit:before {
+  border-right: none;
+  border-left-color: white;
+  left: 140px;
+  top: 32px;
+}
+
+/* line 73, component/_guide.scss */
+.guide-burn {
+  top: 285px;
+  left: 70px;
+}
+/* line 77, component/_guide.scss */
+.guide-burn:before {
+  left: -18px;
+  top: 32px;
+}
+
+/* line 83, component/_guide.scss */
+.guide-enjoy {
+  top: 200px;
+  padding: 20px 40px;
+}
+/* line 87, component/_guide.scss */
+.guide-enjoy .guide-content {
+  color: #fa764a;
+}
+/* line 91, component/_guide.scss */
+.guide-enjoy:before {
+  border: none;
 }
 
 /* line 7, theme/_default.scss */

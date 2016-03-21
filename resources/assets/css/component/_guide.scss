@@ -1,0 +1,94 @@
+.guide-highlight {
+	z-index: 998;
+	position: relative;
+}
+
+.guide-step {
+	display: none;
+	background-color: white;
+	position: absolute;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
+	padding: 10px 15px;
+	z-index: 999;
+
+	&.active {
+		display: block;
+	}
+
+	.guide-title {
+		margin-bottom: 10px;
+		color: #fa764a;
+	}
+
+	.guide-content {
+		color: #515151;
+		.strong {
+			color: #19c3f1;
+		}
+	}
+
+	&:before {
+		border: solid transparent;
+		content: ' ';
+		height: 0;
+		width: 0;
+		border-width: 9px;
+		border-right-color: white;
+		position: absolute;
+	}
+}
+
+.guide-login {
+	top: 10px;
+	left: 70px;
+
+	&:before {
+		left: -18px;
+		top: 15px;
+	}
+}
+
+.guide-interactive-mode {
+	top: 20px;
+	left: 350px;
+
+	&:before {
+		left: -18px;
+		top: 15px;
+	}
+}
+
+.guide-code-edit {
+	top: 20px;
+	left: 350px;
+	
+	&:before {
+		border-right: none;
+		border-left-color: white;
+		left: 140px;
+		top: 32px;
+	}
+}
+
+.guide-burn {
+	top: 285px;
+	left: 70px;
+	
+	&:before {
+		left: -18px;
+		top: 32px;
+	}
+}
+
+.guide-enjoy {
+	top: 200px;
+	padding: 20px 40px;
+
+	.guide-content {
+		color: #fa764a;
+	}
+
+	&:before {
+		border: none;
+	}
+}
