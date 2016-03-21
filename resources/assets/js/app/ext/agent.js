@@ -29,7 +29,6 @@ define(['../util', '../user', './burn-dialog'], function(util, user, burnDialog)
 	}
 
 	function checkExt(callback) {
-		console.log("checkExt: " + config.appId);
 		chrome.runtime.sendMessage(config.appId, "ping", function(response) {
 			if(response && response.action == "ping" && response.result == "pong") {
 				callback(true);

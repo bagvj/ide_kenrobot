@@ -11856,8 +11856,9 @@ body {
 #login_dialog .tab.active {
   display: block;
 }
-/* line 21, component/_login-dialog.scss */
-#login_dialog .qrLogin {
+
+/* line 22, component/_login-dialog.scss */
+.qrLogin {
   background-color: rgba(0, 0, 0, 0.5);
   border: 1px solid transparent;
   color: black;
@@ -11869,8 +11870,9 @@ body {
   padding-bottom: 20px;
   position: relative;
 }
-/* line 34, component/_login-dialog.scss */
-#login_dialog .baseLogin {
+
+/* line 35, component/_login-dialog.scss */
+.baseLogin {
   background-color: rgba(0, 0, 0, 0.5);
   border: 1px solid transparent;
   color: black;
@@ -11883,8 +11885,9 @@ body {
   position: relative;
   z-index: 10;
 }
-/* line 48, component/_login-dialog.scss */
-#login_dialog .baseLoginBtn {
+
+/* line 49, component/_login-dialog.scss */
+.baseLoginBtn {
   display: none;
   outline-style: none;
   border: 0;
@@ -11907,8 +11910,9 @@ body {
   width: 60px;
   z-index: 101;
 }
-/* line 72, component/_login-dialog.scss */
-#login_dialog .qrLoginBtn {
+
+/* line 73, component/_login-dialog.scss */
+.qrLoginBtn {
   display: none;
   border: 0;
   background-image: url(../images/loginBtns.png);
@@ -11930,8 +11934,9 @@ body {
   width: 60px;
   z-index: 101;
 }
-/* line 95, component/_login-dialog.scss */
-#login_dialog .qrLogin .tips {
+
+/* line 96, component/_login-dialog.scss */
+.qrLogin .tips {
   font-family: "Microsoft YaHei", "Helvetica Neue";
   font-size: 14px;
   font-weight: lighter;
@@ -11940,16 +11945,18 @@ body {
   text-align: center;
   padding: 6px 0;
 }
-/* line 105, component/_login-dialog.scss */
-#login_dialog .qrLogin .qrcode {
+
+/* line 106, component/_login-dialog.scss */
+.qrLogin .qrcode {
   padding-top: 10px;
   width: 200px;
   height: 200px;
   display: block;
   margin: 0 auto;
 }
-/* line 113, component/_login-dialog.scss */
-#login_dialog .baseLogin .tips {
+
+/* line 114, component/_login-dialog.scss */
+.baseLogin .tips {
   color: white;
   display: block;
   font-size: 18px;
@@ -11959,16 +11966,18 @@ body {
   margin: 26px auto 10px auto;
   text-align: center;
 }
-/* line 124, component/_login-dialog.scss */
-#login_dialog .baseLogin .message {
+
+/* line 125, component/_login-dialog.scss */
+.baseLogin .message {
   color: #f00;
   font-size: 14px;
   height: 20px;
   margin-bottom: 15px;
   text-align: center;
 }
-/* line 132, component/_login-dialog.scss */
-#login_dialog .baseLogin .field {
+
+/* line 133, component/_login-dialog.scss */
+.baseLogin .field {
   color: black;
   display: block;
   font-size: 12px;
@@ -11981,12 +11990,14 @@ body {
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
 }
-/* line 146, component/_login-dialog.scss */
-#login_dialog .baseLogin .field:first-child {
+
+/* line 147, component/_login-dialog.scss */
+.baseLogin .field:first-child {
   margin-top: 20px;
 }
-/* line 150, component/_login-dialog.scss */
-#login_dialog .baseLogin .field label {
+
+/* line 151, component/_login-dialog.scss */
+.baseLogin .field label {
   border-bottom-color: #a7a7a7;
   border-bottom-style: solid;
   border-bottom-width: 1px;
@@ -12013,16 +12024,19 @@ body {
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
 }
-/* line 178, component/_login-dialog.scss */
-#login_dialog .baseLogin .field .email-icon {
+
+/* line 179, component/_login-dialog.scss */
+.baseLogin .field .email-icon {
   background: url("../images/email.png") no-repeat center;
 }
-/* line 182, component/_login-dialog.scss */
-#login_dialog .baseLogin .field .password-icon {
+
+/* line 183, component/_login-dialog.scss */
+.baseLogin .field .password-icon {
   background: url("../images/password.png") no-repeat center;
 }
-/* line 186, component/_login-dialog.scss */
-#login_dialog .baseLogin .field input {
+
+/* line 187, component/_login-dialog.scss */
+.baseLogin .field input {
   -webkit-appearance: none;
   -webkit-rtl-ordering: logical;
   -webkit-user-select: text;
@@ -12069,28 +12083,32 @@ body {
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
 }
-/* line 234, component/_login-dialog.scss */
-#login_dialog .baseLogin .remember {
+
+/* line 235, component/_login-dialog.scss */
+.baseLogin .remember {
   margin-bottom: 20px;
 }
-/* line 238, component/_login-dialog.scss */
-#login_dialog .baseLogin .remember input {
+
+/* line 239, component/_login-dialog.scss */
+.baseLogin .remember input {
   width: 15px;
   height: 15px;
   margin-left: 40px;
   line-height: 20px;
   vertical-align: middle;
 }
-/* line 246, component/_login-dialog.scss */
-#login_dialog .baseLogin .remember label {
+
+/* line 247, component/_login-dialog.scss */
+.baseLogin .remember label {
   margin-left: 27px;
   font-size: 12px;
   color: #8d9092;
   vertical-align: middle;
   line-height: 20px;
 }
-/* line 254, component/_login-dialog.scss */
-#login_dialog .baseLogin .btn-login {
+
+/* line 255, component/_login-dialog.scss */
+.baseLogin .btn-login {
   -webkit-appearance: none;
   -webkit-rtl-ordering: logical;
   -webkit-user-select: none;
@@ -12108,8 +12126,9 @@ body {
   margin-left: 30px;
   font-family: "Microsoft YaHei", "Helvetica Neue";
 }
-/* line 273, component/_login-dialog.scss */
-#login_dialog .baseLogin .btn-register {
+
+/* line 274, component/_login-dialog.scss */
+.baseLogin .btn-register {
   -webkit-appearance: none;
   -webkit-rtl-ordering: logical;
   -webkit-user-select: none;
@@ -12128,7 +12147,7 @@ body {
   font-family: "Microsoft YaHei", "Helvetica Neue";
 }
 
-/* line 295, component/_login-dialog.scss */
+/* line 293, component/_login-dialog.scss */
 #use_weixin {
   position: absolute;
   height: auto;
@@ -12138,12 +12157,12 @@ body {
   z-index: 105;
   display: none;
 }
-/* line 304, component/_login-dialog.scss */
+/* line 302, component/_login-dialog.scss */
 #use_weixin img {
   height: 512px;
   width: 350px;
 }
-/* line 309, component/_login-dialog.scss */
+/* line 307, component/_login-dialog.scss */
 #use_weixin.active {
   display: block;
 }
