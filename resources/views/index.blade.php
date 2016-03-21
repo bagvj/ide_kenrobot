@@ -177,7 +177,7 @@
 					<i class="iconfont icon-close1"></i>
 				</div>
 				<div>
-					<a href="javascript:;" title="返回" class="baseLoginBtn" data-action="baseLogin active" style="display:none;"></a>
+					<a title="返回" class="baseLoginBtn" data-action="baseLogin active" style="display:none;"></a>
 					<div class="tab baseLogin active">
 						<div class="tips">登录到啃萝卜</div>
 						<form>
@@ -201,7 +201,7 @@
 							</div>
 						</form>
 					</div>
-					<a href="javascript:;" title="返回" class="qrLoginBtn" data-action="qrLogin"></a>
+					<a title="返回" class="qrLoginBtn" data-action="qrLogin"></a>
 					<div class="tab qrLogin">
 						<div class="tips">请使用微信扫一扫</div>
 						<div class="tips">扫码关注后即可直接登录</div>
@@ -248,10 +248,40 @@
 			</div>
 		</div>
 		@if(!$has_visit)
-		<div class="guide-layer mask">
-			<div class="login-hint">
-				<div class="title">提示：</div>
-				<div class="content">点击此处即可弹出<span class="strong">【登录】</span>窗口<br />登录后可解锁更多功能哦<br />推荐使用Google Chrome浏览器</div>
+		<div class="mask guide-layer">
+			<div class="guide-step guide-login">
+				<div class="guide-title">提示：</div>
+				<div class="guide-content">
+					点击此处即可弹出<span class="strong">登录</span>窗口<br />
+					登录后可解锁更多功能哦<br />
+					推荐使用Google Chrome浏览器
+				</div>
+			</div>
+			<div class="guide-step guide-interactive-mode">
+				<div class="guide-title">提示：</div>
+				<div class="guide-content">
+					点击此处可切换<span class="strong">交互模式</span><br />
+					包括拖拽模式和现代模式
+				</div>
+			</div>
+			<div class="guide-step guide-code-edit">
+				<div class="guide-title">提示：</div>
+				<div class="guide-content">
+					双击空白处或主板<br />
+					可切换到<span class="strong">代码编辑</span>
+				</div>
+			</div>
+			<div class="guide-step guide-burn">
+				<div class="guide-title">提示：</div>
+				<div class="guide-content">
+					点击此处按钮可进行<br />
+					<span class="strong">烧写</span>、<span class="strong">保存</span>和<span class="strong">下载</span>
+				</div>
+			</div>
+			<div class="guide-step guide-enjoy">
+				<div class="guide-content">
+					尽情使用吧
+				</div>
 			</div>
 		</div>
 		@endif
