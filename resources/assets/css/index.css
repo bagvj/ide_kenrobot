@@ -11671,7 +11671,7 @@ body {
 
 /* line 2, layout/_software.scss */
 .software .editor {
-  font-size: 16px;
+  font-size: 14px;
   height: 100%;
 }
 /* line 7, layout/_software.scss */
@@ -11680,8 +11680,8 @@ body {
   right: 25px;
   top: 25px;
   cursor: pointer;
-  width: 80px;
-  height: 80px;
+  width: 96px;
+  height: 54px;
   color: white;
   background-color: #a0a1a4;
   text-align: center;
@@ -12407,7 +12407,7 @@ body {
 }
 /* line 15, theme/_default.scss */
 .theme-default .sidebar .bar {
-  background-color: #575F69;
+  background-color: #333C48;
 }
 /* line 17, theme/_default.scss */
 .theme-default .sidebar .bar ul {

@@ -11,14 +11,14 @@ width: 1px;\
 background: #555651\
 }\
 .ace-default {\
-background-color: #F4F6FA;\
+background-color: white;\
 color: #515151\
 }\
 .ace-default .ace_cursor {\
 color: #515151\
 }\
 .ace-default .ace_marker-layer .ace_selection {\
-background-color: rgba(142, 190, 252, 0.2)\
+background-color: rgba(255, 181, 72, 0.2)\
 }\
 .ace-default.ace_multiselect .ace_selection.ace_start {\
 box-shadow: 0 0 3px 0px #534F59;\
@@ -31,7 +31,7 @@ margin: -1px 0 0 -1px;\
 border: 1px solid #49483E\
 }\
 .ace-default .ace_marker-layer .ace_active-line {\
-background: #cbced3\
+background: #E1E4E8\
 }\
 .ace-default .ace_gutter-active-line {\
 background-color: transparent;\
