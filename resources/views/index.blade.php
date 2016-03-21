@@ -27,6 +27,7 @@
 						<li class="hide" data-action="library"><i class="iconfont icon-zhanshigongcheng"></i>库</li>
 						<li data-action="burn"><i class="iconfont icon-paixu"></i>烧写</li>
 						<li data-action="save"><i class="iconfont icon-baocun"></i>保存</li>
+						<li class="hide" data-action="format"><i class="iconfont icon-code1"></i>格式化</li>
 						<li data-action="download"><i class="iconfont icon-download"></i>下载</li>
 					</ul>
 				</div>

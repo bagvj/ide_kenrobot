@@ -1,5 +1,6 @@
-define(['ace/ace', 'ace/ext-language_tools', 'jquery', './EventManager', './code'], function(_, _, $, EventManager, code) {
+define(['ace/ace', 'ace/ext-language_tools', 'beautify', 'jquery', './EventManager', './code'], function(_, _, beautify, $, EventManager, code) {
 	var editor;
+	var js_beautify = beautify.js_beautify;
 
 	function init(getNodes) {
 		editor = ace.edit($(".software .editor")[0]);
@@ -40,11 +41,17 @@ define(['ace/ace', 'ace/ext-language_tools', 'jquery', './EventManager', './code
 		code.addLibrary(library.code);
 	}
 
+	function format() {
+		var source = js_beautify(editor.getValue());
+		editor.setValue(source, 1);
+	}
+
 	return {
 		init: init,
 		getData: getData,
 		setData: setData,
 		gen: gen,
 		addLibrary: addLibrary,
+		format: format,
 	};
 });

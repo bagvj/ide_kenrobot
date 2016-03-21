@@ -28,6 +28,9 @@ define(['jquery', './EventManager', './util', './config', './user', './project',
 			case "burn":
 				onBurnClick();
 				break;
+			case "format":
+				onFormatClick();
+				break;
 			default:
 				var tab = $('.sidebar .tab.tab-' + action);
 				util.toggleActive(li, null, true);
@@ -43,6 +46,10 @@ define(['jquery', './EventManager', './util', './config', './user', './project',
 		user.authCheck(function(success) {
 			success ? project.showSaveDialog() : user.showLoginDialog(project.showSaveDialog);
 		});
+	}
+
+	function onFormatClick() {
+		software.format();
 	}
 
 	function onDownloadClick() {

@@ -220,7 +220,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 		var list = $('.sidebar .tab');
 		if(index == 0) {
 			bars.filter('[data-action="board"],[data-action="component"]').removeClass("hide");
-			bars.filter('[data-action="library"]').addClass("hide");
+			bars.filter('[data-action="library"],[data-action="format"]').addClass("hide");
 			list.filter('.tab-board,.tab-component').removeClass("hide");
 			list.filter('.tab-library').addClass("hide");
 
@@ -232,7 +232,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 			projectData.software = software.getData();
 		} else {
 			bars.filter('[data-action="board"],[data-action="component"]').addClass("hide");
-			bars.filter('[data-action="library"]').removeClass("hide");
+			bars.filter('[data-action="library"],[data-action="format"]').removeClass("hide");
 			list.filter('.tab-board,.tab-component').addClass("hide");
 			list.filter('.tab-library').removeClass("hide");
 
