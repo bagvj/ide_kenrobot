@@ -1,4 +1,4 @@
-define(['jquery', './config', './hardware', './user', './project', './software', './sidebar', './board', './component', './library', './guide'], function($, config, hardware, user, project, software, sidebar, board, component, library, guide) {
+define(['jquery', './config', './hardware', './user', './project', './software', './sidebar', './board', './component', './library', './ext/agent', './guide'], function($, config, hardware, user, project, software, sidebar, board, component, library, extAgent, guide) {
 	function init() {
 		initPV();
 		initAjax();
@@ -10,6 +10,7 @@ define(['jquery', './config', './hardware', './user', './project', './software',
 		library.init();
 		hardware.init();
 		software.init(hardware.getNodes);
+		extAgent.init(config.extension);
 
 		guide.init();
 

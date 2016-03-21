@@ -1,0 +1,73 @@
+/* line 1, index.scss */
+* {
+  -webkit-margin-before: 0px;
+  -webkit-margin-after: 0px;
+  -webkit-padding-start: 0px;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 14, index.scss */
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 21, index.scss */
+li {
+  list-style: outside none none;
+}
+
+/* line 25, index.scss */
+ul, li {
+  margin: 0;
+}
+
+/* line 29, index.scss */
+input {
+  outline: none;
+}
+
+/* line 33, index.scss */
+body {
+  font-family: 'Microsoft YaHei';
+  color: #515151;
+  font-size: 14px;
+}
+
+/* line 39, index.scss */
+a, a:visited {
+  text-decoration: none;
+}
+
+/* line 44, index.scss */
+.main .title {
+  margin-top: 14px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+/* line 51, index.scss */
+.main .content {
+  margin-top: 70px;
+  font-size: 16px;
+  text-align: center;
+}
+/* line 56, index.scss */
+.main .content .link {
+  text-decoration: none;
+  color: blue;
+}
+/* line 62, index.scss */
+.main .copyright {
+  margin-top: 80px;
+  font-size: 12px;
+  text-align: center;
+}

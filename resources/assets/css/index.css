@@ -11734,21 +11734,22 @@ body {
 }
 
 /* line 37, component/_x-widget.scss */
-.x-confirm {
+.x-dialog {
   color: #515151;
   width: 400px;
   margin: 0 auto;
   position: relative;
+  display: none;
 }
-/* line 43, component/_x-widget.scss */
-.x-confirm .x-confirm-title {
+/* line 44, component/_x-widget.scss */
+.x-dialog .x-dialog-title {
   font-size: 16px;
   height: 36px;
   line-height: 36px;
   text-align: center;
 }
 /* line 51, component/_x-widget.scss */
-.x-confirm .x-confirm-close {
+.x-dialog .x-dialog-close {
   font-size: 20px;
   right: 10px;
   top: 3px;
@@ -11758,7 +11759,7 @@ body {
   cursor: pointer;
 }
 /* line 61, component/_x-widget.scss */
-.x-confirm .x-confirm-content {
+.x-dialog .x-dialog-content {
   height: 110px;
   background-color: white;
   display: flex;
@@ -11766,42 +11767,42 @@ body {
   align-items: center;
 }
 /* line 69, component/_x-widget.scss */
-.x-confirm .x-confirm-btns {
+.x-dialog .x-dialog-btns {
   height: 50px;
   background-color: white;
   color: white;
   position: relative;
 }
 /* line 75, component/_x-widget.scss */
-.x-confirm .x-confirm-btns .x-confirm-btn {
+.x-dialog .x-dialog-btns .x-dialog-btn {
   width: 100px;
   height: 30px;
   display: block;
 }
 /* line 80, component/_x-widget.scss */
-.x-confirm .x-confirm-btns .x-confirm-btn.confirm {
+.x-dialog .x-dialog-btns .x-dialog-btn.confirm {
   background-color: #4bc1ec;
 }
 /* line 84, component/_x-widget.scss */
-.x-confirm .x-confirm-btns .x-confirm-btn.cancel {
+.x-dialog .x-dialog-btns .x-dialog-btn.cancel {
   background-color: #ea9c68;
 }
 
 /* line 92, component/_x-widget.scss */
-.x-confirm-info .x-confirm-title {
+.x-dialog-info .x-dialog-title {
   background-color: #ECFBE6;
 }
 /* line 96, component/_x-widget.scss */
-.x-confirm-info .x-confirm-btn {
+.x-dialog-info .x-dialog-btn {
   margin: 0 auto;
 }
 
 /* line 102, component/_x-widget.scss */
-.x-confirm-confirm .x-confirm-title {
+.x-dialog-confirm .x-dialog-title {
   background-color: #fdf1d8;
 }
 /* line 106, component/_x-widget.scss */
-.x-confirm-confirm .x-confirm-btn {
+.x-dialog-confirm .x-dialog-btn {
   float: right;
   margin-right: 20px;
 }
@@ -11855,9 +11856,8 @@ body {
 #login_dialog .tab.active {
   display: block;
 }
-
-/* line 22, component/_login-dialog.scss */
-.qrLogin {
+/* line 21, component/_login-dialog.scss */
+#login_dialog .qrLogin {
   background-color: rgba(0, 0, 0, 0.5);
   border: 1px solid transparent;
   color: black;
@@ -11869,9 +11869,8 @@ body {
   padding-bottom: 20px;
   position: relative;
 }
-
-/* line 35, component/_login-dialog.scss */
-.baseLogin {
+/* line 34, component/_login-dialog.scss */
+#login_dialog .baseLogin {
   background-color: rgba(0, 0, 0, 0.5);
   border: 1px solid transparent;
   color: black;
@@ -11884,9 +11883,8 @@ body {
   position: relative;
   z-index: 10;
 }
-
-/* line 49, component/_login-dialog.scss */
-.baseLoginBtn {
+/* line 48, component/_login-dialog.scss */
+#login_dialog .baseLoginBtn {
   display: none;
   outline-style: none;
   border: 0;
@@ -11909,9 +11907,8 @@ body {
   width: 60px;
   z-index: 101;
 }
-
-/* line 73, component/_login-dialog.scss */
-.qrLoginBtn {
+/* line 72, component/_login-dialog.scss */
+#login_dialog .qrLoginBtn {
   display: none;
   border: 0;
   background-image: url(../images/loginBtns.png);
@@ -11933,9 +11930,8 @@ body {
   width: 60px;
   z-index: 101;
 }
-
-/* line 96, component/_login-dialog.scss */
-.qrLogin .tips {
+/* line 95, component/_login-dialog.scss */
+#login_dialog .qrLogin .tips {
   font-family: "Microsoft YaHei", "Helvetica Neue";
   font-size: 14px;
   font-weight: lighter;
@@ -11944,40 +11940,16 @@ body {
   text-align: center;
   padding: 6px 0;
 }
-
-/* line 106, component/_login-dialog.scss */
-.qrLogin .qrcode {
+/* line 105, component/_login-dialog.scss */
+#login_dialog .qrLogin .qrcode {
   padding-top: 10px;
   width: 200px;
   height: 200px;
   display: block;
   margin: 0 auto;
 }
-
-/* line 114, component/_login-dialog.scss */
-#use_weixin {
-  display: none;
-}
-
-/* line 118, component/_login-dialog.scss */
-#use_weixin img {
-  height: 512px;
-  width: 350px;
-}
-
-/* line 123, component/_login-dialog.scss */
-#use_weixin.active {
-  position: absolute;
-  height: auto;
-  width: 300px;
-  top: 25%;
-  left: 75%;
-  display: block;
-  z-index: 105;
-}
-
-/* line 133, component/_login-dialog.scss */
-.baseLogin .tips {
+/* line 113, component/_login-dialog.scss */
+#login_dialog .baseLogin .tips {
   color: white;
   display: block;
   font-size: 18px;
@@ -11987,18 +11959,16 @@ body {
   margin: 26px auto 10px auto;
   text-align: center;
 }
-
-/* line 144, component/_login-dialog.scss */
-.baseLogin .message {
+/* line 124, component/_login-dialog.scss */
+#login_dialog .baseLogin .message {
   color: #f00;
   font-size: 14px;
   height: 20px;
   margin-bottom: 15px;
   text-align: center;
 }
-
-/* line 152, component/_login-dialog.scss */
-.baseLogin .field {
+/* line 132, component/_login-dialog.scss */
+#login_dialog .baseLogin .field {
   color: black;
   display: block;
   font-size: 12px;
@@ -12011,14 +11981,12 @@ body {
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
 }
-
-/* line 166, component/_login-dialog.scss */
-.baseLogin .field:first-child {
+/* line 146, component/_login-dialog.scss */
+#login_dialog .baseLogin .field:first-child {
   margin-top: 20px;
 }
-
-/* line 170, component/_login-dialog.scss */
-.baseLogin .field label {
+/* line 150, component/_login-dialog.scss */
+#login_dialog .baseLogin .field label {
   border-bottom-color: #a7a7a7;
   border-bottom-style: solid;
   border-bottom-width: 1px;
@@ -12045,19 +12013,16 @@ body {
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
 }
-
-/* line 198, component/_login-dialog.scss */
-.baseLogin .field .email-icon {
+/* line 178, component/_login-dialog.scss */
+#login_dialog .baseLogin .field .email-icon {
   background: url("../images/email.png") no-repeat center;
 }
-
-/* line 202, component/_login-dialog.scss */
-.baseLogin .field .password-icon {
+/* line 182, component/_login-dialog.scss */
+#login_dialog .baseLogin .field .password-icon {
   background: url("../images/password.png") no-repeat center;
 }
-
-/* line 206, component/_login-dialog.scss */
-.baseLogin .field input {
+/* line 186, component/_login-dialog.scss */
+#login_dialog .baseLogin .field input {
   -webkit-appearance: none;
   -webkit-rtl-ordering: logical;
   -webkit-user-select: text;
@@ -12104,32 +12069,28 @@ body {
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
 }
-
-/* line 254, component/_login-dialog.scss */
-.baseLogin .remember {
+/* line 234, component/_login-dialog.scss */
+#login_dialog .baseLogin .remember {
   margin-bottom: 20px;
 }
-
-/* line 258, component/_login-dialog.scss */
-.baseLogin .remember input {
+/* line 238, component/_login-dialog.scss */
+#login_dialog .baseLogin .remember input {
   width: 15px;
   height: 15px;
   margin-left: 40px;
   line-height: 20px;
   vertical-align: middle;
 }
-
-/* line 266, component/_login-dialog.scss */
-.baseLogin .remember label {
+/* line 246, component/_login-dialog.scss */
+#login_dialog .baseLogin .remember label {
   margin-left: 27px;
   font-size: 12px;
   color: #8d9092;
   vertical-align: middle;
   line-height: 20px;
 }
-
-/* line 274, component/_login-dialog.scss */
-.baseLogin .btn-login {
+/* line 254, component/_login-dialog.scss */
+#login_dialog .baseLogin .btn-login {
   -webkit-appearance: none;
   -webkit-rtl-ordering: logical;
   -webkit-user-select: none;
@@ -12147,9 +12108,8 @@ body {
   margin-left: 30px;
   font-family: "Microsoft YaHei", "Helvetica Neue";
 }
-
-/* line 293, component/_login-dialog.scss */
-.baseLogin .btn-register {
+/* line 273, component/_login-dialog.scss */
+#login_dialog .baseLogin .btn-register {
   -webkit-appearance: none;
   -webkit-rtl-ordering: logical;
   -webkit-user-select: none;
@@ -12166,6 +12126,26 @@ body {
   outline-style: none;
   margin-left: 35px;
   font-family: "Microsoft YaHei", "Helvetica Neue";
+}
+
+/* line 295, component/_login-dialog.scss */
+#use_weixin {
+  position: absolute;
+  height: auto;
+  width: 300px;
+  top: 25%;
+  left: 75%;
+  z-index: 105;
+  display: none;
+}
+/* line 304, component/_login-dialog.scss */
+#use_weixin img {
+  height: 512px;
+  width: 350px;
+}
+/* line 309, component/_login-dialog.scss */
+#use_weixin.active {
+  display: block;
 }
 
 /* line 1, component/_save-dialog.scss */
@@ -12230,40 +12210,40 @@ body {
   color: white;
 }
 
-/* line 1, component/_extension-dialog.scss */
-.extension-dialog {
+/* line 1, component/_install-dialog.scss */
+.install-dialog {
   width: 500px;
 }
-/* line 4, component/_extension-dialog.scss */
-.extension-dialog .x-confirm-title {
+/* line 4, component/_install-dialog.scss */
+.install-dialog .x-dialog-title {
   color: white;
   background-color: #939ba4;
 }
-/* line 9, component/_extension-dialog.scss */
-.extension-dialog .x-confirm-content {
+/* line 9, component/_install-dialog.scss */
+.install-dialog .x-dialog-content {
   height: 220px;
   display: block;
   padding: 15px;
 }
-/* line 14, component/_extension-dialog.scss */
-.extension-dialog .x-confirm-content .step {
+/* line 14, component/_install-dialog.scss */
+.install-dialog .x-dialog-content .step {
   margin-top: 10px;
   margin-left: 24px;
   line-height: 24px;
 }
-/* line 18, component/_extension-dialog.scss */
-.extension-dialog .x-confirm-content .step a {
+/* line 18, component/_install-dialog.scss */
+.install-dialog .x-dialog-content .step a {
   color: #4bc1ec;
   text-decoration: none;
 }
-/* line 24, component/_extension-dialog.scss */
-.extension-dialog .x-confirm-content .des {
+/* line 24, component/_install-dialog.scss */
+.install-dialog .x-dialog-content .des {
   margin-left: 24px;
   margin-top: 10px;
   font-size: 12px;
 }
-/* line 29, component/_extension-dialog.scss */
-.extension-dialog .x-confirm-content .des .helpless {
+/* line 29, component/_install-dialog.scss */
+.install-dialog .x-dialog-content .des .helpless {
   font-size: 18px;
 }
 
@@ -12272,35 +12252,197 @@ body {
   width: 500px;
 }
 /* line 4, component/_arduino-driver-dialog.scss */
-.arduino-driver-dialog .x-confirm-title {
+.arduino-driver-dialog .x-dialog-title {
   color: white;
   background-color: #939ba4;
 }
 /* line 9, component/_arduino-driver-dialog.scss */
-.arduino-driver-dialog .x-confirm-content {
+.arduino-driver-dialog .x-dialog-content {
   height: 150px;
   display: block;
   padding: 15px;
 }
 /* line 14, component/_arduino-driver-dialog.scss */
-.arduino-driver-dialog .x-confirm-content .step {
+.arduino-driver-dialog .x-dialog-content .step {
   margin-top: 10px;
   margin-left: 24px;
   line-height: 24px;
 }
 /* line 18, component/_arduino-driver-dialog.scss */
-.arduino-driver-dialog .x-confirm-content .step a {
+.arduino-driver-dialog .x-dialog-content .step a {
   color: #4bc1ec;
   text-decoration: none;
 }
 
-/* line 1, component/_guide.scss */
-.guide-highlight {
-  z-index: 998;
+/* line 3, component/_burn-dialog.scss */
+.burn-dialog {
+  width: 340px;
+}
+/* line 6, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-title {
+  color: white;
+  background-color: #939ba4;
+}
+/* line 11, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content {
+  height: 200px;
+  display: block;
   position: relative;
 }
-
-/* line 6, component/_guide.scss */
+/* line 16, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  display: none;
+}
+/* line 24, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab.active {
+  display: block;
+}
+/* line 28, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab input[type="button"] {
+  background-color: white;
+  color: #4891ed;
+  border: 1px solid #4891ed;
+  cursor: pointer;
+}
+/* line 35, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab .wrap {
+  position: relative;
+}
+/* line 41, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-init .message {
+  text-align: center;
+  margin-top: 75px;
+}
+/* line 48, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-no-serial .message {
+  margin-top: 60px;
+  margin-left: 20px;
+  margin-right: 20px;
+  line-height: 22px;
+  text-align: center;
+}
+/* line 55, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-no-serial .message .driver {
+  color: #4891ed;
+}
+/* line 62, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-connect .tips {
+  margin: 15px;
+  line-height: 22px;
+  text-align: center;
+}
+/* line 68, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-connect .field {
+  margin-bottom: 20px;
+}
+/* line 71, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-connect .field label {
+  margin-left: 15px;
+  margin-right: 10px;
+  height: 30px;
+  line-height: 30px;
+}
+/* line 78, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-connect .field select {
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #4891ed;
+  padding-left: 5px;
+}
+/* line 85, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-connect .field .port {
+  width: 80px;
+  margin-right: 10px;
+}
+/* line 90, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-connect .field .bitRate {
+  width: 80px;
+}
+/* line 95, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-connect .connect {
+  display: block;
+  width: 100px;
+  height: 30px;
+  margin: 0 auto;
+}
+/* line 102, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-connect .message {
+  color: red;
+  text-align: center;
+  height: 20px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+/* line 112, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-burn .burn-wrap {
+  height: 80px;
+  margin-top: 35px;
+}
+/* line 117, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-burn .burn {
+  float: left;
+  width: 80px;
+  height: 80px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+/* line 124, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-burn .burn.burning {
+  border-color: #ccc;
+  color: #ccc;
+  cursor: default;
+}
+/* line 131, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-burn .message {
+  float: left;
+  width: 200px;
+  height: 80px;
+  line-height: 80px;
+  text-align: center;
+  border: 1px solid #ccc;
+  color: red;
+}
+/* line 141, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-burn .burn-progress {
+  margin-top: 35px;
+}
+/* line 143, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-burn .burn-progress ul {
+  margin-left: 20px;
+  height: 20px;
+}
+/* line 147, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-burn .burn-progress ul li {
+  float: left;
+  width: 5px;
+  height: 20px;
+  margin-left: 1px;
+  background-color: #ccc;
+}
+/* line 155, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-burn .burn-progress ul li:first-child {
+  margin-left: 0;
+}
+/* line 162, component/_burn-dialog.scss */
+.burn-dialog .x-dialog-content .tab-burn .burn-progress.active li.ins {
+  animation: fill 0.3s linear forwards;
+}
+@keyframes fill {
+  0% {
+    opacity: 0;
+    background-color: #ccc;
+  }
+  100% {
+    opacity: 1;
+    background-color: green;
+  }
+}
+/* line 1, component/_guide.scss */
 .guide-step {
   display: none;
   background-color: white;
@@ -12309,24 +12451,24 @@ body {
   padding: 10px 15px;
   z-index: 999;
 }
-/* line 14, component/_guide.scss */
+/* line 9, component/_guide.scss */
 .guide-step.active {
   display: block;
 }
-/* line 18, component/_guide.scss */
+/* line 13, component/_guide.scss */
 .guide-step .guide-title {
   margin-bottom: 10px;
   color: #fa764a;
 }
-/* line 23, component/_guide.scss */
+/* line 18, component/_guide.scss */
 .guide-step .guide-content {
   color: #515151;
 }
-/* line 25, component/_guide.scss */
+/* line 20, component/_guide.scss */
 .guide-step .guide-content .strong {
   color: #19c3f1;
 }
-/* line 30, component/_guide.scss */
+/* line 25, component/_guide.scss */
 .guide-step:before {
   border: solid transparent;
   content: ' ';
@@ -12337,34 +12479,34 @@ body {
   position: absolute;
 }
 
-/* line 41, component/_guide.scss */
+/* line 36, component/_guide.scss */
 .guide-login {
   top: 10px;
   left: 70px;
 }
-/* line 45, component/_guide.scss */
+/* line 40, component/_guide.scss */
 .guide-login:before {
   left: -18px;
   top: 15px;
 }
 
-/* line 51, component/_guide.scss */
+/* line 46, component/_guide.scss */
 .guide-interactive-mode {
   top: 20px;
   left: 350px;
 }
-/* line 55, component/_guide.scss */
+/* line 50, component/_guide.scss */
 .guide-interactive-mode:before {
   left: -18px;
   top: 15px;
 }
 
-/* line 61, component/_guide.scss */
+/* line 56, component/_guide.scss */
 .guide-code-edit {
   top: 20px;
   left: 350px;
 }
-/* line 65, component/_guide.scss */
+/* line 60, component/_guide.scss */
 .guide-code-edit:before {
   border-right: none;
   border-left-color: white;
@@ -12372,27 +12514,27 @@ body {
   top: 32px;
 }
 
-/* line 73, component/_guide.scss */
+/* line 68, component/_guide.scss */
 .guide-burn {
   top: 285px;
   left: 70px;
 }
-/* line 77, component/_guide.scss */
+/* line 72, component/_guide.scss */
 .guide-burn:before {
   left: -18px;
   top: 32px;
 }
 
-/* line 83, component/_guide.scss */
+/* line 78, component/_guide.scss */
 .guide-enjoy {
   top: 200px;
   padding: 20px 40px;
 }
-/* line 87, component/_guide.scss */
+/* line 82, component/_guide.scss */
 .guide-enjoy .guide-content {
   color: #fa764a;
 }
-/* line 91, component/_guide.scss */
+/* line 86, component/_guide.scss */
 .guide-enjoy:before {
   border: none;
 }

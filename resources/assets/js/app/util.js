@@ -20,7 +20,7 @@ define(['jquery'], function($){
 		});
 	}
 
-	function confirm(args) {
+	function dialogOld(args) {
 		args = typeof args == "string" ? {text: args} : args;
 		var type = args.type || "confirm";
 		var title = args.title;
@@ -35,49 +35,93 @@ define(['jquery'], function($){
 		var cancelFunc = args.cancelFunc;
 		var closeFunc = args.closeFunc;
 
-		var template = '<div class="x-confirm x-confirm-' + type + '">\
-			<div class="x-confirm-title">' + title + '</div>\
-			<div class="x-confirm-close">&times;</div>\
-			<div class="x-confirm-content">' + text + '</div>\
-			<div class="x-confirm-btns">' +
-				(type == "confirm" ? '<button class="x-confirm-btn cancel">' + cancel + '</button>' : '') + '<button class="x-confirm-btn confirm">' + ok + '</button>\
-			</div>\
-		</div>';
-		var dialog = $(template);
+		var btnTemplate = ""
+		if(type == "confirm") {
+			btnTemplate = '<div class="x-dialog-btns"><button class="x-dialog-btn cancel">' + cancel + '</button><button class="x-dialog-btn confirm">' + ok + '</button></div>';
+		} else if(type == "info") {
+			btnTemplate = '<div class="x-dialog-btns"><button class="x-dialog-btn confirm">' + ok + '</button></div>';
+		}
+		var template = '<div class="x-dialog x-dialog-' + type + '">\
+			<div class="x-dialog-title">' + title + '</div>\
+			<div class="x-dialog-close">&times;</div>\
+			<div class="x-dialog-content">' + text + '</div>'
+			+ btnTemplate + 
+		'</div>';
+		var dialogWin = $(template);
 		if(args.cls) {
-			dialog.addClass(args.cls);
+			dialogWin.addClass(args.cls);
 		}
 
 		if(args.contentCls) {
-			$('.x-confirm-content', dialog).addClass(args.contentCls);
+			$('.x-dialog-content', dialogWin).addClass(args.contentCls);
 		}
 
 		var doClose = function() {
-			dialog.slideUp(200, function() {
-				dialog.remove();
+			dialogWin.slideUp(200, function() {
+				dialogWin.remove();
 				$('.dialog-layer').removeClass("active");
 				closeFunc && closeFunc();
 			});
 		}
 
-		$('.x-confirm-btns .confirm', dialog).on('click', function(){
+		$('.x-dialog-btns .confirm', dialogWin).on('click', function(){
 			doClose();
 			okFunc && okFunc();
 		});	
 
-		$('.x-confirm-close,.x-confirm-btns .cancel', dialog).on('click', function(){
+		$('.x-dialog-close,.x-dialog-btns .cancel', dialogWin).on('click', function(){
 			doClose();
 			cancelFunc && cancelFunc();
 		});
 
-		dialog.appendTo($('.dialog-layer')).css({
-			top: -dialog.height(),
+		dialogWin.appendTo($('.dialog-layer').addClass("active")).css({
+			top: -dialogWin.height(),
 		}).show().animate({
 			top: 200,
 		}, 400, "swing");
-		$('.dialog-layer').addClass("active");
 
-		return dialog;
+		return dialogWin;
+	}
+
+	function dialog(args) {
+		args = typeof args == "string" ? {selector: args}: args;
+		var selector = args.selector;
+		var dialogWin = $(selector);
+		if(!dialogWin || !dialogWin.hasClass("x-dialog")) {
+			console.log("Can not find " + selector + " or it is not a x-dialog");
+			return false;
+		}
+
+		var okFunc = args.okFunc;
+		var cancelFunc = args.cancelFunc;
+		var closeFunc = args.closeFunc;
+
+		var dialogLayer = $('.dialog-layer').addClass("active");
+		var doClose = function() {
+			dialogWin.slideUp(200, function() {
+				dialogWin.hide();
+				dialogLayer.removeClass("active");
+				closeFunc && closeFunc();
+			});
+		}
+
+		$('.x-dialog-btns .confirm', dialogWin).off('click').on('click', function(){
+			doClose();
+			okFunc && okFunc();
+		});	
+
+		$('.x-dialog-close,.x-dialog-btns .cancel', dialogWin).off('click').on('click', function(){
+			doClose();
+			cancelFunc && cancelFunc();
+		});
+
+		dialogWin.css({
+			top: -dialogWin.height(),
+		}).show().animate({
+			top: 200,
+		}, 300, "swing");
+
+		return dialogWin;
 	}
 
 	function toggleActive(target, tag, collapseMode) {
@@ -105,7 +149,7 @@ define(['jquery'], function($){
 
 	return {
 		message: message,
-		confirm: confirm,
+		dialog: dialog,
 		toggleActive: toggleActive,
 	}
 });

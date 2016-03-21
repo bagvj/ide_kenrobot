@@ -66,6 +66,7 @@ define(function() {
 				}, 50);
 			});
 		} catch(ex) {
+			console.dir(ex);
 			doComplete(false);
 		}
 	}

@@ -283,13 +283,11 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 		
 		user.authCheck(function(success) {
 			if(success) {
-				var okFunc = function() {
-					doProjectDelete(curProjectInfo.id);
-				};
-				util.confirm({
-					title: "删除确认",
-					text: "删除后不可恢复，确定要删除该项目吗？",
-					okFunc: okFunc,
+				util.dialog({
+					selector: ".delete-project-dialog",
+					okFunc: function() {
+						doProjectDelete(curProjectInfo.id);
+					},
 				});
 			} else {
 				user.showLoginDialog();
@@ -318,7 +316,6 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 					}
 				}
 
-				console.log("aaaaaaaa" + projects.length);
 				if(projects.length == 0) {
 					var defaultProjectInfo = getDefaultProject();
 					projects.push(defaultProjectInfo);

@@ -1,4 +1,4 @@
-define(['jquery', './EventManager', './util', './config', './user', './project', './board', './software', './extAgent'], function($, EventManager, util, config, user, project, board, software, extAgent) {
+define(['jquery', './EventManager', './util', './config', './user', './project', './board', './software', './ext/agent'], function($, EventManager, util, config, user, project, board, software, agent) {
 	function init() {
 		$('.sidebar .logo').on('click', onLogoClick);
 
@@ -61,12 +61,18 @@ define(['jquery', './EventManager', './util', './config', './user', './project',
 		});
 	}
 
-	function onSerialClick() {
-		extAgent.init(config.extension.debugUrl);
+	function onBurnClick() {
+		project.build(function(result){
+			if(result.status == 0 && result.url) {
+				agent.showBurnDialog(result.url);
+			} else {
+				util.message(result.message);
+			}
+		});
 	}
 
-	function onBurnClick() {
-		extAgent.init(config.extension.burnUrl);
+	function onSerialClick() {
+		
 	}
 
 	return {

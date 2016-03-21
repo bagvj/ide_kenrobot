@@ -1,0 +1,180 @@
+$blue: #4891ed;
+
+.burn-dialog {
+	width: 340px;
+
+	.x-dialog-title {
+		color: white;
+	    background-color: #939ba4;
+	}
+	
+	.x-dialog-content {
+		height: 200px;
+		display: block;
+		position: relative;
+		
+		.tab {
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			position: absolute;
+			display: none;
+
+			&.active {
+				display: block;
+			}
+
+			input[type="button"] {
+				background-color: white;
+				color: $blue;
+				border: 1px solid $blue;
+				cursor: pointer;
+			}
+
+			.wrap {
+				position: relative;
+			}
+		}
+
+		.tab-init {
+			.message {
+				text-align: center;
+				margin-top: 75px;
+			}
+		}
+
+		.tab-no-serial {
+			.message {
+				margin-top: 60px;
+				margin-left: 20px;
+				margin-right: 20px;
+				line-height: 22px;
+				text-align: center;
+
+				.driver {
+					color: $blue;
+				}
+			}
+		}
+
+		.tab-connect {
+			.tips {
+				margin: 15px;
+				line-height: 22px;
+				text-align: center;
+			}
+
+			.field {
+				margin-bottom: 20px;
+
+				label {
+					margin-left: 15px;
+					margin-right: 10px;
+					height: 30px;
+					line-height: 30px;
+				}
+
+				select {
+					height: 30px;
+					line-height: 30px;
+					border: 1px solid $blue;
+					padding-left: 5px;
+				}
+
+				.port {
+					width: 80px;
+					margin-right: 10px;
+				}
+
+				.bitRate {
+					width: 80px;
+				}
+			}
+
+			.connect {
+				display: block;
+				width: 100px;
+				height: 30px;
+				margin: 0 auto;
+			}
+
+			.message {
+				color: red;
+				text-align: center;
+				height: 20px;
+				margin-top: 10px;
+				font-size: 14px;
+			}
+		}
+
+		.tab-burn {
+			.burn-wrap {
+				height: 80px;
+				margin-top: 35px;
+			}
+
+			.burn {
+				float: left;
+				width: 80px;
+				height: 80px;
+				margin-left: 20px;
+				margin-right: 20px;
+
+				&.burning {
+					border-color: #ccc;
+					color: #ccc;
+					cursor: default;
+				}
+			}
+
+			.message {
+				float: left;
+				width: 200px;
+				height: 80px;
+				line-height: 80px;
+				text-align: center;
+				border: 1px solid #ccc;
+				color: red;
+			}
+
+			.burn-progress {
+				margin-top: 35px;
+				ul {
+					margin-left: 20px;
+					height: 20px;
+
+					li {
+						float: left;
+						width: 5px;
+						height: 20px;
+						margin-left: 1px;
+
+						background-color:#ccc;
+
+						&:first-child {
+							margin-left: 0;
+						}
+					}
+				}
+
+				&.active {
+					li.ins {
+						animation: fill 0.3s linear forwards;
+						
+						@keyframes fill {
+							0% {
+								opacity: 0;
+								background-color: #ccc;
+							}
+							100%  {
+								opacity: 1;
+								background-color: green;
+							}	
+						}
+					}
+				}
+			}
+		}
+	}
+}

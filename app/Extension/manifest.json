@@ -1,10 +1,11 @@
 {
+	"manifest_version": 2,
 	"name": "啃萝卜",
 	"description": "啃萝卜平台扩展插件",
-	"version": "0.1.11",
+	"author": "kenrobot.com",
 	"app": {
 		"background": {
-			"scripts": ["js/background.js"]
+			"page": "background.html"
 		}
 	},
 	"icons": {
@@ -16,22 +17,9 @@
 		"fileSystem",
 		"*://*.kenrobot.com/"
 	],
-	"url_handlers": {
-		"debug": {
-			"matches": [
-				"http://platform.kenrobot.com/extension/debug/*"
-			],
-			"title": "串口调试"
-		},
-		"burn": {
-			"matches": [
-				"http://platform.kenrobot.com/extension/burn/*"
-			],
-			"title": "烧写"
-		}
-	},
 	"externally_connectable": {
   		"matches": ["*://*.kenrobot.com/*"]
 	},
-	"update_url": "http://platform.kenrobot.com/extension-update.xml"
+	"update_url": "http://platform.kenrobot.com/extension-update.xml",
+	"version": "0.1.12"
 }

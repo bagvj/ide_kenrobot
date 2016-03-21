@@ -34,21 +34,21 @@
     }
 }
 
-.x-confirm {
+.x-dialog {
     color: #515151;
     width: 400px;
     margin: 0 auto;
     position: relative;
+    display: none;
 
-    .x-confirm-title {
+    .x-dialog-title {
         font-size: 16px;
-        
         height: 36px;
         line-height: 36px;
         text-align: center;
     }
 
-    .x-confirm-close {
+    .x-dialog-close {
         font-size: 20px;
         right: 10px;
         top: 3px;
@@ -58,7 +58,7 @@
         cursor: pointer;
     }
     
-    .x-confirm-content {
+    .x-dialog-content {
         height: 110px;
         background-color: white;
         display: flex;
@@ -66,13 +66,13 @@
         align-items: center;
     }
 
-    .x-confirm-btns {
+    .x-dialog-btns {
         height: 50px;
         background-color: white;
         color: white;
         position: relative;
 
-        .x-confirm-btn {
+        .x-dialog-btn {
             width: 100px;
             height: 30px;
             display: block;
@@ -88,22 +88,22 @@
     }
 }
 
-.x-confirm-info {
-    .x-confirm-title {
+.x-dialog-info {
+    .x-dialog-title {
         background-color: #ECFBE6;
     }
 
-    .x-confirm-btn {
+    .x-dialog-btn {
         margin: 0 auto;
     }
 }
 
-.x-confirm-confirm {
-    .x-confirm-title {
+.x-dialog-confirm {
+    .x-dialog-title {
         background-color: #fdf1d8;
     }
 
-    .x-confirm-btn {
+    .x-dialog-btn {
         float: right;
         margin-right: 20px;
     }
