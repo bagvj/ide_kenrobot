@@ -185,28 +185,20 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 
 	function onProjectTitleClick(e) {
 		var li = $(this).parent();
-		var operation = $('.sidebar .project .list').data('operation');
-		if(operation == "delete") {
+		if(util.toggleActive(li, null, true)) {
+			var id = li.data('project-id');
+			curProjectInfo = id == 0 ? getDefaultProject() : getProjectInfo(id);
+			var projectData = curProjectInfo.project_data;
 
-		} else {
-			if(curProjectInfo) {
-				curProjectInfo.project_data = getProjectData();
-			}
-			if(util.toggleActive(li, null, true)) {
-				var id = li.data('project-id');
-				curProjectInfo = id == 0 ? getDefaultProject() : getProjectInfo(id);
-				var projectData = curProjectInfo.project_data;
+			board.setData(projectData.board);
+			hardware.setData(projectData.hardware);
+			software.setData(projectData.software);
 
-				board.setData(projectData.board);
-				hardware.setData(projectData.hardware);
-				software.setData(projectData.software);
-
-				var divs = li.find(".view > div");
-				if(divs.filter(".active").length == 0) {
-					divs.eq(0).click();
-				} else {
-					divs.filter(".active").click();
-				}
+			var divs = li.find(".view > div");
+			if(divs.filter(".active").length == 0) {
+				divs.eq(0).click();
+			} else {
+				divs.filter(".active").click();
 			}
 		}
 	}

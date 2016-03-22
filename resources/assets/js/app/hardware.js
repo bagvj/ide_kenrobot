@@ -498,7 +498,26 @@ define(['jquery', 'jquery-ui', 'jquery.cookie', 'go', './nodeTemplate', './Event
 	function portTypeMatch(port1, port2) {
 		var portData1 = getPortData(port1);
 		var portData2 = getPortData(port2);
-		return portData1.type == portData2.type;
+		if(portData1.type != portData2.type) {
+			return false;
+		}
+
+		var componentPortData;
+		var boardPortData;
+		if(portData1.owner_type == 0) {
+			componentPortData = portData1;
+			boardPortData = portData2;
+		} else {
+			componentPortData = portData2;
+			boardPortData = portData1;
+		}
+
+		if(componentPortData.special == "") {
+			return true;
+		}
+
+		var list = componentPortData.special.split(',');
+		return list.indexOf(boardPortData.name) >= 0;
 	}
 
 	function portHasLink(port) {

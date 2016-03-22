@@ -37,11 +37,9 @@
 							<ul>
 								<li class="new" data-action="new"><i class="iconfont icon-plus"></i></li>
 								<li class="delete" data-action="delete"><i class="iconfont icon-iconfonttrash"></i></li>
-								<li class="cancel hide" data-action="cancel">取消</li>
-								<li class="confirm hide" data-action="confirm">确定</li>
 							</ul>
 						</div>
-						<div class="list x-scrollbar" data-operation="default">
+						<div class="list x-scrollbar">
 							<ul>
 								<li data-project-id="0">
 									<div class="title">

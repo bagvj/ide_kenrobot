@@ -196,6 +196,7 @@ class HomeController extends Controller {
 		$components = DB::table('components')->get();
 		foreach($components as $key => $value) {
 			$value->in_use = $value->in_use == 1;
+			$value->auto_connect = $value->auto_connect == 1;
 			$value->type = "component";
 			$value->deletable = true;
 			$value->selectable = true;
