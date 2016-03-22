@@ -155,6 +155,7 @@ define(['jquery', 'jquery-ui', 'jquery.cookie', 'go', './nodeTemplate', './Event
 		for(var i = 0; i < nodeDataArray.length; i++) {
 			nodeData = nodeDataArray[i];
 			nodes.push({
+				type: nodeData.type,
 				name: nodeData.name,
 				key: nodeData.key,
 				varName: nodeData.varName || "",
@@ -205,12 +206,20 @@ define(['jquery', 'jquery-ui', 'jquery.cookie', 'go', './nodeTemplate', './Event
 			var nodeDataArray = model.nodeDataArray;
 			var nodeData;
 			var config;
+			var varName;
 			for(var i = 0; i < nodeDataArray.length; i++) {
 				nodeData = nodeDataArray[i];
+				varName = nodeData.varName || "";
 				config = getConfig(nodeData.name, i == 0);
 				nodeData = $.extend(nodeData, config);
+				nodeData.varName = varName;
 			}
-			diagram.model = new go.GraphLinksModel(model.nodeDataArray, model.linkDataArray);
+			diagram.model = GO(go.GraphLinksModel, {
+				linkFromPortIdProperty: "fromPort",
+				linkToPortIdProperty: "toPort",
+				nodeDataArray: model.nodeDataArray,
+				linkDataArray: model.linkDataArray
+			});
 		} else {
 			diagram.clear();
 			addInitNodes();

@@ -102,8 +102,6 @@ define(["go", "./EventManager"], function(_, EventManager) {
 
 		//节点选中模版
 		var nodeSelectionTemplate = GO(go.Adornment, "Auto",
-			// new go.Binding("width"),
-			// new go.Binding("height"),
 			GO(go.Shape, 
 				{
 					fill: null,
