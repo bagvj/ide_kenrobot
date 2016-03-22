@@ -76,7 +76,9 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 					doUpdateUser();
 					callback && callback();
 				} else if (result.code == 1) {
-
+					userInfo = result.data;
+					doUpdateUser();
+					callback && callback();
 				} else {
 					$('.baseLogin .message span').show().html(result.message).delay(2000).queue(function() {
 						$(this).fadeOut().dequeue();

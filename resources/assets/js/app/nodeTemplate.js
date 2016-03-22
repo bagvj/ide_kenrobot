@@ -16,7 +16,7 @@ define(["go", "./EventManager"], function(_, EventManager) {
 			"ArduinoUNO":
 				GO(go.Node, "Spot",
 					nodeStyle(),
-					makeBody(),
+					makeBody(false),
 					makePort("0", new go.Spot(0.947, 0.037), "Rectangle", "#F1C933", boardPortSize),
 					makePort("1", new go.Spot(0.912, 0.037), "Rectangle", "#F1C933", boardPortSize),
 					makePort("2", new go.Spot(0.877, 0.037), "Rectangle", "#F1C933", boardPortSize),
@@ -163,12 +163,29 @@ define(["go", "./EventManager"], function(_, EventManager) {
 		];
 	}
 
-	function makeBody(){
-		return GO(go.Picture,
-			new go.Binding("source"),
-			new go.Binding("width"),
-			new go.Binding("height")
-		);
+	function makeBody(needBackground){
+		needBackground = needBackground != false;
+		if(needBackground) {
+			return GO(go.Panel, "Auto",
+				GO(go.Shape, "RoundedRectangle",
+					{
+						fill: "#d7d7d7",
+						stroke: null,
+					}
+				),
+				GO(go.Picture, 
+					new go.Binding("source"),
+					new go.Binding("width"),
+					new go.Binding("height")
+				)
+			);
+		} else {
+			return GO(go.Picture, 
+				new go.Binding("source"),
+				new go.Binding("width"),
+				new go.Binding("height")
+			);
+		}
 	}
 
 	function makePort(portId, spot, shape, fill, size, stroke) {

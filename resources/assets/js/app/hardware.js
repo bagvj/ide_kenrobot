@@ -149,16 +149,68 @@ define(['jquery', 'jquery-ui', 'jquery.cookie', 'go', './nodeTemplate', './Event
 	}
 
 	function getData() {
+		var nodes = [];
+		var nodeDataArray = diagram.model.nodeDataArray;
+		var nodeData;
+		for(var i = 0; i < nodeDataArray.length; i++) {
+			nodeData = nodeDataArray[i];
+			nodes.push({
+				name: nodeData.name,
+				key: nodeData.key,
+				varName: nodeData.varName || "",
+				location: nodeData.location
+			});
+		}
+
+		var links = [];
+		var linkDataArray = diagram.model.linkDataArray;
+		var linkData;
+		var points;
+		var pointArray;
+		var point;
+		for(var i = 0; i < linkDataArray.length; i++) {
+			linkData = linkDataArray[i];
+			points = [];
+			pointArray = linkData.points.toArray();
+			for(var j = 0; j < pointArray.length; j++) {
+				point = pointArray[j];
+				points.push(point.x, point.y);
+			}
+			links.push({
+				from: linkData.from,
+				to: linkData.to,
+				fromPort: linkData.fromPort,
+				toPort: linkData.toPort,
+				points: points,
+			});
+		}
+
 		return {
-			model: diagram.model.toJson(),
+			model: {
+				nodeDataArray: nodes,
+				linkDataArray: links,
+			},
 			componentConuts: componentConuts,
 		};
 	}
 
 	function setData(data) {
 		data = data || {};
-		if(data.model) {
-			diagram.model = go.Model.fromJson(data.model);
+		var model = data.model;
+		if(model) {
+			if(typeof model == "string") {
+				model = JSON.parse(model);
+			}
+
+			var nodeDataArray = model.nodeDataArray;
+			var nodeData;
+			var config;
+			for(var i = 0; i < nodeDataArray.length; i++) {
+				nodeData = nodeDataArray[i];
+				config = getConfig(nodeData.name, i == 0);
+				nodeData = $.extend(nodeData, config);
+			}
+			diagram.model = new go.GraphLinksModel(model.nodeDataArray, model.linkDataArray);
 		} else {
 			diagram.clear();
 			addInitNodes();
@@ -471,7 +523,7 @@ define(['jquery', 'jquery-ui', 'jquery.cookie', 'go', './nodeTemplate', './Event
 
 	function genNodeData(name, isBoard) {
 		var config = getConfig(name, isBoard);
-		var nodeData = $.extend(true, {}, config);
+		var nodeData = $.extend({}, config);
 		var timeStamp = new Date().getTime();
 		nodeData.key = name + "_" + timeStamp;
 		var index = componentCounts[name] || 0;
