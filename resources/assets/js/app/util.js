@@ -20,69 +20,6 @@ define(['jquery'], function($){
 		});
 	}
 
-	function dialogOld(args) {
-		args = typeof args == "string" ? {text: args} : args;
-		var type = args.type || "confirm";
-		var title = args.title;
-		if(!title) {
-			title = type == "confirm" ? "确认" : "信息提示";
-		}
-
-		var text = args.text;
-		var ok = args.ok || "确 认";
-		var cancel = args.cancel || "取 消";
-		var okFunc = args.okFunc;
-		var cancelFunc = args.cancelFunc;
-		var closeFunc = args.closeFunc;
-
-		var btnTemplate = ""
-		if(type == "confirm") {
-			btnTemplate = '<div class="x-dialog-btns"><button class="x-dialog-btn cancel">' + cancel + '</button><button class="x-dialog-btn confirm">' + ok + '</button></div>';
-		} else if(type == "info") {
-			btnTemplate = '<div class="x-dialog-btns"><button class="x-dialog-btn confirm">' + ok + '</button></div>';
-		}
-		var template = '<div class="x-dialog x-dialog-' + type + '">\
-			<div class="x-dialog-title">' + title + '</div>\
-			<div class="x-dialog-close">&times;</div>\
-			<div class="x-dialog-content">' + text + '</div>'
-			+ btnTemplate + 
-		'</div>';
-		var dialogWin = $(template);
-		if(args.cls) {
-			dialogWin.addClass(args.cls);
-		}
-
-		if(args.contentCls) {
-			$('.x-dialog-content', dialogWin).addClass(args.contentCls);
-		}
-
-		var doClose = function() {
-			dialogWin.slideUp(200, function() {
-				dialogWin.remove();
-				$('.dialog-layer').removeClass("active");
-				closeFunc && closeFunc();
-			});
-		}
-
-		$('.x-dialog-btns .confirm', dialogWin).on('click', function(){
-			doClose();
-			okFunc && okFunc();
-		});	
-
-		$('.x-dialog-close,.x-dialog-btns .cancel', dialogWin).on('click', function(){
-			doClose();
-			cancelFunc && cancelFunc();
-		});
-
-		dialogWin.appendTo($('.dialog-layer').addClass("active")).css({
-			top: -dialogWin.height(),
-		}).show().animate({
-			top: 200,
-		}, 400, "swing");
-
-		return dialogWin;
-	}
-
 	function dialog(args) {
 		args = typeof args == "string" ? {selector: args}: args;
 		var selector = args.selector;
@@ -92,34 +29,50 @@ define(['jquery'], function($){
 			return false;
 		}
 
-		var okFunc = args.okFunc;
-		var cancelFunc = args.cancelFunc;
-		var closeFunc = args.closeFunc;
+		var onConfirm = args.onConfirm;
+		var onCancel = args.onCancel;
+		var onClosing = args.onClosing;
+		var onClose = args.onClose;
+		var onShow = args.onShow;
+
+		var content = args.content;
+		if(content) {
+			$('.x-dialog-content', dialogWin).text(content);
+		}
 
 		var dialogLayer = $('.dialog-layer').addClass("active");
 		var doClose = function() {
 			dialogWin.slideUp(200, function() {
-				dialogWin.hide();
+				dialogWin.hide().removeClass("active");
 				dialogLayer.removeClass("active");
-				closeFunc && closeFunc();
+				onClose && onClose();
 			});
 		}
 
 		$('.x-dialog-btns .confirm', dialogWin).off('click').on('click', function(){
-			doClose();
-			okFunc && okFunc();
+			if(!onClosing || onClosing() != false) {
+				doClose();
+				onConfirm && onConfirm();
+			} 
 		});	
 
 		$('.x-dialog-close,.x-dialog-btns .cancel', dialogWin).off('click').on('click', function(){
-			doClose();
-			cancelFunc && cancelFunc();
+			if(!onClosing || onClosing() != false) {
+				doClose();
+				onCancel && onCancel();
+			} 
 		});
 
 		dialogWin.css({
 			top: -dialogWin.height(),
-		}).show().animate({
-			top: 200,
-		}, 300, "swing");
+		});
+
+		(function() {
+			onShow && onShow();
+			dialogWin.show().addClass("active").animate({
+				top: 200,
+			}, 300, "swing");
+		})();
 
 		return dialogWin;
 	}

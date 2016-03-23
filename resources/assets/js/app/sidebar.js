@@ -55,22 +55,14 @@ define(['jquery', './EventManager', './util', './config', './user', './project',
 	}
 
 	function onDownloadClick() {
-		project.isBuild(function(result) {
-			if(result.status == 0) {
-				window.location.href = result.url;
-			} else {
-				util.message(result.message);
-			}
+		project.isBuild(function(url) {
+			window.location.href = url;
 		});
 	}
 
 	function onBurnClick() {
-		project.isBuild(function(result){
-			if(result.status == 0) {
-				agent.showBurnDialog(result.url);
-			} else {
-				util.message(result.message);
-			}
+		project.isBuild(function(url){
+			agent.showBurnDialog(url);
 		});
 	}
 

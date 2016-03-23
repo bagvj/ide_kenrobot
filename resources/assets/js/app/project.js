@@ -1,7 +1,12 @@
 define(['jquery', './EventManager', './util', './config', './user', './hardware', './software', './board'], function($, EventManager, util, config, user, hardware, software, board) {
-	var projects = [];
+	//项目模版
 	var projectTemplate = '<li data-project-id="{{id}}"><div class="title"><span class="name">{{project_name}}</span><i class="iconfont icon-lashenkuangxiangxia"></i></div><div class="view"><div><span class="name">{{project_name}}</span>.uno</div><div><span class="name">{{project_name}}</span>.ino</div></div></li>';
+	//项目
+	var projects = [];
+	//当前项目
 	var curProjectInfo;
+	//状态
+	var state;
 
 	function init() {
 		$('.project .operation li').on('click', onProjectActionClick);
@@ -14,6 +19,14 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 
 	function build() {
 		var doBuild = function() {
+			var isBuilding = true;
+			util.dialog({
+				selector: '.building-dialog',
+				content: "正在编译，请稍候...",
+				onClosing: function() {
+					return !isBuilding;
+				}
+			});
 			var id = curProjectInfo.id;
 			$.ajax({
 				type: "POST",
@@ -23,13 +36,16 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 					id: id,
 					user_id: user.getUserId(),
 				},
-			}).done(function(result){
+			}).done(function(result) {
+				isBuilding = false;
 				if(result.status == 0) {
-					var projectInfo = getProjectInfo(id);
+					var projectInfo = getProjectInfo(result.id);
 					projectInfo.status = 2;
 					projectInfo.url = result.url;
 				}
-				util.message(result.message);
+
+				var dialog = $('.building-dialog');
+				$('.x-dialog-content', dialog).text(result.message);
 			});
 		};
 
@@ -41,19 +57,13 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 	function isBuild(callback) {
 		var checkBuild = function() {
 			var status = curProjectInfo.status;
-			var result = {};
 			if(!status || status == 0) {
-				result.status = -2;
-				result.message = "请先保存";
+				util.message("请先保存");
 			} else if(status == 1) {
-				result.status = -1;
-				result.message = "请先编译";
+				util.message("请先编译");
 			} else {
-				result.status = 0;
-				result.message = "编译成功";
-				result.url = curProjectInfo.url;
+				callback(curProjectInfo.url);
 			}
-			callback(result);
 		};
 
 		user.authCheck(function(success) {
@@ -72,6 +82,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 		};
 
 		user.authCheck(function(success) {
+			(!success) && (state = 0);
 			success ? doSave() : user.showLoginDialog();
 		});
 	}
@@ -233,7 +244,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 			if(success) {
 				util.dialog({
 					selector: ".delete-project-dialog",
-					okFunc: function() {
+					onConfirm: function() {
 						doProjectDelete(id);
 					},
 				});
@@ -275,9 +286,18 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 		if(isEdit) {
 			var dialog = $('.save-dialog');
 			var form = $('form', dialog);
+			var project_name = $('input[name="name"]', form).val();
+			for(var i = 0; i < projects.length; i++) {
+				var projectInfo = projects[i];
+				if(projectInfo.id > 0 && projectInfo.project_name == project_name) {
+					util.message("项目名重复");
+					return;
+				}
+			}
+
 			project = {
 				id: id,
-				project_name: $('input[name="name"]', form).val(),
+				project_name: project_name,
 				user_id: user.getUserId(),
 				project_intro: $('textarea[name="intro"]', form).val(),
 				project_data: JSON.stringify(getProjectData()),
@@ -292,6 +312,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 			}
 		}
 		
+		util.message("正在保存，请稍候...");
 		$.ajax({
 			type: 'POST',
 			url: '/project/save',

@@ -37,10 +37,15 @@ define(['jquery', '../util'], function($, util) {
 		hexUrl = _hexUrl;
 		util.dialog({
 			selector: selector,
-			closeFunc: onDialogClose,
+			onClosing: onDialogClosing,
+			onClose: onDialogClose,
 		});
 
 		checkSerialPorts();
+	}
+
+	function onDialogClosing() {
+		
 	}
 
 	function onDialogClose() {

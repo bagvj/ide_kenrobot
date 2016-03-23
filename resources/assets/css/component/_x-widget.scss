@@ -41,6 +41,10 @@
     position: relative;
     display: none;
 
+    &.active {
+        display: block;
+    }
+
     .x-dialog-title {
         font-size: 16px;
         height: 36px;

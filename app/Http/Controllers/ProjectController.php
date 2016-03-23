@@ -42,10 +42,10 @@ class ProjectController extends Controller {
 		$output = array();
 		exec($cmd, $output, $status);
 		if ($status == 0) {
-			return response()->json(['status' => 0, 'message' => '编译成功', 'url' => "/project/download/$id"]);
+			return response()->json(['status' => 0, 'message' => '编译成功', 'id' => $id, 'url' => "/project/download/$id"]);
 		} else {
 			// return response()->json(['status' => $status, 'message' => '编译失败']);
-			return response()->json(['status' => $status, 'message' => '编译失败', 'output' => $output]);
+			return response()->json(['status' => $status, 'message' => '编译失败', 'id' => $id, 'output' => $output]);
 		}
 	}
 

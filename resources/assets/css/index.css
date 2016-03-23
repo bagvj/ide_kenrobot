@@ -11748,13 +11748,17 @@ body {
   display: none;
 }
 /* line 44, component/_x-widget.scss */
+.x-dialog.active {
+  display: block;
+}
+/* line 48, component/_x-widget.scss */
 .x-dialog .x-dialog-title {
   font-size: 16px;
   height: 36px;
   line-height: 36px;
   text-align: center;
 }
-/* line 51, component/_x-widget.scss */
+/* line 55, component/_x-widget.scss */
 .x-dialog .x-dialog-close {
   font-size: 20px;
   right: 10px;
@@ -11764,7 +11768,7 @@ body {
   position: absolute;
   cursor: pointer;
 }
-/* line 61, component/_x-widget.scss */
+/* line 65, component/_x-widget.scss */
 .x-dialog .x-dialog-content {
   height: 110px;
   background-color: white;
@@ -11772,42 +11776,42 @@ body {
   justify-content: center;
   align-items: center;
 }
-/* line 69, component/_x-widget.scss */
+/* line 73, component/_x-widget.scss */
 .x-dialog .x-dialog-btns {
   height: 50px;
   background-color: white;
   color: white;
   position: relative;
 }
-/* line 75, component/_x-widget.scss */
+/* line 79, component/_x-widget.scss */
 .x-dialog .x-dialog-btns .x-dialog-btn {
   width: 100px;
   height: 30px;
   display: block;
 }
-/* line 80, component/_x-widget.scss */
+/* line 84, component/_x-widget.scss */
 .x-dialog .x-dialog-btns .x-dialog-btn.confirm {
   background-color: #4bc1ec;
 }
-/* line 84, component/_x-widget.scss */
+/* line 88, component/_x-widget.scss */
 .x-dialog .x-dialog-btns .x-dialog-btn.cancel {
   background-color: #ea9c68;
 }
 
-/* line 92, component/_x-widget.scss */
+/* line 96, component/_x-widget.scss */
 .x-dialog-info .x-dialog-title {
   background-color: #ECFBE6;
 }
-/* line 96, component/_x-widget.scss */
+/* line 100, component/_x-widget.scss */
 .x-dialog-info .x-dialog-btn {
   margin: 0 auto;
 }
 
-/* line 102, component/_x-widget.scss */
+/* line 106, component/_x-widget.scss */
 .x-dialog-confirm .x-dialog-title {
   background-color: #fdf1d8;
 }
-/* line 106, component/_x-widget.scss */
+/* line 110, component/_x-widget.scss */
 .x-dialog-confirm .x-dialog-btn {
   float: right;
   margin-right: 20px;

@@ -256,6 +256,14 @@
 					<button class="x-dialog-btn confirm">确定</button><button class="x-dialog-btn cancel">取消</button>
 				</div>
 			</div>
+			<div class="x-dialog x-dialog-info building-dialog">
+				<div class="x-dialog-title">编译</div>
+				<div class="x-dialog-close">&times;</div>
+				<div class="x-dialog-content"></div>
+				<div class="x-dialog-btns">
+					<button class="x-dialog-btn confirm">确定</button>
+				</div>
+			</div>
 			<div class="x-dialog x-dialog-custom burn-dialog">
 				<div class="x-dialog-title">烧写</div>
 				<div class="x-dialog-close">&times;</div>
