@@ -11267,22 +11267,28 @@ body {
 /* line 34, layout/_sidebar.scss */
 .sidebar .project .operation {
   height: 60px;
+  background-color: #3E4959;
 }
-/* line 36, layout/_sidebar.scss */
+/* line 37, layout/_sidebar.scss */
 .sidebar .project .operation li {
   float: left;
-  width: 50%;
+  width: 66px;
   height: 60px;
   text-align: center;
   line-height: 60px;
   cursor: pointer;
+  margin-left: 1px;
 }
-/* line 43, layout/_sidebar.scss */
+/* line 46, layout/_sidebar.scss */
+.sidebar .project .operation li:first-child {
+  margin-left: 0;
+}
+/* line 50, layout/_sidebar.scss */
 .sidebar .project .operation li > i {
   margin-top: 16px;
   font-size: 24px;
 }
-/* line 50, layout/_sidebar.scss */
+/* line 57, layout/_sidebar.scss */
 .sidebar .project .list {
   background-color: #DEE1E5;
   overflow-y: auto;
@@ -11292,7 +11298,7 @@ body {
   right: 0;
   position: absolute;
 }
-/* line 60, layout/_sidebar.scss */
+/* line 67, layout/_sidebar.scss */
 .sidebar .project .list li .title {
   height: 36px;
   line-height: 36px;
@@ -11304,7 +11310,7 @@ body {
   margin-top: 1px;
   position: relative;
 }
-/* line 70, layout/_sidebar.scss */
+/* line 77, layout/_sidebar.scss */
 .sidebar .project .list li .title > i {
   font-size: 24px;
   top: 4px;
@@ -11315,15 +11321,15 @@ body {
   -webkit-transform: rotate(90deg);
   transform: rotate(90deg);
 }
-/* line 79, layout/_sidebar.scss */
+/* line 86, layout/_sidebar.scss */
 .sidebar .project .list li:first-child .title {
   margin-top: 0;
 }
-/* line 83, layout/_sidebar.scss */
+/* line 90, layout/_sidebar.scss */
 .sidebar .project .list li .view {
   display: none;
 }
-/* line 85, layout/_sidebar.scss */
+/* line 92, layout/_sidebar.scss */
 .sidebar .project .list li .view > div {
   font-size: 12px;
   color: #515151;
@@ -11332,15 +11338,15 @@ body {
   line-height: 36px;
   cursor: pointer;
 }
-/* line 93, layout/_sidebar.scss */
+/* line 100, layout/_sidebar.scss */
 .sidebar .project .list li .view > div:hover {
   background-color: #C9CED4;
 }
-/* line 97, layout/_sidebar.scss */
+/* line 104, layout/_sidebar.scss */
 .sidebar .project .list li .view > div.active {
   background-color: #ECEFF3;
 }
-/* line 105, layout/_sidebar.scss */
+/* line 112, layout/_sidebar.scss */
 .sidebar .project .list li.active .title > i {
   -moz-transform: rotate(0);
   -ms-transform: rotate(0);
@@ -11348,25 +11354,25 @@ body {
   transform: rotate(0);
   right: 0;
 }
-/* line 111, layout/_sidebar.scss */
+/* line 118, layout/_sidebar.scss */
 .sidebar .project .list li.active .view {
   display: block;
 }
-/* line 119, layout/_sidebar.scss */
+/* line 126, layout/_sidebar.scss */
 .sidebar .component {
   width: 200px;
   position: relative;
   background-color: #e1e4e8;
   float: left;
 }
-/* line 125, layout/_sidebar.scss */
+/* line 132, layout/_sidebar.scss */
 .sidebar .component .search {
   margin-top: 12px;
   margin-bottom: 20px;
   margin-left: 12px;
   background-color: #e1e4e8;
 }
-/* line 131, layout/_sidebar.scss */
+/* line 138, layout/_sidebar.scss */
 .sidebar .component .search .key {
   height: 24px;
   width: 164px;
@@ -11378,14 +11384,14 @@ body {
   border-radius: 12px;
   border: 1px solid #bac4d0;
 }
-/* line 143, layout/_sidebar.scss */
+/* line 150, layout/_sidebar.scss */
 .sidebar .component .search > i {
   line-height: 24px;
   right: 30px;
   color: #b9b9b6;
   position: absolute;
 }
-/* line 151, layout/_sidebar.scss */
+/* line 158, layout/_sidebar.scss */
 .sidebar .component .items {
   top: 56px;
   left: 0;
@@ -11396,77 +11402,77 @@ body {
   float: left;
   overflow-y: auto;
 }
-/* line 161, layout/_sidebar.scss */
+/* line 168, layout/_sidebar.scss */
 .sidebar .component .items .list {
   margin-left: 12px;
   float: left;
 }
-/* line 165, layout/_sidebar.scss */
+/* line 172, layout/_sidebar.scss */
 .sidebar .component .items .list li {
   width: 72px;
   text-align: center;
   float: left;
 }
-/* line 170, layout/_sidebar.scss */
+/* line 177, layout/_sidebar.scss */
 .sidebar .component .items .list li:nth-child(odd) {
   margin-right: 20px;
 }
-/* line 174, layout/_sidebar.scss */
+/* line 181, layout/_sidebar.scss */
 .sidebar .component .items .list li.active .image {
   border: 2px solid #4cc1fc;
 }
-/* line 181, layout/_sidebar.scss */
+/* line 188, layout/_sidebar.scss */
 .sidebar .component .items .item .image {
   width: 72px;
   height: 72px;
   background-color: white;
   border: 1px solid #bac4d0;
 }
-/* line 188, layout/_sidebar.scss */
+/* line 195, layout/_sidebar.scss */
 .sidebar .component .items .item .name {
   font-size: 12px;
   color: #515151;
   margin-top: 5px;
   margin-bottom: 12px;
 }
-/* line 198, layout/_sidebar.scss */
+/* line 205, layout/_sidebar.scss */
 .sidebar .board {
   width: 200px;
   position: relative;
   overflow-y: auto;
   background-color: #DEE1E5;
 }
-/* line 205, layout/_sidebar.scss */
+/* line 212, layout/_sidebar.scss */
 .sidebar .board .list li {
   position: relative;
 }
-/* line 207, layout/_sidebar.scss */
+/* line 214, layout/_sidebar.scss */
 .sidebar .board .list li .image {
   width: 70px;
   height: 70px;
   display: block;
   margin: 0 auto;
 }
-/* line 214, layout/_sidebar.scss */
+/* line 221, layout/_sidebar.scss */
 .sidebar .board .list li .name {
   color: #515151;
   margin: 0 atuo;
   display: block;
   text-align: center;
 }
-/* line 221, layout/_sidebar.scss */
+/* line 228, layout/_sidebar.scss */
 .sidebar .board .list li.normal {
   cursor: pointer;
 }
-/* line 224, layout/_sidebar.scss */
+/* line 231, layout/_sidebar.scss */
 .sidebar .board .list li.normal:hover {
   background-color: #C9CED4;
 }
-/* line 228, layout/_sidebar.scss */
+/* line 235, layout/_sidebar.scss */
 .sidebar .board .list li.normal.active {
   background-color: #ECEFF4;
 }
-/* line 234, layout/_sidebar.scss */
+/* line 241, layout/_sidebar.scss */
 .sidebar .board .list li.forward .stamps {
   position: absolute;
   top: 0;
@@ -11476,14 +11482,14 @@ body {
   background: url(/assets/images/stamps.png) no-repeat 115px 10px;
   background-size: 50px 50px;
 }
-/* line 248, layout/_sidebar.scss */
+/* line 255, layout/_sidebar.scss */
 .sidebar .library {
   width: 200px;
   position: relative;
   overflow-y: auto;
   background-color: #DEE1E5;
 }
-/* line 255, layout/_sidebar.scss */
+/* line 262, layout/_sidebar.scss */
 .sidebar .library .list li {
   cursor: pointer;
   color: #515151;
@@ -11491,25 +11497,25 @@ body {
   height: 36px;
   line-height: 36px;
 }
-/* line 262, layout/_sidebar.scss */
+/* line 269, layout/_sidebar.scss */
 .sidebar .library .list li:hover {
   background-color: #C9CED4;
 }
-/* line 266, layout/_sidebar.scss */
+/* line 273, layout/_sidebar.scss */
 .sidebar .library .list li.active {
   background-color: #ECEFF4;
 }
-/* line 274, layout/_sidebar.scss */
+/* line 281, layout/_sidebar.scss */
 .sidebar .x-scrollbar::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3);
   background-color: #DEE1E5;
 }
-/* line 279, layout/_sidebar.scss */
+/* line 286, layout/_sidebar.scss */
 .sidebar .x-scrollbar::-webkit-scrollbar {
   width: 8px;
   background-color: #DEE1E5;
 }
-/* line 284, layout/_sidebar.scss */
+/* line 291, layout/_sidebar.scss */
 .sidebar .x-scrollbar::-webkit-scrollbar-thumb {
   background-color: #BABCC0;
 }
@@ -11578,7 +11584,7 @@ body {
   width: 0;
   border-width: 6px;
   border-right-color: #1fb6ed;
-  left: -12px;
+  left: -11px;
   top: 9px;
   position: absolute;
 }
@@ -12168,7 +12174,7 @@ body {
 }
 
 /* line 1, component/_save-dialog.scss */
-#save-dialog {
+.save-dialog {
   max-width: 1024px;
   min-width: 500px;
   height: 100%;
@@ -12181,42 +12187,42 @@ body {
   color: #515151;
 }
 /* line 13, component/_save-dialog.scss */
-#save-dialog .close-btn {
+.save-dialog .close-btn {
   color: #999;
 }
 /* line 17, component/_save-dialog.scss */
-#save-dialog .wrapper {
+.save-dialog .wrapper {
   margin: 30px 60px 10px 20px;
 }
 /* line 21, component/_save-dialog.scss */
-#save-dialog .control-label {
+.save-dialog .control-label {
   font-weight: normal;
 }
 /* line 25, component/_save-dialog.scss */
-#save-dialog .form-control {
+.save-dialog .form-control {
   background-color: #FAFAFA;
   border-radius: 0;
   border: 1px solid #ccc;
 }
 /* line 29, component/_save-dialog.scss */
-#save-dialog .form-control:focus {
+.save-dialog .form-control:focus {
   box-shadow: none;
   border: 1px solid #ccc;
 }
 /* line 35, component/_save-dialog.scss */
-#save-dialog .form-group:last-child {
+.save-dialog .form-group:last-child {
   margin-bottom: 30px;
 }
 /* line 40, component/_save-dialog.scss */
-#save-dialog .checkbox-inline input {
+.save-dialog .checkbox-inline input {
   margin-right: 10px;
 }
 /* line 43, component/_save-dialog.scss */
-#save-dialog .checkbox-inline:first-child {
+.save-dialog .checkbox-inline:first-child {
   padding-left: 0;
 }
 /* line 48, component/_save-dialog.scss */
-#save-dialog .save {
+.save-dialog .save {
   width: 100px;
   height: 36px;
   color: white;
@@ -12225,7 +12231,7 @@ body {
   border-radius: 0;
 }
 /* line 56, component/_save-dialog.scss */
-#save-dialog .save:hover {
+.save-dialog .save:hover {
   color: white;
 }
 

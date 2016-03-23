@@ -191,7 +191,7 @@ define(['jquery', 'jquery-ui', 'jquery.cookie', './nodeTemplate', './EventManage
 				nodeDataArray: nodes,
 				linkDataArray: links,
 			},
-			componentConuts: componentConuts,
+			componentCounts: componentCounts,
 		};
 	}
 
@@ -224,7 +224,7 @@ define(['jquery', 'jquery-ui', 'jquery.cookie', './nodeTemplate', './EventManage
 			diagram.clear();
 			addInitNodes();
 		}
-		componentConuts = data.componentConuts || [];
+		componentCounts = data.componentCounts || [];
 
 		hintTargetPort();
 		highlightLink();

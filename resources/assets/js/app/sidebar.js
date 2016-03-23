@@ -44,7 +44,7 @@ define(['jquery', './EventManager', './util', './config', './user', './project',
 
 	function onSaveClick() {
 		user.authCheck(function(success) {
-			success ? project.showSaveDialog() : user.showLoginDialog(project.showSaveDialog);
+			success ? project.save() : user.showLoginDialog(project.save);
 		});
 	}
 

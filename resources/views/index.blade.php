@@ -36,8 +36,9 @@
 					<div class="project">
 						<div class="operation">
 							<ul>
-								<li class="new" data-action="new"><i class="iconfont icon-plus"></i></li>
-								<li class="delete" data-action="delete"><i class="iconfont icon-iconfonttrash"></i></li>
+								<li class="new" data-action="new" title="新建项目"><i class="iconfont icon-plus"></i></li>
+								<li class="edit" data-action="edit" title="编辑项目"><i class="iconfont icon-edit"></i></li>
+								<li class="delete" data-action="delete" title="删除项目"><i class="iconfont icon-iconfonttrash"></i></li>
 							</ul>
 						</div>
 						<div class="list x-scrollbar">
@@ -315,7 +316,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="save-dialog" class="dialog">
+		<div class="dialog save-dialog">
 			<div class="close-btn right">
 				<i class="iconfont icon-close1"></i>
 			</div>
