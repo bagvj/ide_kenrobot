@@ -89,24 +89,21 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 	}
 
 	function onLoadSuccess(result) {
-		if(result.status != 0) {
-			projects = [];
-		} else {
-			projects = result.data;
-		}
-
-		if(projects.length == 0) {
-			projects.push(getDefaultProject());
+		if(result.status == 0) {
+			projects = result.data.concat(projects);
 		}
 
 		var ul = $(".project .list ul").empty();
 		for(var i = 0; i < projects.length; i++) {
 			var projectInfo = projects[i];
-			try {
-				projectInfo.project_data = JSON.parse(projectInfo.project_data);
-			} catch(ex) {
-				projectInfo.project_data = {};
+			if(typeof projectInfo.project_data == "string") {
+				try {
+					projectInfo.project_data = JSON.parse(projectInfo.project_data);
+				} catch(ex) {
+					projectInfo.project_data = {};
+				}
 			}
+			
 			ul.append(getProjectHtml(projectInfo));
 		}
 		bindProjectEvent(-1);
@@ -186,7 +183,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 		var li = $(this).parent();
 		if(util.toggleActive(li, null, true)) {
 			var id = li.data('project-id');
-			curProjectInfo = id == 0 ? getDefaultProject() : getProjectInfo(id);
+			curProjectInfo = getProjectInfo(id);
 			var projectData = curProjectInfo.project_data;
 
 			board.setData(projectData.board);
@@ -345,6 +342,10 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 	}
 
 	function onLogin() {
+		var projectInfo = getDefaultProject();
+		projectInfo.project_data = getProjectData();
+		projects = [projectInfo];
+
 		$.ajax({
 			url: '/projects/' + user.getUserId(),
 			dataType: 'json',

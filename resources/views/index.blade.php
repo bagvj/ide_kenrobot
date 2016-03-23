@@ -12,6 +12,7 @@
 		<link href="/assets/images/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 		<link href="/assets/css/index.css" rel="stylesheet" />
 
+		<script src="/assets/js/lib/go.js"></script>
 		<script src="/assets/js/lib/require.js" data-main="/assets/js/index"></script>
 	</head>
 	<body class="unselectable theme-default" data-theme="default">

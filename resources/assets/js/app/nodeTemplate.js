@@ -1,4 +1,4 @@
-define(["go", "./EventManager"], function(_, EventManager) {
+define(["./EventManager"], function(EventManager) {
 	var GO = go.GraphObject.make;
 
 	var defaultTextFont = "14px Microsoft Yahei";

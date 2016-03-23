@@ -1,4 +1,4 @@
-define(['ace/ace', 'ace/ext-language_tools', 'beautify', 'jquery', './EventManager', './code'], function(_, _, beautify, $, EventManager, code) {
+define(['ace/ext-language_tools', 'beautify', 'jquery', './EventManager', './code'], function(_, beautify, $, EventManager, code) {
 	var editor;
 	var js_beautify = beautify.js_beautify;
 

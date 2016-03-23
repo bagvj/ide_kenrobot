@@ -92,6 +92,7 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 		index = index || 0;
 		if(index == 0) {
 			$('.qrLoginBtn').click();
+			$('.email', dialog).focus();
 		} else {
 			$('.baseLoginBtn').click();
 		}
