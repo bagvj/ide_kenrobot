@@ -37,7 +37,7 @@ class WebAuthController extends Controller
 
         //kenrobot_id cookie
         $kenrobot_id = WebAuthHelper::encryptKenrobotId($user->uid);
-        return response()->json(['code' => 0, 'message' => '登录成功'])->withCookie(cookie('kenrobot_id', $kenrobot_id));
+        return response()->json(['code' => 0, 'message' => '登录成功', 'data' => $user])->withCookie(cookie('kenrobot_id', $kenrobot_id));
     }
 
     /**

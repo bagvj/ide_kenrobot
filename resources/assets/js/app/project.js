@@ -105,7 +105,6 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 			try {
 				projectInfo.project_data = JSON.parse(projectInfo.project_data);
 			} catch(ex) {
-				console.log(ex.message);
 				projectInfo.project_data = {};
 			}
 			ul.append(getProjectHtml(projectInfo));

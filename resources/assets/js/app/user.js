@@ -42,6 +42,7 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 					display: "block"
 				});
 				$('#use_weixin').removeClass("active");
+				$('.email', dialog).focus();
 
 				setWeixinLoginCheck(false);
 			} else {
@@ -75,6 +76,7 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 					userInfo = result.data;
 					doUpdateUser();
 					callback && callback();
+					EventManager.trigger("user", "login");
 				} else if (result.code == 1) {
 					userInfo = result.data;
 					doUpdateUser();
