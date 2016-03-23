@@ -6,10 +6,9 @@ if [ $# -ne 3 ];then
 fi
 
 #参数：
-#   1.项目名字
-#	2.项目目录
-#	3.主板类型
-
+#	1.项目目录
+#	2.主板类型
+#   3.项目名字
 if [ ! -d "$1" ]; then
 	echo "文件夹\"$1\"不存在"
 	exit 2
@@ -24,14 +23,11 @@ PROJECT_PATH=$1
 BOARD_TYPE=$2
 #项目名字
 PROJECT_NAME=$3
-
 #当前目录
 DIR=`pwd`
 
 #进入项目目录
 cd ${PROJECT_PATH};
-
-echo -n ${PROJECT_NAME}>.project
 
 #如果src文件夹不存在，则创建
 if [ ! -d "src" ]; then
@@ -45,8 +41,9 @@ fi
 
 #把.ino源代码文件复制(移动)到src下
 # cp *.ino src/
-mv *.ino src/
+mv main.ino src/
 
+rm -rf build.*
 #开始编译
 ino build -m ${BOARD_TYPE} --make ${MAKE_PATH}
 
@@ -62,19 +59,22 @@ fi
 echo "编译成功"
 
 #复制文件
-cp .build/${BOARD_TYPE}/firmware.hex .build/${BOARD_TYPE}/${PROJECT_NAME}.hex
-cp src/main.ino ./${PROJECT_NAME}.ino
+cp .build/${BOARD_TYPE}/firmware.hex build.hex
 
-#打包
-zip -j build.zip ${PROJECT_NAME}.ino .build/${BOARD_TYPE}/${PROJECT_NAME}.hex
-mv .build/${BOARD_TYPE}/${PROJECT_NAME}.hex ./build.hex
+#开始打包
+cp src/main.ino ./${PROJECT_NAME}.ino
+cp .build/${BOARD_TYPE}/firmware.hex ${PROJECT_NAME}.hex
 
 #如果eep存在
 if [ -f ".build/${BOARD_TYPE}/firmware.eep" ]; then
-	cp .build/${BOARD_TYPE}/firmware.eep .build/${BOARD_TYPE}/${PROJECT_NAME}.eep
-	zip -j build.zip .build/${BOARD_TYPE}/${PROJECT_NAME}.eep
-	mv .build/${BOARD_TYPE}/${PROJECT_NAME}.eep ./build.eep
+	cp .build/${BOARD_TYPE}/firmware.eep ${PROJECT_NAME}.eep
 fi
+zip build.zip ${PROJECT_NAME}.*
+rm -rf ${PROJECT_NAME}.*
+
+#记录编译信息
+echo ${PROJECT_NAME}>>build.info
+echo `date`>>build.info
 
 #回到之前的目录
 cd ${DIR}

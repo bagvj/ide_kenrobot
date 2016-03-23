@@ -62,7 +62,7 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 		$('.btn-login', dialog).off('click').on('click', function() {
 			$.ajax({
 				type: 'POST',
-				url: '/snspostlogin',
+				url: '/auth/login',
 				dataType: 'json',
 				data: {
 					email: $('.email', dialog).val(),
@@ -178,7 +178,11 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 			loginCheckTimer = setInterval(function() {
 				var key = $('#qrcode_key').val();
 				$.ajax({
-					url: '/weixinlogin?key=' + key,
+					type: 'POST',
+					url: '/auth/login/weixin',
+					data: {
+						key: key,
+					},
 					dataType: 'json',
 				}).done(function(result) {
 					if (result.code == 0) {

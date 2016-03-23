@@ -51,7 +51,6 @@ class WebAuthController extends Controller
             return response()->json(['code' => 1, 'message' => '已经登录', 'data' => $user]);
         }
 
-
         $weixinauth = WebAuthFactory::create('weixin');
         $crendentials = $request->only('key');
 

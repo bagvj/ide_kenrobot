@@ -11,28 +11,17 @@
 |
  */
 Route::get('/', 'HomeController@index');
-
-Route::post('/build', 'HomeController@build');
-Route::get('/download/{uri}/{ext?}', 'HomeController@download')->where('uri', '[.0-9a-zA-Z_-]+');
-
 Route::get('/config', 'HomeController@config');
 
+Route::post('/project/build', 'ProjectController@buildProject');
 Route::post('/project/save', 'ProjectController@saveProject');
 Route::post('/project/delete', 'ProjectController@deleteProject');
+Route::get('/project/download/{id}/{ext?}', 'ProjectController@downloadProject')->where('id', '[1-9][0-9]*');
 Route::get('/project/{id}', 'ProjectController@getProject')->where('id', '[1-9][0-9]*');
 Route::get('/projects/{user_id}', 'ProjectController@getProjects')->where('user_id', '[1-9][0-9]*');
 
 // 登录验证
-Route::get('/auth/login', 'Auth\AuthController@getLogin');
-Route::post('/auth/login', 'Auth\AuthController@postLogin');
-Route::get('/auth/logout', 'Auth\AuthController@getLogout2');
-
+Route::post('/auth/login', 'Auth\WebAuthController@snsPostLogin');
+Route::post('/auth/login/weixin', 'Auth\WebAuthController@weixinlogin');
 Route::get('/auth/check', 'Auth\AuthServerController@index');
-
-// 注册 暂时关闭
-// Route::get('/auth/register', 'Auth\AuthController@getRegister');
-// Route::post('/auth/register', 'Auth\AuthController@postRegister');
-
-Route::any('/snspostlogin', 'Auth\WebAuthController@snsPostLogin');
-Route::any('/weixinlogin', 'Auth\WebAuthController@weixinlogin');
-
+Route::get('/logout', 'Auth\AuthController@getLogout2');

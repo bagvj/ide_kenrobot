@@ -12,39 +12,53 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 		load();
 	}
 
-	function build(callback) {
+	function build() {
 		var doBuild = function() {
-			var projectName = curProjectInfo.project_name;
-			var boardInfo = board.getData();
-			var softwareData = software.getData();
-
+			var id = curProjectInfo.id;
 			$.ajax({
 				type: "POST",
-				url: "/build",
-				data: {
-					source: softwareData.source,
-					project_name: projectName,
-					build_type: "Arduino",
-					board_type: boardInfo.board_type,
-				},
+				url: "/project/build",
 				dataType: "json",
+				data: {
+					id: id,
+					user_id: user.getUserId(),
+				},
 			}).done(function(result){
-				callback && callback(result);
+				if(result.status == 0) {
+					var projectInfo = getProjectInfo(id);
+					projectInfo.status = 2;
+					projectInfo.url = result.url;
+				}
+				util.message(result.message);
 			});
 		};
 
-		if(config.buildAuth) {
-			user.authCheck(function(success) {
-				if(!success) {
-					user.showLoginDialog(doBuild);
-					return;
-				}
+		user.authCheck(function(success) {
+			success ? doBuild() : user.showLoginDialog();
+		});
+	}
 
-				doBuild();
-			});
-		} else {
-			doBuild();
-		}
+	function isBuild(callback) {
+		var checkBuild = function() {
+			var status = curProjectInfo.status;
+			var result = {};
+			if(!status || status == 0) {
+				result.status = -2;
+				result.message = "请先保存";
+			} else if(status == 1) {
+				result.status = -1;
+				result.message = "请先编译";
+			} else {
+				result.status = 0;
+				result.message = "编译成功";
+				result.url = curProjectInfo.url;
+			}
+			callback(result);
+		};
+
+		user.authCheck(function(success) {
+			success ? checkBuild() : user.showLoginDialog();
+		});
 	}
 
 	function save() {
@@ -108,6 +122,10 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 					projectInfo.project_data = {};
 				}
 			}
+
+			if(projectInfo.status === undefined) {
+				projectInfo.status = 1;
+			}
 			
 			ul.append(getProjectHtml(projectInfo));
 		}
@@ -135,7 +153,8 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 	}
 
 	function onProjectFileClick(e) {
-		var projectData = curProjectInfo.project_data;
+		var projectInfo = curProjectInfo;
+		var projectData = projectInfo.project_data;
 		var div = $(this);
 		util.toggleActive(div, 'div')
 		var index = div.index();
@@ -153,6 +172,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 			}
 
 			projectData.software = software.getData();
+			// projectInfo.status = 0;
 		} else {
 			bars.filter('[data-action="board"],[data-action="component"]').addClass("hide");
 			bars.filter('[data-action="library"],[data-action="format"]').removeClass("hide");
@@ -165,6 +185,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 			}
 
 			projectData.hardware = hardware.getData();
+			// projectInfo.status = 0;
 			software.gen();
 		}
 		$(".main > .tabs").css({
@@ -202,7 +223,8 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 	}
 
 	function onProjectDeleteClick(e) {
-		if(curProjectInfo.id == 0) {
+		var id = curProjectInfo.id;
+		if(id == 0) {
 			util.message("你的项目尚未保存");
 			return;
 		}
@@ -212,7 +234,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 				util.dialog({
 					selector: ".delete-project-dialog",
 					okFunc: function() {
-						doProjectDelete(curProjectInfo.id);
+						doProjectDelete(id);
 					},
 				});
 			} else {
@@ -285,6 +307,9 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 					}).done(function(res) {
 						doUpdateProject(id, res);
 					});
+				} else {
+					var projectInfo = getProjectInfo(id);
+					projectInfo.status = 1;
 				}
 			}
 		});
@@ -297,6 +322,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 		}
 
 		var projectInfo = result.data;
+		projectInfo.status = 1;
 		if(typeof projectInfo.project_data == "string") {
 			try {
 				projectInfo.project_data = JSON.parse(projectInfo.project_data);
@@ -316,6 +342,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 					break;
 				}
 			}
+			
 			projects.push(projectInfo);
 			curProjectInfo = projectInfo;
 			list.append(getProjectHtml(projectInfo));
@@ -353,9 +380,9 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 				}
 
 				if(projects.length == 0) {
-					var defaultProjectInfo = getDefaultProject();
-					projects.push(defaultProjectInfo);
-					$(".project .list > ul").append(getProjectHtml(defaultProjectInfo));
+					var projectInfo = getDefaultProject();
+					projects.push(projectInfo);
+					$(".project .list > ul").append(getProjectHtml(projectInfo));
 					bindProjectEvent(-1);
 				} else {
 					var titles = $(".project .list .title");
@@ -398,6 +425,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 			project_intro: "我的项目简介",
 			public_type: 1,
 			project_data: {},
+			status: 0,
 		};
 	}
 
@@ -424,6 +452,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 
 	return {
 		init: init,
+		isBuild: isBuild,
 		build: build,
 		save: save,
 	}

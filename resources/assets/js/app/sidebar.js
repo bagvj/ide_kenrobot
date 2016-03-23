@@ -16,20 +16,20 @@ define(['jquery', './EventManager', './util', './config', './user', './project',
 		var index = li.index();
 		var action = li.data("action");
 		switch(action) {
+			case "format":
+				onFormatClick();
+				break;
 			case "save":
 				onSaveClick();
 				break;
-			case "download":
-				onDownloadClick();
-				break;
-			case "serial":
-				onSerialClick();
+			case "build":
+				onBuildClick();
 				break;
 			case "burn":
 				onBurnClick();
 				break;
-			case "format":
-				onFormatClick();
+			case "download":
+				onDownloadClick();
 				break;
 			default:
 				var tab = $('.sidebar .tab.tab-' + action);
@@ -42,37 +42,36 @@ define(['jquery', './EventManager', './util', './config', './user', './project',
 		}
 	}
 
-	function onSaveClick() {
-		user.authCheck(function(success) {
-			success ? project.save() : user.showLoginDialog(project.save);
-		});
-	}
-
 	function onFormatClick() {
 		software.format();
 	}
 
-	function onDownloadClick() {
-		project.build(function(result) {
-			util.message(result.message);
-			if (result.status == 0 && result.url) {
-				window.location.href = result.url;
-			}
-		});
+	function onSaveClick() {
+		project.save();
 	}
 
-	function onBurnClick() {
-		project.build(function(result){
-			if(result.status == 0 && result.url) {
-				agent.showBurnDialog(result.url);
+	function onBuildClick() {
+		project.build();
+	}
+
+	function onDownloadClick() {
+		project.isBuild(function(result) {
+			if(result.status == 0) {
+				window.location.href = result.url;
 			} else {
 				util.message(result.message);
 			}
 		});
 	}
 
-	function onSerialClick() {
-		
+	function onBurnClick() {
+		project.isBuild(function(result){
+			if(result.status == 0) {
+				agent.showBurnDialog(result.url);
+			} else {
+				util.message(result.message);
+			}
+		});
 	}
 
 	return {

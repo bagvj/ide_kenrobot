@@ -1,4 +1,4 @@
-define(['../util', '../user', './burn-dialog'], function(util, user, burnDialog) {
+define(['../util', './burn-dialog'], function(util, burnDialog) {
 	var config;
 
 	function init(_config) {
@@ -8,23 +8,12 @@ define(['../util', '../user', './burn-dialog'], function(util, user, burnDialog)
 	function check(callback) {
 		var isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
 		if(!isChrome && !window.chrome) {
-			util.message("Kenrobot平台扩展目前只支持Chrome浏览器，其它浏览器敬请期待！");
+			util.message("啃萝卜平台扩展目前只支持Chrome浏览器，其它浏览器敬请期待！");
 			return;
 		}
 
 		checkExt(function(installed) {
-			if(!installed) {
-				showInstallDialog();
-				return;
-			}
-
-			if(config.launchAuth) {
-				user.authCheck(function(success) {
-					success ? callback() : user.showLoginDialog(callback);
-				});
-			} else {
-				callback();
-			}			
+			installed ? callback() : showInstallDialog();
 		});
 	}
 

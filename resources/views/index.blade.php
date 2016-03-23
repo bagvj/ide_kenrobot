@@ -26,9 +26,10 @@
 						<li data-action="board"><i class="iconfont icon-miniboard"></i>主板</li>
 						<li data-action="component"><i class="iconfont icon-icon23"></i>元件</li>
 						<li class="hide" data-action="library"><i class="iconfont icon-zhanshigongcheng"></i>库</li>
-						<li data-action="burn"><i class="iconfont icon-paixu"></i>烧写</li>
-						<li data-action="save"><i class="iconfont icon-baocun"></i>保存</li>
 						<li class="hide" data-action="format"><i class="iconfont icon-code1"></i>格式化</li>
+						<li data-action="save"><i class="iconfont icon-baocun"></i>保存</li>
+						<li data-action="build"><i class="iconfont icon-bug"></i>编译</li>
+						<li data-action="burn"><i class="iconfont icon-paixu"></i>烧写</li>
 						<li data-action="download"><i class="iconfont icon-download"></i>下载</li>
 					</ul>
 				</div>
@@ -163,7 +164,7 @@
 					<div class="welcome">
 						Hi,<span class="name">{{isset($user) ? $user->name : ''}}</span>
 					</div>
-					<a class="logout" href="/auth/logout">退出</a>
+					<a class="logout" href="/logout">退出</a>
 					<i class="iconfont icon-close1 close-btn"></i>
 				</div>
 				<div class="indent">
