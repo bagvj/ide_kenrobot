@@ -3,6 +3,9 @@ define(['jquery', './EventManager', './util', './config', './user', './project',
 		$('.sidebar .logo').on('click', onLogoClick);
 
 		$('.sidebar .bar ul > li').on('click', onSidebarClick).filter('[data-action="component"]').click();
+		EventManager.bind('global', 'project.save', onSaveClick);
+		EventManager.bind('global', 'project.build', onBuildClick);
+		EventManager.bind('global', 'software.format', onFormatClick);
 	}
 
 	function onLogoClick(e) {

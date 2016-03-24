@@ -14,6 +14,35 @@ define(['ace/ext-language_tools', 'jquery', './EventManager', './code'], functio
 		editor.setTheme("ace/theme/default");
 		editor.session.setMode("ace/mode/arduino");
 
+		editor.commands.addCommands([{
+			name: "saveProject",
+			bindKey: {
+				win: "Ctrl-s",
+				mac: "Command-s"
+			},
+			exec: function(editor) {
+				EventManager.trigger('global', 'project.save');
+			}
+		}, {
+			name: "buildProject",
+			bindKey: {
+				win: "Ctrl-b",
+				mac: "Command-b"
+			},
+			exec: function(editor) {
+				EventManager.trigger('global', 'project.build');
+			}
+		}, {
+			name: "formatCode",
+			bindKey: {
+				win: "Ctrl-u",
+				mac: "Command-u"
+			},
+			exec: function(editor) {
+				EventManager.trigger('global', 'software.format');
+			}
+		}]);
+
 		$('.software .back').on('click', function(e) {
 			EventManager.trigger("project", "switchPanel", 0);
 		});

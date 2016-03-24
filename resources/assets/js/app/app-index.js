@@ -1,7 +1,8 @@
-define(['jquery', './config', './hardware', './user', './project', './software', './sidebar', './board', './component', './library', './ext/agent', './guide'], function($, config, hardware, user, project, software, sidebar, board, component, library, extAgent, guide) {
+define(['jquery', 'mousetrap', './EventManager', './config', './hardware', './user', './project', './software', './sidebar', './board', './component', './library', './ext/agent', './guide'], function($, Mousetrap, EventManager, config, hardware, user, project, software, sidebar, board, component, library, extAgent, guide) {
 	function init() {
 		initPV();
 		initAjax();
+		initKeys();
 
 		user.init();
 		sidebar.init();
@@ -36,6 +37,26 @@ define(['jquery', './config', './hardware', './user', './project', './software',
 			var s = document.getElementsByTagName("script")[0]; 
 			s.parentNode.insertBefore(hm, s);
 		}
+	}
+
+	function initKeys() {
+		//保存
+		Mousetrap.bind(['ctrl+s', 'command+s'], function(e) {
+			e.preventDefault && e.preventDefault();
+			EventManager.trigger('global', 'project.save');
+		});
+
+		//编译
+		Mousetrap.bind(['ctrl+b', 'command+b'], function(e) {
+			e.preventDefault && e.preventDefault();
+			EventManager.trigger('global', 'project.build');
+		});
+
+		//格式化
+		Mousetrap.bind(['ctrl+u', 'command+u'], function(e) {
+			e.preventDefault && e.preventDefault();
+			EventManager.trigger('global', 'software.format');
+		});
 	}
 
 	function onLoadSuccess(result) {
