@@ -1,14 +1,15 @@
 define(['../util', './burn-dialog'], function(util, burnDialog) {
 	var config;
+	var API;
 
 	function init(_config) {
 		config = _config;
+		API = getChromeAPI();
 	}
 
 	function check(callback) {
-		var isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-		if(!isChrome && !window.chrome) {
-			util.message("啃萝卜平台扩展目前只支持Chrome浏览器，其它浏览器敬请期待！");
+		if(!isChrome() || !API) {
+			util.message("啃萝卜扩展目前只支持Chrome浏览器，其它浏览器敬请期待！");
 			return;
 		}
 
@@ -17,8 +18,20 @@ define(['../util', './burn-dialog'], function(util, burnDialog) {
 		});
 	}
 
+	function isChrome() {
+		return navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+	}
+
+	function getChromeAPI() {
+		if(!isChrome()) {
+			return null;
+		}
+
+		return window.chrome;
+	}
+
 	function checkExt(callback) {
-		chrome.runtime.sendMessage(config.appId, "ping", function(response) {
+		API.runtime.sendMessage(config.appId, "ping", function(response) {
 			if(response && response.action == "ping" && response.result == "pong") {
 				callback(true);
 			} else {
@@ -33,7 +46,7 @@ define(['../util', './burn-dialog'], function(util, burnDialog) {
 
 	function showBurnDialog(hexUrl) {
 		check(function() {
-			burnDialog.init(config);
+			burnDialog.init(API, config);
 			burnDialog.show(hexUrl);
 		});
 	}

@@ -3,8 +3,6 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 	var projectTemplate = '<li data-project-id="{{id}}"><div class="title"><span class="name">{{project_name}}</span><i class="iconfont icon-lashenkuangxiangxia"></i></div><div class="view"><div><span class="name">{{project_name}}</span>.uno</div><div><span class="name">{{project_name}}</span>.ino</div></div></li>';
 	//项目
 	var projects = [];
-	//当前项目
-	var curProjectInfo;
 	//状态
 	var state;
 
@@ -27,7 +25,8 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 					return !isBuilding;
 				}
 			});
-			var id = curProjectInfo.id;
+			var info = getCurrentProject();
+			var id = info.id;
 			$.ajax({
 				type: "POST",
 				url: "/project/build",
@@ -56,13 +55,14 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 
 	function isBuild(callback) {
 		var checkBuild = function() {
-			var status = curProjectInfo.status;
+			var projectInfo = getCurrentProject();
+			var status = projectInfo.status;
 			if(!status || status == 0) {
 				util.message("请先保存");
 			} else if(status == 1) {
 				util.message("请先编译");
 			} else {
-				callback(curProjectInfo.url);
+				callback(projectInfo.url);
 			}
 		};
 
@@ -73,7 +73,8 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 
 	function save() {
 		var doSave = function() {
-			var id = curProjectInfo.id;
+			var projectInfo = getCurrentProject();
+			var id = projectInfo.id;
 			if(id == 0) {
 				showSaveDialog(true);
 			} else {
@@ -88,7 +89,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 	}
 
 	function onSwitchPanel(index) {
-		$('.project .list .view > div.active').parent().find("div").eq(index).click();
+		$('.project .list li.current .view > div.active').parent().find("div").eq(index).click();
 	}
 
 	function onLogin() {
@@ -145,64 +146,80 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 
 	function onProjectTitleClick(e) {
 		var li = $(this).parent();
-		if(util.toggleActive(li, null, true)) {
-			var id = li.data('project-id');
-			curProjectInfo = getProjectInfo(id);
-			var projectData = curProjectInfo.project_data;
-
-			board.setData(projectData.board);
-			hardware.setData(projectData.hardware);
-			software.setData(projectData.software);
-
-			var divs = li.find(".view > div");
-			if(divs.filter(".active").length == 0) {
-				divs.eq(0).click();
-			} else {
-				divs.filter(".active").click();
-			}
-		}
+		util.toggleActive(li, null, true);
 	}
 
 	function onProjectFileClick(e) {
-		var projectInfo = curProjectInfo;
-		var projectData = projectInfo.project_data;
-		var div = $(this);
-		util.toggleActive(div, 'div')
-		var index = div.index();
-		var bars = $('.sidebar .bar ul > li');
-		var list = $('.sidebar .tab');
+		var file = $(this);
+		util.toggleActive(file, 'div');
+		var index = file.index();
+		var sidebarBtns = $('.sidebar .bar ul > li');
+		var sidebarTabs = $('.sidebar .tab');
 		if(index == 0) {
-			bars.filter('[data-action="board"],[data-action="component"]').removeClass("hide");
-			bars.filter('[data-action="library"],[data-action="format"]').addClass("hide");
-			list.filter('.tab-board,.tab-component').removeClass("hide");
-			list.filter('.tab-library').addClass("hide");
+			sidebarBtns.filter('[data-action="board"],[data-action="component"]').removeClass("hide");
+			sidebarBtns.filter('[data-action="library"],[data-action="format"]').addClass("hide");
+			sidebarTabs.filter('.tab-board,.tab-component').removeClass("hide");
+			sidebarTabs.filter('.tab-library').addClass("hide");
 
-			var componentBar = bars.filter('[data-action="component"]');
-			if(!componentBar.hasClass("active")) {
-				componentBar.click();
-			}
-
-			projectData.software = software.getData();
-			// projectInfo.status = 0;
+			// var componentBar = sidebarBtns.filter('[data-action="component"]');
+			// if(!componentBar.hasClass("active")) {
+			// 	componentBar.click();
+			// }
 		} else {
-			bars.filter('[data-action="board"],[data-action="component"]').addClass("hide");
-			bars.filter('[data-action="library"],[data-action="format"]').removeClass("hide");
-			list.filter('.tab-board,.tab-component').addClass("hide");
-			list.filter('.tab-library').removeClass("hide");
+			sidebarBtns.filter('[data-action="board"],[data-action="component"]').addClass("hide");
+			sidebarBtns.filter('[data-action="library"],[data-action="format"]').removeClass("hide");
+			sidebarTabs.filter('.tab-board,.tab-component').addClass("hide");
+			sidebarTabs.filter('.tab-library').removeClass("hide");
 
-			var projectBar = bars.filter('[data-action="project"]');
+			var projectBar = sidebarBtns.filter('[data-action="project"]');
 			if(!projectBar.hasClass("active")) {
 				projectBar.click();
 			}
-
-			projectData.hardware = hardware.getData();
-			// projectInfo.status = 0;
-			software.gen();
 		}
 		$(".main > .tabs").css({
-			'margin-left': $('.sidebar').width()
+			'margin-left': $('.sidebar').width(),
 		});
 		$('.main > .tabs .tab').removeClass("active").eq(index).addClass("active");
+
+		var projectInfo;
+		var project_data;
+		var projectList = $('.project .list > ul > li');
+		var thisLi = file.parent().parent();
+		var id = thisLi.data('project-id');
+
+		if(projectList.filter(".current").length == 0) {
+			projectInfo = getProjectInfo(id);
+			project_data = projectInfo.project_data;
+
+			board.setData(project_data.board);
+			hardware.setData(project_data.hardware);
+			software.setData(project_data.software);
+		} else {
+			projectInfo = getCurrentProject();
+			
+			var currentLi = projectList.filter(".current");
+			if(currentLi == thisLi) {
+				project_data = projectInfo.project_data;
+				if(index == 0) {
+					project_data.software = software.getData();
+				} else {
+					project_data.hardware = hardware.getData();
+					software.gen();
+				}
+			} else {
+				projectInfo.project_data = getProjectData();
+
+				projectInfo = getProjectInfo(id);
+				project_data = projectInfo.project_data;
+
+				board.setData(project_data.board);
+				hardware.setData(project_data.hardware);
+				software.setData(project_data.software);
+			}
+		}
+
+		projectList.filter(".current").removeClass("current");
+		thisLi.addClass("current");
 	}
 
 	function onProjectActionClick(e) {
@@ -234,7 +251,8 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 	}
 
 	function onProjectDeleteClick(e) {
-		var id = curProjectInfo.id;
+		var projectInfo = getCurrentProject();
+		var id = projectInfo.id;
 		if(id == 0) {
 			util.message("你的项目尚未保存");
 			return;
@@ -255,7 +273,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 	}
 
 	function showSaveDialog(isNew) { 
-		var projectInfo = isNew ? getDefaultProject() : curProjectInfo;
+		var projectInfo = isNew ? getDefaultProject() : getCurrentProject();
 		var text = isNew ? "创建项目" : "保存项目";
 		
 		var dialog = $('.save-dialog');
@@ -365,7 +383,6 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 			}
 			
 			projects.push(projectInfo);
-			curProjectInfo = projectInfo;
 			list.append(getProjectHtml(projectInfo));
 
 			bindProjectEvent(-1);
@@ -373,7 +390,6 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 			//save
 			var index = getProjectIndex(projectInfo.id);
 			projects[index] = projectInfo;
-			curProjectInfo = projectInfo;
 
 			list.find('> li[data-project-id="' + projectInfo.id + '"]').find(".name").text(projectInfo.project_name);
 		}
@@ -414,14 +430,16 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 	}
 
 	function bindProjectEvent(id) {
-		$('.project .list .view > div').off('click').on('click', onProjectFileClick);
 		var titles = $('.project .list .title').off('click').on('click', onProjectTitleClick);
-		if(typeof id == "number") {
-			if(id == -1) {
-				titles.eq(titles.length - 1).click();
-			} else {
-				$('.project .list >  ul > li[data-project-id="' + id + '"] .title').click();
+		$('.project .list .view > div').off('click').on('click', onProjectFileClick);
+		if(id == -1) {
+			var li = titles.eq(titles.length - 1).click().parent();
+			var files = $('.view > div', li);
+			if(files.filter('.active').length == 0) {
+				files.eq(0).click();
 			}
+		} else {
+			$('.project .list >  ul > li[data-project-id="' + id + '"] .title').click();
 		}
 	}
 
@@ -448,6 +466,11 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 			project_data: {},
 			status: 0,
 		};
+	}
+
+	function getCurrentProject() {
+		var id = $('.project .list li.current').data('project-id');
+		return getProjectInfo(id);
 	}
 
 	function getProjectInfo(id) {

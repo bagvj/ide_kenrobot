@@ -1,4 +1,5 @@
 define(['jquery', '../util'], function($, util) {
+	var API;
 	var isInit;
 
 	var selector;
@@ -8,10 +9,11 @@ define(['jquery', '../util'], function($, util) {
 	var connectionId;
 	var hexUrl;
 
-	function init(_config) {
+	function init(api, _config) {
 		if(isInit) {
 			return;
 		}
+		API = api;
 		isInit = true;
 
 		config = _config;
@@ -154,7 +156,7 @@ define(['jquery', '../util'], function($, util) {
 	function sendMessage(message, callback) {
 		message = typeof message == "string" ? {action: message} : message;
 		callback = callback || function() {}
-		chrome.runtime.sendMessage(config.appId, message, callback);
+		API.runtime.sendMessage(config.appId, message, callback);
 	}
 
 	function switchTab(tab) {
