@@ -5,8 +5,8 @@ define(['ace/ext-language_tools', 'jquery', './EventManager', './code'], functio
 	function init(getNodes) {
 		editor = ace.edit($(".software .editor")[0]);
 		editor.setOptions({
-			enableBasicAutocompletion: true,
 			enableSnippets: true,
+			enableBasicAutocompletion: true,
 			enableLiveAutocompletion: true,
 		});
 		editor.setShowPrintMargin(false);
@@ -17,6 +17,7 @@ define(['ace/ext-language_tools', 'jquery', './EventManager', './code'], functio
 		$('.software .back').on('click', function(e) {
 			EventManager.trigger("project", "switchPanel", 0);
 		});
+
 
 		code.init(getNodes);
 	}

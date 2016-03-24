@@ -198,7 +198,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 			projectInfo = getCurrentProject();
 			
 			var currentLi = projectList.filter(".current");
-			if(currentLi == thisLi) {
+			if(currentLi.data('project-id') == thisLi.data('project-id')) {
 				project_data = projectInfo.project_data;
 				if(index == 0) {
 					project_data.software = software.getData();
@@ -210,6 +210,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 				$('.view > div.active', projectList).removeClass("active");
 				$('.view > div', thisLi).eq(index).addClass("active");
 
+				software.gen();
 				projectInfo.project_data = getProjectData();
 
 				projectInfo = getProjectInfo(id);
