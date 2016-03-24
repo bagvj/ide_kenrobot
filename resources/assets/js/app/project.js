@@ -207,6 +207,9 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 					software.gen();
 				}
 			} else {
+				$('.view > div.active', projectList).removeClass("active");
+				$('.view > div', thisLi).eq(index).addClass("active");
+
 				projectInfo.project_data = getProjectData();
 
 				projectInfo = getProjectInfo(id);
