@@ -112,7 +112,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 				}).done(onLoadSuccess);
 			} else {
 				projects = [getDefaultProject()];
-				bindProjectEvent(0);
+				bindProjectEvent();
 			}
 		});
 	}
@@ -141,7 +141,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 			
 			ul.append(getProjectHtml(projectInfo));
 		}
-		bindProjectEvent(-1);
+		bindProjectEvent();
 	}
 
 	function onProjectTitleClick(e) {
@@ -385,7 +385,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 			projects.push(projectInfo);
 			list.append(getProjectHtml(projectInfo));
 
-			bindProjectEvent(-1);
+			bindProjectEvent();
 		} else {
 			//save
 			var index = getProjectIndex(projectInfo.id);
@@ -420,7 +420,7 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 					var projectInfo = getDefaultProject();
 					projects.push(projectInfo);
 					$(".project .list > ul").append(getProjectHtml(projectInfo));
-					bindProjectEvent(-1);
+					bindProjectEvent();
 				} else {
 					var titles = $(".project .list .title");
 					titles.eq(titles.length - 1).click();
@@ -429,17 +429,14 @@ define(['jquery', './EventManager', './util', './config', './user', './hardware'
 		});
 	}
 
-	function bindProjectEvent(id) {
+	function bindProjectEvent() {
 		var titles = $('.project .list .title').off('click').on('click', onProjectTitleClick);
 		$('.project .list .view > div').off('click').on('click', onProjectFileClick);
-		if(id == -1) {
-			var li = titles.eq(titles.length - 1).click().parent();
-			var files = $('.view > div', li);
-			if(files.filter('.active').length == 0) {
-				files.eq(0).click();
-			}
-		} else {
-			$('.project .list >  ul > li[data-project-id="' + id + '"] .title').click();
+
+		var li = titles.eq(titles.length - 1).click().parent();
+		var files = $('.view > div', li);
+		if(files.filter('.active').length == 0) {
+			files.eq(0).click();
 		}
 	}
 
