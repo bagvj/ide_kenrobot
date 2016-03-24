@@ -1,6 +1,6 @@
-define(['ace/ext-language_tools', 'beautify', 'jquery', './EventManager', './code'], function(_, beautify, $, EventManager, code) {
+define(['ace/ext-language_tools', 'jquery', './EventManager', './code'], function(_, $, EventManager, code) {
 	var editor;
-	var js_beautify = beautify.js_beautify;
+	var js_format_string = Module.cwrap("js_format_string", "string", ["string"]);
 
 	function init(getNodes) {
 		editor = ace.edit($(".software .editor")[0]);
@@ -42,8 +42,23 @@ define(['ace/ext-language_tools', 'beautify', 'jquery', './EventManager', './cod
 	}
 
 	function format() {
-		var source = js_beautify(editor.getValue());
-		editor.setValue(source, 1);
+		// var source = js_beautify(editor.getValue());
+		// editor.setValue(source, 1);
+		var placeholder = "codebender_reformat_cursor";
+		var old_position = editor.getCursorPosition();
+		var old_code_lines = editor.getSession().getValue().split("\n");
+		old_code_lines[old_position.row] = old_code_lines[old_position.row].slice(0, old_position.column) + placeholder + old_code_lines[old_position.row].slice(old_position.column);
+		var formatted_lines = js_format_string(old_code_lines.join("\n")).split("\n");
+		for (var i = 0; i < formatted_lines.length; i++) {
+			var index = formatted_lines[i].indexOf(placeholder);
+			if (index !== -1) {
+				formatted_lines[i] = formatted_lines[i].substring(0, index) + formatted_lines[i].substring(index + placeholder.length, formatted_lines[i].length);
+				editor.getSession().setValue(formatted_lines.join("\n"));
+				editor.getSession().getSelection().selectionLead.setPosition(i, index);
+				editor.focus();
+				break
+			}
+		}
 	}
 
 	return {
