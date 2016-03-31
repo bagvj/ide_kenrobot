@@ -236,7 +236,7 @@ define(["./EventManager"], function(EventManager) {
 
 	function onNodeDoubleClick(e, node) {
 		if(node.data.type == "board") {
-			EventManager.trigger("project", "switchPanel", 1);
+			EventManager.trigger("project", "viewChange", "software");
 		}
 	}
 

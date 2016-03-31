@@ -2,16 +2,20 @@ define(function() {
 	var libraries = [];
 
 	var getNodes;
+	var getFileName;
+	var getAuthor;
 
 	var headCodes;
 	var varCodes;
 	var setupCodes;
 
-	var codeDeclare = "/************************************************************\n *Copyright(C), 2016-2038, KenRobot.com\n *FileName:  //文件名\n *Author:    //作者\n *Version:   //版本\n *Date:      //完成日期\n */\n";
+	var codeDeclare = "/************************************************************\n * Copyright(C), 2016-2038, KenRobot.com\n * FileName: {{filename}}\n * Author: {{author}}\n * Date: {{date}}\n */\n";
 	var autoGenDeclare = "{{indent}}//auto generate\n{{indent}}//warning: please don't modify\n{{code}}{{indent}}//end auto generate. block tag: {{tag}}\n";
 
-	function init(_getNodes) {
-		getNodes = _getNodes;
+	function init(api) {
+		getNodes = api.getNodes;
+		getFileName = api.getFileName;
+		getAuthor = api.getAuthor;
 	}
 
 	function addLibrary(library) {
@@ -32,7 +36,7 @@ define(function() {
 		visit();
 
 		if(!oldSource) {
-			var codeStr = codeDeclare;
+			var codeStr = genDeclare();
 			var headStr = genHead();
 			if(headStr != "") {
 				codeStr += "\n" + headStr;
@@ -51,12 +55,34 @@ define(function() {
 
 			return codeStr;
 		} else {
+			oldSource = replaceAuto(oldSource, genDeclare(), "declare");
 			oldSource = replaceAuto(oldSource, genHead(), "head");
 			oldSource = replaceAuto(oldSource, genVar(), "variable");
 			oldSource = replaceAuto(oldSource, genSetup(), "setup");
 
 			return oldSource;
 		}
+	}
+
+	function getCodeInfo() {
+		var now = new Date();
+		var filename = getFileName() + ".ino";
+		var author = getAuthor();
+		if(author == "") {
+			author = "啃萝卜";
+		}
+		var date = now.getFullYear() + "/" + (now.getMonth() + 1) + "/" + now.getDate();
+
+		return {
+			filename: filename,
+			author: author,
+			date: date,
+		};
+	}
+
+	function genDeclare() {
+		var codeInfo = getCodeInfo();
+		return codeDeclare.replace("{{filename}}", codeInfo.filename).replace("{{author}}", codeInfo.author).replace("{{date}}", codeInfo.date);
 	}
 
 	//生成头部
@@ -121,21 +147,44 @@ define(function() {
 	}
 
 	function replaceAuto(source, autoCode, tag) {
-		var endFlag = "//end auto generate. block tag: " + tag;
-		var endIndex = source.indexOf(endFlag);
-		if(endIndex < 0) {
-			return source;
-		}
+		if(tag == "declare") {
+			var flag = "Copyright(C)";
+			var index = source.indexOf(flag);
+			if(index < 0) {
+				return source;
+			}
 
-		var startFlag = "//auto generate";
-		var startIndex = source.lastIndexOf(startFlag, endIndex);
-		if(startIndex < 0) {
-			return source;
-		}
+			var startFlag = "/**********";
+			var startIndex = source.lastIndexOf(startFlag, index);
+			if(startIndex < 0) {
+				return source;
+			}
 
-		startIndex = source.lastIndexOf("\n", startIndex) + 1;
-		endIndex = endIndex + endFlag.length + 1;
-		return source.replace(source.substring(startIndex, endIndex), autoCode);
+			var endFlag = " */\n";
+			var endIndex = source.indexOf(endFlag, index);
+			if(endIndex < 0) {
+				return source;
+			}
+
+			endIndex = endIndex + endFlag.length;
+			return source.replace(source.substring(startIndex, endIndex), autoCode);
+		} else {
+			var endFlag = "//end auto generate. block tag: " + tag;
+			var endIndex = source.indexOf(endFlag);
+			if(endIndex < 0) {
+				return source;
+			}
+
+			var startFlag = "//auto generate";
+			var startIndex = source.lastIndexOf(startFlag, endIndex);
+			if(startIndex < 0) {
+				return source;
+			}
+
+			startIndex = source.lastIndexOf("\n", startIndex) + 1;
+			endIndex = endIndex + endFlag.length + 1;
+			return source.replace(source.substring(startIndex, endIndex), autoCode);
+		}
 	}
 
 	function visit() {

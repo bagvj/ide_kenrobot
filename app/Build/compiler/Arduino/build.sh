@@ -49,7 +49,7 @@ ino build -m ${BOARD_TYPE} --make ${MAKE_PATH}
 
 #编译出错
 if [ $? -ne 0 ]; then
-	echo "编译出错"
+	echo "编译失败"
 	#回到之前的目录
 	cd ${DIR}
 	exit 3

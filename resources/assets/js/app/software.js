@@ -2,7 +2,7 @@ define(['ace/ext-language_tools', 'jquery', './EventManager', './code'], functio
 	var editor;
 	var js_format_string = Module.cwrap("js_format_string", "string", ["string"]);
 
-	function init(getNodes) {
+	function init(api) {
 		editor = ace.edit($(".software .editor")[0]);
 		editor.setOptions({
 			enableSnippets: true,
@@ -13,6 +13,7 @@ define(['ace/ext-language_tools', 'jquery', './EventManager', './code'], functio
 		editor.$blockScrolling = Infinity;
 		editor.setTheme("ace/theme/default");
 		editor.session.setMode("ace/mode/arduino");
+		editor.on('change', onEditorChange);
 
 		editor.commands.addCommands([{
 			name: "saveProject",
@@ -44,11 +45,11 @@ define(['ace/ext-language_tools', 'jquery', './EventManager', './code'], functio
 		}]);
 
 		$('.software .back').on('click', function(e) {
-			EventManager.trigger("project", "switchPanel", 0);
+			EventManager.trigger("project", "viewChange", "hardware");
 		});
-
-
-		code.init(getNodes);
+		
+		code.init(api);
+		EventManager.bind("global", "resize", onResize);
 	}
 
 	function setData(data) {
@@ -89,6 +90,14 @@ define(['ace/ext-language_tools', 'jquery', './EventManager', './code'], functio
 				break
 			}
 		}
+	}
+
+	function onResize() {
+		editor.resize(true);
+	}
+
+	function onEditorChange(e) {
+		EventManager.trigger("software", "editorChange");
 	}
 
 	return {

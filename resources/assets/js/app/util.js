@@ -10,7 +10,7 @@ define(['jquery'], function($){
 		var text = args.text;
 		var template = '<div class="x-message alert alert-' + type + ' alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + text + '</div>';
 		var messageDiv = $(template);
-		messageDiv.appendTo($("body")).css({
+		messageDiv.appendTo($(".message-layer")).css({
 			left: ($(window).width() - messageDiv.width()) / 2,
 			top: -messageDiv.height(),
 		}).animate({
@@ -77,6 +77,10 @@ define(['jquery'], function($){
 		return dialogWin;
 	}
 
+	function isInDialog() {
+		return $('.dialog-layer').hasClass("active");
+	}
+
 	function toggleActive(target, tag, collapseMode) {
 		tag = tag || "li";
 		if(collapseMode) {
@@ -103,6 +107,7 @@ define(['jquery'], function($){
 	return {
 		message: message,
 		dialog: dialog,
+		isInDialog: isInDialog,
 		toggleActive: toggleActive,
 	}
 });

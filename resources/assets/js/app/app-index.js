@@ -1,16 +1,23 @@
-define(['jquery', 'mousetrap', './EventManager', './config', './hardware', './user', './project', './software', './sidebar', './board', './component', './library', './ext/agent', './guide'], function($, Mousetrap, EventManager, config, hardware, user, project, software, sidebar, board, component, library, extAgent, guide) {
+define(['jquery', 'mousetrap', './EventManager', './config', './util', './hardware', './user', './project', './software', './sidebar', './topMenu', './logcat', './board', './component', './library', './ext/agent', './guide'], function($, Mousetrap, EventManager, config, util, hardware, user, project, software, sidebar, topMenu, logcat, board, component, library, extAgent, guide) {
 	function init() {
 		initPV();
 		initAjax();
 		initKeys();
+		initEscape();
 
 		user.init();
 		sidebar.init();
+		topMenu.init();
+		logcat.init();
 		board.init();
 		component.init();
 		library.init();
 		hardware.init();
-		software.init(hardware.getNodes);
+		software.init({
+			getNodes: hardware.getNodes,
+			getFileName: project.getProjectName,
+			getAuthor: user.getUserName,
+		});
 		extAgent.init(config.extension);
 
 		guide.init();
@@ -56,6 +63,28 @@ define(['jquery', 'mousetrap', './EventManager', './config', './hardware', './us
 		Mousetrap.bind(['ctrl+u', 'command+u'], function(e) {
 			e.preventDefault && e.preventDefault();
 			EventManager.trigger('global', 'software.format');
+		});
+	}
+
+	function initEscape() {
+		$(window).on('keydown', function(e) {
+			if(e.keyCode != 27) {
+				return;
+			}
+
+			if(util.isInDialog()) {
+				return;
+			}
+
+			if(logcat.isShow()) {
+				logcat.hide();
+				return;
+			}
+
+			if(sidebar.isShow()) {
+				sidebar.hide();
+				return;
+			}
 		});
 	}
 

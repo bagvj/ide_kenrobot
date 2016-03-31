@@ -36,10 +36,10 @@ class HomeController extends Controller {
 		$libraries = $this->getLibrariyConfig();
 
 		$has_visit = 1;
-		if (empty($_COOKIE['has_visit'])) {
-			$has_visit = 0;
-		}
-		setcookie('has_visit', 1, time() + 86400 * 365, "", ".kenrobot.com");
+		// if (empty($_COOKIE['has_visit'])) {
+		// 	$has_visit = 0;
+		// }
+		// setcookie('has_visit', 1, time() + 86400 * 365, "", ".kenrobot.com");
 
 		return view("index", compact('user', 'mainpage', 'qrcodeurl', 'register_url', 'key', 'boards', 'components', 'libraries', 'has_visit'));
 	}

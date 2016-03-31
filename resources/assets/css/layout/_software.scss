@@ -6,22 +6,28 @@
 
 	.back {
 		z-index: 99;
-		right: 25px;
-		top: 25px;
+		right: 30px;
+		top: 30px;
 		cursor: pointer;
+		opacity: 0.8;
 
 		width: 96px;
-		height: 54px;
-		color: white;
-		background-color: #a0a1a4;
+		height: 36px;
 		text-align: center;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		position: absolute;
 
-		&.active {
-			top: 90px;
+		color: white;
+		background-color: #488ac0;
+
+		& > i {
+			margin-right: 4px;
+		}
+
+		&:hover {
+			opacity: 1;
 		}
 	}
 }

@@ -17,23 +17,12 @@
 			height: 30px;
 			border-radius: 50%;
 			position: relative;
+			background-color: #d7d7d7;
 
       		& > i {
 				font-size: 20px;
 				line-height: 30px;
-				display: block;
-			}
-
-			&[data-mode="modern"], &[data-mode="drag"] {
-				& > i {
-					font-size: 22px;
-				}
-			}
-
-			&[data-mode="clone"] {
-				& > i {
-					font-size: 18px;
-				}
+				color: #515151;
 			}
 
 			&:last-child {
@@ -41,6 +30,11 @@
 			}
 
 			&:hover {
+				background-color: #1fb6ed;
+				& > i {
+					color: white;
+				}
+
 				.tips {
 					display: block;
 				}
@@ -103,27 +97,6 @@
 			opacity: 0.5;
 			position: absolute;
 		}
-	}
-
-	.copyright {
-		width: 100%;
-		bottom: 0;
-		z-index: 3;
-		position: absolute;
-
-		.alert {
-			width: 560px;
-			font-size: 12px;
-			margin-bottom: 0;
-			padding-top: 4px;
-			padding-bottom: 4px;
-			border-radius: 0;
-			border: none;
-			line-height: 20px;
-			text-align: center;
-			margin: 0 auto;
-			color: #676767;
-		}    
 	}
 
 	.name-dialog {

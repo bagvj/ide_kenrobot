@@ -76,10 +76,10 @@ define(['jquery', 'jquery-ui', 'jquery.cookie', './nodeTemplate', './EventManage
 
 		diagram.grid = GO(go.Panel, "Grid",
 			// { gridCellSize: new go.Size(10, 30) },
-			GO(go.Shape, "LineH", { stroke: "#EBEFF7" }),
-			GO(go.Shape, "LineV", { stroke: "#EBEFF7" }),
-			GO(go.Shape, "LineH", { stroke: "#F0F3F8", interval: 5 }),
-			GO(go.Shape, "LineV", { stroke: "#F0F3F8", interval: 5 })
+			GO(go.Shape, "LineH", { stroke: "#353535", opacity: 0.4 }),
+			GO(go.Shape, "LineV", { stroke: "#353535", opacity: 0.4}),
+			GO(go.Shape, "LineH", { stroke: "#353535", interval: 5, opacity: 0.4}),
+			GO(go.Shape, "LineV", { stroke: "#353535", interval: 5, opacity: 0.4})
 		);
 		
 		//节点模版
@@ -190,6 +190,7 @@ define(['jquery', 'jquery-ui', 'jquery.cookie', './nodeTemplate', './EventManage
 			model: {
 				nodeDataArray: nodes,
 				linkDataArray: links,
+				scale: diagram.scale,
 			},
 			componentCounts: componentCounts,
 		};
@@ -220,8 +221,11 @@ define(['jquery', 'jquery-ui', 'jquery.cookie', './nodeTemplate', './EventManage
 				nodeDataArray: model.nodeDataArray,
 				linkDataArray: model.linkDataArray
 			});
+			diagram.scale = model.scale || 1;
 		} else {
 			diagram.clear();
+			diagram.scale = 1;
+
 			addInitNodes();
 		}
 		componentCounts = data.componentCounts || [];
@@ -305,6 +309,10 @@ define(['jquery', 'jquery-ui', 'jquery.cookie', './nodeTemplate', './EventManage
 		});
 	}
 
+	function onResize() {
+		// console.log("onResize");
+	}
+
 	function initEvent() {
 		container = $('#' + containerId).droppable({
 			disabled: true,
@@ -319,6 +327,7 @@ define(['jquery', 'jquery-ui', 'jquery.cookie', './nodeTemplate', './EventManage
 		EventManager.bind('hardware', 'nodeClick', onNodeClick);
 		EventManager.bind('hardware', 'linkClick', onLinkClick);
 		EventManager.bind('hardware', 'portClick', onPortClick);
+		EventManager.bind("global", "resize", onResize);
 	}
 
 	function setMode(mode) {
@@ -593,7 +602,7 @@ define(['jquery', 'jquery-ui', 'jquery.cookie', './nodeTemplate', './EventManage
 	}
 
 	function onBackgroundDoubleClick(e) {
-		EventManager.trigger("project", "switchPanel", 1);
+		EventManager.trigger("project", "viewChange", "software");
 	}
 
 	function onBackgroundContextClick(e) {

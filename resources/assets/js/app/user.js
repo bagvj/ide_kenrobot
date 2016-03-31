@@ -6,6 +6,9 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 		initLoginDialog();
 
 		initUserDialog();
+		initCopyright();
+
+		$('.main-header .logo').on('click', onLogoClick);
 	}
 
 	function getUserId() {
@@ -14,6 +17,10 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 
 	function getUserInfo() {
 		return userInfo;
+	}
+
+	function getUserName() {
+		return userInfo ? userInfo.name : "";
 	}
 
 	function authCheck(callback) {
@@ -152,26 +159,6 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 		});
 	}
 
-	function initUserDialog() {
-		var user = $('.user');
-		var dialog = $('.dialog', user);
-		var indent = $('.indent', user);
-		var back = $('.software .back');
-		$('.close-btn', dialog).on('click', function() {
-			dialog.slideUp(200, function(e) {
-				indent.show();
-			});
-			back.removeClass("active");
-		});
-
-		indent.on('click', function() {
-			dialog.slideDown(400, function() {
-				indent.hide();
-			});
-			back.addClass("active");
-		});
-	}
-
 	function setWeixinLoginCheck(value, callback) {
 		clearInterval(loginCheckTimer);
 		if (value) {
@@ -209,26 +196,97 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 		}
 	}
 
+	function initUserDialog() {
+		var user = $('.user-info');
+		var userMenu = $('.user-menu', user);
+
+		var hideMenu = function() {
+			userMenu.hide();
+		}
+
+		userMenu.on('mouseleave', hideMenu);
+		user.on('mouseleave', hideMenu);
+
+		$('.wrap', user).on('mouseover', function() {
+			userMenu.show();
+		});
+
+		$('ul > li', userMenu).on('click', onMenuClick);
+
+		if(user.hasClass("active")) {
+			$('.top-menu').css({
+				'margin-right': user.width(),
+			});
+		}
+	}
+
+	function initCopyright() {
+		var copyright = $('.copyright');
+
+		var hideCopyright = $.cookie("hideCopyright");
+		if(!hideCopyright) {
+			copyright.addClass("active");
+			$('.close-btn', copyright).on('click', function() {
+				copyright.fadeOut(function() {
+					copyright.remove();
+					$.cookie("hideCopyright", true);
+				});
+			});
+		} else {
+			copyright.remove();
+		}
+	}
+
+	function onMenuClick(e) {
+		var li = $(this);
+		var action = li.data('action');
+		switch(action) {
+			case "share":
+				util.message("敬请期待");
+				break;
+			case "setting":
+				util.message("敬请期待");
+				break;
+			case "logout":
+				window.location.href = "/logout";
+				break;
+		}
+	}
+
 	function doUpdateUser() {
-		var user = $('.user');
-		var back = $('.software .back');
+		var user = $('.user-info');
+		var topMenu = $('.top-menu');
+
 		if(userInfo) {
 			user.addClass("active");
-			back.addClass("active");
 			$(".photo img", user).attr("src", userInfo.avatar_url);
 			$(".name", user).text(userInfo.name);
+
+			topMenu.css({
+				'margin-right': user.width(),
+			});
 		} else {
 			user.removeClass("active");
-			back.removeClass("active");
 			$(".name", user).text("");
 			$(".photo img", user).attr("src", "#");
+
+			topMenu.css({
+				'margin-right': 0,
+			});
 		}
+	}
+
+	function onLogoClick(e) {
+		authCheck(function(success) {
+			success ? util.message("你已登录") : showLoginDialog(null, 1);
+		});
 	}
 
 	return {
 		init: init,
 		getUserId: getUserId,
 		getUserInfo: getUserInfo,
+		getUserName: getUserName,
 		authCheck: authCheck,
 		showLoginDialog: showLoginDialog,
 	};

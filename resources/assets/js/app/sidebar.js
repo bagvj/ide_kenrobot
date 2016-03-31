@@ -1,75 +1,76 @@
-define(['jquery', './EventManager', './util', './config', './user', './project', './board', './software', './ext/agent'], function($, EventManager, util, config, user, project, board, software, agent) {
-	function init() {
-		$('.sidebar .logo').on('click', onLogoClick);
+define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 
-		$('.sidebar .bar ul > li').on('click', onSidebarClick).filter('[data-action="component"]').click();
-		EventManager.bind('global', 'project.save', onSaveClick);
-		EventManager.bind('global', 'project.build', onBuildClick);
-		EventManager.bind('global', 'software.format', onFormatClick);
+	function init() {
+		EventManager.bind("sidebar", "viewChange", onViewChange);
+		
+		$('.sidebar .bar ul > li').on('click', onSidebarClick).filter('[data-action="project"]').click();
 	}
 
-	function onLogoClick(e) {
-		user.authCheck(function(success) {
-			success ? util.message("你已登录") : user.showLoginDialog(null, 1);
-		});
+	function isShow() {
+		return $('.sidebar .bar ul > li.active').length > 0;
+	}
+
+	function hide() {
+		$('.sidebar .bar ul > li.active').click();
+	}
+
+	function onViewChange(view) {
+		var sidebarBtns = $('.sidebar .bar ul > li');
+		var sidebarTabs = $('.sidebar .tab');
+		if(view == "hardware") {
+			sidebarBtns.filter('[data-action="board"],[data-action="component"]').removeClass("hide");
+			sidebarBtns.filter('[data-action="library"]').addClass("hide");
+			sidebarTabs.filter('.tab-board,.tab-component').removeClass("hide");
+			sidebarTabs.filter('.tab-library').addClass("hide");
+		} else {
+			sidebarBtns.filter('[data-action="board"],[data-action="component"]').addClass("hide");
+			sidebarBtns.filter('[data-action="library"]').removeClass("hide");
+			sidebarTabs.filter('.tab-board,.tab-component').addClass("hide");
+			sidebarTabs.filter('.tab-library').removeClass("hide");
+		}
+
+		util.toggleActive($('.main-tabs .tab-' + view), 'div');
 	}
 
 	function onSidebarClick(e) {
 		var li = $(this);
-		var index = li.index();
 		var action = li.data("action");
-		switch(action) {
-			case "format":
-				onFormatClick();
-				break;
-			case "save":
-				onSaveClick();
-				break;
-			case "build":
-				onBuildClick();
-				break;
-			case "burn":
-				onBurnClick();
-				break;
-			case "download":
-				onDownloadClick();
-				break;
-			default:
-				var tab = $('.sidebar .tab.tab-' + action);
-				util.toggleActive(li, null, true);
-				var collapse = util.toggleActive(tab, ".tab", true);
-				$(".main > .tabs").css({
-					'margin-left': $('.sidebar').width()
-				});
-				break;
+		var tab = $('.sidebar .tab-' + action);
+		if(tab.is(':animated')) {
+			return;
 		}
-	}
 
-	function onFormatClick() {
-		software.format();
-	}
+		var width = tab.data('origin-width');
+		if(!width) {
+			width = tab.width();
+			tab.data("origin-width", width);
+		}
 
-	function onSaveClick() {
-		project.save();
-	}
-
-	function onBuildClick() {
-		project.build();
-	}
-
-	function onDownloadClick() {
-		project.isBuild(function(url) {
-			window.location.href = url;
-		});
-	}
-
-	function onBurnClick() {
-		project.isBuild(function(url){
-			agent.showBurnDialog(url);
-		});
+		var delay = 100;
+		var easing = "easeOutExpo";
+		if(tab.hasClass("active")) {
+			tab.animate({
+				width: 0,
+			}, delay, easing, function() {
+				util.toggleActive(li, null, true);
+				tab.removeClass("active");
+			});
+		} else {
+			$('.sidebar .tab.active').css({
+				width: 0
+			}).removeClass("active");
+			
+			tab.addClass("active").animate({
+				width: width,
+			}, delay, easing, function() {
+				util.toggleActive(li, null, true);
+			});
+		}
 	}
 
 	return {
 		init: init,
+		isShow: isShow,
+		hide: hide,
 	}
 });

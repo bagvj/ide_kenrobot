@@ -1,64 +1,67 @@
 .sidebar {
 	.bar {
-		.logo {
-			cursor: pointer;
-			height: 60px;
-			background: #323942 url('/assets/images/logo-single.png') no-repeat center;
-			background-size: 50px 50px;
-		}
+		background-color: #1d222d;
 
 		ul li {
-			height: 60px;
+			height: 66px;
 			text-align: center;
 			cursor: pointer;
 			font-size: 12px;
-			i {
-				font-size: 22px;
-				margin-bottom: 3px;
-				display: block;
+			padding-top: 5px;
+			color: white;
+
+			&.active {
+				background-color: #38A1DB;
+			}
+			&:hover {
+				background-color: #20B9EF;
 			}
 
-			&[data-action="board"] {
-				i {
-					font-size: 18px;
-					margin-bottom: 6px;
-				}
+			i {
+				font-size: 24px;
+				display: block;
 			}
 		}
 	}
 
 	.project {
-		width: 200px;
+		width: 240px;
 		position: relative;
 
 		.operation {
-			height: 60px;
-			background-color: #3E4959;
+			position: absolute;
+			bottom: 0;
+			height: 40px;
+			background-color: #313848;
+
 			li {
 				float: left;
-				width: 66px;
-				height: 60px;
+				width: 79px;
+				height: 40px;
 				text-align: center;
-				line-height: 60px;
+				line-height: 40px;
 				cursor: pointer;
 				margin-left: 1px;
+				color: white;
+
+				&:hover {
+					background-color: #38A1DB;
+				}
 
 				&:first-child {
 					margin-left: 0;
 				}
 
-				&>i {
-					margin-top: 16px;
-					font-size: 24px;
+				& > i {
+					margin-right: 4px;
 				}
 			}
 		}
 
 		.list {
-			background-color: #DEE1E5;
 			overflow-y: auto;
-			top: 60px;
-			bottom: 0;
+			top: 0;
+			bottom: 40px;
 			left: 0;
 			right: 0;
 			position: absolute;
@@ -67,51 +70,63 @@
 				.title {
 					height: 36px;
 					line-height: 36px;
-					background-color: #7D899B;
-					padding-left: 14px;
+					padding-left: 8px;
 					padding-right: 4px;
 					cursor: pointer;
-					color: white;
 					margin-top: 1px;
 					position: relative;
-					&>i {
-						font-size: 24px;
-						top: 4px;
-						right: 6px;
-						position: absolute;
-						@include rotate(90deg);
+					color: white;
+					background-color: #4b5765;
+
+					.icon {
+						margin-right: 4px;
+					}
+
+					.arrow {
+						float: right;
+					}
+
+					.arrow:before {
+						content: "\e615";
+					}
+				}
+
+				.view {
+					display: none;
+					background-color: white;
+
+					& > div {
+						font-size: 12px;
+						height: 36px;
+						padding-left: 26px;
+						line-height: 36px;
+						cursor: pointer;
+						color: #515151;
+
+						.icon {
+							margin-right: 4px;
+						}
+
+						&:hover {
+							color: #24c1ff;
+						}
+
+						&.active {
+							color: #24c1ff;
+						}
 					}
 				}
 
 				&:first-child .title {
 					margin-top: 0;
 				}
-
-				.view {
-					display: none;
-					&>div {
-						font-size: 12px;
-						color: #515151;
-						height: 36px;
-						padding-left: 24px;
-						line-height: 36px;
-						cursor: pointer;
-
-						&:hover {
-							background-color: #C9CED4;
-						}
-
-						&.active {
-							background-color: #ECEFF3;
-						}
-					}
-				}
 				
 				&.active {
 					.title {
-						&>i {
-							@include rotate(0);
-							right: 0;
+						background-color: #488ac0;
+
+						.arrow:before {
+							content: "\e614";
 						}
 					}
 
@@ -126,14 +141,12 @@
 	.component {
 		width: 200px;
 		position: relative;
-		background-color: #e1e4e8;
 		float: left;
 
 		.search {
 			margin-top: 12px;
 			margin-bottom: 20px;
 			margin-left: 12px;
-			background-color: #e1e4e8;
 
 			.key {
 				height: 24px;
@@ -147,6 +160,7 @@
 				border-radius: 12px;
 				border: 1px solid #bac4d0;
 			}
+
 			& > i {
 				line-height: 24px;
 				right: 30px;
@@ -160,7 +174,6 @@
 			left: 0;
 			bottom: 20px;
 			right: 0;
-			background-color: #e1e4e8;
 			position: absolute;
 			float: left;
 			overflow-y: auto;
@@ -188,13 +201,14 @@
 				.image {
 					width: 72px;
 					height: 72px;
+					border-radius: 6px;
 					background-color: white;
 					border: 1px solid #bac4d0;
 				}
 
 				.name {
 					font-size: 12px;
-					color: #515151;
+					color: white;
 					margin-top: 5px;
 					margin-bottom: 12px;
 				}
@@ -206,7 +220,6 @@
 		width: 200px;
 		position: relative;
 		overflow-y: auto;
-		background-color: #DEE1E5;
 
 		.list {
 			li {
@@ -219,7 +232,7 @@
 				}
 
 				.name {
-					color: #515151;
+					color: white;
 					margin: 0 atuo;
 					display: block;
 					text-align: center;
@@ -229,11 +242,11 @@
 					cursor: pointer;
 
 					&:hover {
-						background-color: #C9CED4;
+						background-color: #4B5765;
 					}
 
 					&.active {
-						background-color: #ECEFF4;
+						background-color: #4B5765;
 					}
 				}
 
@@ -253,43 +266,26 @@
 	}
 
 	.library {
-		width: 200px;
+		width: 180px;
 		position: relative;
 		overflow-y: auto;
-		background-color: #DEE1E5;
 
 		.list {
 			li {
 				cursor: pointer;
-				color: #515151;
+				color: white;
 				text-align: center;
 				height: 36px;
 				line-height: 36px;
 
 				&:hover {
-					background-color: #C9CED4;
+					background-color: #488ac0;
 				}
 
 				&.active {
-					background-color: #ECEFF4;
+					background-color: #488ac0;
 				}
 			}
-		}
-	}
-
-	.x-scrollbar {
-		&::-webkit-scrollbar-track {
-			-webkit-box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
-			background-color: #DEE1E5;
-		}
-
-		&::-webkit-scrollbar {
-			width: 8px;
-			background-color: #DEE1E5;
-		}
-
-		&::-webkit-scrollbar-thumb {
-			background-color: #BABCC0;
 		}
 	}
 }
