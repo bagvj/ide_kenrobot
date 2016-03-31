@@ -11,7 +11,7 @@ r.js -o build.js
 cp ../KenExt.pem ./pack.pem
 
 cd pack
-# rm -rf build.* *.rb *.sh update.xml css/*.scss .sass-cache .git*
+rm -rf build.* *.rb *.sh update.xml css/*.scss .sass-cache .git*
 
 #回到之前的目录
 cd ${DIR}
