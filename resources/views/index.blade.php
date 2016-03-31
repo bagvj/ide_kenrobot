@@ -271,7 +271,7 @@
 					<div class="x-dialog-title">删除确认</div>
 					<div class="x-dialog-close">&times;</div>
 					<div class="x-dialog-content">
-						删除后不可恢复，确定要删除该项目吗？
+						删除后不可恢复，确定要删除项目"<span class="strong name"></span>"吗？
 					</div>
 					<div class="x-dialog-btns">
 						<button class="x-dialog-btn confirm">确定</button><button class="x-dialog-btn cancel">取消</button>

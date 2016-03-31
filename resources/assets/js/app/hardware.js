@@ -309,10 +309,6 @@ define(['jquery', 'jquery-ui', 'jquery.cookie', './nodeTemplate', './EventManage
 		});
 	}
 
-	function onResize() {
-		// console.log("onResize");
-	}
-
 	function initEvent() {
 		container = $('#' + containerId).droppable({
 			disabled: true,
@@ -327,6 +323,7 @@ define(['jquery', 'jquery-ui', 'jquery.cookie', './nodeTemplate', './EventManage
 		EventManager.bind('hardware', 'nodeClick', onNodeClick);
 		EventManager.bind('hardware', 'linkClick', onLinkClick);
 		EventManager.bind('hardware', 'portClick', onPortClick);
+		EventManager.bind('hardware', 'adjustTools', onAdjustTools);
 		EventManager.bind("global", "resize", onResize);
 	}
 
@@ -742,6 +739,17 @@ define(['jquery', 'jquery-ui', 'jquery.cookie', './nodeTemplate', './EventManage
 
 	function linkValidation(fromNode, fromPort, toNode, toPort) {
 		return !portHasLink(fromPort) && !portHasLink(toPort) && portTypeMatch(fromPort, toPort);
+	}
+
+	function onResize() {
+		// console.log("onResize");
+	}
+
+	function onAdjustTools(value) {
+		var left = value ? 230 : 30;
+		$('.hardware .tools').css({
+			left: left
+		});
 	}
 
 	function onContainerDrop(e, ui) {

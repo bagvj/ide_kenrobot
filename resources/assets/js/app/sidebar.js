@@ -3,7 +3,7 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 	function init() {
 		EventManager.bind("sidebar", "viewChange", onViewChange);
 		
-		$('.sidebar .bar ul > li').on('click', onSidebarClick).filter('[data-action="project"]').click();
+		$('.sidebar .bar ul > li').on('click', onSidebarClick);
 	}
 
 	function isShow() {
@@ -48,7 +48,8 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 
 		var delay = 100;
 		var easing = "easeOutExpo";
-		if(tab.hasClass("active")) {
+		var active = tab.hasClass("active");
+		if(active) {
 			tab.animate({
 				width: 0,
 			}, delay, easing, function() {
@@ -56,15 +57,28 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 				tab.removeClass("active");
 			});
 		} else {
-			$('.sidebar .tab.active').css({
-				width: 0
-			}).removeClass("active");
+			var activeLi = li.parent().find('li.active');
+			var activeAction = activeLi.data('action');
+			var activeTab = $('.sidebar .tab.active');
+			if(activeTab.length > 0) {
+				activeTab.css({
+					width: 0
+				}).removeClass("active");
+			}
 			
 			tab.addClass("active").animate({
 				width: width,
 			}, delay, easing, function() {
 				util.toggleActive(li, null, true);
 			});
+
+			if(activeAction == "component") {
+				EventManager.trigger("hardware", "adjustTools", false);
+			}
+		}
+
+		if(action == "component") {
+			EventManager.trigger("hardware", "adjustTools", !active);
 		}
 	}
 

@@ -221,19 +221,26 @@ define(['jquery', './EventManager', './util', './user', './hardware', './softwar
 	function onProjectDeleteClick(e) {
 		var projectInfo = getCurrentProject();
 		var id = projectInfo.id;
+
+		var showDeleteDialog = function() {
+			var dialog = util.dialog({
+				selector: ".delete-project-dialog",
+				onConfirm: function() {
+					doProjectDelete(id);
+				},
+			});
+
+			$('.name', dialog).text(projectInfo.project_name);
+		}
+
 		if(id == 0) {
-			util.message("你的项目尚未保存");
+			showDeleteDialog();
 			return;
 		}
 		
 		user.authCheck(function(success) {
 			if(success) {
-				util.dialog({
-					selector: ".delete-project-dialog",
-					onConfirm: function() {
-						doProjectDelete(id);
-					},
-				});
+				showDeleteDialog();
 			} else {
 				user.showLoginDialog();
 			}
@@ -369,6 +376,34 @@ define(['jquery', './EventManager', './util', './user', './hardware', './softwar
 	}
 
 	function doProjectDelete(id) {
+		var doDelete = function() {
+			$('.top-tabs > ul > li[data-project-id="' + id + '"]').remove();
+			$('.project .list > ul > li[data-project-id="' + id + '"]').remove();
+
+			for(var i = 0; i < projects.length; i++) {
+				var info = projects[i];
+				if(info.id == id) {
+					projects.splice(i, 1);
+					break;
+				}
+			}
+
+			if(projects.length == 0) {
+				var projectInfo = getDefaultProject();
+				projects.push(projectInfo);
+				$(".project .list > ul").append(getProjectHtml(projectInfo));
+				bindProjectEvent();
+			} else {
+				var titles = $(".project .list .title");
+				titles.eq(titles.length - 1).click();
+			}
+		};
+
+		if(id == 0) {
+			doDelete();
+			return;
+		}
+
 		$.ajax({
 			type: "POST",
 			url: "/project/delete",
@@ -380,26 +415,7 @@ define(['jquery', './EventManager', './util', './user', './hardware', './softwar
 		}).done(function(result){
 			util.message(result.message);
 			if (result.status == 0) {
-				$('.top-tabs > ul > li[data-project-id="' + id + '"]').remove();
-				$('.project .list > ul > li[data-project-id="' + id + '"]').remove();
-
-				for(var i = 0; i < projects.length; i++) {
-					var info = projects[i];
-					if(info.id == id) {
-						projects.splice(i, 1);
-						break;
-					}
-				}
-
-				if(projects.length == 0) {
-					var projectInfo = getDefaultProject();
-					projects.push(projectInfo);
-					$(".project .list > ul").append(getProjectHtml(projectInfo));
-					bindProjectEvent();
-				} else {
-					var titles = $(".project .list .title");
-					titles.eq(titles.length - 1).click();
-				}
+				doDelete();
 			}
 		});
 	}
