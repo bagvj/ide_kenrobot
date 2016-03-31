@@ -1,4 +1,5 @@
 define(['jquery'], function($){
+	
 	function message(args) {
 		var duration = 400;
 		$("div.x-message").stop(true).fadeOut(duration / 2, function(){
@@ -25,7 +26,7 @@ define(['jquery'], function($){
 		var selector = args.selector;
 		var dialogWin = $(selector);
 		if(!dialogWin || !dialogWin.hasClass("x-dialog")) {
-			console.log("Can not find " + selector + " or it is not a x-dialog");
+			// console.log("Can not find " + selector + " or it is not a x-dialog");
 			return false;
 		}
 

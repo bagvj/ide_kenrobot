@@ -1,6 +1,7 @@
 define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 	var userInfo;
 	var loginCheckTimer;
+	var loginCallback;
 
 	function init() {
 		initLoginDialog();
@@ -35,165 +36,161 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 		});
 	}
 
-	function showLoginDialog(callback, index) {
-		var dialog = $('#login_dialog');
-		$('.qrLoginBtn, .baseLoginBtn', dialog).off('click').on('click', function(e) {
-			var action = $(this).data("action");
-			if (action == "qrLogin") {
-				$(".qrLoginBtn, .qrLogin").removeClass("active");
-				$(".baseLoginBtn, .baseLogin").addClass("active");
-				$(".qrLoginBtn").css({
-					display: "none"
-				});
-				$(".baseLoginBtn").css({
-					display: "block"
-				});
-				$('#use_weixin').removeClass("active");
-				$('.email', dialog).focus();
+	function showLoginDialog(callback, type) {
+		loginCallback = callback;
 
+		var dialog = util.dialog({
+			selector: ".login-dialog",
+			onClosing: function() {
+				loginCallback = null;
 				setWeixinLoginCheck(false);
-			} else {
-				$(".baseLoginBtn, .baseLogin").removeClass("active");
-				$(".qrLoginBtn, .qrLogin").addClass("active");
-				$(".baseLoginBtn").css({
-					display: "none"
-				});
-				$(".qrLoginBtn").css({
-					display: "block"
-				});
-
-				setWeixinLoginCheck(true, callback);
-			}
+			},
 		});
 
-		$('.btn-login', dialog).off('click').on('click', function() {
-			$.ajax({
-				type: 'POST',
-				url: '/auth/login',
-				dataType: 'json',
-				data: {
-					email: $('.email', dialog).val(),
-					password: $('.password', dialog).val()
-				},
-			}).done(function(result){
-				if (result.code == 0) {
-					//登录成功
-					util.message(result.message);
-					$('#login_dialog .close-btn').click();
-					userInfo = result.data;
-					doUpdateUser();
-					callback && callback();
-					EventManager.trigger("user", "login");
-				} else if (result.code == 1) {
-					userInfo = result.data;
-					doUpdateUser();
-					callback && callback();
-				} else {
-					$('.baseLogin .message span').show().html(result.message).delay(2000).queue(function() {
-						$(this).fadeOut().dequeue();
-					});
-				}
-			});
-		});
+		type = type || "account";
 
-		index = index || 0;
-		if(index == 0) {
-			$('.qrLoginBtn').click();
+		$('.switch .' + type, dialog).click();
+		if(type == "account") {
 			$('.email', dialog).focus();
-		} else {
-			$('.baseLoginBtn').click();
 		}
-
-		dialog.css({
-			top: -dialog.height(),
-		}).show().animate({
-			top: 200,
-		}, 400, "swing");
-		$('.dialog-layer').addClass("active");
 	}
 
 	function initLoginDialog() {
-		var dialog = $('#login_dialog');
-		var use_weixin = $('#use_weixin');
-		$('.close-btn', dialog).on('click', function(e) {
-			dialog.slideUp(100, function(event, ui) {
-				use_weixin.removeClass("active");
-				$('.dialog-layer').removeClass("active");
-			});
-			setWeixinLoginCheck(false);
+		var dialog = $('.login-dialog');
+		var scan = $('.scan', dialog);
+
+		$('.switch li', dialog).on('click', function() {
+			var li = $(this);
+			var action = li.data("action");
+			var tab = $('.tab-' + action, dialog);
+
+			util.toggleActive(tab, 'div');
+			util.toggleActive(li);
+
+			if(action == "weixin") {
+				setWeixinLoginCheck(true);
+			} else {
+				$('.email', dialog).focus();
+				setWeixinLoginCheck(false);
+			}
 		});
 
-		$('.qrLogin .qrcode').hover(function(e) {
-			var top = $(this).offset().top;
-			var left = $(this).offset().left;
-			if (!use_weixin.is(':animated')) {
-				use_weixin.addClass("active").show()
-					.css({
-						top: top - 160,
-						left: left + 50,
-						opacity: 0
-					})
-					.animate({
-						left: left + 260,
-						opacity: 1,
-					});
+		$('.login-btn', dialog).on('click', doLogin);
+
+		$('.qrcode', dialog).hover(function(e) {
+			if(dialog.is(':animated') || scan.is(':animated')) {
+				return;
 			}
+			
+			scan.addClass("active").css({
+				left: 160,
+				opacity: 0
+			}).animate({
+				left: 340,
+				opacity: 1,
+			}, 400, "easeOutExpo");
 		}, function(e) {
-			var left = $(this).offset().left;
-			if (!use_weixin.is(':animated')) {
-				use_weixin.animate({
-					left: left + 420,
-					opacity: 0,
-				}, null, null, function() {
-					use_weixin.removeClass("active").hide();
-				});
+			if(dialog.is(':animated') || scan.is(':animated')) {
+				return;
 			}
+
+			scan.animate({
+				left: 440,
+				opacity: 0,
+			}, 400, "easeOutExpo", function() {
+				scan.removeClass("active");
+			});
 		});
 
-		$('form', dialog).on('keyup', function(e){
-			if(e.keyCode == 13) {
-				if($('.baseLogin', dialog).hasClass("active")){
-					$(".btn-login", dialog).trigger("click");
-				}
+		$('form', dialog).on('keyup', function(e) {
+			if(e.keyCode != 13) {
+				return;
+			}
+
+			if(!$(".tab-account", dialog).hasClass("active")) {
+				return;
+			}
+
+			$(".login-btn", dialog).trigger("click");
+		});
+	}
+
+	function doLogin() {
+		var dialog = $('.login-dialog');
+		$.ajax({
+			type: 'POST',
+			url: '/auth/login',
+			dataType: 'json',
+			data: {
+				email: $('.email', dialog).val(),
+				password: $('.password', dialog).val()
+			},
+		}).done(function(result){
+			if (result.code == 0) {
+				//登录成功
+				util.message(result.message);
+				$('.x-dialog-close', dialog).click();
+
+				userInfo = result.data;
+				doUpdateUser();
+				doLoginCallback();
+				EventManager.trigger("user", "login");
+			} else if (result.code == 1) {
+				userInfo = result.data;
+				doUpdateUser();
+				doLoginCallback();
+			} else {
+				$('.message span', dialog).show().text(result.message).delay(2000).queue(function() {
+					$(this).fadeOut().dequeue();
+				});
 			}
 		});
 	}
 
-	function setWeixinLoginCheck(value, callback) {
+	function setWeixinLoginCheck(value) {
 		clearInterval(loginCheckTimer);
-		if (value) {
-			loginCheckTimer = setInterval(function() {
-				var key = $('#qrcode_key').val();
-				$.ajax({
-					type: 'POST',
-					url: '/auth/login/weixin',
-					data: {
-						key: key,
-					},
-					dataType: 'json',
-				}).done(function(result) {
-					if (result.code == 0) {
-						//登录成功
-						userInfo = result.data;
-						setWeixinLoginCheck(false);
-						util.message(result.message);
-						$('#login_dialog .close-btn').click();
-						doUpdateUser();
-						//回调
-						callback && callback();
-						EventManager.trigger("user", "login");
-					} else if (result.code == 1) {
-						//已经登录
-						userInfo = result.data;
-						setWeixinLoginCheck(false);
-						doUpdateUser();
-					} else {
-						//登录失败
-
-					}
-				});
-			}, 3000);
+		if (!value) {
+			return;
 		}
+
+		var dialog = $('.login-dialog');
+		var doCheck = function() {
+			var key = $('.qrcode-key', dialog).val();
+			$.ajax({
+				type: 'POST',
+				url: '/auth/login/weixin',
+				data: {
+					key: key,
+				},
+				dataType: 'json',
+			}).done(function(result) {
+				if (result.code == 0) {
+					//登录成功
+					userInfo = result.data;
+					setWeixinLoginCheck(false);
+					$('.x-dialog-close', dialog).click();
+					util.message(result.message);
+
+					doUpdateUser();
+					doLoginCallback();
+					EventManager.trigger("user", "login");
+				} else if (result.code == 1) {
+					//已经登录
+					userInfo = result.data;
+					setWeixinLoginCheck(false);
+					doUpdateUser();
+				} else {
+					//登录失败
+
+				}
+			});
+		};
+
+		loginCheckTimer = setInterval(doCheck, 3000);
+	}
+
+	function doLoginCallback() {
+		loginCallback && loginCallback();
 	}
 
 	function initUserDialog() {
@@ -278,7 +275,7 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 
 	function onLogoClick(e) {
 		authCheck(function(success) {
-			success ? util.message("你已登录") : showLoginDialog(null, 1);
+			success ? util.message("你已登录") : showLoginDialog(null, "weixin");
 		});
 	}
 

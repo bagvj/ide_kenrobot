@@ -195,49 +195,54 @@
 			</div>
 			<div class="drag-layer"></div>
 			<div class="modal dialog-layer">
-				<div id="login_dialog" class="dialog">
-					<div class="close-btn left">
-						<i class="kenrobot ken-close"></i>
-					</div>
-					<div>
-						<a title="返回" class="baseLoginBtn" data-action="baseLogin active" style="display:none;"></a>
-						<div class="tab baseLogin active">
-							<div class="tips">登录到啃萝卜</div>
+				<div class="x-dialog x-dialog-custom login-dialog">
+					<i class="kenrobot ken-close x-dialog-close"></i>
+					<ul class="switch">
+						<li class="account active" data-action="account"></li>
+						<li class="weixin" data-action="weixin"><div class="tips">扫码登录更安全</div></li>
+					</ul>
+					<div class="logo"></div>
+					<div class="seperator"></div>
+					<div class="wrap">
+						<div class="tab tab-account active">
+							<div class="title">账号登录</div>
 							<form>
 								{!! csrf_field() !!}
+								<input class="qrcode-key" type="hidden" value="{{$key or ''}}">
+								<div class="field">
+									<span class="icon"><i class="kenrobot ken-user"></i></span>
+									<input class="email" type="email" name="email" value="{{old('email')}}" placeholder="邮箱地址/手机号码" autocomplete="off" />
+								</div>
+								<div class="field">
+									<span class="icon"><i class="kenrobot ken-password"></i></span>
+									<input class="password" type="password" name="password" placeholder="密码" />
+								</div>
 								<div class="message">
 									<span></span>
 								</div>
-								<div class="field">
-									<label class="email-icon"></label>
-									<input class="email" type="email" name="email" value="{{ old('email') }}" placeholder="邮箱地址/手机号码" autocomplete="off" />
-								</div>
-								<div class="field">
-									<label class="password-icon"></label>
-									<input class="password" type="password" name="password" />
-								</div>
-								<div class="remember"></div>
-								<div>
-									<input id="qrcode_key" type="hidden" value="{{$key or ''}}">
-									<a class="btn-login">登录</a>
-									<a class="btn-register" href="{{$register_url}}">注册</a>
-								</div>
+								<input class="login-btn" type="button" value="登录" />
 							</form>
 						</div>
-						<a title="返回" class="qrLoginBtn" data-action="qrLogin"></a>
-						<div class="tab qrLogin">
-							<div class="tips">请使用微信扫一扫</div>
-							<div class="tips">扫码关注后即可直接登录</div>
-							<img class="qrcode" alt="微信扫码" src="{{ $qrcodeurl or '' }}" />
+						<div class="tab tab-weixin">
+							<div class="scan">
+								<img src="{{asset('/assets/images/weixin-scan.png')}}" />
+							</div>
+							<img class="qrcode" alt="微信扫码" src="{{$qrcodeurl or ''}}" />
+							<div class="tips">
+								请使用微信扫一扫<br />
+								扫码关注后即可直接登录
+							</div>
 						</div>
 					</div>
-				</div>
-				<div id="use_weixin" style="display:none;">
-					<img src="{{asset('/assets/images/use_weixin.png')}}" />
+					<div class="footer">
+						<a class="forget-password" href="{{$find_password_url}}">忘记密码</a>
+						<a class="register" href="{{$register_url}}">点击注册</a>
+						<span class="no-account">还没有啃萝卜账号？</span>
+					</div>
 				</div>
 				<div class="x-dialog x-dialog-info install-dialog">
 					<div class="x-dialog-title">安装</div>
-					<div class="x-dialog-close">&times;</div>
+					<i class="kenrobot ken-close x-dialog-close"></i>
 					<div class="x-dialog-content selectable">
 						你没有安装啃萝卜<span class="strong">KenExt.crx</span>，请按以下步骤操作:
 						<div class="step">
@@ -254,7 +259,7 @@
 				</div>
 				<div class="x-dialog x-dialog-info arduino-driver-dialog">
 					<div class="x-dialog-title">驱动问题</div>
-					<div class="x-dialog-close">&times;</div>
+					<i class="kenrobot ken-close x-dialog-close"></i>
 					<div class="x-dialog-content selectable">
 						如果你遇到了Arduino<span class="strong">驱动问题</span>，请按以下步骤操作:
 						<div class="step">
@@ -269,7 +274,7 @@
 				</div>
 				<div class="x-dialog x-dialog-confirm delete-project-dialog">
 					<div class="x-dialog-title">删除确认</div>
-					<div class="x-dialog-close">&times;</div>
+					<i class="kenrobot ken-close x-dialog-close"></i>
 					<div class="x-dialog-content">
 						删除后不可恢复，确定要删除项目"<span class="strong name"></span>"吗？
 					</div>
@@ -279,7 +284,7 @@
 				</div>
 				<div class="x-dialog x-dialog-info building-dialog">
 					<div class="x-dialog-title">编译</div>
-					<div class="x-dialog-close">&times;</div>
+					<i class="kenrobot ken-close x-dialog-close"></i>
 					<div class="x-dialog-content"></div>
 					<div class="x-dialog-btns">
 						<button class="x-dialog-btn confirm">确定</button>
@@ -287,7 +292,7 @@
 				</div>
 				<div class="x-dialog x-dialog-custom burn-dialog">
 					<div class="x-dialog-title">烧写</div>
-					<div class="x-dialog-close">&times;</div>
+					<i class="kenrobot ken-close x-dialog-close"></i>
 					<div class="x-dialog-content">
 						<div class="tab tab-init active">
 							<div class="wrap">

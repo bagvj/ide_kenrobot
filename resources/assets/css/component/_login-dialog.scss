@@ -1,310 +1,215 @@
-#login_dialog {
-    margin: 0 auto;
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 280px;
-    height: 280px;
-    border: 1px solid transparent;
-    overflow: hidden;
-    z-index: 101;
+.login-dialog {
+	width: 320px;
+	height: 360px;
+	padding: 10px 20px 30px 20px;
+	background-color: white;
 
-    .close-btn {
-        color: white;
-    }
+	.x-dialog-close {
+		left: 8px;
+		width: 20px;
+		color: #a8a8a8;
+	}
 
-    .tab {
-        display: none;
-        &.active {
-            display: block;
-        }
-    }
-}
+	.switch {
+		position: absolute;
+		right: 0;
+		top: 0;
+		cursor: pointer;
 
-.qrLogin {
-    background-color: rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(0, 0, 0, 0);
-    color: rgb(0, 0, 0);
-    display: block;
-    font-size: 12px;
-    height: 280px;
-    line-height: 18px;
-    margin: 0;
-    padding-bottom: 20px;
-    position: relative;
-}
+		li {
+			height: 64px;
+			width: 64px;
+			display: block;
 
-.baseLogin {
-    background-color: rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(0, 0, 0, 0);
-    color: rgb(0, 0, 0);
-    display: block;
-    font-size: 12px;
-    font-family: "Microsoft YaHei", "Helvetica Neue";
-    height: 280px;
-    line-height: 18px;
-    padding-bottom: 20px;
-    position: relative;
-    z-index: 10;
-}
+			&.active {
+				display: none;
+			}
+		}
 
-.baseLoginBtn {
-    display: none;
-    outline-style:none;
-    border: 0;
-    background-image: url(../images/loginBtns.png);
-    background-position: -201px -199px;
-    background-repeat: no-repeat;
-    color: rgb(0, 136, 204);
-    cursor: pointer;
-    display: block;
-    font-size: 12px;
-    height: 60px;
-    line-height: 18px;
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    transition-delay: 0s;
-    transition-duration: 0.2s;
-    transition-property: background-position;
-    transition-timing-function: cubic-bezier(0.25, 0.5, 0.5, 0.9);
-    width: 60px;
-    z-index: 101;
-}
+		.weixin {
+			background-image: url('../images/weixin-login.png');
 
-.qrLoginBtn {
-    display: none;
-    border: 0;
-    background-image: url(../images/loginBtns.png);
-    background-position: -260px -260px;
-    background-repeat: no-repeat;
-    color: rgb(0, 136, 204);
-    cursor: pointer;
-    display: block;
-    height: 60px;
-    line-height: 18px;
-    position: absolute;
-    right: 0px;
-    text-decoration: none;
-    top: 0px;
-    transition-delay: 0s;
-    transition-duration: 0.2s;
-    transition-property: background-position;
-    transition-timing-function: cubic-bezier(0.25, 0.5, 0.5, 0.9);
-    width: 60px;
-    z-index: 101;
-}
+			.tips {
+				letter-spacing: 0.85px;
+				height: 36px;
+				line-height: 36px;
+				font-size: 12px;
+				padding-left: 14px;
+				padding-right: 14px;
+				position: absolute;
+				top: 10px;
+				right: -135px;
+				color: white;
+				background-color: #fb8920;
+				display: none;
 
-.qrLogin .tips {
-    font-family: "Microsoft YaHei", "Helvetica Neue";
-    font-size: 14px;
-    font-weight: lighter;
-    color: #eee;
-    margin: 0 auto;
-    text-align: center;
-    padding: 6px 0;
-}
+				&:before {
+					border: solid transparent;
+					content: ' ';
+					height: 0;
+					width: 0;
+					border-width: 6px;
+					border-right-color: #fb8920;
+					top: 9px;
+					left: -12px;
+					position: absolute;
+				}
+			}
 
-.qrLogin .qrcode {
-    padding-top: 10px;
-    width:200px;
-    height:200px;
-    display:block;
-    margin:0 auto;
-}
+			&:hover {
+				.tips {
+					display: block;
+				}
+			}
+		}
 
-.baseLogin .tips {
-    color: rgb(255, 255, 255);
-    display: block;
-    font-size: 18px;
-    font-weight: 500;
-    height: 28px;
-    line-height: 28px;
-    margin: 26px auto 10px auto;
-    text-align: center;
-}
+		.account {
+			background-image: url('../images/account-login.png');
+		}
+	}
 
-.baseLogin .message {
-    color: #f00;
-    font-size: 14px;
-    height: 20px;
-    margin-bottom: 15px;
-    text-align: center;
-}
+	.logo {
+		background: url('../images/logo2.png') no-repeat center;
+		background-size: 98px 48px;
+		height: 48px;
+		margin-bottom: 8px;
+	}
 
-.baseLogin .field {
-    color: rgb(0, 0, 0);
-    display: block;
-    font-size: 12px;
-    height: 40px;
-    line-height: 18px;
-    padding-bottom: 10px;
-    padding-left: 28.5px;
-    position: relative;
-    width: 220px;
-    -webkit-box-sizing: content-box;
-    box-sizing: content-box;
-}
+	.seperator {
+		height: 1px;
+		background-color: #ccc;
+	}
 
-.baseLogin .field:first-child {
-    margin-top: 20px;
-}
+	.tab {
+		display: none;
 
-.baseLogin .field label {
-    border-bottom-color: rgb(167, 167, 167);
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-left-color: rgb(167, 167, 167);
-    border-left-style: solid;
-    border-left-width: 1px;
-    border-top-color: rgb(167, 167, 167);
-    border-top-style: solid;
-    border-top-width: 1px;
-    color: rgb(0, 0, 0);
-    display: block;
-    float: left;
-    font-size: 12px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: normal;
-    height: 38px;
-    line-height: 18px;
-    list-style-image: none;
-    list-style-position: outside;
-    list-style-type: none;
-    width: 39px;
-    zoom: 1;
-    -webkit-box-sizing: content-box;
-    box-sizing: content-box;
-}
+		&.active {
+			display: block;
+		}
+	}
 
-.baseLogin .field .email-icon {
-    background: url('../images/email.png') no-repeat center;
-}
+	.tab-account {
+		.title {
+			color: #515151;
+			height: 20px;
+			line-height: 20px;
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
 
-.baseLogin .field .password-icon {
-    background: url('../images/password.png') no-repeat center;
-}
+		.field {
+			margin-top: 20px;
 
-.baseLogin .field input {
-    -webkit-appearance: none;
-    -webkit-rtl-ordering: logical;
-    -webkit-user-select: text;
-    background-color: rgb(255, 255, 255);
-    border-bottom-color: rgb(255, 255, 255);
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-image-outset: 0px;
-    border-image-repeat: stretch;
-    border-image-slice: 100%;
-    border-image-source: none;
-    border-image-width: 1;
-    border-left-color: rgb(255, 255, 255);
-    border-left-style: solid;
-    border-left-width: 1px;
-    border-right-color: rgb(255, 255, 255);
-    border-right-style: solid;
-    border-right-width: 1px;
-    border-top-color: rgb(255, 255, 255);
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
-    border-top-style: solid;
-    border-top-width: 1px;
-    box-shadow: none;
-    color: rgb(89, 89, 89);
-    cursor: auto;
-    display: block;
-    float: left;
-    font-size: 12px;
-    height: 20px;
-    letter-spacing: normal;
-    line-height: 20px;
-    padding-bottom: 9px;
-    padding-left: 9px;
-    padding-right: 9px;
-    padding-top: 9px;
-    position: relative;
-    width: 159px;
-    word-spacing: 0px;
-    -webkit-writing-mode: horizontal-tb;
-    outline: none;
-    -webkit-box-sizing: content-box;
-    box-sizing: content-box;
-}
+			&:first-child {
+				margin-top: 0;
+			}
 
-.baseLogin .remember {
-    margin-bottom: 20px;
-}
+			.icon {
+				float: left;
+				height: 36px;
+				width: 36px;
+				background-color: #999;
 
-.baseLogin .remember input {
-    width: 15px;
-    height: 15px;
-    margin-left: 40px;
-    line-height: 20px;
-    vertical-align: middle;
-}
+				& > i {
+					font-size: 28px;
+					line-height: 36px;
+					margin-left: 4px;
+					color: white;
+				}
+			}
 
-.baseLogin .remember label {
-    margin-left: 27px;
-    font-size: 12px;
-    color: #8d9092;
-    vertical-align: middle;
-    line-height: 20px;
-}
+			& > input {
+				display: block;
+				width: 244px;
+				margin-left: 36px;
+				height: 36px;
+				line-height: 36px;
+				font-size: 12px;
+				padding-left: 8px;
+				padding-right: 8px;
+				border-top: 1px solid #ccc;
+				border-right: 1px solid #ccc;
+				border-bottom: 1px solid #ccc;
+				background-color: #f8f8f8;
+				color: #515151;
+			}
+		}
 
-.baseLogin .btn-login {
-    -webkit-appearance: none;
-    -webkit-rtl-ordering: logical;
-    -webkit-user-select: none;
-    border-radius: 4px;
-    background-color: rgb(0, 170, 238);
-    color: white;
-    cursor: pointer;
-    text-align: center;
-    float: left;
-    font-size: 18px;
-    height: 40px;
-    width: 90px;
-    line-height: 40px;
-    outline-style: none;
-    margin-left: 30px;
-    font-family: "Microsoft YaHei", "Helvetica Neue";
-}
+		.message {
+			visibility: hidden;
+			text-align: center;
+			height: 20px;
+			line-height: 20px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			color: red;
 
-.baseLogin .btn-register {
-    -webkit-appearance: none;
-    -webkit-rtl-ordering: logical;
-    -webkit-user-select: none;
-    border-radius: 4px;
-    background-color: rgb(0, 170, 238);
-    color: white;
-    cursor: pointer;
-    text-align: center;
-    float: left;
-    font-size: 18px;
-    height: 40px;
-    width: 90px;
-    line-height: 40px;
-    outline-style: none;
-    margin-left: 35px;
-    font-family: "Microsoft YaHei", "Helvetica Neue";
-}
+			&.active {
+				visibility: visible;
+			}
+		}
 
-#use_weixin {
-    position: absolute;
-    height: auto;
-    width: 300px;
-    top: 25%;
-    left: 75%;
-    z-index:105;
-    display: none;
+		.login-btn {
+			display: block;
+			width: 100%;
+			height: 36px;
+			line-height: 36px;
+			text-align: center;
+			letter-spacing: 5px;
+			background-color: #fb8920;
+			color: white;
+		}
+	}
 
-    img {
-        height: 512px;
-        width: 350px;
-    }
+	.tab-weixin {
+		.qrcode {
+			width: 150px;
+			height: 150px;
+			display: block;
+			margin: 20px auto 10px auto;
+		}
 
-    &.active {
-        display: block;
-    } 
+		.tips {
+			letter-spacing: 2.32px;
+			line-height: 20px;
+			text-align: center;
+			color: #515151;
+		}
+
+		.scan {
+			position: absolute;
+			left: 160px;
+			top: -80px;
+			display: none;
+
+			&.active {
+				display: block;
+			}
+		}
+	}
+
+	.footer {
+		position: absolute;
+		bottom: 30px;
+		left: 20px;
+		right: 20px;
+
+		letter-spacing: 0.85px;
+		font-size: 12px;
+
+		.forget-password {
+			color: #fb8920;
+			float: left;
+		}
+
+		.register {
+			float: right;
+			color: #fb8920;
+		}
+
+		.no-account {
+			float: right;
+			color: #999;
+		}
+	}
 }

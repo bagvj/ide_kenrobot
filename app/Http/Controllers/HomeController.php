@@ -30,6 +30,7 @@ class HomeController extends Controller {
 		$mainpage = config('navigation.master.mainpage');
 
 		$register_url = config('platform.url.register').'&redirect_uri='.urlencode($request->url());
+		$find_password_url = config('platform.url.find_password');
 		$boards = $this->getBoardConfig();
 
 		$components = $this->getComponentConfig();
@@ -41,7 +42,7 @@ class HomeController extends Controller {
 		// }
 		// setcookie('has_visit', 1, time() + 86400 * 365, "", ".kenrobot.com");
 
-		return view("index", compact('user', 'mainpage', 'qrcodeurl', 'register_url', 'key', 'boards', 'components', 'libraries', 'has_visit'));
+		return view("index", compact('user', 'mainpage', 'qrcodeurl', 'register_url', 'find_password_url', 'key', 'boards', 'components', 'libraries', 'has_visit'));
 	}
 
 	public function config() {
