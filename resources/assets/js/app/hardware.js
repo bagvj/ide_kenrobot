@@ -26,7 +26,7 @@ define(['jquery', 'jquery-ui', 'jquery.cookie', './nodeTemplate', './EventManage
 	var follower;
 
 	//交互模式
-	var interactiveMode = $.cookie("interactiveMode") || "modern";
+	var interactiveMode = $.cookie("interactiveMode") || "drag";
 	//模式
 	var mode = "default";
 
