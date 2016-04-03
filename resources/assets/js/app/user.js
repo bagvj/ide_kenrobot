@@ -140,8 +140,9 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 				doUpdateUser();
 				doLoginCallback();
 			} else {
-				$('.message span', dialog).show().text(result.message).delay(2000).queue(function() {
-					$(this).fadeOut().dequeue();
+				var message = $('.message', dialog);
+				message.addClass("active").text(result.message).delay(2000).queue(function() {
+					message.removeClass("active").text('').dequeue();
 				});
 			}
 		});
