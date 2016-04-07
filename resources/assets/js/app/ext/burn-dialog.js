@@ -83,8 +83,12 @@ define(['jquery', '../util'], function($, util) {
 				}
 			}
 
-			//有且仅有一个arduino设置连接
-			if(count == 1) {
+			if(count == 0) {
+				//没有arduino串口
+				switchTab("no-serial");
+				setTimeout(checkSerialPorts, 1);
+			} else if(count == 1) {
+				//有且仅有一个arduino设置连接
 				$('.tab-connect .connect', selector).click();
 			} else {
 				switchTab("connect");
