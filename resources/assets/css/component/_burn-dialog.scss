@@ -106,6 +106,13 @@ $blue: #4891ed;
 				margin-top: 10px;
 				font-size: 14px;
 			}
+
+			.driver {
+				position: absolute;
+				left: 15px;
+				bottom: 0;
+				color: $blue;
+			}
 		}
 
 		.tab-burn {

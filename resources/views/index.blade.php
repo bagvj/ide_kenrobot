@@ -294,7 +294,7 @@
 					<div class="x-dialog-title">烧写</div>
 					<i class="kenrobot ken-close x-dialog-close"></i>
 					<div class="x-dialog-content">
-						<div class="tab tab-init active">
+						<div class="tab tab-init">
 							<div class="wrap">
 								<div class="message">
 									正在初始化，请稍候
@@ -309,7 +309,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="tab tab-connect">
+						<div class="tab tab-connect active">
 							<div class="wrap">
 								<div class="tips">
 									未检测到Arduino开发板连接或您已连接多个<br />请手动设置串口
@@ -331,6 +331,7 @@
 									<input class="connect" type="button" value="连接" />
 								</div>
 								<div class="message"></div>
+								<a class="driver" href='#'>驱动问题?</a>
 							</div>
 						</div>
 						<div class="tab tab-burn">

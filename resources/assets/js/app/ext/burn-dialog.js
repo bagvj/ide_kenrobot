@@ -30,7 +30,7 @@ define(['jquery', '../util'], function($, util) {
 		var downloadUrl = "http://platform.kenrobot.com/download/arduino-driver-x" + bit + ".zip";
 		$('.arduino-driver-dialog .downloadUrl').attr('href', downloadUrl);
 
-		$('.tab-no-serial .driver', selector).on('click', onDriverClick);
+		$('.driver', selector).on('click', onDriverClick);
 		$('.tab-connect .connect', selector).on('click', onConnectClick);
 		$('.tab-burn .burn', selector).on('click', onBurnClick);
 	}
@@ -43,7 +43,7 @@ define(['jquery', '../util'], function($, util) {
 			onClose: onDialogClose,
 		});
 
-		checkSerialPorts();
+		// checkSerialPorts();
 	}
 
 	function onDialogClosing() {
@@ -83,11 +83,7 @@ define(['jquery', '../util'], function($, util) {
 				}
 			}
 
-			if(count == 0) {
-				//没有arduino串口
-				switchTab("no-serial");
-				setTimeout(checkSerialPorts, 1);
-			} else if(count == 1) {
+			if(count == 1) {
 				//有且仅有一个arduino设置连接
 				$('.tab-connect .connect', selector).click();
 			} else {
