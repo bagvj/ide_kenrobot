@@ -13,13 +13,13 @@
 		position: absolute;
 
 		.main-header {
-			height: 40px;
+			height: 66px;
 			position: relative;
 			background-color: #1e2129;
 		}
 
 		.main-content {
-			top: 40px;
+			top: 66px;
 			bottom: 0;
 			left: 0;
 			right: 0;
@@ -53,9 +53,14 @@
 		background-size: 45px 45px;
 	}
 
+	& > .wrap {
+		margin-left: 66px;
+		height: 66px;
+	}
+
 	.top-menu {
 		height: 40px;
-		margin-left: 112px;
+		margin-left: 48px;
 	}
 
 	.user-info {
@@ -65,12 +70,17 @@
 		position: absolute;
 		background-color: #1e2129;
 	}
+
+	.top-tabs {
+		height: 26px;
+		border-top: 1px solid #343e4c;
+		background-color: #1e2129;
+	}
 }
 
 .main-content {
 	.sidebar {
 		height: 100%;
-		padding-top: 26px;
 		float: left;
 	}
 
@@ -82,14 +92,8 @@
 		position: absolute;
 		background-color: #262a34;
 
-		.top-tabs {
-			height: 26px;
-			border-top: 1px solid #343e4c;
-			background-color: #1e2129;
-		}
-
 		.main-tabs {
-			top: 26px;
+			top: 0;
 			bottom: 0;
 			left: 0;
 			right: 0;
@@ -269,7 +273,7 @@
 
 	.tab {
 		z-index: 10;
-		top: 26px;
+		top: 0;
 		bottom: 0;
 		left: 66px;
 		position: absolute;

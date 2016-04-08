@@ -22,25 +22,31 @@
 				<div class="main-header">
 					<div class="logo">
 					</div>
-					<div class="top-menu">
-						<ul>
-							<li data-action="build"><i class="kenrobot ken-build"></i>编译</li><li data-action="burn"><i class="kenrobot ken-upload"></i>烧写</li><li data-action="format"><i class="kenrobot ken-format"></i>格式化</li><li data-action="save"><i class="kenrobot ken-save"></i>保存</li><li data-action="download"><i class="kenrobot ken-download"></i>下载</li><li data-action="logcat"><i class="kenrobot ken-terminal"></i>输出</li>
-						</ul>
-					</div>
-					<div class="user-info {{isset($user) ? 'active' : ''}}">
-						<div class="wrap">
-							<a class="photo" href="{{$mainpage}}" target="_blank">
-								<img src="{{$user->avatar_url or asset('assets/images/default_portrait.png')}}" />
-							</a>
-							<div class="welcome">
-								<span class="name">{{isset($user) ? $user->name : ''}}</span><i class="kenrobot ken-triangle-down arrow"></i>
+					<div class="wrap">
+						<div class="top-menu">
+							<ul>
+								<li data-action="build"><i class="kenrobot ken-build"></i>编译</li><li data-action="burn"><i class="kenrobot ken-upload"></i>烧写</li><li data-action="format"><i class="kenrobot ken-format"></i>格式化</li><li data-action="save"><i class="kenrobot ken-save"></i>保存</li><li data-action="download"><i class="kenrobot ken-download"></i>下载</li><li data-action="logcat"><i class="kenrobot ken-terminal"></i>输出</li>
+							</ul>
+						</div>
+						<div class="user-info {{isset($user) ? 'active' : ''}}">
+							<div class="wrap">
+								<a class="photo" href="{{$mainpage}}" target="_blank">
+									<img src="{{$user->avatar_url or asset('assets/images/default_portrait.png')}}" />
+								</a>
+								<div class="welcome">
+									<span class="name">{{isset($user) ? $user->name : ''}}</span><i class="kenrobot ken-triangle-down arrow"></i>
+								</div>
+							</div>
+							<div class="user-menu">
+								<ul>
+									<li data-action="share"><i class="kenrobot ken-share"></i>分享</li>
+									<li data-action="setting"><i class="kenrobot ken-setting"></i>设置</li>
+									<li data-action="logout"><i class="kenrobot ken-logout"></i>退出</li>
+								</ul>
 							</div>
 						</div>
-						<div class="user-menu">
+						<div class="top-tabs">
 							<ul>
-								<li data-action="share"><i class="kenrobot ken-share"></i>分享</li>
-								<li data-action="setting"><i class="kenrobot ken-setting"></i>设置</li>
-								<li data-action="logout"><i class="kenrobot ken-logout"></i>退出</li>
 							</ul>
 						</div>
 					</div>
@@ -122,10 +128,7 @@
 						</div>
 					</div>
 					<div class="wrap">
-						<div class="top-tabs">
-							<ul>
-							</ul>
-						</div>
+						
 						<div class="main-tabs">
 							<div class="tab tab-software active">
 								<div class="software">
