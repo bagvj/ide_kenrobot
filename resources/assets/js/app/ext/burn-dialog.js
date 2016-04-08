@@ -43,7 +43,7 @@ define(['jquery', '../util'], function($, util) {
 			onClose: onDialogClose,
 		});
 
-		// checkSerialPorts();
+		checkSerialPorts();
 	}
 
 	function onDialogClosing() {
@@ -66,7 +66,7 @@ define(['jquery', '../util'], function($, util) {
 
 	function checkSerialPorts() {
 		sendMessage("serial.getDevices", function(ports) {
-			if(ports.length == 0) {
+			if(!ports || ports.length == 0) {
 				//没有串口连接
 				switchTab("no-serial");
 				setTimeout(checkSerialPorts, 1);
