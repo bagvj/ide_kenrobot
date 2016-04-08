@@ -8951,7 +8951,6 @@ body {
 /* line 61, layout/_layout.scss */
 .main-header .top-menu {
   height: 40px;
-  margin-left: 48px;
 }
 /* line 66, layout/_layout.scss */
 .main-header .user-info {
@@ -8964,16 +8963,15 @@ body {
 /* line 74, layout/_layout.scss */
 .main-header .top-tabs {
   height: 26px;
-  border-top: 1px solid #343e4c;
-  background-color: #1e2129;
+  background-color: #1d1e20;
 }
 
-/* line 82, layout/_layout.scss */
+/* line 81, layout/_layout.scss */
 .main-content .sidebar {
   height: 100%;
   float: left;
 }
-/* line 87, layout/_layout.scss */
+/* line 86, layout/_layout.scss */
 .main-content > .wrap {
   top: 0;
   bottom: 0;
@@ -8982,7 +8980,7 @@ body {
   position: absolute;
   background-color: #262a34;
 }
-/* line 95, layout/_layout.scss */
+/* line 94, layout/_layout.scss */
 .main-content > .wrap .main-tabs {
   top: 0;
   bottom: 0;
@@ -8991,24 +8989,25 @@ body {
   position: absolute;
 }
 
-/* line 105, layout/_layout.scss */
+/* line 104, layout/_layout.scss */
 .top-menu {
   white-space: nowrap;
 }
-/* line 108, layout/_layout.scss */
+/* line 107, layout/_layout.scss */
 .top-menu li {
   font-size: 14px;
   line-height: 40px;
   height: 40px;
-  width: 80px;
+  width: 84px;
   display: inline-block;
   text-align: center;
   cursor: pointer;
+  letter-spacing: 1px;
   color: white;
 }
 /* line 118, layout/_layout.scss */
 .top-menu li > i {
-  margin-right: 5px;
+  margin-right: 6px;
 }
 /* line 122, layout/_layout.scss */
 .top-menu li.disabled {
@@ -9016,7 +9015,7 @@ body {
 }
 /* line 126, layout/_layout.scss */
 .top-menu li:hover {
-  color: #24c1ff;
+  background-color: #3A4256;
 }
 
 /* line 133, layout/_layout.scss */
@@ -9049,61 +9048,75 @@ body {
   z-index: 10;
   cursor: pointer;
   margin-left: 1px;
-  color: #a8a8a8;
-  background-color: #55575e;
+  color: #6e7679;
+  background-color: #1d1e20;
 }
 /* line 166, layout/_layout.scss */
-.top-tabs li:first-child {
-  margin-left: 0;
-}
-/* line 170, layout/_layout.scss */
-.top-tabs li.active {
-  color: white;
-  background-color: #637c95;
-}
-/* line 175, layout/_layout.scss */
 .top-tabs li .name {
   margin-left: 10px;
 }
-/* line 179, layout/_layout.scss */
+/* line 170, layout/_layout.scss */
 .top-tabs li .close-btn {
+  display: none;
   font-size: 12px;
   line-height: 28px;
   margin-right: 5px;
   float: right;
 }
-/* line 185, layout/_layout.scss */
+/* line 177, layout/_layout.scss */
 .top-tabs li .close-btn:hover {
   color: #FF9696;
 }
+/* line 182, layout/_layout.scss */
+.top-tabs li:first-child {
+  margin-left: 0;
+}
+/* line 186, layout/_layout.scss */
+.top-tabs li.active {
+  color: white;
+  background-color: #262a34;
+}
+/* line 191, layout/_layout.scss */
+.top-tabs li:hover {
+  color: white;
+  background-color: #28282e;
+}
+/* line 194, layout/_layout.scss */
+.top-tabs li:hover.active {
+  background-color: #363c4a;
+}
+/* line 198, layout/_layout.scss */
+.top-tabs li:hover .close-btn {
+  display: block;
+}
 
-/* line 192, layout/_layout.scss */
+/* line 205, layout/_layout.scss */
 .user-info {
   display: none;
 }
-/* line 195, layout/_layout.scss */
+/* line 208, layout/_layout.scss */
 .user-info.active {
   display: block;
 }
-/* line 199, layout/_layout.scss */
+/* line 212, layout/_layout.scss */
 .user-info .wrap {
   position: relative;
   float: right;
 }
-/* line 203, layout/_layout.scss */
+/* line 216, layout/_layout.scss */
 .user-info .wrap .photo {
   float: left;
   line-height: 40px;
   height: 40px;
   margin-left: 8px;
 }
-/* line 209, layout/_layout.scss */
+/* line 222, layout/_layout.scss */
 .user-info .wrap .photo > img {
   width: 28px;
   height: 28px;
   border-radius: 50%;
 }
-/* line 216, layout/_layout.scss */
+/* line 229, layout/_layout.scss */
 .user-info .wrap .welcome {
   float: left;
   font-size: 12px;
@@ -9113,28 +9126,28 @@ body {
   margin-right: 8px;
   color: white;
 }
-/* line 225, layout/_layout.scss */
+/* line 238, layout/_layout.scss */
 .user-info .wrap .welcome .arrow {
   margin-left: 5px;
   font-size: 10px;
 }
-/* line 232, layout/_layout.scss */
+/* line 245, layout/_layout.scss */
 .user-info .user-menu {
   display: none;
   z-index: 100;
   position: relative;
 }
-/* line 237, layout/_layout.scss */
+/* line 250, layout/_layout.scss */
 .user-info .user-menu.active {
   display: block;
 }
-/* line 241, layout/_layout.scss */
+/* line 254, layout/_layout.scss */
 .user-info .user-menu > ul {
   float: left;
   width: 160px;
   background-color: #4b5765;
 }
-/* line 246, layout/_layout.scss */
+/* line 259, layout/_layout.scss */
 .user-info .user-menu > ul > li {
   cursor: pointer;
   float: left;
@@ -9144,22 +9157,22 @@ body {
   padding-left: 36px;
   color: white;
 }
-/* line 255, layout/_layout.scss */
+/* line 268, layout/_layout.scss */
 .user-info .user-menu > ul > li > i {
   margin-right: 24px;
 }
-/* line 259, layout/_layout.scss */
+/* line 272, layout/_layout.scss */
 .user-info .user-menu > ul > li:hover {
   background-color: #488ac0;
 }
 
-/* line 268, layout/_layout.scss */
+/* line 281, layout/_layout.scss */
 .sidebar .bar {
   width: 66px;
   height: 100%;
   float: left;
 }
-/* line 274, layout/_layout.scss */
+/* line 287, layout/_layout.scss */
 .sidebar .tab {
   z-index: 10;
   top: 0;
@@ -9169,23 +9182,23 @@ body {
   visibility: hidden;
   background-color: rgba(52, 58, 74, 0.92);
 }
-/* line 283, layout/_layout.scss */
+/* line 296, layout/_layout.scss */
 .sidebar .tab.active {
   visibility: visible;
 }
-/* line 287, layout/_layout.scss */
+/* line 300, layout/_layout.scss */
 .sidebar .tab > div {
   height: 100%;
 }
 
-/* line 293, layout/_layout.scss */
+/* line 306, layout/_layout.scss */
 .copyright {
   width: 100%;
   bottom: 0;
   display: none;
   position: absolute;
 }
-/* line 299, layout/_layout.scss */
+/* line 312, layout/_layout.scss */
 .copyright .wrap {
   width: 560px;
   font-size: 12px;
@@ -9199,22 +9212,22 @@ body {
   color: #676767;
   background-color: #d8edf7;
 }
-/* line 313, layout/_layout.scss */
+/* line 326, layout/_layout.scss */
 .copyright .wrap .close-btn {
   cursor: pointer;
   position: absolute;
   right: 5px;
 }
-/* line 318, layout/_layout.scss */
+/* line 331, layout/_layout.scss */
 .copyright .wrap .close-btn:hover {
   color: #FF9696;
 }
-/* line 324, layout/_layout.scss */
+/* line 337, layout/_layout.scss */
 .copyright.active {
   display: block;
 }
 
-/* line 330, layout/_layout.scss */
+/* line 343, layout/_layout.scss */
 .bottom-container .drag-handle {
   position: absolute;
   height: 3px;
@@ -9222,12 +9235,12 @@ body {
   width: 100%;
   cursor: n-resize;
 }
-/* line 337, layout/_layout.scss */
+/* line 350, layout/_layout.scss */
 .bottom-container .drag-handle.active {
   background-color: #4CC1FC;
   opacity: 0.2;
 }
-/* line 343, layout/_layout.scss */
+/* line 356, layout/_layout.scss */
 .bottom-container .close-btn {
   position: absolute;
   right: 5px;
@@ -9236,35 +9249,35 @@ body {
   cursor: pointer;
   color: white;
 }
-/* line 351, layout/_layout.scss */
+/* line 364, layout/_layout.scss */
 .bottom-container .close-btn:hover {
   color: #FF9696;
 }
-/* line 356, layout/_layout.scss */
+/* line 369, layout/_layout.scss */
 .bottom-container .logcat {
   height: 100%;
   background-color: transparent;
 }
-/* line 360, layout/_layout.scss */
+/* line 373, layout/_layout.scss */
 .bottom-container .logcat .ace_gutter {
   background-color: transparent;
 }
 
-/* line 366, layout/_layout.scss */
+/* line 379, layout/_layout.scss */
 .dialog-layer {
   z-index: 500;
   display: none;
 }
-/* line 370, layout/_layout.scss */
+/* line 383, layout/_layout.scss */
 .dialog-layer.active {
   display: block;
 }
-/* line 374, layout/_layout.scss */
+/* line 387, layout/_layout.scss */
 .dialog-layer .dialog {
   display: none;
 }
 
-/* line 379, layout/_layout.scss */
+/* line 392, layout/_layout.scss */
 .guide-layer {
   display: none;
   z-index: 4;

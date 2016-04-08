@@ -60,7 +60,7 @@
 
 	.top-menu {
 		height: 40px;
-		margin-left: 48px;
+		// margin-left: 48px;
 	}
 
 	.user-info {
@@ -73,8 +73,7 @@
 
 	.top-tabs {
 		height: 26px;
-		border-top: 1px solid #343e4c;
-		background-color: #1e2129;
+		background-color: #1d1e20;
 	}
 }
 
@@ -109,14 +108,15 @@
 		font-size: 14px;
 		line-height: 40px;
 		height: 40px;
-		width: 80px;
+		width: 84px;
 		display: inline-block;
 		text-align: center;
 		cursor: pointer;
+		letter-spacing: 1px;
 		color: white;
 
 		& > i {
-			margin-right: 5px;
+			margin-right: 6px;
 		}
 
 		&.disabled {
@@ -124,7 +124,7 @@
 		}
 
 		&:hover {
-			color: #24c1ff;
+			background-color: #3A4256;
 		}
 	}
 }
@@ -160,23 +160,15 @@
 		z-index: 10;
 		cursor: pointer;
 		margin-left: 1px;
-		color: #a8a8a8;
-		background-color: #55575e;
-
-		&:first-child {
-			margin-left: 0;
-		}
-
-		&.active {
-			color: white;
-			background-color: #637c95;
-		}
+		color: #6e7679;
+		background-color: #1d1e20;
 
 		.name {
 			margin-left: 10px;
 		}
 
 		.close-btn {
+			display: none;
 			font-size: 12px;
 			line-height: 28px;
 			margin-right: 5px;
@@ -184,6 +176,27 @@
 
 			&:hover {
 				color: #FF9696;
+			}
+		}
+
+		&:first-child {
+			margin-left: 0;
+		}
+
+		&.active {
+			color: white;
+			background-color: #262a34;
+		}
+
+		&:hover {
+			color: white;
+			background-color: #28282e;
+			&.active {
+				background-color: #363c4a;
+			}
+
+			.close-btn {
+				display: block;
 			}
 		}
 	}
