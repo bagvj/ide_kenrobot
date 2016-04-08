@@ -15,6 +15,9 @@
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
 }
+.ken-switch-on2:before { content: "\e626"; }
+.ken-switch-off2:before { content: "\e627"; }
+.ken-project2:before { content: "\e61a"; }
 .ken-add:before { content: "\e600"; }
 .ken-close:before { content: "\e601"; }
 .ken-icon-code:before { content: "\e602"; }
@@ -40,8 +43,15 @@
 .ken-triangle-up:before { content: "\e617"; }
 .ken-user:before { content: "\e618"; }
 .ken-move:before { content: "\e619"; }
-.ken-terminal:before { content: "\e61a"; }
 .ken-clone:before { content: "\e61b"; }
 .ken-board:before { content: "\e61c"; }
 .ken-switch:before { content: "\e61d"; }
 .ken-icon-folder:before { content: "\e61e"; }
+.ken-save:before { content: "\e605"; }
+.ken-terminal:before { content: "\e61f"; }
+.ken-upload:before { content: "\e620"; }
+.ken-build:before { content: "\e621"; }
+.ken-download:before { content: "\e622"; }
+.ken-format:before { content: "\e623"; }
+.ken-logo:before { content: "\e624"; }
+.ken-scratch:before { content: "\e625"; }

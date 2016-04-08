@@ -8594,153 +8594,203 @@ button.close {
 }
 
 /* line 18, _kenrobot.scss */
+.ken-switch-on2:before {
+  content: "\e626";
+}
+
+/* line 19, _kenrobot.scss */
+.ken-switch-off2:before {
+  content: "\e627";
+}
+
+/* line 20, _kenrobot.scss */
+.ken-project2:before {
+  content: "\e61a";
+}
+
+/* line 21, _kenrobot.scss */
 .ken-add:before {
   content: "\e600";
 }
 
-/* line 19, _kenrobot.scss */
+/* line 22, _kenrobot.scss */
 .ken-close:before {
   content: "\e601";
 }
 
-/* line 20, _kenrobot.scss */
+/* line 23, _kenrobot.scss */
 .ken-icon-code:before {
   content: "\e602";
 }
 
-/* line 21, _kenrobot.scss */
+/* line 24, _kenrobot.scss */
 .ken-component:before {
   content: "\e603";
 }
 
-/* line 22, _kenrobot.scss */
+/* line 25, _kenrobot.scss */
 .ken-delete:before {
   content: "\e604";
 }
 
-/* line 23, _kenrobot.scss */
+/* line 26, _kenrobot.scss */
 .ken-icon-hardware:before {
   content: "\e606";
 }
 
-/* line 24, _kenrobot.scss */
+/* line 27, _kenrobot.scss */
 .ken-info-error:before {
   content: "\e607";
 }
 
-/* line 25, _kenrobot.scss */
+/* line 28, _kenrobot.scss */
 .ken-info-info:before {
   content: "\e608";
 }
 
-/* line 26, _kenrobot.scss */
+/* line 29, _kenrobot.scss */
 .ken-info-info2:before {
   content: "\e609";
 }
 
-/* line 27, _kenrobot.scss */
+/* line 30, _kenrobot.scss */
 .ken-info-success:before {
   content: "\e60a";
 }
 
-/* line 28, _kenrobot.scss */
+/* line 31, _kenrobot.scss */
 .ken-info-warning:before {
   content: "\e60b";
 }
 
-/* line 29, _kenrobot.scss */
+/* line 32, _kenrobot.scss */
 .ken-library:before {
   content: "\e60c";
 }
 
-/* line 30, _kenrobot.scss */
+/* line 33, _kenrobot.scss */
 .ken-switch-off:before {
   content: "\e60d";
 }
 
-/* line 31, _kenrobot.scss */
+/* line 34, _kenrobot.scss */
 .ken-switch-on:before {
   content: "\e60e";
 }
 
-/* line 32, _kenrobot.scss */
+/* line 35, _kenrobot.scss */
 .ken-password:before {
   content: "\e60f";
 }
 
-/* line 33, _kenrobot.scss */
+/* line 36, _kenrobot.scss */
 .ken-project:before {
   content: "\e610";
 }
 
-/* line 34, _kenrobot.scss */
+/* line 37, _kenrobot.scss */
 .ken-setting:before {
   content: "\e611";
 }
 
-/* line 35, _kenrobot.scss */
+/* line 38, _kenrobot.scss */
 .ken-share:before {
   content: "\e612";
 }
 
-/* line 36, _kenrobot.scss */
+/* line 39, _kenrobot.scss */
 .ken-logout:before {
   content: "\e613";
 }
 
-/* line 37, _kenrobot.scss */
+/* line 40, _kenrobot.scss */
 .ken-triangle-down:before {
   content: "\e614";
 }
 
-/* line 38, _kenrobot.scss */
+/* line 41, _kenrobot.scss */
 .ken-triangle-left:before {
   content: "\e615";
 }
 
-/* line 39, _kenrobot.scss */
+/* line 42, _kenrobot.scss */
 .ken-triangle-right:before {
   content: "\e616";
 }
 
-/* line 40, _kenrobot.scss */
+/* line 43, _kenrobot.scss */
 .ken-triangle-up:before {
   content: "\e617";
 }
 
-/* line 41, _kenrobot.scss */
+/* line 44, _kenrobot.scss */
 .ken-user:before {
   content: "\e618";
 }
 
-/* line 42, _kenrobot.scss */
+/* line 45, _kenrobot.scss */
 .ken-move:before {
   content: "\e619";
 }
 
-/* line 43, _kenrobot.scss */
-.ken-terminal:before {
-  content: "\e61a";
-}
-
-/* line 44, _kenrobot.scss */
+/* line 46, _kenrobot.scss */
 .ken-clone:before {
   content: "\e61b";
 }
 
-/* line 45, _kenrobot.scss */
+/* line 47, _kenrobot.scss */
 .ken-board:before {
   content: "\e61c";
 }
 
-/* line 46, _kenrobot.scss */
+/* line 48, _kenrobot.scss */
 .ken-switch:before {
   content: "\e61d";
 }
 
-/* line 47, _kenrobot.scss */
+/* line 49, _kenrobot.scss */
 .ken-icon-folder:before {
   content: "\e61e";
+}
+
+/* line 50, _kenrobot.scss */
+.ken-save:before {
+  content: "\e605";
+}
+
+/* line 51, _kenrobot.scss */
+.ken-terminal:before {
+  content: "\e61f";
+}
+
+/* line 52, _kenrobot.scss */
+.ken-upload:before {
+  content: "\e620";
+}
+
+/* line 53, _kenrobot.scss */
+.ken-build:before {
+  content: "\e621";
+}
+
+/* line 54, _kenrobot.scss */
+.ken-download:before {
+  content: "\e622";
+}
+
+/* line 55, _kenrobot.scss */
+.ken-format:before {
+  content: "\e623";
+}
+
+/* line 56, _kenrobot.scss */
+.ken-logo:before {
+  content: "\e624";
+}
+
+/* line 57, _kenrobot.scss */
+.ken-scratch:before {
+  content: "\e625";
 }
 
 /* line 1, base/_reset.scss */
@@ -8953,25 +9003,29 @@ body {
   color: white;
 }
 /* line 114, layout/_layout.scss */
+.top-menu li > i {
+  margin-right: 5px;
+}
+/* line 118, layout/_layout.scss */
 .top-menu li.disabled {
   color: #666;
 }
-/* line 118, layout/_layout.scss */
+/* line 122, layout/_layout.scss */
 .top-menu li:hover {
   color: #24c1ff;
 }
 
-/* line 125, layout/_layout.scss */
+/* line 129, layout/_layout.scss */
 .main-tabs .tab {
   height: 100%;
   position: relative;
   display: none;
 }
-/* line 130, layout/_layout.scss */
+/* line 134, layout/_layout.scss */
 .main-tabs .tab.active {
   display: block;
 }
-/* line 134, layout/_layout.scss */
+/* line 138, layout/_layout.scss */
 .main-tabs .tab > div {
   top: 0;
   bottom: 0;
@@ -8980,7 +9034,7 @@ body {
   position: absolute;
 }
 
-/* line 145, layout/_layout.scss */
+/* line 149, layout/_layout.scss */
 .top-tabs li {
   font-size: 12px;
   line-height: 26px;
@@ -8994,58 +9048,58 @@ body {
   color: #a8a8a8;
   background-color: #55575e;
 }
-/* line 158, layout/_layout.scss */
+/* line 162, layout/_layout.scss */
 .top-tabs li:first-child {
   margin-left: 0;
 }
-/* line 162, layout/_layout.scss */
+/* line 166, layout/_layout.scss */
 .top-tabs li.active {
   color: white;
   background-color: #637c95;
 }
-/* line 167, layout/_layout.scss */
+/* line 171, layout/_layout.scss */
 .top-tabs li .name {
   margin-left: 10px;
 }
-/* line 171, layout/_layout.scss */
+/* line 175, layout/_layout.scss */
 .top-tabs li .close-btn {
   font-size: 12px;
   line-height: 28px;
   margin-right: 5px;
   float: right;
 }
-/* line 177, layout/_layout.scss */
+/* line 181, layout/_layout.scss */
 .top-tabs li .close-btn:hover {
   color: #FF9696;
 }
 
-/* line 184, layout/_layout.scss */
+/* line 188, layout/_layout.scss */
 .user-info {
   display: none;
 }
-/* line 187, layout/_layout.scss */
+/* line 191, layout/_layout.scss */
 .user-info.active {
   display: block;
 }
-/* line 191, layout/_layout.scss */
+/* line 195, layout/_layout.scss */
 .user-info .wrap {
   position: relative;
   float: right;
 }
-/* line 195, layout/_layout.scss */
+/* line 199, layout/_layout.scss */
 .user-info .wrap .photo {
   float: left;
   line-height: 40px;
   height: 40px;
   margin-left: 8px;
 }
-/* line 201, layout/_layout.scss */
+/* line 205, layout/_layout.scss */
 .user-info .wrap .photo > img {
   width: 28px;
   height: 28px;
   border-radius: 50%;
 }
-/* line 208, layout/_layout.scss */
+/* line 212, layout/_layout.scss */
 .user-info .wrap .welcome {
   float: left;
   font-size: 12px;
@@ -9055,28 +9109,28 @@ body {
   margin-right: 8px;
   color: white;
 }
-/* line 217, layout/_layout.scss */
+/* line 221, layout/_layout.scss */
 .user-info .wrap .welcome .arrow {
   margin-left: 5px;
   font-size: 10px;
 }
-/* line 224, layout/_layout.scss */
+/* line 228, layout/_layout.scss */
 .user-info .user-menu {
   display: none;
   z-index: 100;
   position: relative;
 }
-/* line 229, layout/_layout.scss */
+/* line 233, layout/_layout.scss */
 .user-info .user-menu.active {
   display: block;
 }
-/* line 233, layout/_layout.scss */
+/* line 237, layout/_layout.scss */
 .user-info .user-menu > ul {
   float: left;
   width: 160px;
   background-color: #4b5765;
 }
-/* line 238, layout/_layout.scss */
+/* line 242, layout/_layout.scss */
 .user-info .user-menu > ul > li {
   cursor: pointer;
   float: left;
@@ -9086,22 +9140,22 @@ body {
   padding-left: 36px;
   color: white;
 }
-/* line 247, layout/_layout.scss */
+/* line 251, layout/_layout.scss */
 .user-info .user-menu > ul > li > i {
   margin-right: 24px;
 }
-/* line 251, layout/_layout.scss */
+/* line 255, layout/_layout.scss */
 .user-info .user-menu > ul > li:hover {
   background-color: #488ac0;
 }
 
-/* line 260, layout/_layout.scss */
+/* line 264, layout/_layout.scss */
 .sidebar .bar {
   width: 66px;
   height: 100%;
   float: left;
 }
-/* line 266, layout/_layout.scss */
+/* line 270, layout/_layout.scss */
 .sidebar .tab {
   z-index: 10;
   top: 26px;
@@ -9111,23 +9165,23 @@ body {
   visibility: hidden;
   background-color: rgba(52, 58, 74, 0.92);
 }
-/* line 275, layout/_layout.scss */
+/* line 279, layout/_layout.scss */
 .sidebar .tab.active {
   visibility: visible;
 }
-/* line 279, layout/_layout.scss */
+/* line 283, layout/_layout.scss */
 .sidebar .tab > div {
   height: 100%;
 }
 
-/* line 285, layout/_layout.scss */
+/* line 289, layout/_layout.scss */
 .copyright {
   width: 100%;
   bottom: 0;
   display: none;
   position: absolute;
 }
-/* line 291, layout/_layout.scss */
+/* line 295, layout/_layout.scss */
 .copyright .wrap {
   width: 560px;
   font-size: 12px;
@@ -9141,22 +9195,22 @@ body {
   color: #676767;
   background-color: #d8edf7;
 }
-/* line 305, layout/_layout.scss */
+/* line 309, layout/_layout.scss */
 .copyright .wrap .close-btn {
   cursor: pointer;
   position: absolute;
   right: 5px;
 }
-/* line 310, layout/_layout.scss */
+/* line 314, layout/_layout.scss */
 .copyright .wrap .close-btn:hover {
   color: #FF9696;
 }
-/* line 316, layout/_layout.scss */
+/* line 320, layout/_layout.scss */
 .copyright.active {
   display: block;
 }
 
-/* line 322, layout/_layout.scss */
+/* line 326, layout/_layout.scss */
 .bottom-container .drag-handle {
   position: absolute;
   height: 3px;
@@ -9164,12 +9218,12 @@ body {
   width: 100%;
   cursor: n-resize;
 }
-/* line 329, layout/_layout.scss */
+/* line 333, layout/_layout.scss */
 .bottom-container .drag-handle.active {
   background-color: #4CC1FC;
   opacity: 0.2;
 }
-/* line 335, layout/_layout.scss */
+/* line 339, layout/_layout.scss */
 .bottom-container .close-btn {
   position: absolute;
   right: 5px;
@@ -9178,35 +9232,35 @@ body {
   cursor: pointer;
   color: white;
 }
-/* line 343, layout/_layout.scss */
+/* line 347, layout/_layout.scss */
 .bottom-container .close-btn:hover {
   color: #FF9696;
 }
-/* line 348, layout/_layout.scss */
+/* line 352, layout/_layout.scss */
 .bottom-container .logcat {
   height: 100%;
   background-color: transparent;
 }
-/* line 352, layout/_layout.scss */
+/* line 356, layout/_layout.scss */
 .bottom-container .logcat .ace_gutter {
   background-color: transparent;
 }
 
-/* line 358, layout/_layout.scss */
+/* line 362, layout/_layout.scss */
 .dialog-layer {
   z-index: 500;
   display: none;
 }
-/* line 362, layout/_layout.scss */
+/* line 366, layout/_layout.scss */
 .dialog-layer.active {
   display: block;
 }
-/* line 366, layout/_layout.scss */
+/* line 370, layout/_layout.scss */
 .dialog-layer .dialog {
   display: none;
 }
 
-/* line 371, layout/_layout.scss */
+/* line 375, layout/_layout.scss */
 .guide-layer {
   display: none;
   z-index: 4;

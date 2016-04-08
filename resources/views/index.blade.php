@@ -24,7 +24,7 @@
 					</div>
 					<div class="top-menu">
 						<ul>
-							<li data-action="build">编译</li><li data-action="burn">烧写</li><li data-action="format">格式化</li><li data-action="save">保存</li><li data-action="download">下载</li><li data-action="logcat">输出</li>
+							<li data-action="build"><i class="kenrobot ken-build"></i>编译</li><li data-action="burn"><i class="kenrobot ken-upload"></i>烧写</li><li data-action="format"><i class="kenrobot ken-format"></i>格式化</li><li data-action="save"><i class="kenrobot ken-save"></i>保存</li><li data-action="download"><i class="kenrobot ken-download"></i>下载</li><li data-action="logcat"><i class="kenrobot ken-terminal"></i>输出</li>
 						</ul>
 					</div>
 					<div class="user-info {{isset($user) ? 'active' : ''}}">

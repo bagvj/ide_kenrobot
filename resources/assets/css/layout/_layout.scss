@@ -111,6 +111,10 @@
 		cursor: pointer;
 		color: white;
 
+		& > i {
+			margin-right: 5px;
+		}
+
 		&.disabled {
 			color: #666;
 		}
