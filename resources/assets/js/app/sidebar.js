@@ -11,6 +11,7 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 	}
 
 	function hide() {
+		bindClickHide();
 		$('.sidebar .bar ul > li.active').click();
 	}
 
@@ -30,6 +31,31 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 		}
 
 		util.toggleActive($('.main-tabs .tab-' + view), 'div');
+	}
+
+	function clickHide(e) {
+		if(!isShow()) {
+			return;
+		}
+
+		var li = $(e.target).closest('li');
+		if(li.length > 0 && li.parent().parent().hasClass("bar")) {
+			return;
+		}
+
+		var tab = $(e.target).closest('div.tab');
+		if(tab.length > 0 && tab.parent().hasClass("sidebar")) {
+			return;
+		}
+
+		hide();
+	}
+
+	function bindClickHide(value) {
+		$(window).off('click', clickHide);
+		if(value) {
+			$(window).on('click', clickHide);
+		}
 	}
 
 	function onSidebarClick(e) {
@@ -55,6 +81,7 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 			}, delay, easing, function() {
 				util.toggleActive(li, null, true);
 				tab.removeClass("active");
+				bindClickHide();
 			});
 		} else {
 			var activeLi = li.parent().find('li.active');
@@ -70,6 +97,7 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 				width: width,
 			}, delay, easing, function() {
 				util.toggleActive(li, null, true);
+				bindClickHide(true);
 			});
 
 			if(activeAction == "component") {
