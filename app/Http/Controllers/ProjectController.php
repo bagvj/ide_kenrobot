@@ -126,7 +126,7 @@ class ProjectController extends Controller {
 	}
 
 	public function getProjects(Request $request, $user_id) {
-		$url = config("platform.url.base").config("platform.url.getUserProjects")."&user_id=".$user_id;
+		$url = config("platform.url.base").config("platform.url.getUserProjects")."&project_type=code&user_id=".$user_id;
 		$curl = new Curl();
 		return $curl->get($url);
 	}
