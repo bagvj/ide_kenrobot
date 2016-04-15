@@ -105,6 +105,7 @@ class ProjectController extends Controller {
 			'project_name' => $request->input('project_name'),
 			'project_intro' => $request->input('project_intro'),
 			'public_type' => $request->input('public_type'),
+			'project_type' => 'code',
 		);
 		if($id == 0 || empty($project->hash)) {
 			$params['hash'] = $this->getHash();
