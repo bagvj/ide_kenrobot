@@ -144,6 +144,9 @@ class HomeController extends Controller {
 		$curl = new Curl();
 		$qrcodeurl = $curl->get($url);
 
-		return $qrcodeurl;
+		$image_data = base64_encode($curl->get($qrcodeurl));
+		return "data:image/jpg;base64," . $image_data;
+		
+		// return $qrcodeurl;
 	}
 }
