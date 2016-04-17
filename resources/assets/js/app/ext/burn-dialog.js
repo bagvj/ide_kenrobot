@@ -8,6 +8,7 @@ define(['jquery', '../util'], function($, util) {
 	
 	var connectionId;
 	var hexUrl;
+	var nameReg = /(arduino)|(\/dev\/cu\.usbmodem)/i;
 
 	function init(api, _config) {
 		if(isInit) {
@@ -78,7 +79,7 @@ define(['jquery', '../util'], function($, util) {
 			for(var i = 0; i < ports.length; i++) {
 				var port = ports[i];
 				$('<option>').text(port.path).attr("title", port.displayName).appendTo(portList);
-				if(port.displayName && port.displayName.toLowerCase().indexOf("arduino") > -1) {
+				if(port.displayName && nameReg.test(port.displayName)) {
 					count++;
 				}
 			}
