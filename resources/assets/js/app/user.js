@@ -205,7 +205,7 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 		userMenu.on('mouseleave', hideMenu);
 		user.on('mouseleave', hideMenu);
 
-		$('.wrap', user).on('mouseover', function() {
+		$('.user-info', user).on('mouseover', function() {
 			userMenu.show();
 		});
 
