@@ -62,7 +62,7 @@
 		height: 40px;
 	}
 
-	.user-info {
+	.user {
 		height: 40px;
 		right: 0;
 		top: 0;
@@ -201,14 +201,41 @@
 	}
 }
 
-.user-info {
-	display: none;
-
+.user {
 	&.active {
-		display: block;
+		.user-login {
+			display: none;
+		}
+
+		.user-info {
+			display: block;
+		}
 	}
 
-	.wrap {
+	.user-login {
+		margin-right: 20px;
+		
+		ul li {
+			letter-spacing: 2px;
+			float: left;
+			cursor: pointer;
+			line-height: 40px;
+			margin-left: 8px;
+			margin-right: 8px;
+			color: white;
+
+			&:hover {
+				color: #24c1ff;
+
+				& > a {
+					color: #24c1ff;
+				}
+			}
+		}
+	}
+
+	.user-info {
+		display: none;
 		position: relative;
 		float: right;
 

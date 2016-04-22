@@ -9,7 +9,7 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 		initUserDialog();
 		initCopyright();
 
-		$('.main-header .logo').on('click', onLogoClick);
+		$('.user-login li[data-action="login"]').on('click', onLogin);
 	}
 
 	function getUserId() {
@@ -195,7 +195,7 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 	}
 
 	function initUserDialog() {
-		var user = $('.user-info');
+		var user = $('.user');
 		var userMenu = $('.user-menu', user);
 
 		var hideMenu = function() {
@@ -252,7 +252,7 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 	}
 
 	function doUpdateUser() {
-		var user = $('.user-info');
+		var user = $('.user');
 		var topMenu = $('.top-menu');
 
 		if(userInfo) {
@@ -274,10 +274,8 @@ define(['jquery', './EventManager', './util'], function($, EventManager, util) {
 		}
 	}
 
-	function onLogoClick(e) {
-		authCheck(function(success) {
-			success ? util.message("你已登录") : showLoginDialog(null, "weixin");
-		});
+	function onLogin(e) {
+		showLoginDialog(null, "weixin");
 	}
 
 	return {

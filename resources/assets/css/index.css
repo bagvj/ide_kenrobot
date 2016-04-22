@@ -8952,26 +8952,26 @@ body {
 .main-header .top-menu {
   height: 40px;
 }
-/* line 66, layout/_layout.scss */
-.main-header .user-info {
+/* line 65, layout/_layout.scss */
+.main-header .user {
   height: 40px;
   right: 0;
   top: 0;
   position: absolute;
   background-color: #1e2129;
 }
-/* line 74, layout/_layout.scss */
+/* line 73, layout/_layout.scss */
 .main-header .top-tabs {
   height: 26px;
   background-color: #1d1e20;
 }
 
-/* line 81, layout/_layout.scss */
+/* line 80, layout/_layout.scss */
 .main-content .sidebar {
   height: 100%;
   float: left;
 }
-/* line 86, layout/_layout.scss */
+/* line 85, layout/_layout.scss */
 .main-content > .wrap {
   top: 0;
   bottom: 0;
@@ -8980,7 +8980,7 @@ body {
   position: absolute;
   background-color: #262a34;
 }
-/* line 94, layout/_layout.scss */
+/* line 93, layout/_layout.scss */
 .main-content > .wrap .main-tabs {
   top: 0;
   bottom: 0;
@@ -8989,11 +8989,11 @@ body {
   position: absolute;
 }
 
-/* line 104, layout/_layout.scss */
+/* line 103, layout/_layout.scss */
 .top-menu {
   white-space: nowrap;
 }
-/* line 107, layout/_layout.scss */
+/* line 106, layout/_layout.scss */
 .top-menu li {
   font-size: 14px;
   line-height: 40px;
@@ -9005,30 +9005,30 @@ body {
   letter-spacing: 1px;
   color: white;
 }
-/* line 118, layout/_layout.scss */
+/* line 117, layout/_layout.scss */
 .top-menu li > i {
   margin-right: 6px;
 }
-/* line 122, layout/_layout.scss */
+/* line 121, layout/_layout.scss */
 .top-menu li.disabled {
   color: #666;
 }
-/* line 126, layout/_layout.scss */
+/* line 125, layout/_layout.scss */
 .top-menu li:hover {
   background-color: #3A4256;
 }
 
-/* line 133, layout/_layout.scss */
+/* line 132, layout/_layout.scss */
 .main-tabs .tab {
   height: 100%;
   position: relative;
   display: none;
 }
-/* line 138, layout/_layout.scss */
+/* line 137, layout/_layout.scss */
 .main-tabs .tab.active {
   display: block;
 }
-/* line 142, layout/_layout.scss */
+/* line 141, layout/_layout.scss */
 .main-tabs .tab > div {
   top: 0;
   bottom: 0;
@@ -9037,7 +9037,7 @@ body {
   position: absolute;
 }
 
-/* line 153, layout/_layout.scss */
+/* line 152, layout/_layout.scss */
 .top-tabs li {
   font-size: 12px;
   line-height: 26px;
@@ -9051,11 +9051,11 @@ body {
   color: #6e7679;
   background-color: #1d1e20;
 }
-/* line 166, layout/_layout.scss */
+/* line 165, layout/_layout.scss */
 .top-tabs li .name {
   margin-left: 10px;
 }
-/* line 170, layout/_layout.scss */
+/* line 169, layout/_layout.scss */
 .top-tabs li .close-btn {
   display: none;
   font-size: 12px;
@@ -9063,61 +9063,84 @@ body {
   margin-right: 5px;
   float: right;
 }
-/* line 177, layout/_layout.scss */
+/* line 176, layout/_layout.scss */
 .top-tabs li .close-btn:hover {
   color: #FF9696;
 }
-/* line 182, layout/_layout.scss */
+/* line 181, layout/_layout.scss */
 .top-tabs li:first-child {
   margin-left: 0;
 }
-/* line 186, layout/_layout.scss */
+/* line 185, layout/_layout.scss */
 .top-tabs li.active {
   color: white;
   background-color: #262a34;
 }
-/* line 191, layout/_layout.scss */
+/* line 190, layout/_layout.scss */
 .top-tabs li:hover {
   color: white;
   background-color: #28282e;
 }
-/* line 194, layout/_layout.scss */
+/* line 193, layout/_layout.scss */
 .top-tabs li:hover.active {
   background-color: #363c4a;
 }
-/* line 198, layout/_layout.scss */
+/* line 197, layout/_layout.scss */
 .top-tabs li:hover .close-btn {
   display: block;
 }
 
-/* line 205, layout/_layout.scss */
-.user-info {
+/* line 206, layout/_layout.scss */
+.user.active .user-login {
   display: none;
 }
-/* line 208, layout/_layout.scss */
-.user-info.active {
+/* line 210, layout/_layout.scss */
+.user.active .user-info {
   display: block;
 }
-/* line 212, layout/_layout.scss */
-.user-info .wrap {
+/* line 215, layout/_layout.scss */
+.user .user-login {
+  margin-right: 20px;
+}
+/* line 218, layout/_layout.scss */
+.user .user-login ul li {
+  letter-spacing: 2px;
+  float: left;
+  cursor: pointer;
+  line-height: 40px;
+  margin-left: 8px;
+  margin-right: 8px;
+  color: white;
+}
+/* line 227, layout/_layout.scss */
+.user .user-login ul li:hover {
+  color: #24c1ff;
+}
+/* line 230, layout/_layout.scss */
+.user .user-login ul li:hover > a {
+  color: #24c1ff;
+}
+/* line 237, layout/_layout.scss */
+.user .user-info {
+  display: none;
   position: relative;
   float: right;
 }
-/* line 216, layout/_layout.scss */
-.user-info .wrap .photo {
+/* line 242, layout/_layout.scss */
+.user .user-info .photo {
   float: left;
   line-height: 40px;
   height: 40px;
   margin-left: 8px;
 }
-/* line 222, layout/_layout.scss */
-.user-info .wrap .photo > img {
+/* line 248, layout/_layout.scss */
+.user .user-info .photo > img {
   width: 28px;
   height: 28px;
   border-radius: 50%;
 }
-/* line 229, layout/_layout.scss */
-.user-info .wrap .welcome {
+/* line 255, layout/_layout.scss */
+.user .user-info .welcome {
   float: left;
   font-size: 12px;
   line-height: 40px;
@@ -9126,29 +9149,29 @@ body {
   margin-right: 8px;
   color: white;
 }
-/* line 238, layout/_layout.scss */
-.user-info .wrap .welcome .arrow {
+/* line 264, layout/_layout.scss */
+.user .user-info .welcome .arrow {
   margin-left: 5px;
   font-size: 10px;
 }
-/* line 245, layout/_layout.scss */
-.user-info .user-menu {
+/* line 271, layout/_layout.scss */
+.user .user-menu {
   display: none;
   z-index: 100;
   position: relative;
 }
-/* line 250, layout/_layout.scss */
-.user-info .user-menu.active {
+/* line 276, layout/_layout.scss */
+.user .user-menu.active {
   display: block;
 }
-/* line 254, layout/_layout.scss */
-.user-info .user-menu > ul {
+/* line 280, layout/_layout.scss */
+.user .user-menu > ul {
   float: left;
   width: 160px;
   background-color: #4b5765;
 }
-/* line 259, layout/_layout.scss */
-.user-info .user-menu > ul > li {
+/* line 285, layout/_layout.scss */
+.user .user-menu > ul > li {
   cursor: pointer;
   float: left;
   width: 160px;
@@ -9157,22 +9180,22 @@ body {
   padding-left: 36px;
   color: white;
 }
-/* line 268, layout/_layout.scss */
-.user-info .user-menu > ul > li > i {
+/* line 294, layout/_layout.scss */
+.user .user-menu > ul > li > i {
   margin-right: 24px;
 }
-/* line 272, layout/_layout.scss */
-.user-info .user-menu > ul > li:hover {
+/* line 298, layout/_layout.scss */
+.user .user-menu > ul > li:hover {
   background-color: #488ac0;
 }
 
-/* line 281, layout/_layout.scss */
+/* line 307, layout/_layout.scss */
 .sidebar .bar {
   width: 66px;
   height: 100%;
   float: left;
 }
-/* line 287, layout/_layout.scss */
+/* line 313, layout/_layout.scss */
 .sidebar .tab {
   z-index: 10;
   top: 0;
@@ -9182,23 +9205,23 @@ body {
   visibility: hidden;
   background-color: rgba(52, 58, 74, 0.92);
 }
-/* line 296, layout/_layout.scss */
+/* line 322, layout/_layout.scss */
 .sidebar .tab.active {
   visibility: visible;
 }
-/* line 300, layout/_layout.scss */
+/* line 326, layout/_layout.scss */
 .sidebar .tab > div {
   height: 100%;
 }
 
-/* line 306, layout/_layout.scss */
+/* line 332, layout/_layout.scss */
 .copyright {
   width: 100%;
   bottom: 0;
   display: none;
   position: absolute;
 }
-/* line 312, layout/_layout.scss */
+/* line 338, layout/_layout.scss */
 .copyright .wrap {
   width: 560px;
   font-size: 12px;
@@ -9212,22 +9235,22 @@ body {
   color: #676767;
   background-color: #d8edf7;
 }
-/* line 326, layout/_layout.scss */
+/* line 352, layout/_layout.scss */
 .copyright .wrap .close-btn {
   cursor: pointer;
   position: absolute;
   right: 5px;
 }
-/* line 331, layout/_layout.scss */
+/* line 357, layout/_layout.scss */
 .copyright .wrap .close-btn:hover {
   color: #FF9696;
 }
-/* line 337, layout/_layout.scss */
+/* line 363, layout/_layout.scss */
 .copyright.active {
   display: block;
 }
 
-/* line 343, layout/_layout.scss */
+/* line 369, layout/_layout.scss */
 .bottom-container .drag-handle {
   position: absolute;
   height: 3px;
@@ -9235,12 +9258,12 @@ body {
   width: 100%;
   cursor: n-resize;
 }
-/* line 350, layout/_layout.scss */
+/* line 376, layout/_layout.scss */
 .bottom-container .drag-handle.active {
   background-color: #4CC1FC;
   opacity: 0.2;
 }
-/* line 356, layout/_layout.scss */
+/* line 382, layout/_layout.scss */
 .bottom-container .close-btn {
   position: absolute;
   right: 5px;
@@ -9249,35 +9272,35 @@ body {
   cursor: pointer;
   color: white;
 }
-/* line 364, layout/_layout.scss */
+/* line 390, layout/_layout.scss */
 .bottom-container .close-btn:hover {
   color: #FF9696;
 }
-/* line 369, layout/_layout.scss */
+/* line 395, layout/_layout.scss */
 .bottom-container .logcat {
   height: 100%;
   background-color: transparent;
 }
-/* line 373, layout/_layout.scss */
+/* line 399, layout/_layout.scss */
 .bottom-container .logcat .ace_gutter {
   background-color: transparent;
 }
 
-/* line 379, layout/_layout.scss */
+/* line 405, layout/_layout.scss */
 .dialog-layer {
   z-index: 500;
   display: none;
 }
-/* line 383, layout/_layout.scss */
+/* line 409, layout/_layout.scss */
 .dialog-layer.active {
   display: block;
 }
-/* line 387, layout/_layout.scss */
+/* line 413, layout/_layout.scss */
 .dialog-layer .dialog {
   display: none;
 }
 
-/* line 392, layout/_layout.scss */
+/* line 418, layout/_layout.scss */
 .guide-layer {
   display: none;
   z-index: 4;
