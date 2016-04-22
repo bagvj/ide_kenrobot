@@ -167,11 +167,11 @@
 		}
 
 		.close-btn {
-			display: none;
+			visibility: hidden;
 			font-size: 12px;
 			line-height: 28px;
-			margin-right: 5px;
-			float: right;
+			position: absolute;
+			right: 5px;
 
 			&:hover {
 				color: #FF9696;
@@ -195,7 +195,7 @@
 			}
 
 			.close-btn {
-				display: block;
+				visibility: visible;
 			}
 		}
 	}
