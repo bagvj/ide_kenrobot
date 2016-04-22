@@ -1,4 +1,4 @@
-define(['jquery', './EventManager', './util'], function($, EventManager, util) {
+define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, util) {
 	var userInfo;
 	var loginCheckTimer;
 	var loginCallback;

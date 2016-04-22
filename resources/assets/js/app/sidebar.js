@@ -1,4 +1,4 @@
-define(['jquery', './EventManager', './util'], function($, EventManager, util) {
+define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, util) {
 
 	function init() {
 		EventManager.bind("sidebar", "viewChange", onViewChange);

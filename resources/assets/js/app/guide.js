@@ -1,4 +1,4 @@
-define(['jquery', './config', './util'], function($, config, util) {
+define(['vendor/jquery', './config', './util'], function(_, config, util) {
 	var guideConfig;
 	function init() {
 		guideConfig = config.guide;

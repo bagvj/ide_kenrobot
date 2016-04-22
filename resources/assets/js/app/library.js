@@ -1,4 +1,4 @@
-define(['jquery', './software'], function($, software) {
+define(['vendor/jquery', './software'], function(_, software) {
 	var libraries;
 
 	function init() {

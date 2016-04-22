@@ -1,4 +1,4 @@
-define(['ace/ext-language_tools', 'jquery', './EventManager', './code'], function(_, $, EventManager, code) {
+define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/mode-arduino', 'vendor/ace/snippets/text', 'vendor/ace/snippets/arduino', 'vendor/ace/ext-language_tools', 'vendor/jquery', './EventManager', './code'], function(_, _, _, _, _, _, _, EventManager, code) {
 	var editor;
 	var js_format_string = Module.cwrap("js_format_string", "string", ["string"]);
 

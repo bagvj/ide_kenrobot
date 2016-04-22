@@ -1,4 +1,4 @@
-define(['jquery', './util'], function($, util) {
+define(['vendor/jquery', './util'], function(_, util) {
 	var current;
 	var boards;
 	var selector;

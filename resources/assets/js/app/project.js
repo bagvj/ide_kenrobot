@@ -1,4 +1,4 @@
-define(['jquery', './EventManager', './util', './user', './hardware', './software', './board', './logcat'], function($, EventManager, util, user, hardware, software, board, logcat) {
+define(['vendor/jquery', './EventManager', './util', './user', './hardware', './software', './board', './logcat'], function(_, EventManager, util, user, hardware, software, board, logcat) {
 	//项目模版
 	var projectTemplate = '<li data-project-id="{{id}}" data-view="software"><div class="title"><i class="kenrobot ken-icon-folder icon"></i><span class="name">{{project_name}}</span><i class="kenrobot arrow"></i></div><div class="view"><div><i class="kenrobot ken-icon-code icon"></i><span class="name">{{project_name}}</span>.ino</div></div></li>';
 	var tabTemplate = '<li data-project-id="{{id}}"><span class="name">{{project_name}}</span><i class="kenrobot ken-close close-btn"></i></li>';

@@ -1,4 +1,4 @@
-define(['jquery', './EventManager', './project', './software', './logcat', './ext/agent'], function($, EventManager, project, software, logcat, agent) {
+define(['vendor/jquery', './EventManager', './project', './software', './logcat', './ext/agent'], function(_, EventManager, project, software, logcat, agent) {
 
 	function init() {
 		$('.top-menu > ul > li').on('click', onMenuClick);
