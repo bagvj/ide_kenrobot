@@ -24,6 +24,15 @@ Route::post('/api/project/get', 'ProjectController@getProject');
 Route::post('/api/projects/user', 'ProjectController@getProjects');
 
 // 登录验证
+<<<<<<< HEAD
 Route::post('/api/auth/login', 'Auth\WebAuthController@snsPostLogin');
 Route::post('/api/auth/login/weixin', 'Auth\WebAuthController@weixinlogin');
 Route::get('/api/auth/check', 'Auth\AuthServerController@index');
+=======
+Route::post('/auth/login', 'Auth\WebAuthController@snsPostLogin');
+Route::post('/auth/login/weixin', 'Auth\WebAuthController@weixinlogin');
+Route::get('/auth/check', 'Auth\AuthServerController@index');
+Route::get('/logout', 'Auth\AuthController@getLogout2');
+
+Route::post('/temp/platformid', 'Auth\WebAuthController@platformId');
+>>>>>>> 6bb3c8473deee311762df1bdba7d9c72616fe972
