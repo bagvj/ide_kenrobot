@@ -383,9 +383,9 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">公开：</label>
 							<div class="col-sm-10">
-								<label class="checkbox-inline"><input type="radio" name="public-type" value="1" checked="true" />私有</label>
+								<label class="checkbox-inline"><input type="radio" name="public-type" value="0" checked="true" />私有</label>
+								<label class="checkbox-inline"><input type="radio" name="public-type" value="1" />好友公开</label>
 								<label class="checkbox-inline"><input type="radio" name="public-type" value="2" />完全公开</label>
-								<label class="checkbox-inline"><input type="radio" name="public-type" value="3" />好友公开</label>
 							</div>
 						</div>
 						<div class="form-group">

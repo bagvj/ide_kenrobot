@@ -1,4 +1,4 @@
-define(['vendor/jquery', './EventManager', './util', './user', './hardware', './software', './board', './logcat'], function(_, EventManager, util, user, hardware, software, board, logcat) {
+define(['vendor/jquery', './EventManager', './util', './user', './hardware', './software', './board', './logcat', './sidebar'], function(_, EventManager, util, user, hardware, software, board, logcat, sidebar) {
 	//项目模版
 	var projectTemplate = '<li data-project-id="{{id}}" data-view="software"><div class="title"><i class="kenrobot ken-icon-folder icon"></i><span class="name">{{project_name}}</span><i class="kenrobot arrow"></i></div><div class="view"><div><i class="kenrobot ken-icon-code icon"></i><span class="name">{{project_name}}</span>.ino</div></div></li>';
 	var tabTemplate = '<li data-project-id="{{id}}"><span class="name">{{project_name}}</span><i class="kenrobot ken-close close-btn"></i></li>';
@@ -29,7 +29,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 
 	function load() {
 		var key = getHashKeyValue('project');
-		key = /^[0-9a-zA-Z]{6}$/.test(key) ? key : 0;
+		key = /^[0-9a-zA-Z]{6}$/.test(key) ? key : "";
 		var user_id = user.getUserId();
 		if(key) {
 			$.ajax({
@@ -42,7 +42,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 				dataType: 'json',
 			}).done(function(result) {
 				if(result.status != 0) {
-					util.message(result.message);
+					// util.message(result.message);
 					window.location.hash = "";
 					return;
 				}
@@ -64,8 +64,12 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 						user_id: user_id
 					},
 					dataType: 'json',
-				}).done(onLoadSuccess);
+				}).done(function(result) {
+					projects = [];
+					onLoadSuccess(result);
+				});
 			} else {
+				projects = [];
 				onLoadSuccess();
 			}
 		}
@@ -100,11 +104,12 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 					},
 				}).done(function(result) {
 					isBuilding = false;
+					var projectInfo = getProjectInfo(id);
 					if(result.status == 0) {
-						var projectInfo = getProjectInfo(result.id);
 						projectInfo.status = 2;
 						projectInfo.url = result.url;
 					} else {
+						delete projectInfo.url;
 						logcat.show();
 						logcat.clear();
 						logcat.append(result.output.join("\n"));
@@ -141,6 +146,12 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 
 		user.authCheck(function(success) {
 			success ? checkBuild() : user.showLoginDialog();
+		});
+	}
+
+	function download() {
+		isBuild(function(url) {
+			window.location.href = url;
 		});
 	}
 
@@ -291,7 +302,9 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		});
 	}
 
-	function showSaveDialog(isNew) { 
+	function showSaveDialog(isNew) {
+		sidebar.hide();
+
 		var projectInfo = isNew ? getDefaultProject() : getCurrentProject();
 		var text = isNew ? "创建项目" : "保存项目";
 		
@@ -325,11 +338,12 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			var dialog = $('.save-dialog');
 			var form = $('form', dialog);
 			var project_name = $('input[name="name"]', form).val();
+			var hasNewName = true;
 			for(var i = 0; i < projects.length; i++) {
 				var projectInfo = projects[i];
 				if(projectInfo.id > 0 && projectInfo.project_name == project_name) {
-					util.message("项目名重复");
-					return;
+					hasNewName = false;
+					break;
 				}
 			}
 
@@ -341,6 +355,9 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 				project_data: JSON.stringify(getProjectData()),
 				public_type: $("input[name='public-type']:checked", form).val(),
 			};
+			if(!hasNewName && project_name != "我的项目") {
+				delete project.project_name;
+			}
 			$('.close-btn', dialog).click();
 		} else {
 			project = {
@@ -420,6 +437,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			projects[index] = projectInfo;
 
 			list.find('> li[data-project-id="' + projectInfo.id + '"]').find(".name").text(projectInfo.project_name);
+			$('.top-tabs ul li[data-project-id="' + projectInfo.id + '"]').find(".name").text(projectInfo.project_name);
 		}
 		software.gen();
 	}
@@ -639,6 +657,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		isBuild: isBuild,
 		build: build,
 		save: save,
+		download: download,
 		getProjectName: getProjectName,
 	}
 });

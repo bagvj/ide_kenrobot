@@ -15,7 +15,8 @@ class ProjectController extends Controller {
 
 	public function buildProject(Request $request) {
 		$id = $request->input('id');
-		$project = $this->getProjectInfo($id);
+		$user_id = $request->input('user_id');
+		$project = $this->getProjectInfo($user_id, $id);
 		if(!$project) {
 			return response()->json(['status' => -1, 'message' => '非法请求']);
 		}
@@ -42,20 +43,19 @@ class ProjectController extends Controller {
 		$output = array();
 		exec($cmd, $output, $status);
 		if ($status == 0) {
-			return response()->json(['status' => 0, 'message' => '编译成功', 'id' => $id, 'url' => "/project/download/$id"]);
+			return response()->json(['status' => 0, 'message' => '编译成功', 'hash' => $hash, 'url' => "/project/download/$hash"]);
 		} else {
 			// return response()->json(['status' => $status, 'message' => '编译失败']);
-			return response()->json(['status' => $status, 'message' => '编译失败', 'id' => $id, 'output' => $output]);
+			return response()->json(['status' => $status, 'message' => '编译失败', 'hash' => $hash, 'output' => $output]);
 		}
 	}
 
-	public function downloadProject(Request $request, $id, $ext = "zip") {
-		$project = $this->getProjectInfo($id);
+	public function downloadProject(Request $request, $hash, $ext = "zip") {
+		$project = $this->getProjectInfo(null, $hash, 'hash', config("platform.url.token"));
 		if(!$project) {
 			return abort(404);
 		}
 
-		$hash = $project->hash;
 		$ext = "." . $ext;
 		$filename = "/tmp/build/$hash/build$ext";
 		$build_info = "/tmp/build/$hash/build.info";
@@ -90,8 +90,9 @@ class ProjectController extends Controller {
 
 	public function saveProject(Request $request) {
 		$id = $request->input('id');
+		$user_id = $request->input('user_id');
 		if($id != 0) {
-			$project = $this->getProjectInfo($id);
+			$project = $this->getProjectInfo($user_id, $id);
 			if(!$project) {
 				return response()->json(['status' => -1, 'message' => '非法请求']);
 			}
@@ -112,7 +113,6 @@ class ProjectController extends Controller {
 		}
 
 		//传递默认参数
-		$user_id = $request->input('user_id');
 		$user = User::find($user_id);
 		$params['uid'] = empty($user) ? 0 : $user->uid;
 
@@ -145,8 +145,13 @@ class ProjectController extends Controller {
 		return $curl->post($url, $params);
 	}
 
-	private function getProjectInfo($id) {
-		$url = config("platform.url.base").config("platform.url.getProject")."&id=$id";
+	private function getProjectInfo($user_id, $key, $type = 'id', $token = '') {
+		$url = config("platform.url.base").config("platform.url.getProject");
+		if(!empty($token)) {
+			$url = $url."&token=$token&$type=$key";
+		} else {
+			$url = $url."&user_id=$user_id&$type=$key";
+		}
 		$curl = new Curl();
 		$result = json_decode($curl->get($url));
 		return ($result && $result->status == 0) ? $result->data : false;

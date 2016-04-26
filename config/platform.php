@@ -7,6 +7,8 @@ return [
     	'register' => "http://www.kenrobot.com/index.php?app=public&mod=Register&act=index",
     	'find_password' => "http://www.kenrobot.com/index.php?app=public&mod=Passport&act=findPassword",
 
+    	'token' => "D4v8dD",
+
         'saveProject' => "?app=api&mod=Project&act=save",
         'getProject' => "?app=api&mod=Project&act=item",
         'getUserProjects' => "?app=api&mod=Project&act=items",

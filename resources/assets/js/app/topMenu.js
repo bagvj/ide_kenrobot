@@ -52,9 +52,7 @@ define(['vendor/jquery', './EventManager', './project', './software', './logcat'
 	}
 
 	function onDownloadClick() {
-		project.isBuild(function(url) {
-			window.location.href = url;
-		});
+		project.download();
 	}
 
 	function onLogcatClick() {

@@ -55,10 +55,6 @@ class HomeController extends Controller {
 		return collect($config)->toJson();
 	}
 
-	public function show(Request $request, $key) {
-		
-	}
-
 	private function getLibrariyConfig($isDict = false) {
 		$libraries = DB::table('libraries')->get();
 		if($isDict) {
