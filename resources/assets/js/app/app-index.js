@@ -24,6 +24,7 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 		guide.init();
 
 		$.ajax({
+			// type: 'POST',
 			url: '/api/config',
 			dataType: 'json',
 		}).done(onLoadSuccess);

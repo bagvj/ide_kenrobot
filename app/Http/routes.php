@@ -12,20 +12,21 @@
  */
 Route::get('/', 'HomeController@index');
 Route::get('/logout', 'Auth\AuthController@getLogout2');
-Route::get('/project/{id}', 'HomeController@show')->where('id', '[1-9][0-9]*');
-
-Route::get('/api/config', 'HomeController@config');
-
 Route::get('/project/download/{id}/{ext?}', 'ProjectController@downloadProject')->where('id', '[1-9][0-9]*');
+
+// 临时
+Route::post('/temp/platformid', 'Auth\WebAuthController@platformId');
+
+// 配置API
+Route::get('/api/config', 'HomeController@config');
+// 项目PI
 Route::post('/api/project/build', 'ProjectController@buildProject');
 Route::post('/api/project/save', 'ProjectController@saveProject');
 Route::post('/api/project/delete', 'ProjectController@deleteProject');
 Route::post('/api/project/get', 'ProjectController@getProject');
 Route::post('/api/projects/user', 'ProjectController@getProjects');
 
-// 登录验证
+// 登录验证API
 Route::post('/api/auth/login', 'Auth\WebAuthController@snsPostLogin');
 Route::post('/api/auth/login/weixin', 'Auth\WebAuthController@weixinlogin');
 Route::get('/api/auth/check', 'Auth\AuthServerController@index');
-
-Route::post('/temp/platformid', 'Auth\WebAuthController@platformId');
