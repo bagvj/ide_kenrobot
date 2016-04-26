@@ -27,7 +27,7 @@ define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, 
 	function authCheck(callback) {
 		$.ajax({
 			type: 'GET',
-			url: '/auth/check',
+			url: '/api/auth/check',
 			dataType: 'json',
 		}).done(function(result){
 			var success = result.code == 0;
@@ -119,7 +119,7 @@ define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, 
 		var dialog = $('.login-dialog');
 		$.ajax({
 			type: 'POST',
-			url: '/auth/login',
+			url: '/api/auth/login',
 			dataType: 'json',
 			data: {
 				email: $('.email', dialog).val(),
@@ -159,7 +159,7 @@ define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, 
 			var key = $('.qrcode-key', dialog).val();
 			$.ajax({
 				type: 'POST',
-				url: '/auth/login/weixin',
+				url: '/api/auth/login/weixin',
 				data: {
 					key: key,
 				},

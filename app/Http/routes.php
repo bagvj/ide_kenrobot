@@ -11,17 +11,19 @@
 |
  */
 Route::get('/', 'HomeController@index');
-Route::get('/config', 'HomeController@config');
+Route::get('/logout', 'Auth\AuthController@getLogout2');
+Route::get('/project/{id}', 'HomeController@show')->where('id', '[1-9][0-9]*');
 
-Route::post('/project/build', 'ProjectController@buildProject');
-Route::post('/project/save', 'ProjectController@saveProject');
-Route::post('/project/delete', 'ProjectController@deleteProject');
+Route::get('/api/config', 'HomeController@config');
+
 Route::get('/project/download/{id}/{ext?}', 'ProjectController@downloadProject')->where('id', '[1-9][0-9]*');
-Route::get('/project/{id}', 'ProjectController@getProject')->where('id', '[1-9][0-9]*');
-Route::get('/projects/{user_id}', 'ProjectController@getProjects')->where('user_id', '[1-9][0-9]*');
+Route::post('/api/project/build', 'ProjectController@buildProject');
+Route::post('/api/project/save', 'ProjectController@saveProject');
+Route::post('/api/project/delete', 'ProjectController@deleteProject');
+Route::post('/api/project/get', 'ProjectController@getProject');
+Route::post('/api/projects/user', 'ProjectController@getProjects');
 
 // 登录验证
-Route::post('/auth/login', 'Auth\WebAuthController@snsPostLogin');
-Route::post('/auth/login/weixin', 'Auth\WebAuthController@weixinlogin');
-Route::get('/auth/check', 'Auth\AuthServerController@index');
-Route::get('/logout', 'Auth\AuthController@getLogout2');
+Route::post('/api/auth/login', 'Auth\WebAuthController@snsPostLogin');
+Route::post('/api/auth/login/weixin', 'Auth\WebAuthController@weixinlogin');
+Route::get('/api/auth/check', 'Auth\AuthServerController@index');

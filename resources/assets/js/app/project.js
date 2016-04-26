@@ -15,7 +15,60 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		EventManager.bind("user", "login", onLogin);
 		EventManager.bind("software", "editorChange", onEditorChange);
 
-		load();
+		$(window).on('hashchange', function(e) {
+			load();	
+		});
+	}
+
+	function getHashKeyValue(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+		var r = window.location.hash.substr(1).match(reg);
+
+		return r != null ? unescape(r[2]) : null;
+	}
+
+	function load() {
+		var key = getHashKeyValue('project');
+		key = /^[0-9a-zA-Z]{6}$/.test(key) ? key : 0;
+		var user_id = user.getUserId();
+		if(key) {
+			$.ajax({
+				type: 'POST',
+				url: '/api/project/get',
+				data: {
+					user_id: user_id,
+					key: key,
+				},
+				dataType: 'json',
+			}).done(function(result) {
+				if(result.status != 0) {
+					util.message(result.message);
+					window.location.hash = "";
+					return;
+				}
+
+				projects = [];
+				onLoadSuccess(result);
+			});
+		} else {
+			if(window.location.hash != "") {
+				window.location.hash = "";
+				return;
+			}
+
+			if(user_id) {
+				$.ajax({
+					type: 'POST',
+					url: '/api/projects/user',
+					data: {
+						user_id: user_id
+					},
+					dataType: 'json',
+				}).done(onLoadSuccess);
+			} else {
+				onLoadSuccess();
+			}
+		}
 	}
 
 	function build() {
@@ -39,7 +92,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			var doBuild = function() {
 				$.ajax({
 					type: "POST",
-					url: "/project/build",
+					url: "/api/project/build",
 					dataType: "json",
 					data: {
 						id: id,
@@ -118,7 +171,11 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		projects = [projectInfo];
 
 		$.ajax({
-			url: '/projects/' + user.getUserId(),
+			type: 'POST',
+			url: '/api/projects/user',
+			data: {
+				user_id: user.getUserId(),
+			},
 			dataType: 'json',
 		}).done(onLoadSuccess);
 	}
@@ -128,27 +185,14 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		projectInfo && (projectInfo.status = 0);
 	}
 
-	function load() {
-		user.authCheck(function(success) {
-			if(success) {
-				$.ajax({
-					url: '/projects/' + user.getUserId(),
-					dataType: 'json',
-				}).done(onLoadSuccess);
-			} else {
-				projects = [getDefaultProject()];
-				bindProjectEvent();
-			}
-		});
-	}
-
 	function onLoadSuccess(result) {
-		if(result.status == 0) {
-			projects = result.data.concat(projects);
+		if(result && result.status != undefined && result.status == 0) {
+			projects = $.isArray(result.data) ? result.data.concat(projects) : [result.data].concat(projects);
 		} else {
 			projects = [getDefaultProject()];
 		}
 
+		$('.top-tabs ul').empty();
 		var ul = $(".project .list ul").empty();
 		for(var i = 0; i < projects.length; i++) {
 			var projectInfo = projects[i];
@@ -309,7 +353,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		showMessage && util.message("正在保存，请稍候...");
 		$.ajax({
 			type: 'POST',
-			url: '/project/save',
+			url: '/api/project/save',
 			data: project,
 			dataType: 'json',
 		}).done(function(result) {
@@ -317,7 +361,12 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			if(result.status == 0) {
 				if(isEdit) {
 					$.ajax({
-						url: 'project/' + result.data.project_id,
+						type: 'POST',
+						url: '/api/project/get',
+						data: {
+							user_id: user.getUserId(),
+							key: result.data.project_id,
+						},
 						dataType: 'json',
 					}).done(function(res) {
 						doUpdateProject(id, res);
@@ -395,7 +444,15 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 				bindProjectEvent();
 			} else {
 				var titles = $(".project .list .title");
-				titles.eq(titles.length - 1).click();
+				var title = titles.eq(titles.length - 1);
+				if(!title.hasClass("active")) {
+					title.click();
+				}
+				var li = title.parent();
+				var files = $('.view > div', li);
+				if(files.filter('.active').length == 0) {
+					files.eq(0).click();
+				}
 			}
 		};
 
@@ -406,7 +463,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 
 		$.ajax({
 			type: "POST",
-			url: "/project/delete",
+			url: "/api/project/delete",
 			data: {
 				id: id,
 				user_id: user.getUserId(),
@@ -424,7 +481,11 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		var titles = $('.project .list .title').off('click').on('click', onProjectTitleClick);
 		$('.project .list .view > div').off('click').on('click', onProjectFileClick);
 
-		var li = titles.eq(titles.length - 1).click().parent();
+		var title = titles.eq(titles.length - 1);
+		if(!title.hasClass("active")) {
+			title.click();
+		}
+		var li = title.parent();
 		var files = $('.view > div', li);
 		if(files.filter('.active').length == 0) {
 			files.eq(0).click();
@@ -488,6 +549,11 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 
 	function onTabCloseClick(e) {
 		var li = $(this).parent();
+		if(li.siblings().length == 0) {
+			console.log("aaaaa");
+			return;
+		}
+
 		var id = li.data('project-id');
 		var active = li.hasClass("active");
 		
@@ -569,6 +635,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 
 	return {
 		init: init,
+		load: load,
 		isBuild: isBuild,
 		build: build,
 		save: save,

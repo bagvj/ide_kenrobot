@@ -11,6 +11,8 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 		board.init();
 		component.init();
 		library.init();
+		project.init();
+
 		hardware.init();
 		software.init({
 			getNodes: hardware.getNodes,
@@ -22,7 +24,7 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 		guide.init();
 
 		$.ajax({
-			url: '/config',
+			url: '/api/config',
 			dataType: 'json',
 		}).done(onLoadSuccess);
 	}
@@ -83,8 +85,9 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 		library.load(result.libraries);
 
 		hardware.load(result);
-
-		project.init();
+		user.authCheck(function() {
+			project.load();
+		});
 	}
 
 	return {

@@ -45,13 +45,13 @@ define(function() {
 			if (varStr != "") {
 				codeStr += "\n" + varStr + '\n';
 			}
-			codeStr += "void setup() {\n";
+			codeStr += "void setup()\n{\n";
 			var setupStr = genSetup();
 			if(setupStr != "") {
 				codeStr += setupStr;
 			}
 			codeStr += '    \n}\n\n';
-			codeStr += "void loop() {\n    \n}";
+			codeStr += "void loop()\n{\n    \n}";
 
 			return codeStr;
 		} else {
