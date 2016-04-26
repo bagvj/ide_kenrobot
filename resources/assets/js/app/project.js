@@ -99,10 +99,22 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			},
 			dataType: 'json',
 		}).done(function(result) {
-			result.status == 0 ? promise.resolve(result.data) : promise.reject();
+			result.status == 0 ? promise.resolve(convertProject(result.data)) : promise.reject();
 		});
 
 		return promise;
+	}
+
+	function convertProject(projectInfo) {
+		if(typeof projectInfo.project_data == "string") {
+			try {
+				projectInfo.project_data = JSON.parse(projectInfo.project_data);
+			} catch(ex) {
+				projectInfo.project_data = {};
+			}
+		}
+
+		return projectInfo;
 	}
 
 	function openProject(projectInfo) {
@@ -123,13 +135,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		var ul = $(".project .list ul");
 		for(var i = 0; i < projects.length; i++) {
 			var projectInfo = projects[i];
-			if(typeof projectInfo.project_data == "string") {
-				try {
-					projectInfo.project_data = JSON.parse(projectInfo.project_data);
-				} catch(ex) {
-					projectInfo.project_data = {};
-				}
-			}
+			projectInfo = convertProject(projectInfo);
 
 			if(projectInfo.status === undefined) {
 				projectInfo.status = 1;
@@ -441,13 +447,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 
 		var projectInfo = result.data;
 		projectInfo.status = 1;
-		if(typeof projectInfo.project_data == "string") {
-			try {
-				projectInfo.project_data = JSON.parse(projectInfo.project_data);
-			} catch(ex) {
-				projectInfo.project_data = {};
-			}
-		}
+		convertProject(projectInfo);
 
 		var list = $('.project .list > ul');
 		if(id == 0 || isCopy) {
