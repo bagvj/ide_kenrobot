@@ -308,27 +308,16 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		var projectInfo = isNew ? getDefaultProject() : getCurrentProject();
 		var text = isNew ? "创建项目" : "保存项目";
 		
-		var dialog = $('.save-dialog');
+		var dialog = util.dialog('.save-dialog');
 		var form = $('form', dialog);
 		$('input[name="name"]', form).val(projectInfo.project_name);
 		$('textarea[name="intro"]', form).val(projectInfo.project_intro);
 		$('input[name="public-type"][value="' + projectInfo.public_type + '"]', form).attr("checked", true);
 		$('input[name="save"]', form).val(text);
 
-		var dialogLayer = $('.dialog-layer').addClass("active");
-		$('.close-btn', dialog).off('click').on('click', function(e) {
-			dialog.slideUp(100);
-			dialogLayer.removeClass("active");
-		});
-		$('.save', dialog).off('click').on('click', function() {
+		$('.save-btn', dialog).off('click').on('click', function() {
 			doProjectSave(projectInfo.id, true);
 		});
-
-		dialog.css({
-			top: -dialog.height(),
-		}).show().animate({
-			top: 200,
-		}, 400, "swing");
 	}
 
 	function doProjectSave(id, isEdit, showMessage, callback) {
@@ -358,7 +347,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			if(!hasNewName && project_name != "我的项目") {
 				delete project.project_name;
 			}
-			$('.close-btn', dialog).click();
+			$('.x-dialog-close', dialog).click();
 		} else {
 			project = {
 				id: id,
@@ -616,6 +605,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			project_intro: "我的项目简介",
 			public_type: 1,
 			project_data: {},
+			author: user.getUserName(),
 			status: 0,
 		};
 	}
@@ -646,11 +636,6 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		return index;
 	}
 
-	function getProjectName() {
-		var projectInfo = getCurrentProject();
-		return projectInfo ? projectInfo.project_name : "";
-	}
-
 	return {
 		init: init,
 		load: load,
@@ -658,6 +643,6 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		build: build,
 		save: save,
 		download: download,
-		getProjectName: getProjectName,
+		getCurrentProject: getCurrentProject,
 	}
 });

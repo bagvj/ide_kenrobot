@@ -2,8 +2,7 @@ define(function() {
 	var libraries = [];
 
 	var getNodes;
-	var getFileName;
-	var getAuthor;
+	var getProjectInfo;
 
 	var headCodes;
 	var varCodes;
@@ -14,8 +13,7 @@ define(function() {
 
 	function init(api) {
 		getNodes = api.getNodes;
-		getFileName = api.getFileName;
-		getAuthor = api.getAuthor;
+		getProjectInfo = api.getProjectInfo;
 	}
 
 	function addLibrary(library) {
@@ -66,11 +64,9 @@ define(function() {
 
 	function getCodeInfo() {
 		var now = new Date();
-		var filename = getFileName() + ".ino";
-		var author = getAuthor();
-		if(author == "") {
-			author = "啃萝卜";
-		}
+		var projectInfo = getProjectInfo();
+		var filename = projectInfo.project_name + ".ino";
+		var author = projectInfo.author || "啃萝卜";
 		var date = now.getFullYear() + "/" + (now.getMonth() + 1) + "/" + now.getDate();
 
 		return {

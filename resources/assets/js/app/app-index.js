@@ -16,8 +16,7 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 		hardware.init();
 		software.init({
 			getNodes: hardware.getNodes,
-			getFileName: project.getProjectName,
-			getAuthor: user.getUserName,
+			getProjectInfo: project.getCurrentProject,
 		});
 		extAgent.init(config.extension);
 

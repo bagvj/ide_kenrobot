@@ -1,60 +1,66 @@
 .save-dialog {
-	max-width: 1024px;
-	min-width: 500px;
-	height: 100%;
 	width: 720px;
-	background-color: white;
-	margin: 0 auto;
-	border: 1px solid transparent;
-	display: none;
-	z-index: 600;
-	color: #515151;
 
-	.close-btn {
-		color: #999;
-	}
+	.x-dialog-content {
+		height: 320px;
+		display: block;
+		padding: 30px 60px 30px 30px;
+		white-space: nowrap;
 
-	.wrapper {
-		margin: 30px 60px 10px 20px;
-	}
+		.filed-key {
+			text-align: right;
+			width: 80px;
+			margin-right: 20px;
+			display: inline-block;
+			line-height: 34px;
+		}
 
-	.control-label {
-		font-weight: normal;
-	}
-
-	.form-control {
-		background-color: #FAFAFA;
-		border-radius: 0;
-		border: 1px solid #ccc;
-		&:focus {
-			box-shadow: none;
+		.name {
+			background-color: #FAFAFA;
 			border: 1px solid #ccc;
+			width: 524px;
+			padding-left: 12px;
+			padding-right: 12px;
+			line-height: 34px;
+			height: 34px;
 		}
-	}
 
-	.form-group:last-child {
-		margin-bottom: 30px;
-	}
+		.filed-intro {
+			margin-top: 20px;
+			margin-bottom: 20px;
 
-	.checkbox-inline {
-		input {
-			margin-right: 10px;
+			.filed-key {
+				vertical-align: top;
+			}
 		}
-		&:first-child {
-			padding-left: 0;
+
+		.intro {
+			background-color: #FAFAFA;
+			border: 1px solid #ccc;
+			width: 524px;
+			padding: 6px 12px;
 		}
-	}
 
-	.save {
-		width: 100px;
-		height: 36px;
-		color: white;
-		background: #1FB6ED;
-		border: none;
-		border-radius: 0;
+		.public-type {
+			display: inline-block;
 
-		&:hover {
+			& > label {
+				margin-right: 10px;
+				font-weight: normal;
+
+				& > input[type="radio"] {
+					margin-right: 10px;
+				}
+			}
+		}
+
+		.save-btn {
+			width: 100px;
+			height: 36px;
 			color: white;
+			background: #1FB6ED;
+			border: none;
+			float: right;
 		}
 	}
 }
