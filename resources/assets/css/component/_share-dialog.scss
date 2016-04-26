@@ -1,0 +1,24 @@
+.share-dialog {
+	width: 400px;
+
+	.x-dialog-title {
+		color: white;
+	    background-color: #939ba4;
+	}
+	
+	.x-dialog-content {
+		height: 150px;
+		padding-top: 20px;
+		display: block;
+		position: relative;
+		
+		.share-content {
+			width: 360px;
+			padding: 6px 12px;
+			margin: 0 auto;
+			display: block;
+			border: 1px solid #ccc;
+			background-color: #fafafa;
+		}
+	}
+}

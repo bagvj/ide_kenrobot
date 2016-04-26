@@ -2,6 +2,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 	//项目模版
 	var projectTemplate = '<li data-project-id="{{id}}" data-view="software"><div class="title"><i class="kenrobot ken-icon-folder icon"></i><span class="name">{{project_name}}</span><i class="kenrobot arrow"></i></div><div class="view"><div><i class="kenrobot ken-icon-code icon"></i><span class="name">{{project_name}}</span>.ino</div></div></li>';
 	var tabTemplate = '<li data-project-id="{{id}}"><span class="name">{{project_name}}</span><i class="kenrobot ken-close close-btn"></i></li>';
+	var shareTemplate = '我是{{name}}，这是我的{{project_name}}项目{{project_url}}，快来看看吧^_^';
 
 	//我的项目
 	var myProjects = [];
@@ -12,6 +13,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		$('.project .operation li').on('click', onProjectActionClick);
 
 		EventManager.bind("project", "viewChange", onViewChange);
+		EventManager.bind("project", "share", onShare);
 		EventManager.bind("user", "login", onLogin);
 		EventManager.bind("software", "editorChange", onEditorChange);
 
@@ -184,14 +186,14 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			};
 
 			if(info.status == 0) {
-				doProjectSave(info, false, false, false, doBuild);
+				doProjectSave(info, false, false, false, false, doBuild);
 			} else {
 				doBuild();
 			}
 		};
 
 		user.authCheck(function(success) {
-			success ? callback() : user.showLoginDialog();
+			success ? checkOwn(callback) : user.showLoginDialog();
 		});
 	}
 
@@ -209,7 +211,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		};
 
 		user.authCheck(function(success) {
-			success ? checkBuild() : user.showLoginDialog();
+			success ? checkOwn(checkBuild) : user.showLoginDialog();
 		});
 	}
 
@@ -230,21 +232,21 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			}
 		};
 
-		var checkOwn = function () {
-			var projectInfo = getCurrentProject();
-			var user_id = user.getUserId();
-			if(projectInfo.user_id != user_id) {
-				showCopyDialog(function() {
-					showSaveDialog(projectInfo, true, true);
-				});
-			} else {
-				doSave();
-			}
-		}
-
 		user.authCheck(function(success) {
-			success ? checkOwn() : user.showLoginDialog();
+			success ? checkOwn(doSave) : user.showLoginDialog();
 		});
+	}
+
+	function checkOwn(callback) {
+		var projectInfo = getCurrentProject();
+		var user_id = user.getUserId();
+		if(projectInfo.user_id != user_id) {
+			showCopyDialog(function() {
+				showSaveDialog(projectInfo, true, true);
+			});
+		} else {
+			callback && callback();
+		}
 	}
 
 	function onViewChange(view) {
@@ -254,6 +256,27 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 	function onLogin() {
 		// load();
 		loadMyProject();
+	}
+
+	function onShare() {
+		var doShare = function() {
+			var projectInfo = getCurrentProject();
+			if(projectInfo.public_type != 2) {
+				util.message("你的项目未完全公开，不能分享");
+				return;
+			}
+
+			var name = user.getUserName();
+			var project_name = projectInfo.project_name;
+			var project_url = "http://" + window.location.host + "/#project=" + projectInfo.hash;
+			var content = shareTemplate.replace("{{name}}", user.getUserName()).replace("{{project_name}}", project_name).replace("{{project_url}}", project_url);
+			var dialog;
+
+			dialog = util.dialog(".share-dialog");
+			$('.share-content', dialog).text(content);
+		};
+		
+		checkOwn(doShare);
 	}
 
 	function onEditorChange() {
@@ -350,11 +373,11 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		$('input[name="save"]', form).val(text);
 
 		$('.save-btn', dialog).off('click').on('click', function() {
-			doProjectSave(projectInfo, true, isCopy);
+			doProjectSave(projectInfo, true, isNew, isCopy);
 		});
 	}
 
-	function doProjectSave(projectInfo, isEdit, isCopy, showMessage, callback) {
+	function doProjectSave(projectInfo, isEdit, isNew, isCopy, showMessage, callback) {
 		var id = projectInfo.id;
 		var project;
 		showMessage = showMessage != false;
@@ -496,16 +519,6 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 	function bindProjectEvent() {
 		var titles = $('.project .list .title').off('click').on('click', onProjectTitleClick);
 		$('.project .list .view > div').off('click').on('click', onProjectFileClick);
-
-		// var title = titles.eq(titles.length - 1);
-		// if(!title.hasClass("active")) {
-		// 	title.click();
-		// }
-		// var li = title.parent();
-		// var files = $('.view > div', li);
-		// if(files.filter('.active').length == 0) {
-		// 	files.eq(0).click();
-		// }
 	}
 
 	function bindTabEvent() {

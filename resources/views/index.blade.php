@@ -359,11 +359,11 @@
 						<form>
 							<div>
 								<span class="filed-key">项目名称：</span>
-								<input class="name" name="name" type="text" autocomplete="off" />
+								<input class="name" name="name" type="text" autocomplete="off" spellcheck="false" />
 							</div>
 							<div class="filed-intro">
 								<span class="filed-key">项目简介：</span>
-								<textarea class="intro" name="intro" rows="5"></textarea>
+								<textarea class="intro" name="intro" rows="5" spellcheck="false"></textarea>
 							</div>
 							<div>
 								<span class="filed-key">公开：</span>
@@ -385,6 +385,16 @@
 					</div>
 					<div class="x-dialog-btns">
 						<button class="x-dialog-btn confirm">确定</button><button class="x-dialog-btn cancel">取消</button>
+					</div>
+				</div>
+				<div class="x-dialog x-dialog-info share-dialog">
+					<div class="x-dialog-title">分享</div>
+					<i class="kenrobot ken-close x-dialog-close"></i>
+					<div class="x-dialog-content">
+						<textarea class="share-content" name="share-content" rows="5" spellcheck="false"></textarea>
+					</div>
+					<div class="x-dialog-btns">
+						<button class="x-dialog-btn confirm">确定</button>
 					</div>
 				</div>
 			</div>

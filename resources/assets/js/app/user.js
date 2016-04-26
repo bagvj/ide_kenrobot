@@ -240,7 +240,7 @@ define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, 
 		var action = li.data('action');
 		switch(action) {
 			case "share":
-				util.message("敬请期待");
+				EventManager.trigger("project", "share");
 				break;
 			case "setting":
 				util.message("敬请期待");
