@@ -22,11 +22,10 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 
 		guide.init();
 
-		$.ajax({
-			// type: 'POST',
-			url: '/api/config',
-			dataType: 'json',
-		}).done(onLoadSuccess);
+		$.when(
+			loadConfig(),
+			project.loadMyProject()
+		).done(project.load);
 	}
 
 	function initAjax() {
@@ -79,15 +78,21 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 		});
 	}
 
-	function onLoadSuccess(result) {
-		board.load(result.boards);
-		component.load(result.components);
-		library.load(result.libraries);
+	function loadConfig() {
+		var promise = $.Deferred();
+		$.ajax({
+			url: '/api/config',
+			dataType: 'json',
+		}).done(function(result) {
+			board.load(result.boards);
+			component.load(result.components);
+			library.load(result.libraries);
+			hardware.load(result);
 
-		hardware.load(result);
-		user.authCheck(function() {
-			project.load();
+			promise.resolve();
 		});
+
+		return promise;
 	}
 
 	return {

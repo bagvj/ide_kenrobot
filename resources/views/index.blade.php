@@ -79,14 +79,6 @@
 								</div>
 								<div class="list x-scrollbar">
 									<ul>
-										<li data-project-id="0">
-											<div class="title">
-												<span class="name">我的项目</span><i class="kenrobot"></i>
-											</div>
-											<div class="view">
-												<div data-view="software"><span class="name">我的项目</span>.ino</div>
-											</div>
-										</li>
 									</ul>
 								</div>
 								
@@ -361,7 +353,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="x-dialog save-dialog">
+				<div class="x-dialog x-dialog-custom save-dialog">
 					<i class="kenrobot ken-close x-dialog-close"></i>
 					<div class="x-dialog-content">
 						<form>
@@ -383,6 +375,16 @@
 							</div>
 							<input class="save-btn" type="button" value="保存" />
 						</form>
+					</div>
+				</div>
+				<div class="x-dialog x-dialog-confirm copy-dialog">
+					<div class="x-dialog-title">复制项目</div>
+					<i class="kenrobot ken-close x-dialog-close"></i>
+					<div class="x-dialog-content">
+						当前项目不是你的项目，是否复制？
+					</div>
+					<div class="x-dialog-btns">
+						<button class="x-dialog-btn confirm">确定</button><button class="x-dialog-btn cancel">取消</button>
 					</div>
 				</div>
 			</div>

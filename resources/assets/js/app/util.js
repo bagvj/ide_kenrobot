@@ -42,25 +42,24 @@ define(function(){
 		}
 
 		var dialogLayer = $('.dialog-layer').addClass("active");
-		var doClose = function() {
+		var doClose = function(callback) {
 			dialogWin.slideUp(200, function() {
 				dialogWin.hide().removeClass("active");
 				dialogLayer.removeClass("active");
 				onClose && onClose();
+				callback && callback();
 			});
 		}
 
 		$('.x-dialog-btns .confirm', dialogWin).off('click').on('click', function(){
 			if(!onClosing || onClosing() != false) {
-				doClose();
-				onConfirm && onConfirm();
+				doClose(onConfirm);
 			} 
 		});	
 
 		$('.x-dialog-close,.x-dialog-btns .cancel', dialogWin).off('click').on('click', function(){
 			if(!onClosing || onClosing() != false) {
-				doClose();
-				onCancel && onCancel();
+				doClose(onCancel);
 			} 
 		});
 

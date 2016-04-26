@@ -3,10 +3,10 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 	var projectTemplate = '<li data-project-id="{{id}}" data-view="software"><div class="title"><i class="kenrobot ken-icon-folder icon"></i><span class="name">{{project_name}}</span><i class="kenrobot arrow"></i></div><div class="view"><div><i class="kenrobot ken-icon-code icon"></i><span class="name">{{project_name}}</span>.ino</div></div></li>';
 	var tabTemplate = '<li data-project-id="{{id}}"><span class="name">{{project_name}}</span><i class="kenrobot ken-close close-btn"></i></li>';
 
-	//项目
-	var projects = [];
-	//状态
-	var state;
+	//我的项目
+	var myProjects = [];
+	//已打开的项目
+	var openedProjects = [];
 
 	function init() {
 		$('.project .operation li').on('click', onProjectActionClick);
@@ -27,52 +27,116 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		return r != null ? unescape(r[2]) : null;
 	}
 
-	function load() {
-		var key = getHashKeyValue('project');
-		key = /^[0-9a-zA-Z]{6}$/.test(key) ? key : "";
-		var user_id = user.getUserId();
-		if(key) {
+	function loadMyProject() {
+		var promise = $.Deferred();
+		user.authCheck(function(success) {
+			if(!success) {
+				promise.resolve();
+				return;
+			}
+
 			$.ajax({
 				type: 'POST',
-				url: '/api/project/get',
+				url: '/api/projects/user',
 				data: {
-					user_id: user_id,
-					key: key,
+					user_id: user.getUserId(),
 				},
 				dataType: 'json',
 			}).done(function(result) {
-				if(result.status != 0) {
-					// util.message(result.message);
-					window.location.hash = "";
-					return;
-				}
+				$(".project .list ul").empty();
 
-				projects = [];
-				onLoadSuccess(result);
+				addProject(result.data);
+				promise.resolve();
 			});
+		});
+
+		return promise;
+	}
+
+	function load() {
+		var hash = getHashKeyValue('project');
+		hash = /^[0-9a-zA-Z]{6}$/.test(hash) ? hash : "";
+		if(hash) {
+			getProjectInfoByHash(hash)
+				.done(function(projectInfo) {
+					openProject(projectInfo);
+				})
+				.fail(function() {
+					window.location.hash = "";
+				});
 		} else {
 			if(window.location.hash != "") {
 				window.location.hash = "";
 				return;
 			}
 
-			if(user_id) {
-				$.ajax({
-					type: 'POST',
-					url: '/api/projects/user',
-					data: {
-						user_id: user_id
-					},
-					dataType: 'json',
-				}).done(function(result) {
-					projects = [];
-					onLoadSuccess(result);
-				});
-			} else {
-				projects = [];
-				onLoadSuccess();
+			if(openedProjects.length > 0) {
+				return;
+			}
+
+			var projectInfo = myProjects.length > 0 ? myProjects[myProjects.length - 1] : getDefaultProject();
+			openProject(projectInfo);
+		}
+	}
+
+	function getProjectInfoByHash(hash) {
+		var promise = $.Deferred();
+
+		for(var i = 0; i < myProjects.length; i++) {
+			if(myProjects[i].hash == hash) {
+				return promise.resolve(myProjects[i]);
 			}
 		}
+
+		$.ajax({
+			type: 'POST',
+			url: '/api/project/get',
+			data: {
+				user_id: user.getUserId(),
+				hash: hash,
+			},
+			dataType: 'json',
+		}).done(function(result) {
+			result.status == 0 ? promise.resolve(result.data) : promise.reject();
+		});
+
+		return promise;
+	}
+
+	function openProject(projectInfo) {
+		var ul = $('.top-tabs > ul');
+		var targetTab = ul.find('> li[data-project-id="' + projectInfo.id + '"]');
+		if(targetTab.length == 0) {
+			openedProjects.push(projectInfo);
+
+			targetTab = $(tabTemplate.replace(/\{\{project_name\}\}/g, projectInfo.project_name).replace(/\{\{id\}\}/g, projectInfo.id));
+			targetTab.appendTo(ul);
+			bindTabEvent();
+		}
+
+		targetTab.click();
+	}
+
+	function addProject(projects) {
+		var ul = $(".project .list ul");
+		for(var i = 0; i < projects.length; i++) {
+			var projectInfo = projects[i];
+			if(typeof projectInfo.project_data == "string") {
+				try {
+					projectInfo.project_data = JSON.parse(projectInfo.project_data);
+				} catch(ex) {
+					projectInfo.project_data = {};
+				}
+			}
+
+			if(projectInfo.status === undefined) {
+				projectInfo.status = 1;
+			}
+			
+			ul.append(getProjectHtml(projectInfo));
+			myProjects.push(projectInfo);
+		}
+		bindProjectEvent();
 	}
 
 	function build() {
@@ -80,7 +144,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			var info = getCurrentProject();
 			var id = info.id;
 			if(id == 0) {
-				showSaveDialog(true);
+				showSaveDialog(info, true);
 				return;
 			}
 
@@ -104,7 +168,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 					},
 				}).done(function(result) {
 					isBuilding = false;
-					var projectInfo = getProjectInfo(id);
+					var projectInfo = getProjectById(openedProjects, id);
 					if(result.status == 0) {
 						projectInfo.status = 2;
 						projectInfo.url = result.url;
@@ -120,7 +184,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			};
 
 			if(info.status == 0) {
-				doProjectSave(id, false, false, doBuild);
+				doProjectSave(info, false, false, false, doBuild);
 			} else {
 				doBuild();
 			}
@@ -160,15 +224,26 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			var projectInfo = getCurrentProject();
 			var id = projectInfo.id;
 			if(id == 0) {
-				showSaveDialog(true);
+				showSaveDialog(projectInfo, true);
 			} else {
-				doProjectSave(id);
+				doProjectSave(projectInfo);
 			}
 		};
 
+		var checkOwn = function () {
+			var projectInfo = getCurrentProject();
+			var user_id = user.getUserId();
+			if(projectInfo.user_id != user_id) {
+				showCopyDialog(function() {
+					showSaveDialog(projectInfo, true, true);
+				});
+			} else {
+				doSave();
+			}
+		}
+
 		user.authCheck(function(success) {
-			(!success) && (state = 0);
-			success ? doSave() : user.showLoginDialog();
+			success ? checkOwn() : user.showLoginDialog();
 		});
 	}
 
@@ -177,51 +252,13 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 	}
 
 	function onLogin() {
-		var projectInfo = getDefaultProject();
-		projectInfo.project_data = getProjectData();
-		projects = [projectInfo];
-
-		$.ajax({
-			type: 'POST',
-			url: '/api/projects/user',
-			data: {
-				user_id: user.getUserId(),
-			},
-			dataType: 'json',
-		}).done(onLoadSuccess);
+		// load();
+		loadMyProject();
 	}
 
 	function onEditorChange() {
 		var projectInfo = getCurrentProject();
 		projectInfo && (projectInfo.status = 0);
-	}
-
-	function onLoadSuccess(result) {
-		if(result && result.status != undefined && result.status == 0) {
-			projects = $.isArray(result.data) ? result.data.concat(projects) : [result.data].concat(projects);
-		} else {
-			projects = [getDefaultProject()];
-		}
-
-		$('.top-tabs ul').empty();
-		var ul = $(".project .list ul").empty();
-		for(var i = 0; i < projects.length; i++) {
-			var projectInfo = projects[i];
-			if(typeof projectInfo.project_data == "string") {
-				try {
-					projectInfo.project_data = JSON.parse(projectInfo.project_data);
-				} catch(ex) {
-					projectInfo.project_data = {};
-				}
-			}
-
-			if(projectInfo.status === undefined) {
-				projectInfo.status = 1;
-			}
-			
-			ul.append(getProjectHtml(projectInfo));
-		}
-		bindProjectEvent();
 	}
 
 	function onProjectTitleClick(e) {
@@ -232,17 +269,9 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 	function onProjectFileClick(e) {
 		var li = $(this).parent().parent();
 		var id = li.data('project-id');
-		var projectInfo = getProjectInfo(id);
-		var ul = $('.top-tabs > ul');
+		var projectInfo = getProjectById(myProjects, id);
 
-		var targetTab = ul.find('> li[data-project-id="' + id + '"]');
-		if(targetTab.length == 0) {
-			targetTab = $(tabTemplate.replace(/\{\{project_name\}\}/g, projectInfo.project_name).replace(/\{\{id\}\}/g, projectInfo.id));
-			targetTab.appendTo(ul);
-			bindTabEvent();
-		}
-
-		targetTab.click();
+		openProject(projectInfo);
 	}
 
 	function onProjectActionClick(e) {
@@ -263,20 +292,30 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 
 	function onProjectNewClick(e) {
 		user.authCheck(function(success) {
-			success ? showSaveDialog(true) : user.showLoginDialog();
+			success ? showSaveDialog(getDefaultProject(), true) : user.showLoginDialog();
 		});
 	}
 
 	function onProjectEditClick(e) {
+		var id = $('.project .list li.active').data('project-id');
+		var projectInfo = getProjectById(myProjects, id);
+		if(!projectInfo) {
+			return;
+		}
+
 		user.authCheck(function(success) {
-			success ? showSaveDialog() : user.showLoginDialog();
+			success ? showSaveDialog(projectInfo) : user.showLoginDialog();
 		});
 	}
 
 	function onProjectDeleteClick(e) {
-		var projectInfo = getCurrentProject();
-		var id = projectInfo.id;
+		var id = $('.project .list li.active').data('project-id');
+		var projectInfo = getProjectById(myProjects, id);
+		if(!projectInfo) {
+			return;
+		}
 
+		var id = projectInfo.id;
 		var showDeleteDialog = function() {
 			var dialog = util.dialog({
 				selector: ".delete-project-dialog",
@@ -294,18 +333,13 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		}
 		
 		user.authCheck(function(success) {
-			if(success) {
-				showDeleteDialog();
-			} else {
-				user.showLoginDialog();
-			}
+			success ? showDeleteDialog() : user.showLoginDialog();
 		});
 	}
 
-	function showSaveDialog(isNew) {
+	function showSaveDialog(projectInfo, isNew, isCopy) {
 		sidebar.hide();
 
-		var projectInfo = isNew ? getDefaultProject() : getCurrentProject();
 		var text = isNew ? "创建项目" : "保存项目";
 		
 		var dialog = util.dialog('.save-dialog');
@@ -316,41 +350,31 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		$('input[name="save"]', form).val(text);
 
 		$('.save-btn', dialog).off('click').on('click', function() {
-			doProjectSave(projectInfo.id, true);
+			doProjectSave(projectInfo, true, isCopy);
 		});
 	}
 
-	function doProjectSave(id, isEdit, showMessage, callback) {
+	function doProjectSave(projectInfo, isEdit, isCopy, showMessage, callback) {
+		var id = projectInfo.id;
 		var project;
 		showMessage = showMessage != false;
 		if(isEdit) {
 			var dialog = $('.save-dialog');
 			var form = $('form', dialog);
 			var project_name = $('input[name="name"]', form).val();
-			var hasNewName = true;
-			for(var i = 0; i < projects.length; i++) {
-				var projectInfo = projects[i];
-				if(projectInfo.id > 0 && projectInfo.project_name == project_name) {
-					hasNewName = false;
-					break;
-				}
-			}
-
 			project = {
-				id: id,
+				id: isCopy ? 0: id,
 				project_name: project_name,
 				user_id: user.getUserId(),
 				project_intro: $('textarea[name="intro"]', form).val(),
 				project_data: JSON.stringify(getProjectData()),
 				public_type: $("input[name='public-type']:checked", form).val(),
 			};
-			if(!hasNewName && project_name != "我的项目") {
-				delete project.project_name;
-			}
+
 			$('.x-dialog-close', dialog).click();
 		} else {
 			project = {
-				id: id,
+				id: isCopy ? 0: id,
 				user_id: user.getUserId(),
 				project_data: JSON.stringify(getProjectData()),
 			}
@@ -371,14 +395,14 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 						url: '/api/project/get',
 						data: {
 							user_id: user.getUserId(),
-							key: result.data.project_id,
+							id: result.data.project_id,
 						},
 						dataType: 'json',
 					}).done(function(res) {
-						doUpdateProject(id, res);
+						doUpdateProject(id, isCopy, res);
 					});
 				} else {
-					var projectInfo = getProjectInfo(id);
+					var projectInfo = getProjectById(openedProjects, id);
 					projectInfo.status = 1;
 					callback && callback();
 				}
@@ -386,7 +410,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		});
 	}
 
-	function doUpdateProject(id, result) {
+	function doUpdateProject(id, isCopy, result) {
 		if(result.status != 0) {
 			util.message(result.message);
 			return;
@@ -403,32 +427,25 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		}
 
 		var list = $('.project .list > ul');
-		if(id == 0) {
+		if(id == 0 || isCopy) {
 			//new
-			list.find('> li[data-project-id="0"]').remove();
-			$('.top-tabs > ul > li[data-project-id="0"]').remove();
-
-			for(var i = 0; i < projects.length; i++){
-				var info = projects[i];
-				if(info.id == 0) {
-					projects.splice(i, 1);
-					break;
-				}
-			}
+			list.find('> li[data-project-id="' + id + '"]').remove();
+			$('.top-tabs > ul > li[data-project-id="' + id + '"]').remove();
+			deleteProjectById(openedProjects, id);
 			
-			projects.push(projectInfo);
-			list.append(getProjectHtml(projectInfo));
-
-			bindProjectEvent();
+			addProject([projectInfo]);
+			openProject(projectInfo);
 		} else {
 			//save
-			var index = getProjectIndex(projectInfo.id);
-			projects[index] = projectInfo;
+			var index = getProjectIndex(openedProjects, projectInfo.id);
+			index >= 0 && (openedProjects[index] = projectInfo);
+
+			index = getProjectIndex(myProjects, projectInfo.id);
+			index >= 0 && (myProjects[index] = projectInfo);
 
 			list.find('> li[data-project-id="' + projectInfo.id + '"]').find(".name").text(projectInfo.project_name);
 			$('.top-tabs ul li[data-project-id="' + projectInfo.id + '"]').find(".name").text(projectInfo.project_name);
 		}
-		software.gen();
 	}
 
 	function doProjectDelete(id) {
@@ -436,30 +453,15 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			$('.top-tabs > ul > li[data-project-id="' + id + '"]').remove();
 			$('.project .list > ul > li[data-project-id="' + id + '"]').remove();
 
-			for(var i = 0; i < projects.length; i++) {
-				var info = projects[i];
-				if(info.id == id) {
-					projects.splice(i, 1);
-					break;
-				}
-			}
+			deleteProjectById(myProjects, id);
+			deleteProjectById(openedProjects, id);
 
-			if(projects.length == 0) {
+			if(openedProjects.length == 0) {
 				var projectInfo = getDefaultProject();
-				projects.push(projectInfo);
-				$(".project .list > ul").append(getProjectHtml(projectInfo));
-				bindProjectEvent();
+				openProject(getDefaultProject());
 			} else {
-				var titles = $(".project .list .title");
-				var title = titles.eq(titles.length - 1);
-				if(!title.hasClass("active")) {
-					title.click();
-				}
-				var li = title.parent();
-				var files = $('.view > div', li);
-				if(files.filter('.active').length == 0) {
-					files.eq(0).click();
-				}
+				var list = $('.top-tabs > ul > li');
+				list.eq(list.length - 1).click();
 			}
 		};
 
@@ -484,19 +486,26 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		});
 	}
 
+	function showCopyDialog(callback) {
+		util.dialog({
+			selector: '.copy-dialog',
+			onConfirm: callback,
+		});
+	}
+
 	function bindProjectEvent() {
 		var titles = $('.project .list .title').off('click').on('click', onProjectTitleClick);
 		$('.project .list .view > div').off('click').on('click', onProjectFileClick);
 
-		var title = titles.eq(titles.length - 1);
-		if(!title.hasClass("active")) {
-			title.click();
-		}
-		var li = title.parent();
-		var files = $('.view > div', li);
-		if(files.filter('.active').length == 0) {
-			files.eq(0).click();
-		}
+		// var title = titles.eq(titles.length - 1);
+		// if(!title.hasClass("active")) {
+		// 	title.click();
+		// }
+		// var li = title.parent();
+		// var files = $('.view > div', li);
+		// if(files.filter('.active').length == 0) {
+		// 	files.eq(0).click();
+		// }
 	}
 
 	function bindTabEvent() {
@@ -549,26 +558,31 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 	}
 
 	function doSaveView(id) {
-		var projectInfo = getProjectInfo(id);
+		var projectInfo = getProjectById(openedProjects, id);
 		software.gen();
 		projectInfo.project_data = getProjectData();
 	}
 
 	function onTabCloseClick(e) {
 		var li = $(this).parent();
+		var id = li.data('project-id');
 		if(li.siblings().length == 0) {
-			console.log("aaaaa");
-			return;
+			return false;
 		}
 
-		var id = li.data('project-id');
 		var active = li.hasClass("active");
 		
 		var index = li.index() - 1;
 		index = index < 0 ? 0 : index;
 
-		li.remove();
 		doSaveView(id);
+		li.remove();
+		for(var i = 0; i < openedProjects.length; i++) {
+			if(openedProjects[i].id == id) {
+				openedProjects.splice(i, 1);
+				break;
+			}
+		}
 
 		if(active) {
 			var list = $('.top-tabs > ul > li');
@@ -603,7 +617,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			user_id: user.getUserId(),
 			project_name: "我的项目",
 			project_intro: "我的项目简介",
-			public_type: 1,
+			public_type: 0,
 			project_data: {},
 			author: user.getUserName(),
 			status: 0,
@@ -612,19 +626,10 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 
 	function getCurrentProject() {
 		var id = $('.top-tabs > ul > li.active').data('project-id');
-		return getProjectInfo(id);
+		return getProjectById(openedProjects, id);
 	}
 
-	function getProjectInfo(id) {
-		for(var i = 0; i < projects.length; i++){
-			var info = projects[i];
-			if(info.id == id) {
-				return info;
-			}
-		}
-	}
-
-	function getProjectIndex(id) {
+	function getProjectIndex(projects, id) {
 		var index = -1;
 		for(var i = 0; i < projects.length; i++){
 			var info = projects[i];
@@ -636,6 +641,25 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		return index;
 	}
 
+	function getProjectById(projects, id) {
+		for(var i = 0; i < projects.length; i++){
+			var info = projects[i];
+			if(info.id == id) {
+				return info;
+			}
+		}
+	}
+
+	function deleteProjectById(projects, id) {
+		for(var i = 0; i < projects.length; i++){
+			var info = projects[i];
+			if(info.id == id) {
+				projects.splice(i, 1);
+				break;
+			}
+		}
+	}
+
 	return {
 		init: init,
 		load: load,
@@ -644,5 +668,6 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		save: save,
 		download: download,
 		getCurrentProject: getCurrentProject,
+		loadMyProject: loadMyProject,
 	}
 });

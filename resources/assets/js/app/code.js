@@ -8,7 +8,7 @@ define(function() {
 	var varCodes;
 	var setupCodes;
 
-	var codeDeclare = "/************************************************************\n * Copyright(C), 2016-2038, KenRobot.com\n * FileName: {{filename}}\n * Author: {{author}}\n * Date: {{date}}\n */\n";
+	var codeDeclare = "/************************************************************\n * Copyright(C), 2016-2038, KenRobot.com\n * FileName: {{filename}}\n * Author: {{author}}\n * Create: {{create_at}}\n * Modify: {{modify_at}}\n */\n";
 	var autoGenDeclare = "{{indent}}//auto generate\n{{indent}}//warning: please don't modify\n{{code}}{{indent}}//end auto generate. block tag: {{tag}}\n";
 
 	function init(api) {
@@ -63,22 +63,29 @@ define(function() {
 	}
 
 	function getCodeInfo() {
-		var now = new Date();
 		var projectInfo = getProjectInfo();
 		var filename = projectInfo.project_name + ".ino";
 		var author = projectInfo.author || "啃萝卜";
-		var date = now.getFullYear() + "/" + (now.getMonth() + 1) + "/" + now.getDate();
+		var create = new Date(projectInfo.create_at * 1000);
+		var create_at = create.getFullYear() + "/" + (create.getMonth() + 1) + "/" + create.getDate();
+		var now = new Date();
+		var modify_at = now.getFullYear() + "/" + (now.getMonth() + 1) + "/" + now.getDate();
 
 		return {
 			filename: filename,
 			author: author,
-			date: date,
+			create_at: create_at,
+			modify_at: modify_at,
 		};
 	}
 
 	function genDeclare() {
 		var codeInfo = getCodeInfo();
-		return codeDeclare.replace("{{filename}}", codeInfo.filename).replace("{{author}}", codeInfo.author).replace("{{date}}", codeInfo.date);
+		return codeDeclare
+			.replace("{{filename}}", codeInfo.filename)
+			.replace("{{author}}", codeInfo.author)
+			.replace("{{create_at}}", codeInfo.create_at)
+			.replace("{{modify_at}}", codeInfo.modify_at);
 	}
 
 	//生成头部

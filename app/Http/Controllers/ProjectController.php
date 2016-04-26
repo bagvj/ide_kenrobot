@@ -122,8 +122,10 @@ class ProjectController extends Controller {
 
 	public function getProject(Request $request) {
 		$user_id = $request->input('user_id');
-		$key = $request->input('key');
-		$type = intval($key) ? 'id' : 'hash';
+		$id = $request->input('id');
+		$hash = $request->input('hash');
+		$type = isset($id) ? 'id' : 'hash';
+		$key = isset($id) ? $id : $hash;
 		$url = config("platform.url.base").config("platform.url.getProject")."&user_id=$user_id&$type=$key";
 		$curl = new Curl();
 		return $curl->get($url);
