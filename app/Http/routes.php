@@ -12,7 +12,7 @@
  */
 Route::get('/', 'HomeController@index');
 Route::get('/logout', 'Auth\AuthController@getLogout2');
-Route::get('/project/download/{hash}', 'ProjectController@downloadProject')->where('hash', '[0-9a-zA-Z]{6}');
+Route::get('/project/download/{hash}/{ext?}', 'ProjectController@downloadProject')->where('hash', '[0-9a-zA-Z]{6}');
 
 // 临时
 Route::post('/temp/platformid', 'Auth\WebAuthController@platformId');
