@@ -12,6 +12,9 @@
 		<link href="/assets/images/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 		<link href="/assets/css/index.css" rel="stylesheet" />
 
+		@if(!env('APP_DEBUG'))
+		<script scr="//hm.baidu.com/hm.js?{{env('PV_KEY')}}"></script>
+		@endif
 		<script src="/assets/js/go.js"></script>
 		<script src="/assets/js/astyle.js"></script>
 		<script src="/assets/js/require.js" data-main="/assets/js/index"></script>

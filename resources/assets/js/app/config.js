@@ -1,8 +1,5 @@
 define(function() {
 	return {
-		//是否需要加入PV统计
-		// needPV: true,
-
 		//引导配置
 		guide: {
 			showIfFirstVisit: true,

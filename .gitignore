@@ -8,5 +8,7 @@ Homestead.json
 .env.dev
 .env.test
 .env.master
+.env*
+.env-*
 switch
 /public/assets/js/config.js
