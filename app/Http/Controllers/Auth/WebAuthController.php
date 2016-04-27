@@ -66,7 +66,10 @@ class WebAuthController extends Controller
             Auth::logout();
         }
         Auth::login($user,false);
-        return response()->json(['code' => 0, 'message' => '登录成功','data' => $user]);
-    }
+
+        //kenrobot_id cookie
+        $kenrobot_id = WebAuthHelper::encryptKenrobotId($user->uid);
+        return response()->json(['code' => 0, 'message' => '登录成功', 'data' => $user])->withCookie(cookie('kenrobot_id', $kenrobot_id));
+     }
 
 }

@@ -86,15 +86,22 @@ class WeixinAuth implements WebAuth
         if (!empty($user)) {
             $user->name = $this->user['name'];
             $user->avatar_url = $this->user['avatar_url'];
+            if (empty($user->uid)) {
+               $user->uid =  $this->fetchUidFromSns($this->user['openid']);
+            }
             $user->save();
         } else {
-             $user = User::create([
+            $uid =  $this->fetchUidFromSns($this->user['openid']);
+          
+            
+            $user = User::create([
                 'name' => $this->user['name'],
                 'email' => $this->user['email'],
                 'password' => bcrypt($this->user['email'].'321'),
                 'openid'   => $this->user['openid'],
                 'avatar_url' => $this->user['avatar_url'],
-                'source'   => 'weixin'
+                'source'   => 'weixin',
+                'uid'       => $uid,
             ]);
         }
         
@@ -120,6 +127,28 @@ class WeixinAuth implements WebAuth
 
        return $userdata;
     }
+
+    /**
+     * 从SNS中取回用户uid
+     */
+    protected function fetchUidFromSns($openid)
+    {
+        $email = $openid.'@kenrobot.com';
+        $url = "http://www.kenrobot.com/?app=api&mod=UserCenter&act=fetch_uid&email=".$email;
+        $data = $this->curl->get($url);
+   
+        if (is_string($data)) {
+            $userData = json_decode($data, true);
+        } else {
+            $userData = (array) $data;
+        }
+        if ($userData['code'] == 0) {
+            return intval($userData['data']['uid']);
+        }
+
+        return 0;
+    }
+
 
     /**
      * 调用远程验证
