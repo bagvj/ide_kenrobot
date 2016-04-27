@@ -27,7 +27,7 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 	function authCheck(callback) {
 		var promise = $.Deferred();
 		userApi.authCheck().done(function(result){
-			if(result.code == 0) {
+			if(result.status == 0) {
 				userInfo = result.user;
 				promise.resolve();
 			} else {
@@ -123,7 +123,7 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 		var username = $('.email', dialog).val();
 		var password = $('.password', dialog).val();
 		userApi.login(username, password).done(function(result){
-			if (result.code == 0) {
+			if (result.status == 0) {
 				//登录成功
 				util.message(result.message);
 				$('.x-dialog-close', dialog).click();
@@ -132,7 +132,7 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 				doUpdateUser();
 				doLoginCallback();
 				EventManager.trigger("user", "login");
-			} else if (result.code == 1) {
+			} else if (result.status == 1) {
 				userInfo = result.data;
 				doUpdateUser();
 				doLoginCallback();
@@ -155,7 +155,7 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 		var doCheck = function() {
 			var key = $('.qrcode-key', dialog).val();
 			userApi.weixinLogin(key).done(function(result) {
-				if (result.code == 0) {
+				if (result.status == 0) {
 					//登录成功
 					userInfo = result.data;
 					setWeixinLoginCheck(false);
@@ -165,7 +165,7 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 					doUpdateUser();
 					doLoginCallback();
 					EventManager.trigger("user", "login");
-				} else if (result.code == 1) {
+				} else if (result.status == 1) {
 					//已经登录
 					userInfo = result.data;
 					setWeixinLoginCheck(false);
