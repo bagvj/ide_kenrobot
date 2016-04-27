@@ -38,9 +38,7 @@ define(['vendor/jquery', './EventManager', './project', './software', './logcat'
 	}
 
 	function onBurnClick() {
-		project.isBuild(function(url){
-			agent.showBurnDialog(url);
-		});
+		project.build().done(agent.showBurnDialog);
 	}
 
 	function onFormatClick() {
@@ -52,7 +50,9 @@ define(['vendor/jquery', './EventManager', './project', './software', './logcat'
 	}
 
 	function onDownloadClick() {
-		project.download();
+		project.build().done(function(url){
+			window.location.href = url;
+		});
 	}
 
 	function onLogcatClick() {

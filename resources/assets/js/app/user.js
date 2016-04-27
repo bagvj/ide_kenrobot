@@ -1,4 +1,4 @@
-define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, util) {
+define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, EventManager, util, userApi) {
 	var userInfo;
 	var loginCheckTimer;
 	var loginCallback;
@@ -25,15 +25,18 @@ define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, 
 	}
 
 	function authCheck(callback) {
-		$.ajax({
-			type: 'GET',
-			url: '/api/auth/check',
-			dataType: 'json',
-		}).done(function(result){
-			var success = result.code == 0;
-			userInfo = success ? result.user : null;
-			callback && callback(success);
+		var promise = $.Deferred();
+		userApi.authCheck().done(function(result){
+			if(result.code == 0) {
+				userInfo = result.user;
+				promise.resolve();
+			} else {
+				userInfo = null;
+				promise.reject();
+			}
 		});
+
+		return promise;
 	}
 
 	function showLoginDialog(callback, type) {
@@ -117,15 +120,9 @@ define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, 
 
 	function doLogin() {
 		var dialog = $('.login-dialog');
-		$.ajax({
-			type: 'POST',
-			url: '/api/auth/login',
-			dataType: 'json',
-			data: {
-				email: $('.email', dialog).val(),
-				password: $('.password', dialog).val()
-			},
-		}).done(function(result){
+		var username = $('.email', dialog).val();
+		var password = $('.password', dialog).val();
+		userApi.login(username, password).done(function(result){
 			if (result.code == 0) {
 				//登录成功
 				util.message(result.message);
@@ -157,14 +154,7 @@ define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, 
 		var dialog = $('.login-dialog');
 		var doCheck = function() {
 			var key = $('.qrcode-key', dialog).val();
-			$.ajax({
-				type: 'POST',
-				url: '/api/auth/login/weixin',
-				data: {
-					key: key,
-				},
-				dataType: 'json',
-			}).done(function(result) {
+			userApi.weixinLogin(key).done(function(result) {
 				if (result.code == 0) {
 					//登录成功
 					userInfo = result.data;

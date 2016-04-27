@@ -1,4 +1,4 @@
-define(['vendor/jquery', './EventManager', './util', './user', './hardware', './software', './board', './logcat', './sidebar'], function(_, EventManager, util, user, hardware, software, board, logcat, sidebar) {
+define(['vendor/jquery', './EventManager', './util', './projectApi', './user', './hardware', './software', './board', './logcat', './sidebar'], function(_, EventManager, util, projectApi, user, hardware, software, board, logcat, sidebar) {
 	//项目模版
 	var projectTemplate = '<li data-project-id="{{id}}" data-view="software"><div class="title"><i class="kenrobot ken-icon-folder icon"></i><span class="name">{{project_name}}</span><i class="kenrobot arrow"></i></div><div class="view"><div><i class="kenrobot ken-icon-code icon"></i><span class="name">{{project_name}}</span>.ino</div></div></li>';
 	var tabTemplate = '<li data-project-id="{{id}}"><span class="name">{{project_name}}</span><i class="kenrobot ken-close close-btn"></i></li>';
@@ -31,25 +31,15 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 
 	function loadMyProject() {
 		var promise = $.Deferred();
-		user.authCheck(function(success) {
-			if(!success) {
-				promise.resolve();
-				return;
-			}
-
-			$.ajax({
-				type: 'POST',
-				url: '/api/projects/user',
-				data: {
-					user_id: user.getUserId(),
-				},
-				dataType: 'json',
-			}).done(function(result) {
+		user.authCheck().done(function() {
+			projectApi.getAll().done(function(result) {
 				$(".project .list ul").empty();
 
 				addProject(result.data);
 				promise.resolve();
 			});
+		}).fail(function() {
+			promise.resolve();
 		});
 
 		return promise;
@@ -91,15 +81,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			}
 		}
 
-		$.ajax({
-			type: 'POST',
-			url: '/api/project/get',
-			data: {
-				user_id: user.getUserId(),
-				hash: hash,
-			},
-			dataType: 'json',
-		}).done(function(result) {
+		projectApi.get(hash, 'hash').done(function(result) {
 			result.status == 0 ? promise.resolve(convertProject(result.data)) : promise.reject();
 		});
 
@@ -148,47 +130,51 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		bindProjectEvent();
 	}
 
-	function build() {
+	function build(autoClose) {
+		var promise = $.Deferred();
+
 		var callback = function() {
 			var info = getCurrentProject();
 			var id = info.id;
 			if(id == 0) {
 				showSaveDialog(info, true);
+				promise.reject();
+
 				return;
 			}
 
+			var url;
 			var isBuilding = true;
 			var dialog = util.dialog({
 				selector: '.building-dialog',
 				content: "正在编译，请稍候...",
 				onClosing: function() {
 					return !isBuilding;
+				},
+				onClose: function() {
+					!autoClose && url && promise.resolve(url);
 				}
 			});
 
 			var doBuild = function() {
-				$.ajax({
-					type: "POST",
-					url: "/api/project/build",
-					dataType: "json",
-					data: {
-						id: id,
-						user_id: user.getUserId(),
-					},
-				}).done(function(result) {
+				projectApi.build(id).done(function(result) {
 					isBuilding = false;
+					$('.x-dialog-content', dialog).text(result.message);
+
 					var projectInfo = getProjectById(openedProjects, id);
 					if(result.status == 0) {
-						projectInfo.status = 2;
-						projectInfo.url = result.url;
+						url = result.url;
+						if(autoClose) {
+							$('.x-dialog-close', dialog).click();
+							promise.resolve(url);
+						}
 					} else {
-						delete projectInfo.url;
 						logcat.show();
 						logcat.clear();
 						logcat.append(result.output.join("\n"));
-					}
 
-					$('.x-dialog-content', dialog).text(result.message);
+						promise.reject();
+					}
 				});
 			};
 
@@ -199,33 +185,14 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			}
 		};
 
-		user.authCheck(function(success) {
-			success ? checkOwn(callback) : user.showLoginDialog();
+		user.authCheck().done(function() {
+			checkOwn(callback);
+		}).fail(function() {
+			user.showLoginDialog();
+			promise.reject();
 		});
-	}
 
-	function isBuild(callback) {
-		var checkBuild = function() {
-			var projectInfo = getCurrentProject();
-			var status = projectInfo.status;
-			if(!status || status == 0) {
-				util.message("请先保存");
-			} else if(status == 1) {
-				util.message("请先编译");
-			} else {
-				callback(projectInfo.url);
-			}
-		};
-
-		user.authCheck(function(success) {
-			success ? checkOwn(checkBuild) : user.showLoginDialog();
-		});
-	}
-
-	function download() {
-		isBuild(function(url) {
-			window.location.href = url;
-		});
+		return promise;
 	}
 
 	function save() {
@@ -239,9 +206,9 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			}
 		};
 
-		user.authCheck(function(success) {
-			success ? checkOwn(doSave) : user.showLoginDialog();
-		});
+		user.authCheck().then(function() {
+			checkOwn(doSave);
+		}, user.showLoginDialog);
 	}
 
 	function checkOwn(callback) {
@@ -261,7 +228,6 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 	}
 
 	function onLogin() {
-		// load();
 		loadMyProject();
 	}
 
@@ -321,9 +287,9 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 	}
 
 	function onProjectNewClick(e) {
-		user.authCheck(function(success) {
-			success ? showSaveDialog(getDefaultProject(), true) : user.showLoginDialog();
-		});
+		user.authCheck().then(function() {
+			showSaveDialog(getDefaultProject(), true);
+		}, user.showLoginDialog);
 	}
 
 	function onProjectEditClick(e) {
@@ -333,9 +299,9 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			return;
 		}
 
-		user.authCheck(function(success) {
-			success ? showSaveDialog(projectInfo) : user.showLoginDialog();
-		});
+		user.authCheck().then(function() {
+			showSaveDialog(projectInfo);
+		}, user.showLoginDialog);
 	}
 
 	function onProjectDeleteClick(e) {
@@ -362,9 +328,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			return;
 		}
 		
-		user.authCheck(function(success) {
-			success ? showDeleteDialog() : user.showLoginDialog();
-		});
+		user.authCheck().then(showDeleteDialog, user.showLoginDialog);
 	}
 
 	function showSaveDialog(projectInfo, isNew, isCopy) {
@@ -411,24 +375,12 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 		}
 		
 		showMessage && util.message("正在保存，请稍候...");
-		$.ajax({
-			type: 'POST',
-			url: '/api/project/save',
-			data: project,
-			dataType: 'json',
-		}).done(function(result) {
+
+		projectApi.save(project).done(function(result) {
 			showMessage && util.message(result.message);
 			if(result.status == 0) {
 				if(isEdit) {
-					$.ajax({
-						type: 'POST',
-						url: '/api/project/get',
-						data: {
-							user_id: user.getUserId(),
-							id: result.data.project_id,
-						},
-						dataType: 'json',
-					}).done(function(res) {
+					projectApi.get(result.data.project_id).done(function(res) {
 						doUpdateProject(id, isCopy, res);
 					});
 				} else {
@@ -494,15 +446,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			return;
 		}
 
-		$.ajax({
-			type: "POST",
-			url: "/api/project/delete",
-			data: {
-				id: id,
-				user_id: user.getUserId(),
-			},
-			dataType: "json",
-		}).done(function(result){
+		projectApi.remove(id).done(function(result){
 			util.message(result.message);
 			if (result.status == 0) {
 				doDelete();
@@ -677,10 +621,8 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 	return {
 		init: init,
 		load: load,
-		isBuild: isBuild,
 		build: build,
 		save: save,
-		download: download,
 		getCurrentProject: getCurrentProject,
 		loadMyProject: loadMyProject,
 	}
