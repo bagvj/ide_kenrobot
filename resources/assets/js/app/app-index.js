@@ -81,7 +81,11 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 	function loadConfig() {
 		var promise = $.Deferred();
 		$.ajax({
+			type: 'POST',
 			url: '/api/config',
+			data: {
+				id: 0,
+			},
 			dataType: 'json',
 		}).done(function(result) {
 			board.load(result.boards);
