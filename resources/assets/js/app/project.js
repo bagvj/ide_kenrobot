@@ -166,7 +166,9 @@ define(['vendor/jquery', './EventManager', './util', './projectApi', './user', '
 						url = result.url;
 						if(autoClose) {
 							$('.x-dialog-close', dialog).click();
-							promise.resolve(url);
+							setTimeout(function() {
+								promise.resolve(url);
+							}, 500);
 						}
 					} else {
 						logcat.show();
