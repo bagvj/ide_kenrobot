@@ -33,7 +33,7 @@
 						<div class="user{{isset($user) ? ' active' : ''}}">
 							<div class="user-login">
 								<ul>
-									<li data-action="login">登录</li><li><a href="{{$register_url}}">注册</a></li>
+									<li data-action="login">登录</li><li data-action="register">注册</li>
 								</ul>
 							</div>
 							<div class="user-info">
