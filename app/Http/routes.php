@@ -26,4 +26,4 @@ Route::post('/auth/login/weixin', 'Auth\WebAuthController@weixinlogin');
 Route::get('/auth/check', 'Auth\AuthServerController@index');
 Route::get('/logout', 'Auth\AuthController@getLogout2');
 
-Route::get('/temp/platformid', 'Auth\WebAuthController@platformId');
+Route::post('/temp/platformid', 'Auth\WebAuthController@platformId');
