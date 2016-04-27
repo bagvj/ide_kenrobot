@@ -3,27 +3,23 @@ define(['vendor/jquery', './user'], function(_, user) {
 	function get(key, type) {
 		type = type || "id";
 
+		var data = {};
+		data.user_id = user.getUserId();
+
 		if(type == "hash") {
-			return $.ajax({
-				type: 'POST',
-				url: '/api/project/get',
-				data: {
-					user_id: user.getUserId(),
-					hash: key,
-				},
-				dataType: 'json',
-			});
+			data.hash = key;
+		} else if(type == "last") {
+			data.type = 'last';
 		} else {
-			return $.ajax({
-				type: 'POST',
-				url: '/api/project/get',
-				data: {
-					user_id: user.getUserId(),
-					id: key,
-				},
-				dataType: 'json',
-			});
+			data.id = key;
 		}
+
+		return $.ajax({
+			type: 'POST',
+			url: '/api/project/get',
+			data: data,
+			dataType: 'json',
+		});
 	}
 
 	function getAll() {
