@@ -172,7 +172,7 @@ define(function() {
 			endIndex = endIndex + endFlag.length;
 			return source.replace(source.substring(startIndex, endIndex), autoCode);
 		} else {
-			var endFlag = "//end auto generate. block tag: " + tag;
+			var endFlag = "//end auto generate. block tag: " + tag + "\n";
 			var endIndex = source.indexOf(endFlag);
 			if(endIndex < 0) {
 				return source;
@@ -185,7 +185,8 @@ define(function() {
 			}
 
 			startIndex = source.lastIndexOf("\n", startIndex) + 1;
-			endIndex = endIndex + endFlag.length + 1;
+			endIndex = endIndex + endFlag.length;
+
 			return source.replace(source.substring(startIndex, endIndex), autoCode);
 		}
 	}

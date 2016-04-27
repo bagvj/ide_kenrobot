@@ -247,7 +247,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 	function checkOwn(callback) {
 		var projectInfo = getCurrentProject();
 		var user_id = user.getUserId();
-		if(projectInfo.user_id != user_id) {
+		if(projectInfo.user_id > 0 && projectInfo.user_id != user_id) {
 			showCopyDialog(function() {
 				showSaveDialog(projectInfo, true, true);
 			});
