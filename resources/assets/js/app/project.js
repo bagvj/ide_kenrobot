@@ -64,6 +64,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 					openProject(projectInfo);
 				})
 				.fail(function() {
+					util.message("项目不存在");
 					window.location.hash = "";
 				});
 		} else {
