@@ -14,7 +14,6 @@ Route::get('/', 'HomeController@index');
 Route::get('/logout', 'Auth\AuthController@getLogout2');
 Route::get('/project/download/{hash}/{ext?}', 'NewProjectController@downloadProject')->where('hash', '[0-9a-zA-Z]{6}');
 
-
 // 临时
 Route::post('/temp/platformid', 'Auth\WebAuthController@platformId');
 
@@ -32,6 +31,6 @@ Route::get('/api/comment', 'CommentController@index');
 Route::any('/api/comment/create', 'CommentController@store');
 
 // 登录验证API
+Route::post('/api/auth/check', 'Auth\WebAuthController@check');
 Route::post('/api/auth/login', 'Auth\WebAuthController@snsPostLogin');
 Route::post('/api/auth/login/weixin', 'Auth\WebAuthController@weixinlogin');
-Route::get('/api/auth/check', 'Auth\WebAuthController@check');

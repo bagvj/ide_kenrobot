@@ -2,8 +2,11 @@ define(['vendor/jquery'], function() {
 
 	function authCheck() {
 		return $.ajax({
-			type: 'GET',
+			type: 'POST',
 			url: '/api/auth/check',
+			data: {
+				id: 0
+			},
 			dataType: 'json',
 		});
 	}
