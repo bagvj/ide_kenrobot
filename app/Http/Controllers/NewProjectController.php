@@ -125,6 +125,7 @@ class NewProjectController extends Controller {
             return response()->json(['status' => -2, 'message' => "请登录后进行保存"]);
         }
         $input['uid'] = $user->uid;
+        $input['author'] = $user->name;
 
         
         if ($is_update) {
