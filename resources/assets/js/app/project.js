@@ -397,7 +397,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 				project_name: project_name,
 				user_id: user.getUserId(),
 				project_intro: $('textarea[name="intro"]', form).val(),
-				project_data: JSON.stringify(getProjectData()),
+				project_data: JSON.stringify(isNew ? {} : getProjectData()),
 				public_type: $("input[name='public-type']:checked", form).val(),
 			};
 
@@ -406,7 +406,7 @@ define(['vendor/jquery', './EventManager', './util', './user', './hardware', './
 			project = {
 				id: isCopy ? 0: id,
 				user_id: user.getUserId(),
-				project_data: JSON.stringify(getProjectData()),
+				project_data: JSON.stringify(isNew ? {} : getProjectData()),
 			}
 		}
 		
