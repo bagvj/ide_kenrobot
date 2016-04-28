@@ -9,7 +9,6 @@
 		<meta name="description" content="啃萝卜智能硬件平台" />
 		<meta name="csrf-token" content="{{csrf_token()}}" />
 
-		<!-- <link href="favicon.ico" type="image/x-icon" rel="shortcut icon" /> -->
 		<link href="/assets/css/index.css" rel="stylesheet" />
 
 		@if(!env('APP_DEBUG'))
