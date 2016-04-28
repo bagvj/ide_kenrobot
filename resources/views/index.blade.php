@@ -9,7 +9,7 @@
 		<meta name="description" content="啃萝卜智能硬件平台" />
 		<meta name="csrf-token" content="{{csrf_token()}}" />
 
-		<link href="/assets/images/favicon.ico" type="image/x-icon" rel="shortcut icon" />
+		<!-- <link href="favicon.ico" type="image/x-icon" rel="shortcut icon" /> -->
 		<link href="/assets/css/index.css" rel="stylesheet" />
 
 		@if(!env('APP_DEBUG'))
@@ -38,7 +38,7 @@
 							</div>
 							<div class="user-info">
 								<a class="photo" href="{{$mainpage}}" target="_blank">
-									<img src="{{$user->avatar_url or asset('assets/images/default_portrait.png')}}" />
+									<img src="{{$user->avatar_url or asset('assets/image/default_portrait.png')}}" />
 								</a>
 								<div class="welcome">
 									<span class="name">{{isset($user) ? $user->name : ''}}</span><i class="kenrobot ken-triangle-down arrow"></i>
@@ -89,10 +89,10 @@
 								<ul class="list">
 								@foreach($boards as $index => $board)
 								@if($index == 0)
-									<li class="normal" data-board="{{$board->name}}"><img class="image" src="/assets/images/board/arduino-uno-r3-small.png" /><span class="name">{{$board->label}}</span></li>
+									<li class="normal" data-board="{{$board->name}}"><img class="image" src="/assets/image/board/arduino-uno-r3-small.png" /><span class="name">{{$board->label}}</span></li>
 								@else
 									<li class="forward" data-board="{{$board->name}}">
-										<img class="image" src="/assets/images/board/arduino-uno-r3-small.png" />
+										<img class="image" src="/assets/image/board/arduino-uno-r3-small.png" />
 										<span class="name">{{$board->label}}</span>
 										<div class="stamps"></div>
 									</li>
@@ -227,7 +227,7 @@
 						</div>
 						<div class="tab tab-weixin">
 							<div class="scan">
-								<img src="{{asset('/assets/images/weixin-scan.png')}}" />
+								<img src="{{asset('/assets/image/weixin-scan.png')}}" />
 							</div>
 							<img class="qrcode" alt="微信扫码" src="{{$qrcodeurl or ''}}" />
 							<div class="tips">

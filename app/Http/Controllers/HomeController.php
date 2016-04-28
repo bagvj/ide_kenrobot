@@ -76,7 +76,7 @@ class HomeController extends Controller {
 			$value->type = "board";
 			$value->deletable = false;
 			$value->selectable = false;
-			$value->source = "assets/images/board/" . $value->name . ".png";
+			$value->source = "assets/image/board/" . $value->name . ".png";
 		}
 
 		if($withPorts) {
@@ -111,7 +111,7 @@ class HomeController extends Controller {
 			$value->type = "component";
 			$value->deletable = true;
 			$value->selectable = true;
-			$value->source = "assets/images/component/" . $value->name . ".png";
+			$value->source = "assets/image/component/" . $value->name . ".png";
 		}
 
 		if($withPorts) {

@@ -27,7 +27,7 @@
 		}
 
 		.weixin {
-			background-image: url('../images/weixin-login.png');
+			background-image: url('../image/weixin-login.png');
 
 			.tips {
 				letter-spacing: 0.85px;
@@ -40,7 +40,7 @@
 				top: 10px;
 				right: -135px;
 				color: white;
-				background-color: #fb8920;
+				background-color: #2093ff;
 				display: none;
 
 				&:before {
@@ -49,7 +49,7 @@
 					height: 0;
 					width: 0;
 					border-width: 6px;
-					border-right-color: #fb8920;
+					border-right-color: #2093ff;
 					top: 9px;
 					left: -12px;
 					position: absolute;
@@ -64,14 +64,14 @@
 		}
 
 		.account {
-			background-image: url('../images/account-login.png');
+			background-image: url('../image/account-login.png');
 		}
 	}
 
 	.logo {
-		background: url('../images/logo2.png') no-repeat center;
-		background-size: 98px 48px;
-		height: 48px;
+		background: url('../image/logo2.png') no-repeat center;
+		background-size: 112px 44px;
+		height: 44px;
 		margin-bottom: 8px;
 	}
 
@@ -156,8 +156,12 @@
 			line-height: 36px;
 			text-align: center;
 			letter-spacing: 5px;
-			background-color: #fb8920;
+			background-color: #197CD9;
 			color: white;
+
+			&:hover {
+				background-color: #2093ff;
+			}
 		}
 	}
 

@@ -62,9 +62,9 @@ gulp.task('css', function() {
 });
 
 // 图片处理
-gulp.task('images', function() {
-	var imgSrc = SRC + 'images/**/*',
-		imgDst = DIST + 'images/';
+gulp.task('image', function() {
+	var imgSrc = SRC + 'image/**/*',
+		imgDst = DIST + 'image/';
 
 	return gulp.src(imgSrc)
 		// .pipe(imagemin())
@@ -72,9 +72,9 @@ gulp.task('images', function() {
 });
 
 // font处理
-gulp.task('fonts', function() {
-	var fontSrc = SRC + 'fonts/**/*',
-		fontDst = DIST + 'fonts/';
+gulp.task('font', function() {
+	var fontSrc = SRC + 'font/**/*',
+		fontDst = DIST + 'font/';
 
 	return gulp.src(fontSrc)
 		.pipe(gulp.dest(fontDst));
@@ -82,11 +82,11 @@ gulp.task('fonts', function() {
 
 // 清空图片、样式、js
 gulp.task('clean', function() {
-	return gulp.src([DIST + 'css', DIST + 'js', DIST + 'images', DIST + 'fonts'], {read: false})
+	return gulp.src([DIST + 'css', DIST + 'js', DIST + 'image', DIST + 'font'], {read: false})
 		.pipe(clean());
 });
 
 // 默认任务
 gulp.task('default', function() {
-	return runSequence('clean', ['css', 'images', 'fonts'], 'js');
+	return runSequence('clean', ['css', 'image', 'font'], 'js');
 });
