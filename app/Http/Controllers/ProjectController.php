@@ -126,7 +126,12 @@ class ProjectController extends Controller {
 		$hash = $request->input('hash');
 		$type = isset($id) ? 'id' : 'hash';
 		$key = isset($id) ? $id : $hash;
-		$url = config("platform.url.base").config("platform.url.getProject")."&user_id=$user_id&$type=$key";
+
+		//传递默认参数
+		$user = User::find($user_id);
+		$uid = empty($user) ? 0 : $user->uid;
+
+		$url = config("platform.url.base").config("platform.url.getProject")."&user_id=$user_id&$type=$key&uid=$uid";
 		$curl = new Curl();
 		return $curl->get($url);
 	}
@@ -182,4 +187,5 @@ class ProjectController extends Controller {
 
 		return $result[0];
 	}
+
 }
