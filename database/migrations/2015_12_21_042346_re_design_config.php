@@ -22,7 +22,6 @@ class ReDesignConfig extends Migration {
 		Schema::dropIfExists('softwares');
 		Schema::dropIfExists('params');
 
-		Schema::dropIfExists('projects');
 		Schema::dropIfExists('libraries');
 		Schema::dropIfExists('boards');
 		Schema::dropIfExists('components');
@@ -86,7 +85,6 @@ class ReDesignConfig extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::dropIfExists('projects');
 		Schema::dropIfExists('libraries');
 		Schema::dropIfExists('boards');
 		Schema::dropIfExists('components');

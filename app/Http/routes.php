@@ -21,10 +21,10 @@ Route::post('/temp/platformid', 'Auth\WebAuthController@platformId');
 Route::get('/api/config', 'HomeController@config');
 // 项目PI
 Route::post('/api/project/build', 'ProjectController@buildProject');
-Route::post('/api/project/save', 'ProjectController@saveProject');
-Route::post('/api/project/delete', 'ProjectController@deleteProject');
-Route::post('/api/project/get', 'ProjectController@getProject');
-Route::post('/api/projects/user', 'ProjectController@getProjects');
+Route::post('/api/project/save', 'NewProjectController@saveProject');
+Route::post('/api/project/delete', 'NewProjectController@deleteProject');
+Route::post('/api/project/get', 'NewProjectController@getProject');
+Route::post('/api/projects/user', 'NewProjectController@getProjects');
 
 // 登录验证API
 Route::post('/api/auth/login', 'Auth\WebAuthController@snsPostLogin');
