@@ -27,7 +27,7 @@ class WebAuthController extends Controller
         $loginResult = $snsauth->validate($crendentials);
 
         if ($loginResult === false) {
-            return response()->json(['code' => $snsauth->getErrorCode(), 'message' => $snsauth->getError()]);
+            return response()->json(['status' => $snsauth->getErrorCode(), 'message' => $snsauth->getError()]);
         }
 
         $user = $snsauth->localUser();
@@ -38,7 +38,7 @@ class WebAuthController extends Controller
 
         //kenrobot_id cookie
         $kenrobot_id = WebAuthHelper::encryptKenrobotId($user->uid);
-        return response()->json(['code' => 0, 'message' => '登录成功', 'data' => $user])->withCookie(cookie('kenrobot_id', $kenrobot_id));
+        return response()->json(['status' => 0, 'message' => '登录成功', 'data' => $user])->withCookie(cookie('kenrobot_id', $kenrobot_id));
     }
 
     /**
@@ -49,7 +49,7 @@ class WebAuthController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::user();
-            return response()->json(['code' => 1, 'message' => '已经登录', 'data' => $user]);
+            return response()->json(['status' => 1, 'message' => '已经登录', 'data' => $user]);
         }
 
         $weixinauth = WebAuthFactory::create('weixin');
@@ -58,7 +58,7 @@ class WebAuthController extends Controller
         $loginResult = $weixinauth->validate($crendentials);
 
         if ($loginResult === false) {
-            return response()->json(['code' => 2, 'message' => '登录失败']);
+            return response()->json(['status' => 2, 'message' => '登录失败']);
         }
 
         $user = $weixinauth->localUser();
@@ -70,8 +70,17 @@ class WebAuthController extends Controller
 
         //kenrobot_id cookie
         $kenrobot_id = WebAuthHelper::encryptKenrobotId($user->uid);
-        return response()->json(['code' => 0, 'message' => '登录成功', 'data' => $user])->withCookie(cookie('kenrobot_id', $kenrobot_id));
+        return response()->json(['status' => 0, 'message' => '登录成功', 'data' => $user])->withCookie(cookie('kenrobot_id', $kenrobot_id));
      }
+
+    public function check()
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            return response()->json(['status' => 0, 'message' => '已经登录', 'user' => $user]);
+        }
+        return response()->json(['status' => -1, 'message' => '未登录']);
+    }
 
      /**
       * platfrom_id
@@ -88,10 +97,10 @@ class WebAuthController extends Controller
         }
 
         if (empty($user)) {
-            return response()->json(['code' => -1, 'message' => '读取失败']);
+            return response()->json(['status' => -1, 'message' => '读取失败']);
         }
         
-        return response()->json(['code' => 0, 'message' => '成功', 'data' => [ 'user_id' => $user->id]]);
+        return response()->json(['status' => 0, 'message' => '成功', 'data' => [ 'user_id' => $user->id]]);
 
 
      }
