@@ -13,7 +13,7 @@ class AddAuthorToProject extends Migration
     public function up()
     {
         //
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('projects', function (Blueprint $table) {
             $table->string('author', 200)->after('user_id');
         });
     }
@@ -25,7 +25,7 @@ class AddAuthorToProject extends Migration
      */
     public function down()
     {
-       Schema::table('users', function (Blueprint $table) {
+       Schema::table('projects', function (Blueprint $table) {
             $table->dropColumn('author');
         });
     }
