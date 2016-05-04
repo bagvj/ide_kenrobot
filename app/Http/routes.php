@@ -18,7 +18,7 @@ Route::get('/project/download/{hash}/{ext?}', 'ProjectController@downloadProject
 Route::post('/temp/platformid', 'Auth\WebAuthController@platformId');
 
 // 配置API
-Route::get('/api/config', 'HomeController@config');
+Route::post('/api/config', 'HomeController@config');
 // 项目API
 Route::post('/api/project/build', 'ProjectController@buildProject');
 Route::post('/api/project/save', 'NewProjectController@saveProject');
