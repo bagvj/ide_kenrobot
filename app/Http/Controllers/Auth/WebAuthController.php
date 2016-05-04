@@ -77,6 +77,8 @@ class WebAuthController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::user();
+            $userinfo = $user->toArray();
+            $userinfo = array_only($userinfo, ['id', 'name', 'avatar_url']);
             return response()->json(['status' => 0, 'message' => '已经登录', 'user' => $user]);
         }
         return response()->json(['status' => -1, 'message' => '未登录']);
