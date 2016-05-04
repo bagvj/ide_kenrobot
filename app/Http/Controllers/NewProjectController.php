@@ -213,7 +213,8 @@ class NewProjectController extends Controller {
         }
 
 
-        $projectList = ProjectModel::where('user_id', $user_id)->get();
+        $projectList = ProjectModel::where('user_id', $user_id)
+            ->where('project_type','code')->get();
         if (!empty($projectList) && $projectList->count() > 0) {
             return response()->json(['status' => 0, 'message' => '', 'data' => $projectList->toArray()]);
         }
