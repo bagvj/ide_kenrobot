@@ -19,14 +19,18 @@ Route::post('/temp/platformid', 'Auth\WebAuthController@platformId');
 
 // 配置API
 Route::get('/api/config', 'HomeController@config');
-// 项目PI
+// 项目API
 Route::post('/api/project/build', 'ProjectController@buildProject');
 Route::post('/api/project/save', 'NewProjectController@saveProject');
 Route::post('/api/project/delete', 'NewProjectController@deleteProject');
 Route::post('/api/project/get', 'NewProjectController@getProject');
 Route::post('/api/projects/user', 'NewProjectController@getProjects');
 
+//项目评论API
+Route::get('/api/comment', 'CommentController@index');
+Route::any('/api/comment/create', 'CommentController@store');
+
 // 登录验证API
 Route::post('/api/auth/login', 'Auth\WebAuthController@snsPostLogin');
 Route::post('/api/auth/login/weixin', 'Auth\WebAuthController@weixinlogin');
-Route::get('/api/auth/check', 'Auth\AuthServerController@index');
+Route::get('/api/auth/check', 'Auth\WebAuthController@check');
