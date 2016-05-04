@@ -212,9 +212,8 @@ class NewProjectController extends Controller {
             return response()->json(['status' => -1, 'message' => '[user_id]为必需字段切类型为数字']);
         }
 
-        $need_keys = array('id','project_name', 'user_id','project_intro','project_data','public_type','hash','project_type','created_at', 'updated_at');
 
-        $projectList = ProjectModel::where('user_id', $user_id)->get($need_keys);
+        $projectList = ProjectModel::where('user_id', $user_id)->get();
         if (!empty($projectList) && $projectList->count() > 0) {
             return response()->json(['status' => 0, 'message' => '', 'data' => $projectList->toArray()]);
         }
