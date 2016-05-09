@@ -28,13 +28,23 @@ var SRC = './resources/assets/';
 var DIST = './public/assets/';
 var args = minimist(process.argv.slice(2));
 
+gulp.task('copy-env', function() {
+	gulp.src('./.env')
+		.pipe(clean());
+
+	var suffix = args.release ? "release" : "debug";
+	gulp.src('./.env-' + suffix)
+		.pipe(rename('.env'))
+		.pipe(gulp.dest('./'));
+});
+
 gulp.task('clean-js', function() {
 	return gulp.src(DIST + 'js')
 		.pipe(clean());
 });
 
 // js处理
-gulp.task('js', ['clean-js'], function() {
+gulp.task('js', ['clean-js', 'copy-env'], function() {
 	var jsSrc = SRC + 'js/**/*.js',
 		jsDst = DIST + 'js/';
 
