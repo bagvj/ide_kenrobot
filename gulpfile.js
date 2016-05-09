@@ -100,3 +100,17 @@ gulp.task('clean', function() {
 gulp.task('default', function() {
 	return runSequence('clean', ['css', 'image', 'font'], 'js');
 });
+
+// 样式处理
+gulp.task('sns-css', function() {
+	var cssSrc = '../sns_kenrobot/addons/theme/stv1/_static/css/mobile-index.scss',
+		cssDst = '../sns_kenrobot/addons/theme/stv1/_static/css/';
+
+	return sass(cssSrc)
+		.pipe(gulpif(args.release, cleanCSS()))
+		.pipe(gulp.dest(cssDst));
+});
+
+gulp.task('sns-watch', function() {
+	gulp.watch('../sns_kenrobot/addons/theme/stv1/_static/css/mobile-index.scss', ['sns-css']);
+});
