@@ -161,7 +161,7 @@ define(['vendor/jquery', '../util'], function(_, util) {
 	}
 
 	function switchTab(tab) {
-		util.toggleActive($('.tab-' + tab, selector), 'div');
+		util.toggleActive($('.tab-' + tab, selector));
 		if(tab == "connect") {
 
 		} else if(tab == "burn") {

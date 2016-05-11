@@ -261,7 +261,7 @@ define(['vendor/jquery', './EventManager', './util', './projectApi', './user', '
 
 	function onProjectTitleClick(e) {
 		var li = $(this).parent();
-		util.toggleActive(li, null, true);
+		util.toggleActive(li, true);
 	}
 
 	function onProjectFileClick(e) {

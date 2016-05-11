@@ -30,7 +30,7 @@ define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, 
 			sidebarTabs.filter('.tab-library').removeClass("hide");
 		}
 
-		util.toggleActive($('.main-tabs .tab-' + view), 'div');
+		util.toggleActive($('.main-tabs .tab-' + view));
 	}
 
 	function clickHide(e) {
@@ -79,7 +79,7 @@ define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, 
 			tab.animate({
 				width: 0,
 			}, delay, easing, function() {
-				util.toggleActive(li, null, true);
+				util.toggleActive(li, true);
 				tab.removeClass("active");
 				bindClickHide();
 			});
@@ -96,7 +96,7 @@ define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, 
 			tab.addClass("active").animate({
 				width: width,
 			}, delay, easing, function() {
-				util.toggleActive(li, null, true);
+				util.toggleActive(li, true);
 				bindClickHide(true);
 			});
 

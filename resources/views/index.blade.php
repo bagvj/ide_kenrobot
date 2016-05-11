@@ -229,16 +229,24 @@
 								<img src="{{asset('/assets/image/weixin-scan.png')}}" />
 							</div>
 							<img class="qrcode" alt="微信扫码" src="{{$qrcodeurl or ''}}" />
-							<div class="tips">
-								请使用微信扫一扫<br />
-								扫码关注后即可直接登录
+							<div class="login-tips tips">
+								请使用微信扫一扫<br />扫码关注后即可直接登录
+							</div>
+							<div class="register-tips tips">
+								推荐使用微信扫码功能<br />扫码后将完成注册并登录
 							</div>
 						</div>
 					</div>
 					<div class="footer">
-						<a class="forget-password" href="{{$find_password_url}}">忘记密码</a>
-						<a class="register" href="{{$register_url}}">点击注册</a>
-						<span class="no-account">还没有啃萝卜账号？</span>
+						<div class="login-footer">
+							<a class="forget-password" href="{{$find_password_url}}">忘记密码</a>
+							<a class="register" href="{{$register_url}}">点击注册</a>
+							<span class="no-account">还没有啃萝卜账号？</span>
+						</div>
+						<div class="register-footer">
+							<span class="no-account">不使用微信？前往</span>
+							<a class="register" href="{{$register_url}}">网站注册</a>
+						</div>
 					</div>
 				</div>
 				<div class="x-dialog x-dialog-info install-dialog">
@@ -247,7 +255,7 @@
 					<div class="x-dialog-content selectable">
 						你没有安装啃萝卜<span class="strong">KenExt.crx</span>，请按以下步骤操作:
 						<div class="step">
-							Step 1: 点击<a href="http://platform.kenrobot.com/download/KenExt.crx" title="啃萝卜">下载</a><br />
+							Step 1: 点击<a href="/download/KenExt.crx" title="啃萝卜">下载</a><br />
 							Step 2: 打开chrome浏览器，在地址栏输入<span class="strong">chrome://extensions</span><br />
 							Step 3: 把<span class="strong">KenExt.crx</span>拖入浏览器<br />
 							Step 4: 完成安装

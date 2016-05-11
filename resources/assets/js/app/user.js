@@ -39,7 +39,7 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 		return promise;
 	}
 
-	function showLoginDialog(callback, type) {
+	function showLoginDialog(callback, type, isRegister) {
 		loginCallback = callback;
 
 		var dialog = util.dialog({
@@ -53,6 +53,20 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 		type = type || "account";
 
 		$('.switch .' + type, dialog).click();
+		if(isRegister) {
+			$('.switch', dialog).removeClass("active");
+			$('.login-tips', dialog).removeClass("active");
+			$('.register-tips', dialog).addClass("active");
+			$('.footer .login-footer', dialog).removeClass("active");
+			$('.footer .register-footer', dialog).addClass("active");
+		} else {
+			$('.switch', dialog).addClass("active");
+			$('.login-tips', dialog).addClass("active");
+			$('.register-tips', dialog).removeClass("active");
+			$('.footer .login-footer', dialog).addClass("active");
+			$('.footer .register-footer', dialog).removeClass("active");
+		}
+
 		if(type == "account") {
 			$('.email', dialog).focus();
 		}
@@ -67,7 +81,7 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 			var action = li.data("action");
 			var tab = $('.tab-' + action, dialog);
 
-			util.toggleActive(tab, 'div');
+			util.toggleActive(tab);
 			util.toggleActive(li);
 
 			if(action == "weixin") {
@@ -91,7 +105,7 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 			}).animate({
 				left: 340,
 				opacity: 1,
-			}, 400, "easeOutExpo");
+			}, 400, "swing");
 		}, function(e) {
 			if(dialog.is(':animated') || scan.is(':animated')) {
 				return;
@@ -100,7 +114,7 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 			scan.animate({
 				left: 440,
 				opacity: 0,
-			}, 400, "easeOutExpo", function() {
+			}, 400, "swing", function() {
 				scan.removeClass("active");
 			});
 		});
@@ -265,7 +279,8 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 	}
 
 	function onLogin(e) {
-		showLoginDialog(null, "weixin");
+		var action = $(this).data('action');
+		showLoginDialog(null, "weixin", action == "register");
 	}
 
 	return {

@@ -15,6 +15,7 @@
 		right: 0;
 		top: 0;
 		cursor: pointer;
+		display: none;
 
 		li {
 			height: 64px;
@@ -65,6 +66,10 @@
 
 		.account {
 			background-image: url('../image/account-login.png');
+		}
+
+		&.active {
+			display: block;
 		}
 	}
 
@@ -180,6 +185,22 @@
 			color: #515151;
 		}
 
+		.login-tips {
+			display: none;
+			
+			&.active {
+				display: block;
+			}
+		}
+
+		.register-tips {
+			display: none;
+			
+			&.active {
+				display: block;
+			}
+		}
+
 		.scan {
 			position: absolute;
 			left: 160px;
@@ -201,19 +222,44 @@
 		letter-spacing: 0.85px;
 		font-size: 12px;
 
-		.forget-password {
-			color: #fb8920;
-			float: left;
+		.login-footer {
+			display: none;
+
+			&.active {
+				display: block;
+			}
+
+			.forget-password {
+				color: #fb8920;
+				float: left;
+			}
+
+			.register {
+				float: right;
+				color: #fb8920;
+			}
+
+			.no-account {
+				float: right;
+				color: #999;
+			}
 		}
 
-		.register {
-			float: right;
-			color: #fb8920;
-		}
+		.register-footer {
+			display: none;
+			text-align: center;
 
-		.no-account {
-			float: right;
-			color: #999;
+			&.active {
+				display: block;
+			}
+
+			.no-account {
+				color: #999;
+			}
+
+			.register {
+				color: #fb8920;
+			}
 		}
 	}
 }

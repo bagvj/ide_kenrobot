@@ -18,7 +18,7 @@ define(['vendor/jquery', './config', './util'], function(_, config, util) {
 		if(index + 1 < steps.length) {
 			index = index + 1;
 			var nextStep = steps.eq(index);
-			util.toggleActive(nextStep, 'div');
+			util.toggleActive(nextStep);
 			if(index + 1 == steps.length) {
 				nextStep.css({
 					left: ($(window).width() - nextStep.width()) / 2,
