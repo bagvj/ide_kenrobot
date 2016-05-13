@@ -63,9 +63,9 @@ gulp.task('css', function() {
 });
 
 // 图片处理
-gulp.task('images', function() {
-	var imgSrc = SRC + 'images/**/*',
-		imgDst = DIST + 'images/';
+gulp.task('image', function() {
+	var imgSrc = SRC + 'image/**/*',
+		imgDst = DIST + 'image/';
 
 	return gulp.src(imgSrc)
 		// .pipe(imagemin())
@@ -94,7 +94,7 @@ gulp.task('clean', function() {
 
 // 默认任务
 gulp.task('default', function() {
-	return runSequence('clean', ['css', 'images', 'other'], 'js');
+	return runSequence('clean', ['css', 'image', 'other'], 'js');
 });
 
 //发布
