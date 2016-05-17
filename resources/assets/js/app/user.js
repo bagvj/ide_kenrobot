@@ -95,27 +95,18 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 		$('.login-btn', dialog).on('click', doLogin);
 
 		$('.qrcode', dialog).hover(function(e) {
-			if(dialog.is(':animated') || scan.is(':animated')) {
-				return;
-			}
-			
-			scan.addClass("active").css({
-				left: 160,
-				opacity: 0
-			}).animate({
-				left: 340,
-				opacity: 1,
-			}, 400, "swing");
-		}, function(e) {
-			if(dialog.is(':animated') || scan.is(':animated')) {
+			if(dialog.is(':animated')) {
 				return;
 			}
 
-			scan.animate({
-				left: 440,
-				opacity: 0,
-			}, 400, "swing", function() {
-				scan.removeClass("active");
+			scan.stop().show().removeClass("x-fadeOut").addClass("x-fadeIn");
+		}, function(e) {
+			if(dialog.is(':animated')) {
+				return;
+			}
+
+			scan.removeClass("x-fadeIn").addClass("x-fadeOut").delay(400).queue(function() {
+				scan.hide();
 			});
 		});
 
