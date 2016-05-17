@@ -34,6 +34,28 @@
     }
 }
 
+@include keyframes('dialog-fadeIn') {
+    from {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(200px);
+    }
+}
+
+@include keyframes('dialog-fadeOut') {
+    from {
+        opacity: 1;
+        transform: translateY(200px);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+}
+
 .x-dialog {
     color: #515151;
     width: 400px;
@@ -43,6 +65,14 @@
 
     &.active {
         display: block;
+    }
+
+    &.dialog-fadeIn {
+        @include animation('dialog-fadeIn' 0.4s cubic-bezier(0.18, 0.9, 0.32, 1) both);
+    }
+
+    &.dialog-fadeOut {
+        @include animation('dialog-fadeOut' 0.3s cubic-bezier(0.18, 0.9, 0.32, 1) forwards);
     }
 
     .x-dialog-title {

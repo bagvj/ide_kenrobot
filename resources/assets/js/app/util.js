@@ -42,8 +42,8 @@ define(function(){
 
 		var dialogLayer = $('.dialog-layer').addClass("active");
 		var doClose = function(callback) {
-			dialogWin.slideUp(200, function() {
-				dialogWin.hide().removeClass("active");
+			dialogWin.removeClass("dialog-fadeIn").addClass("dialog-fadeOut").delay(300).queue(function() {
+				dialogWin.hide().removeClass("dialog-fadeOut");
 				dialogLayer.removeClass("active");
 				onClose && onClose();
 				callback && callback();
@@ -62,16 +62,8 @@ define(function(){
 			} 
 		});
 
-		dialogWin.css({
-			top: -dialogWin.height(),
-		});
-
-		(function() {
-			onShow && onShow();
-			dialogWin.show().addClass("active").animate({
-				top: 200,
-			}, 300, "swing");
-		})();
+		onShow && onShow();
+		dialogWin.stop().show().removeClass('dialog-fadeOut').addClass("dialog-fadeIn");
 
 		return dialogWin;
 	}
