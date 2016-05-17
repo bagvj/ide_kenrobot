@@ -23,7 +23,7 @@ define(['vendor/jquery', './EventManager', './util', './projectApi', './user', '
 	}
 
 	function getHashKeyValue(name) {
-		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+		var reg = new RegExp("(^|&)" + name + "/([^&]*)(&|$)", "i");
 		var r = window.location.hash.substr(1).match(reg);
 
 		return r != null ? unescape(r[2]) : null;

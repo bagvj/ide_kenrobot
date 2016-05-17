@@ -26,7 +26,6 @@ define(function(){
 		var selector = args.selector;
 		var dialogWin = $(selector);
 		if(!dialogWin || !dialogWin.hasClass("x-dialog")) {
-			// console.log("Can not find " + selector + " or it is not a x-dialog");
 			return false;
 		}
 
