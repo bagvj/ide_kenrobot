@@ -26,6 +26,10 @@ Route::post('/api/project/delete', 'NewProjectController@deleteProject');
 Route::post('/api/project/get', 'NewProjectController@getProject');
 Route::post('/api/projects/user', 'NewProjectController@getProjects');
 
+//获取项目列表，SNS调用
+Route::any('/api/projects/list', 'NewProjectController@ProjectList');
+
+
 //项目评论API
 Route::get('/api/comment', 'CommentController@index');
 Route::any('/api/comment/create', 'CommentController@store');

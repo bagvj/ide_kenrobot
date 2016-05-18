@@ -223,6 +223,51 @@ class NewProjectController extends Controller {
     }
 
     /**
+     * 项目列表,对外接口
+     */
+    public function ProjectList(Request $request)
+    {
+        $uid = $request->input('uid');
+        $page = $request->input('page');
+        $pagesize = $request->input('pagesize');
+        $page = !empty($page) ? intval($page) : 1;
+        $pagesize = !empty($pagesize) ? intval($pagesize) : 3; 
+        if ($page <= 0 || $pagesize <=1 ) {
+            return response()->json(['status' => -3, 'message' => '无效的页码数据']);
+        }
+
+
+        if (empty($uid)) {
+            return response()->json(['status' => -1, 'message' => '[uid]为必需字段']);
+        }
+        $allowKeys = ['id','project_name', 'user_id', 'uid', 'author' ,'project_intro', 'public_type', 'hash', 'project_type'];
+        $projectList = ProjectModel::where('uid', $uid)
+                ->orderby('updated_at','desc')
+                ->skip(($page-1)*$pagesize)
+                ->take($pagesize)
+                ->get($allowKeys);
+
+        if (!empty($projectList) && $projectList->count() > 0) {
+            $total = ProjectModel::where('uid', $uid)->count();
+            return response()->json(['status' => 0, 'message' => '获取成功', 'data' => [
+                'total' => $total, 
+                'page' => $page,
+                'pagesize' => $pagesize,
+                'count' => $projectList->count(),
+                'items' => $projectList->toArray()
+                ]]);
+        }
+
+        return response()->json(['status' => -2, 'message' => '没有相关的数据', 'data' => [
+            'total' => 0, 
+            'page' => $page,
+            'pagesize' => $pagesize,
+            'count' => 0,
+            'items' => []
+            ]]);
+    }
+
+    /**
      * 删除项目
      * @param int id 项目ID
      */
