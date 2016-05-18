@@ -232,7 +232,7 @@ class NewProjectController extends Controller {
         $pagesize = $request->input('pagesize');
         $page = !empty($page) ? intval($page) : 1;
         $pagesize = !empty($pagesize) ? intval($pagesize) : 3; 
-        if ($page <= 0 || $pagesize <=1 ) {
+        if ($page <= 0 || $pagesize <1 ) {
             return response()->json(['status' => -3, 'message' => '无效的页码数据']);
         }
 
