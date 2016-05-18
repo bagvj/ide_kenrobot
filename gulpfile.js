@@ -109,19 +109,7 @@ gulp.task('sns-css', function() {
 		cssDst = '../sns_kenrobot/addons/theme/stv1/_static/css/';
 
 	return sass(cssSrc, {style: 'expanded'})
+		.pipe(gulpif(args.prefix, autoprefixer()))
 		.pipe(gulpif(args.release, cleanCSS()))
 		.pipe(gulp.dest(cssDst));
-});
-
-gulp.task('sns-watch', function() {
-	gulp.watch('../sns_kenrobot/addons/theme/stv1/_static/css/mobile-index.scss', ['sns-css']);
-});
-
-gulp.task('css-test', function() {
-	return sass(SRC + 'css/test.scss', {style: 'expanded'})
-		.pipe(gulp.dest(SRC + 'css/'));
-});
-
-gulp.task('css-test-watch', function() {
-	gulp.watch(SRC + 'css/test.scss', ['css-test']);
 });
