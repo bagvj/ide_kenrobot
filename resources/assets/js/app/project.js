@@ -243,7 +243,7 @@ define(['vendor/jquery', './EventManager', './util', './projectApi', './user', '
 
 			var name = user.getUserName();
 			var project_name = projectInfo.project_name;
-			var project_url = "http://" + window.location.host + "/#project=" + projectInfo.hash;
+			var project_url = "http://" + window.location.host + "/#project/" + projectInfo.hash;
 			var content = shareTemplate.replace("{{name}}", user.getUserName()).replace("{{project_name}}", project_name).replace("{{project_url}}", project_url);
 			var dialog;
 
