@@ -94,20 +94,23 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 
 		$('.login-btn', dialog).on('click', doLogin);
 
+		var scanTimerId;
 		$('.qrcode', dialog).hover(function(e) {
 			if(dialog.is(':animated')) {
 				return;
 			}
 
+			clearTimeout(scanTimerId);
 			scan.stop().show().removeClass("x-fadeOut").addClass("x-fadeIn");
 		}, function(e) {
 			if(dialog.is(':animated')) {
 				return;
 			}
 
-			scan.removeClass("x-fadeIn").addClass("x-fadeOut").delay(400).queue(function() {
-				scan.hide();
-			});
+			scan.removeClass("x-fadeIn").addClass("x-fadeOut");
+			scanTimerId = setTimeout(function() {
+				scan.hide().removeClass("x-fadeOut");
+			}, 300);
 		});
 
 		$('form', dialog).on('keyup', function(e) {
