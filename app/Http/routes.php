@@ -12,7 +12,7 @@
  */
 Route::get('/', 'HomeController@index');
 Route::get('/logout', 'Auth\AuthController@getLogout2');
-Route::get('/project/download/{hash}/{ext?}', 'NewProjectController@downloadProject')->where('hash', '[0-9a-zA-Z]{6}');
+Route::get('/project/download/{hash}/{ext?}', 'ProjectController@downloadProject')->where('hash', '[0-9a-zA-Z]{6}');
 
 // 临时
 Route::post('/temp/platformid', 'Auth\WebAuthController@platformId');
@@ -20,14 +20,14 @@ Route::post('/temp/platformid', 'Auth\WebAuthController@platformId');
 // 配置API
 Route::post('/api/config', 'HomeController@config');
 // 项目API
-Route::post('/api/project/build', 'NewProjectController@buildProject');
-Route::post('/api/project/save', 'NewProjectController@saveProject');
-Route::post('/api/project/delete', 'NewProjectController@deleteProject');
-Route::post('/api/project/get', 'NewProjectController@getProject');
-Route::post('/api/projects/user', 'NewProjectController@getProjects');
+Route::post('/api/project/build', 'ProjectController@buildProject');
+Route::post('/api/project/save', 'ProjectController@saveProject');
+Route::post('/api/project/delete', 'ProjectController@deleteProject');
+Route::post('/api/project/get', 'ProjectController@getProject');
+Route::post('/api/projects/user', 'ProjectController@getProjects');
 
 //获取项目列表，SNS调用
-Route::any('/api/projects/list', 'NewProjectController@ProjectList');
+Route::any('/api/projects/list', 'ProjectController@ProjectList');
 
 
 //项目评论API
