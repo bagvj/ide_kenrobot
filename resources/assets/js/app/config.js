@@ -6,6 +6,10 @@ define(function() {
 			autoNextDelay: 3000,
 		},
 
+		project: {
+			maxCodeLength: 10 * 1024 * 1024,
+		},
+
 		//chrome扩展app配置
 		extension: {
 			//Chrome app id

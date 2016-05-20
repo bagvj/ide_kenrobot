@@ -1,4 +1,4 @@
-define(['vendor/jquery', './EventManager', './util', './projectApi', './user', './hardware', './software', './board', './logcat', './sidebar'], function(_, EventManager, util, projectApi, user, hardware, software, board, logcat, sidebar) {
+define(['vendor/jquery', './EventManager', './util', './projectApi', './user', './hardware', './software', './board', './logcat', './sidebar', './config'], function(_, EventManager, util, projectApi, user, hardware, software, board, logcat, sidebar, config) {
 	//项目模版
 	var projectTemplate = '<li data-project-id="{{id}}" data-view="software"><div class="title"><i class="kenrobot ken-icon-folder icon"></i><span class="name">{{project_name}}</span><i class="kenrobot arrow"></i></div><div class="view"><div><i class="kenrobot ken-icon-code icon"></i><span class="name">{{project_name}}</span>.ino</div></div></li>';
 	var tabTemplate = '<li data-project-id="{{id}}"><span class="name">{{project_name}}</span><i class="kenrobot ken-close close-btn"></i></li>';
@@ -93,6 +93,7 @@ define(['vendor/jquery', './EventManager', './util', './projectApi', './user', '
 			try {
 				projectInfo.project_data = JSON.parse(projectInfo.project_data);
 			} catch(ex) {
+				console.log(ex);
 				projectInfo.project_data = {};
 			}
 		}
@@ -376,6 +377,11 @@ define(['vendor/jquery', './EventManager', './util', './projectApi', './user', '
 			}
 		}
 		
+		if(project.project_data.length > config.project.maxCodeLength) {
+			util.message("代码太长");
+			return;
+		}
+
 		showMessage && util.message("正在保存，请稍候...");
 
 		projectApi.save(project).done(function(result) {
