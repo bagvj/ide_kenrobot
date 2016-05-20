@@ -66,36 +66,20 @@ define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, 
 			return;
 		}
 
-		var width = tab.data('origin-width');
-		if(!width) {
-			width = tab.width();
-			tab.data("origin-width", width);
-		}
-
-		var delay = 100;
-		var easing = "easeOutExpo";
 		var active = tab.hasClass("active");
 		if(active) {
-			tab.animate({
-				width: 0,
-			}, delay, easing, function() {
+			tab.stop().removeClass("x-slideIn").addClass("x-slideOut").delay(150).queue(function() {
 				util.toggleActive(li, true);
-				tab.removeClass("active");
+				tab.removeClass("active").removeClass("x-slideOut");
 				bindClickHide();
 			});
+
 		} else {
 			var activeLi = li.parent().find('li.active');
 			var activeAction = activeLi.data('action');
-			var activeTab = $('.sidebar .tab.active');
-			if(activeTab.length > 0) {
-				activeTab.css({
-					width: 0
-				}).removeClass("active");
-			}
+			$('.sidebar .tab.active').stop().removeClass("active").removeClass("x-slideIn").removeClass("x-slideOut");
 			
-			tab.addClass("active").animate({
-				width: width,
-			}, delay, easing, function() {
+			tab.stop().removeClass("x-slideOut").addClass("active").addClass("x-slideIn").delay(150).queue(function() {
 				util.toggleActive(li, true);
 				bindClickHide(true);
 			});

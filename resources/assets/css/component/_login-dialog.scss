@@ -235,11 +235,11 @@
 			}
 
 			&.x-fadeIn {
-				@include animation('scan-fadeIn' 0.3s ease-out both);
+				@include animation('scan-fadeIn' 0.3s cubic-bezier(0, 0.8, 0.1, 1) both);
 			}
 
 			&.x-fadeOut {
-				@include animation('scan-fadeOut' 0.2s ease-out forwards);
+				@include animation('scan-fadeOut' 0.2s cubic-bezier(0.8, 0, 1, 0.1) forwards);
 			}
 		}
 	}

@@ -68,7 +68,7 @@ gulp.task('css', function() {
 		cssDst = DIST + 'css/';
 
 	return sass(cssSrc, {style: 'expanded'})
-		.pipe(gulpif(args.prefix, autoprefixer()))
+		.pipe(autoprefixer())
 		.pipe(gulpif(args.release, cleanCSS()))
 		.pipe(gulp.dest(cssDst));
 });
@@ -109,7 +109,7 @@ gulp.task('sns-css', function() {
 		cssDst = '../sns_kenrobot/addons/theme/stv1/_static/css/';
 
 	return sass(cssSrc, {style: 'expanded'})
-		.pipe(gulpif(args.prefix, autoprefixer()))
+		.pipe(autoprefixer())
 		.pipe(gulpif(args.release, cleanCSS()))
 		.pipe(gulp.dest(cssDst));
 });

@@ -80,6 +80,8 @@
 	.sidebar {
 		height: 100%;
 		float: left;
+		width: 66px;
+		position: relative;
 	}
 
 	& > .wrap {
@@ -303,11 +305,34 @@
 	}
 }
 
+@include keyframes('tab-slideIn') {
+	from {
+		opacity: 0;
+		transform: scaleX(0);
+	}
+	to {
+		opacity: 1;
+		transform: scaleX(1);
+	}
+}
+
+@include keyframes('tab-slideOut') {
+	from {
+		opacity: 1;
+		transform: scaleX(1);
+	}
+	to {
+		opacity: 0;
+		transform: scaleX(0);
+	}
+}
+
 .sidebar {
 	.bar {
 		width: 66px;
 		height: 100%;
-		float: left;
+		position: absolute;
+		z-index: 11;
 	}
 
 	.tab {
@@ -316,11 +341,19 @@
 		bottom: 0;
 		left: 66px;
 		position: absolute;
-		visibility: hidden;
+		display: none;
 		background-color: rgba(52, 58, 74, 0.92);
 
 		&.active {
-			visibility: visible;
+			display: block;
+		}
+
+		&.x-slideIn {
+			@include animation('tab-slideIn' 0.15s cubic-bezier(0, 0.8, 0.1, 1) both);
+		}
+
+		&.x-slideOut {
+			@include animation('tab-slideOut' 0.15s cubic-bezier(0.8, 0, 1, 0.1) forwards);
 		}
 
 		& > div {

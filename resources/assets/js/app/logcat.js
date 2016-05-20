@@ -50,7 +50,7 @@ define(['vendor/jquery', 'vendor/jquery-ui', 'vendor/ace/ace', 'vendor/ace/theme
 			bottom: containerHeight,
 		}, delay, easing);
 
-		 isDisplay = true;
+		isDisplay = true;
 		container.addClass("active").animate({
 			height: containerHeight,
 		}, delay, easing, function() {
