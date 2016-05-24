@@ -28,7 +28,7 @@ define(['vendor/jquery', '../util'], function(_, util) {
 		} else {
 			bit = 32;
 		}
-		var downloadUrl = "http://platform.kenrobot.com/download/arduino-driver-x" + bit + ".zip";
+		var downloadUrl = "/download/arduino-driver-x" + bit + ".zip";
 		$('.arduino-driver-dialog .downloadUrl').attr('href', downloadUrl);
 
 		$('.driver', selector).on('click', onDriverClick);
