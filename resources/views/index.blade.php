@@ -87,13 +87,16 @@
 							<div class="board x-scrollbar">
 								<ul class="list">
 								@foreach($boards as $index => $board)
-								@if($index == 0)
-									<li class="normal" data-board="{{$board->name}}"><img class="image" src="/assets/image/board/arduino-uno-r3-small.png" /><span class="name">{{$board->label}}</span></li>
-								@else
+								@if($board->is_forward)
 									<li class="forward" data-board="{{$board->name}}">
-										<img class="image" src="/assets/image/board/arduino-uno-r3-small.png" />
+										<img class="image" src="/assets/image/board/ArduinoUNO-small.png" />
 										<span class="name">{{$board->label}}</span>
 										<div class="stamps"></div>
+									</li>
+								@else
+									<li class="normal" data-board="{{$board->name}}">
+										<img class="image" src="/assets/image/board/{{$board->name}}-small.png" />
+										<span class="name">{{$board->label}}</span>
 									</li>
 								@endif
 								@endforeach

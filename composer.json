@@ -9,7 +9,8 @@
         "laravel/framework": "5.1.*",
         "php-curl-class/php-curl-class": "~4.8",
         "laravel/socialite": "~2.0",
-        "doctrine/dbal": "v2.4.2"
+        "doctrine/dbal": "v2.4.2",
+        "maatwebsite/excel": "~2.1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -32,20 +33,20 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "php artisan clear-compiled",
-            "php artisan optimize"
+            "php56 artisan clear-compiled",
+            "php56 artisan optimize"
         ],
         "pre-update-cmd": [
-            "php artisan clear-compiled"
+            "php56 artisan clear-compiled"
         ],
         "post-update-cmd": [
-            "php artisan optimize"
+            "php56 artisan optimize"
         ],
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "php artisan key:generate"
+            "php56 artisan key:generate"
         ]
     },
     "config": {
