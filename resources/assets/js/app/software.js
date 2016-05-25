@@ -1,4 +1,4 @@
-define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/mode-arduino', 'vendor/ace/snippets/text', 'vendor/ace/snippets/arduino', 'vendor/ace/ext-language_tools', 'vendor/jquery', './EventManager', './code'], function(_, _, _, _, _, _, _, EventManager, code) {
+define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/mode-arduino', 'vendor/ace/snippets/text', 'vendor/ace/snippets/arduino', 'vendor/ace/ext-language_tools', 'vendor/ace/ext-code_blast', 'vendor/jquery', './EventManager', './code'], function(_, _, _, _, _, _, _, _, EventManager, code) {
 	var editor;
 	var js_format_string = Module.cwrap("js_format_string", "string", ["string"]);
 
@@ -8,6 +8,7 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/mode-arduino',
 			enableSnippets: true,
 			enableBasicAutocompletion: true,
 			enableLiveAutocompletion: true,
+			// blastCode: true,
 		});
 		editor.setShowPrintMargin(false);
 		editor.$blockScrolling = Infinity;

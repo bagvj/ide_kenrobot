@@ -28,6 +28,9 @@ require.config({
 		"vendor/ace/ext-language_tools": {
 			deps: ['./ace', "./theme-default", "./mode-arduino", "./snippets/text", "./snippets/arduino"],
 		},
+		"vendor/ace/ext-code_blast": {
+			deps: ['./ace'],
+		},
 	},
 });
 require(['./app/app-index'], function(app) {
