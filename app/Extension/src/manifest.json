@@ -9,7 +9,6 @@
 		}
 	},
 	"icons": {
-		"16": "image/logo.ico",
 		"128": "image/logo.ico"
 	},
 	"permissions": [
@@ -21,5 +20,5 @@
   		"matches": ["*://*.kenrobot.com/*"]
 	},
 	"update_url": "http://ide.kenrobot.com/extension-update.xml",
-	"version": "0.1.18"
+	"version": "0.1.19"
 }
