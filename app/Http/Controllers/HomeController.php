@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use ZipArchive;
 use Curl\Curl;
 use Session;
-use Excel;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HomeController extends Controller {
 
