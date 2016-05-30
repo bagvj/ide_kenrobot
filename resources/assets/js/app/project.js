@@ -207,7 +207,7 @@ define(['vendor/jquery', './EventManager', './util', './projectApi', './user', '
 			var projectInfo = getCurrentProject();
 			var id = projectInfo.id;
 			if(id == 0) {
-				showSaveDialog(projectInfo, true);
+				showSaveDialog(projectInfo);
 			} else {
 				doProjectSave(projectInfo);
 			}
