@@ -129,14 +129,10 @@
 						</div>
 					</div>
 					<div class="wrap">
-						
 						<div class="main-tabs">
 							<div class="tab tab-software active">
 								<div class="software">
 									<div class="editor"></div>
-									<div class="back{{isset($user) ? ' active' : ''}}">
-										<i class="kenrobot ken-switch"></i>硬件设计
-									</div>
 								</div>
 							</div>
 							<div class="tab tab-hardware">
@@ -190,6 +186,9 @@
 		</div>
 		<div class="layers">
 			<div class="float-layer">
+				<div class="switch-view{{isset($user) ? ' active' : ''}}" data-view="hardware">
+					<i class="kenrobot ken-switch"></i><span class="switch-text">硬件设计</span>
+				</div>
 				<div class="copyright">
 					<div class="wrap">
 						备案号：京ICP备15039570号&nbsp;&nbsp;&nbsp;&nbsp;Copyright © 2014 KenRobot.com All Rights Reserved
@@ -383,7 +382,7 @@
 									<label><input type="radio" name="public-type" value="2" />完全公开</label>
 								</div>
 							</div>
-							<input class="save-btn" type="button" value="保存" />
+							<input class="save-btn" name="save" type="button" value="保存" />
 						</form>
 					</div>
 				</div>

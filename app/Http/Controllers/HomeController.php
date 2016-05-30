@@ -166,7 +166,7 @@ class HomeController extends Controller {
 	}
 
 	private function getBoardConfig($isDict = false, $withPorts = false) {
-		$boards = DB::table('boards')->orderBy('is_forward')->get();
+		$boards = DB::table('boards')->where('in_use', 1)->orderBy('is_forward')->get();
 		foreach($boards as $key => $value) {
 			$value->in_use = $value->in_use == 1;
 			$value->type = "board";
@@ -200,7 +200,7 @@ class HomeController extends Controller {
 	}
 
 	private function getComponentConfig($isDict = false, $withPorts = false) {
-		$components = DB::table('components')->get();
+		$components = DB::table('components')->where('in_use', 1)->get();
 		foreach($components as $key => $value) {
 			$value->in_use = $value->in_use == 1;
 			$value->auto_connect = $value->auto_connect == 1;

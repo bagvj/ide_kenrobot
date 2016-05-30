@@ -44,10 +44,6 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/mode-arduino',
 				EventManager.trigger('global', 'software.format');
 			}
 		}]);
-
-		$('.software .back').on('click', function(e) {
-			EventManager.trigger("project", "viewChange", "hardware");
-		});
 		
 		code.init(api);
 		EventManager.bind("global", "resize", onResize);

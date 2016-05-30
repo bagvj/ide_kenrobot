@@ -20,6 +20,10 @@ define(['vendor/jquery', './EventManager', './util', './projectApi', './user', '
 		$(window).on('hashchange', function(e) {
 			load();	
 		});
+
+		$('.switch-view').on('click', function(e) {
+			EventManager.trigger("project", "viewChange", $(this).data('view'));
+		});
 	}
 
 	function getHashKeyValue(name) {
@@ -344,7 +348,7 @@ define(['vendor/jquery', './EventManager', './util', './projectApi', './user', '
 		$('input[name="name"]', form).val(projectInfo.project_name);
 		$('textarea[name="intro"]', form).val(projectInfo.project_intro);
 		$('input[name="public-type"][value="' + projectInfo.public_type + '"]', form).attr("checked", true);
-		$('input[name="save"]', form).val(text);
+		$('.save-btn', form).val(text);
 
 		$('.save-btn', dialog).off('click').on('click', function() {
 			doProjectSave(projectInfo, true, isNew, isCopy);
@@ -513,9 +517,14 @@ define(['vendor/jquery', './EventManager', './util', './projectApi', './user', '
 		if(view == "hardware") {
 			project_data.software = software.getData();
 			hardware.setData(project_data.hardware);
+			$('.switch-view').data('view', 'software');
+			$('.switch-view .switch-text').text('软件设计');
 		} else {
 			software.gen();
 			project_data.hardware = hardware.getData();
+
+			$('.switch-view').data('view', 'hardware');
+			$('.switch-view .switch-text').text('硬件设计');
 		}
 
 		$('.top-tabs > ul > li[data-project-id="' + id + '"]').data("view", view);
