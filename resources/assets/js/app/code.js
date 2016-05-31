@@ -66,7 +66,7 @@ define(function() {
 		var projectInfo = getProjectInfo();
 		var filename = projectInfo.project_name + ".ino";
 		var author = projectInfo.author || "啃萝卜";
-		var create = projectInfo.create_at ? new Date(projectInfo.create_at * 1000) : new Date();
+		var create = projectInfo.created_at ? new Date(projectInfo.created_at) : new Date();
 		var create_at = create.getFullYear() + "/" + (create.getMonth() + 1) + "/" + create.getDate();
 		var now = new Date();
 		var modify_at = now.getFullYear() + "/" + (now.getMonth() + 1) + "/" + now.getDate();
