@@ -403,7 +403,7 @@
 						<textarea class="share-content" name="share-content" rows="5" spellcheck="false"></textarea>
 					</div>
 					<div class="x-dialog-btns">
-						<button class="x-dialog-btn confirm">确定</button>
+						<button class="x-dialog-btn copy-btn">复制</button>
 					</div>
 				</div>
 			</div>

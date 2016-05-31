@@ -92,15 +92,23 @@ gulp.task('font', function() {
 		.pipe(gulp.dest(fontDst));
 });
 
+gulp.task('res', function() {
+	var resSrc = SRC + 'res/**/*',
+		resDst = DIST + 'res/';
+
+	return gulp.src(resSrc)
+		.pipe(gulp.dest(resDst));
+});
+
 // 清空图片、样式、js
 gulp.task('clean', function() {
-	return gulp.src([DIST + 'css', DIST + 'js', DIST + 'image', DIST + 'font'], {read: false})
+	return gulp.src([DIST + 'css', DIST + 'js', DIST + 'image', DIST + 'font', + DIST + 'res'], {read: false})
 		.pipe(clean());
 });
 
 // 默认任务
 gulp.task('default', function() {
-	return runSequence('clean', ['css', 'image', 'font'], 'js');
+	return runSequence('clean', ['css', 'image', 'font', 'res'], 'js');
 });
 
 // 样式处理

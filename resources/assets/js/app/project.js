@@ -1,4 +1,4 @@
-define(['vendor/jquery', './EventManager', './util', './projectApi', './user', './hardware', './software', './board', './logcat', './sidebar', './config'], function(_, EventManager, util, projectApi, user, hardware, software, board, logcat, sidebar, config) {
+define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './projectApi', './user', './hardware', './software', './board', './logcat', './sidebar', './config'], function(_, ZeroClipboard, EventManager, util, projectApi, user, hardware, software, board, logcat, sidebar, config) {
 	//项目模版
 	var projectTemplate = '<li data-project-id="{{id}}" data-view="software"><div class="title"><i class="kenrobot ken-icon-folder icon"></i><span class="name">{{project_name}}</span><i class="kenrobot arrow"></i></div><div class="view"><div><i class="kenrobot ken-icon-code icon"></i><span class="name">{{project_name}}</span>.ino</div></div></li>';
 	var tabTemplate = '<li data-project-id="{{id}}"><span class="name">{{project_name}}</span><i class="kenrobot ken-close close-btn"></i></li>';
@@ -8,6 +8,7 @@ define(['vendor/jquery', './EventManager', './util', './projectApi', './user', '
 	var myProjects = [];
 	//已打开的项目
 	var openedProjects = [];
+	var clipboard;
 
 	function init() {
 		$('.project .operation li').on('click', onProjectActionClick);
@@ -23,6 +24,24 @@ define(['vendor/jquery', './EventManager', './util', './projectApi', './user', '
 
 		$('.switch-view').on('click', function(e) {
 			EventManager.trigger("project", "viewChange", $(this).data('view'));
+		});
+
+		ZeroClipboard.config({
+			swfPath: "assets/res/ZeroClipboard.swf"
+		});
+		clipboard = new ZeroClipboard($('.share-dialog .copy-btn'));
+		clipboard.on( 'ready', function(e) {
+			clipboard.on('copy', function(e) {
+				e.clipboardData.setData('text/plain', $('.share-dialog .share-content').text());
+			});
+
+			clipboard.on('aftercopy', function(e) {
+				util.message("复制成功");
+			});
+		});
+
+		clipboard.on('error', function(e) {
+			clipboard.destroy();
 		});
 	}
 
@@ -193,7 +212,7 @@ define(['vendor/jquery', './EventManager', './util', './projectApi', './user', '
 		};
 
 		user.authCheck().done(function() {
-			checkOwn(callback);
+			checkOwn().done(callback);
 		}).fail(function() {
 			user.showLoginDialog();
 			promise.reject();
@@ -214,19 +233,22 @@ define(['vendor/jquery', './EventManager', './util', './projectApi', './user', '
 		};
 
 		user.authCheck().then(function() {
-			checkOwn(doSave);
+			checkOwn().done(doSave);
 		}, user.showLoginDialog);
 	}
 
-	function checkOwn(callback) {
+	function checkOwn() {
+		var promise = $.Deferred();
+
 		var projectInfo = getCurrentProject();
 		var user_id = user.getUserId();
 		if(projectInfo.user_id > 0 && projectInfo.user_id != user_id) {
 			showCopyDialog(function() {
 				showSaveDialog(projectInfo, true, true);
 			});
+			return promise;
 		} else {
-			callback && callback();
+			return promise.resolve();
 		}
 	}
 
@@ -250,13 +272,11 @@ define(['vendor/jquery', './EventManager', './util', './projectApi', './user', '
 			var project_name = projectInfo.project_name;
 			var project_url = "http://" + window.location.host + "/#project/" + projectInfo.hash;
 			var content = shareTemplate.replace("{{name}}", user.getUserName()).replace("{{project_name}}", project_name).replace("{{project_url}}", project_url);
-			var dialog;
-
-			dialog = util.dialog(".share-dialog");
+			var dialog = util.dialog(".share-dialog");
 			$('.share-content', dialog).text(content);
 		};
 		
-		checkOwn(doShare);
+		checkOwn().done(doShare);
 	}
 
 	function onEditorChange() {
