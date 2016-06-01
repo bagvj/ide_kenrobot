@@ -17,6 +17,8 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomCon
 		$('.serial-input .input', tab).on('keyup', onKeyup);
 		$('.serial-setting .close-btn').on('click', onSettingClick);
 
+		EventManager.bind('bottomContainer', "hide", hide);
+
 		hasInit = true;
 	}
 
@@ -29,6 +31,19 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomCon
 		if(!tab.hasClass("active")) {
 			util.toggleActive(tab);
 		}
+
+		var portList = $('.serial-setting .port', tab).empty();
+		agent.sendMessage("serial.getDevices", function(ports) {
+			if(!ports || ports.length == 0) {
+				//没有串口连接
+				return;
+			}
+
+			for(var i = 0; i < ports.length; i++) {
+				var port = ports[i];
+				$('<option>').text(port.path).attr("title", port.displayName).appendTo(portList);
+			}
+		});
 	}
 
 	function hide() {
@@ -41,7 +56,7 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomCon
 		});
 		connectionId = null;
 
-		bottomContainer.hide();
+		bottomContainer.hide(true);
 	}
 
 	function toggle() {

@@ -30,6 +30,17 @@
 			width: 100%;
 			padding: 6px 10px;
 			background-color: #19191b;
+
+			&::-webkit-scrollbar-track {
+				-webkit-box-shadow: none;
+				background-color: #DFE1E5;
+			}
+			&::-webkit-scrollbar {
+				background-color: #DFE1E5;
+			}
+			&::-webkit-scrollbar-thumb {
+				background-color: #c1c1c1;
+			}
 		}
 	}
 
@@ -96,6 +107,28 @@
 		}
 	}
 
+	@include keyframes('serial-setting-fadeIn') {
+		from {
+			opacity: 0;
+			transform: translateX(260px);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(-20px);
+		}
+	}
+
+	@include keyframes('serial-setting-fadeOut') {
+		from {
+			opacity: 1;
+			transform: translateX(-20px);
+		}
+		to {
+			opacity: 0;
+			transform: translateX(260px);
+		}
+	}
+
 	.serial-setting {
 		display: none;
 		position: absolute;
@@ -148,6 +181,14 @@
 
 		&.active {
 			display: block;
+		}
+
+		&.x-fadeIn {
+			@include animation('serial-setting-fadeIn' 0.3s cubic-bezier(0, 0.8, 0.1, 1) both);
+		}
+
+		&.x-fadeOut {
+			@include animation('serial-setting-fadeOut' 0.2s cubic-bezier(0.8, 0, 1, 0.1) forwards);
 		}
 	}
 }

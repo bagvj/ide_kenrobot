@@ -17,6 +17,8 @@ define(['vendor/jquery', 'vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/a
 		logcat.setTheme("ace/theme/default");
 		logcat.session.setMode("ace/mode/arduino");
 
+		EventManager.bind('bottomContainer', "hide", hide);
+
 		hasInit = true;
 	}
 
@@ -32,7 +34,7 @@ define(['vendor/jquery', 'vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/a
 
 	function hide() {
 		init();
-		bottomContainer.hide();
+		bottomContainer.hide(true);
 
 		tab.removeClass("active");
 	}
@@ -53,10 +55,6 @@ define(['vendor/jquery', 'vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/a
 
 	function clear() {
 		logcat.setValue('');
-	}
-
-	function onResize() {
-		logcat.resize(true);
 	}
 
 	return {

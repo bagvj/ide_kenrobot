@@ -46,12 +46,10 @@ define(['vendor/jquery', 'vendor/jquery-ui', './EventManager', './util'], functi
 		isDisplay = true;
 		container.addClass("active").animate({
 			height: containerHeight,
-		}, delay, easing, function() {
-			EventManager.trigger("bottomContainer", 'resize');
-		});
+		}, delay, easing);
 	}
 
-	function hide() {
+	function hide(fromChild) {
 		if(!isShow()) {
 			return;
 		}
@@ -67,8 +65,11 @@ define(['vendor/jquery', 'vendor/jquery-ui', './EventManager', './util'], functi
 			height: 0,
 		}, delay, easing, function() {
 			container.removeClass("active");
-			EventManager.trigger("bottomContainer", 'resize');
 		});
+
+		if(!fromChild) {
+			EventManager.trigger("bottomContainer", "hide");
+		}
 	}
 
 	function toggle() {
@@ -101,7 +102,6 @@ define(['vendor/jquery', 'vendor/jquery-ui', './EventManager', './util'], functi
 		$(".main-wrap").css({
 			bottom: containerHeight
 		});
-		EventManager.trigger("bottomContainer", 'resize');
 	}
 
 	return {
