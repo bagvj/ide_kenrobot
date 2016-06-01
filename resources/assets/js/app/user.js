@@ -225,7 +225,7 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 			$('.close-btn', copyright).on('click', function() {
 				copyright.fadeOut(function() {
 					copyright.remove();
-					$.cookie("hideCopyright", true);
+					$.cookie("hideCopyright", true, {expires: 365});
 				});
 			});
 		} else {

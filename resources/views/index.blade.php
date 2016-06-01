@@ -218,6 +218,7 @@
 										<select class="bitRate">
 											<option>115200</option>
 											<option>57600</option>
+											<option>38400</option>
 											<option>19200</option>
 											<option>9600</option>
 											<option>4800</option>
@@ -382,6 +383,7 @@
 									<select class="bitRate">
 										<option>115200</option>
 										<option>57600</option>
+										<option>38400</option>
 										<option>19200</option>
 										<option>9600</option>
 										<option>4800</option>
