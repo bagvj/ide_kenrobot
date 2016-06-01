@@ -2,7 +2,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
 <svg xmlns="http://www.w3.org/2000/svg">
 <metadata>
-Created by FontForge 20120731 at Wed Jun  1 15:48:55 2016
+Created by FontForge 20120731 at Fri Jun  3 10:54:38 2016
  By admin
 </metadata>
 <defs>
@@ -19,7 +19,7 @@ Created by FontForge 20120731 at Wed Jun  1 15:48:55 2016
     bbox="28 -121 1008 864"
     underline-thickness="50"
     underline-position="-100"
-    unicode-range="U+0078-E62A"
+    unicode-range="U+0078-E62C"
   />
 <missing-glyph horiz-adv-x="374" 
 d="M34 0v682h272v-682h-272zM68 34h204v614h-204v-614z" />
@@ -151,6 +151,8 @@ d="M821 485h-186v308h-247v-308h-185l309 -307zM203 -68h617v123h-617v-123z" />
     <glyph glyph-name="uniE623" unicode="&#xe623;" 
 d="M109 -38v841q0 21 14.5 35.5t35.5 14.5h471q21 0 46.5 -10.5t39.5 -24.5l164 -164q15 -15 25.5 -40t10.5 -46v-606q0 -21 -14.5 -35.5t-35.5 -14.5h-707q-21 0 -35.5 14.5t-14.5 35.5v0zM647 584h198q-6 16 -12 22l-164 164q-7 7 -22 12v-198zM176 -21h673v538h-219
 q-21 0 -35.5 15t-14.5 36v218h-404v-807zM286 163v188l102 -94zM286 472h449v-66h-449v66zM457 356h281v-66h-281v66zM457 235h281v-66h-281v66zM286 108h449v-66h-449v66z" />
+    <glyph glyph-name="uniE624" unicode="&#xe624;" 
+d="M835 735h-641q-12 0 -20 -8.5t-8 -19.5v-649q0 -11 8 -19.5t20 -8.5h641q12 0 20 8.5t8 19.5v649q0 11 -8 19.5t-20 8.5z" />
     <glyph glyph-name="uniE625" unicode="&#xe625;" 
 d="M82 677h595v-72h-595v72zM82 478h860v-71h-860v71zM82 280h595v-72h-595v72zM82 81h860v-72h-860v72z" />
     <glyph glyph-name="uniE626" unicode="&#xe626;" 
@@ -197,5 +199,9 @@ q11 2 18 10q16 15 16 38z" />
 d="M901 31h-778q-26 0 -43.5 18.5t-17.5 43.5v540q0 25 17.5 43t43.5 18h781q24 0 41 -18.5t17 -42.5v-540q0 -25 -17.5 -43.5t-43.5 -18.5zM843 571h-662q-17 0 -30 -6t-18.5 -15t-9 -18t-3.5 -15v-7l61 -299q9 -22 26.5 -41.5t34.5 -19.5q508 -3 540 0q15 2 28.5 14
 t19 21.5t13.5 25.5q5 10 20.5 85t28 144t12.5 70q-1 27 -16.5 42.5t-29.5 17.5zM721 453h61v-62h-61v62zM721 273h-61v61h61v-61zM602 453h61v-62h-61v62zM602 273h-61v61h61v-61zM483 453h61v-62h-61v62zM483 273h-61v61h61v-61zM361 453h61v-62h-61v62zM361 273h-58v61h61
 v-61h-3zM242 453h61v-62h-61v62z" />
+    <glyph glyph-name="uniE62B" unicode="&#xe62b;" 
+d="M226 729h191v-688h-191v688zM605 729h191v-688h-191v688z" />
+    <glyph glyph-name="uniE62C" unicode="&#xe62c;" 
+d="M224 801l589 -421l-589 -413v834z" />
   </font>
 </defs></svg>

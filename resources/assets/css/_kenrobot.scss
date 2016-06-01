@@ -16,9 +16,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.ken-stop:before { content: "\e624"; }
+.ken-pause:before { content: "\e62b"; }
 .ken-setting2:before { content: "\e628"; }
 .ken-switch-on2:before { content: "\e626"; }
 .ken-switch-off2:before { content: "\e627"; }
+.ken-play:before { content: "\e62c"; }
 .ken-project2:before { content: "\e61a"; }
 .ken-clear:before { content: "\e629"; }
 .ken-add:before { content: "\e600"; }

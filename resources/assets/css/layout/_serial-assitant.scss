@@ -48,6 +48,11 @@
 		float: left;
 		height: 42px;
 
+		.input-wrap {
+			float: left;
+			margin-right: 20px;
+		}
+
 		.input-label {
 			margin-left: 20px;
 			margin-right: 10px;
@@ -77,6 +82,29 @@
 
 			&:hover {
 				background-color: #627184;
+			}
+		}
+
+		& > ul {
+			float: left;
+
+			& > li {
+				float: left;
+				width: 30px;
+				height: 42px;
+
+				& > i {
+					line-height: 42px;
+					font-size: 20px;
+					color: #a0a0a0;
+				}
+
+				&.active {
+					cursor: pointer;
+					& > i {
+						color: white;
+					}
+				}
 			}
 		}
 	}

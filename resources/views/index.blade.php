@@ -190,9 +190,16 @@
 					<div class="serial-assitant">
 						<div class="serial-top">
 							<div class="serial-input">
-								<span class="input-label">输入：</span>
-								<input type="text" class="input" />
-								<input type="button" class="send-btn" value="发送" />
+								<div class="input-wrap">
+									<span class="input-label">输入：</span>
+									<input type="text" class="input" />
+									<input type="button" class="send-btn" value="发送" />
+								</div>
+								<ul class="serial-control">
+									<li data-action="play" title="连接串口"><i class="kenrobot ken-play"></i></li>
+									<li data-action="pause" title="暂停接收"><i class="kenrobot ken-pause"></i></li>
+									<li data-action="stop" title="断开串口"><i class="kenrobot ken-stop"></i></li>
+								</ul>
 							</div>
 							<div class="serial-tools">
 								<ul>
