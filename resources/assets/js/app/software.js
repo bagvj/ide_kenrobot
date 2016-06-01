@@ -46,7 +46,7 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/mode-arduino',
 		}]);
 		
 		code.init(api);
-		EventManager.bind("global", "resize", onResize);
+		EventManager.bind("bottomContainer", "resize", onResize);
 	}
 
 	function setData(data) {

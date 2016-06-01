@@ -1,4 +1,4 @@
-define(['vendor/jquery', './EventManager', './project', './software', './logcat', './ext/agent'], function(_, EventManager, project, software, logcat, agent) {
+define(['vendor/jquery', './EventManager', './project', './software', './logcat', './serialAssitant', './ext/agent', './ext/burn-dialog'], function(_, EventManager, project, software, logcat, serialAssitant, agent, burnDialog) {
 
 	function init() {
 		$('.top-menu > ul > li').on('click', onMenuClick);
@@ -9,7 +9,6 @@ define(['vendor/jquery', './EventManager', './project', './software', './logcat'
 
 	function onMenuClick(e) {
 		var li = $(this);
-		var index = li.index();
 		var action = li.data("action");
 		switch(action) {
 			case "build":
@@ -30,6 +29,9 @@ define(['vendor/jquery', './EventManager', './project', './software', './logcat'
 			case "logcat":
 				onLogcatClick();
 				break;
+			case "serial-assitant":
+				onSerialAssitantClick();
+				break;
 		}
 	}
 
@@ -38,7 +40,11 @@ define(['vendor/jquery', './EventManager', './project', './software', './logcat'
 	}
 
 	function onBurnClick() {
-		project.build(true).done(agent.showBurnDialog);
+		project.build(true).done(function(hexUrl) {
+			agent.check().done(function() {
+				burnDialog.show(hexUrl);
+			});
+		});
 	}
 
 	function onFormatClick() {
@@ -57,6 +63,10 @@ define(['vendor/jquery', './EventManager', './project', './software', './logcat'
 
 	function onLogcatClick() {
 		logcat.toggle();
+	}
+
+	function onSerialAssitantClick() {
+		serialAssitant.toggle();	
 	}
 
 	return {

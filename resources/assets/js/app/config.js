@@ -13,7 +13,8 @@ define(function() {
 		//chrome扩展app配置
 		extension: {
 			//Chrome app id
-			appId: "hhgmonhbodfiplppmcangkmlfkcnilpd",
+			// appId: "hhgmonhbodfiplppmcangkmlfkcnilpd",
+			appId: "ahekibdjpbbpcgfhodbkfkmjpkbiiden",
 
 			//烧写速度
 			uploadDelay: 250,

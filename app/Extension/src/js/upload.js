@@ -134,12 +134,6 @@ define(function() {
 		}
 	}
 
-	function bufferToString(buf) {
-		var bufView = new Uint8Array(buf);
-		var encodedString = String.fromCharCode.apply(null, bufView);
-		return decodeURIComponent(escape(encodedString));
-	};
-
 	function stringToBuffer(str) {
 		var encodedString = str;
 		var bytes = new Uint8Array(encodedString.length);

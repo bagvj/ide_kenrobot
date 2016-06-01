@@ -1,9 +1,18 @@
-define(['jquery', './upload'], function($, upload) {
+define(['jquery', './encoding', './upload'], function($, _, upload) {
 	var connectionId;
 	var uploadProgress;
+	var serialDatas;
+	var encoder;
+	var decoder;
 
 	function init() {
 		chrome.runtime.onMessageExternal.addListener(onMessageExternal);
+		chrome.serial.onReceive.addListener(onReceive);
+		chrome.serial.onReceiveError.addListener(onReceiveError);
+
+		serialDatas = [];
+		encoder = new TextEncoder();
+		decoder = new TextDecoder();
 	}
 
 	function ensureConnect(callback) {
@@ -46,6 +55,7 @@ define(['jquery', './upload'], function($, upload) {
 		} else if(action == "serial.connect") {
 			connectionId = null;
 			uploadProgress = 0;
+			serialDatas = [];
 			ensureConnect(function() {
 				try {
 					chrome.serial.connect(message.portPath, {
@@ -66,6 +76,7 @@ define(['jquery', './upload'], function($, upload) {
 		} else if(action == "serial.disconnect") {
 			connectionId = null;
 			uploadProgress = 0;
+			serialDatas = [];
 			try {
 				chrome.serial.disconnect(message.connectionId, function(result){
 					sendResponse(result);
@@ -83,6 +94,33 @@ define(['jquery', './upload'], function($, upload) {
 				}
 			});
 			return true;
+		} else if(action == "serial.send") {
+			if(!connectionId) {
+				sendResponse(false);
+				return;
+			}
+			var bytes = encoder.encode(message.data);
+			chrome.serial.send(connectionId, bytes.buffer, function(sendInfo) {
+				sendResponse(sendInfo);
+			});
+			return true;
+		} else if(action == "serial.flush") {
+			if(!connectionId) {
+				sendResponse(false);
+				return;
+			}
+			chrome.serial.flush(connectionId, function(result) {
+				sendResponse(result);
+			});
+			return true;
+		} else if(action == "serial.receive") {
+			if(!connectionId) {
+				sendResponse(false);
+				return;
+			}
+			var result = serialDatas;
+			serialDatas = [];
+			sendResponse(result);
 		} else if(action == "upload") {
 			$.ajax({
 				url: message.url,
@@ -99,6 +137,25 @@ define(['jquery', './upload'], function($, upload) {
 			return true;
 		} else if(action == "upload.progress") {
 			sendResponse(uploadProgress);
+		}
+	}
+
+	function onReceive(info) {
+		if(connectionId && info.connectionId == connectionId) {
+			var str = decoder.decode(new Uint8Array(info.data));
+			serialDatas.push(str);
+		}
+	}
+
+	function onReceiveError(info) {
+		connectionId = null;
+		uploadProgress = 0;
+		serialDatas = [];
+
+		try {
+			chrome.serial.disconnect(connectionId, function(){});
+		} catch(ex) {
+
 		}
 	}
 

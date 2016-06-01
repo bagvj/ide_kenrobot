@@ -1,4 +1,4 @@
-define(['../util', './burn-dialog'], function(util, burnDialog) {
+define(['vendor/jquery', '../util'], function(_, util) {
 	var config;
 	var API;
 
@@ -7,15 +7,28 @@ define(['../util', './burn-dialog'], function(util, burnDialog) {
 		API = getChromeAPI();
 	}
 
-	function check(callback) {
+	function getConfig() {
+		return config;
+	}
+
+	function check() {
+		var promise = $.Deferred();
 		if(!isChrome() || !API) {
 			util.message("啃萝卜扩展目前只支持Chrome浏览器，其它浏览器敬请期待！");
-			return;
+			return promise;
 		}
 
-		checkExt(function(installed) {
-			installed ? callback() : showInstallDialog();
-		});
+		checkExt().done(function() {
+			promise.resolve();
+		}).fail(showInstallDialog);
+
+		return promise;
+	}
+
+	function sendMessage(message, callback) {
+		message = typeof message == "string" ? {action: message} : message;
+		callback = callback || function() {};
+		API.runtime.sendMessage(config.appId, message, callback);
 	}
 
 	function isChrome() {
@@ -30,29 +43,26 @@ define(['../util', './burn-dialog'], function(util, burnDialog) {
 		return window.chrome;
 	}
 
-	function checkExt(callback) {
+	function checkExt() {
+		var promise = $.Deferred();
 		API.runtime.sendMessage(config.appId, "ping", function(response) {
 			if(response && response.action == "ping" && response.result == "pong") {
-				callback(true);
+				promise.resolve();
 			} else {
-				callback(false);
+				promise.reject();
 			}
 		});
+		return promise;
 	}
 
 	function showInstallDialog() {
 		util.dialog(".install-dialog");
 	}
 
-	function showBurnDialog(hexUrl) {
-		check(function() {
-			burnDialog.init(API, config);
-			burnDialog.show(hexUrl);
-		});
-	}
-
 	return {
 		init: init,
-		showBurnDialog: showBurnDialog,
+		check: check,
+		sendMessage: sendMessage,
+		getConfig: getConfig,
 	}
 });

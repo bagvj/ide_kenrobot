@@ -1,23 +1,21 @@
-define(['vendor/jquery', '../util'], function(_, util) {
-	var API;
+define(['vendor/jquery', '../util', './agent'], function(_, util, agent) {
 	var isInit;
 
 	var selector;
-	var config;
+	var uploadDelay;
 	var host;
 	
 	var connectionId;
 	var hexUrl;
 	var nameReg = /(arduino)|(\/dev\/cu\.usbmodem)/i;
 
-	function init(api, _config) {
+	function init() {
 		if(isInit) {
 			return;
 		}
-		API = api;
 		isInit = true;
 
-		config = _config;
+		uploadDelay = agent.getConfig().uploadDelay;
 		host = window.location.protocol + "//" + window.location.host;
 
 		selector = ".burn-dialog";
@@ -37,6 +35,8 @@ define(['vendor/jquery', '../util'], function(_, util) {
 	}
 
 	function show(_hexUrl) {
+		init();
+
 		hexUrl = _hexUrl;
 		util.dialog({
 			selector: selector,
@@ -56,7 +56,7 @@ define(['vendor/jquery', '../util'], function(_, util) {
 		$('.tab-burn .burn-progress', selector).removeClass("active");
 		$('.tab-connect .port', selector).empty();
 
-		sendMessage({
+		agent.sendMessage({
 			action: "serial.disconnect",
 			connectionId: connectionId,
 		});
@@ -66,7 +66,7 @@ define(['vendor/jquery', '../util'], function(_, util) {
 	}
 
 	function checkSerialPorts() {
-		sendMessage("serial.getDevices", function(ports) {
+		agent.sendMessage("serial.getDevices", function(ports) {
 			if(!ports || ports.length == 0) {
 				//没有串口连接
 				switchTab("no-serial");
@@ -104,7 +104,7 @@ define(['vendor/jquery', '../util'], function(_, util) {
 		var portPath = $('.tab-connect .port', selector).val();
 		var bitRate = parseInt($('.tab-connect .bitRate', selector).val());
 
-		sendMessage({
+		agent.sendMessage({
 			action: "serial.connect",
 			portPath: portPath,
 			bitRate: bitRate,
@@ -126,10 +126,10 @@ define(['vendor/jquery', '../util'], function(_, util) {
 		updateProgress(0);
 		showMessage("正在烧写", "burn", 0);
 
-		sendMessage({
+		agent.sendMessage({
 			action: "upload",
 			url: host + hexUrl + "/hex",
-			delay: config.uploadDelay,
+			delay: uploadDelay,
 		}, function(result) {
 			watchProgress(false);
 			$('.tab-burn .burn', selector).removeClass("burning").attr("disabled", false);
@@ -146,18 +146,10 @@ define(['vendor/jquery', '../util'], function(_, util) {
 
 		if(value) {
 			var queryProgress = function() {
-				sendMessage("upload.progress", function(progress) {
-					updateProgress(progress);
-				});
+				agent.sendMessage("upload.progress", updateProgress);
 			};
-			watchTimer = setInterval(queryProgress, config.uploadDelay);
+			watchTimer = setInterval(queryProgress, uploadDelay);
 		}
-	}
-
-	function sendMessage(message, callback) {
-		message = typeof message == "string" ? {action: message} : message;
-		callback = callback || function() {}
-		API.runtime.sendMessage(config.appId, message, callback);
 	}
 
 	function switchTab(tab) {
@@ -193,7 +185,6 @@ define(['vendor/jquery', '../util'], function(_, util) {
 	}
 
 	return {
-		init: init,
 		show: show,
 	};
 });

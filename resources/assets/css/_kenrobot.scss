@@ -15,9 +15,12 @@
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.ken-setting2:before { content: "\e628"; }
 .ken-switch-on2:before { content: "\e626"; }
 .ken-switch-off2:before { content: "\e627"; }
 .ken-project2:before { content: "\e61a"; }
+.ken-clear:before { content: "\e629"; }
 .ken-add:before { content: "\e600"; }
 .ken-close:before { content: "\e601"; }
 .ken-icon-code:before { content: "\e602"; }
@@ -53,5 +56,5 @@
 .ken-build:before { content: "\e621"; }
 .ken-download:before { content: "\e622"; }
 .ken-format:before { content: "\e623"; }
-.ken-logo:before { content: "\e624"; }
 .ken-scratch:before { content: "\e625"; }
+.ken-serial:before { content: "\e62a"; }

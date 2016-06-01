@@ -1,4 +1,4 @@
-define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './util', './hardware', './user', './project', './software', './sidebar', './topMenu', './logcat', './board', './component', './library', './ext/agent', './guide'], function(_, Mousetrap, EventManager, config, util, hardware, user, project, software, sidebar, topMenu, logcat, board, component, library, extAgent, guide) {
+define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './util', './hardware', './user', './project', './software', './sidebar', './topMenu', './bottomContainer', './board', './component', './library', './ext/agent', './guide'], function(_, Mousetrap, EventManager, config, util, hardware, user, project, software, sidebar, topMenu, bottomContainer, board, component, library, extAgent, guide) {
 	function init() {
 		initAjax();
 		initKeys();
@@ -7,7 +7,7 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 		user.init();
 		sidebar.init();
 		topMenu.init();
-		logcat.init();
+		bottomContainer.init();
 		board.init();
 		component.init();
 		library.init();
@@ -66,8 +66,8 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 				return;
 			}
 
-			if(logcat.isShow()) {
-				logcat.hide();
+			if(bottomContainer.isShow()) {
+				bottomContainer.hide();
 				return;
 			}
 

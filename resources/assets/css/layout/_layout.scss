@@ -28,7 +28,7 @@
 	}
 
 	.bottom-container {
-		height: 150px;
+		height: 200px;
 		bottom: 0;
 		left: 0;
 		right: 0;
@@ -432,6 +432,7 @@
 		top: 0;
 		width: 100%;
 		cursor: n-resize;
+		z-index: 1;
 
 		&.active {
 			background-color: #4CC1FC;
@@ -439,25 +440,13 @@
 		}
 	}
 
-	.close-btn {
-		position: absolute;
-		right: 5px;
-		top: 0;
-		font-size: 12px;
-		cursor: pointer;
-		color: white;
-
-		&:hover {
-			color: #FF9696;
-		}
-	}
-
-	.logcat {
+	& > .tab {
 		height: 100%;
-		background-color: transparent;
+		position: relative;
+		display: none;
 
-		.ace_gutter {
-			background-color: transparent;
+		&.active {
+			display: block;
 		}
 	}
 }

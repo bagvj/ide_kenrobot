@@ -26,7 +26,7 @@
 					<div class="wrap">
 						<div class="top-menu">
 							<ul>
-								<li data-action="build"><i class="kenrobot ken-build"></i>编译</li><li data-action="burn"><i class="kenrobot ken-upload"></i>烧写</li><li data-action="format"><i class="kenrobot ken-format"></i>格式化</li><li data-action="save"><i class="kenrobot ken-save"></i>保存</li><li data-action="download"><i class="kenrobot ken-download"></i>下载</li><li data-action="logcat"><i class="kenrobot ken-terminal"></i>输出</li>
+								<li data-action="build"><i class="kenrobot ken-build"></i>编译</li><li data-action="burn"><i class="kenrobot ken-upload"></i>烧写</li><li data-action="format"><i class="kenrobot ken-format"></i>格式化</li><li data-action="save"><i class="kenrobot ken-save"></i>保存</li><li data-action="download"><i class="kenrobot ken-download"></i>下载</li><li data-action="logcat"><i class="kenrobot ken-terminal"></i>输出</li><li data-action="serial-assitant"><i class="kenrobot ken-serial"></i>串口</li>
 							</ul>
 						</div>
 						<div class="user{{isset($user) ? ' active' : ''}}">
@@ -180,8 +180,50 @@
 				</div>
 			</div>
 			<div class="bottom-container">
-				<div class="logcat"></div>
 				<div class="drag-handle"></div>
+				<div class="tab tab-logcat active">
+					<div class="logcat-wrap">
+						<div class="logcat"></div>
+					</div>
+				</div>
+				<div class="tab tab-serial-assitant">
+					<div class="serial-assitant">
+						<div class="serial-top">
+							<div class="serial-input">
+								<span class="input-label">输入：</span>
+								<input type="text" class="input" />
+								<input type="button" class="send-btn" value="发送" />
+							</div>
+							<div class="serial-tools">
+								<ul>
+									<li data-action="clear"><i class="kenrobot ken-delete"></i></li>
+									<li data-action="setting"><i class="kenrobot ken-setting"></i></li>
+								</ul>
+								<div class="serial-setting">
+									<div class="title">设置<i class="kenrobot ken-close close-btn"></i></div>
+									<div class="field">
+										<label>端口:</label>
+										<select class="port">
+										</select>
+									</div>
+									<div class="field">
+										<label>波特率:</label>
+										<select class="bitRate">
+											<option>115200</option>
+											<option>57600</option>
+											<option>19200</option>
+											<option>9600</option>
+											<option>4800</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="serial-bottom">
+							<textarea class="log" spellcheck="false" readonly="readonly"></textarea>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="layers">

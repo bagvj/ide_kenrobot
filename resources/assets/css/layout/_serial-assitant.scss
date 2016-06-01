@@ -1,0 +1,151 @@
+.serial-assitant {
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	position: absolute;
+	background-color: #19191b;
+
+	.serial-top {
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 42px;
+		position: absolute;
+		background-color: rgba(6, 6, 6, 0.3);
+	}
+
+	.serial-bottom {
+		top: 42px;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		position: absolute;
+
+		& > .log {
+			color: white;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: 100%;
+			padding: 6px 10px;
+			background-color: #19191b;
+		}
+	}
+
+	.serial-input {
+		float: left;
+		height: 42px;
+
+		.input-label {
+			margin-left: 20px;
+			margin-right: 10px;
+			line-height: 42px;
+			color: white;
+		}
+
+		.input {
+			height: 30px;
+			width: 420px;
+			// line-height: 30px;
+			padding-left: 8px;
+			padding-right: 8px;
+			margin: 6px 0;
+			outline: none;
+			color: white;
+			border: 1px solid #414551;
+			background-color: #2b2d35;
+		}
+
+		.send-btn {
+			line-height: 30px;
+			height: 30px;
+			width: 54px;
+			margin: 6px 0 6px 10px;
+			color: white;
+			background-color: #4b5765;
+		}
+	}
+
+	.serial-tools {
+		float: right;
+		margin-right: 6px;
+		// position: absolute;
+
+		& > ul {
+			float: left;
+
+			li {
+				float: left;
+				width: 30px;
+				height: 42px;
+				cursor: pointer;
+
+				& > i {
+					line-height: 42px;
+					font-size: 20px;
+					color: #a0a0a0;
+
+					&:hover {
+						color: white;
+					}
+				}
+			}
+		}
+	}
+
+	.serial-setting {
+		display: none;
+		position: absolute;
+		height: 150px;
+		width: 260px;
+		top: -150px;
+		right: 0;
+		box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
+		background-color: #4b5765;
+
+		.title {
+			height: 30px;
+			background-color: #488ac0;
+			padding-left: 20px;
+			color: white;
+			line-height: 30px;
+
+			.close-btn {
+				cursor: pointer;
+				float: right;
+				line-height: 30px;
+				margin-right: 5px;
+				color: white;
+
+				&:hover {
+					color: #FF9696;
+				}
+			}
+		}
+
+		.field {
+			height: 30px;
+			margin: 20px 0;
+
+			& > label {
+				line-height: 30px;
+				color: white;
+				margin-left: 20px;
+				width: 48px;
+			}
+
+			& > select {
+				color: white;
+				width: 164px;
+				height: 30px;
+				background-color: #2b2d35;
+				border: 1px solid #22232a;
+			}
+		}
+
+		&.active {
+			display: block;
+		}
+	}
+}

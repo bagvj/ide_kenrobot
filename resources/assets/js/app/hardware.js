@@ -324,7 +324,7 @@ define(['vendor/jquery', 'vendor/jquery-ui', 'vendor/jquery.cookie', './nodeTemp
 		EventManager.bind('hardware', 'linkClick', onLinkClick);
 		EventManager.bind('hardware', 'portClick', onPortClick);
 		EventManager.bind('hardware', 'adjustTools', onAdjustTools);
-		EventManager.bind("global", "resize", onResize);
+		EventManager.bind("bottomContainer", "resize", onResize);
 	}
 
 	function setMode(mode) {
