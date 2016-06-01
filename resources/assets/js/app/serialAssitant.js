@@ -1,5 +1,4 @@
-define(['vendor/jquery', './EventManager', './util', './ext/agent'], function(_, EventManager, util, agent) {
-	var isDisplay;
+define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomContainer'], function(_, EventManager, util, agent, bottomContainer) {
 	var hasInit;
 	var tab;
 	var connectionId;
@@ -21,32 +20,19 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent'], function(_,
 		hasInit = true;
 	}
 
-	function isShow() {
-		return isDisplay;
-	}
-
 	function show() {
-		if(isShow()) {
-			return;
-		}
-
 		init();
 		onClearClick();
 		
-		isDisplay = true;
-		EventManager.trigger("bottomContainer", "toggle", true);
+		bottomContainer.show();
+
 		if(!tab.hasClass("active")) {
 			util.toggleActive(tab);
 		}
 	}
 
 	function hide() {
-		if(!isShow()) {
-			return;
-		}
-
-		isDisplay = false;
-		EventManager.trigger("bottomContainer", "toggle", false);
+		init();
 		tab.removeClass("active");
 
 		agent.sendMessage({
@@ -54,10 +40,14 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent'], function(_,
 			connectionId: connectionId,
 		});
 		connectionId = null;
+
+		bottomContainer.hide();
 	}
 
 	function toggle() {
-		isShow() ? hide() : show();
+		init();
+
+		tab.hasClass("active") ? hide() : show();
 	}
 
 	function onKeyup(e) {
@@ -221,7 +211,6 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent'], function(_,
 	}
 
 	return {
-		isShow: isShow,
 		show: show,
 		hide: hide,
 		toggle: toggle,

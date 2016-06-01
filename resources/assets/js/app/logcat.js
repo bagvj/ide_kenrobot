@@ -1,5 +1,4 @@
-define(['vendor/jquery', 'vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/mode-arduino', 'vendor/ace/snippets/text', 'vendor/ace/snippets/arduino', 'vendor/ace/ext-language_tools', './EventManager', './util'], function(_, _, _, _, _, _, _, EventManager, util) {
-	var isDisplay;
+define(['vendor/jquery', 'vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/mode-arduino', 'vendor/ace/snippets/text', 'vendor/ace/snippets/arduino', 'vendor/ace/ext-language_tools', './EventManager', './util', './bottomContainer'], function(_, _, _, _, _, _, _, EventManager, util, bottomContainer) {
 	var logcat;
 	var hasInit;
 	var tab;
@@ -21,36 +20,27 @@ define(['vendor/jquery', 'vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/a
 		hasInit = true;
 	}
 
-	function isShow() {
-		return isDisplay;
-	}
-
 	function show() {
-		if(isShow()) {
-			return;
-		}
-		
 		init();
 
-		isDisplay = true;
-		EventManager.trigger("bottomContainer", "toggle", true);
+		bottomContainer.show();
+
 		if(!tab.hasClass("active")) {
 			util.toggleActive(tab);
 		}
 	}
 
 	function hide() {
-		if(!isShow()) {
-			return;
-		}
+		init();
+		bottomContainer.hide();
 
-		isDisplay = false;
-		EventManager.trigger("bottomContainer", "toggle", false);
 		tab.removeClass("active");
 	}
 
 	function toggle() {
-		isShow() ? hide() : show();
+		init();
+
+		tab.hasClass("active") ? hide() : show();
 	}
 
 	function append(log) {
@@ -70,7 +60,6 @@ define(['vendor/jquery', 'vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/a
 	}
 
 	return {
-		isShow: isShow,
 		show: show,
 		hide: hide,
 		toggle: toggle,

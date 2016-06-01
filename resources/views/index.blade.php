@@ -181,7 +181,7 @@
 			</div>
 			<div class="bottom-container">
 				<div class="drag-handle"></div>
-				<div class="tab tab-logcat active">
+				<div class="tab tab-logcat">
 					<div class="logcat-wrap">
 						<div class="logcat"></div>
 					</div>
@@ -196,8 +196,8 @@
 							</div>
 							<div class="serial-tools">
 								<ul>
-									<li data-action="clear"><i class="kenrobot ken-delete"></i></li>
-									<li data-action="setting"><i class="kenrobot ken-setting"></i></li>
+									<li data-action="clear" title="清空输出"><i class="kenrobot ken-delete"></i></li>
+									<li data-action="setting" title="串口设置"><i class="kenrobot ken-setting"></i></li>
 								</ul>
 								<div class="serial-setting">
 									<div class="title">设置<i class="kenrobot ken-close close-btn"></i></div>

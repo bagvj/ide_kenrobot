@@ -47,7 +47,6 @@
 		.input {
 			height: 30px;
 			width: 420px;
-			// line-height: 30px;
 			padding-left: 8px;
 			padding-right: 8px;
 			margin: 6px 0;
@@ -64,13 +63,16 @@
 			margin: 6px 0 6px 10px;
 			color: white;
 			background-color: #4b5765;
+
+			&:hover {
+				background-color: #627184;
+			}
 		}
 	}
 
 	.serial-tools {
 		float: right;
-		margin-right: 6px;
-		// position: absolute;
+		margin-right: 18px;
 
 		& > ul {
 			float: left;
