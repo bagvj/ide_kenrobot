@@ -4,8 +4,6 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomCon
 	var connectionId;
 	var state;
 
-	var nameReg = /(arduino)|(\/dev\/cu\.usbmodem)/i;
-
 	function init() {
 		if(hasInit) {
 			return;
@@ -190,6 +188,7 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomCon
 				} else {
 					var portList = $('.serial-setting .port', tab).empty();
 					var count = 0;
+					var nameReg = agent.getConfig().nameReg;
 					for(var i = 0; i < ports.length; i++) {
 						var port = ports[i];
 						$('<option>').text(port.path).attr("title", port.displayName).appendTo(portList);

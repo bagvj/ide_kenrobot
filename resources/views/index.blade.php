@@ -26,7 +26,7 @@
 					<div class="wrap">
 						<div class="top-menu">
 							<ul>
-								<li data-action="build"><i class="kenrobot ken-build"></i>编译</li><li data-action="burn"><i class="kenrobot ken-upload"></i>烧写</li><li data-action="format"><i class="kenrobot ken-format"></i>格式化</li><li data-action="save"><i class="kenrobot ken-save"></i>保存</li><li data-action="download"><i class="kenrobot ken-download"></i>下载</li><li data-action="logcat"><i class="kenrobot ken-terminal"></i>输出</li><li data-action="serial-assitant"><i class="kenrobot ken-serial"></i>串口</li>
+								<li data-action="build"><i class="kenrobot ken-build"></i>编译</li><li data-action="burn"><i class="kenrobot ken-upload"></i>烧写</li><li data-action="format"><i class="kenrobot ken-format"></i>格式化</li><li data-action="save"><i class="kenrobot ken-save"></i>保存</li><li data-action="download"><i class="kenrobot ken-download"></i>下载</li><li data-action="logcat"><i class="kenrobot ken-terminal"></i>输出</li><li data-action="serial-assitant"><i class="kenrobot ken-serial"></i>串口</li><li data-action="interpreter"><i class="kenrobot ken-serial"></i>解释器</li>
 							</ul>
 						</div>
 						<div class="user{{isset($user) ? ' active' : ''}}">
@@ -80,7 +80,6 @@
 									<ul>
 									</ul>
 								</div>
-								
 							</div>
 						</div>
 						<div class="tab tab-board">
@@ -455,6 +454,39 @@
 					</div>
 					<div class="x-dialog-btns">
 						<button class="x-dialog-btn copy-btn">复制</button>
+					</div>
+				</div>
+				<div class="x-dialog x-dialog-custom interpreter-dialog">
+					<div class="x-dialog-title"><div class="x-dialog-icon"></div>啃萝卜</div>
+					<i class="kenrobot ken-close x-dialog-close"></i>
+					<div class="x-dialog-content">
+						<div class="wrap">
+							<div class="left">
+								<div class="top">
+									<span class="port-label">端口</span>
+									<select class="port-list">
+									</select>
+									<input class="connect x-btn" data-action="connect" type="button" value="连接" />
+									<input class="reset x-btn" data-action="reset" type="button" value="重置" />
+									<input class="advance x-btn" data-action="advance" type="button" value="高级" />
+								</div>
+								<div class="bottom">
+									
+								</div>
+							</div>
+							<div class="right">
+								<div class="top">
+									<input class="prog x-btn" data-action="prog" type="button" value="写入" title="写入代码"/>
+									<input class="run x-btn" data-action="run" type="button" value="运行" title="运行当前或者EEPROM中的代码" />
+									<input class="save x-btn" data-action="save" type="button" value="保存" title="把代码保存到EEPROM"/>
+									<input class="list x-btn" data-action="list" type="button" value="显示" title="显示EEPROM中的代码" />
+									<label class="auto-run-label" for="auto-run" title="启动时自动运行EEPROM中的代码"><input class="auto-run" type="checkbox" id="auto-run" data-action="auto-run" />自动运行</label>
+								</div>
+								<div class="bottom">
+									<textarea class="code" spellcheck="false" placeholder="请在此处输入代码"></textarea>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

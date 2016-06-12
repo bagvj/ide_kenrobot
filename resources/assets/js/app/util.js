@@ -29,6 +29,9 @@ define(function(){
 			return false;
 		}
 
+		dialogWin.clearQueue("fadeIn");
+		dialogWin.clearQueue("fadeOut");
+
 		var onConfirm = args.onConfirm;
 		var onCancel = args.onCancel;
 		var onClosing = args.onClosing;
@@ -42,12 +45,13 @@ define(function(){
 
 		var dialogLayer = $('.dialog-layer').addClass("active");
 		var doClose = function(callback) {
-			dialogWin.removeClass("dialog-fadeIn").addClass("dialog-fadeOut").delay(300).queue(function() {
+			dialogWin.removeClass("dialog-in").addClass("dialog-fadeOut").delay(300, "fadeOut").queue("fadeOut", function() {
 				dialogWin.hide().removeClass("dialog-fadeOut");
 				dialogLayer.removeClass("active");
 				onClose && onClose();
 				callback && callback();
 			});
+			dialogWin.dequeue("fadeOut");
 		}
 
 		$('.x-dialog-btns .confirm', dialogWin).off('click').on('click', function(){
@@ -63,7 +67,10 @@ define(function(){
 		});
 
 		onShow && onShow();
-		dialogWin.stop().show().removeClass('dialog-fadeOut').addClass("dialog-fadeIn");
+		dialogWin.show().addClass("dialog-fadeIn").delay(300, "fadeIn").queue("fadeIn", function() {
+			dialogWin.addClass("dialog-in").removeClass("dialog-fadeIn");
+		});
+		dialogWin.dequeue("fadeIn");
 
 		return dialogWin;
 	}

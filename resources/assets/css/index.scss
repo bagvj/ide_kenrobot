@@ -1,6 +1,7 @@
 @charset "utf-8";
 
 @import "_bootstrap.scss";
+@import "_terminal.scss";
 @import "_kenrobot.scss";
 
 @import "base/_reset.scss";
@@ -21,4 +22,5 @@
 @import "component/_install-dialog.scss";
 @import "component/_arduino-driver-dialog.scss";
 @import "component/_burn-dialog.scss";
+@import "component/_interpreter-dialog.scss";
 @import "component/_guide.scss";

@@ -15,11 +15,15 @@ define(function() {
 			//Chrome app id
 			appId: "hhgmonhbodfiplppmcangkmlfkcnilpd",
 
+			nameReg : /(arduino)|(\/dev\/cu\.usbmodem)/i,
+
 			//烧写速度
-			uploadDelay: 250,
+			uploadDelay: 150,
 
 			//串口接收速度
 			serialReceiveDelay: 100,
+
+			interpreterBitRate: 115200,
 		},
 	};
 });

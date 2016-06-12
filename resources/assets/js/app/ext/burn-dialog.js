@@ -2,12 +2,10 @@ define(['vendor/jquery', '../util', './agent'], function(_, util, agent) {
 	var isInit;
 
 	var selector;
-	var uploadDelay;
 	var host;
 	
 	var connectionId;
 	var hexUrl;
-	var nameReg = /(arduino)|(\/dev\/cu\.usbmodem)/i;
 
 	function init() {
 		if(isInit) {
@@ -15,7 +13,6 @@ define(['vendor/jquery', '../util', './agent'], function(_, util, agent) {
 		}
 		isInit = true;
 
-		uploadDelay = agent.getConfig().uploadDelay;
 		host = window.location.protocol + "//" + window.location.host;
 
 		selector = ".burn-dialog";
@@ -76,6 +73,7 @@ define(['vendor/jquery', '../util', './agent'], function(_, util, agent) {
 
 			var portList = $('.tab-connect .port', selector).empty();
 			var count = 0;
+			var nameReg = agent.getConfig().nameReg;
 			for(var i = 0; i < ports.length; i++) {
 				var port = ports[i];
 				$('<option>').text(port.path).attr("title", port.displayName).appendTo(portList);
@@ -129,7 +127,7 @@ define(['vendor/jquery', '../util', './agent'], function(_, util, agent) {
 		agent.sendMessage({
 			action: "upload",
 			url: host + hexUrl + "/hex",
-			delay: uploadDelay,
+			delay: agent.getConfig().uploadDelay,
 		}, function(result) {
 			watchProgress(false);
 			$('.tab-burn .burn', selector).removeClass("burning").attr("disabled", false);
@@ -144,11 +142,12 @@ define(['vendor/jquery', '../util', './agent'], function(_, util, agent) {
 	function watchProgress(value) {
 		clearInterval(watchTimer);
 
+		var delay = agent.getConfig().uploadDelay;
 		if(value) {
 			var queryProgress = function() {
 				agent.sendMessage("upload.progress", updateProgress);
 			};
-			watchTimer = setInterval(queryProgress, uploadDelay);
+			watchTimer = setInterval(queryProgress, delay);
 		}
 	}
 

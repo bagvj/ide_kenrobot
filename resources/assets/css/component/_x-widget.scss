@@ -61,14 +61,19 @@
     width: 400px;
     margin: 0 auto;
     position: relative;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
     display: none;
 
     &.active {
         display: block;
     }
 
+    &.dialog-in {
+        transform: translateY(200px);
+    }
+
     &.dialog-fadeIn {
-        @include animation('dialog-fadeIn' 0.4s cubic-bezier(0.18, 0.9, 0.32, 1) both);
+        @include animation('dialog-fadeIn' 0.3s cubic-bezier(0.18, 0.9, 0.32, 1) both);
     }
 
     &.dialog-fadeOut {

@@ -1,4 +1,4 @@
-define(['vendor/jquery', './EventManager', './project', './software', './logcat', './serialAssitant', './ext/agent', './ext/burn-dialog'], function(_, EventManager, project, software, logcat, serialAssitant, agent, burnDialog) {
+define(['vendor/jquery', './EventManager', './project', './software', './logcat', './serialAssitant', './interpreter', './ext/agent', './ext/burn-dialog', './util'], function(_, EventManager, project, software, logcat, serialAssitant, interpreter, agent, burnDialog, util) {
 
 	function init() {
 		$('.top-menu > ul > li').on('click', onMenuClick);
@@ -31,6 +31,9 @@ define(['vendor/jquery', './EventManager', './project', './software', './logcat'
 				break;
 			case "serial-assitant":
 				onSerialAssitantClick();
+				break;
+			case "interpreter":
+				onInterpreterClick();
 				break;
 		}
 	}
@@ -67,6 +70,12 @@ define(['vendor/jquery', './EventManager', './project', './software', './logcat'
 
 	function onSerialAssitantClick() {
 		serialAssitant.toggle();	
+	}
+
+	function onInterpreterClick() {
+		agent.check().done(function() {
+			interpreter.show();
+		});
 	}
 
 	return {
