@@ -18,7 +18,7 @@ define(function() {
 			nameReg : /(arduino)|(\/dev\/cu\.usbmodem)/i,
 
 			//烧写速度
-			uploadDelay: 150,
+			uploadDelay: 250,
 
 			//串口接收速度
 			serialReceiveDelay: 100,
