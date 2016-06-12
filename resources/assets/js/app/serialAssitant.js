@@ -189,16 +189,19 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomCon
 					var portList = $('.serial-setting .port', tab).empty();
 					var count = 0;
 					var nameReg = agent.getConfig().nameReg;
+					var index;
 					for(var i = 0; i < ports.length; i++) {
 						var port = ports[i];
 						$('<option>').text(port.path).attr("title", port.displayName).appendTo(portList);
 						if(nameReg.test(port.path) || (port.displayName && nameReg.test(port.displayName))) {
 							count++;
+							index = i;
 						}
 					}
 
 					if(count == 1) {
 						//有且仅有一个arduino设置连接
+						portList[0].selectedIndex = index;
 						promise.resolve();
 					} else {
 						var setting = $('.serial-setting', tab);
