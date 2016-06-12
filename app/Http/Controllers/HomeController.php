@@ -152,7 +152,7 @@ class HomeController extends Controller {
 	}
 
 	private function getLibrariyConfig($isDict = false) {
-		$libraries = DB::table('libraries')->get();
+		$libraries = DB::table('libraries')->where('in_use', 1)->get();
 		if($isDict) {
 			$result = array();
 			foreach ($libraries as $key => $value) {
