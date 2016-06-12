@@ -26,7 +26,7 @@
 					<div class="wrap">
 						<div class="top-menu">
 							<ul>
-								<li data-action="build"><i class="kenrobot ken-build"></i>编译</li><li data-action="burn"><i class="kenrobot ken-upload"></i>烧写</li><li data-action="format"><i class="kenrobot ken-format"></i>格式化</li><li data-action="save"><i class="kenrobot ken-save"></i>保存</li><li data-action="download"><i class="kenrobot ken-download"></i>下载</li><li data-action="logcat"><i class="kenrobot ken-terminal"></i>输出</li><li data-action="serial-assitant"><i class="kenrobot ken-serial"></i>串口</li>
+								<li data-action="build"><i class="kenrobot ken-build"></i>编译</li><li data-action="burn"><i class="kenrobot ken-upload"></i>烧写</li><li data-action="format"><i class="kenrobot ken-format"></i>格式化</li><li data-action="save"><i class="kenrobot ken-save"></i>保存</li><li data-action="download"><i class="kenrobot ken-download"></i>下载</li><li data-action="logcat"><i class="kenrobot ken-terminal"></i>输出</li><li data-action="serial-assitant"><i class="kenrobot ken-serial"></i>串口</li><li data-action="interpreter"><i class="kenrobot ken-serial"></i>解释器</li>
 							</ul>
 						</div>
 						<div class="user{{isset($user) ? ' active' : ''}}">
