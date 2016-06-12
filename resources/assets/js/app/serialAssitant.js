@@ -192,7 +192,7 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomCon
 					for(var i = 0; i < ports.length; i++) {
 						var port = ports[i];
 						$('<option>').text(port.path).attr("title", port.displayName).appendTo(portList);
-						if(port.displayName && nameReg.test(port.displayName)) {
+						if(nameReg.test(port.path) || (port.displayName && nameReg.test(port.displayName))) {
 							count++;
 						}
 					}
