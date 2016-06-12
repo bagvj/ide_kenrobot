@@ -4,6 +4,8 @@ define(['jquery', './encoding', './upload'], function($, _, upload) {
 	var serialDatas;
 	var encoder;
 	var decoder;
+	var DTR_RTS_ON = {dtr: true, rts: true}; 
+	var DTR_RTS_OFF = {dtr: false, rts: false};
 
 	function init() {
 		chrome.runtime.onMessageExternal.addListener(onMessageExternal);
@@ -92,6 +94,15 @@ define(['jquery', './encoding', './upload'], function($, _, upload) {
 				} else {
 					sendResponse(false);
 				}
+			});
+			return true;
+		} else if(action == "serial.reset") {
+			chrome.serial.setControlSignals(connectionId, DTR_RTS_OFF, function(a) {
+				setTimeout(function() {
+					chrome.serial.setControlSignals(connectionId, DTR_RTS_ON, function(b) {
+						sendResponse(true);
+					});
+				}, 50);
 			});
 			return true;
 		} else if(action == "serial.send") {
