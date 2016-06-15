@@ -17,6 +17,7 @@ class AddExample extends Migration
             $table->string('name')->comment('名字');
             $table->string('category')->comment('目录');
             $table->integer('order')->comment('顺序');
+            $table->string('uuid')->comment('唯一id')->default("");
             $table->softDeletes();
         });
 

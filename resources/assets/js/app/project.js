@@ -177,7 +177,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 	}
 
 	function loadExample(example) {
-		var projectInfo = getDefaultProject();
+		var projectInfo = getDefaultProject(true);
 		projectInfo.project_name = example.name;
 		projectInfo.project_intro = example.name + "示例";
 		projectInfo.project_data.software = {source: example.code};
@@ -190,6 +190,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		var ul = $('.top-tabs > ul');
 		var targetTab = ul.find('> li[data-project-id="' + projectInfo.id + '"]');
 		var example = targetTab.data('example');
+		var isExamlpe = isUuid(projectInfo.id);
 
 		if(targetTab.length == 0 || (projectInfo.isExamlpe && example && example != projectInfo.project_name)) {
 			openedProjects.push(projectInfo);
@@ -620,9 +621,9 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 							  .replace(/\{\{id\}\}/g, projectInfo.id);
 	}
 
-	function getDefaultProject() {
+	function getDefaultProject(useUuid) {
 		return {
-			id: 0,
+			id: useUuid ? getUuid() : 0,
 			user_id: user.getUserId(),
 			project_name: "我的项目",
 			project_intro: "我的项目简介",
@@ -665,11 +666,11 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 	}
 
 	function getUuid() {
-		var d = new Date().getTime();
+		var time = new Date().getTime();
 		
 		var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-		        var r = (d + Math.random() * 16) % 16 | 0;
-		        d = Math.floor(d / 16);
+		        var r = (time + Math.random() * 16) % 16 | 0;
+		        time = Math.floor(time / 16);
 		        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
 		});
 
@@ -677,7 +678,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 	}
 
 	function isUuid(id) {
-		return /[0-9a-zA-Z]{8,8}-([0-9a-zA-Z]{4,4}-){3,3}[0-9a-zA-Z]{12,12}/.test(id);
+		return /^[0-9a-z]{8}-([0-9a-z]{4}-){3}[0-9a-z]{12}$/.test(id);
 	}
 
 	return {
