@@ -131,9 +131,14 @@
 							<div class="example x-scrollbar">
 								<ul class="list">
 								@foreach($exampleGroups as $category => $examples)
+									<li>
+										<span>{{$category}}</span>
+										<ul>
 										@foreach($examples as $example)
 											<li data-id="{{$example->uuid}}">{{$example->name}}</li>
 										@endforeach
+										</ul>
+									</li>
 								@endforeach
 								</ul>
 							</div>

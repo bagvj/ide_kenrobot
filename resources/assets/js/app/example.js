@@ -2,7 +2,7 @@ define(['vendor/jquery', './util', './project'], function(_, util, project) {
 	var libraries;
 
 	function init() {
-		$('.example .list > li').on('click', onExampleClick);
+		$('.example .list > li li').on('click', onExampleClick);
 	}
 
 	function get(id) {

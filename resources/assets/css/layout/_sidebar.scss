@@ -292,7 +292,6 @@
 	.example {
 		width: 240px;
 		position: relative;
-		overflow-y: auto;
 
 		.list { 
 			li {
@@ -302,7 +301,7 @@
 				height: 36px;
 				line-height: 36px;
 
-				.sub-menu {
+				& > ul {
 					position: relative;
 					left: 100%;
 					top: -100%;
@@ -313,7 +312,7 @@
 				&:hover {
 					background-color: #488ac0;
 
-					.sub-menu {
+					& > ul {
 						display: block;
 					}
 				}
