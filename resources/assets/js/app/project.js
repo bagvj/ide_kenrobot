@@ -143,7 +143,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		var doSave = function() {
 			var projectInfo = getCurrentProject();
 			var id = projectInfo.id;
-			if(id == 0) {
+			if(id == 0 || isUuid(id)) {
 				showSaveDialog(projectInfo);
 			} else {
 				doProjectSave(projectInfo);
@@ -177,22 +177,28 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 	}
 
 	function loadExample(example) {
-		var projectInfo = getDefaultProject(true);
+		var projectInfo = getDefaultProject(example.id);
 		projectInfo.project_name = example.name;
 		projectInfo.project_intro = example.name + "示例";
 		projectInfo.project_data.software = {source: example.code};
-		projectInfo.isExamlpe = true;
 
 		openProject(projectInfo);
+	}
+
+	function isOpen(id, click) {
+		var targetTab = $('.top-tabs > ul li[data-project-id="' + id + '"]');
+		if(click && targetTab.length > 0) {
+			targetTab.click();
+		}
+
+		return targetTab.length > 0;
 	}
 
 	function openProject(projectInfo) {
 		var ul = $('.top-tabs > ul');
 		var targetTab = ul.find('> li[data-project-id="' + projectInfo.id + '"]');
-		var example = targetTab.data('example');
-		var isExamlpe = isUuid(projectInfo.id);
 
-		if(targetTab.length == 0 || (projectInfo.isExamlpe && example && example != projectInfo.project_name)) {
+		if(targetTab.length == 0) {
 			openedProjects.push(projectInfo);
 
 			targetTab = $(tabTemplate.replace(/\{\{project_name\}\}/g, projectInfo.project_name).replace(/\{\{id\}\}/g, projectInfo.id));
@@ -409,7 +415,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 			var form = $('form', dialog);
 			var project_name = $('input[name="name"]', form).val();
 			project = {
-				id: isCopy ? 0: id,
+				id: (isCopy || isUuid(id)) ? 0: id,
 				project_name: project_name,
 				user_id: user.getUserId(),
 				project_intro: $('textarea[name="intro"]', form).val(),
@@ -460,7 +466,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		convertProject(projectInfo);
 
 		var list = $('.project .list > ul');
-		if(id == 0 || isCopy) {
+		if(id == 0 || isUuid(id) || isCopy) {
 			//new
 			list.find('> li[data-project-id="' + id + '"]').remove();
 			$('.top-tabs > ul > li[data-project-id="' + id + '"]').remove();
@@ -621,9 +627,9 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 							  .replace(/\{\{id\}\}/g, projectInfo.id);
 	}
 
-	function getDefaultProject(useUuid) {
+	function getDefaultProject(id) {
 		return {
-			id: useUuid ? getUuid() : 0,
+			id: id || 0,
 			user_id: user.getUserId(),
 			project_name: "我的项目",
 			project_intro: "我的项目简介",
@@ -665,18 +671,6 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		}
 	}
 
-	function getUuid() {
-		var time = new Date().getTime();
-		
-		var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-		        var r = (time + Math.random() * 16) % 16 | 0;
-		        time = Math.floor(time / 16);
-		        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-		});
-
-		return uuid;
-	}
-
 	function isUuid(id) {
 		return /^[0-9a-z]{8}-([0-9a-z]{4}-){3}[0-9a-z]{12}$/.test(id);
 	}
@@ -686,6 +680,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		load: load,
 		build: build,
 		save: save,
+		isOpen: isOpen,
 		getCurrentProject: getCurrentProject,
 		loadMyProject: loadMyProject,
 		loadExample: loadExample,

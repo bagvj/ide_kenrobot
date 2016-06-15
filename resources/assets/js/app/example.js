@@ -5,12 +5,12 @@ define(['vendor/jquery', './util', './project'], function(_, util, project) {
 		$('.example .list > li').on('click', onExampleClick);
 	}
 
-	function get(name) {
+	function get(id) {
 		return $.ajax({
 			type: 'POST',
 			url: '/api/example',
 			data: {
-				name: name
+				id: id
 			},
 			dataType: 'json',
 		});
@@ -18,9 +18,13 @@ define(['vendor/jquery', './util', './project'], function(_, util, project) {
 
 	function onExampleClick(e) {
 		var li = $(this);
-		var name = li.data('example');
+		var id = li.data('id');
 
-		get(name).done(function(result) {
+		if(project.isOpen(id, true)) {
+			return;
+		}
+
+		get(id).done(function(result) {
 			if(result.error) {
 				util.message(result.message);
 				return;

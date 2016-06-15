@@ -21,8 +21,8 @@ class ConfigController extends Controller {
 	}
 
 	public function example(Request $request) {
-		$name = $request->input('name');
-		$example = DB::table('examples')->where('name', $name)->first(['name', 'category', 'order']);
+		$uuid = $request->input('id');
+		$example = DB::table('examples')->where('uuid', $uuid)->first(['name', 'category', 'order', 'uuid']);
 		if(!$example) {
 			return collect(['error' => 1, '没有该示例'])->toJson();
 		}
@@ -32,6 +32,8 @@ class ConfigController extends Controller {
 			return collect(['error' => 2, '示例代码读取失败'])->toJson();
 		}
 
+		$example->id = $example->uuid;
+		unset($example->uuid);
 		$example->code = file_get_contents($path);
 
 		return collect($example)->toJson();

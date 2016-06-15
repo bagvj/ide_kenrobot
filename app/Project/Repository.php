@@ -6,7 +6,7 @@ use DB;
 
 class Repository {
 	public static function getExamples($isDict = false, $group = false) {
-		$examples = DB::table('examples')->get(['name', 'category', 'order']);
+		$examples = DB::table('examples')->get(['name', 'category', 'order', 'uuid']);
 		$result = array();
 		if($isDict) {
 			foreach ($examples as $key => $value) {

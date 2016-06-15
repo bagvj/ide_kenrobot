@@ -132,7 +132,7 @@
 								<ul class="list">
 								@foreach($exampleGroups as $category => $examples)
 										@foreach($examples as $example)
-											<li data-example="{{$example->name}}">{{$example->name}}</li>
+											<li data-id="{{$example->uuid}}">{{$example->name}}</li>
 										@endforeach
 								@endforeach
 								</ul>
