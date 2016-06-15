@@ -65,6 +65,7 @@
 								<li class="hide" data-action="board"><i class="kenrobot ken-board"></i>主板</li>
 								<li class="hide" data-action="component"><i class="kenrobot ken-component"></i>元件</li>
 								<li data-action="library"><i class="kenrobot ken-library"></i>库</li>
+								<li data-action="example"><i class="kenrobot ken-demo"></i>示例</li>
 							</ul>
 						</div>
 						<div class="tab tab-project">
@@ -122,6 +123,17 @@
 								<ul class="list">
 								@foreach($libraries as $library)
 									<li data-library="{{$library->name}}">{{$library->name}}</li>
+								@endforeach
+								</ul>
+							</div>
+						</div>
+						<div class="tab tab-example">
+							<div class="example x-scrollbar">
+								<ul class="list">
+								@foreach($exampleGroups as $category => $examples)
+										@foreach($examples as $example)
+											<li data-example="{{$example->name}}">{{$example->name}}</li>
+										@endforeach
 								@endforeach
 								</ul>
 							</div>

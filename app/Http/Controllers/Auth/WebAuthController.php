@@ -85,28 +85,4 @@ class WebAuthController extends Controller
         }
         return response()->json(['status' => -1, 'message' => '未登录']);
     }
-
-     /**
-      * platfrom_id
-      */
-     public function platformId(Request $request)
-     {
-        $uid = $request->input('uid');
-        $email = $request->input('email');
-
-        $user = UserModel::where('uid', $uid)->first();
-
-        if ($user == null) {
-            $user = UserModel::where('email', $email)->first();
-        }
-
-        if (empty($user)) {
-            return response()->json(['status' => -1, 'message' => '读取失败']);
-        }
-        
-        return response()->json(['status' => 0, 'message' => '成功', 'data' => [ 'user_id' => $user->id]]);
-
-
-     }
-
 }

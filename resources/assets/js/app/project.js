@@ -45,29 +45,6 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		});
 	}
 
-	function getHashKeyValue(name) {
-		var reg = new RegExp("(^|&)" + name + "/([^&]*)(&|$)", "i");
-		var r = window.location.hash.substr(1).match(reg);
-
-		return r != null ? unescape(r[2]) : null;
-	}
-
-	function loadMyProject() {
-		var promise = $.Deferred();
-		user.authCheck().done(function() {
-			projectApi.getAll().done(function(result) {
-				$(".project .list ul").empty();
-
-				addProject(result.data);
-				promise.resolve();
-			});
-		}).fail(function() {
-			promise.resolve();
-		});
-
-		return promise;
-	}
-
 	function load() {
 		var hash = getHashKeyValue('project');
 		hash = /^[0-9a-zA-Z]{6}$/.test(hash) ? hash : "";
@@ -93,65 +70,6 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 			var projectInfo = myProjects.length > 0 ? myProjects[myProjects.length - 1] : getDefaultProject();
 			openProject(projectInfo);
 		}
-	}
-
-	function getProjectInfoByHash(hash) {
-		var promise = $.Deferred();
-
-		for(var i = 0; i < myProjects.length; i++) {
-			if(myProjects[i].hash == hash) {
-				return promise.resolve(myProjects[i]);
-			}
-		}
-
-		projectApi.get(hash, 'hash').done(function(result) {
-			result.status == 0 ? promise.resolve(convertProject(result.data)) : promise.reject();
-		});
-
-		return promise;
-	}
-
-	function convertProject(projectInfo) {
-		if(typeof projectInfo.project_data == "string") {
-			try {
-				projectInfo.project_data = JSON.parse(projectInfo.project_data);
-			} catch(ex) {
-				console.log(ex);
-				projectInfo.project_data = {};
-			}
-		}
-
-		return projectInfo;
-	}
-
-	function openProject(projectInfo) {
-		var ul = $('.top-tabs > ul');
-		var targetTab = ul.find('> li[data-project-id="' + projectInfo.id + '"]');
-		if(targetTab.length == 0) {
-			openedProjects.push(projectInfo);
-
-			targetTab = $(tabTemplate.replace(/\{\{project_name\}\}/g, projectInfo.project_name).replace(/\{\{id\}\}/g, projectInfo.id));
-			targetTab.appendTo(ul);
-			bindTabEvent();
-		}
-
-		targetTab.click();
-	}
-
-	function addProject(projects) {
-		var ul = $(".project .list ul");
-		for(var i = 0; i < projects.length; i++) {
-			var projectInfo = projects[i];
-			projectInfo = convertProject(projectInfo);
-
-			if(projectInfo.status === undefined) {
-				projectInfo.status = 1;
-			}
-			
-			ul.append(getProjectHtml(projectInfo));
-			myProjects.push(projectInfo);
-		}
-		bindProjectEvent();
 	}
 
 	function build(autoClose) {
@@ -236,6 +154,112 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 			checkOwn().done(doSave);
 		}, user.showLoginDialog);
 	}
+
+	function getCurrentProject() {
+		var id = $('.top-tabs > ul > li.active').data('project-id');
+		return getProjectById(openedProjects, id);
+	}
+
+	function loadMyProject() {
+		var promise = $.Deferred();
+		user.authCheck().done(function() {
+			projectApi.getAll().done(function(result) {
+				$(".project .list ul").empty();
+
+				addProject(result.data);
+				promise.resolve();
+			});
+		}).fail(function() {
+			promise.resolve();
+		});
+
+		return promise;
+	}
+
+	function loadExample(example) {
+		var projectInfo = getDefaultProject();
+		projectInfo.project_name = example.name;
+		projectInfo.project_intro = example.name + "示例";
+		projectInfo.project_data.software = {source: example.code};
+		projectInfo.isExamlpe = true;
+
+		openProject(projectInfo);
+	}
+
+	function openProject(projectInfo) {
+		var ul = $('.top-tabs > ul');
+		var targetTab = ul.find('> li[data-project-id="' + projectInfo.id + '"]');
+		var example = targetTab.data('example');
+
+		if(targetTab.length == 0 || (projectInfo.isExamlpe && example && example != projectInfo.project_name)) {
+			openedProjects.push(projectInfo);
+
+			targetTab = $(tabTemplate.replace(/\{\{project_name\}\}/g, projectInfo.project_name).replace(/\{\{id\}\}/g, projectInfo.id));
+			projectInfo.isExamlpe && (targetTab.data('example', projectInfo.project_name));
+
+			targetTab.appendTo(ul);
+
+			$('.top-tabs > ul > li').off('click').on('click', onTabClick);
+			$('.top-tabs > ul > li .close-btn').off('click').on('click', onTabCloseClick);
+		}
+
+		targetTab.click();
+	}
+
+	function getHashKeyValue(name) {
+		var reg = new RegExp("(^|&)" + name + "/([^&]*)(&|$)", "i");
+		var r = window.location.hash.substr(1).match(reg);
+
+		return r != null ? unescape(r[2]) : null;
+	}
+
+	function getProjectInfoByHash(hash) {
+		var promise = $.Deferred();
+
+		for(var i = 0; i < myProjects.length; i++) {
+			if(myProjects[i].hash == hash) {
+				return promise.resolve(myProjects[i]);
+			}
+		}
+
+		projectApi.get(hash, 'hash').done(function(result) {
+			result.status == 0 ? promise.resolve(convertProject(result.data)) : promise.reject();
+		});
+
+		return promise;
+	}
+
+	function convertProject(projectInfo) {
+		if(typeof projectInfo.project_data == "string") {
+			try {
+				projectInfo.project_data = JSON.parse(projectInfo.project_data);
+			} catch(ex) {
+				console.log(ex);
+				projectInfo.project_data = {};
+			}
+		}
+
+		return projectInfo;
+	}
+
+	function addProject(projects) {
+		var ul = $(".project .list ul");
+		for(var i = 0; i < projects.length; i++) {
+			var projectInfo = projects[i];
+			projectInfo = convertProject(projectInfo);
+
+			if(projectInfo.status === undefined) {
+				projectInfo.status = 1;
+			}
+			
+			ul.append(getProjectHtml(projectInfo));
+			myProjects.push(projectInfo);
+		}
+
+		$('.project .list .title').off('click').on('click', onProjectTitleClick);
+		$('.project .list .view > div').off('click').on('click', onProjectFileClick);
+	}
+
 
 	function checkOwn() {
 		var promise = $.Deferred();
@@ -493,16 +517,6 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		});
 	}
 
-	function bindProjectEvent() {
-		var titles = $('.project .list .title').off('click').on('click', onProjectTitleClick);
-		$('.project .list .view > div').off('click').on('click', onProjectFileClick);
-	}
-
-	function bindTabEvent() {
-		$('.top-tabs > ul > li').off('click').on('click', onTabClick);
-		$('.top-tabs > ul > li .close-btn').off('click').on('click', onTabCloseClick);
-	}
-
 	function onTabClick(e) {
 		var li = $(this);
 		var view = li.data('view');
@@ -619,11 +633,6 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		};
 	}
 
-	function getCurrentProject() {
-		var id = $('.top-tabs > ul > li.active').data('project-id');
-		return getProjectById(openedProjects, id);
-	}
-
 	function getProjectIndex(projects, id) {
 		var index = -1;
 		for(var i = 0; i < projects.length; i++){
@@ -655,6 +664,22 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		}
 	}
 
+	function getUuid() {
+		var d = new Date().getTime();
+		
+		var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		        var r = (d + Math.random() * 16) % 16 | 0;
+		        d = Math.floor(d / 16);
+		        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+		});
+
+		return uuid;
+	}
+
+	function isUuid(id) {
+		return /[0-9a-zA-Z]{8,8}-([0-9a-zA-Z]{4,4}-){3,3}[0-9a-zA-Z]{12,12}/.test(id);
+	}
+
 	return {
 		init: init,
 		load: load,
@@ -662,5 +687,6 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		save: save,
 		getCurrentProject: getCurrentProject,
 		loadMyProject: loadMyProject,
+		loadExample: loadExample,
 	}
 });

@@ -288,4 +288,40 @@
 			}
 		}
 	}
+
+	.example {
+		width: 240px;
+		position: relative;
+		overflow-y: auto;
+
+		.list { 
+			li {
+				cursor: pointer;
+				color: white;
+				text-align: center;
+				height: 36px;
+				line-height: 36px;
+
+				.sub-menu {
+					position: relative;
+					left: 100%;
+					top: -100%;
+					background-color: rgba(52, 58, 74, 0.92);
+					display: none;
+				}
+
+				&:hover {
+					background-color: #488ac0;
+
+					.sub-menu {
+						display: block;
+					}
+				}
+
+				&.active {
+					background-color: #488ac0;
+				}
+			}
+		}
+	}
 }
