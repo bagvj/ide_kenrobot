@@ -470,21 +470,37 @@
 						<div class="left">
 							<ul>
 								<li data-action="theme">主题</li>
-								<li class="hide" data-action="editor">编辑器</li>
+								<li data-action="editor">编辑器</li>
 								<li data-action="shortcut">快捷键</li>
 							</ul>
 						</div>
 						<div class="right">
 							<div class="tab tab-theme">
-								<div>
-									<span class="theme-label">主题：</span>
-									<select class="theme">
-										<option>默认</option>
-									</select>
+								<div class="field">
+									<span>主题</span>
+									<div>
+										<select class="theme">
+											<option value="default">默认</option>
+										</select>
+									</div>
 								</div>
 							</div>
 							<div class="tab tab-editor">
-
+								<div class="field">
+									<span>代码着色</span>
+									<div>
+										<select class="code-theme">
+											<option value="default">默认</option>
+											<option value="eclipse">Eclipse</option>
+											<option value="github">Github</option>
+											<option value="monokai">Monokai</option>
+											<option value="terminal">Terminal</option>
+											<option value="textmate">Textmate</option>
+											<option value="tomorrow">Tomorrow</option>
+											<option value="xcode">Xcode</option>
+										</select>
+									</div>
+								</div>
 							</div>
 							<div class="tab tab-shortcut">
 								<div class="grid">

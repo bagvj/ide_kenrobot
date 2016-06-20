@@ -77,17 +77,64 @@
 			.tab-theme {
 				padding: 30px;
 
-				.theme-label {
-					line-height: 32px;
-					margin-left: 20px;
-				}
+				.field {
+					margin-top: 20px;
 
-				.theme {
-					border: 1px solid #ddd;
-					background-color: #f7f7f7;
-					height: 32px;
-					width: 320px;
-					padding-left: 10px;
+					&:first-child {
+						margin-top: 0;
+					}
+
+					& > span {
+						line-height: 32px;
+						margin-right: 20px;
+						display: inline-block;
+						width: 80px;
+						text-align: right;
+					}
+
+					& > div {
+						display: inline-block;
+					}
+
+					.theme {
+						border: 1px solid #ddd;
+						background-color: #f7f7f7;
+						height: 32px;
+						width: 320px;
+						padding-left: 10px;
+					}
+				}
+			}
+
+			.tab-editor {
+				padding: 30px;
+				
+				.field {
+					margin-top: 20px;
+
+					&:first-child {
+						margin-top: 0;
+					}
+
+					& > span {
+						line-height: 32px;
+						margin-right: 20px;
+						display: inline-block;
+						width: 80px;
+						text-align: right;
+					}
+
+					& > div {
+						display: inline-block;
+					}
+
+					.code-theme {
+						border: 1px solid #ddd;
+						background-color: #f7f7f7;
+						height: 32px;
+						width: 320px;
+						padding-left: 10px;
+					}
 				}
 			}
 
