@@ -463,6 +463,68 @@
 						<button class="x-dialog-btn confirm">确定</button><button class="x-dialog-btn cancel">取消</button>
 					</div>
 				</div>
+				<div class="x-dialog x-dialog-custom setting-dialog">
+					<div class="x-dialog-title">设置</div>
+					<i class="kenrobot ken-close x-dialog-close"></i>
+					<div class="x-dialog-content">
+						<div class="left">
+							<ul>
+								<li data-action="theme">主题</li>
+								<li class="hide" data-action="editor">编辑器</li>
+								<li data-action="shortcut">快捷键</li>
+							</ul>
+						</div>
+						<div class="right">
+							<div class="tab tab-theme">
+								<div>
+									<span class="theme-label">主题：</span>
+									<select class="theme">
+										<option>默认</option>
+									</select>
+								</div>
+							</div>
+							<div class="tab tab-editor">
+
+							</div>
+							<div class="tab tab-shortcut">
+								<div class="grid">
+									<div>
+										<span class="name">名称</span>
+										<span class="shortcut">快捷键</span>
+									</div>
+									<div>
+										<span class="name">保存</span>
+										<span class="shortcut">Ctrl + S</span>
+									</div>
+									<div>
+										<span class="name">编译</span>
+										<span class="shortcut">Ctrl + B</span>
+									</div>
+									<div>
+										<span class="name">格式化</span>
+										<span class="shortcut">Ctrl + U</span>
+									</div>
+									<div>
+										<span class="name">注释/取消注释</span>
+										<span class="shortcut">Ctrl + /</span>
+									</div>
+									<div>
+										<span class="name">撤消</span>
+										<span class="shortcut">Ctrl + Z</span>
+									</div>
+									<div>
+										<span class="name">重做</span>
+										<span class="shortcut">Ctrl + Y</span>
+									</div>
+									<div>
+										<span class="name">剪切行</span>
+										<span class="shortcut">Ctrl + D</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="x-dialog x-dialog-info share-dialog">
 					<div class="x-dialog-title">分享</div>
 					<i class="kenrobot ken-close x-dialog-close"></i>

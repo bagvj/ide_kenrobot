@@ -1,4 +1,4 @@
-define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, EventManager, util, userApi) {
+define(['vendor/jquery', './EventManager', './util', './setting', './userApi'], function(_, EventManager, util, setting, userApi) {
 	var userInfo;
 	var loginCheckTimer;
 	var loginCallback;
@@ -241,7 +241,7 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 				EventManager.trigger("project", "share");
 				break;
 			case "setting":
-				util.message("敬请期待");
+				setting.show();
 				break;
 			case "logout":
 				window.location.href = "/logout";

@@ -1,0 +1,140 @@
+.setting-dialog {
+	width: 720px;
+	color: #676767;
+
+	.x-dialog-title {
+		padding-left: 20px;
+		height: 50px;
+		line-height: 50px;
+		background-color: #dbdbdb;
+		border-bottom: 1px solid #b3b3b3;
+		text-align: left;
+	}
+
+	.x-dialog-close {
+		top: 11px;
+
+	}
+
+	.x-dialog-content {
+		height: 370px;
+		display: block;
+		position: relative;
+
+		& > .left {
+			background-color: #f2f2f2;
+			width: 120px;
+			top: 0;
+			bottom: 0;
+			position: absolute;
+			padding-top: 10px;
+
+			& > ul > li {
+				height: 40px;
+				line-height: 40px;
+				padding-left: 25px;
+				cursor: pointer;
+				position: relative;
+
+				&:before {
+					content: ' ';
+					height: 40px;
+					width: 5px;
+					left: 0;
+					background-color: #24c1ff;
+					position: absolute;
+					display: none;
+				}
+
+				&.active {
+					&:before {
+						display: block;
+					}
+				}
+
+				&:hover {
+					color: #333;
+				}
+			}
+		}
+
+
+		& > .right {
+			width: 600px;
+			left: 120px;
+			top: 0;
+			bottom: 0;
+			position: absolute;
+
+			.tab {
+				display: none;
+
+				&.active {
+					display: block;
+				}
+			}
+
+			.tab-theme {
+				padding: 30px;
+
+				.theme-label {
+					line-height: 32px;
+					margin-left: 20px;
+				}
+
+				.theme {
+					border: 1px solid #ddd;
+					background-color: #f7f7f7;
+					height: 32px;
+					width: 320px;
+					padding-left: 10px;
+				}
+			}
+
+			.tab-shortcut {
+				padding-left: 30px;
+				padding-top: 20px;
+
+				.grid {
+					border: 1px solid #ddd;
+					width: 502px;
+
+					 & > div {
+						background-color: white;
+						height: 24px;
+						line-height: 24px;
+						width: 500px;
+						white-space: nowrap;
+						border-top: 1px solid #ddd;
+						font-size: 12px;
+
+						&:first-child {
+							font-weight: bold;
+							border-top: none;
+						}
+
+						&:nth-child(odd) {
+							background-color: #f2f2f2;
+						}
+
+						.name {
+							display: inline-block;
+							width: 200px;
+							float: left;
+							padding-left: 20px;
+							border-right: 1px solid #ddd;
+							letter-spacing: 1px;
+						}
+
+						.shortcut {
+							display: inline-block;
+							width: 300px;
+							padding-left: 20px;
+							float: left;
+						}
+					}
+				}
+			}
+		}
+	}
+}
