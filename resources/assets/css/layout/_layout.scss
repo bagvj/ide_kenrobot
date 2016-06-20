@@ -166,13 +166,19 @@
 
 		.name {
 			margin-left: 10px;
+			width: 124px;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			display: inline-block;
 		}
 
 		.close-btn {
 			visibility: hidden;
 			font-size: 12px;
-			line-height: 28px;
+			line-height: 26px;
 			position: absolute;
+			top: 0;
 			right: 5px;
 
 			&:hover {
