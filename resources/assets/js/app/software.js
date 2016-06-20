@@ -19,30 +19,78 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-chrome',
 		editor.commands.addCommands([{
 			name: "saveProject",
 			bindKey: {
-				win: "Ctrl-s",
-				mac: "Command-s"
+				win: "Ctrl-S",
+				mac: "Command-S"
 			},
-			exec: function(editor) {
+			exec: function() {
 				EventManager.trigger('global', 'project.save');
 			}
 		}, {
 			name: "buildProject",
 			bindKey: {
-				win: "Ctrl-b",
-				mac: "Command-b"
+				win: "Ctrl-B",
+				mac: "Command-B"
 			},
-			exec: function(editor) {
+			exec: function() {
 				EventManager.trigger('global', 'project.build');
 			}
 		}, {
 			name: "formatCode",
 			bindKey: {
-				win: "Ctrl-u",
-				mac: "Command-u"
+				win: "Ctrl-U",
+				mac: "Command-U"
 			},
-			exec: function(editor) {
+			exec: function() {
 				EventManager.trigger('global', 'software.format');
 			}
+		}, {
+			name: "movelinesup",
+			bindKey: {
+				win: "Ctrl-Up",
+				mac: "Command-Up"
+			},
+			exec: function(e) {
+				e.moveLinesUp();
+			},
+			scrollIntoView: "cursor"
+		}, {
+			name: "movelinesdown",
+			bindKey: {
+				win: "Ctrl-Down",
+				mac: "Command-Down"
+			},
+			exec: function(e) {
+				e.moveLinesDown();
+			},
+			scrollIntoView: "cursor"
+		}, {
+			name: "unfind",
+			bindKey: {
+				win: "Ctrl-F",
+				mac: "Command-F"
+			},
+			exec: function() {},
+		}, {
+			name: "unreplace",
+			bindKey: {
+				win: "Ctrl-H",
+				mac: "Command-Option-F"
+			},
+			exec: function() {},
+		}, {
+			name: "showSettingsMenu",
+			bindKey: {
+				win: "Ctrl-,",
+				mac: "Command-,"
+			},
+			exec: function() {},
+		}, {
+			name: "centerselection",
+			bindKey: {
+				win: "Ctrl-L",
+				mac: "Command-L",
+			},
+			exec: function() {},
 		}]);
 		
 		code.init(api);

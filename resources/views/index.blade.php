@@ -546,6 +546,22 @@
 										<span class="name">剪切行</span>
 										<span class="shortcut">Ctrl + D</span>
 									</div>
+									<div>
+										<span class="name">交换上一行</span>
+										<span class="shortcut">Ctrl + Up</span>
+									</div>
+									<div>
+										<span class="name">交换下一行</span>
+										<span class="shortcut">Ctrl + Down</span>
+									</div>
+									<div>
+										<span class="name">块缩进</span>
+										<span class="shortcut">Ctrl + ]</span>
+									</div>
+									<div>
+										<span class="name">减少块缩进</span>
+										<span class="shortcut">Ctrl + [</span>
+									</div>
 								</div>
 							</div>
 						</div>

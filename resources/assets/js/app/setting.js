@@ -60,19 +60,19 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './EventManager', './util'], fu
 			case "theme":
 				if(force || options.theme != value) {
 					options.theme = value;
-					EventManager.trigger("setting", "change", {type: "theme", value: value});
+					EventManager.trigger("setting", "change", {type: type, value: value});
 				}
 				break;
 			case "editor.theme":
 				if(force || options.editor.theme != value) {
 					options.editor.theme = value;
-					EventManager.trigger("setting", "change", {type: "editor.theme", value: value});
+					EventManager.trigger("setting", "change", {type: type, value: value});
 				}
 				break;
 			case "editor.tabSize":
 				if(force || options.editor.tabSize != value) {
 					options.editor.tabSize = value;
-					EventManager.trigger("setting", "change", {type: "editor.tabSize", value: value});
+					EventManager.trigger("setting", "change", {type: type, value: value});
 				}
 				break;
 		}
