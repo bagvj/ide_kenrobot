@@ -88,9 +88,19 @@
 					position: relative;
 					color: white;
 					background-color: #4b5765;
+					
+
+					.name {
+						width: 190px;
+						overflow: hidden;
+						white-space: nowrap;
+						text-overflow: ellipsis;
+						display: inline-block;
+					}
 
 					.icon {
 						margin-right: 4px;
+						float: left;
 					}
 
 					.arrow {
