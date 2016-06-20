@@ -57,12 +57,12 @@
 }
 
 .x-dialog {
-    color: #515151;
     width: 400px;
     margin: 0 auto;
     position: relative;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
     display: none;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
+    color: #515151;
 
     &.active {
         display: block;
@@ -99,10 +99,10 @@
     
     .x-dialog-content {
         height: 110px;
-        background-color: white;
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: white;
     }
 
     .x-dialog-btns {

@@ -26,10 +26,10 @@ $blue: #4891ed;
 			}
 
 			input[type="button"] {
+				cursor: pointer;
 				background-color: white;
 				color: $blue;
 				border: 1px solid $blue;
-				cursor: pointer;
 			}
 
 			.wrap {
@@ -78,8 +78,8 @@ $blue: #4891ed;
 				select {
 					height: 30px;
 					line-height: 30px;
-					border: 1px solid $blue;
 					padding-left: 5px;
+					border: 1px solid $blue;
 				}
 
 				.port {
@@ -129,9 +129,9 @@ $blue: #4891ed;
 				margin-right: 20px;
 
 				&.burning {
+					cursor: default;
 					border-color: #ccc;
 					color: #ccc;
-					cursor: default;
 				}
 			}
 

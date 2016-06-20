@@ -1,7 +1,7 @@
 .sidebar {
 	.bar {
-		background-color: #1d222d;
 		position: relative;
+		background-color: #1d222d;
 
 		ul li {
 			height: 66px;
@@ -166,17 +166,17 @@
 				
 				padding-left: 10px;
 				padding-right: 20px;
+				border-radius: 12px;
 				color: #515151;
 				background-color: white;
-				border-radius: 12px;
 				border: 1px solid #bac4d0;
 			}
 
 			& > i {
 				line-height: 24px;
 				right: 30px;
-				color: #b9b9b6;
 				position: absolute;
+				color: #b9b9b6;
 			}
 		}
 
@@ -268,7 +268,7 @@
 						bottom: 0;
 						left: 0;
 						right: 0;
-						background: url(/assets/image/stamps.png) no-repeat 115px 10px;
+						background: url('../image/stamps.png') no-repeat 115px 10px;
 						background-size: 50px 50px
 					}
 				}
@@ -284,9 +284,9 @@
 		.list {
 			li {
 				cursor: pointer;
-				color: white;
 				text-align: center;
 				height: 36px;
+				color: white;
 				line-height: 36px;
 
 				&:hover {
@@ -307,17 +307,17 @@
 		.list { 
 			li {
 				cursor: pointer;
-				color: white;
 				text-align: center;
 				height: 36px;
 				line-height: 36px;
+				color: white;
 
 				& > ul {
 					position: relative;
 					left: 100%;
 					top: -100%;
-					background-color: rgba(52, 58, 74, 0.92);
 					display: none;
+					background-color: rgba(52, 58, 74, 0.92);
 				}
 
 				&:hover {

@@ -40,9 +40,9 @@
 	.x-dialog-title {
 		height: 40px;
 		line-height: 40px;
+		text-align: left;
 		color: #201412;
 		background-color: #dbdbdb;
-		text-align: left;
 
 		.x-dialog-icon {
 			width: 40px;
@@ -68,20 +68,20 @@
 		.port-list {
 			height: 30px;
 			width: 120px;
+			margin-left: 10px;
+			margin-right: 20px;
+
 			border: 1px solid #c7c7c7;
 			background-color: #f8f8f8;
 			color: #676767;
-
-			margin-left: 10px;
-			margin-right: 20px;
 		}
 
 		.x-btn {
 			height: 30px;
+			letter-spacing: 1px;
 			border: 1px solid #c7c7c7;
 			background-color: #f8f8f8;
 			color: #676767;
-			letter-spacing: 1px;
 
 			&:hover {
 				background-color: #dbdbdb;
@@ -161,10 +161,10 @@
 
 			.terminal, .cmd {
 				font-family: 'Microsoft YaHei';
-				color: #676767;
-				background-color: #f2f2f2;
 				font-size: 14px;
 				line-height: 20px;
+				color: #676767;
+				background-color: #f2f2f2;
 			}
 
 			.terminal .terminal-output div div, .cmd .prompt {

@@ -6,9 +6,9 @@
 		padding-left: 20px;
 		height: 50px;
 		line-height: 50px;
+		text-align: left;
 		background-color: #dbdbdb;
 		border-bottom: 1px solid #b3b3b3;
-		text-align: left;
 	}
 
 	.x-dialog-close {
@@ -22,12 +22,12 @@
 		position: relative;
 
 		& > .left {
-			background-color: #f2f2f2;
 			width: 120px;
 			top: 0;
 			bottom: 0;
 			position: absolute;
 			padding-top: 10px;
+			background-color: #f2f2f2;
 
 			& > ul > li {
 				height: 40px;
@@ -41,9 +41,9 @@
 					height: 40px;
 					width: 5px;
 					left: 0;
-					background-color: #24c1ff;
 					position: absolute;
 					display: none;
+					background-color: #24c1ff;
 				}
 
 				&.active {
@@ -97,11 +97,11 @@
 					}
 
 					.theme {
-						border: 1px solid #ddd;
-						background-color: #f7f7f7;
 						height: 32px;
 						width: 320px;
 						padding-left: 10px;
+						border: 1px solid #ddd;
+						background-color: #f7f7f7;
 					}
 				}
 			}
@@ -129,19 +129,19 @@
 					}
 
 					.code-theme {
-						border: 1px solid #ddd;
-						background-color: #f7f7f7;
 						height: 32px;
 						width: 320px;
 						padding-left: 10px;
+						border: 1px solid #ddd;
+						background-color: #f7f7f7;
 					}
 
 					.tab-size {
-						border: 1px solid #ddd;
-						background-color: #f7f7f7;
 						height: 32px;
 						width: 320px;
 						padding-left: 10px;
+						border: 1px solid #ddd;
+						background-color: #f7f7f7;
 					}
 				}
 			}
@@ -151,17 +151,17 @@
 				padding-top: 20px;
 
 				.grid {
-					border: 1px solid #ddd;
 					width: 502px;
+					border: 1px solid #ddd;
 
 					 & > div {
-						background-color: white;
 						height: 24px;
 						line-height: 24px;
 						width: 500px;
 						white-space: nowrap;
-						border-top: 1px solid #ddd;
 						font-size: 12px;
+						background-color: white;
+						border-top: 1px solid #ddd;
 
 						&:first-child {
 							font-weight: bold;
@@ -177,8 +177,8 @@
 							width: 200px;
 							float: left;
 							padding-left: 20px;
-							border-right: 1px solid #ddd;
 							letter-spacing: 1px;
+							border-right: 1px solid #ddd;
 						}
 
 						.shortcut {
