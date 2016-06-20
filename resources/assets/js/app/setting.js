@@ -1,62 +1,80 @@
-define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, util) {
-	var hasInit;
-	var selector = ".setting-dialog";
+define(['vendor/jquery', 'vendor/jquery.cookie', './EventManager', './util'], function(_, _, EventManager, util) {
 	var options;
+	var selector = ".setting-dialog";
+	var defaultOptions = {
+		theme: "default",
+		editor: {
+			theme: "default",
+			tabSize: 4,
+		},
+	};
 
 	function init() {
-		if(hasInit) {
-			return;
-		}
-
-		options = {
-			theme: "default",
-			editor: {
-				theme: "default",
-			},
-		};
-
-		hasInit = true;
 		$('.left ul > li', selector).on('click', onTabClick)[0].click();
+
+		$('.tab-theme .theme', selector).on('change', function() {
+			applyOption("theme", $(this).val());
+			saveOptions();
+		});
+
+		$('.tab-editor .code-theme', selector).on('change', function() {
+			applyOption("editor.theme", $(this).val());
+			saveOptions();
+		});
+
+		$('.tab-editor .tab-size', selector).on('blur', function() {
+			applyOption("editor.tabSize", parseInt($(this).val()));
+			saveOptions();
+		});
+
+		loadOptions();
 	}
 
 	function show() {
-		init();
-
-		var newOptions;
-		var dialog = util.dialog({
-			selector: selector,
-			onClosing: function() {
-				newOptions = getOptions();
-			},
-			onClose: function() {
-				applyOptions(newOptions);
-			}
-		});
+		util.dialog(selector);
 	}
 
-	function getOptions() {
-		var opt = {
-			theme: "",
-			editor: {
-				theme: "",
-			}
+	function loadOptions() {
+		try {
+			options = JSON.parse($.cookie("setting"));
+		} catch(ex) {
+			options = defaultOptions;
 		}
 
-		opt.theme = $('.tab-theme .theme', selector).val();
-		opt.editor.theme = $('.tab-editor .code-theme', selector).val();
+		$('.tab-theme .theme', selector).val(options.theme);
+		applyOption("theme", options.theme, true);
 
-		return opt;
+		$('.tab-editor .code-theme', selector).val(options.editor.theme);
+		applyOption("editor.theme", options.editor.theme, true);
+
+		$('.tab-editor .tab-size', selector).val(options.editor.tabSize);
+		applyOption("editor.tabSize", options.editor.tabSize, true);
 	}
 
-	function applyOptions(newOptions) {
-		if(options.theme != newOptions.theme) {
-			options.theme = newOptions.theme;
-			EventManager.trigger("setting", "changeTheme", options.theme);
-		}
+	function saveOptions() {
+		$.cookie("setting", JSON.stringify(options));
+	}
 
-		if(options.editor.theme != newOptions.editor.theme) {
-			options.editor.theme = newOptions.editor.theme;
-			EventManager.trigger("setting", "changeEditorTheme", options.editor.theme);
+	function applyOption(type, value, force) {
+		switch(type) {
+			case "theme":
+				if(force || options.theme != value) {
+					options.theme = value;
+					EventManager.trigger("setting", "change", {type: "theme", value: value});
+				}
+				break;
+			case "editor.theme":
+				if(force || options.editor.theme != value) {
+					options.editor.theme = value;
+					EventManager.trigger("setting", "change", {type: "editor.theme", value: value});
+				}
+				break;
+			case "editor.tabSize":
+				if(force || options.editor.tabSize != value) {
+					options.editor.tabSize = value;
+					EventManager.trigger("setting", "change", {type: "editor.tabSize", value: value});
+				}
+				break;
 		}
 	}
 
@@ -73,6 +91,7 @@ define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, 
 	}
 
 	return {
+		init: init,
 		show: show,
 	}
 });

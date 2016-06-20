@@ -1,4 +1,4 @@
-define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-eclipse', 'vendor/ace/theme-github', 'vendor/ace/theme-monokai', 'vendor/ace/theme-terminal', 'vendor/ace/theme-textmate', 'vendor/ace/theme-tomorrow', 'vendor/ace/theme-xcode', 'vendor/ace/mode-arduino', 'vendor/ace/snippets/text', 'vendor/ace/snippets/arduino', 'vendor/ace/ext-language_tools', 'vendor/ace/ext-code_blast', 'vendor/jquery', './EventManager', './code'], function(_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, EventManager, code) {
+define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-chrome', 'vendor/ace/theme-clouds', 'vendor/ace/theme-eclipse', 'vendor/ace/theme-github', 'vendor/ace/theme-monokai', 'vendor/ace/theme-terminal', 'vendor/ace/theme-textmate', 'vendor/ace/theme-tomorrow', 'vendor/ace/theme-xcode', 'vendor/ace/mode-arduino', 'vendor/ace/snippets/text', 'vendor/ace/snippets/arduino', 'vendor/ace/ext-language_tools', 'vendor/ace/ext-code_blast', 'vendor/jquery', './EventManager', './code'], function(_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, EventManager, code) {
 	var editor;
 	var js_format_string = Module.cwrap("js_format_string", "string", ["string"]);
 
@@ -47,7 +47,7 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-eclipse'
 		
 		code.init(api);
 		EventManager.bind("bottomContainer", "resize", onResize);
-		EventManager.bind("setting", "changeEditorTheme", onChangeTheme);
+		EventManager.bind("setting", "change", onSettingChange);
 	}
 
 	function setData(data) {
@@ -98,8 +98,15 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-eclipse'
 		EventManager.trigger("software", "editorChange");
 	}
 
-	function onChangeTheme(theme) {
-		editor.setTheme("ace/theme/" + theme);
+	function onSettingChange(option) {
+		switch(option.type) {
+			case "editor.theme":
+				editor.setTheme("ace/theme/" + option.value);
+				break;
+			case "editor.tabSize":
+				editor.getSession().setTabSize(option.value);
+				break;
+		}
 	}
 
 	return {

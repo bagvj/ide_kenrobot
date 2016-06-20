@@ -1,4 +1,4 @@
-define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, util) {
+define(['vendor/jquery', './EventManager', './util', './setting'], function(_, EventManager, util, setting) {
 
 	function init() {
 		EventManager.bind("sidebar", "viewChange", onViewChange);
@@ -61,6 +61,11 @@ define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, 
 	function onSidebarClick(e) {
 		var li = $(this);
 		var action = li.data("action");
+		if(action == "setting") {
+			setting.show();
+			return;
+		}
+
 		var tab = $('.sidebar .tab-' + action);
 		if(tab.is(':animated')) {
 			return;

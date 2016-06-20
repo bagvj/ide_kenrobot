@@ -46,7 +46,6 @@
 							<div class="user-menu">
 								<ul>
 									<li data-action="share"><i class="kenrobot ken-share"></i>分享</li>
-									<li data-action="setting"><i class="kenrobot ken-setting"></i>设置</li>
 									<li data-action="logout"><i class="kenrobot ken-logout"></i>退出</li>
 								</ul>
 							</div>
@@ -60,12 +59,15 @@
 				<div class="main-content">
 					<div class="sidebar">
 						<div class="bar">
-							<ul>
+							<ul class="top-bar">
 								<li data-action="project"><i class="kenrobot ken-project"></i>项目</li>
 								<li class="hide" data-action="board"><i class="kenrobot ken-board"></i>主板</li>
 								<li class="hide" data-action="component"><i class="kenrobot ken-component"></i>元件</li>
 								<li data-action="library"><i class="kenrobot ken-library"></i>库</li>
 								<li data-action="example"><i class="kenrobot ken-demo"></i>示例</li>
+							</ul>
+							<ul class="bottom-bar">
+								<li data-action="setting"><i class="kenrobot ken-setting"></i>设置</li>
 							</ul>
 						</div>
 						<div class="tab tab-project">
@@ -491,14 +493,22 @@
 									<div>
 										<select class="code-theme">
 											<option value="default">默认</option>
+											<option value="chrome">Chrome</option>
+											<option value="clouds">Clouds</option>
 											<option value="eclipse">Eclipse</option>
 											<option value="github">Github</option>
 											<option value="monokai">Monokai</option>
 											<option value="terminal">Terminal</option>
 											<option value="textmate">Textmate</option>
 											<option value="tomorrow">Tomorrow</option>
-											<option value="xcode">Xcode</option>
+											<option value="xcode">XCode</option>
 										</select>
+									</div>
+								</div>
+								<div class="field">
+									<span>Tab大小</span>
+									<div>
+										<input class="tab-size" type="number" value="4" min="0" max="8" />
 									</div>
 								</div>
 							</div>

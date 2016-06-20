@@ -1,4 +1,4 @@
-define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './util', './hardware', './user', './project', './software', './sidebar', './topMenu', './bottomContainer', './board', './component', './library', './example', './ext/agent', './guide'], function(_, Mousetrap, EventManager, config, util, hardware, user, project, software, sidebar, topMenu, bottomContainer, board, component, library, example, extAgent, guide) {
+define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './util', './hardware', './user', './project', './software', './sidebar', './topMenu', './bottomContainer', './board', './component', './library', './example', './ext/agent', './guide', './setting'], function(_, Mousetrap, EventManager, config, util, hardware, user, project, software, sidebar, topMenu, bottomContainer, board, component, library, example, extAgent, guide, setting) {
 	function init() {
 		initAjax();
 		initKeys();
@@ -22,6 +22,7 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 		extAgent.init(config.extension);
 
 		guide.init();
+		setting.init();
 
 		$.when(
 			loadConfig(),

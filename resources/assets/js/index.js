@@ -25,6 +25,12 @@ require.config({
 		"vendor/ace/theme-default": {
 			deps: ['./ace'],
 		},
+		"vendor/ace/theme-chrome": {
+			deps: ['./ace'],
+		},
+		"vendor/ace/theme-clouds": {
+			deps: ['./ace'],
+		},
 		"vendor/ace/theme-eclipse": {
 			deps: ['./ace'],
 		},
@@ -47,7 +53,7 @@ require.config({
 			deps: ['./ace'],
 		},
 		"vendor/ace/ext-language_tools": {
-			deps: ['./ace', "./mode-arduino", "./snippets/text", "./snippets/arduino", "./theme-default", "./theme-eclipse", "./theme-github", "./theme-monokai", "./theme-terminal", "./theme-textmate", "./theme-tomorrow", "./theme-xcode"],
+			deps: ['./ace', "./mode-arduino", "./snippets/text", "./snippets/arduino", "./theme-default", "./theme-chrome", "./theme-clouds", "./theme-eclipse", "./theme-github", "./theme-monokai", "./theme-terminal", "./theme-textmate", "./theme-tomorrow", "./theme-xcode"],
 		},
 		"vendor/ace/ext-code_blast": {
 			deps: ['./ace'],

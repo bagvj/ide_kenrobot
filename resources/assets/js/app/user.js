@@ -1,4 +1,4 @@
-define(['vendor/jquery', './EventManager', './util', './setting', './userApi'], function(_, EventManager, util, setting, userApi) {
+define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, EventManager, util, userApi) {
 	var userInfo;
 	var loginCheckTimer;
 	var loginCallback;
@@ -239,9 +239,6 @@ define(['vendor/jquery', './EventManager', './util', './setting', './userApi'], 
 		switch(action) {
 			case "share":
 				EventManager.trigger("project", "share");
-				break;
-			case "setting":
-				setting.show();
 				break;
 			case "logout":
 				window.location.href = "/logout";
