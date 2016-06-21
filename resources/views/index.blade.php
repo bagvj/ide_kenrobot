@@ -257,12 +257,6 @@
 				<div class="switch-view{{isset($user) ? ' active' : ''}}" data-view="hardware">
 					<i class="kenrobot ken-switch"></i><span class="switch-text">硬件设计</span>
 				</div>
-				<div class="copyright">
-					<div class="wrap">
-						备案号：京ICP备15039570号&nbsp;&nbsp;&nbsp;&nbsp;Copyright © 2014 KenRobot.com All Rights Reserved
-						<i class="kenrobot ken-close close-btn"></i>
-					</div>
-				</div>
 			</div>
 			<div class="drag-layer"></div>
 			<div class="modal dialog-layer">
@@ -474,6 +468,7 @@
 								<li data-action="theme">主题</li>
 								<li data-action="editor">编辑器</li>
 								<li data-action="shortcut">快捷键</li>
+								<li data-action="about">关于</li>
 							</ul>
 						</div>
 						<div class="right">
@@ -563,6 +558,11 @@
 										<span class="shortcut">Ctrl + [</span>
 									</div>
 								</div>
+							</div>
+							<div class="tab tab-about">
+								<div class="about-logo"></div>
+								<div class="intro">啃萝卜是一款在线硬件编程学习平台，我们的目标是：让机器人编程变得更容易，让学习变得更简单。</div>
+								<div class="copyright">版权所有2016 KenRobot Inc. 保留所有权利。</div>
 							</div>
 						</div>
 					</div>

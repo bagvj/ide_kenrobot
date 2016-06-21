@@ -28,10 +28,10 @@ Route::post('/api/projects/user', 'ProjectController@getProjects');
 //获取项目列表，SNS调用
 Route::any('/api/projects/list', 'ProjectController@ProjectList');
 
-
 //项目评论API
-Route::get('/api/comment', 'CommentController@index');
-Route::any('/api/comment/create', 'CommentController@store');
+Route::post('/api/comment/save', 'CommentController@save');
+Route::post('/api/comment/get', 'CommentController@get');
+Route::post('/api/comment/delete', 'CommentController@remove');
 
 // 登录验证API
 Route::post('/api/auth/check', 'Auth\WebAuthController@check');

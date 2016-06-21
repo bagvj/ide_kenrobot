@@ -7,7 +7,6 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 		initLoginDialog();
 
 		initUserDialog();
-		initCopyright();
 
 		$('.user-login li').on('click', onLogin);
 	}
@@ -213,23 +212,6 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 			$('.top-menu').css({
 				'margin-right': user.width(),
 			});
-		}
-	}
-
-	function initCopyright() {
-		var copyright = $('.copyright');
-
-		var hideCopyright = $.cookie("hideCopyright");
-		if(!hideCopyright) {
-			copyright.addClass("active");
-			$('.close-btn', copyright).on('click', function() {
-				copyright.fadeOut(function() {
-					copyright.remove();
-					$.cookie("hideCopyright", true, {expires: 365});
-				});
-			});
-		} else {
-			copyright.remove();
 		}
 	}
 

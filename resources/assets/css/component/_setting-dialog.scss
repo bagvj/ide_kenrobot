@@ -190,6 +190,27 @@
 					}
 				}
 			}
+
+			.tab-about {
+				padding: 30px;
+
+				.about-logo {
+					width: 100px;
+					height: 50px;
+					background: url('../image/logo3.png') no-repeat center;
+					background-size: contain;
+				}
+
+				.intro {
+					margin-top: 7px;
+					line-height: 24px;
+				}
+
+				.copyright {
+					font-size: 12px;
+					margin-top: 30px;
+				}
+			}
 		}
 	}
 }

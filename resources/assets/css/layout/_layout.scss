@@ -395,42 +395,6 @@
 	}
 }
 
-.copyright {
-	width: 100%;
-	bottom: 0;
-	display: none;
-	position: absolute;
-
-	.wrap {
-		width: 560px;
-		font-size: 12px;
-		padding-top: 4px;
-		padding-bottom: 4px;
-		line-height: 20px;
-		text-align: center;
-		z-index: 600;
-		margin: 0 auto;
-		position: relative;
-
-		color: #676767;
-		background-color: #d8edf7;
-
-		.close-btn {
-			cursor: pointer;
-			position: absolute;
-			right: 5px;
-
-			&:hover {
-				color: #FF9696;
-			}
-		}
-	}
-
-	&.active {
-		display: block;
-	}
-}
-
 .bottom-container {
 	.drag-handle {
 		position: absolute;

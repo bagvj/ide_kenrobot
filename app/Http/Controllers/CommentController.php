@@ -10,40 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Project\Comment as CommentModel;
 class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        $project_id = $request->input('project_id');
-        //
-        $commentList =  CommentModel::where('project_id', $project_id)
-                ->orderby('reply_comment')
-                ->orderby('created_at')->get();
-
-        //嵌套评论
-        $commentNest = [];
-        dd($commentList);
-        foreach ($commentList->toArray() as $comment) {
-            if ($comment['reply_comment'] == 0) {
-                $comment['sub_comments'] = array();
-                $commentNest[$comment['id']] = $comment;
-            } else {
-                $commentNest[$comment['reply_comment']]['sub_comments'][$comment['id']] = $comment;
-            }
-        }
-        return $commentNest;
-    }
-
-    /**
-     * 添加评论
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function save(Request $request)
     {
         //
         $input = $request->only(['project_id', 'user_id', 'content']);
@@ -61,24 +28,33 @@ class CommentController extends Controller
         return CommentModel::create($input);
     }
 
-    /**
-     * 更新评论
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function get(Request $request)
+    {
+        $project_id = $request->input('project_id');
+        //
+        $commentList =  CommentModel::where('project_id', $project_id)
+                ->orderby('reply_comment')
+                ->orderby('created_at')->get();
+
+        //嵌套评论
+        $commentNest = [];
+        foreach ($commentList->toArray() as $comment) {
+            if ($comment['reply_comment'] == 0) {
+                $comment['sub_comments'] = array();
+                $commentNest[$comment['id']] = $comment;
+            } else {
+                $commentNest[$comment['reply_comment']]['sub_comments'][$comment['id']] = $comment;
+            }
+        }
+        return $commentNest;
+    }
+
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * 删除评论
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function remove($id)
     {
         //
     }

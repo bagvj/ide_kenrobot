@@ -1,4 +1,4 @@
-define(['vendor/jquery', './EventManager', './project', './software', './logcat', './serialAssitant', './interpreter', './ext/agent', './ext/burn-dialog', './util'], function(_, EventManager, project, software, logcat, serialAssitant, interpreter, agent, burnDialog, util) {
+define(['vendor/jquery', './EventManager', './project', './software', './logcat', './serialAssitant', './interpreter', './ext/agent', './ext/burn-dialog', './comment', './util'], function(_, EventManager, project, software, logcat, serialAssitant, interpreter, agent, burnDialog, comment, util) {
 
 	function init() {
 		$('.top-menu > ul > li').on('click', onMenuClick);
