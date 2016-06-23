@@ -13,6 +13,9 @@ require.config({
 		"vendor/jquery-ui": {
 			deps: ['./jquery'],
 		},
+		"vendor/jquery.mCustomScrollbar": {
+			deps: ['./jquery'],
+		},
 		"vendor/ace/mode-arduino": {
 			deps: ['./ace'],
 		},
