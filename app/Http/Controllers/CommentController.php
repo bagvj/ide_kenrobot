@@ -27,7 +27,7 @@ class CommentController extends Controller
         }
 
         $comment = CommentModel::create($input);
-        return ['status' => 0, 'message' => '保存成功', 'data' => $comment];
+        return ['status' => 0, 'message' => '发表成功', 'data' => $comment];
     }
 
     public function get(Request $request)

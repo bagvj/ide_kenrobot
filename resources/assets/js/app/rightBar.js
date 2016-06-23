@@ -72,7 +72,13 @@ define(['vendor/jquery', './util', './EventManager', './comment'], function(_, u
 		}
 
 		var li = $(this);
-		var action = li.data('action');		
+		var action = li.data('action');	
+		if(li.hasClass('active')) {
+			li.removeClass('active');
+		} else {
+			util.toggleActive(li);
+		}
+
 		isShow() ? doHide(action) : doShow(action);
 	}
 
