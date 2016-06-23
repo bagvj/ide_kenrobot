@@ -21,6 +21,12 @@
 		}
 	}
 
+	.main-content {
+		& > .wrap {
+			background-color: white;
+		}
+	}
+
 	.top-menu {
 		li {
 			color: #676767;
