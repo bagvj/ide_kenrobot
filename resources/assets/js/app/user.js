@@ -23,7 +23,7 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 		return userInfo ? userInfo.name : "";
 	}
 
-	function authCheck(callback) {
+	function authCheck() {
 		var promise = $.Deferred();
 		userApi.authCheck().done(function(result){
 			if(result.status == 0) {

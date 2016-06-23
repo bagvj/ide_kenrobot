@@ -22,8 +22,20 @@
 	}
 
 	.main-content {
+		background-color: white;
+		
 		& > .wrap {
 			background-color: white;
+
+			.switch-view {
+				opacity: 1;
+				color: white;
+				background-color: #676767;
+
+				&:hover {
+					background-color: #333;
+				}
+			}
 		}
 	}
 
@@ -690,14 +702,4 @@
 	//         margin-right: 20px;
 	//     }
 	// }
-
-	.switch-view {
-		opacity: 1;
-		color: white;
-		background-color: #676767;
-
-		&:hover {
-			background-color: #333;
-		}
-	}
 }

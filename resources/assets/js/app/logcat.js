@@ -64,5 +64,5 @@ define(['vendor/jquery', 'vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/a
 		toggle: toggle,
 		append: append,
 		clear: clear,
-	}
+	};
 });

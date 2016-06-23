@@ -290,6 +290,7 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomCon
 	}
 
 	return {
+		init: init,
 		show: show,
 		hide: hide,
 		toggle: toggle,

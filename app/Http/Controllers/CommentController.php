@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Project\Comment as CommentModel;
+
 class CommentController extends Controller
 {
     public function save(Request $request)
@@ -25,28 +26,32 @@ class CommentController extends Controller
             return ['status' => -1, 'message' => '项目ID不能为空'];
         }
 
-        return CommentModel::create($input);
+        $comment = CommentModel::create($input);
+        return ['status' => 0, 'message' => '保存成功', 'data' => $comment];
     }
 
     public function get(Request $request)
     {
         $project_id = $request->input('project_id');
         //
-        $commentList =  CommentModel::where('project_id', $project_id)
-                ->orderby('reply_comment')
-                ->orderby('created_at')->get();
+        // $commentList =  CommentModel::where('project_id', $project_id)
+        //         ->orderby('reply_comment')
+        //         ->orderby('created_at')->get();
 
         //嵌套评论
-        $commentNest = [];
-        foreach ($commentList->toArray() as $comment) {
-            if ($comment['reply_comment'] == 0) {
-                $comment['sub_comments'] = array();
-                $commentNest[$comment['id']] = $comment;
-            } else {
-                $commentNest[$comment['reply_comment']]['sub_comments'][$comment['id']] = $comment;
-            }
-        }
-        return $commentNest;
+        // $commentNest = [];
+        // foreach ($commentList->toArray() as $comment) {
+        //     if ($comment['reply_comment'] == 0) {
+        //         $comment['sub_comments'] = array();
+        //         $commentNest[$comment['id']] = $comment;
+        //     } else {
+        //         $commentNest[$comment['reply_comment']]['sub_comments'][$comment['id']] = $comment;
+        //     }
+        // }
+        // return $commentNest;
+
+        return CommentModel::where('project_id', $project_id)
+                ->orderby('created_at')->get();
     }
 
     public function update(Request $request, $id)

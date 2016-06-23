@@ -194,6 +194,147 @@
 								</div>
 							</div>
 						</div>
+						<div class="switch-view{{isset($user) ? ' active' : ''}}" data-view="hardware">
+							<i class="kenrobot ken-switch"></i><span class="switch-text">硬件设计</span>
+						</div>
+					</div>
+					<div class="right-bar">
+						<div class="wrap">
+							<div class="tab tab-comment">
+								<div class="tab-wrap">
+									<div class="publish-comment">
+										<textarea class="comment-content" spellcheck="false" placeholder="小哥，吐槽一下呗~"></textarea>
+										<div class="publish-wrap">
+											<input class="publish" type="button" value="发表评论" />
+										</div>
+									</div>
+									<div class="comment-item">
+										<div class="left">
+											<img class="photo" src="#" />
+										</div>
+										<div class="right">
+											<div class="comment-header">
+												<div class="name">一二三四</div>
+												<div class="floor">2楼</div>
+											</div>
+											<div class="comment-content">
+												我是纯新手 感觉这里for x in L:这个有些跳了 不看答案根本不知道这个
+											</div>
+											<div class="comment-footer">
+												<div class="publish-time">时间：2016-03-23 18:56</div>
+											</div>
+										</div>
+									</div>
+									<div class="comment-item">
+										<div class="left">
+											<img class="photo" src="#" />
+										</div>
+										<div class="right">
+											<div class="comment-header">
+												<div class="name">一二三四</div>
+												<div class="floor">2楼</div>
+											</div>
+											<div class="comment-content">
+												我是纯新手 感觉这里for x in L:这个有些跳了 不看答案根本不知道这个
+											</div>
+											<div class="comment-footer">
+												<div class="publish-time">时间：2016-03-23 18:56</div>
+											</div>
+										</div>
+									</div>
+									<div class="comment-item">
+										<div class="left">
+											<img class="photo" src="#" />
+										</div>
+										<div class="right">
+											<div class="comment-header">
+												<div class="name">一二三四</div>
+												<div class="floor">2楼</div>
+											</div>
+											<div class="comment-content">
+												我是纯新手 感觉这里for x in L:这个有些跳了 不看答案根本不知道这个
+											</div>
+											<div class="comment-footer">
+												<div class="publish-time">时间：2016-03-23 18:56</div>
+											</div>
+										</div>
+									</div>
+									<div class="comment-item">
+										<div class="left">
+											<img class="photo" src="#" />
+										</div>
+										<div class="right">
+											<div class="comment-header">
+												<div class="name">一二三四</div>
+												<div class="floor">2楼</div>
+											</div>
+											<div class="comment-content">
+												我是纯新手 感觉这里for x in L:这个有些跳了 不看答案根本不知道这个
+											</div>
+											<div class="comment-footer">
+												<div class="publish-time">时间：2016-03-23 18:56</div>
+											</div>
+										</div>
+									</div>
+									<div class="comment-item">
+										<div class="left">
+											<img class="photo" src="#" />
+										</div>
+										<div class="right">
+											<div class="comment-header">
+												<div class="name">一二三四</div>
+												<div class="floor">2楼</div>
+											</div>
+											<div class="comment-content">
+												我是纯新手 感觉这里for x in L:这个有些跳了 不看答案根本不知道这个
+											</div>
+											<div class="comment-footer">
+												<div class="publish-time">时间：2016-03-23 18:56</div>
+											</div>
+										</div>
+									</div>
+									<div class="comment-item">
+										<div class="left">
+											<img class="photo" src="#" />
+										</div>
+										<div class="right">
+											<div class="comment-header">
+												<div class="name">一二三四</div>
+												<div class="floor">2楼</div>
+											</div>
+											<div class="comment-content">
+												我是纯新手 感觉这里for x in L:这个有些跳了 不看答案根本不知道这个
+											</div>
+											<div class="comment-footer">
+												<div class="publish-time">时间：2016-03-23 18:56</div>
+											</div>
+										</div>
+									</div>
+									<div class="comment-item">
+										<div class="left">
+											<img class="photo" src="#" />
+										</div>
+										<div class="right">
+											<div class="comment-header">
+												<div class="name">一二三四</div>
+												<div class="floor">2楼</div>
+											</div>
+											<div class="comment-content">
+												我是纯新手 感觉这里for x in L:这个有些跳了 不看答案根本不知道这个
+											</div>
+											<div class="comment-footer">
+												<div class="publish-time">时间：2016-03-23 18:56</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="bar">
+							<ul>
+								<li data-action="comment"><i class="kenrobot ken-comment"></i>评论</li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -254,9 +395,6 @@
 		</div>
 		<div class="layers">
 			<div class="float-layer">
-				<div class="switch-view{{isset($user) ? ' active' : ''}}" data-view="hardware">
-					<i class="kenrobot ken-switch"></i><span class="switch-text">硬件设计</span>
-				</div>
 			</div>
 			<div class="drag-layer"></div>
 			<div class="modal dialog-layer">

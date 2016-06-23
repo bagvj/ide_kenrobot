@@ -302,7 +302,10 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 			var name = user.getUserName();
 			var project_name = projectInfo.project_name;
 			var project_url = "http://" + window.location.host + "/#project/" + projectInfo.hash;
-			var content = shareTemplate.replace("{{name}}", user.getUserName()).replace("{{project_name}}", project_name).replace("{{project_url}}", project_url);
+			var content = shareTemplate.replace(/\{\{name\}\}/g, user.getUserName())
+									   .replace(/\{\{project_name\}\}/g, project_name)
+									   .replace(/\{\{project_url\}\}/g, project_url);
+									   
 			var dialog = util.dialog(".share-dialog");
 			$('.share-content', dialog).text(content);
 		};

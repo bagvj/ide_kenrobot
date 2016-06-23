@@ -1,8 +1,9 @@
 @charset "utf-8";
 
-@import "_bootstrap.scss";
-@import "_terminal.scss";
-@import "_kenrobot.scss";
+@import "vendor/_bootstrap.scss";
+@import "vendor/_terminal.scss";
+@import "vendor/_kenrobot.scss";
+@import "vendor/_kenrobot.scss";
 
 @import "base/_reset.scss";
 
@@ -10,6 +11,7 @@
 
 @import "layout/_layout.scss";
 @import "layout/_sidebar.scss";
+@import "layout/_right-bar.scss";
 @import "layout/_hardware.scss";
 @import "layout/_software.scss";
 @import "layout/_logcat.scss";
