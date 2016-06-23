@@ -75,7 +75,6 @@ define(['vendor/jquery', 'vendor/jquery-ui', 'vendor/jquery.cookie', './nodeTemp
 		});
 
 		diagram.grid = GO(go.Panel, "Grid",
-			// { gridCellSize: new go.Size(10, 30) },
 			GO(go.Shape, "LineH", { stroke: "#353535", opacity: 0.4 }),
 			GO(go.Shape, "LineV", { stroke: "#353535", opacity: 0.4}),
 			GO(go.Shape, "LineH", { stroke: "#353535", interval: 5, opacity: 0.4}),
@@ -325,6 +324,7 @@ define(['vendor/jquery', 'vendor/jquery-ui', 'vendor/jquery.cookie', './nodeTemp
 		EventManager.bind('hardware', 'portClick', onPortClick);
 		EventManager.bind('hardware', 'adjustTools', onAdjustTools);
 		EventManager.bind("bottomContainer", "resize", onResize);
+		EventManager.bind("setting", "change", onSettingChange);
 	}
 
 	function setMode(mode) {
@@ -743,6 +743,24 @@ define(['vendor/jquery', 'vendor/jquery-ui', 'vendor/jquery.cookie', './nodeTemp
 
 	function onResize() {
 		// console.log("onResize");
+	}
+
+	function onSettingChange(option) {
+		if(option.type == "theme") {
+			var theme = option.value;
+			var color;
+			if(theme == "white") {
+				color = "#ececec";
+			} else {
+				color = "#353535";
+			}
+			var iter = diagram.grid.elements.iterator;
+			var line;
+			while(iter.next()) {
+				line = iter.value;
+				line.stroke = color;
+			}
+		}
 	}
 
 	function onAdjustTools(value) {

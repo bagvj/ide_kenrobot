@@ -1,6 +1,6 @@
 define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './projectApi', './user', './hardware', './software', './board', './logcat', './sidebar', './config'], function(_, ZeroClipboard, EventManager, util, projectApi, user, hardware, software, board, logcat, sidebar, config) {
 	//项目模版
-	var projectTemplate = '<li data-project-id="{{id}}" data-view="software" title="{{project_name}}"><div class="title"><i class="kenrobot ken-icon-folder icon"></i><span class="name">{{project_name}}</span><i class="kenrobot arrow"></i></div><div class="view"><div><i class="kenrobot ken-icon-code icon"></i><span class="name" title="{{project_name}}.ino">{{project_name}}</span>.ino</div></div></li>';
+	var projectTemplate = '<li data-project-id="{{id}}" data-view="software" title="{{project_name}}"><div class="title"><span class="name">{{project_name}}</span><i class="kenrobot arrow"></i></div><div class="view"><div><span class="name" title="{{project_name}}.ino">{{project_name}}</span>.ino</div></div></li>';
 	var tabTemplate = '<li data-project-id="{{id}}" title="{{project_name}}"><span class="name">{{project_name}}</span><i class="kenrobot ken-close close-btn"></i></li>';
 	var shareTemplate = '我是{{name}}，这是我的{{project_name}}项目{{project_url}}，快来看看吧^_^';
 

@@ -1,13 +1,8 @@
-define(['vendor/jquery', 'vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/mode-arduino', 'vendor/ace/snippets/text', 'vendor/ace/snippets/arduino', 'vendor/ace/ext-language_tools', './EventManager', './util', './bottomContainer'], function(_, _, _, _, _, _, _, EventManager, util, bottomContainer) {
+define(['vendor/jquery', 'vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-default', 'vendor/ace/theme-chrome', 'vendor/ace/theme-clouds', 'vendor/ace/theme-eclipse', 'vendor/ace/theme-github', 'vendor/ace/theme-monokai', 'vendor/ace/theme-terminal', 'vendor/ace/theme-textmate', 'vendor/ace/theme-tomorrow', 'vendor/ace/theme-xcode', 'vendor/ace/mode-arduino', 'vendor/ace/snippets/text', 'vendor/ace/snippets/arduino', 'vendor/ace/ext-language_tools', './EventManager', './util', './bottomContainer'], function(_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, EventManager, util, bottomContainer) {
 	var logcat;
-	var hasInit;
 	var tab;
 
 	function init() {
-		if(hasInit) {
-			return;
-		}
-
 		tab = $('.bottom-container .tab-logcat');
 		logcat = ace.edit($('.logcat', tab)[0]);
 		logcat.setShowPrintMargin(false);
@@ -18,13 +13,10 @@ define(['vendor/jquery', 'vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/a
 		logcat.session.setMode("ace/mode/arduino");
 
 		EventManager.bind('bottomContainer', "hide", hide);
-
-		hasInit = true;
+		EventManager.bind("setting", "change", onSettingChange);
 	}
 
 	function show() {
-		init();
-
 		bottomContainer.show();
 
 		if(!tab.hasClass("active")) {
@@ -33,15 +25,12 @@ define(['vendor/jquery', 'vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/a
 	}
 
 	function hide() {
-		init();
 		bottomContainer.hide(true);
 
 		tab.removeClass("active");
 	}
 
 	function toggle() {
-		init();
-
 		tab.hasClass("active") ? hide() : show();
 	}
 
@@ -57,7 +46,19 @@ define(['vendor/jquery', 'vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/a
 		logcat.setValue('');
 	}
 
+	function onSettingChange(option) {
+		switch(option.type) {
+			case "editor.theme":
+				logcat.setTheme("ace/theme/" + option.value);
+				break;
+			case "editor.tabSize":
+				logcat.getSession().setTabSize(option.value);
+				break;
+		}
+	}
+
 	return {
+		init: init,
 		show: show,
 		hide: hide,
 		toggle: toggle,

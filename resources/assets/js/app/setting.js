@@ -10,6 +10,8 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './EventManager', './util'], fu
 	};
 
 	function init() {
+		EventManager.bind('setting', 'change', onSettingChange);
+
 		$('.left ul > li', selector).on('click', onTabClick)[0].click();
 
 		$('.tab-theme .theme', selector).on('change', function() {
@@ -52,7 +54,7 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './EventManager', './util'], fu
 	}
 
 	function saveOptions() {
-		$.cookie("setting", JSON.stringify(options));
+		$.cookie("setting", JSON.stringify(options), {expires: 365});
 	}
 
 	function applyOption(type, value, force) {
@@ -76,6 +78,13 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './EventManager', './util'], fu
 				}
 				break;
 		}
+
+		if(type == "theme") {
+			if((options.theme == "default" && options.editor.theme == "white") || (options.theme == "white" && options.editor.theme == "default")){
+				$('.tab-editor .code-theme', selector).val(options.theme);
+				applyOption("editor.theme", options.theme, true);
+			}
+		}
 	}
 
 	function onTabClick(e) {
@@ -88,6 +97,13 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './EventManager', './util'], fu
 
 		var text = li.text();
 		$('.x-dialog-title', selector).text("设置>" + text);
+	}
+
+	function onSettingChange(option) {
+		if(option.type == "theme") {
+			var oldTheme = $('body').data('theme');
+			$('body').removeClass("theme-" + oldTheme).addClass("theme-" + option.value).data("theme", option.value);
+		}
 	}
 
 	return {

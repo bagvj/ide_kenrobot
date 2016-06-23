@@ -70,6 +70,7 @@
 		}
 
 		.list {
+			overflow-x: hidden;
 			overflow-y: auto;
 			top: 0;
 			bottom: 40px;
@@ -123,7 +124,7 @@
 						line-height: 36px;
 						cursor: pointer;
 						color: #515151;
-
+						
 						.icon {
 							margin-right: 4px;
 						}
@@ -294,7 +295,7 @@
 		.list {
 			li {
 				cursor: pointer;
-				text-align: center;
+				padding-left: 24px;
 				height: 36px;
 				color: white;
 				line-height: 36px;
@@ -311,18 +312,19 @@
 	}
 
 	.example {
-		width: 240px;
+		width: 180px;
 		position: relative;
 
 		.list { 
 			li {
 				cursor: pointer;
-				text-align: center;
+				padding-left: 24px;
 				height: 36px;
 				line-height: 36px;
 				color: white;
 
 				& > ul {
+					width: 220px;
 					position: relative;
 					left: 100%;
 					top: -100%;

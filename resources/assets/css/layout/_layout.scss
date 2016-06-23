@@ -90,7 +90,6 @@
 		left: 66px;
 		right: 0;
 		position: absolute;
-		background-color: #262a34;
 
 		.main-tabs {
 			top: 0;
@@ -221,25 +220,31 @@
 	}
 
 	.user-login {
-		margin-right: 20px;
+		padding-left: 20px;
+		padding-right: 20px;
+		height: 40px;
 		
-		ul li {
-			letter-spacing: 2px;
+		ul {
 			float: left;
-			cursor: pointer;
-			line-height: 40px;
-			margin-left: 8px;
-			margin-right: 8px;
-			color: white;
 
-			&:hover {
-				color: #24c1ff;
+			li {
+				letter-spacing: 2px;
+				float: left;
+				cursor: pointer;
+				line-height: 40px;
+				margin-left: 8px;
+				margin-right: 8px;
+				color: white;
 
-				& > a {
+				&:hover {
 					color: #24c1ff;
+
+					& > a {
+						color: #24c1ff;
+					}
 				}
 			}
-		}
+		} 
 	}
 
 	.user-info {

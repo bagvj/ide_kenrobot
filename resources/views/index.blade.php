@@ -478,6 +478,7 @@
 									<div>
 										<select class="theme">
 											<option value="default">默认</option>
+											<option value="white">白色</option>
 										</select>
 									</div>
 								</div>
@@ -488,6 +489,7 @@
 									<div>
 										<select class="code-theme">
 											<option value="default">默认</option>
+											<option value="white">白色</option>
 											<option value="chrome">Chrome</option>
 											<option value="clouds">Clouds</option>
 											<option value="eclipse">Eclipse</option>

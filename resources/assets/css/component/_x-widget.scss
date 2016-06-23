@@ -95,6 +95,10 @@
         float: right;
         position: absolute;
         cursor: pointer;
+
+        &:hover {
+            color: #ff6666;
+        }
     }
     
     .x-dialog-content {
