@@ -1,4 +1,4 @@
-define(['vendor/jquery', 'vendor/jquery.mCustomScrollbar', './util', './EventManager', './commentApi', './user', './project'], function(_, _, util, EventManager, commentApi, user, project) {
+define(['vendor/jquery', './util', './EventManager', './commentApi', './user', './project'], function(_, util, EventManager, commentApi, user, project) {
 	var store = {};
 	var container;
 	var commentTemplate = '<div class="comment-item"><div class="left"><img class="photo" src="{{avatar_url}}" /></div><div class="right"><div class="comment-header"><div class="name">{{reply_user}}</div><div class="floor">{{floor}}</div></div><div class="comment-content">{{content}}</div><div class="comment-footer"><div class="publish-time">时间：{{created_at}}</div></div></div></div>';
@@ -9,8 +9,6 @@ define(['vendor/jquery', 'vendor/jquery.mCustomScrollbar', './util', './EventMan
 
 		container = $('.right-bar .tab-comment');
 		$('.publish', container).on('click', onPublishClick);
-
-		$('> .tab-wrap', container).mCustomScrollbar();
 	}
 
 	function clear(value) {
