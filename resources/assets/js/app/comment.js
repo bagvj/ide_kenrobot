@@ -34,7 +34,6 @@ define(['vendor/jquery', './util', './EventManager', './commentApi', './user', '
 	function update(projectId) {
 		commentApi.get(projectId).done(function(result) {
 			if(result.status != 0) {
-				util.message(result.message);
 				return;
 			}
 
