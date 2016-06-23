@@ -40,12 +40,13 @@ class HomeController extends Controller {
 		$exampleGroups = Repository::getExamples(false, true);
 
 		$has_visit = 1;
+		$setting = $this->getSetting();
 		// if (empty($_COOKIE['has_visit'])) {
 		// 	$has_visit = 0;
 		// }
 		// setcookie('has_visit', 1, time() + 86400 * 365, "", ".kenrobot.com");
 
-		return view("index", compact('user', 'mainpage', 'qrcodeurl', 'register_url', 'find_password_url', 'key', 'boards', 'components', 'libraries', 'exampleGroups', 'has_visit'));
+		return view("index", compact('user', 'mainpage', 'qrcodeurl', 'register_url', 'find_password_url', 'key', 'boards', 'components', 'libraries', 'exampleGroups', 'has_visit', 'setting'));
 	}
 
 	public function config() {
@@ -68,5 +69,20 @@ class HomeController extends Controller {
 		return "data:image/jpg;base64," . $image_data;
 		
 		// return $qrcodeurl;
+	}
+
+	private function getSetting() {
+		if(!isset($_COOKIE['setting'])) {
+			return config('platform.setting');
+		}
+
+		$setting;
+		try {
+			$setting = json_decode($_COOKIE['setting'], true);
+		} catch(Exception $ex) {
+			$setting = config('platform.setting');
+		}
+
+		return $setting;
 	}
 }

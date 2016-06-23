@@ -18,7 +18,7 @@
 		<script src="/assets/js/astyle.js"></script>
 		<script src="/assets/js/require.js" data-main="/assets/js/index"></script>
 	</head>
-	<body class="unselectable theme-default" data-theme="default">
+	<body class="unselectable theme-{{$setting['theme']}}" data-theme="{{$setting['theme']}}">
 		<div class="main">
 			<div class="main-wrap">
 				<div class="main-header">

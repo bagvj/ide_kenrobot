@@ -13,5 +13,13 @@ return [
         'getProject' => "?app=api&mod=Project&act=item",
         'getUserProjects' => "?app=api&mod=Project&act=items",
         'deleteProject' => "?app=api&mod=Project&act=del",
+
+        'setting' => array(
+            'theme' => 'default',
+            'editor' => array(
+                'tabSize' => 4,
+                'theme' => 'default',
+            ),
+        ),
     ]
 ];
