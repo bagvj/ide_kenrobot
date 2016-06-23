@@ -1,7 +1,7 @@
 define(['vendor/jquery', './util', './EventManager', './commentApi', './user', './project'], function(_, util, EventManager, commentApi, user, project) {
 	var store = {};
 	var container;
-	var commentTemplate = '<div class="comment-item"><div class="left"><img class="photo" src="{{avatar_url}}" /></div><div class="right"><div class="comment-header"><div class="name">{{reply_user}}</div><div class="floor">{{floor}}</div></div><div class="comment-content">{{content}}</div><div class="comment-footer"><div class="publish-time">时间：{{created_at}}</div></div></div></div>';
+	var commentTemplate = '<div class="comment-item"><div class="left"><img class="photo" src="{{avatar_url}}" /></div><div class="right"><div class="comment-header"><div class="name">{{name}}</div><div class="floor">{{floor}}楼</div></div><div class="comment-content">{{content}}</div><div class="comment-footer"><div class="publish-time">时间：{{created_at}}</div></div></div></div>';
 
 	function init() {
 		EventManager.bind('rightBar', 'show', onShow);
@@ -22,13 +22,9 @@ define(['vendor/jquery', './util', './EventManager', './commentApi', './user', '
 	function add(commentInfo) {
 		var wrap = $('.tab-wrap', container);
 
-		commentInfo.floor = "";
-		commentInfo.avatar_url = "#";
-		commentInfo.reply_user = commentInfo.user_id;
-
 		var commentHtml = commentTemplate.replace(/\{\{avatar_url\}\}/g, commentInfo.avatar_url)
 		                                 .replace(/\{\{floor\}\}/g, commentInfo.floor)
-										 .replace(/\{\{reply_user\}\}/g, commentInfo.user_id)
+										 .replace(/\{\{name\}\}/g, commentInfo.name)
 										 .replace(/\{\{content\}\}/g, commentInfo.content)
 										 .replace(/\{\{created_at\}\}/g, commentInfo.created_at);
 
@@ -37,7 +33,12 @@ define(['vendor/jquery', './util', './EventManager', './commentApi', './user', '
 
 	function update(projectId) {
 		commentApi.get(projectId).done(function(result) {
-			var comments = result;
+			if(result.status != 0) {
+				util.message(result.message);
+				return;
+			}
+
+			var comments = result.data;
 			store[projectId] = comments;
 			for(var i = 0; i < comments.length; i++) {
 				add(comments[i]);

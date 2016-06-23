@@ -18,7 +18,11 @@ define(['vendor/jquery', './util', './EventManager', './comment'], function(_, u
 	}
 
 	function hide() {
-		doHide('all');
+		if(!isShow()) {
+			return;
+		}
+
+		$('.bar > ul > li.active').click();
 	}
 
 	function doShow(action) {
@@ -27,17 +31,19 @@ define(['vendor/jquery', './util', './EventManager', './comment'], function(_, u
 		}
 		
 		container.addClass("active");
-		var delay = 100;
-		var easing = "easeOutExpo";
-
-		$(".main-content > .wrap").animate({
-			right: containerWidth + 2,
-		}, delay, easing);
+		var mainWrap = $('.main-content > .wrap').addClass('x-right-expand').delay(150, 'right-expand').queue('right-expand', function() {
+			mainWrap.addClass('right-expand').removeClass("x-right-expand");
+			mainWrap.trigger('reisze');
+		});
+		mainWrap.dequeue('right-expand');
 
 		isDisplay = true;
-		$('> .wrap', container).animate({
-			width: containerWidth - barWidth,
-		}, delay, easing);
+
+		var wrap = $('> .wrap', container).addClass('x-expand').delay(150, 'expand').queue('expand', function() {
+			wrap.addClass('active').removeClass("x-expand");
+			EventManager.trigger('rightBar', 'resize');
+		});
+		wrap.dequeue('expand');
 
 		EventManager.trigger("rightBar", "show", action);
 	}
@@ -48,20 +54,19 @@ define(['vendor/jquery', './util', './EventManager', './comment'], function(_, u
 		}
 
 		container.removeClass('active');
-		var delay = 100;
-		var easing = "easeOutExpo";
-		$(".main-content > .wrap").animate({
-			right: barWidth,
-		}, delay, easing, function() {
-			$(this).removeAttr('style');
+
+		var mainWrap = $('.main-content > .wrap').addClass('x-right-fold').delay(150, 'right-fold').queue('right-fold', function() {
+			mainWrap.removeClass('right-expand').removeClass('x-right-fold');
+			mainWrap.trigger('reisze');
 		});
+		mainWrap.dequeue('right-fold');
 
 		isDisplay = false;
-		$('> .wrap', container).animate({
-			width: 0,
-		}, delay, easing, function() {
-			$(this).removeAttr('style');
+		var wrap = $('> .wrap', container).addClass('x-fold').delay(150, 'fold').queue('fold', function() {
+			wrap.removeClass('active').removeClass('x-fold');
+			EventManager.trigger('rightBar', 'resize');
 		});
+		wrap.dequeue('fold');
 
 		EventManager.trigger("rightBar", "hide", action);
 	}

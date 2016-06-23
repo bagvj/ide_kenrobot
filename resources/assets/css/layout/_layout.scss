@@ -128,11 +128,43 @@
 				opacity: 1;
 			}
 		}
+
+		@include keyframes('main-content-wrap-right-expand') {
+			from {
+				right: 24px;
+			}
+			to {
+				right: 522px;
+			}
+		}
+
+		@include keyframes('main-content-wrap-right-fold') {
+			from {
+				right: 522px;
+			}
+			to {
+				right: 24px;
+			}
+		}
+
+		&.x-right-expand {
+			@include animation('main-content-wrap-right-expand' 0.3s cubic-bezier(0, 0.8, 0.1, 1) both);
+		}
+
+		&.x-right-fold {
+			@include animation('main-content-wrap-right-fold' 0.3s cubic-bezier(0.8, 0, 1, 0.1) forwards);
+		}
+
+		&.right-expand {
+			right: 522px;
+		}
 	}
 
 	.right-bar {
 		height: 100%;
 		float: right;
+		position: relative;
+		z-index: 99;
 	}
 }
 

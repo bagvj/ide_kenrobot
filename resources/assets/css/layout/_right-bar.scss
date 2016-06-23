@@ -1,3 +1,39 @@
+@include keyframes('right-bar-expand') {
+	from {
+		width: 0;
+	}
+	to {
+		width: 496px;
+	}
+}
+
+@include keyframes('right-bar-fold') {
+	from {
+		width: 496px;
+	}
+	to {
+		width: 0px;
+	}
+}
+
+@include keyframes('right-bar-wrap-expand') {
+	from {
+		clip: rect(0 496px auto 496px);
+	}
+	to {
+		clip: rect(0 496px auto 0);
+	}
+}
+
+@include keyframes('right-bar-wrap-fold') {
+	from {
+		clip: rect(0 496px auto 0);
+	}
+	to {
+		clip: rect(0 496px auto 496px);
+	}
+}
+
 .right-bar {
 	&.active {
 		border-left: 2px solid #1d1e20;
@@ -60,6 +96,30 @@
 			// &.active {
 			// 	display: block;
 			// }
+		}
+
+		&.x-expand {
+			@include animation('right-bar-expand' 0.15s cubic-bezier(0, 0.8, 0.1, 1) both);
+
+			& > .tab {
+				@include animation('right-bar-wrap-expand' 0.15s cubic-bezier(0, 0.8, 0.1, 1) both);
+			}
+		}
+
+		&.x-fold {
+			@include animation('right-bar-fold' 0.15s cubic-bezier(0.8, 0, 1, 0.1) forwards);
+
+			& > .tab {
+				@include animation('right-bar-wrap-fold' 0.15s cubic-bezier(0.8, 0, 1, 0.1) forwards);
+			}
+		}
+
+		&.active {
+			width: 496px;
+
+			& > .tab {
+				clip: auto;
+			}
 		}
 	}
 
