@@ -45,7 +45,16 @@ class CommentController extends Controller
         }
 
         $comment = CommentModel::create($input);
-        return ['status' => 0, 'message' => '发表成功', 'data' => $comment];
+        if ($comment) {
+            $comment['name'] = $comment->user->name;
+            $comment['avatar_url'] = $comment->user->avatar_url;
+            $comment['floor'] = CommentModel::where('project_id', $input['project_id'])->count() + 1;
+            unset($comment['user']);
+            return collect(['status' => 0, 'message' => '评论成功','data' => $comment->toArray()])->toJson(JSON_UNESCAPED_UNICODE);
+        }else {
+            return collect(['status' => -5, 'message' => '评论失败'])->toJson(JSON_UNESCAPED_UNICODE);
+        }
+        return ;
     }
 
     private function uglywordfitler($content)
