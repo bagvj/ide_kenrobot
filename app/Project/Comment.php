@@ -18,5 +18,8 @@ class Comment extends Model
 
     protected $hidden = ['deleted_at','updated_at'];
 
-
+    public function user()
+    {
+        return $this->hasOne('App\User', 'id','user_id');
+    }
 }

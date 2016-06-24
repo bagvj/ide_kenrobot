@@ -30,7 +30,7 @@ Route::any('/api/projects/list', 'ProjectController@ProjectList');
 
 //项目评论API
 Route::post('/api/comment/save', 'CommentController@save');
-Route::post('/api/comment/get', 'CommentController@get');
+Route::get('/api/comment/get', 'CommentController@get');
 Route::post('/api/comment/delete', 'CommentController@remove');
 
 // 登录验证API
