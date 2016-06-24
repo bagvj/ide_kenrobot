@@ -45,7 +45,9 @@ class CommentController extends Controller
         }
 
         $comment = CommentModel::create($input);
-        return ['status' => 0, 'message' => '发表成功', 'data' => $comment];
+<<<<<<< HEAD
+        return collect(['status' => 0, 'message' => '保存成功', 'data' => $comment])->toJson(JSON_UNESCAPED_UNICODE);
+
     }
 
     private function uglywordfitler($content)
@@ -57,6 +59,9 @@ class CommentController extends Controller
             }
         }
         return '';
+=======
+        return ['status' => 0, 'message' => '发表成功', 'data' => $comment];
+>>>>>>> 1ee946c3c077fee9232c4acfc11d90919013456b
     }
 
     public function get(Request $request)

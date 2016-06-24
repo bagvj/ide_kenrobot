@@ -17,7 +17,11 @@ define(['vendor/jquery', './util', './EventManager', './comment'], function(_, u
 		return isDisplay;
 	}
 
-	function show(action) {
+	function hide() {
+		doHide('all');
+	}
+
+	function doShow(action) {
 		if(isShow()) {
 			return;
 		}
@@ -38,7 +42,7 @@ define(['vendor/jquery', './util', './EventManager', './comment'], function(_, u
 		EventManager.trigger("rightBar", "show", action);
 	}
 
-	function hide(action) {
+	function doHide(action) {
 		if(!isShow()) {
 			return;
 		}
@@ -68,11 +72,19 @@ define(['vendor/jquery', './util', './EventManager', './comment'], function(_, u
 		}
 
 		var li = $(this);
-		var action = li.data('action');		
-		isShow() ? hide(action) : show(action);
+		var action = li.data('action');	
+		if(li.hasClass('active')) {
+			li.removeClass('active');
+		} else {
+			util.toggleActive(li);
+		}
+
+		isShow() ? doHide(action) : doShow(action);
 	}
 
 	return {
 		init: init,
+		isShow: isShow,
+		hide: hide,
 	}
 });

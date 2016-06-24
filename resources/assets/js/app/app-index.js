@@ -79,6 +79,11 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 				sidebar.hide();
 				return;
 			}
+
+			if(rightBar.isShow()) {
+				rightBar.hide();
+				return;
+			}
 		});
 	}
 
