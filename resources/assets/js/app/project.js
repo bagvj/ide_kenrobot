@@ -115,7 +115,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 					} else {
 						logcat.show();
 						logcat.clear();
-						logcat.append(result.output.join("\n"));
+						logcat.append(software.maskCode(result.output.join("\n")));
 
 						promise.reject();
 					}
@@ -636,7 +636,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 			user_id: user.getUserId(),
 			project_name: "我的项目",
 			project_intro: "我的项目简介",
-			public_type: 0,
+			public_type: 2,
 			project_data: {},
 			author: user.getUserName(),
 			status: 0,

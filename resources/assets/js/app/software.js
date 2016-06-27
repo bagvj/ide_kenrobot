@@ -101,17 +101,27 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 
 	function setData(data) {
 		data = data || {};
 		var source = data.source || code.gen();
-		editor.setValue(source, 1);
+		editor.setValue(maskCode(source), 1);
 	}
 
 	function getData() {
 		return {
-			source: editor.getValue(),
+			source: maskCode(editor.getValue(), true),
 		};
 	}
 
 	function gen() {
-		editor.setValue(code.gen(editor.getValue()), 1);
+		editor.setValue(maskCode(code.gen(editor.getValue())), 1);
+	}
+
+	function maskCode(source, tag) {
+		if(tag) {
+			return source.replace(/<KenrobotSoftwareSerial\.h>/g, "<bqSoftwareSerial.h>")
+						 .replace(/kenSoftwareSerial/g, "bqSoftwareSerial");
+		} else {
+			return source.replace(/<bqSoftwareSerial\.h>/g, "<KenrobotSoftwareSerial.h>")
+						 .replace(/bqSoftwareSerial/g, "kenSoftwareSerial");
+		}
 	}
 
 	function addLibrary(library) {
@@ -164,5 +174,6 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 
 		gen: gen,
 		addLibrary: addLibrary,
 		format: format,
+		maskCode: maskCode,
 	};
 });
