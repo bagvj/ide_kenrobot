@@ -1,29 +1,42 @@
-define(['vendor/jquery', './software'], function(_, software) {
-	var libraries;
+define(['vendor/jquery', './EventManager'], function(_, EventManager) {
+	var list;
 
 	function init() {
-		$('.library .list > li').on('click', onLibraryClick);
+		list = $('.library .list > li').on('click', onLibraryClick);
 	}
 
-	function load(_libraries) {
-		libraries = _libraries;
+	function getData() {
+		var libs = [];
+		list.filter('.check').each(function(i, item) {
+			libs.push($(item).data('library'));
+		});
+
+		return libs;
+	}
+
+	function setData(libs) {
+		reset();
+
+		for(var i = 0; i < libs.length; i++) {
+			var lib = libs[i];
+			list.filter('[data-library="' + lib + '"]').addClass('check');
+		}
 	}
 
 	function onLibraryClick(e) {
 		var li = $(this);
-		var name = li.data('library');
-		var library = libraries[name];
+		li.toggleClass('check');
+			
+		EventManager.trigger('library', 'change');
+	}
 
-		if (!library) {
-			return
-		}
-
-		software.addLibrary(library);
-		software.gen();
+	function reset() {
+		list.removeClass('check');
 	}
 
 	return {
 		init: init,
-		load: load,
+		getData: getData,
+		setData: setData,
 	}
 });

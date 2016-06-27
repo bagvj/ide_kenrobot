@@ -18,6 +18,7 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 		hardware.init();
 		software.init({
 			getNodes: hardware.getNodes,
+			getLibraries: software.getLibraries,
 			getProjectInfo: project.getCurrentProject,
 		});
 		extAgent.init(config.extension);
@@ -96,11 +97,11 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 				id: 0,
 			},
 			dataType: 'json',
-		}).done(function(result) {
-			board.load(result.boards);
-			component.load(result.components);
-			library.load(result.libraries);
-			hardware.load(result);
+		}).done(function(config) {
+			board.load(config.boards);
+			component.load(config.components);
+			hardware.load(config);
+			software.load(config);
 
 			promise.resolve();
 		});

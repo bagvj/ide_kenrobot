@@ -124,7 +124,7 @@
 							<div class="library x-scrollbar">
 								<ul class="list">
 								@foreach($libraries as $library)
-									<li data-library="{{$library->name}}">{{$library->name}}</li>
+									<li data-library="{{$library->name}}"><i class="kenrobot ken-check"></i>{{$library->name}}</li>
 								@endforeach
 								</ul>
 							</div>

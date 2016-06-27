@@ -299,13 +299,23 @@
 				height: 36px;
 				color: white;
 				line-height: 36px;
+				position: relative;
+
+				& > i {
+					display: none;
+					position: absolute;
+					font-size: 12px;
+					left: 6px;
+				}
 
 				&:hover {
 					background-color: #488ac0;
 				}
 
-				&.active {
-					background-color: #488ac0;
+				&.check {
+					& > i {
+						display: block;
+					}
 				}
 			}
 		}

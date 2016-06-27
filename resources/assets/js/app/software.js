@@ -1,6 +1,7 @@
-define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 'vendor/ace/theme-chrome', 'vendor/ace/theme-clouds', 'vendor/ace/theme-eclipse', 'vendor/ace/theme-github', 'vendor/ace/theme-monokai', 'vendor/ace/theme-terminal', 'vendor/ace/theme-textmate', 'vendor/ace/theme-tomorrow', 'vendor/ace/theme-xcode', 'vendor/ace/mode-arduino', 'vendor/ace/snippets/text', 'vendor/ace/snippets/arduino', 'vendor/ace/ext-language_tools', 'vendor/ace/ext-code_blast', 'vendor/jquery', './EventManager', './code'], function(_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, EventManager, code) {
+define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 'vendor/ace/theme-chrome', 'vendor/ace/theme-clouds', 'vendor/ace/theme-eclipse', 'vendor/ace/theme-github', 'vendor/ace/theme-monokai', 'vendor/ace/theme-terminal', 'vendor/ace/theme-textmate', 'vendor/ace/theme-tomorrow', 'vendor/ace/theme-xcode', 'vendor/ace/mode-arduino', 'vendor/ace/snippets/text', 'vendor/ace/snippets/arduino', 'vendor/ace/ext-language_tools', 'vendor/ace/ext-code_blast', 'vendor/jquery', './EventManager', './library', './code'], function(_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, EventManager, library, code) {
 	var editor;
 	var js_format_string = Module.cwrap("js_format_string", "string", ["string"]);
+	var configs;
 
 	function init(api) {
 		editor = ace.edit($(".software .editor")[0]);
@@ -96,16 +97,25 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 
 		code.init(api);
 		EventManager.bind("bottomContainer", "resize", onResize);
 		EventManager.bind("setting", "change", onSettingChange);
+		EventManager.bind("library", "change", onLibraryChange);
+	}
+
+	function load(_configs) {
+		configs = _configs;
 	}
 
 	function setData(data) {
 		data = data || {};
+		var libraries = data.libraries || [];
+		library.setData(libraries);
+
 		var source = data.source || code.gen();
 		editor.setValue(maskCode(source), 1);
 	}
 
 	function getData() {
 		return {
+			libraries: library.getData(),
 			source: maskCode(editor.getValue(), true),
 		};
 	}
@@ -122,10 +132,6 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 
 			return source.replace(/<bqSoftwareSerial\.h>/g, "<KenrobotSoftwareSerial.h>")
 						 .replace(/bqSoftwareSerial/g, "kenSoftwareSerial");
 		}
-	}
-
-	function addLibrary(library) {
-		code.addLibrary(library.code);
 	}
 
 	function format() {
@@ -148,8 +154,30 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 
 		}
 	}
 
+	function getLibraries() {
+		var result = [];
+		var names = library.getData();
+		for(var i = 0; i < names.length; i++) {
+			var name = names[i];
+			var lib = configs.libraries[name];
+			var lines = lib.code.split("\n");
+			for(var j = 0; j < lines.length; j++) {
+				var line = lines[j];
+				if(line != "" && result.indexOf(line) < 0) {
+					result.push(line);
+				}
+			}
+		}
+
+		return result;
+	}
+
 	function onResize() {
 		editor.resize(true);
+	}
+
+	function onLibraryChange() {
+		gen();
 	}
 
 	function onEditorChange(e) {
@@ -169,11 +197,12 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 
 
 	return {
 		init: init,
+		load: load,
 		getData: getData,
 		setData: setData,
 		gen: gen,
-		addLibrary: addLibrary,
 		format: format,
 		maskCode: maskCode,
+		getLibraries: getLibraries,
 	};
 });

@@ -1,7 +1,6 @@
 define(function() {
-	var libraries = [];
-
 	var getNodes;
+	var getLibraries;
 	var getProjectInfo;
 
 	var headCodes;
@@ -13,17 +12,8 @@ define(function() {
 
 	function init(api) {
 		getNodes = api.getNodes;
+		getLibraries = api.getLibraries;
 		getProjectInfo = api.getProjectInfo;
-	}
-
-	function addLibrary(library) {
-		var codes = library.split("\n");
-		for(var i = 0; i < codes.length; i++) {
-			var line = codes[i];
-			if(line != "" && libraries.indexOf(line) < 0) {
-				libraries.push(line);
-			}
-		}
 	}
 
 	function gen(oldSource) {
@@ -90,6 +80,7 @@ define(function() {
 
 	//生成头部
 	function genHead() {
+		var libraries = getLibraries();
 		for(var i = 0; i < libraries.length; i++) {
 			var line = libraries[i];
 			if(line != "" && headCodes.indexOf(line) < 0) {
@@ -235,6 +226,5 @@ define(function() {
 	return {
 		init: init,
 		gen: gen,
-		addLibrary: addLibrary,
 	}
 });
