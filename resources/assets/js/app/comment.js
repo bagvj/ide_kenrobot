@@ -1,7 +1,9 @@
-define(['vendor/jquery', './util', './EventManager', './commentApi', './user', './project'], function(_, util, EventManager, commentApi, user, project) {
+define(['vendor/jquery', './util', './EventManager', './commentApi', './user', './project', './software'], function(_, util, EventManager, commentApi, user, project, software) {
 	var store = {};
 	var container;
 	var commentTemplate = '<div class="comment-item"><div class="left"><img class="photo" src="{{avatar_url}}" /></div><div class="right"><div class="comment-header"><div class="name">{{name}}</div><div class="floor">{{floor}}楼</div></div><div class="comment-content">{{content}}</div><div class="comment-footer"><div class="publish-time">时间：{{created_at}}</div></div></div></div>';
+	var lineReferenceTemplate = '<div class="line-reference"><div class="line-num"></div><div class="line-content"></div></div>'
+	var getLineTimer;
 
 	function init() {
 		EventManager.bind('rightBar', 'show', onShow);
@@ -9,14 +11,24 @@ define(['vendor/jquery', './util', './EventManager', './commentApi', './user', '
 
 		container = $('.right-bar .tab-comment');
 		$('.publish', container).on('click', onPublishClick);
+		$('.use-line', container).on('click', onUseLineClick);
+		$('.publish-wrap .line', container).on('blur', onLineBlur).on('focus', onLineFocus);
+
+		EventManager.bind('project', 'open', onOpenProject);
+	}
+
+	function getComments(projectId) {
+		return store[projectId];
 	}
 
 	function clear(value) {
 		$('.comment-content', container).val('');
 
-		if(value) {
-			$('.tab-wrap .comment-item', container).remove();
-		}
+		$('.publish-wrap', container).removeClass('expand');
+		$('.use-line', container).attr('checked', false);
+		$('.publish-wrap .line', container).val('');
+		$('.publish-wrap .line-num', container).text('');
+		$('.publish-wrap .line-content', container).text('');
 	}
 
 	function add(commentInfo) {
@@ -27,6 +39,14 @@ define(['vendor/jquery', './util', './EventManager', './commentApi', './user', '
 										 .replace(/\{\{name\}\}/g, commentInfo.name)
 										 .replace(/\{\{content\}\}/g, commentInfo.content)
 										 .replace(/\{\{created_at\}\}/g, commentInfo.created_at);
+		commentHtml = $(commentHtml);
+		if(commentInfo.extra) {
+			var extra = commentInfo.extra;
+			var lineReferenceHtml = $(lineReferenceTemplate);
+			$('.line-num', lineReferenceHtml).text(extra.line);
+			$('.line-content', lineReferenceHtml).text(extra.lineContent);
+			$(lineReferenceHtml).insertBefore($('.comment-content', commentHtml));
+		}
 
 		wrap.append(commentHtml);
 	}
@@ -38,11 +58,34 @@ define(['vendor/jquery', './util', './EventManager', './commentApi', './user', '
 			}
 
 			var comments = result.data;
-			store[projectId] = comments;
+			var commentInfo;
 			for(var i = 0; i < comments.length; i++) {
+				commentInfo = comments[i];
+				if(commentInfo.extra) {
+					try {
+						commentInfo.extra = JSON.parse(commentInfo.extra);
+					} catch(ex) {
+						commentInfo.extra = null;
+					}
+				}
 				add(comments[i]);
 			}
+			store[projectId] = comments;
 		});
+	}
+
+	function displayLine(line) {
+		var lineNum = $('.publish-wrap .line-num', container);
+		var lineContent = $('.publish-wrap .line-content', container);
+
+		if(!line || line <= 0) {
+			lineNum.text('');
+			lineContent.text('');
+		} else {
+			lineNum.text(line);
+			var content = $.trim(software.getLine(line - 1));
+			lineContent.text(content);
+		}
 	}
 
 	function onShow(action) {
@@ -50,28 +93,43 @@ define(['vendor/jquery', './util', './EventManager', './commentApi', './user', '
 			return;
 		}
 
-		clear(true);
-		var projectInfo = project.getCurrentProject();
-		if(projectInfo.isExamlpe) {
-			return;
-		}
-
-		var projectId = projectInfo.id;
-		var comments = store[projectId];
-		if(comments) {
-			for(var i = 0; i < comments.length; i++) {
-				add(comments[i]);
-			}
-			return;
-		}
-
-		update(projectId);
+		onOpenProject();
 	}
 
 	function onHide(action) {
 		if(action != "comment") {
 			return;
 		}
+	}
+
+	function onUseLineClick(e) {
+		if($(this).is(':checked')) {
+			$('.publish-wrap', container).addClass('expand');
+			$('.publish-wrap .line', container).stop().delay(300).focus();
+		} else {
+			$('.publish-wrap', container).removeClass('expand');
+		}
+	}
+
+	function onLineBlur(e) {
+		clearInterval(getLineTimer);
+		displayLine(getLineNum());
+	}
+
+	function onLineFocus(e) {
+		var oldLine;
+		var line;
+		getLineTimer = setInterval(function() {
+			line = getLineNum();
+			if(!oldLine || oldLine != line) {
+				oldLine = line;
+				displayLine(line);
+			}
+		}, 500);
+	}
+
+	function getLineNum() {
+		return parseInt($('.publish-wrap .line', container).val());
 	}
 
 	function onPublishClick(e) {
@@ -103,11 +161,24 @@ define(['vendor/jquery', './util', './EventManager', './commentApi', './user', '
 				util.message("无效的评论，至少10个非空白字符");
 				return;
 			}
+
+			var extra = "";
+			if($('.use-line', container).is(':checked')) {
+				var line = getLineNum();
+				if(line && line >= 0) {
+					var lineContent = $('.publish-wrap .line-content', container).text();
+					extra = {
+						line: line,
+						lineContent: lineContent
+					};
+				}
+			}
 			
 			var commentInfo = {
 				content: content,
 				user_id: user.getUserId(),
 				project_id: projectId,
+				extra: JSON.stringify(extra),
 			};
 			commentApi.save(commentInfo).done(function(result) {
 				util.message(result.message);
@@ -123,7 +194,29 @@ define(['vendor/jquery', './util', './EventManager', './commentApi', './user', '
 		user.authCheck().then(doPublish, user.showLoginDialog);
 	}
 
+	function onOpenProject() {
+		$('.tab-wrap .comment-item', container).remove();
+		clear();
+
+		var projectInfo = project.getCurrentProject();
+		if(projectInfo.isExamlpe) {
+			return;
+		}
+
+		var projectId = projectInfo.id;
+		var comments = store[projectId];
+		if(comments) {
+			for(var i = 0; i < comments.length; i++) {
+				add(comments[i]);
+			}
+			return;
+		}
+
+		update(projectId);
+	}
+
 	return {
 		init: init,
+		getComments: getComments,
 	}
 });

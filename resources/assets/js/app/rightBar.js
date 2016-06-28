@@ -41,7 +41,7 @@ define(['vendor/jquery', './util', './EventManager', './comment'], function(_, u
 
 		var wrap = $('> .wrap', container).addClass('x-expand').delay(150, 'expand').queue('expand', function() {
 			wrap.addClass('active').removeClass("x-expand");
-			EventManager.trigger('rightBar', 'resize');
+			EventManager.trigger("rightBar", "resize");
 		});
 		wrap.dequeue('expand');
 
@@ -64,7 +64,7 @@ define(['vendor/jquery', './util', './EventManager', './comment'], function(_, u
 		isDisplay = false;
 		var wrap = $('> .wrap', container).addClass('x-fold').delay(150, 'fold').queue('fold', function() {
 			wrap.removeClass('active').removeClass('x-fold');
-			EventManager.trigger('rightBar', 'resize');
+			EventManager.trigger("rightBar", "resize");
 		});
 		wrap.dequeue('fold');
 

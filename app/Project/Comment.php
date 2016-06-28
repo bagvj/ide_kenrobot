@@ -14,7 +14,7 @@ class Comment extends Model
 
     protected $table = 'comments';
 
-    protected $fillable = ['project_id', 'user_id', 'content', 'reply_comment', 'reply_user'];
+    protected $fillable = ['project_id', 'user_id', 'content', 'reply_comment', 'reply_user', 'extra'];
 
     protected $hidden = ['deleted_at','updated_at'];
 

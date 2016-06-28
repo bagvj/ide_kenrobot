@@ -31,7 +31,7 @@ define(function() {
 		}
 	}
 
-	function trigger(target, type, args) {
+	function trigger(target, type) {
 		var name = getEventName(target, type);
 		var hanlders = hanlderMap[name];
 		if(!hanlders) {
@@ -40,7 +40,7 @@ define(function() {
 
 		for(var i = 0; i < hanlders.length; i++) {
 			var handler = hanlders[i];
-			handler(args);
+			handler.apply(this, [].slice.call(arguments, 2));
 		}
 	}
 

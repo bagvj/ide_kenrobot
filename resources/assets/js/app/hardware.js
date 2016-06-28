@@ -324,6 +324,7 @@ define(['vendor/jquery', 'vendor/jquery-ui', 'vendor/jquery.cookie', './nodeTemp
 		EventManager.bind('hardware', 'portClick', onPortClick);
 		EventManager.bind('hardware', 'adjustTools', onAdjustTools);
 		EventManager.bind("bottomContainer", "resize", onResize);
+		EventManager.bind("rightBar", "resize", onResize);
 		EventManager.bind("setting", "change", onSettingChange);
 	}
 
@@ -742,7 +743,7 @@ define(['vendor/jquery', 'vendor/jquery-ui', 'vendor/jquery.cookie', './nodeTemp
 	}
 
 	function onResize() {
-		// console.log("onResize");
+
 	}
 
 	function onSettingChange(option) {

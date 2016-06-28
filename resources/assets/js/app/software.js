@@ -96,6 +96,7 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 
 		
 		code.init(api);
 		EventManager.bind("bottomContainer", "resize", onResize);
+		EventManager.bind("rightBar", "resize", onResize);
 		EventManager.bind("setting", "change", onSettingChange);
 		EventManager.bind("library", "change", onLibraryChange);
 	}
@@ -172,6 +173,21 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 
 		return result;
 	}
 
+	function getLine(line) {
+		return editor.getSession().getLine(line);
+	}
+
+	function getCurrentLineInfo() {
+		var pos = editor.getCursorPosition();
+		var line = pos.row;
+		var lineContent = getLine(line);
+
+		return {
+			line: line + 1,
+			lineContent: lineContent,
+		};
+	}
+
 	function onResize() {
 		editor.resize(true);
 	}
@@ -204,5 +220,7 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 
 		format: format,
 		maskCode: maskCode,
 		getLibraries: getLibraries,
+		getLine: getLine,
+		getCurrentLineInfo: getCurrentLineInfo,
 	};
 });

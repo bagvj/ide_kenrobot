@@ -1,4 +1,4 @@
-define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './util', './hardware', './user', './project', './software', './sidebar', './topMenu', './bottomContainer', './board', './component', './library', './example', './ext/agent', './guide', './logcat', './setting', './rightBar'], function(_, Mousetrap, EventManager, config, util, hardware, user, project, software, sidebar, topMenu, bottomContainer, board, component, library, example, extAgent, guide, logcat, setting, rightBar) {
+define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './util', './hardware', './user', './project', './software', './sidebar', './topMenu', './bottomContainer', './board', './component', './library', './example', './ext/agent', './guide', './logcat', './setting', './rightBar', './barrage'], function(_, Mousetrap, EventManager, config, util, hardware, user, project, software, sidebar, topMenu, bottomContainer, board, component, library, example, extAgent, guide, logcat, setting, rightBar, barrage) {
 	function init() {
 		initAjax();
 		initKeys();
@@ -26,6 +26,7 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 		guide.init();
 		setting.init();
 		rightBar.init();
+		barrage.init();
 
 		$.when(
 			loadConfig(),

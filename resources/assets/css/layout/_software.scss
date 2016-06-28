@@ -3,4 +3,24 @@
 		font-size: 14px;
 		height: 100%;
 	}
+
+	.barrage {
+		z-index: 3;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		overflow: hidden;
+		pointer-events: none;
+
+		.barrage-item {
+			font-size: 16px;
+			color: white;
+			position: absolute;
+			white-space: nowrap;
+			// text-shadow: #000 1px 0 0, #000 0 1px 0, #000 -1px 0 0, #000 0 -1px 0;
+			// *filter: Glow(color=#000, strength=1);
+		}
+	}
 }

@@ -211,6 +211,8 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		}
 
 		targetTab.click();
+
+		EventManager.trigger('project', 'open');
 	}
 
 	function getHashKeyValue(name) {

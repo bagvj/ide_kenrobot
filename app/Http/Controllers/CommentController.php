@@ -16,7 +16,7 @@ class CommentController extends Controller
     public function save(Request $request)
     {
         //
-        $input = $request->only(['project_id', 'user_id', 'content']);
+        $input = $request->only(['project_id', 'user_id', 'content', 'extra']);
         $comment_id = $request->input('comment_id');
 
         if (!Auth::check()) {
@@ -54,7 +54,6 @@ class CommentController extends Controller
         }else {
             return collect(['status' => -5, 'message' => '评论失败'])->toJson(JSON_UNESCAPED_UNICODE);
         }
-        return ;
     }
 
     private function uglywordfitler($content)

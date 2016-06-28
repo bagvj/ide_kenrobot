@@ -129,6 +129,33 @@
 			overflow-y: auto;
 		}
 
+		.line-reference {
+			position: relative;
+
+			.line-num {
+				width: 54px;
+				height: 24px;
+				position: absolute;
+				left: 0;
+				text-align: right;
+				letter-spacing: 1px;
+				padding-right: 10px;
+				color: white;
+				background-color: #3a3d4b;
+			}
+
+			.line-content {
+				height: 24px;
+				margin-left: 54px;
+				padding-left: 10px;
+				color: white;
+				background-color: #4d5161;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: pre;
+			}
+		}
+
 		.publish-comment {
 			.comment-content {
 				width: 100%;
@@ -139,18 +166,71 @@
 				background-color: #262a34;
 			}
 
-			.publish {
-				height: 40px;
-				width: 120px;
-				float: right;
-				color: white;
-				background-color: #488ac0;
-			}
-
 			.publish-wrap {
-				margin-top: 20px;
+				margin-top: 15px;
 				margin-bottom: 20px;
-				height: 40px;
+
+				.line-wrap {
+					height: 40px;
+					margin-top: 15px;
+
+					.use-line {
+						line-height: 24px;
+						border: 1px solid #5c6272;
+					}
+
+					.use-line-label {
+						line-height: 24px;
+						margin: 8px;
+						font-weight: normal;
+						color: #9ba6c2;
+					}
+
+					.line {
+						width: 52px;
+						height: 24px;
+						display: none;
+						letter-spacing: 1px;
+						text-align: center;
+						background-color: transparent;
+						color: #95a0bb;
+						border: 1px solid #5c6272;
+					}
+
+					.tips {
+						line-height: 24px;
+						margin: 8px;
+						font-weight: normal;
+						color: #4E9AC9;
+						display: none;
+					}
+
+					.publish {
+						height: 40px;
+						width: 120px;
+						float: right;
+						color: white;
+						background-color: #488ac0;
+					}
+				}
+
+				& > .line-reference {
+					display: none;
+				}
+
+				&.expand {
+					& > .line-reference {
+						display: block;
+					}
+
+					.line {
+						display: inline-block;
+					}
+
+					.tips {
+						display: inline-block;
+					}
+				}
 			}
 		}
 
@@ -186,17 +266,25 @@
 						float: right;
 					}
 				}
+
+				.line-reference {
+					margin-top: 10px;
+				}
 				
 				.comment-content {
-					margin-top: 4px;
-					margin-bottom: 20px;
+					margin-top: 10px;
+					
 					font-size: 14px;
 					line-height: 24px;
 				}
 
-				.publish-time {
-					color: #585f71;
-					font-size: 12px;
+				.comment-footer {
+					margin-top: 20px;
+
+					.publish-time {
+						color: #585f71;
+						font-size: 12px;
+					}
 				}
 			}
 		}

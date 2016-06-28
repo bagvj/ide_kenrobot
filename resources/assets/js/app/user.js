@@ -121,7 +121,7 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 				return;
 			}
 
-			$(".login-btn", dialog).trigger("click");
+			$(".login-btn", dialog).click();
 		});
 	}
 

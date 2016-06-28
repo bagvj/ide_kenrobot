@@ -353,6 +353,18 @@
 		}
 
 		.tab-comment {
+			.line-reference {
+				.line-num {
+					color: #333;
+					background-color: #d5d7d9;
+				}
+
+				.line-content {
+					color: #333;
+					background-color: #e7e8eb;
+				}
+			}
+
 			.publish-comment {
 				.comment-content {
 					color: #676767;
@@ -360,9 +372,31 @@
 					background-color: white;
 				}
 
-				.publish {
-					color: white;
-					background-color: #0088ff;
+				.publish-wrap {
+					.line-wrap {
+						.use-line {
+							border: 1px solid #ccc;
+						}
+
+						.use-line-label {
+							color: #676767;
+						}
+
+						.line {
+							background-color: transparent;
+							color: #676767;
+							border: 1px solid #ccc;
+						}
+
+						.tips {
+							color: #EA8E76;
+						}
+
+						.publish {
+							color: white;
+							background-color: #0088ff;
+						}
+					}
 				}
 			}
 
@@ -610,125 +644,11 @@
 		// }
 	}
 
-	// .alert {
-	// 	&.alert-info {
-	// 		color: #316b8e;
-	// 		background-color: #d8edf7;
-	// 		border-color: #b9d5e2;
-	// 	}
-
-	// 	&.alert-success {
-	// 		color: #477a40;
-	// 		background-color: #def0d7;
-	// 		border-color: #bad9ae;
-	// 	}
-
-	// 	&.alert-warning {
-	// 		color: #836e3a;
-	// 		background-color: #fdf8e2;
-	// 		border-color: #eae3c2;
-	// 	}
-
-	// 	&.alert-danger {
-	// 		color: #a74345;
-	// 		background-color: #f2dedf;
-	// 		border-color: #e4c1c3;
-	// 	}
-	// }
-
-	// .x-dialog {
-	//     width: 400px;
-	//     margin: 0 auto;
-	//     position: relative;
-	//     display: none;
-	//     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
-	//     color: #515151;
-
-	//     &.active {
-	//         display: block;
-	//     }
-
-	//     &.dialog-in {
-	//         transform: translateY(200px);
-	//     }
-
-	//     &.dialog-fadeIn {
-	//         @include animation('dialog-fadeIn' 0.3s cubic-bezier(0.18, 0.9, 0.32, 1) both);
-	//     }
-
-	//     &.dialog-fadeOut {
-	//         @include animation('dialog-fadeOut' 0.3s cubic-bezier(0.18, 0.9, 0.32, 1) forwards);
-	//     }
-
-	//     .x-dialog-title {
-	//         font-size: 16px;
-	//         height: 36px;
-	//         line-height: 36px;
-	//         text-align: center;
-	//     }
-
-	//     .x-dialog-close {
-	//         font-size: 20px;
-	//         right: 10px;
-	//         top: 3px;
-	//         z-index: 10;
-	//         float: right;
-	//         position: absolute;
-	//         cursor: pointer;
-
-	//         &:hover {
-	//             color: #ff6666;
-	//         }
-	//     }
-	    
-	//     .x-dialog-content {
-	//         height: 110px;
-	//         display: flex;
-	//         justify-content: center;
-	//         align-items: center;
-	//         background-color: white;
-	//     }
-
-	//     .x-dialog-btns {
-	//         height: 50px;
-	//         background-color: white;
-	//         color: white;
-	//         position: relative;
-
-	//         .x-dialog-btn {
-	//             width: 100px;
-	//             height: 30px;
-	//             display: block;
-
-	//             &.confirm {
-	//                 background-color: #4bc1ec;
-	//             }
-
-	//             &.cancel {
-	//                 background-color: #ea9c68;
-	//             }
-	//         }
-	//     }
-	// }
-
-	// .x-dialog-info {
-	//     .x-dialog-title {
-	//         background-color: #ECFBE6;
-	//     }
-
-	//     .x-dialog-btn {
-	//         margin: 0 auto;
-	//     }
-	// }
-
-	// .x-dialog-confirm {
-	//     .x-dialog-title {
-	//         background-color: #fdf1d8;
-	//     }
-
-	//     .x-dialog-btn {
-	//         float: right;
-	//         margin-right: 20px;
-	//     }
-	// }
+	.software {
+		.barrage {
+			.barrage-item {
+				color: black;
+			}
+		}
+	}
 }

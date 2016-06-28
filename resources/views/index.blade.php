@@ -151,6 +151,7 @@
 							<div class="tab tab-software active">
 								<div class="software">
 									<div class="editor"></div>
+									<div class="barrage"></div>
 								</div>
 							</div>
 							<div class="tab tab-hardware">
@@ -203,10 +204,22 @@
 							<div class="tab tab-comment">
 								<div class="tab-wrap">
 									<div class="publish-comment">
-										<textarea class="comment-content" spellcheck="false" placeholder="小哥，吐槽一下呗~"></textarea>
-										<div class="publish-wrap">
-											<input class="publish" type="button" value="发表评论" />
-										</div>
+										<form>
+											<textarea class="comment-content" spellcheck="false" placeholder="小哥，吐槽一下呗~"></textarea>
+											<div class="publish-wrap">
+												<div class="line-reference">
+													<div class="line-num"></div>
+													<div class="line-content"></div>
+												</div>
+												<div class="line-wrap">
+													<input class="use-line" type="checkbox" id="use-line" />
+													<label class="use-line-label" for="use-line">引用行</label>
+													<input type="text" class="line" title="行号" />
+													<label class="tips">评论某行代码有惊喜</label>
+													<input class="publish" type="button" value="发表评论" />
+													</div>
+											</div>
+										</form>
 									</div>
 								</div>
 							</div>

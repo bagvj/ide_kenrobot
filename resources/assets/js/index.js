@@ -63,6 +63,6 @@ require.config({
 		},
 	},
 });
-require(['./app/app-index'], function(app) {
+require(['./app/app'], function(app) {
 	app.init();
 });
