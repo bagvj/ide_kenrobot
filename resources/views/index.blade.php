@@ -245,7 +245,7 @@
 							<div class="serial-input">
 								<div class="input-wrap">
 									<span class="input-label">输入：</span>
-									<input type="text" class="input" />
+									<input type="text" class="input" spellcheck="false" />
 									<input type="button" class="send-btn" value="发送" />
 								</div>
 								<ul class="serial-control">
@@ -278,6 +278,10 @@
 										</select>
 									</div>
 								</div>
+							</div>
+							<div class="options">
+								<input type="checkbox" class="line-break" id="line-break" />
+								<label class="line-break-label" for="line-break">带换行符</label>
 							</div>
 						</div>
 						<div class="serial-bottom">
@@ -612,7 +616,7 @@
 					</div>
 				</div>
 				<div class="x-dialog x-dialog-custom interpreter-dialog">
-					<div class="x-dialog-title"><div class="x-dialog-icon"></div>啃萝卜</div>
+					<div class="x-dialog-title"><div class="x-dialog-icon"></div><span class="name">啃萝卜</span></div>
 					<i class="kenrobot ken-close x-dialog-close"></i>
 					<div class="x-dialog-content">
 						<div class="wrap">

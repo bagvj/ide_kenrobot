@@ -5,6 +5,8 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 	var terminal;
 	var connectionId;
 	var state;
+	var hexHasCheck;
+	var host;
 
 	var connectBtn;
 	var resetBtn;
@@ -20,6 +22,7 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 			return;
 		}
 
+		host = window.location.protocol + "//" + window.location.host;
 		hasInit = true;
 
 		var btns = $('.top .x-btn', selector);
@@ -57,7 +60,8 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 			selector: '.interpreter-dialog',
 			onClose: disconnect,
 		});
-		onConnectClick();
+
+		checkPorts(true).done(onConnectClick);
 	}
 
 	function onButtonClick(e) {
@@ -104,15 +108,17 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 		if(connectionId) {
 			disconnect();
 		} else {
-			checkPorts().done(function() {
-				setEnabled(connectBtn, false);
-				doConnect().done(function() {
-					refreshBtnState(1);
-					connectBtn.val("断开");
-					terminal.focus();
-				}).fail(function() {
-					setEnabled(connectBtn, true);
-				});
+			setEnabled(connectBtn, false);
+			doConnect().done(function(connId) {
+				connectionId = connId;
+				setSerialReceive(true);
+				refreshBtnState(1);
+				connectBtn.val("断开");
+				terminal.focus();
+
+			}).fail(function() {
+				util.message("连接失败");
+				setEnabled(connectBtn, true);
 			});
 		}
 	}
@@ -173,7 +179,7 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 		});
 	}
 
-	function checkPorts() {
+	function checkPorts(showTips) {
 		var promise = $.Deferred();
 
 		var first = true;
@@ -205,7 +211,7 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 						//有且仅有一个arduino设置连接
 						portList[0].selectedIndex = index;
 						promise.resolve();
-					} else {
+					} else if(showTips) {
 						util.message("请设置串口");
 					}
 				}
@@ -227,16 +233,8 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 			action: "serial.connect",
 			portPath: portPath,
 			bitRate: bitRate,
-		}, function(connId) {
-			if (connId) {
-				//连接成功
-				connectionId = connId;
-				setSerialReceive(true);
-				promise.resolve();
-			} else {
-				util.message("连接失败");
-				promise.reject();
-			}
+		}, function(connId) {			
+			connId ? promise.resolve(connId) : promise.reject();
 		});
 
 		return promise;
@@ -257,17 +255,24 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 			action: "serial.disconnect",
 			connectionId: connectionId,
 		});
-		connectionId = null;	
+		connectionId = null;
+		watchProgress(false);
 	}
 
 	function setSerialReceive(value) {
 		clearInterval(receiveTimer);
+		hexHasCheck = false;
+
 		if (value) {
 			var checkReceive = function() {
 				agent.sendMessage("serial.receive", onSerialReceive);
 			}
 			var config = agent.getConfig();
 			receiveTimer = setInterval(checkReceive, config.serialReceiveDelay);
+
+			setTimeout(function() {
+				!hexHasCheck && doPrepareHex();
+			}, 2000);
 		}
 	}
 
@@ -283,15 +288,75 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 		}
 
 		result = result.join('').replace(String.fromCharCode(65533), "").replace(/\n$/g, "");
-		append(result);
-	}
 
-	function append(text) {
-		if (!text || text.length == 0 || text.length == '\n') {
+		if (!result || result.length == 0 || result == '\n') {
 			return;
 		}
 
-		terminal.echo(text);
+		if(!checkHex(result)) {
+			//没有烧hex文件，取消接收
+			doPrepareHex();
+			return;
+		}
+
+		terminal.echo(result);
+	}
+
+	function checkHex(result) {
+		if(hexHasCheck) {
+			return true;
+		}
+		hexHasCheck = true;
+		if(result.indexOf("2016 KenRobot") < 0) {
+			return false;
+		}
+
+		refreshBtnState(2);
+		return true;
+	}
+
+	function doPrepareHex() {
+		setSerialReceive(false);
+
+		var hexUrl = "/download/interpreter.hex";
+		agent.sendMessage({
+			action: "upload",
+			url: host + hexUrl,
+			delay: agent.getConfig().uploadDelay,
+		}, function(result) {
+			watchProgress(false);
+			if(result) {
+				setTimeout(function() {
+					$('.x-dialog-title .name', selector).text("啃萝卜");
+					util.message("烧写成功");
+					disconnect();
+					setTimeout(function() {
+						onConnectClick();
+					}, 200);
+				}, 2000);
+			} else {
+				util.message("烧写失败");
+				$('.x-dialog-title .name', selector).text("啃萝卜");
+			}
+		});
+		watchProgress(true);
+	}
+
+	var watchTimer;
+	function watchProgress(value) {
+		clearInterval(watchTimer);
+
+		var delay = agent.getConfig().uploadDelay;
+		if(value) {
+			var queryProgress = function() {
+				agent.sendMessage("upload.progress", updateProgress);
+			};
+			watchTimer = setInterval(queryProgress, delay);
+		}
+	}
+
+	function updateProgress(progress) {
+		$('.x-dialog-title .name', selector).text("啃萝卜(正在烧入解释器代码 " + progress + "%)");
 	}
 
 	function refreshBtnState(_state) {
@@ -309,6 +374,16 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 			setEnabled(autoRun, false);
 		} else if(state == 1) {
 			setEnabled(connectBtn, true);
+			setEnabled(resetBtn, false);
+			setEnabled(progBtn, false);
+			setEnabled(runBtn, false);
+			setEnabled(saveBtn, false);
+			setEnabled(listBtn, false);
+
+			setEnabled(autoRunLabel, false);
+			setEnabled(autoRun, false);
+		} else if(state == 2) {
+			setEnabled(connectBtn, true);
 			setEnabled(resetBtn, true);
 			setEnabled(progBtn, true);
 			setEnabled(runBtn, true);
@@ -317,8 +392,6 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 
 			setEnabled(autoRunLabel, true);
 			setEnabled(autoRun, true);
-		} else if(state == 2) {
-
 		}		
 	}
 

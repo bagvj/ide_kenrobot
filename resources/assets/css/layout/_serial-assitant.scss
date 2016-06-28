@@ -109,6 +109,22 @@
 		}
 	}
 
+	.options {
+		float: right;
+		margin-right: 20px;
+
+		.line-break {
+
+		}
+
+		.line-break-label {
+			line-height: 42px;
+			font-weight: normal;
+			margin-bottom: 0;
+			color: white;
+		}
+	}
+
 	.serial-tools {
 		float: right;
 		margin-right: 18px;

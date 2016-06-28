@@ -15,7 +15,7 @@ define(function() {
 			//Chrome app id
 			appId: "hhgmonhbodfiplppmcangkmlfkcnilpd",
 
-			nameReg : /(arduino)|(\/dev\/cu\.usbmodem)/i,
+			nameReg : /(USB-SERIAL)|(arduino)|(\/dev\/cu\.usbmodem)/i,
 
 			//烧写速度
 			uploadDelay: 250,

@@ -33,7 +33,9 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomCon
 			util.toggleActive(tab);
 		}
 
-		onPlayClick();
+		agent.check().done(function() {
+			checkPorts(true).done(onPlayClick);
+		});
 	}
 
 	function hide() {
@@ -60,6 +62,10 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomCon
 
 		if(!connectionId) {
 			return;
+		}
+
+		if($('.line-break', tab).is(':checked')) {
+			message = message + '\n';
 		}
 
 		serialSend(message);
@@ -92,9 +98,7 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomCon
 		}
 
 		if(state == 0) {
-			agent.check().done(function() {
-				checkPorts().done(doConnect);
-			});
+			doConnect();
 		} else if(state == 2) {
 			state = 1;
 		}
@@ -122,6 +126,8 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomCon
 		setSerialReceive(false);
 		state = 0;
 		refreshControlState();
+
+		// checkPorts();
 	}
 
 	function refreshControlState() {
@@ -171,7 +177,7 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomCon
 		log.scrollTop(log[0].scrollHeight);
 	}
 
-	function checkPorts() {
+	function checkPorts(showTips) {
 		var promise = $.Deferred();
 
 		var first = true;
@@ -203,13 +209,14 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomCon
 						//有且仅有一个arduino设置连接
 						portList[0].selectedIndex = index;
 						promise.resolve();
-					} else {
+					} else if(showTips) {
 						var setting = $('.serial-setting', tab);
 						if(!setting.hasClass("active")) {
 							onSettingClick();
 						}
 
 						util.message("请设置串口");
+						promise.reject();
 					}
 				}
 			});
