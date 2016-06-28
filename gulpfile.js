@@ -23,7 +23,10 @@ var gulp = require('gulp'),                      //基础库
 	minifyHtml = require("gulp-minify-html");    //html压缩
 	ngAnnotate = require('gulp-ng-annotate'),    //ng注释
 	sourcemaps = require('gulp-sourcemaps'),     //source map
-	requirejsOptimize = require('gulp-requirejs-optimize'); //requirejs打包
+	requirejsOptimize = require('gulp-requirejs-optimize'), //requirejs打包
+	path = require('path'),
+	child_process = require('child_process'),
+	os = require('os');
 
 var SRC = './resources/assets/';
 var DIST = './public/assets/';
@@ -111,17 +114,22 @@ gulp.task('default', function() {
 	return runSequence('clean', ['css', 'image', 'font', 'res'], 'js');
 });
 
+function genUuid() {
+	var d = new Date().getTime();
+	var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		var r = (d + Math.random() * 16) % 16 | 0;
+		d = Math.floor(d / 16);
+		return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+	});
+
+	return uuid;
+}
+
 gulp.task('uuid', function() {
 	var n = args.n || 1;
 	console.log("uuid:")
 	for(var i = 0; i < n; i++) {
-		var d = new Date().getTime();
-		var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-			var r = (d + Math.random() * 16) % 16 | 0;
-			d = Math.floor(d / 16);
-			return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-		});
-		console.log(uuid);
+		console.log(genUuid());
 	}
 });
 
@@ -134,4 +142,28 @@ gulp.task('sns-css', function() {
 		.pipe(autoprefixer())
 		.pipe(gulpif(args.release, cleanCSS()))
 		.pipe(gulp.dest(cssDst));
+});
+
+//编译解释器hex
+gulp.task('interpreter', function() {
+	var name = "interpreter";
+	var inoSrc = "/usr/local/share/arduino/libraries/KenArduino/examples/Interpreter/Interpreter.ino";
+	var projectPath = os.tmpdir() + "/" + name + "/";
+	var hexDist = './public/download/';
+
+	gulp.src(inoSrc)
+		.pipe(rename('main.ino'))
+		.pipe(gulp.dest(projectPath));
+
+	var cmd = "sh app/Build/compiler/Arduino/build.sh " + projectPath + " uno " + name;
+	child_process.exec(cmd, function(error) {
+		if(error) {
+			console.log(error);
+			return;
+		}
+
+		gulp.src(projectPath + "build.hex")
+			.pipe(rename(name + '.hex'))
+			.pipe(gulp.dest(hexDist));
+	});
 });
