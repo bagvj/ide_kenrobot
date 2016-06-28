@@ -180,7 +180,7 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 
 	function getCurrentLineInfo() {
 		var pos = editor.getCursorPosition();
 		var line = pos.row;
-		var lineContent = getLine(line);
+		var lineContent = $.trim(getLine(line));
 
 		return {
 			line: line + 1,
