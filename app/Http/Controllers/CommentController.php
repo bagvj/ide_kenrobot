@@ -24,8 +24,8 @@ class CommentController extends Controller
         }
 
         $strlen = strlen($input['content']);
-        if ($strlen < 10 || 1000 < $strlen) {
-          return collect( ['status' => -3, 'message' => '评论内容限定到10-1000字'])->toJson(JSON_UNESCAPED_UNICODE);
+        if ($strlen == 0 || 1000 < $strlen) {
+          return collect( ['status' => -3, 'message' => '评论内容限定到1-1000字符'])->toJson(JSON_UNESCAPED_UNICODE);
         }
 
         //敏感词

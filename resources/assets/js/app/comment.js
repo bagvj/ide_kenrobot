@@ -157,8 +157,8 @@ define(['vendor/jquery', './util', './EventManager', './commentApi', './user', '
 			if(content.length > 1000) {
 				util.message("内容太长了");
 				return;
-			} else if(content.length < 10) {
-				util.message("无效的评论，至少10个非空白字符");
+			} else if(content.length == 0) {
+				util.message("内容为空");
 				return;
 			}
 
