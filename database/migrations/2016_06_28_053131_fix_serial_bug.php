@@ -13,6 +13,7 @@ class FixSerialBug extends Migration
     public function up()
     {
         DB::statement("update components set varCode = '', headCode = '', setupCode = 'Serial.begin(9600);\n' where name = 'serialPort'");
+        DB::statement("update components set in_use = 0 where name = 'bluetooth'");
     }
 
     /**
