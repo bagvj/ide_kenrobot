@@ -187,7 +187,16 @@ define(['vendor/jquery', './util', './EventManager', './commentApi', './user', '
 				}
 
 				clear();
+				if(result.data.extra) {
+					try {
+						result.data.extra = JSON.parse(result.data.extra);
+					} catch(ex) {
+						result.data.extra = null;
+					}
+				}
 				add(result.data);
+				store[projectId].push(result.data);
+				EventManager.trigger('comment', 'refresh');
 			});
 		};
 

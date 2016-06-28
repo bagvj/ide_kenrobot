@@ -17,6 +17,7 @@ define(['vendor/jquery', './EventManager', './software', './project', './comment
 
 		EventManager.bind('project', 'open', onOpenProject);
 		EventManager.bind("project", "viewChange", onViewChange);
+		EventManager.bind('comment', 'refresh', onRefreshComment);
 	}
 
 	function add(text, options) {
@@ -153,6 +154,11 @@ define(['vendor/jquery', './EventManager', './software', './project', './comment
 		if(view == "software") {
 			start();
 		}
+	}
+
+	function onRefreshComment(projectId) {
+		stop();
+		start();
 	}
 
 	return {
