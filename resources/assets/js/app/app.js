@@ -1,4 +1,4 @@
-define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './util', './hardware', './user', './project', './software', './sidebar', './topMenu', './bottomContainer', './board', './component', './library', './example', './ext/agent', './guide', './logcat', './setting', './rightBar', './barrage'], function(_, Mousetrap, EventManager, config, util, hardware, user, project, software, sidebar, topMenu, bottomContainer, board, component, library, example, extAgent, guide, logcat, setting, rightBar, barrage) {
+define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './util', './hardware', './user', './project', './software', './sidebar', './topMenu', './board', './component', './library', './example', './ext/agent', './serial', './ext/burnDialog', './guide', './bottomContainer', './logcat', './serialAssitant', './interpreter', './setting', './rightBar', './barrage', './driverDialog'], function(_, Mousetrap, EventManager, config, util, hardware, user, project, software, sidebar, topMenu, board, component, library, example, extAgent, serial, burnDialog, guide, bottomContainer, logcat, serialAssitant, interpreter, setting, rightBar, barrage, driverDialog) {
 	function init() {
 		initAjax();
 		initKeys();
@@ -7,13 +7,16 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 		user.init();
 		sidebar.init();
 		topMenu.init();
-		bottomContainer.init();
 		board.init();
 		component.init();
 		library.init();
 		example.init();
 		project.init();
+
+		bottomContainer.init();
 		logcat.init();
+		serialAssitant.init();
+		interpreter.init();
 
 		hardware.init();
 		software.init({
@@ -22,11 +25,14 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 			getProjectInfo: project.getCurrentProject,
 		});
 		extAgent.init(config.extension);
+		serial.init();
+		burnDialog.init();
 
 		guide.init();
 		setting.init();
 		rightBar.init();
 		barrage.init();
+		driverDialog.init();
 
 		$.when(
 			loadConfig(),
@@ -46,46 +52,25 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 		//保存
 		Mousetrap.bind(['ctrl+s', 'command+s'], function(e) {
 			e.preventDefault && e.preventDefault();
-			EventManager.trigger('global', 'project.save');
+			EventManager.trigger('project', 'save');
 		});
 
 		//编译
 		Mousetrap.bind(['ctrl+b', 'command+b'], function(e) {
 			e.preventDefault && e.preventDefault();
-			EventManager.trigger('global', 'project.build');
+			EventManager.trigger('project', 'build');
 		});
 
 		//格式化
 		Mousetrap.bind(['ctrl+u', 'command+u'], function(e) {
 			e.preventDefault && e.preventDefault();
-			EventManager.trigger('global', 'software.format');
+			EventManager.trigger('software', 'format');
 		});
 	}
 
 	function initEscape() {
 		$(window).on('keydown', function(e) {
-			if(e.keyCode != 27) {
-				return;
-			}
-
-			if(util.isInDialog()) {
-				return;
-			}
-
-			if(bottomContainer.isShow()) {
-				bottomContainer.hide();
-				return;
-			}
-
-			if(sidebar.isShow()) {
-				sidebar.hide();
-				return;
-			}
-
-			if(rightBar.isShow()) {
-				rightBar.hide();
-				return;
-			}
+			e.keyCode != 27 || util.isInDialog() || bottomContainer.hide() || sidebar.hide() || rightBar.hide();
 		});
 	}
 

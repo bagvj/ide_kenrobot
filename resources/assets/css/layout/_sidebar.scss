@@ -23,16 +23,6 @@
 				display: block;
 			}
 		}
-
-		.top-bar {
-			
-		}
-
-		.bottom-bar {
-			width: 100%;
-			bottom: 0;
-			position: absolute;
-		}
 	}
 
 	.project {
@@ -233,55 +223,6 @@
 					color: white;
 					margin-top: 5px;
 					margin-bottom: 12px;
-				}
-			}
-		}
-	}
-
-	.board {
-		width: 200px;
-		position: relative;
-		overflow-y: auto;
-
-		.list {
-			li {
-				position: relative;
-				.image {
-					width: 70px;
-					height: 70px;
-					display: block;
-					margin: 0 auto;
-				}
-
-				.name {
-					color: white;
-					margin: 0 atuo;
-					display: block;
-					text-align: center;
-				}
-
-				&.normal {
-					cursor: pointer;
-
-					&:hover {
-						background-color: #4B5765;
-					}
-
-					&.active {
-						background-color: #4B5765;
-					}
-				}
-
-				&.forward {
-					.stamps {
-						position: absolute;
-						top: 0;
-						bottom: 0;
-						left: 0;
-						right: 0;
-						background: url('../image/stamps.png') no-repeat 115px 10px;
-						background-size: 50px 50px
-					}
 				}
 			}
 		}

@@ -1,4 +1,4 @@
-define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', './ext/agent', ], function(_, _, EventManager, util, agent) {
+define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', './ext/agent', './serial', './config'], function(_, _, EventManager, util, agent, serial, config) {
 	var hasInit;
 	var receiveTimer;
 	var selector = ".interpreter-dialog";
@@ -18,7 +18,16 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 	var autoRun;
 
 	function init() {
-		if (hasInit) {
+		EventManager.bind('interpreter', 'show', onShow);
+	}
+
+	function onShow() {
+		doInit();
+		show();
+	}
+
+	function doInit() {
+		if(hasInit) {
 			return;
 		}
 
@@ -49,7 +58,7 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 	}
 
 	function show() {
-		init();
+		EventManager.trigger('bottomContainer', "hide");
 
 		terminal.reset();
 		autoRun[0].checked = false;
@@ -61,7 +70,11 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 			onClose: disconnect,
 		});
 
-		checkPorts(true).done(onConnectClick);
+		// if(serial.getPort()) {
+		// 	onConnectClick();
+		// } else {
+			serial.refreshPort(true).done(onConnectClick);
+		// }
 	}
 
 	function onButtonClick(e) {
@@ -109,14 +122,13 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 			disconnect();
 		} else {
 			setEnabled(connectBtn, false);
-			doConnect().done(function(connId) {
+			doConnect().then(function(connId) {
 				connectionId = connId;
 				setSerialReceive(true);
 				refreshBtnState(1);
 				connectBtn.val("断开");
 				terminal.focus();
-
-			}).fail(function() {
+			}, function() {
 				util.message("连接失败");
 				setEnabled(connectBtn, true);
 			});
@@ -179,55 +191,11 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 		});
 	}
 
-	function checkPorts(showTips) {
-		var promise = $.Deferred();
-
-		var first = true;
-		var doCheck = function() {
-			agent.sendMessage("serial.getDevices", function(ports) {
-				if (!ports || ports.length == 0) {
-					if (first) {
-						first = false;
-						setTimeout(doCheck, 1000);
-						return;
-					}
-
-					util.message("找不到串口");
-				} else {
-					var portList = $('.port-list', selector).empty();
-					var count = 0;
-					var index;
-					var nameReg = agent.getConfig().nameReg;
-					for (var i = 0; i < ports.length; i++) {
-						var port = ports[i];
-						$('<option>').text(port.path).attr("title", port.displayName).appendTo(portList);
-						if(nameReg.test(port.path) || (port.displayName && nameReg.test(port.displayName))) {
-							count++;
-							index = i;
-						}
-					}
-
-					if (count == 1) {
-						//有且仅有一个arduino设置连接
-						portList[0].selectedIndex = index;
-						promise.resolve();
-					} else if(showTips) {
-						util.message("请设置串口");
-					}
-				}
-			});
-		};
-
-		doCheck();
-
-		return promise;
-	}
-
 	function doConnect() {
 		var promise = $.Deferred();
 
-		var portPath = $('.port-list', selector).val();
-		var bitRate = agent.getConfig().interpreterBitRate;
+		var bitRate = serial.getBaudRate();
+		var portPath = serial.getPort();
 
 		agent.sendMessage({
 			action: "serial.connect",
@@ -267,8 +235,7 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 			var checkReceive = function() {
 				agent.sendMessage("serial.receive", onSerialReceive);
 			}
-			var config = agent.getConfig();
-			receiveTimer = setInterval(checkReceive, config.serialReceiveDelay);
+			receiveTimer = setInterval(checkReceive, config.serial.receiveDelay);
 
 			setTimeout(function() {
 				!hexHasCheck && doPrepareHex();
@@ -322,7 +289,7 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 		agent.sendMessage({
 			action: "upload",
 			url: host + hexUrl,
-			delay: agent.getConfig().uploadDelay,
+			delay: config.serial.uploadDelay,
 		}, function(result) {
 			watchProgress(false);
 			if(result) {
@@ -346,7 +313,7 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 	function watchProgress(value) {
 		clearInterval(watchTimer);
 
-		var delay = agent.getConfig().uploadDelay;
+		var delay = config.serial.uploadDelay;
 		if(value) {
 			var queryProgress = function() {
 				agent.sendMessage("upload.progress", updateProgress);
@@ -396,6 +363,6 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 	}
 
 	return {
-		show: show,
+		init: init,
 	};
 });

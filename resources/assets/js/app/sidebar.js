@@ -11,22 +11,28 @@ define(['vendor/jquery', './EventManager', './util', './setting'], function(_, E
 	}
 
 	function hide() {
+		if(!isShow()) {
+			return false;
+		}
+
 		bindClickHide();
 		$('.sidebar .bar ul > li.active').click();
+		
+		return true;
 	}
 
 	function onViewChange(view) {
 		var sidebarBtns = $('.sidebar .bar ul > li');
 		var sidebarTabs = $('.sidebar .tab');
 		if(view == "hardware") {
-			sidebarBtns.filter('[data-action="board"],[data-action="component"]').removeClass("hide");
+			sidebarBtns.filter('[data-action="component"]').removeClass("hide");
 			sidebarBtns.filter('[data-action="library"]').addClass("hide");
-			sidebarTabs.filter('.tab-board,.tab-component').removeClass("hide");
+			sidebarTabs.filter('.tab-component').removeClass("hide");
 			sidebarTabs.filter('.tab-library').addClass("hide");
 		} else {
-			sidebarBtns.filter('[data-action="board"],[data-action="component"]').addClass("hide");
+			sidebarBtns.filter('[data-action="component"]').addClass("hide");
 			sidebarBtns.filter('[data-action="library"]').removeClass("hide");
-			sidebarTabs.filter('.tab-board,.tab-component').addClass("hide");
+			sidebarTabs.filter('.tab-component').addClass("hide");
 			sidebarTabs.filter('.tab-library').removeClass("hide");
 		}
 
@@ -101,7 +107,6 @@ define(['vendor/jquery', './EventManager', './util', './setting'], function(_, E
 
 	return {
 		init: init,
-		isShow: isShow,
 		hide: hide,
 	}
 });

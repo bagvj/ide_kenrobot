@@ -171,27 +171,105 @@
 .top-menu {
 	white-space: nowrap;
 
-	li {
-		font-size: 14px;
-		line-height: 40px;
-		height: 40px;
-		width: 84px;
-		display: inline-block;
-		text-align: center;
-		cursor: pointer;
-		letter-spacing: 1px;
-		color: white;
+	& > ul {
+		& > li {
+			font-size: 14px;
+			line-height: 40px;
+			height: 40px;
+			width: 84px;
+			display: inline-block;
+			text-align: center;
+			cursor: pointer;
+			letter-spacing: 1px;
+			color: white;
+			position: relative;
 
-		& > i {
-			margin-right: 6px;
-		}
+			& > i {
+				margin-right: 6px;
+			}
 
-		&.disabled {
-			color: #666;
-		}
+			&.disabled {
+				color: #666;
+			}
 
-		&:hover {
-			background-color: #3A4256;
+			&:hover {
+				background-color: #3A4256;
+			}
+
+			ul {
+				display: none;
+				position: absolute;
+				z-index: 4;
+				background-color: #4b5765;
+
+				& > li {
+					width: 120px;
+					height: 40px;
+					padding-left: 24px;
+					position: relative;
+					text-align: left;
+
+					& > i {
+						position: absolute;
+						right: 0;
+						font-size: 12px;
+					}
+
+					ul {
+						left: 100%;
+						top: 0;
+
+						& > li {
+							letter-spacing: 0;
+						}
+
+						&.select {
+							& > li {
+								& > i {
+									display: none;
+									position: absolute;
+									left: 5px;
+								}
+
+								&.checked {
+									& > i {
+										display: block;
+									}
+								}
+							}
+						}
+					}
+
+					&:hover {
+						background-color: #488ac0;
+
+						& > ul {
+							display: block;
+						}
+					}
+
+					&.board {
+						li {
+							width: 200px;
+
+							&.forward {
+								color: #80878e;
+								cursor: default;
+
+								&:hover {
+									background-color: transparent;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			&:hover {
+				& > ul {
+					display: block;
+				}
+			}
 		}
 	}
 }

@@ -26,7 +26,65 @@
 					<div class="wrap">
 						<div class="top-menu">
 							<ul>
-								<li data-action="build"><i class="kenrobot ken-build"></i>编译</li><li data-action="burn"><i class="kenrobot ken-upload"></i>烧写</li><li data-action="format"><i class="kenrobot ken-format"></i>格式化</li><li data-action="save"><i class="kenrobot ken-save"></i>保存</li><li data-action="download"><i class="kenrobot ken-download"></i>下载</li><li data-action="logcat"><i class="kenrobot ken-terminal"></i>输出</li><li data-action="serial-assitant"><i class="kenrobot ken-serial"></i>串口</li><li data-action="interpreter"><i class="kenrobot ken-serial"></i>解释器</li>
+								<li data-action="build">
+									<i class="kenrobot ken-build"></i><span>编译</span>
+								</li>
+								<li data-action="burn">
+									<i class="kenrobot ken-upload"></i><span>烧写</span>
+								</li>
+								<li data-action="format">
+									<i class="kenrobot ken-format"></i><span>格式化</span>
+								</li>
+								<li data-action="save">
+									<i class="kenrobot ken-save"></i><span>保存</span>
+								</li>
+								<li data-action="download">
+									<i class="kenrobot ken-download"></i><span>下载</span>
+								</li>
+								<li>
+									<i class="kenrobot ken-tool"></i><span>工具</span>
+									<ul>
+										<li data-action="logcat">
+											<span>输出</span>
+										</li>
+										<li data-action="serial-assitant">
+											<span>串口监视器</span>
+										</li>
+										<li data-action="interpreter">
+											<span>解释器</span>
+										</li>
+										<li class="port">
+											<span>端口</span>
+											<i class="kenrobot ken-triangle-right"></i>
+											<ul class="select">
+											</ul>
+										</li>
+										<li class="baudRate">
+											<span>波特率</span>
+											<i class="kenrobot ken-triangle-right"></i>
+											<ul class="select">
+												<li data-rate="115200"><i class="kenrobot ken-check"></i>115200</li>
+												<li data-rate="57600"><i class="kenrobot ken-check"></i>57600</li>
+												<li data-rate="38400"><i class="kenrobot ken-check"></i>38400</li>
+												<li data-rate="19200"><i class="kenrobot ken-check"></i>19200</li>
+												<li data-rate="9600"><i class="kenrobot ken-check"></i>9600</li>
+												<li data-rate="4800"><i class="kenrobot ken-check"></i>4800</li>
+											</ul>
+										</li>
+										<li class="board">
+											<span>开发板</span>
+											<i class="kenrobot ken-triangle-right"></i>
+											<ul class="select">
+											@foreach($boards as $index => $board)
+												<li class="{{$board->is_forward ? 'forward' : ''}}" data-board="{{$board->name}}"><i class="kenrobot ken-check"></i>{{$board->label}}</li>
+											@endforeach
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li data-action="setting">
+									<i class="kenrobot ken-setting"></i><span>设置</span>
+								</li>
 							</ul>
 						</div>
 						<div class="user{{isset($user) ? ' active' : ''}}">
@@ -59,15 +117,11 @@
 				<div class="main-content">
 					<div class="sidebar">
 						<div class="bar">
-							<ul class="top-bar">
+							<ul>
 								<li data-action="project"><i class="kenrobot ken-project"></i>项目</li>
-								<li class="hide" data-action="board"><i class="kenrobot ken-board"></i>主板</li>
 								<li class="hide" data-action="component"><i class="kenrobot ken-component"></i>元件</li>
 								<li data-action="library"><i class="kenrobot ken-library"></i>库</li>
 								<li data-action="example"><i class="kenrobot ken-demo"></i>示例</li>
-							</ul>
-							<ul class="bottom-bar">
-								<li data-action="setting"><i class="kenrobot ken-setting"></i>设置</li>
 							</ul>
 						</div>
 						<div class="tab tab-project">
@@ -83,26 +137,6 @@
 									<ul>
 									</ul>
 								</div>
-							</div>
-						</div>
-						<div class="tab tab-board">
-							<div class="board x-scrollbar">
-								<ul class="list">
-								@foreach($boards as $index => $board)
-								@if($board->is_forward)
-									<li class="forward" data-board="{{$board->name}}">
-										<img class="image" src="/assets/image/board/ArduinoUNO-small.png" />
-										<span class="name">{{$board->label}}</span>
-										<div class="stamps"></div>
-									</li>
-								@else
-									<li class="normal" data-board="{{$board->name}}">
-										<img class="image" src="/assets/image/board/{{$board->name}}-small.png" />
-										<span class="name">{{$board->label}}</span>
-									</li>
-								@endif
-								@endforeach
-								</ul>
 							</div>
 						</div>
 						<div class="tab tab-component">
@@ -257,27 +291,7 @@
 							<div class="serial-tools">
 								<ul>
 									<li data-action="clear" title="清空输出"><i class="kenrobot ken-clear"></i></li>
-									<li data-action="setting" title="串口设置"><i class="kenrobot ken-setting2"></i></li>
 								</ul>
-								<div class="serial-setting">
-									<div class="title">设置<i class="kenrobot ken-close close-btn"></i></div>
-									<div class="field">
-										<label>端口:</label>
-										<select class="port">
-										</select>
-									</div>
-									<div class="field">
-										<label>波特率:</label>
-										<select class="bitRate">
-											<option>115200</option>
-											<option>57600</option>
-											<option>38400</option>
-											<option>19200</option>
-											<option>9600</option>
-											<option>4800</option>
-										</select>
-									</div>
-								</div>
 							</div>
 							<div class="options">
 								<input type="checkbox" class="line-break" id="line-break" />
@@ -410,38 +424,15 @@
 								</div>
 							</div>
 						</div>
-						<div class="tab tab-no-serial">
+						<div class="tab tab-error">
 							<div class="wrap">
-								<div class="message">
+								<div class="message message-1">
 									未检测到有Arduino开发板或其它串口设备插入<br />
 									<a class="driver" href='#'>驱动问题?</a>解决后请关闭本窗口，然后重新点击烧写图标
 								</div>
-							</div>
-						</div>
-						<div class="tab tab-connect">
-							<div class="wrap">
-								<div class="tips">
-									未检测到Arduino开发板连接或您已连接多个<br />请手动设置串口
+								<div class="message message-2">
+									请在“工具->端口”中设置串口
 								</div>
-								<div class="field">
-									<label>端口:</label>
-									<select class="port">
-									</select>
-									<label>波特率:</label>
-									<select class="bitRate">
-										<option>115200</option>
-										<option>57600</option>
-										<option>38400</option>
-										<option>19200</option>
-										<option>9600</option>
-										<option>4800</option>
-									</select>
-								</div>
-								<div>
-									<input class="connect" type="button" value="连接" />
-								</div>
-								<div class="message"></div>
-								<a class="driver" href='#'>驱动问题?</a>
 							</div>
 						</div>
 						<div class="tab tab-burn">
@@ -504,6 +495,7 @@
 								<li data-action="theme">主题</li>
 								<li data-action="editor">编辑器</li>
 								<li data-action="shortcut">快捷键</li>
+								<li data-action="help">帮助</li>
 								<li data-action="about">关于</li>
 							</ul>
 						</div>
@@ -597,6 +589,25 @@
 									</div>
 								</div>
 							</div>
+							<div class="tab tab-help">
+								<div class="tips">常见问题解答</div>
+								<div class="faq">
+									<div class="question">
+										Q： 如何设置串口端口和波特率
+									</div>
+									<div class="answer">
+										A： 在“工具->端口”和“工具->波特率”中设置
+									</div>
+								</div>
+								<div class="faq">
+									<div class="question">
+										Q: 检测不到串口
+									</div>
+									<div class="answer">
+										A: 驱动问题，参考<a class="link" href="#" data-action="faq-driver">这里</a>
+									</div>
+								</div>
+							</div>
 							<div class="tab tab-about">
 								<div class="about-logo"></div>
 								<div class="intro">啃萝卜是一款在线硬件编程学习平台，我们的目标是：让机器人编程变得更容易，让学习变得更简单。</div>
@@ -622,16 +633,11 @@
 						<div class="wrap">
 							<div class="left">
 								<div class="top">
-									<span class="port-label">端口</span>
-									<select class="port-list">
-									</select>
 									<input class="connect x-btn" data-action="connect" type="button" value="连接" />
 									<input class="reset x-btn" data-action="reset" type="button" value="重置" />
 									<input class="advance x-btn" data-action="advance" type="button" value="高级" />
 								</div>
-								<div class="bottom">
-									
-								</div>
+								<div class="bottom"></div>
 							</div>
 							<div class="right">
 								<div class="top">

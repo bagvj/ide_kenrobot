@@ -79,23 +79,24 @@ define(function(){
 		return $('.dialog-layer').hasClass("active");
 	}
 
-	function toggleActive(target, collapseMode) {
+	function toggleActive(target, collapseMode, cls) {
+		cls = cls || "active";
 		if(collapseMode) {
-			if(target.hasClass("active")) {
-				target.removeClass("active");
+			if(target.hasClass(cls)) {
+				target.removeClass(cls);
 				return false;
 			} else {
-				target.siblings(".active").removeClass("active");
-				target.addClass("active");
+				target.siblings("." + cls).removeClass(cls);
+				target.addClass(cls);
 				return true;
 			}
 		} else {
-			if (target.hasClass("active")) {
+			if (target.hasClass(cls)) {
 				return false;
 			}
 
-			target.siblings(".active").removeClass("active");
-			target.addClass("active");
+			target.siblings("." + cls).removeClass(cls);
+			target.addClass(cls);
 
 			return true;
 		}

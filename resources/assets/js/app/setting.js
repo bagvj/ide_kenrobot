@@ -1,18 +1,25 @@
 define(['vendor/jquery', 'vendor/jquery.cookie', './EventManager', './util'], function(_, _, EventManager, util) {
 	var options;
-	var selector = ".setting-dialog";
-	var defaultOptions = {
-		theme: "default",
-		editor: {
-			theme: "default",
-			tabSize: 4,
-		},
-	};
+	var selector;
+	var defaultOptions;
 
 	function init() {
+		selector = $(".setting-dialog");
+
+		defaultOptions = {
+			theme: "default",
+			editor: {
+				theme: "default",
+				tabSize: 4,
+			},
+		};
+
 		EventManager.bind('setting', 'change', onSettingChange);
+		EventManager.bind('setting', 'show', show);
 
 		$('.left ul > li', selector).on('click', onTabClick)[0].click();
+
+		$('.tab-help .link', selector).on('click', onFaqClick);
 
 		$('.tab-theme .theme', selector).on('change', function() {
 			applyOption("theme", $(this).val());
@@ -97,6 +104,18 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './EventManager', './util'], fu
 
 		var text = li.text();
 		$('.x-dialog-title', selector).text("设置>" + text);
+	}
+
+	function onFaqClick(e) {
+		var action = $(this).data('action');
+		switch(action) {
+			case "faq-driver":
+				$('.x-dialog-close', selector).click();
+				setTimeout(function() {
+					EventManager.trigger('driverDialog', 'show');
+				}, 400);
+				break;
+		}
 	}
 
 	function onSettingChange(option) {

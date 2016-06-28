@@ -40,12 +40,35 @@
 	}
 
 	.top-menu {
-		li {
-			color: #676767;
+		& > ul {
+			& > li {
+				color: #676767;
 
-			&:hover {
-				color: #333;
-				background-color: #f6f6f6;
+				&:hover {
+					color: #333;
+					background-color: #f6f6f6;
+				}
+
+				ul {
+					background-color: white;
+					
+					& > li {
+						color: #676767;
+
+						&:hover {
+							color: #333;
+							background-color: #f6f6f6;
+						}
+					}
+				}
+
+				&.board {
+					li {
+						&.forward {
+							color: #ccc;
+						}
+					}
+				}
 			}
 		}
 	}
@@ -217,10 +240,6 @@
 				.list {
 					li {
 						&.active {
-							// .image {
-							// 	border: 2px solid rgb(76, 193, 252);
-							// }
-
 							.name {
 								color: #333;
 							}
@@ -236,36 +255,6 @@
 
 					.name {
 						color: #676767;
-					}
-				}
-			}
-		}
-
-		.board {
-			background-color: white;
-
-			.list {
-				li {
-					.name {
-						color: #676767;
-					}
-
-					&.normal {
-						&:hover {
-							background-color: #0088ff;
-
-							.name {
-								color: white;
-							}
-						}
-
-						&.active {
-							background-color: #0088ff;
-
-							.name {
-								color: white;
-							}
-						}
 					}
 				}
 			}
@@ -320,7 +309,6 @@
 				}
 			}
 		}
-		// }
 	}
 
 	.right-bar {

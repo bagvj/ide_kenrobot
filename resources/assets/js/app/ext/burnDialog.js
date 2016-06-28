@@ -1,6 +1,5 @@
-define(['vendor/jquery', '../util', './agent'], function(_, util, agent) {
-	var isInit;
-
+define(['vendor/jquery', '../util', '../EventManager', './agent', '../project', '../serial', '../config'], function(_, util, EventManager, agent, project, serial, config) {
+	var hasInit;
 	var selector;
 	var host;
 	
@@ -8,32 +7,33 @@ define(['vendor/jquery', '../util', './agent'], function(_, util, agent) {
 	var hexUrl;
 
 	function init() {
-		if(isInit) {
+		EventManager.bind("burn", "show", onShow);
+	}
+
+	function onShow() {
+		doInit();
+		
+		project.build(true).done(function(hexUrl) {
+			agent.check().done(function() {
+				show(hexUrl);
+			});
+		});
+	}
+
+	function doInit() {
+		if(hasInit) {
 			return;
 		}
-		isInit = true;
 
+		hasInit = true;
 		host = window.location.protocol + "//" + window.location.host;
 
-		selector = ".burn-dialog";
-
-		var bit;
-		if (navigator.userAgent.indexOf("WOW64") != -1 || navigator.userAgent.indexOf("Win64") != -1) {
-			bit = 64;
-		} else {
-			bit = 32;
-		}
-		var downloadUrl = "/download/arduino-driver-x" + bit + ".zip";
-		$('.arduino-driver-dialog .downloadUrl').attr('href', downloadUrl);
-
+		selector = $(".burn-dialog");
 		$('.driver', selector).on('click', onDriverClick);
-		$('.tab-connect .connect', selector).on('click', onConnectClick);
 		$('.tab-burn .burn', selector).on('click', onBurnClick);
 	}
 
 	function show(_hexUrl) {
-		init();
-
 		hexUrl = _hexUrl;
 		util.dialog({
 			selector: selector,
@@ -41,7 +41,13 @@ define(['vendor/jquery', '../util', './agent'], function(_, util, agent) {
 			onClose: onDialogClose,
 		});
 
-		checkSerialPorts();
+		serial.refreshPort().then(function() {
+			onConnectClick();
+		}, function(result) {
+			switchTab("error");
+			var message = $('.tab-error .message-' + result.status);
+			util.toggleActive(message);
+		});
 	}
 
 	function onDialogClosing() {
@@ -51,7 +57,6 @@ define(['vendor/jquery', '../util', './agent'], function(_, util, agent) {
 	function onDialogClose() {
 		$('.tab', selector).removeClass("active").eq(0).addClass("active");
 		$('.tab-burn .burn-progress', selector).removeClass("active");
-		$('.tab-connect .port', selector).empty();
 
 		agent.sendMessage({
 			action: "serial.disconnect",
@@ -62,62 +67,36 @@ define(['vendor/jquery', '../util', './agent'], function(_, util, agent) {
 		watchProgress(false);
 	}
 
-	function checkSerialPorts() {
-		agent.sendMessage("serial.getDevices", function(ports) {
-			if(!ports || ports.length == 0) {
-				//没有串口连接
-				switchTab("no-serial");
-				setTimeout(checkSerialPorts, 1);
-				return;
-			}
-
-			var portList = $('.tab-connect .port', selector).empty();
-			var count = 0;
-			var index;
-			var nameReg = agent.getConfig().nameReg;
-			for(var i = 0; i < ports.length; i++) {
-				var port = ports[i];
-				$('<option>').text(port.path).attr("title", port.displayName).appendTo(portList);
-				if(nameReg.test(port.path) || (port.displayName && nameReg.test(port.displayName))) {
-					count++;
-					index = i;
-				}
-			}
-
-			if(count == 1) {
-				//有且仅有一个arduino设置连接
-				portList[0].selectedIndex = index;
-				$('.tab-connect .connect', selector).click();
-			} else {
-				switchTab("connect");
-			}
-		});
-	}
-
 	function onDriverClick(e) {
 		$('.x-dialog-close', selector).click();
 		setTimeout(function() {
-			util.dialog('.arduino-driver-dialog');
+			EventManager.trigger('driverDialog', 'show');
 		}, 400);
 	}
 
-	function onConnectClick(e) {
-		var portPath = $('.tab-connect .port', selector).val();
-		var bitRate = parseInt($('.tab-connect .bitRate', selector).val());
+	function doConnect() {
+		var promise = $.Deferred();
+
+		var bitRate = serial.getBaudRate();
+		var portPath = serial.getPort();
 
 		agent.sendMessage({
 			action: "serial.connect",
 			portPath: portPath,
 			bitRate: bitRate,
-		}, function(_connectionId) {
-			if(_connectionId) {
-				connectionId = _connectionId;
+		}, function(connId) {			
+			connId ? promise.resolve(connId) : promise.reject();
+		});
 
-				switchTab("burn");
-			} else {
-				switchTab("connect");
-				showMessage("连接失败", "connect");
-			}
+		return promise;
+	}
+
+	function onConnectClick(e) {
+		doConnect().then(function(connId) {
+			connectionId = connId;
+			switchTab("burn");
+		}, function(result) {
+			util.message("连接失败");
 		});
 	}
 
@@ -130,7 +109,7 @@ define(['vendor/jquery', '../util', './agent'], function(_, util, agent) {
 		agent.sendMessage({
 			action: "upload",
 			url: host + hexUrl + "/hex",
-			delay: agent.getConfig().uploadDelay,
+			delay: config.serial.uploadDelay,
 		}, function(result) {
 			watchProgress(false);
 			$('.tab-burn .burn', selector).removeClass("burning").attr("disabled", false);
@@ -145,7 +124,7 @@ define(['vendor/jquery', '../util', './agent'], function(_, util, agent) {
 	function watchProgress(value) {
 		clearInterval(watchTimer);
 
-		var delay = agent.getConfig().uploadDelay;
+		var delay = config.serial.uploadDelay;
 		if(value) {
 			var queryProgress = function() {
 				agent.sendMessage("upload.progress", updateProgress);
@@ -156,9 +135,7 @@ define(['vendor/jquery', '../util', './agent'], function(_, util, agent) {
 
 	function switchTab(tab) {
 		util.toggleActive($('.tab-' + tab, selector));
-		if(tab == "connect") {
-
-		} else if(tab == "burn") {
+		if(tab == "burn") {
 			$('.tab-burn .burn', selector).removeClass("burning").attr("disabled", false);
 			$('.tab-burn .burn-progress', selector).removeClass("active");
 			$('.tab-burn .burn-progress ul li.ins', selector).removeClass("ins");
@@ -187,6 +164,6 @@ define(['vendor/jquery', '../util', './agent'], function(_, util, agent) {
 	}
 
 	return {
-		show: show,
+		init: init,
 	};
 });

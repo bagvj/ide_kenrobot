@@ -19,10 +19,12 @@ define(['vendor/jquery', './util', './EventManager', './comment'], function(_, u
 
 	function hide() {
 		if(!isShow()) {
-			return;
+			return false;
 		}
 
 		$('.bar > ul > li.active').click();
+
+		return true;
 	}
 
 	function doShow(action) {
@@ -89,7 +91,6 @@ define(['vendor/jquery', './util', './EventManager', './comment'], function(_, u
 
 	return {
 		init: init,
-		isShow: isShow,
 		hide: hide,
 	}
 });

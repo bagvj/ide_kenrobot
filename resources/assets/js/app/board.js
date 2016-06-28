@@ -4,7 +4,7 @@ define(['vendor/jquery', './util'], function(_, util) {
 	var selector;
 
 	function init() {
-		selector = ".board .list > li.normal";
+		selector = ".top-menu .board ul > li";
 		$(selector).on('click', onBoardClick);
 	}
 
@@ -36,9 +36,13 @@ define(['vendor/jquery', './util'], function(_, util) {
 
 	function onBoardClick(e) {
 		var li = $(this);
+		if(li.hasClass("forward")) {
+			return;
+		}
+
 		var name = li.data("board");
 		current = boards[name];
-		util.toggleActive(li);
+		util.toggleActive(li, null, "checked");
 	}
 
 	return {

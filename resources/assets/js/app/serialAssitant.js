@@ -1,14 +1,20 @@
-define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomContainer'], function(_, EventManager, util, agent, bottomContainer) {
+define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomContainer', './serial', './config'], function(_, EventManager, util, agent, bottomContainer, serial, config) {
 	var hasInit;
 	var tab;
 	var connectionId;
 	var state;
 
 	function init() {
+		EventManager.bind('bottomContainer', "hide", hide);
+		EventManager.bind('serialAssitant', 'toggle', toggle);
+	}
+
+	function doInit() {
 		if(hasInit) {
 			return;
 		}
 
+		hasInit = true;
 		state = 0;
 		refreshControlState();
 
@@ -17,36 +23,37 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomCon
 		$('.send-btn', tab).on('click', onSendClick);
 		$('.serial-input .input', tab).on('keyup', onKeyup);
 		$('.serial-setting .close-btn').on('click', onSettingClick);
-
-		EventManager.bind('bottomContainer', "hide", hide);
-
-		hasInit = true;
 	}
 
 	function show() {
-		init();
-		onClearClick();
-		
-		bottomContainer.show();
+		doInit();
 
+		onClearClick();
+
+		bottomContainer.show();
 		if(!tab.hasClass("active")) {
 			util.toggleActive(tab);
 		}
 
 		agent.check().done(function() {
-			checkPorts(true).done(onPlayClick);
+			// if(serial.getPort()) {
+			// 	onPlayClick();
+			// } else {
+				serial.refreshPort(true).done(onPlayClick);
+			// }
 		});
 	}
 
 	function hide() {
-		init();
+		doInit();
+
 		tab.removeClass("active");
 		onStopClick();
 		bottomContainer.hide(true);
 	}
 
 	function toggle() {
-		init();
+		doInit();
 
 		tab.hasClass("active") ? hide() : show();
 	}
@@ -126,8 +133,6 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomCon
 		setSerialReceive(false);
 		state = 0;
 		refreshControlState();
-
-		// checkPorts();
 	}
 
 	function refreshControlState() {
@@ -177,61 +182,11 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomCon
 		log.scrollTop(log[0].scrollHeight);
 	}
 
-	function checkPorts(showTips) {
-		var promise = $.Deferred();
-
-		var first = true;
-		var doCheck = function() {
-			agent.sendMessage("serial.getDevices", function(ports) {
-				if(!ports || ports.length == 0) {
-					if(first) {
-						first = false;
-						setTimeout(doCheck, 1000);
-						return;
-					}
-
-					util.message("找不到串口");
-				} else {
-					var portList = $('.serial-setting .port', tab).empty();
-					var count = 0;
-					var nameReg = agent.getConfig().nameReg;
-					var index;
-					for(var i = 0; i < ports.length; i++) {
-						var port = ports[i];
-						$('<option>').text(port.path).attr("title", port.displayName).appendTo(portList);
-						if(nameReg.test(port.path) || (port.displayName && nameReg.test(port.displayName))) {
-							count++;
-							index = i;
-						}
-					}
-
-					if(count == 1) {
-						//有且仅有一个arduino设置连接
-						portList[0].selectedIndex = index;
-						promise.resolve();
-					} else if(showTips) {
-						var setting = $('.serial-setting', tab);
-						if(!setting.hasClass("active")) {
-							onSettingClick();
-						}
-
-						util.message("请设置串口");
-						promise.reject();
-					}
-				}
-			});
-		};
-		
-		doCheck();
-
-		return promise;
-	}
-
 	function doConnect() {
 		var promise = $.Deferred();
 
-		var portPath = $('.serial-setting .port', tab).val();
-		var bitRate = parseInt($('.serial-setting .bitRate', tab).val());
+		var portPath = serial.getPort();
+		var bitRate = serial.getBaudRate();
 
 		agent.sendMessage({
 			action: "serial.connect",
@@ -262,8 +217,7 @@ define(['vendor/jquery', './EventManager', './util', './ext/agent', './bottomCon
 			var checkReceive = function() {
 				agent.sendMessage("serial.receive", onSerialReceive);
 			}
-			var config = agent.getConfig();
-			receiveTimer = setInterval(checkReceive, config.serialReceiveDelay);
+			receiveTimer = setInterval(checkReceive, config.serial.receiveDelay);
 		}
 	}
 

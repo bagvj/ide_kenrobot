@@ -1,10 +1,6 @@
-define(['vendor/jquery', './EventManager', './project', './software', './logcat', './serialAssitant', './interpreter', './ext/agent', './ext/burn-dialog', './util'], function(_, EventManager, project, software, logcat, serialAssitant, interpreter, agent, burnDialog, util) {
-
+define(['vendor/jquery', './EventManager'], function(_, EventManager) {
 	function init() {
-		$('.top-menu > ul > li').on('click', onMenuClick);
-		EventManager.bind('global', 'project.save', onSaveClick);
-		EventManager.bind('global', 'project.build', onBuildClick);
-		EventManager.bind('global', 'software.format', onFormatClick);
+		$('.top-menu > ul li').on('click', onMenuClick);
 	}
 
 	function onMenuClick(e) {
@@ -12,70 +8,33 @@ define(['vendor/jquery', './EventManager', './project', './software', './logcat'
 		var action = li.data("action");
 		switch(action) {
 			case "build":
-				onBuildClick();
+				EventManager.trigger('project', 'build');
 				break;
 			case "burn":
-				onBurnClick();
+				EventManager.trigger('burn', 'show');
 				break;
 			case "format":
-				onFormatClick();
+				EventManager.trigger('software', 'format');
 				break;
 			case "save":
-				onSaveClick();
+				EventManager.trigger('project', 'save');
 				break;
 			case "download":
-				onDownloadClick();
+				EventManager.trigger('project', 'download');
 				break;
 			case "logcat":
-				onLogcatClick();
+				EventManager.trigger('logcat', 'toggle');
 				break;
 			case "serial-assitant":
-				onSerialAssitantClick();
+				EventManager.trigger('serialAssitant', 'toggle');
 				break;
 			case "interpreter":
-				onInterpreterClick();
+				EventManager.trigger('interpreter', 'show');
+				break;
+			case "setting":
+				EventManager.trigger('setting', 'show');
 				break;
 		}
-	}
-
-	function onBuildClick() {
-		project.build();
-	}
-
-	function onBurnClick() {
-		project.build(true).done(function(hexUrl) {
-			agent.check().done(function() {
-				burnDialog.show(hexUrl);
-			});
-		});
-	}
-
-	function onFormatClick() {
-		software.format();
-	}
-
-	function onSaveClick() {
-		project.save();
-	}
-
-	function onDownloadClick() {
-		project.build(true).done(function(url){
-			window.location.href = url;
-		});
-	}
-
-	function onLogcatClick() {
-		logcat.toggle();
-	}
-
-	function onSerialAssitantClick() {
-		serialAssitant.toggle();	
-	}
-
-	function onInterpreterClick() {
-		agent.check().done(function() {
-			interpreter.show();
-		});
 	}
 
 	return {

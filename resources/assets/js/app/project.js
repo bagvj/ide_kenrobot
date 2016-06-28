@@ -18,6 +18,11 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		EventManager.bind("user", "login", onLogin);
 		EventManager.bind("software", "editorChange", onEditorChange);
 
+		EventManager.bind("project", "build", build);
+		EventManager.bind("project", "save", save);
+		EventManager.bind("project", "download", onDownload);
+
+
 		$(window).on('hashchange', function(e) {
 			load();	
 		});
@@ -139,22 +144,6 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		return promise;
 	}
 
-	function save() {
-		var doSave = function() {
-			var projectInfo = getCurrentProject();
-			var id = projectInfo.id;
-			if(id == 0 || isUuid(id)) {
-				showSaveDialog(projectInfo);
-			} else {
-				doProjectSave(projectInfo);
-			}
-		};
-
-		user.authCheck().then(function() {
-			checkOwn().done(doSave);
-		}, user.showLoginDialog);
-	}
-
 	function getCurrentProject() {
 		var id = $('.top-tabs > ul > li.active').data('project-id');
 		return getProjectById(openedProjects, id);
@@ -192,6 +181,22 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		}
 
 		return targetTab.length > 0;
+	}
+
+	function save() {
+		var doSave = function() {
+			var projectInfo = getCurrentProject();
+			var id = projectInfo.id;
+			if(id == 0 || isUuid(id)) {
+				showSaveDialog(projectInfo);
+			} else {
+				doProjectSave(projectInfo);
+			}
+		};
+
+		user.authCheck().then(function() {
+			checkOwn().done(doSave);
+		}, user.showLoginDialog);
 	}
 
 	function openProject(projectInfo) {
@@ -283,6 +288,12 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		} else {
 			return promise.resolve();
 		}
+	}
+
+	function onDownload() {
+		build(true).done(function(url){
+			window.location.href = url;
+		});
 	}
 
 	function onViewChange(view) {
@@ -684,7 +695,6 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		init: init,
 		load: load,
 		build: build,
-		save: save,
 		isOpen: isOpen,
 		getCurrentProject: getCurrentProject,
 		loadMyProject: loadMyProject,

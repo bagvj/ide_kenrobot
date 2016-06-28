@@ -58,24 +58,6 @@
 		display: block;
 		position: relative;
 
-		.port-label {
-			margin-left: 10px;
-			height: 30px;
-			line-height: 30px;
-			color: #676767;
-		}
-
-		.port-list {
-			height: 30px;
-			width: 120px;
-			margin-left: 10px;
-			margin-right: 20px;
-
-			border: 1px solid #c7c7c7;
-			background-color: #f8f8f8;
-			color: #676767;
-		}
-
 		.x-btn {
 			height: 30px;
 			letter-spacing: 1px;
@@ -99,6 +81,7 @@
 
 			&.connect {
 				width: 60px;
+				margin-left: 10px;
 				margin-right: 20px;
 			}
 

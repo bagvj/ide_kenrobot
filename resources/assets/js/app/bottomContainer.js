@@ -23,8 +23,6 @@ define(['vendor/jquery', 'vendor/jquery-ui', './EventManager', './util'], functi
 				onResize();
 			}
 		});
-
-		EventManager.bind("bottomContainer", "toggle", onToggle);
 	}
 
 	function isShow() {
@@ -75,22 +73,6 @@ define(['vendor/jquery', 'vendor/jquery-ui', './EventManager', './util'], functi
 		}
 	}
 
-	function toggle() {
-		if(container.is(':animated')) {
-			return;
-		}
-
-		isShow() ? hide() : show();
-	}
-
-	function onToggle(value) {
-		if(isShow() == value) {
-			return;
-		}
-
-		value ? show() : hide();
-	}
-
 	function resizeCheck(e, ui) {
 		var height = containerHeight - ui.position.top;
 		return height >= 150 && height <= 300;
@@ -110,9 +92,7 @@ define(['vendor/jquery', 'vendor/jquery-ui', './EventManager', './util'], functi
 
 	return {
 		init: init,
-		isShow: isShow,
 		show: show,
 		hide: hide,
-		toggle: toggle,
 	}
 });

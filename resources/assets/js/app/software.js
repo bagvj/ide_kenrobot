@@ -24,7 +24,7 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 
 				mac: "Command-S"
 			},
 			exec: function() {
-				EventManager.trigger('global', 'project.save');
+				EventManager.trigger('project', 'save');
 			}
 		}, {
 			name: "buildProject",
@@ -33,7 +33,7 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 
 				mac: "Command-B"
 			},
 			exec: function() {
-				EventManager.trigger('global', 'project.build');
+				EventManager.trigger('project', 'build');
 			}
 		}, {
 			name: "formatCode",
@@ -42,7 +42,7 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 
 				mac: "Command-U"
 			},
 			exec: function() {
-				EventManager.trigger('global', 'software.format');
+				format();
 			}
 		}, {
 			name: "movelinesup",
@@ -99,6 +99,7 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 
 		EventManager.bind("rightBar", "resize", onResize);
 		EventManager.bind("setting", "change", onSettingChange);
 		EventManager.bind("library", "change", onLibraryChange);
+		EventManager.bind("software", "format", format);
 	}
 
 	function load(_configs) {
@@ -217,7 +218,6 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 
 		getData: getData,
 		setData: setData,
 		gen: gen,
-		format: format,
 		maskCode: maskCode,
 		getLibraries: getLibraries,
 		getLine: getLine,

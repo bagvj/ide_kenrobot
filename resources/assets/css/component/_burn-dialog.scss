@@ -44,74 +44,22 @@ $blue: #4891ed;
 			}
 		}
 
-		.tab-no-serial {
+		.tab-error {
 			.message {
+				display: none;
 				margin-top: 60px;
 				margin-left: 20px;
 				margin-right: 20px;
 				line-height: 22px;
 				text-align: center;
 
+				&.active {
+					display: block;
+				}
+
 				.driver {
 					color: $blue;
 				}
-			}
-		}
-
-		.tab-connect {
-			.tips {
-				margin: 15px;
-				line-height: 22px;
-				text-align: center;
-			}
-
-			.field {
-				margin-bottom: 20px;
-
-				label {
-					margin-left: 15px;
-					margin-right: 10px;
-					height: 30px;
-					line-height: 30px;
-				}
-
-				select {
-					height: 30px;
-					line-height: 30px;
-					padding-left: 5px;
-					border: 1px solid $blue;
-				}
-
-				.port {
-					width: 80px;
-					margin-right: 10px;
-				}
-
-				.bitRate {
-					width: 80px;
-				}
-			}
-
-			.connect {
-				display: block;
-				width: 100px;
-				height: 30px;
-				margin: 0 auto;
-			}
-
-			.message {
-				color: red;
-				text-align: center;
-				height: 20px;
-				margin-top: 10px;
-				font-size: 14px;
-			}
-
-			.driver {
-				position: absolute;
-				left: 15px;
-				bottom: 0;
-				color: $blue;
 			}
 		}
 
