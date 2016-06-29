@@ -299,8 +299,8 @@ define(['vendor/jquery', 'vendor/jquery.terminal', './EventManager', './util', '
 					disconnect();
 					setTimeout(function() {
 						onConnectClick();
-					}, 200);
-				}, 2000);
+					}, 1000);
+				}, 3000);
 			} else {
 				util.message("烧写失败");
 				$('.x-dialog-title .name', selector).text("啃萝卜");
