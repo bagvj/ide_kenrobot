@@ -604,7 +604,7 @@
 										Q: 检测不到串口
 									</div>
 									<div class="answer">
-										A: 驱动问题，参考<a class="link" href="#" data-action="faq-driver">这里</a>
+										A: 驱动问题，参考<span class="link" href="#" data-action="faq-driver">这里</span>
 									</div>
 								</div>
 							</div>
