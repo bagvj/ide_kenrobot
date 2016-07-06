@@ -89,7 +89,7 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 			hardware.load(config);
 			software.load(config);
 
-			guide.init();
+			// guide.init();
 			
 			promise.resolve();
 		});

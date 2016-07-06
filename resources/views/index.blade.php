@@ -270,7 +270,7 @@
 						<div class="bar">
 							<ul>
 								<li data-action="comment"><i class="kenrobot ken-comment"></i>评论</li>
-								<li data-action="guide"><i class="kenrobot ken-guide"></i>教程</li>
+								<!-- <li data-action="guide"><i class="kenrobot ken-guide"></i>教程</li> -->
 							</ul>
 						</div>
 					</div>
