@@ -1,26 +1,35 @@
 .sidebar {
 	.bar {
-		position: relative;
+		// position: relative;
 		background-color: #1d222d;
 
-		ul li {
-			height: 66px;
-			text-align: center;
-			cursor: pointer;
-			font-size: 12px;
-			padding-top: 5px;
-			color: white;
+		ul {
+			z-index: 5;
 
-			&.active {
-				background-color: #38A1DB;
-			}
-			&:hover {
-				background-color: #20B9EF;
-			}
+			li {
+				height: 66px;
+				text-align: center;
+				cursor: pointer;
+				font-size: 12px;
+				padding-top: 5px;
+				color: white;
+				position: relative;
 
-			i {
-				font-size: 24px;
-				display: block;
+				&.guide-highlight {
+					background-color: #3A4256;
+				}
+
+				&.active {
+					background-color: #38A1DB;
+				}
+				&:hover {
+					background-color: #20B9EF;
+				}
+
+				i {
+					font-size: 24px;
+					display: block;
+				}
 			}
 		}
 	}

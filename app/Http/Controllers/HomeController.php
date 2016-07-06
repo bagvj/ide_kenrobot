@@ -39,12 +39,8 @@ class HomeController extends Controller {
 		$libraries = Repository::getLibraries();
 		$exampleGroups = Repository::getExamples(false, true);
 
-		$has_visit = 1;
 		$setting = $this->getSetting();
-		// if (empty($_COOKIE['has_visit'])) {
-		// 	$has_visit = 0;
-		// }
-		// setcookie('has_visit', 1, time() + 86400 * 365, "", ".kenrobot.com");
+		$has_visit = !empty($_COOKIE['has_visit']);
 
 		return view("index", compact('user', 'mainpage', 'qrcodeurl', 'register_url', 'find_password_url', 'key', 'boards', 'components', 'libraries', 'exampleGroups', 'has_visit', 'setting'));
 	}

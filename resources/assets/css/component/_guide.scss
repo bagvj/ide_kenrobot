@@ -15,6 +15,15 @@
 			box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
 			background-color: $backgroundColor;
 
+			.guide-close {
+				color: #919191;
+				position: absolute;
+				right: 5px;
+				top: 0;
+				cursor: pointer;
+				pointer-events: auto;
+			}
+
 			.guide-step-wrap {
 				padding: 10px 15px;
 			}
@@ -78,5 +87,79 @@
 				display: block;
 			}
 		}
+	}
+}
+
+.guide-highlight {
+	z-index: 99;
+	pointer-events: none;
+}
+
+.guide-cover {
+	display: block;
+
+	.guide-step {
+		position: absolute;
+		display: none;
+
+		&.active {
+			display: block;
+		}
+	}
+
+	.guide-skip {
+		position: absolute;
+		bottom: 135px;
+		right: 163px;
+		width: 72px;
+		height: 30px;
+		background: url('../image/guide/guide-skip.png') no-repeat center;
+		background-size: contain;
+		cursor: pointer;
+	}
+
+	.guide-step-1 {
+		top: 79px;
+		left: 78px;
+		width: 190px;
+		height: 45px;
+		background: url('../image/guide/guide-step-1.png') no-repeat center;
+		background-size: contain;
+	}
+
+	.guide-step-2 {
+		top: 30px;
+		left: 100px;
+		width: 410px;
+		height: 83px;
+		background: url('../image/guide/guide-step-2.png') no-repeat center;
+		background-size: contain;
+	}
+
+	.guide-step-3 {
+		top: 27px;
+		left: 117px;
+		width: 334px;
+		height: 120px;
+		background: url('../image/guide/guide-step-3.png') no-repeat center;
+		background-size: contain;
+	}
+
+	.guide-step-4 {
+		top: 41px;
+		left: 366px;
+		width: 279px;
+		height: 98px;
+		background: url('../image/guide/guide-step-4.png') no-repeat center;
+		background-size: contain;
+	}
+
+	.guide-step-5 {
+		top: 48px;
+		right: 40px;
+		width: 278px;
+		height: 131px;
+		background: url('../image/guide/guide-step-5.png') no-repeat center;
+		background-size: contain;
 	}
 }

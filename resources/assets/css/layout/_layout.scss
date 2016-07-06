@@ -164,7 +164,7 @@
 		height: 100%;
 		float: right;
 		position: relative;
-		z-index: 99;
+		z-index: 11;
 	}
 }
 
@@ -188,8 +188,8 @@
 				margin-right: 6px;
 			}
 
-			&.disabled {
-				color: #666;
+			&.guide-highlight {
+				background-color: #3A4256;
 			}
 
 			&:hover {
@@ -380,6 +380,7 @@
 				margin-left: 8px;
 				margin-right: 8px;
 				color: white;
+				position: relative;
 
 				&:hover {
 					color: #24c1ff;
@@ -488,7 +489,6 @@
 		width: 66px;
 		height: 100%;
 		position: absolute;
-		z-index: 5;
 	}
 
 	.tab {
@@ -560,4 +560,9 @@
 .guide-layer {
 	display: none;
 	z-index: 10;
+}
+
+.guide-cover {
+	display: none;
+	z-index: 11;
 }

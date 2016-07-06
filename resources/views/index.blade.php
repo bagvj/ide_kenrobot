@@ -257,20 +257,10 @@
 									</div>
 								</div>
 							</div>
-							<div class="tab tab-guide">
-								<div class="tab-wrap">
-									<div class="guide-title">教程引导</div>
-									<div class="line"></div>
-									<div class="guide-list">
-										<ul></ul>
-									</div>
-								</div>
-							</div>
 						</div>
 						<div class="bar">
 							<ul>
 								<li data-action="comment"><i class="kenrobot ken-comment"></i>评论</li>
-								<!-- <li data-action="guide"><i class="kenrobot ken-guide"></i>教程</li> -->
 							</ul>
 						</div>
 					</div>
@@ -316,8 +306,7 @@
 			</div>
 		</div>
 		<div class="layers">
-			<div class="float-layer">
-			</div>
+			<div class="float-layer"></div>
 			<div class="drag-layer"></div>
 			<div class="modal dialog-layer">
 				<div class="x-dialog x-dialog-custom login-dialog">
@@ -666,8 +655,17 @@
 				</div>
 			</div>
 			<div class="message-layer"></div>
-			<div class="modal guide-layer">
+			<div class="modal guide-layer"></div>
+			@if(!$has_visit)
+			<div class="modal guide-cover">
+				<div class="guide-step guide-step-1" data-target=".sidebar li[data-action='project']"></div>
+				<div class="guide-step guide-step-2" data-target=".top-menu li[data-action='build']"></div>
+				<div class="guide-step guide-step-3" data-target=".top-menu li[data-action='burn']"></div>
+				<div class="guide-step guide-step-4" data-target=".top-menu li[data-action='download']"></div>
+				<div class="guide-step guide-step-5" data-target=".user li[data-action='login']"></div>
+				<div class="guide-skip"></div>
 			</div>
+			@endif
 		</div>
 	</body>
 </html>

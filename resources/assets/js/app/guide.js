@@ -53,21 +53,24 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './util', './EventManager'], fu
 	}];
 
 	var guideLayer;
+	var guideCover;
+	var guideCoverTime;
 
 	var finishedGuides;
 
 	function init() {
 		guideLayer = $('.guide-layer');
 
-		var guideList = $('.tab-guide .guide-list > ul');
-		for(var i = 0; i < demos.length; i++) {
-			var demo = demos[i];
-			$('<li>').attr('data-demo-id', demo.id).text((i + 1) + "、 " + demo.title).appendTo(guideList);
-		}
-		$('li', guideList).on('click', onGuideClick);
+		// finishedGuides = util.parseJson($.cookie('finishedGuides')) || [];
+		// finishedGuides.length == 0 && start(demos[0].id);
 
-		finishedGuides = util.parseJson($.cookie('finishedGuides')) || [];
-		finishedGuides.length == 0 && start(demos[0].id);
+		$(window).on('keyup', onGuideCoverNext);
+		guideCover = $('.guide-cover');
+		if(guideCover.length > 0) {
+			guideCover.on('click', onGuideCoverNext);
+			$('.guide-cover .guide-skip').on('click', onGuideSkipClick);
+			onGuideCoverNext();
+		}
 	}
 
 	function start(id) {
@@ -93,6 +96,9 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './util', './EventManager'], fu
 		for(var i = 0; i < count; i++) {
 			var step = demo.steps[i];
 			var demoStep = $('<div>').addClass("guide-step").addClass(step.type || defaultDemoConfig.type).appendTo(guideDemo);
+			$('<i>').addClass("kenrobot ken-close guide-close").attr("title", "退出引导").appendTo(demoStep).on('click', function(e) {
+				stop();
+			});
 			var wrap = $('<div>').addClass('guide-step-wrap').appendTo(demoStep);
 			$('<div>').addClass("guide-title").text((step.title || demo.title || defaultDemoConfig.title) + "(" + (i + 1) + "/" + count + ")").appendTo(wrap);
 			$('<div>').addClass("guide-content").html(step.content).appendTo(wrap);
@@ -104,6 +110,7 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './util', './EventManager'], fu
 	}
 
 	function stop() {
+		guideLayer.hide();
 		var guideDemo = $('.guide-demo.active', guideLayer).removeClass("active");
 		$('.guide-step', guideDemo).removeClass('active').removeClass('hide');
 		var id = guideDemo.data('demo-id');
@@ -209,13 +216,46 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './util', './EventManager'], fu
 	}
 
 	function onGuideClick(e) {
-		var li = $(this);
-		var demoId = li.data('demo-id');
+		// var li = $(this);
+		// var demoId = li.data('demo-id');
 
-		EventManager.trigger('rightBar', 'hide');
+		// EventManager.trigger('rightBar', 'hide');
 
-		stop();
-		start(demoId);
+		// stop();
+		// start(demoId);
+	}
+
+	function onGuideSkipClick(e) {
+		$('.guide-cover').remove();
+		$('.guide-highlight').removeClass('guide-highlight');
+
+		$.cookie('has_visit', true);
+	}
+
+	function onGuideCoverNext(e) {
+		var now = new Date().getTime();
+		if(guideCoverTime && guideCoverTime + 1000 > now) {
+			return;
+		}
+
+		if(e && e.keyCode && e.keyCode != 32) {
+			return;
+		}
+
+		guideCoverTime = now;
+
+		var steps = $('.guide-step', guideCover);
+		var index = steps.filter('.active').index();
+		if(index + 1 < steps.length) {
+			$('.guide-highlight').removeClass('guide-highlight');
+
+			var step = steps.eq(index + 1);
+			util.toggleActive(step);
+			var target = $(step.data('target'));
+			target.addClass('guide-highlight');
+		} else {
+			onGuideSkipClick();
+		}
 	}
 
 	return {

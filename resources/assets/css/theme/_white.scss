@@ -44,6 +44,11 @@
 			& > li {
 				color: #676767;
 
+				&.guide-highlight {
+					color: #333;
+					background-color: #f6f6f6;
+				}
+
 				&:hover {
 					color: #333;
 					background-color: #f6f6f6;
@@ -153,6 +158,10 @@
 
 			ul li {
 				color: white;
+
+				&.guide-highlight {
+					background-color: #333;
+				}
 
 				&.active {
 					background-color: #333;
@@ -395,27 +404,6 @@
 				.right {
 					.publish-time {
 						color: #999;
-					}
-				}
-			}
-		}
-
-		.tab-guide {
-			.guide-title {
-				color: #676767;
-			}
-
-			.line {
-				background-color: #bebebe;
-			}
-
-			.guide-list {
-				li {
-					color: #676767;
-
-					&:hover {
-						background-color: #e6e6e6;
-						color: #333;
 					}
 				}
 			}
