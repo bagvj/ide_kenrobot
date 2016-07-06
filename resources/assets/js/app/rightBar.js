@@ -1,4 +1,4 @@
-define(['vendor/jquery', './util', './EventManager', './comment'], function(_, util, EventManager, comment) {
+define(['vendor/jquery', './util', './EventManager'], function(_, util, EventManager) {
 	var container;
 	var isDisplay;
 	var containerWidth = 520;
@@ -9,8 +9,7 @@ define(['vendor/jquery', './util', './EventManager', './comment'], function(_, u
 		barWidth = $('.bar', container).width();
 
 		$('.bar > ul > li', container).on('click', onBarClick);
-		
-		comment.init();
+		EventManager.bind('rightBar', 'hide', hide);
 	}
 
 	function isShow() {
@@ -29,25 +28,25 @@ define(['vendor/jquery', './util', './EventManager', './comment'], function(_, u
 
 	function doShow(action) {
 		if(isShow()) {
-			return;
+			util.toggleActive($('.tab-' + action, container));
+		} else {
+			container.addClass("active");
+			var mainWrap = $('.main-content > .wrap').addClass('x-right-expand').delay(150, 'right-expand').queue('right-expand', function() {
+				mainWrap.addClass('right-expand').removeClass("x-right-expand");
+				mainWrap.trigger('reisze');
+			});
+			mainWrap.dequeue('right-expand');
+
+			isDisplay = true;
+
+			var wrap = $('> .wrap', container).addClass('x-expand').delay(150, 'expand').queue('expand', function() {
+				wrap.addClass('active').removeClass("x-expand");
+				EventManager.trigger("rightBar", "resize");
+			});
+			util.toggleActive($('.tab-' + action, container));
+			wrap.dequeue('expand');
 		}
-		
-		container.addClass("active");
-		var mainWrap = $('.main-content > .wrap').addClass('x-right-expand').delay(150, 'right-expand').queue('right-expand', function() {
-			mainWrap.addClass('right-expand').removeClass("x-right-expand");
-			mainWrap.trigger('reisze');
-		});
-		mainWrap.dequeue('right-expand');
-
-		isDisplay = true;
-
-		var wrap = $('> .wrap', container).addClass('x-expand').delay(150, 'expand').queue('expand', function() {
-			wrap.addClass('active').removeClass("x-expand");
-			EventManager.trigger("rightBar", "resize");
-		});
-		wrap.dequeue('expand');
-
-		EventManager.trigger("rightBar", "show", action);
+		EventManager.trigger("rightBar", "onShow", action);
 	}
 
 	function doHide(action) {
@@ -66,11 +65,13 @@ define(['vendor/jquery', './util', './EventManager', './comment'], function(_, u
 		isDisplay = false;
 		var wrap = $('> .wrap', container).addClass('x-fold').delay(150, 'fold').queue('fold', function() {
 			wrap.removeClass('active').removeClass('x-fold');
+			$('.tab-' + action, container).removeClass("active");
+
 			EventManager.trigger("rightBar", "resize");
 		});
 		wrap.dequeue('fold');
 
-		EventManager.trigger("rightBar", "hide", action);
+		EventManager.trigger("rightBar", "onHide", action);
 	}
 
 	function onBarClick(e) {
@@ -82,11 +83,11 @@ define(['vendor/jquery', './util', './EventManager', './comment'], function(_, u
 		var action = li.data('action');	
 		if(li.hasClass('active')) {
 			li.removeClass('active');
+			doHide(action);
 		} else {
 			util.toggleActive(li);
+			doShow(action);
 		}
-
-		isShow() ? doHide(action) : doShow(action);
 	}
 
 	return {

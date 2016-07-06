@@ -102,10 +102,26 @@ define(function(){
 		}
 	}
 
+	function aspectReset(aspect) {
+		var origin = aspect._advisor.orig;
+		aspect._advisor.remove();
+		return origin;
+	}
+
+	function parseJson(data) {
+		try {
+			return JSON.parse(data);
+		} catch(ex) {
+
+		}
+	}
+
 	return {
 		message: message,
 		dialog: dialog,
 		isInDialog: isInDialog,
 		toggleActive: toggleActive,
+		aspectReset: aspectReset,
+		parseJson: parseJson,
 	}
 });

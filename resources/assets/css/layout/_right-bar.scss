@@ -91,11 +91,11 @@
 			left: 0;
 			right: 0;
 
-			// display: none;
+			display: none;
 
-			// &.active {
-			// 	display: block;
-			// }
+			&.active {
+				display: block;
+			}
 		}
 
 		&.x-expand {
@@ -285,6 +285,43 @@
 						color: #585f71;
 						font-size: 12px;
 					}
+				}
+			}
+		}
+	}
+
+	.tab-guide {
+		padding: 30px 40px;
+
+		.guide-title {
+			font-size: 18px;
+			font-weight: bold;
+			letter-spacing: 1px;
+			color: #9ba6c2;
+			margin-left: 10px;
+			margin-right: 10px;
+		}
+
+		.line {
+			height: 1px;
+			margin-top: 5px;
+			margin-bottom: 15px;
+			background-color: #474d5b;
+		}
+
+		.guide-list {
+			li {
+				line-height: 30px;
+				height: 30px;
+				display: block;
+				padding-left: 10px;
+				margin-right: 10px;
+				cursor: pointer;
+				color: #9ba6c2;
+
+				&:hover {
+					background-color: #3e4964;
+					color: white;
 				}
 			}
 		}

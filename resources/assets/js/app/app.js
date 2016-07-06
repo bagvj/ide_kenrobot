@@ -1,4 +1,4 @@
-define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './util', './hardware', './user', './project', './software', './sidebar', './topMenu', './board', './component', './library', './example', './ext/agent', './serial', './ext/burnDialog', './guide', './bottomContainer', './logcat', './serialAssitant', './interpreter', './setting', './rightBar', './barrage', './driverDialog'], function(_, Mousetrap, EventManager, config, util, hardware, user, project, software, sidebar, topMenu, board, component, library, example, extAgent, serial, burnDialog, guide, bottomContainer, logcat, serialAssitant, interpreter, setting, rightBar, barrage, driverDialog) {
+define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './util', './hardware', './user', './project', './software', './sidebar', './topMenu', './board', './component', './library', './example', './ext/agent', './serial', './ext/burnDialog', './bottomContainer', './logcat', './serialAssitant', './interpreter', './setting', './rightBar', './comment', './barrage', './driverDialog', './guide'], function(_, Mousetrap, EventManager, config, util, hardware, user, project, software, sidebar, topMenu, board, component, library, example, extAgent, serial, burnDialog, bottomContainer, logcat, serialAssitant, interpreter, setting, rightBar, comment, barrage, driverDialog, guide) {
 	function init() {
 		initAjax();
 		initKeys();
@@ -28,9 +28,9 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 		serial.init();
 		burnDialog.init();
 
-		guide.init();
 		setting.init();
 		rightBar.init();
+		comment.init();
 		barrage.init();
 		driverDialog.init();
 
@@ -89,6 +89,8 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 			hardware.load(config);
 			software.load(config);
 
+			guide.init();
+			
 			promise.resolve();
 		});
 

@@ -1,7 +1,9 @@
-define(['vendor/jquery', './EventManager', './util', './setting'], function(_, EventManager, util, setting) {
+define(['vendor/jquery', 'vendor/meld', './EventManager', './util', './setting', './guide'], function(_, meld, EventManager, util, setting, guide) {
 
 	function init() {
 		EventManager.bind("sidebar", "viewChange", onViewChange);
+		EventManager.bind('guide', 'start', onGuideStart);
+		EventManager.bind('guide', 'stop', onGuideStop);
 		
 		$('.sidebar .bar ul > li').on('click', onSidebarClick);
 	}
@@ -102,6 +104,34 @@ define(['vendor/jquery', './EventManager', './util', './setting'], function(_, E
 
 		if(action == "component") {
 			EventManager.trigger("hardware", "adjustTools", !active);
+		}
+	}
+
+	function onGuideStart(demoId) {
+		if(demoId == 1) {
+			// onSidebarClick = meld.before(onSidebarClick, function(e) {
+			// 	var index = guide.getStep();
+			// 	if(index != 0) {
+			// 		return;
+			// 	}
+
+			// 	var demo = guide.getDemoConfig(demoId);
+			// 	var step = demo.steps[index];
+			// 	if($(this)[0] != $(step.target)[0]) {
+			// 		return;
+			// 	}
+
+			// 	guide.hideStep();
+			// });
+
+			// $('.sidebar .bar ul > li').off('click').on('click', onSidebarClick);
+		}
+	}
+
+	function onGuideStop(demoId) {
+		if(demoId == 1) {
+			// onSidebarClick = util.aspectReset(onSidebarClick);
+			// $('.sidebar .bar ul > li').off('click').on('click', onSidebarClick);
 		}
 	}
 

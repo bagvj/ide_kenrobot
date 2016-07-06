@@ -1,4 +1,4 @@
-define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './projectApi', './user', './hardware', './software', './board', './logcat', './sidebar', './config'], function(_, ZeroClipboard, EventManager, util, projectApi, user, hardware, software, board, logcat, sidebar, config) {
+define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager', './util', './projectApi', './user', './hardware', './software', './board', './logcat', './sidebar', './config', './guide'], function(_, ZeroClipboard, meld, EventManager, util, projectApi, user, hardware, software, board, logcat, sidebar, config, guide) {
 	//项目模版
 	var projectTemplate = '<li data-project-id="{{id}}" data-view="software" title="{{project_name}}"><div class="title"><span class="name">{{project_name}}</span><i class="kenrobot arrow"></i></div><div class="view"><div><span class="name" title="{{project_name}}.ino">{{project_name}}</span>.ino</div></div></li>';
 	var tabTemplate = '<li data-project-id="{{id}}" title="{{project_name}}"><span class="name">{{project_name}}</span><i class="kenrobot ken-close close-btn"></i></li>';
@@ -21,15 +21,14 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		EventManager.bind("project", "build", build);
 		EventManager.bind("project", "save", save);
 		EventManager.bind("project", "download", onDownload);
-
+		EventManager.bind('guide', 'start', onGuideStart);
+		EventManager.bind('guide', 'stop', onGuideStop);
 
 		$(window).on('hashchange', function(e) {
 			load();	
 		});
 
-		$('.switch-view').on('click', function(e) {
-			EventManager.trigger("project", "viewChange", $(this).data('view'));
-		});
+		$('.switch-view').on('click', onChangeViewClick);
 
 		ZeroClipboard.config({
 			swfPath: "assets/res/ZeroClipboard.swf"
@@ -83,7 +82,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		var callback = function() {
 			var info = getCurrentProject();
 			var id = info.id;
-			if(id == 0) {
+			if(id == 0 || isUuid(id)) {
 				showSaveDialog(info, true);
 				promise.reject();
 
@@ -296,6 +295,10 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		});
 	}
 
+	function onChangeViewClick(e) {
+		EventManager.trigger("project", "viewChange", $(this).data('view'));
+	}
+
 	function onViewChange(view) {
 		doSwitchView(view);
 	}
@@ -435,7 +438,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 				project_name: project_name,
 				user_id: user.getUserId(),
 				project_intro: $('textarea[name="intro"]', form).val(),
-				project_data: JSON.stringify(isNew ? {} : getProjectData()),
+				project_data: JSON.stringify((isNew && !isUuid(id)) ? {} : getProjectData()),
 				public_type: $("input[name='public-type']:checked", form).val(),
 			};
 
@@ -461,14 +464,20 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 				if(isEdit) {
 					projectApi.get(result.data.project_id).done(function(res) {
 						doUpdateProject(id, isCopy, res);
+						afterSaveProject();
 					});
 				} else {
 					var projectInfo = getProjectById(openedProjects, id);
 					projectInfo.status = 1;
 					callback && callback();
+					afterSaveProject();
 				}
 			}
 		});
+	}
+
+	function afterSaveProject() {
+
 	}
 
 	function doUpdateProject(id, isCopy, result) {
@@ -587,6 +596,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 		$('.top-tabs > ul > li[data-project-id="' + id + '"]').data("view", view);
 
 		EventManager.trigger("sidebar", "viewChange", view);
+		return view;
 	}
 
 	function doSaveView(id) {
@@ -689,6 +699,42 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', './EventManager', './util', './
 
 	function isUuid(id) {
 		return /^[0-9a-z]{8}-([0-9a-z]{4}-){3}[0-9a-z]{12}$/.test(id);
+	}
+
+	function onGuideStart(demoId) {
+		if(demoId == 1) {
+			afterSaveProject = meld.after(afterSaveProject, function() {
+				var index = guide.getStep();
+				if(index == 1) {
+					guide.nextStep();
+				}
+			});
+		} else if(demoId == 2) {
+			afterSaveProject = meld.after(afterSaveProject, function() {
+				var index = guide.getStep();
+				if(index == 0 || index == 4) {
+					guide.nextStep();
+				}
+			});
+
+			doSwitchView = meld.after(doSwitchView, function(view) {
+				var index = guide.getStep();
+				if(index == 1 && view == "hardware") {
+					guide.nextStep();
+				} else if(index == 3 && view == "software") {
+					guide.nextStep();
+				}
+			});
+		}
+	}
+
+	function onGuideStop(demoId) {
+		if(demoId == 1) {
+			afterSaveProject = util.aspectReset(afterSaveProject);
+		} else if(demoId == 2) {
+			afterSaveProject = util.aspectReset(afterSaveProject);
+			doSwitchView = util.aspectReset(doSwitchView);
+		}
 	}
 
 	return {

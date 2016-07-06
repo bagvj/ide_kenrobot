@@ -1,4 +1,4 @@
-define(['vendor/jquery', 'vendor/jquery-ui', 'vendor/jquery.cookie', './nodeTemplate', './EventManager', './util'], function(_, _, _, template, EventManager, util) {
+define(['vendor/jquery', 'vendor/meld', 'vendor/jquery-ui', 'vendor/jquery.cookie', './nodeTemplate', './EventManager', './util', './guide'], function(_, meld, _, _, template, EventManager, util, guide) {
 	//C++关键字
 	var keywords = [
 		"asm", "do", "if", "return", "typedef", "auto", "double",
@@ -326,6 +326,8 @@ define(['vendor/jquery', 'vendor/jquery-ui', 'vendor/jquery.cookie', './nodeTemp
 		EventManager.bind("bottomContainer", "resize", onResize);
 		EventManager.bind("rightBar", "resize", onResize);
 		EventManager.bind("setting", "change", onSettingChange);
+		EventManager.bind('guide', 'start', onGuideStart);
+		EventManager.bind('guide', 'stop', onGuideStop);
 	}
 
 	function setMode(mode) {
@@ -846,6 +848,23 @@ define(['vendor/jquery', 'vendor/jquery-ui', 'vendor/jquery.cookie', './nodeTemp
 		return {
 			success: true
 		};
+	}
+
+	function onGuideStart(demoId) {
+		if(demoId == 2) {
+			addNode = meld.before(addNode, function(name) {
+				var index = guide.getStep();
+				if(index == 2 && name == "led") {
+					guide.nextStep();
+				}
+			});
+		}
+	}
+
+	function onGuideStop(demoId) {
+		if(demoId == 2) {
+			addNode = util.aspectReset(addNode);
+		}
 	}
 
 	return {

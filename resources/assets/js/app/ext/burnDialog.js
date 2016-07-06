@@ -1,4 +1,4 @@
-define(['vendor/jquery', '../util', '../EventManager', './agent', '../project', '../serial', '../config'], function(_, util, EventManager, agent, project, serial, config) {
+define(['vendor/jquery', 'vendor/meld', '../util', '../EventManager', './agent', '../project', '../serial', '../config', '../guide'], function(_, meld, util, EventManager, agent, project, serial, config, guide) {
 	var hasInit;
 	var selector;
 	var host;
@@ -8,6 +8,8 @@ define(['vendor/jquery', '../util', '../EventManager', './agent', '../project', 
 
 	function init() {
 		EventManager.bind("burn", "show", onShow);
+		EventManager.bind('guide', 'start', onGuideStart);
+		EventManager.bind('guide', 'stop', onGuideStop);
 	}
 
 	function onShow() {
@@ -116,6 +118,7 @@ define(['vendor/jquery', '../util', '../EventManager', './agent', '../project', 
 			$('.tab-burn .burn-progress', selector).removeClass("active");
 			$('.tab-burn .burn-progress ul li.ins', selector).removeClass("ins");
 			showMessage("烧写" + (result ? "成功" : "失败"), "burn", 0);
+			result && onBurnSuccess();
 		});
 		watchProgress(true);
 	}
@@ -131,6 +134,10 @@ define(['vendor/jquery', '../util', '../EventManager', './agent', '../project', 
 			};
 			watchTimer = setInterval(queryProgress, delay);
 		}
+	}
+
+	function onBurnSuccess() {
+
 	}
 
 	function switchTab(tab) {
@@ -160,6 +167,32 @@ define(['vendor/jquery', '../util', '../EventManager', './agent', '../project', 
 		var index = Math.floor(progress / 100 * list.length);
 		for(var i = lastIndex + 1; i <= index; i++) {
 			list.eq(i).addClass("ins");
+		}
+	}
+
+	function onGuideStart(demoId) {
+		if(demoId == 1) {
+			onBurnSuccess = meld.after(onBurnSuccess, function() {
+				var index = guide.getStep();
+				if(index == 2) {
+					guide.nextStep();
+				}
+			});
+		} else if(demoId == 2) {
+			onBurnSuccess = meld.after(onBurnSuccess, function() {
+				var index = guide.getStep();
+				if(index == 5) {
+					guide.nextStep();
+				}
+			});
+		}
+	}
+
+	function onGuideStop(demoId) {
+		if(demoId == 1) {
+			onBurnSuccess = util.aspectReset(onBurnSuccess);
+		} else if(demoId == 2) {
+			onBurnSuccess = util.aspectReset(onBurnSuccess);
 		}
 	}
 

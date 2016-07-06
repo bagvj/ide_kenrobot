@@ -257,10 +257,20 @@
 									</div>
 								</div>
 							</div>
+							<div class="tab tab-guide">
+								<div class="tab-wrap">
+									<div class="guide-title">教程引导</div>
+									<div class="line"></div>
+									<div class="guide-list">
+										<ul></ul>
+									</div>
+								</div>
+							</div>
 						</div>
 						<div class="bar">
 							<ul>
 								<li data-action="comment"><i class="kenrobot ken-comment"></i>评论</li>
+								<li data-action="guide"><i class="kenrobot ken-guide"></i>教程</li>
 							</ul>
 						</div>
 					</div>
@@ -656,44 +666,8 @@
 				</div>
 			</div>
 			<div class="message-layer"></div>
-			@if(!$has_visit)
 			<div class="modal guide-layer">
-				<div class="guide-step guide-login">
-					<div class="guide-title">提示：</div>
-					<div class="guide-content">
-						点击此处即可弹出<span class="strong">登录</span>窗口<br />
-						登录后可解锁更多功能哦<br />
-						推荐使用Google Chrome浏览器
-					</div>
-				</div>
-				<div class="guide-step guide-interactive-mode">
-					<div class="guide-title">提示：</div>
-					<div class="guide-content">
-						点击此处可切换<span class="strong">交互模式</span><br />
-						包括拖拽模式和现代模式
-					</div>
-				</div>
-				<div class="guide-step guide-code-edit">
-					<div class="guide-title">提示：</div>
-					<div class="guide-content">
-						双击空白处或主板<br />
-						可切换到<span class="strong">代码编辑</span>
-					</div>
-				</div>
-				<div class="guide-step guide-burn">
-					<div class="guide-title">提示：</div>
-					<div class="guide-content">
-						点击此处按钮可进行<br />
-						<span class="strong">烧写</span>、<span class="strong">保存</span>和<span class="strong">下载</span>
-					</div>
-				</div>
-				<div class="guide-step guide-enjoy">
-					<div class="guide-content">
-						尽情使用吧
-					</div>
-				</div>
 			</div>
-			@endif
 		</div>
 	</body>
 </html>

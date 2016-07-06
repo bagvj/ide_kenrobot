@@ -103,7 +103,7 @@
 		}
 
 		.switch-view {
-			z-index: 99;
+			z-index: 5;
 			right: 30px;
 			top: 30px;
 			cursor: pointer;
@@ -199,7 +199,7 @@
 			ul {
 				display: none;
 				position: absolute;
-				z-index: 4;
+				z-index: 5;
 				background-color: #4b5765;
 
 				& > li {
@@ -302,7 +302,7 @@
 		width: 150px;
 		float: left;
 		position: relative;
-		z-index: 10;
+		z-index: 4;
 		cursor: pointer;
 		margin-left: 1px;
 		color: #6e7679;
@@ -488,7 +488,7 @@
 		width: 66px;
 		height: 100%;
 		position: absolute;
-		z-index: 11;
+		z-index: 5;
 	}
 
 	.tab {
@@ -559,5 +559,5 @@
 
 .guide-layer {
 	display: none;
-	z-index: 4;
+	z-index: 10;
 }

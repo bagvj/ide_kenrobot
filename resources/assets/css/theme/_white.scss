@@ -399,6 +399,27 @@
 				}
 			}
 		}
+
+		.tab-guide {
+			.guide-title {
+				color: #676767;
+			}
+
+			.line {
+				background-color: #bebebe;
+			}
+
+			.guide-list {
+				li {
+					color: #676767;
+
+					&:hover {
+						background-color: #e6e6e6;
+						color: #333;
+					}
+				}
+			}
+		}
 	}
 
 	// .bottom-container {

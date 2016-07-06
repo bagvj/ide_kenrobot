@@ -6,8 +6,8 @@ define(['vendor/jquery', './util', './EventManager', './commentApi', './user', '
 	var getLineTimer;
 
 	function init() {
-		EventManager.bind('rightBar', 'show', onShow);
-		EventManager.bind('rightBar', 'show', onHide);
+		EventManager.bind('rightBar', 'onShow', onShow);
+		EventManager.bind('rightBar', 'onHide', onHide);
 
 		container = $('.right-bar .tab-comment');
 		$('.publish', container).on('click', onPublishClick);

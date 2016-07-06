@@ -1,6 +1,9 @@
-define(['vendor/jquery', './EventManager'], function(_, EventManager) {
+define(['vendor/jquery', 'vendor/meld', './util', './EventManager', './guide'], function(_, meld, util, EventManager, guide) {
 	function init() {
 		$('.top-menu > ul li').on('click', onMenuClick);
+
+		EventManager.bind('guide', 'start', onGuideStart);
+		EventManager.bind('guide', 'stop', onGuideStop);
 	}
 
 	function onMenuClick(e) {
@@ -34,6 +37,29 @@ define(['vendor/jquery', './EventManager'], function(_, EventManager) {
 			case "setting":
 				EventManager.trigger('setting', 'show');
 				break;
+		}
+	}
+
+	function onGuideStart(demoId) {
+		if(demoId == 1) {
+			// onMenuClick = meld.before(onMenuClick, function(e) {
+			// 	var index = guide.getStep();
+			// 	var action = $(this).data('action');
+			// 	if(index == 1 && action == "save") {
+			// 		guide.hideStep();
+			// 	} else if(index == 2 && action == "burn") {
+			// 		guide.hideStep();
+			// 	}
+			// });
+
+			// $('.top-menu > ul li').off('click').on('click', onMenuClick);
+		}
+	}
+
+	function onGuideStop(demoId) {
+		if(demoId == 1) {
+			// onMenuClick = util.aspectReset(onMenuClick);
+			// $('.top-menu > ul li').off('click').on('click', onMenuClick);
 		}
 	}
 

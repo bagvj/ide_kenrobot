@@ -1,89 +1,82 @@
-.guide-step {
-	display: none;
-	position: absolute;
-	padding: 10px 15px;
-	z-index: 999;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
-	background-color: white;
+.guide-layer {
+	background-color: transparent;
+	pointer-events: none;
 
-	&.active {
-		display: block;
-	}
+	.guide-demo {
+		$backgroundColor: white;
+		$borderWidth: 9px; 
 
-	.guide-title {
-		margin-bottom: 10px;
-		color: #fa764a;
-	}
+		.guide-step {
+			// pointer-events: auto;
+			display: none;
+			position: absolute;
+			// padding: 10px 15px;
+			z-index: 999;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
+			background-color: $backgroundColor;
 
-	.guide-content {
-		color: #515151;
-		.strong {
-			color: #19c3f1;
+			.guide-step-wrap {
+				padding: 10px 15px;
+			}
+
+			.guide-title {
+				margin-bottom: 10px;
+				color: #fa764a;
+			}
+
+			.guide-content {
+				color: #515151;
+				.strong {
+					color: #19c3f1;
+				}
+			}
+
+			&:before {
+				border: solid transparent;
+				content: ' ';
+				height: 0;
+				width: 0;
+				position: absolute;
+				border-width: $borderWidth;
+			}
+
+			&.top {
+				&:before {
+					top: -2 * $borderWidth;
+					left: calc(50% - 9px);
+					border-bottom-color: $backgroundColor;
+				}
+			}
+
+			&.bottom {
+				&:before {
+					top: 100%;
+					left: calc(50% - 9px);
+					border-top-color: $backgroundColor;
+				}
+			}
+
+			&.left {
+				&:before {
+					top: calc(50% - 9px);
+					left: -2 * $borderWidth;
+					border-right-color: $backgroundColor;
+				}
+			}
+
+			&.right {
+				&:before {
+					top: calc(50% - 9px);
+					left: 100%;
+					border-left-color: $backgroundColor;
+				}
+			}
 		}
-	}
 
-	&:before {
-		border: solid transparent;
-		content: ' ';
-		height: 0;
-		width: 0;
-		position: absolute;
-		border-width: 9px;
-		border-right-color: white;
-	}
-}
-
-.guide-login {
-	top: 10px;
-	left: 70px;
-
-	&:before {
-		left: -18px;
-		top: 15px;
-	}
-}
-
-.guide-interactive-mode {
-	top: 20px;
-	left: 350px;
-
-	&:before {
-		left: -18px;
-		top: 15px;
-	}
-}
-
-.guide-code-edit {
-	top: 20px;
-	left: 350px;
-	
-	&:before {
-		left: 140px;
-		top: 32px;
-		border-right: none;
-		border-left-color: white;
-	}
-}
-
-.guide-burn {
-	top: 285px;
-	left: 70px;
-	
-	&:before {
-		left: -18px;
-		top: 32px;
-	}
-}
-
-.guide-enjoy {
-	top: 200px;
-	padding: 20px 40px;
-
-	.guide-content {
-		color: #fa764a;
-	}
-
-	&:before {
-		border: none;
+		&.active {
+			.guide-step.active {
+				display: block;
+			}
+		}
 	}
 }
