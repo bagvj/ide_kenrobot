@@ -125,6 +125,10 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 
 						promise.reject();
 					}
+				}).fail(function() {
+					isBuilding = false;
+					$('.x-dialog-content', dialog).text("编译失败");
+					promise.reject();
 				});
 			};
 
