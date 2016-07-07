@@ -65,10 +65,10 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './util', './EventManager'], fu
 		// finishedGuides.length == 0 && start(demos[0].id);
 
 		$(window).on('keyup', onGuideCoverNext);
-		guideCover = $('.guide-cover');
-		if(guideCover.length > 0) {
-			guideCover.on('click', onGuideCoverNext);
-			$('.guide-cover .guide-skip').on('click', onGuideSkipClick);
+		guideCover = $('.guide-cover').on('click', onGuideCoverNext);
+		$('.guide-cover .guide-skip').on('click', onGuideSkipClick);
+
+		if(!$.cookie('has_visit')) {
 			onGuideCoverNext();
 		}
 	}
@@ -226,7 +226,7 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './util', './EventManager'], fu
 	}
 
 	function onGuideSkipClick(e) {
-		$('.guide-cover').remove();
+		guideCover.hide();
 		$('.guide-highlight').removeClass('guide-highlight');
 
 		$.cookie('has_visit', true);
@@ -247,6 +247,7 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './util', './EventManager'], fu
 		var steps = $('.guide-step', guideCover);
 		var index = steps.filter('.active').index();
 		if(index + 1 < steps.length) {
+			guideCover.show();
 			$('.guide-highlight').removeClass('guide-highlight');
 
 			var step = steps.eq(index + 1);

@@ -656,16 +656,29 @@
 			</div>
 			<div class="message-layer"></div>
 			<div class="modal guide-layer"></div>
-			@if(!$has_visit)
 			<div class="modal guide-cover">
-				<div class="guide-step guide-step-1" data-target=".sidebar li[data-action='project']"></div>
-				<div class="guide-step guide-step-2" data-target=".top-menu li[data-action='build']"></div>
-				<div class="guide-step guide-step-3" data-target=".top-menu li[data-action='burn']"></div>
-				<div class="guide-step guide-step-4" data-target=".top-menu li[data-action='download']"></div>
-				<div class="guide-step guide-step-5" data-target=".user li[data-action='login']"></div>
+				<div class="guide-step guide-step-1" data-target=".sidebar li[data-action='project']">
+					<div class="part part-1"></div>
+					<div class="part part-2"></div>
+				</div>
+				<div class="guide-step guide-step-2" data-target=".top-menu li[data-action='build']">
+					<div class="part part-1"></div>
+					<div class="part part-2"></div>
+				</div>
+				<div class="guide-step guide-step-3" data-target=".top-menu li[data-action='burn']">
+					<div class="part part-1"></div>
+					<div class="part part-2"></div>
+				</div>
+				<div class="guide-step guide-step-4" data-target=".top-menu li[data-action='download']">
+					<div class="part part-1"></div>
+					<div class="part part-2"></div>
+				</div>
+				<div class="guide-step guide-step-5" data-target=".user li[data-action='login']">
+					<div class="part part-1"></div>
+					<div class="part part-2"></div>
+				</div>
 				<div class="guide-skip"></div>
 			</div>
-			@endif
 		</div>
 	</body>
 </html>

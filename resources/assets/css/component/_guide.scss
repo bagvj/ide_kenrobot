@@ -96,14 +96,17 @@
 }
 
 .guide-cover {
-	display: block;
+	display: none;
 
 	.guide-step {
-		position: absolute;
 		display: none;
 
 		&.active {
 			display: block;
+		}
+
+		.part {
+			position: absolute;
 		}
 	}
 
@@ -119,47 +122,102 @@
 	}
 
 	.guide-step-1 {
-		top: 79px;
-		left: 78px;
-		width: 190px;
-		height: 45px;
-		background: url('../image/guide/guide-step-1.png') no-repeat center;
-		background-size: contain;
+		.part-1 {
+			top: 79px;
+			left: 78px;
+			width: 190px;
+			height: 45px;
+			background: url('../image/guide/guide-step-1-1.png') no-repeat center;
+			background-size: contain;
+		}
+
+		.part-2 {
+			top: 90px;
+			left: 315px;
+			width: 382px;
+			height: 518px;
+			background: url('../image/guide/guide-step-1-2.png') no-repeat center;
+			background-size: contain;
+		}	
 	}
 
 	.guide-step-2 {
-		top: 30px;
-		left: 100px;
-		width: 410px;
-		height: 83px;
-		background: url('../image/guide/guide-step-2.png') no-repeat center;
-		background-size: contain;
+		.part-1 {
+			top: 30px;
+			left: 100px;
+			width: 410px;
+			height: 83px;
+			background: url('../image/guide/guide-step-2-1.png') no-repeat center;
+			background-size: contain;
+		}
+
+		.part-2 {
+			top: 140px;
+			left: 160px;
+			width: 392px;
+			height: 213px;
+			background: url('../image/guide/guide-step-2-2.png') no-repeat center;
+			background-size: contain;
+		}
 	}
 
 	.guide-step-3 {
-		top: 27px;
-		left: 117px;
-		width: 334px;
-		height: 120px;
-		background: url('../image/guide/guide-step-3.png') no-repeat center;
-		background-size: contain;
+		.part-1 {
+			top: 27px;
+			left: 117px;
+			width: 334px;
+			height: 120px;
+			background: url('../image/guide/guide-step-3-1.png') no-repeat center;
+			background-size: contain;
+		}
+
+		.part-2 {
+			top: 173px;
+			left: 121px;
+			width: 427px;
+			height: 277px;
+			background: url('../image/guide/guide-step-3-2.png') no-repeat center;
+			background-size: contain;
+		}
 	}
 
 	.guide-step-4 {
-		top: 41px;
-		left: 366px;
-		width: 279px;
-		height: 98px;
-		background: url('../image/guide/guide-step-4.png') no-repeat center;
-		background-size: contain;
+		.part-1 {
+			top: 41px;
+			left: 366px;
+			width: 279px;
+			height: 98px;
+			background: url('../image/guide/guide-step-4-1.png') no-repeat center;
+			background-size: contain;
+		}
+
+		.part-2 {
+			top: 170px;
+			left: 365px;
+			width: 289px;
+			height: 93px;
+			background: url('../image/guide/guide-step-4-2.png') no-repeat center;
+			background-size: contain;
+		}
 	}
 
 	.guide-step-5 {
-		top: 48px;
-		right: 40px;
-		width: 278px;
-		height: 131px;
-		background: url('../image/guide/guide-step-5.png') no-repeat center;
-		background-size: contain;
+		.part-1 {
+			top: 48px;
+			right: 40px;
+			width: 278px;
+			height: 131px;
+			background: url('../image/guide/guide-step-5-1.png') no-repeat center;
+			background-size: contain;
+		}
+
+		.part-2 {
+			top: 130px;
+			right: 356px;
+			width: 352px;
+			height: 390px;
+			background: url('../image/guide/guide-step-5-2.png') no-repeat center;
+			background-size: contain;
+		}
 	}
 }
