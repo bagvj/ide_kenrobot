@@ -116,6 +116,8 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 								promise.resolve(url);
 							}, 500);
 						}
+						logcat.clear();
+						logcat.hide();
 					} else {
 						logcat.show();
 						logcat.clear();
