@@ -42,7 +42,8 @@ class ProjectController extends Controller {
         fwrite($f, $source);
         fclose($f);
 
-        $cmd = "sh ../app/Build/compiler/Arduino/build.sh $path $board_type $project_name 2>&1";
+        $cmd = "sh +x ../app/Build/build.sh $path $board_type $project_name 2>&1";
+        // $cmd = "sh +x ../app/Build/compiler/Arduino/build.sh $path $board_type $project_name 2>&1";
         $output = array();
         exec($cmd, $output, $status);
         if ($status == 0) {
