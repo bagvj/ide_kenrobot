@@ -60,15 +60,16 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './util', './EventManager'], fu
 
 	function init() {
 		guideLayer = $('.guide-layer');
+		guideCover = $('.guide-cover');
 
 		// finishedGuides = util.parseJson($.cookie('finishedGuides')) || [];
 		// finishedGuides.length == 0 && start(demos[0].id);
 
-		$(window).on('keyup', onGuideCoverNext);
-		guideCover = $('.guide-cover').on('click', onGuideCoverNext);
-		$('.guide-cover .guide-skip').on('click', onGuideSkipClick);
-
 		if(!$.cookie('has_visit')) {
+			$(window).on('keyup', onGuideCoverNext);
+			guideCover.on('click', onGuideCoverNext);
+			$('.guide-skip', guideCover).on('click', onGuideSkipClick);
+
 			onGuideCoverNext();
 		}
 	}
@@ -215,19 +216,13 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './util', './EventManager'], fu
 		return stepPos;
 	}
 
-	function onGuideClick(e) {
-		// var li = $(this);
-		// var demoId = li.data('demo-id');
-
-		// EventManager.trigger('rightBar', 'hide');
-
-		// stop();
-		// start(demoId);
-	}
-
 	function onGuideSkipClick(e) {
 		guideCover.hide();
 		$('.guide-highlight').removeClass('guide-highlight');
+
+		$(window).off('keyup', onGuideCoverNext);
+		guideCover.off('click', onGuideCoverNext);
+		$('.guide-skip', guideCover).off('click', onGuideSkipClick);
 
 		$.cookie('has_visit', true);
 	}

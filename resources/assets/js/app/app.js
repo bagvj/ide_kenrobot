@@ -90,7 +90,7 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 			software.load(config);
 
 			guide.init();
-			
+
 			promise.resolve();
 		});
 

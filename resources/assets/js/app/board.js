@@ -25,9 +25,9 @@ define(['vendor/jquery', './util'], function(_, util) {
 		data = data || {};
 		var id = data.id || 1;
 
-		for(var name in boards) {
+		for (var name in boards) {
 			var board = boards[name];
-			if(board.id == id) {
+			if (board.id == id) {
 				$(selector).filter('[data-board="' + name + '"]').click();
 				break;
 			}
@@ -36,7 +36,7 @@ define(['vendor/jquery', './util'], function(_, util) {
 
 	function onBoardClick(e) {
 		var li = $(this);
-		if(li.hasClass("forward")) {
+		if (li.hasClass("forward")) {
 			return;
 		}
 

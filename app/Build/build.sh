@@ -26,7 +26,8 @@ DIR=`pwd`
 #进入项目目录
 cd ${PROJECT_PATH}
 
-echo y | platformio init --board ${BOARD_TYPE}
+rm -rf build.*
+echo y | platformio init --board ${BOARD_TYPE} 1>build.log
 
 #把.ino源代码文件复制(移动)到src下
 # cp *.ino src/
@@ -34,9 +35,8 @@ if [ -f main.ino ]; then
 	mv main.ino src/
 fi
 
-rm -rf build.*
 #开始编译
-platformio run
+platformio run 1>>build.log
 
 #编译出错
 if [ $? -ne 0 ]; then
