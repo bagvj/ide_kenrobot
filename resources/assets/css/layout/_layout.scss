@@ -33,7 +33,7 @@
 		left: 0;
 		right: 0;
 		visibility: hidden;
-		z-index: 300;
+		z-index: 15;
 		position: absolute;
 		background-color: #393d43;
 
@@ -199,7 +199,7 @@
 			ul {
 				display: none;
 				position: absolute;
-				z-index: 5;
+				z-index: 19;
 				background-color: #4b5765;
 
 				& > li {
@@ -438,7 +438,7 @@
 
 	.user-menu {
 		display: none;
-		z-index: 100;
+		z-index: 19;
 		position: relative;
 
 		&.active {
@@ -554,7 +554,7 @@
 }
 
 .dialog-layer {
-	z-index: 500;
+	z-index: 20;
 	display: none;
 
 	&.active {
