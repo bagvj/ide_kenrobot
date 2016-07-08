@@ -71,7 +71,20 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 				return;
 			}
 
-			var projectInfo = myProjects.length > 0 ? myProjects[myProjects.length - 1] : getDefaultProject();
+			var projectInfo;
+			if(myProjects.length > 0){
+				var index = 0;
+				var time = myProjects[index].updated_at;
+				for(var i = 1; i < myProjects.length; i++) {
+					if(myProjects[i].updated_at > time) {
+						time = myProjects[i].updated_at;
+						index = i;
+					}
+				}
+				projectInfo = myProjects[index];
+			} else {
+				projectInfo = getDefaultProject();
+			}
 			openProject(projectInfo);
 		}
 	}
@@ -256,6 +269,14 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 				console.log(ex);
 				projectInfo.project_data = {};
 			}
+		}
+
+		if(typeof projectInfo.created_at == "string") {
+			projectInfo.created_at = new Date(projectInfo.created_at);
+		}
+
+		if(typeof projectInfo.updated_at == "string") {
+			projectInfo.updated_at = new Date(projectInfo.updated_at);
 		}
 
 		return projectInfo;
