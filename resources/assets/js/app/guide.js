@@ -67,7 +67,7 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './util', './EventManager'], fu
 
 		if(!$.cookie('has_visit')) {
 			$(window).on('keyup', onGuideCoverNext);
-			guideCover.on('click', onGuideCoverNext);
+			guideCover.addClass("active").on('click', onGuideCoverNext);
 			$('.guide-skip', guideCover).on('click', onGuideSkipClick);
 
 			onGuideCoverNext();
@@ -75,7 +75,7 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './util', './EventManager'], fu
 	}
 
 	function start(id) {
-		guideLayer.show();
+		guideLayer.addClass("active");
 
 		var guideDemo = $('.guide-demo[data-demo-id="' + id + '"]', guideLayer);
 		if(guideDemo.length > 0) {
@@ -217,12 +217,12 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './util', './EventManager'], fu
 	}
 
 	function onGuideSkipClick(e) {
-		guideCover.hide();
 		$('.guide-highlight').removeClass('guide-highlight');
 
 		$(window).off('keyup', onGuideCoverNext);
-		guideCover.off('click', onGuideCoverNext);
 		$('.guide-skip', guideCover).off('click', onGuideSkipClick);
+		guideCover.off('click', onGuideCoverNext).removeClass("active").remove();
+		guideCover = null;
 
 		$.cookie('has_visit', true);
 	}

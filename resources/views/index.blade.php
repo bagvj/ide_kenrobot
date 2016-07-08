@@ -655,6 +655,7 @@
 			</div>
 			<div class="message-layer"></div>
 			<div class="modal guide-layer"></div>
+			@if(!$has_visit)
 			<div class="modal guide-cover">
 				<div class="guide-step guide-step-1" data-target=".sidebar li[data-action='project']">
 					<div class="part part-1"></div>
@@ -678,6 +679,7 @@
 				</div>
 				<div class="guide-skip"></div>
 			</div>
+			@endif
 		</div>
 	</body>
 </html>

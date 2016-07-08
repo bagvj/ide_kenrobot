@@ -7,10 +7,8 @@
 		$borderWidth: 9px; 
 
 		.guide-step {
-			// pointer-events: auto;
-			display: none;
+			visibility: hidden;
 			position: absolute;
-			// padding: 10px 15px;
 			z-index: 999;
 			box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);
 			background-color: $backgroundColor;
@@ -84,7 +82,7 @@
 
 		&.active {
 			.guide-step.active {
-				display: block;
+				visibility: visible;
 			}
 		}
 	}
@@ -96,13 +94,17 @@
 }
 
 .guide-cover {
-	display: none;
+	visibility: hidden;
+
+	&.active {
+		visibility: visible;
+	}
 
 	.guide-step {
-		display: none;
+		visibility: hidden;
 
 		&.active {
-			display: block;
+			visibility: visible;
 		}
 
 		.part {
