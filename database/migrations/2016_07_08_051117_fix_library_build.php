@@ -12,11 +12,12 @@ class FixLibraryBuild extends Migration
      */
     public function up()
     {
-        DB::statement("update libraries set in_use = 0 where name = 'Esplora'");
-        DB::statement("update libraries set in_use = 0 where name = 'Firmata'");
-        DB::statement("update libraries set in_use = 0 where name = 'Robot Control'");
-        DB::statement("update libraries set in_use = 0 where name = 'Robot IR Remote'");
-        DB::statement("update libraries set in_use = 0 where name = 'Robot Motor'");
+        DB::statement("update libraries set in_use = 1 where name = 'Esplora'");
+        DB::statement("update libraries set in_use = 1 where name = 'Firmata'");
+        DB::statement("update libraries set in_use = 1 where name = 'Robot Control'");
+        DB::statement("update libraries set in_use = 1 where name = 'Robot IR Remote'");
+        DB::statement("update libraries set in_use = 1 where name = 'Robot Motor'");
+        DB::statement("update libraries set in_use = 0 where name = 'KenArduino'");
 
         DB::statement("update libraries set code = '#include <Dhcp.h>\n#include <Dns.h>\n#include <Ethernet.h>\n#include <EthernetClient.h>\n#include <EthernetServer.h>\n#include <EthernetUdp.h>\n#include <SPI.h>' where name = 'Ethernet'");
         DB::statement("update libraries set code = '#include <SD.h>\n#include <SPI.h>' where name = 'SD'");

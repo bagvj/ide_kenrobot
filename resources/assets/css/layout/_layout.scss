@@ -264,6 +264,9 @@
 					}
 
 					&.library {
+						ul {
+							top: -240px;
+						}
 						li {
 							width: 200px;
 						}
