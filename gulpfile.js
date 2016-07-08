@@ -147,7 +147,7 @@ gulp.task('sns-css', function() {
 //编译解释器hex
 gulp.task('interpreter', function() {
 	var name = "interpreter";
-	var inoSrc = "/usr/local/share/arduino/libraries/KenArduino/examples/Interpreter/Interpreter.ino";
+	var inoSrc = "/home/arduino/libraries/KenArduino/examples/Interpreter/Interpreter.ino";
 	var projectPath = os.tmpdir() + "/" + name + "/";
 	var hexDist = './public/download/';
 
@@ -155,7 +155,7 @@ gulp.task('interpreter', function() {
 		.pipe(rename('main.ino'))
 		.pipe(gulp.dest(projectPath));
 
-	var cmd = "sh app/Build/compiler/Arduino/build.sh " + projectPath + " uno " + name;
+	var cmd = "sudo sh app/Build/build.sh " + projectPath + " uno " + name;
 	child_process.exec(cmd, function(error) {
 		if(error) {
 			console.log(error);
