@@ -28,14 +28,10 @@ define(['vendor/jquery', 'vendor/meld', './EventManager', './util', './setting',
 		var sidebarTabs = $('.sidebar .tab');
 		if(view == "hardware") {
 			sidebarBtns.filter('[data-action="component"]').removeClass("hide");
-			sidebarBtns.filter('[data-action="library"]').addClass("hide");
 			sidebarTabs.filter('.tab-component').removeClass("hide");
-			sidebarTabs.filter('.tab-library').addClass("hide");
 		} else {
 			sidebarBtns.filter('[data-action="component"]').addClass("hide");
-			sidebarBtns.filter('[data-action="library"]').removeClass("hide");
 			sidebarTabs.filter('.tab-component').addClass("hide");
-			sidebarTabs.filter('.tab-library').removeClass("hide");
 		}
 
 		util.toggleActive($('.main-tabs .tab-' + view));

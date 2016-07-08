@@ -1,16 +1,15 @@
 define(['vendor/jquery', './util'], function(_, util) {
 	var current;
 	var boards;
-	var selector;
+	var list;
 
 	function init() {
-		selector = ".top-menu .board ul > li";
-		$(selector).on('click', onBoardClick);
+		list = $(".top-menu .board ul > li").on('click', onBoardClick);
 	}
 
 	function load(_boards) {
 		boards = _boards;
-		$(selector).eq(0).click();
+		list.eq(0).click();
 	}
 
 	function getData() {
@@ -28,7 +27,7 @@ define(['vendor/jquery', './util'], function(_, util) {
 		for (var name in boards) {
 			var board = boards[name];
 			if (board.id == id) {
-				$(selector).filter('[data-board="' + name + '"]').click();
+				list.filter('[data-board="' + name + '"]').click();
 				break;
 			}
 		}

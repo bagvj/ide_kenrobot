@@ -2,12 +2,12 @@ define(['vendor/jquery', './EventManager'], function(_, EventManager) {
 	var list;
 
 	function init() {
-		list = $('.library .list > li').on('click', onLibraryClick);
+		list = $('.top-menu .library ul > li').on('click', onLibraryClick);
 	}
 
 	function getData() {
 		var libs = [];
-		list.filter('.check').each(function(i, item) {
+		list.filter('.checked').each(function(i, item) {
 			libs.push($(item).data('library'));
 		});
 
@@ -19,19 +19,19 @@ define(['vendor/jquery', './EventManager'], function(_, EventManager) {
 
 		for(var i = 0; i < libs.length; i++) {
 			var lib = libs[i];
-			list.filter('[data-library="' + lib + '"]').addClass('check');
+			list.filter('[data-library="' + lib + '"]').addClass('checked');
 		}
 	}
 
 	function onLibraryClick(e) {
 		var li = $(this);
-		li.toggleClass('check');
+		li.toggleClass('checked');
 			
 		EventManager.trigger('library', 'change');
 	}
 
 	function reset() {
-		list.removeClass('check');
+		list.removeClass('checked');
 	}
 
 	return {

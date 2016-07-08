@@ -1,6 +1,5 @@
 .sidebar {
 	.bar {
-		// position: relative;
 		background-color: #1d222d;
 
 		ul {
@@ -232,40 +231,6 @@
 					color: white;
 					margin-top: 5px;
 					margin-bottom: 12px;
-				}
-			}
-		}
-	}
-
-	.library {
-		width: 180px;
-		position: relative;
-		overflow-y: auto;
-
-		.list {
-			li {
-				cursor: pointer;
-				padding-left: 24px;
-				height: 36px;
-				color: white;
-				line-height: 36px;
-				position: relative;
-
-				& > i {
-					display: none;
-					position: absolute;
-					font-size: 12px;
-					left: 6px;
-				}
-
-				&:hover {
-					background-color: #488ac0;
-				}
-
-				&.check {
-					& > i {
-						display: block;
-					}
 				}
 			}
 		}

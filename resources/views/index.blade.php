@@ -80,6 +80,15 @@
 											@endforeach
 											</ul>
 										</li>
+										<li class="library">
+											<span>库</span>
+											<i class="kenrobot ken-triangle-right"></i>
+											<ul class="select">
+											@foreach($libraries as $library)
+												<li data-library="{{$library->name}}"><i class="kenrobot ken-check"></i>{{$library->name}}</li>
+											@endforeach
+											</ul>
+										</li>
 									</ul>
 								</li>
 								<li data-action="setting">
@@ -120,7 +129,6 @@
 							<ul>
 								<li data-action="project"><i class="kenrobot ken-project"></i>项目</li>
 								<li class="hide" data-action="component"><i class="kenrobot ken-component"></i>元件</li>
-								<li data-action="library"><i class="kenrobot ken-library"></i>库</li>
 								<li data-action="example"><i class="kenrobot ken-demo"></i>示例</li>
 							</ul>
 						</div>
@@ -152,15 +160,6 @@
 									@endforeach
 									</ul>
 								</div>
-							</div>
-						</div>
-						<div class="tab tab-library">
-							<div class="library x-scrollbar">
-								<ul class="list">
-								@foreach($libraries as $library)
-									<li data-library="{{$library->name}}"><i class="kenrobot ken-check"></i>{{$library->name}}</li>
-								@endforeach
-								</ul>
 							</div>
 						</div>
 						<div class="tab tab-example">

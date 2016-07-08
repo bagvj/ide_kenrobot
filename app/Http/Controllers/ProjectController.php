@@ -84,6 +84,8 @@ class ProjectController extends Controller {
         fclose($file);
 
         $download_name = $build_name.$ext;
+        //允许跨域
+        header('Access-Control-Allow-Origin:*'); 
         //返回的文件类型
         header("Content-type: application/octet-stream");
         //按照字节大小返回
