@@ -327,6 +327,13 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 	}
 
 	function onViewChange(view) {
+		if(view == "hardware") {
+			var boardType = board.getData().board_type;
+			if(boardType != "uno") {
+				util.message("硬件设计目前只支持uno");
+				return;
+			}
+		}
 		doSwitchView(view);
 	}
 
