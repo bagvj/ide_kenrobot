@@ -48,8 +48,21 @@ class ProjectController extends Controller {
         if ($status == 0) {
             return response()->json(['status' => 0, 'message' => '编译成功', 'hash' => $hash, 'url' => "/project/download/$hash"]);
         } else {
-            // return response()->json(['status' => $status, 'message' => '编译失败']);
-            return response()->json(['status' => $status, 'message' => '编译失败', 'hash' => $hash, 'output' => $output]);
+            $start = 0;
+            $end = 0;
+            for($i = 0; $i < count($output); $i++) {
+                $line = $output[$i];
+                if(strpos($line, "in <module>") !== false) {
+                    $start = $i;
+                }
+                if(strpos($line, "scons: ***") !== false) {
+                    $end = $i;
+                }
+                $output[$i] = str_replace($path . "/src/", "", $line);
+            }
+            $filterOutput = array_merge(array_slice($output, $start + 1, $end - $start - 1), array_slice($output, $end + 2));
+
+            return response()->json(['status' => $status, 'message' => '编译失败', 'hash' => $hash, 'output' => $filterOutput]);
         }
     }
 
