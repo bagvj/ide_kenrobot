@@ -1,5 +1,6 @@
 define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './util', './hardware', './user', './project', './software', './sidebar', './topMenu', './board', './component', './library', './example', './ext/agent', './serial', './ext/burnDialog', './bottomContainer', './logcat', './serialAssitant', './interpreter', './setting', './rightBar', './comment', './barrage', './driverDialog', './guide'], function(_, Mousetrap, EventManager, config, util, hardware, user, project, software, sidebar, topMenu, board, component, library, example, extAgent, serial, burnDialog, bottomContainer, logcat, serialAssitant, interpreter, setting, rightBar, comment, barrage, driverDialog, guide) {
 	function init() {
+		printJoinUs();
 		initAjax();
 		initKeys();
 		initEscape();
@@ -38,6 +39,12 @@ define(['vendor/jquery', 'vendor/mousetrap', './EventManager', './config', './ut
 			loadConfig(),
 			project.loadMyProject()
 		).done(project.load);
+	}
+
+	function printJoinUs() {
+		try{
+			console.log(config.greet);
+		} catch(e) {}
 	}
 
 	function initAjax() {
