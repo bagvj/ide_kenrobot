@@ -1,5 +1,6 @@
 #!/bin/bash
 #export PATH=/usr/bin:$PATH
+export PLATFORMIO_LIB_DIR=/home/arduino/libraries
 if [ $# -ne 3 ];then
 	echo "参数个数必须为3"
     exit 1
