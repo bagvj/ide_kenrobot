@@ -55,37 +55,37 @@
 										</li>
 										<li class="port">
 											<span>端口</span>
-											<i class="kenrobot ken-triangle-right"></i>
+											<i class="arrow kenrobot ken-triangle-right"></i>
 											<ul class="select">
 											</ul>
 										</li>
 										<li class="baudRate">
 											<span>波特率</span>
-											<i class="kenrobot ken-triangle-right"></i>
+											<i class="arrow kenrobot ken-triangle-right"></i>
 											<ul class="select">
-												<li data-rate="115200"><i class="kenrobot ken-check"></i>115200</li>
-												<li data-rate="57600"><i class="kenrobot ken-check"></i>57600</li>
-												<li data-rate="38400"><i class="kenrobot ken-check"></i>38400</li>
-												<li data-rate="19200"><i class="kenrobot ken-check"></i>19200</li>
-												<li data-rate="9600"><i class="kenrobot ken-check"></i>9600</li>
-												<li data-rate="4800"><i class="kenrobot ken-check"></i>4800</li>
+												<li data-rate="115200"><i class="check kenrobot ken-check"></i>115200</li>
+												<li data-rate="57600"><i class="check kenrobot ken-check"></i>57600</li>
+												<li data-rate="38400"><i class="check kenrobot ken-check"></i>38400</li>
+												<li data-rate="19200"><i class="check kenrobot ken-check"></i>19200</li>
+												<li data-rate="9600"><i class="check kenrobot ken-check"></i>9600</li>
+												<li data-rate="4800"><i class="check kenrobot ken-check"></i>4800</li>
 											</ul>
 										</li>
 										<li class="board">
 											<span>开发板</span>
-											<i class="kenrobot ken-triangle-right"></i>
+											<i class="arrow kenrobot ken-triangle-right"></i>
 											<ul class="select">
 											@foreach($boards as $index => $board)
-												<li class="{{$board->is_forward ? 'forward' : ''}}" data-board="{{$board->name}}"><i class="kenrobot ken-check"></i>{{$board->label}}</li>
+												<li class="{{$board->is_forward ? 'forward' : ''}}{{$board->is_hot ? ' hot' : ''}}" data-board="{{$board->name}}" title="{{$board->label}}"><i class="check kenrobot ken-check"></i><span class="name">{{$board->label}}</span><i class="hot kenrobot ken-hot"></i></li>
 											@endforeach
 											</ul>
 										</li>
 										<li class="library">
 											<span>库</span>
-											<i class="kenrobot ken-triangle-right"></i>
+											<i class="arrow kenrobot ken-triangle-right"></i>
 											<ul class="select">
 											@foreach($libraries as $library)
-												<li data-library="{{$library->name}}"><i class="kenrobot ken-check"></i>{{$library->name}}</li>
+												<li data-library="{{$library->name}}" title="{{$library->name}}"><i class="check kenrobot ken-check"></i>{{$library->name}}</li>
 											@endforeach
 											</ul>
 										</li>

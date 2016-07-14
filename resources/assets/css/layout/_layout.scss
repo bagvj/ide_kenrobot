@@ -209,7 +209,7 @@
 					position: relative;
 					text-align: left;
 
-					& > i {
+					& > i.arrow {
 						position: absolute;
 						right: 0;
 						font-size: 12px;
@@ -225,14 +225,16 @@
 
 						&.select {
 							& > li {
-								& > i {
+								& > i.check {
+									font-size: 12px;
 									display: none;
 									position: absolute;
 									left: 5px;
+									top: 0;
 								}
 
 								&.checked {
-									& > i {
+									& > i.check {
 										display: block;
 									}
 								}
@@ -256,9 +258,35 @@
 						li {
 							width: 280px;
 
+							.name {
+								width: 230px;
+								overflow: hidden;
+								white-space: nowrap;
+								text-overflow: ellipsis;
+								display: inline-block;
+							}
+
+							& > i.hot {
+								display: none;
+								font-size: 28px;
+								position: absolute;
+								right: 4px;
+								top: 0;
+								color: #ff8181;
+							}
+
+							&.hot {
+								& > i.hot {
+									display: block;
+								}
+							}
+							
 							&.forward {
-								color: #80878e;
 								cursor: default;
+
+								.name {
+									color: #80878e;
+								}
 
 								&:hover {
 									background-color: transparent;

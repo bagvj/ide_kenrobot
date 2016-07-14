@@ -36,7 +36,7 @@ class Repository {
 	}
 
 	public static function getBoards($isDict = false, $withPorts = false) {
-		$boards = DB::table('boards')->where('in_use', 1)->orderBy('is_forward')->get();
+		$boards = DB::table('boards')->where('in_use', 1)->orderBy('is_forward')->orderBy('is_hot', 'DESC')->orderBy('name')->get();
 		foreach($boards as $key => $value) {
 			$value->in_use = $value->in_use == 1;
 			$value->type = "board";

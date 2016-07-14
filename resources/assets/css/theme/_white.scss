@@ -70,7 +70,9 @@
 				&.board {
 					li {
 						&.forward {
-							color: #ccc;
+							.name {
+								color: #ccc;
+							}
 						}
 					}
 				}

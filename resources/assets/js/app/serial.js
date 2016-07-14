@@ -53,7 +53,7 @@ define(['vendor/jquery', './EventManager', './util', './config', './ext/agent'],
 					var index;
 					for (var i = 0; i < ports.length; i++) {
 						var port = ports[i];
-						$('<li>').attr("title", port.displayName).attr("data-port", port.path).append('<i class="kenrobot ken-check"></i>' + port.path).appendTo(portSelector);
+						$('<li>').attr("title", port.displayName).attr("data-port", port.path).append('<i class="check kenrobot ken-check"></i>' + port.path).appendTo(portSelector);
 						if(nameReg.test(port.path) || (port.displayName && nameReg.test(port.displayName))) {
 							count++;
 							index = i;
