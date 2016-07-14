@@ -173,7 +173,7 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './util', './EventManager'], fu
 	function onFinishDemo(id) {
 		if(finishedGuides.indexOf(id) < 0) {
 			finishedGuides.push(id);
-			$.cookie('finishedGuides', JSON.stringify(finishedGuides));
+			$.cookie('finishedGuides', JSON.stringify(finishedGuides), {expires: 365});
 		}
 
 		EventManager.trigger('guide', 'finish', id);
@@ -224,7 +224,7 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './util', './EventManager'], fu
 		guideCover.off('click', onGuideCoverNext).removeClass("active").remove();
 		guideCover = null;
 
-		$.cookie('has_visit', true);
+		$.cookie('has_visit', true, {expires: 365});
 	}
 
 	function onGuideCoverNext(e) {
