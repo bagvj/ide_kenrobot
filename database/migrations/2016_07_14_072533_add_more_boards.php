@@ -22,6 +22,6 @@ class AddMoreBoards extends Migration
      */
     public function down()
     {
-        //
+        DB::statement("delete from `boards` where name='Arduino/Genuino 101';");
     }
 }
