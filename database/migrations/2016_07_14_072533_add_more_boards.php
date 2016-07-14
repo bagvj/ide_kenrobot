@@ -12,7 +12,7 @@ class AddMoreBoards extends Migration
      */
     public function up()
     {
-        DB::statement("insert  into `boards`(`name`,`label`,`board_type`,`in_use`,`is_forward`,`width`,`height`,`category`) values ('Arduino/Genuino 101','Arduino/Genuino 101','genuino101',1,0,392,273,'ArduinoUNO');");
+        DB::statement("insert  into `boards`(`name`,`label`,`board_type`,`in_use`,`is_forward`,`width`,`height`,`category`) values ('ATmega2560','ATmega2560','megaatmega2560',1,0,392,273,'ArduinoUNO'),('SparkFun Mega Pro 3.3V/8MHz','SparkFun Mega Pro 3.3V/8MHz','sparkfun_megapro8MHz',1,0,392,273,'ArduinoUNO'),('SparkFun Mega Pro 5V/16MHz','SparkFun Mega Pro 5V/16MHz','sparkfun_megapro16MHz',1,0,392,273,'ArduinoUNO');");
     }
 
     /**

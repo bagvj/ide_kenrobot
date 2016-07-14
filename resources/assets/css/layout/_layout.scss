@@ -249,8 +249,12 @@
 					}
 
 					&.board {
+						ul {
+							top: -200px;
+						}
+						
 						li {
-							width: 200px;
+							width: 280px;
 
 							&.forward {
 								color: #80878e;
