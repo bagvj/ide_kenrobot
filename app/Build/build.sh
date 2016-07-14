@@ -1,6 +1,7 @@
 #!/bin/bash
 #export PATH=/usr/bin:$PATH
 export PLATFORMIO_LIB_DIR=/home/arduino/libraries
+
 if [ $# -ne 3 ];then
 	echo "参数个数必须为3"
     exit 1
@@ -38,6 +39,8 @@ fi
 
 #开始编译
 platformio run 1>>build.log
+
+echo ''
 
 #编译出错
 if [ $? -ne 0 ]; then

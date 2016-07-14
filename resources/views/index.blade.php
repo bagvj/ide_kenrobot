@@ -76,7 +76,7 @@
 											<i class="arrow kenrobot ken-triangle-right"></i>
 											<ul class="select">
 											@foreach($boards as $index => $board)
-												<li class="{{$board->is_forward ? 'forward' : ''}}{{$board->is_hot ? ' hot' : ''}}" data-board="{{$board->name}}" title="{{$board->label}}"><i class="check kenrobot ken-check"></i><span class="name">{{$board->label}}</span><i class="hot kenrobot ken-hot"></i></li>
+												<li class="{{$board->is_forward ? 'forward' : ''}}{{$board->is_hot ? ' hot' : ''}}" data-board="{{$board->name}}"><i class="check kenrobot ken-check"></i><span class="name">{{$board->label}}</span><i class="hot kenrobot ken-hot"></i></li>
 											@endforeach
 											</ul>
 										</li>
@@ -85,7 +85,7 @@
 											<i class="arrow kenrobot ken-triangle-right"></i>
 											<ul class="select">
 											@foreach($libraries as $library)
-												<li data-library="{{$library->name}}" title="{{$library->name}}"><i class="check kenrobot ken-check"></i>{{$library->name}}</li>
+												<li data-library="{{$library->name}}"><i class="check kenrobot ken-check"></i>{{$library->name}}</li>
 											@endforeach
 											</ul>
 										</li>
