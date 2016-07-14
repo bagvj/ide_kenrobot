@@ -29,6 +29,7 @@ DIR=`pwd`
 cd ${PROJECT_PATH}
 
 rm -rf build.*
+echo "初始化"
 echo y | platformio init --board ${BOARD_TYPE} 1>build.log
 
 #把.ino源代码文件复制(移动)到src下
@@ -38,9 +39,8 @@ if [ -f main.ino ]; then
 fi
 
 #开始编译
-platformio run 1>>build.log
-
-echo ''
+echo "开始编译"
+platformio run -v -e ${BOARD_TYPE}
 
 #编译出错
 if [ $? -ne 0 ]; then
@@ -51,6 +51,7 @@ if [ $? -ne 0 ]; then
 fi
 
 #编译成功
+echo
 echo "编译成功"
 
 #复制文件
