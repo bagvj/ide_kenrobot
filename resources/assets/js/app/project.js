@@ -96,7 +96,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 			var info = getCurrentProject();
 			var id = info.id;
 			if(id == 0 || isUuid(id)) {
-				showSaveDialog(info, true);
+				showSaveDialog(info);
 				promise.reject();
 
 				return;
