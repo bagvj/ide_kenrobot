@@ -11,6 +11,7 @@ use ZipArchive;
 use Curl\Curl;
 use Session;
 use App\Project\Project as ProjectModel;
+use App\Util\Tools;
 
 class ProjectController extends Controller {
 
@@ -166,7 +167,7 @@ class ProjectController extends Controller {
                 return response()->json(['status' => -4, 'message' => '保存失败']);
             }
         }else {
-            $input['hash'] = $this->getHash();
+            $input['hash'] = Tools::getHash();
             $project =  ProjectModel::create($input);
             if ($project == null) {
                 return response()->json(['status' => -4, 'message' => '保存失败']);
@@ -311,29 +312,4 @@ class ProjectController extends Controller {
         }
 
     }
-
-    //生成短url
-    //返回：一个长度为6的由字母和数组组成的字符串
-    private function getHash($value = "") {
-        $key = "HwpGAejoUOPr6DbKBlvRILmsq4z7X3TCtky8NVd5iWE0ga2MchSZxfn1Y9JQuF";
-
-        $result = array();
-        $time = time();
-        $salt = md5(rand(10000, 99999));
-        $md5 = md5($salt . $value . $time);
-
-        for($i = 0; $i < 4; $i++) {
-            $hex = 0x3FFFFFFF & intval(substr($md5, $i * 8, 8), 16);
-            $out = '';
-            for($j = 0; $j < 6; $j++) {
-                $index = 0x0000003D & $hex;
-                $out = $out . $key[$index];
-                $hex = $hex >> 5;
-            }
-            $result[$i] = $out;
-        }
-
-        return $result[0];
-    }
-
 }

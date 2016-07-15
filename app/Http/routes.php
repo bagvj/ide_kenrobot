@@ -18,6 +18,9 @@ Route::get('/project/download/{hash}/{ext?}', 'ProjectController@downloadProject
 Route::post('/api/config', 'ConfigController@index');
 Route::post('/api/example', 'ConfigController@example');
 
+// 编译API
+Route::post('/api/build', 'BuildController@index');
+
 // 项目API
 Route::post('/api/project/build', 'ProjectController@buildProject');
 Route::post('/api/project/save', 'ProjectController@saveProject');
