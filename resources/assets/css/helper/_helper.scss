@@ -18,6 +18,30 @@
   cursor: auto;
 }
 
+.no-scrollbar {
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &::-moz-scrollbar {
+    display: none;
+  }
+
+  &::-ms-scrollbar {
+    display: none;
+  }
+
+  &::-o-scrollbar {
+    display: none;
+  }
+
+  &::scrollbar {
+    display: none;
+  }
+}
+
 .modal {
   top: 0;
   bottom: 0;

@@ -22,7 +22,7 @@ class Repository {
 	}
 
 	public static function getLibraries($isDict = false) {
-		$libraries = DB::table('libraries')->where('in_use', 1)->get();
+		$libraries = DB::table('libraries')->where('in_use', 1)->orderBy('name')->get();
 		if($isDict) {
 			$result = array();
 			foreach ($libraries as $key => $value) {

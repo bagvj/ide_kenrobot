@@ -54,6 +54,16 @@
 					background-color: #f6f6f6;
 				}
 
+				.select-wrap {
+					&:before {
+						border-bottom-color: #333;
+					}
+
+					&:after {
+						border-top-color: #333;
+					}
+				}
+
 				ul {
 					background-color: white;
 					

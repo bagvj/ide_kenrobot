@@ -194,6 +194,9 @@
 
 			&:hover {
 				background-color: #3A4256;
+				& > ul {
+					display: block;
+				}
 			}
 
 			ul {
@@ -209,10 +212,55 @@
 					position: relative;
 					text-align: left;
 
-					& > i.arrow {
+					&:hover {
+						background-color: #488ac0;
+
+						.select-wrap {
+							display: block;
+						}
+
+						ul {
+							display: block;
+						}
+					}
+
+					.select-wrap {
+						display: none;
 						position: absolute;
-						right: 0;
-						font-size: 12px;
+						left: 100%;
+						top: 0;
+
+						&:before {
+							border: solid transparent;
+							content: ' ';
+							height: 0;
+							width: 0;
+							position: absolute;
+							border-width: 5px;
+							top: -3px;
+							left: calc(50% - 5px);
+							z-index: 20;
+							border-bottom-color: white;
+						}
+
+						&:after {
+							border: solid transparent;
+							content: ' ';
+							height: 0;
+							width: 0;
+							position: absolute;
+							border-width: 5px;
+							bottom: -3px;
+							left: calc(50% - 5px);
+							z-index: 20;
+							border-top-color: white;
+						}
+
+						& > ul {
+							position: relative;
+							left: 0;
+							top: 0;
+						}
 					}
 
 					ul {
@@ -242,17 +290,19 @@
 						}
 					}
 
-					&:hover {
-						background-color: #488ac0;
-
-						& > ul {
-							display: block;
-						}
+					& > i.arrow {
+						position: absolute;
+						right: 0;
+						font-size: 12px;
 					}
 
 					&.board {
-						ul {
+						.select-wrap {
 							top: -200px;
+						}
+
+						ul {
+							height: 600px;
 						}
 						
 						li {
@@ -296,19 +346,18 @@
 					}
 
 					&.library {
-						ul {
+						.select-wrap {
 							top: -240px;
 						}
+
+						ul {
+							height: 600px;
+						}
+
 						li {
 							width: 200px;
 						}
 					}
-				}
-			}
-
-			&:hover {
-				& > ul {
-					display: block;
 				}
 			}
 		}
