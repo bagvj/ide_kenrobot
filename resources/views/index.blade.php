@@ -595,6 +595,14 @@
 								<div class="tips">常见问题解答</div>
 								<div class="faq">
 									<div class="question">
+										Q： 如何安装啃萝卜插件
+									</div>
+									<div class="answer">
+										A： 参考<span class="link" href="#" data-action="faq-install">这里</span>
+									</div>
+								</div>
+								<div class="faq">
+									<div class="question">
 										Q： 如何设置串口端口和波特率
 									</div>
 									<div class="answer">

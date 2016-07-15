@@ -115,6 +115,12 @@ define(['vendor/jquery', 'vendor/jquery.cookie', './EventManager', './util'], fu
 					EventManager.trigger('driverDialog', 'show');
 				}, 400);
 				break;
+			case "faq-install":
+				$('.x-dialog-close', selector).click();
+				setTimeout(function() {
+					util.dialog(".install-dialog");
+				}, 400);
+				break;
 		}
 	}
 
