@@ -51,42 +51,47 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 
 	function load() {
 		var hash = getHashKeyValue('project');
-		hash = /^[0-9a-zA-Z]{6}$/.test(hash) ? hash : "";
-		if(hash) {
-			getProjectInfoByHash(hash)
-				.done(function(projectInfo) {
-					openProject(projectInfo);
-				})
-				.fail(function() {
-					util.message("项目不存在");
-					window.location.hash = "";
-				});
-		} else {
-			if(window.location.hash != "") {
-				window.location.hash = "";
+		var action = getHashKeyValue('action');
+		if(action) {
+			if(action == "create") {
+				openProject(getDefaultProject());
 				return;
 			}
-
-			if(openedProjects.length > 0) {
-				return;
-			}
-
-			var projectInfo;
-			if(myProjects.length > 0){
-				var index = 0;
-				var time = myProjects[index].updated_at;
-				for(var i = 1; i < myProjects.length; i++) {
-					if(myProjects[i].updated_at > time) {
-						time = myProjects[i].updated_at;
-						index = i;
-					}
-				}
-				projectInfo = myProjects[index];
-			} else {
-				projectInfo = getDefaultProject();
-			}
-			openProject(projectInfo);
 		}
+		else if(hash) {
+			getProjectInfoByHash(hash).done(function(projectInfo) {
+				openProject(projectInfo);
+			}).fail(function() {
+				util.message("项目不存在");
+				window.location.hash = "";
+			});
+			return;
+		}
+
+		if(window.location.hash != "") {
+			window.location.hash = "";
+			return;
+		}
+
+		if(openedProjects.length > 0) {
+			return;
+		}
+
+		var projectInfo;
+		if(myProjects.length > 0){
+			var index = 0;
+			var time = myProjects[index].updated_at;
+			for(var i = 1; i < myProjects.length; i++) {
+				if(myProjects[i].updated_at > time) {
+					time = myProjects[i].updated_at;
+					index = i;
+				}
+			}
+			projectInfo = myProjects[index];
+		} else {
+			projectInfo = getDefaultProject();
+		}
+		openProject(projectInfo);
 	}
 
 	function build(autoClose) {
