@@ -10,6 +10,9 @@ require.config({
 		"vendor/jquery.cookie": {
 			deps: ['./jquery'],
 		},
+		"vendor/jquery.scrollTo": {
+			deps: ['./jquery'],
+		},
 		"vendor/jquery-ui": {
 			deps: ['./jquery'],
 		},

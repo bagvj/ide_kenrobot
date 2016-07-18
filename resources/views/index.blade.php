@@ -75,22 +75,26 @@
 											<span>开发板</span>
 											<i class="arrow kenrobot ken-triangle-right"></i>
 											<div class="select-wrap">
+												<i class="slider-arrow slider-top kenrobot ken-triangle-up" data-direction="top"></i>
 												<ul class="select no-scrollbar">
 												@foreach($boards as $index => $board)
 													<li class="{{$board->is_forward ? 'forward' : ''}}{{$board->is_hot ? ' hot' : ''}}" data-board="{{$board->name}}"><i class="check kenrobot ken-check"></i><span class="name">{{$board->label}}</span><i class="hot kenrobot ken-hot"></i></li>
 												@endforeach
 												</ul>
+												<i class="slider-arrow slider-bottom kenrobot ken-triangle-down" data-direction="bottom"></i>
 											</div>
 										</li>
 										<li class="library">
 											<span>库</span>
 											<i class="arrow kenrobot ken-triangle-right"></i>
 											<div class="select-wrap">
+												<i class="slider-arrow slider-top kenrobot ken-triangle-up" data-direction="top"></i>
 												<ul class="select no-scrollbar">
 												@foreach($libraries as $library)
 													<li data-library="{{$library->name}}"><i class="check kenrobot ken-check"></i>{{$library->name}}</li>
 												@endforeach
 												</ul>
+												<i class="slider-arrow slider-bottom kenrobot ken-triangle-down" data-direction="bottom"></i>
 											</div>
 										</li>
 									</ul>

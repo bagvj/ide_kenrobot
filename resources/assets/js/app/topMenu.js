@@ -1,9 +1,8 @@
-define(['vendor/jquery', 'vendor/meld', './util', './EventManager', './guide'], function(_, meld, util, EventManager, guide) {
+define(['vendor/jquery', 'vendor/jquery.scrollTo', 'vendor/meld', './util', './EventManager'], function(_, _, meld, util, EventManager) {
 	function init() {
 		$('.top-menu > ul li').on('click', onMenuClick);
 
-		EventManager.bind('guide', 'start', onGuideStart);
-		EventManager.bind('guide', 'stop', onGuideStop);
+		$('.top-menu .select-wrap .slider-arrow').on('mouseover', onArrowMouseHover).on('mouseout', onArrowMouseOut);
 	}
 
 	function onMenuClick(e) {
@@ -40,27 +39,22 @@ define(['vendor/jquery', 'vendor/meld', './util', './EventManager', './guide'], 
 		}
 	}
 
-	function onGuideStart(demoId) {
-		if(demoId == 1) {
-			// onMenuClick = meld.before(onMenuClick, function(e) {
-			// 	var index = guide.getStep();
-			// 	var action = $(this).data('action');
-			// 	if(index == 1 && action == "save") {
-			// 		guide.hideStep();
-			// 	} else if(index == 2 && action == "burn") {
-			// 		guide.hideStep();
-			// 	}
-			// });
+	function onArrowMouseHover(e) {
+		var arrow = $(this);
+		var direction = arrow.data('direction');
+		var menu = $('> ul', arrow.parent());
 
-			// $('.top-menu > ul li').off('click').on('click', onMenuClick);
+		if(direction == "top") {
+			menu.scrollTo('0%', 800);
+		} else {
+			menu.scrollTo("100%", 800);
 		}
 	}
 
-	function onGuideStop(demoId) {
-		if(demoId == 1) {
-			// onMenuClick = util.aspectReset(onMenuClick);
-			// $('.top-menu > ul li').off('click').on('click', onMenuClick);
-		}
+	function onArrowMouseOut(e) {
+		var arrow = $(this);
+		var menu = $('> ul', arrow.parent());
+		menu.stop(true);
 	}
 
 	return {

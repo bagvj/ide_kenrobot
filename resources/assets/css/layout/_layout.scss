@@ -230,30 +230,19 @@
 						left: 100%;
 						top: 0;
 
-						&:before {
-							border: solid transparent;
-							content: ' ';
-							height: 0;
-							width: 0;
+						.slider-arrow {
 							position: absolute;
-							border-width: 5px;
-							top: -3px;
-							left: calc(50% - 5px);
+							left: calc(50% - 8.5px);
+							line-height: 20px;
 							z-index: 20;
-							border-bottom-color: white;
 						}
 
-						&:after {
-							border: solid transparent;
-							content: ' ';
-							height: 0;
-							width: 0;
-							position: absolute;
-							border-width: 5px;
+						.slider-top {
+							top: -3px;
+						}
+
+						.slider-bottom {
 							bottom: -3px;
-							left: calc(50% - 5px);
-							z-index: 20;
-							border-top-color: white;
 						}
 
 						& > ul {
