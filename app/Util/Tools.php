@@ -43,4 +43,11 @@ class Tools {
 		}
 		return array_merge(array_slice($output, $start + 1, $end - $start - 1), array_slice($output, $end + 2));
 	}
+
+	public static function yieldBuildError($output) {
+		$error = array();
+		$error['type'] = 0;
+		$error['message'] = "语法错误";
+		return $error;
+	}
 }
