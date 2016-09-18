@@ -40,3 +40,5 @@ Route::post('/api/comment/delete', 'CommentController@remove');
 Route::post('/api/auth/check', 'Auth\WebAuthController@check');
 Route::post('/api/auth/login', 'Auth\WebAuthController@snsPostLogin');
 Route::post('/api/auth/login/weixin', 'Auth\WebAuthController@weixinlogin');
+
+Route::any('/demo/forumapi/projectinfo', 'ForumApiController@projectInfo');
