@@ -1,4 +1,4 @@
-define(['vendor/jquery'], function() {
+define(['vendor/jquery', 'vendor/jsencrypt', './config'], function($1, JSEncrypt, config) {
 
 	function authCheck() {
 		return $.ajax({
@@ -12,13 +12,16 @@ define(['vendor/jquery'], function() {
 	}
 
 	function login(username, password) {
+		var encrypt = new JSEncrypt.JSEncrypt();
+		encrypt.setPublicKey(config.encrypt.publicKey);
+
 		return $.ajax({
 			type: 'POST',
 			url: '/api/auth/login',
 			dataType: 'json',
 			data: {
 				email: username,
-				password: password
+				password: encrypt.encrypt(password)
 			},
 		});
 	}
