@@ -103,7 +103,7 @@ class ProjectController extends Controller {
         $input = $request->only($keys);
 
         $input['id'] = $request->input('id');
-        $input['project_type'] = 'code';
+        $input['project_type'] = 'ide';
 
         $is_update = !empty($input['id']);
 
@@ -207,7 +207,7 @@ class ProjectController extends Controller {
      */
     public function getProjects(Request $request) {
         $user_id = $request->input('user_id');
-        $project_type = 'code';
+        $project_type = 'ide';
 
         if (empty($user_id)) {
             return response()->json(['status' => -1, 'message' => '[user_id]为必需字段切类型为数字']);
