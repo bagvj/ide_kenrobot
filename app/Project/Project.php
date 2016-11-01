@@ -15,7 +15,7 @@ class Project extends Model
     //
     protected $table = 'projects';
 
-    protected $fillable = ['project_name', 'user_id', 'uid', 'author' ,'project_intro', 'project_data', 'public_type', 'hash', 'project_type'];
+    protected $fillable = ['project_name', 'user_id', 'uid', 'author' ,'project_intro', 'project_data', 'public_type', 'hash'];
 
     protected $hidden = ['deleted_at'];
 }

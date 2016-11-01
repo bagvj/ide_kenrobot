@@ -103,7 +103,6 @@ class ProjectController extends Controller {
         $input = $request->only($keys);
 
         $input['id'] = $request->input('id');
-        $input['project_type'] = 'ide';
 
         $is_update = !empty($input['id']);
 
@@ -207,15 +206,13 @@ class ProjectController extends Controller {
      */
     public function getProjects(Request $request) {
         $user_id = $request->input('user_id');
-        $project_type = 'ide';
 
         if (empty($user_id)) {
             return response()->json(['status' => -1, 'message' => '[user_id]为必需字段切类型为数字']);
         }
 
 
-        $projectList = ProjectModel::where('user_id', $user_id)
-            ->where('project_type',$project_type)->get();
+        $projectList = ProjectModel::where('user_id', $user_id)->get();
         if (!empty($projectList) && $projectList->count() > 0) {
             return response()->json(['status' => 0, 'message' => '', 'data' => $projectList->toArray()]);
         }
@@ -241,7 +238,7 @@ class ProjectController extends Controller {
 		if (empty($uid)) {
 			return response()->json(['status' => -1, 'message' => '[uid]为必需字段']);
 		}
-		$allowKeys = ['id','project_name', 'user_id', 'uid', 'author' ,'project_intro', 'public_type', 'hash', 'project_type'];
+		$allowKeys = ['id','project_name', 'user_id', 'uid', 'author' ,'project_intro', 'public_type', 'hash'];
 		$projectList = ProjectModel::where('uid', $uid)
 			->orderby('updated_at','desc')
 			->skip(($page-1)*$pagesize)
