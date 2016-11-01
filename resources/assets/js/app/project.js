@@ -1,4 +1,4 @@
-define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager', './util', './projectApi', './user', './hardware', './software', './board', './logcat', './sidebar', './config', './guide'], function(_, ZeroClipboard, meld, EventManager, util, projectApi, user, hardware, software, board, logcat, sidebar, config, guide) {
+define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', 'vendor/director', './EventManager', './util', './projectApi', './user', './hardware', './software', './board', './logcat', './sidebar', './config', './guide'], function(_, ZeroClipboard, meld, $1, EventManager, util, projectApi, user, hardware, software, board, logcat, sidebar, config, guide) {
 	//项目模版
 	var projectTemplate = '<li data-project-id="{{id}}" data-view="software" title="{{project_name}}"><div class="title"><span class="name">{{project_name}}</span><i class="kenrobot arrow"></i></div><div class="view"><div><span class="name" title="{{project_name}}.ino">{{project_name}}</span>.ino</div></div></li>';
 	var tabTemplate = '<li data-project-id="{{id}}" title="{{project_name}}"><span class="name">{{project_name}}</span><i class="kenrobot ken-close close-btn"></i></li>';
@@ -9,6 +9,8 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 	//已打开的项目
 	var openedProjects = [];
 	var clipboard;
+
+	var router;
 
 	function init() {
 		$('.project .operation li').on('click', onProjectActionClick);
@@ -24,9 +26,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 		EventManager.bind('guide', 'start', onGuideStart);
 		EventManager.bind('guide', 'stop', onGuideStop);
 
-		$(window).on('hashchange', function(e) {
-			load();	
-		});
+		configRoute();
 
 		$('.switch-view').on('click', onChangeViewClick);
 
@@ -34,7 +34,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 			swfPath: "assets/res/ZeroClipboard.swf"
 		});
 		clipboard = new ZeroClipboard($('.share-dialog .copy-btn'));
-		clipboard.on( 'ready', function(e) {
+		clipboard.on('ready', function(e) {
 			clipboard.on('copy', function(e) {
 				e.clipboardData.setData('text/plain', $('.share-dialog .share-content').text());
 			});
@@ -49,49 +49,57 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 		});
 	}
 
-	function load() {
-		var hash = getHashKeyValue('project');
-		var action = getHashKeyValue('action');
-		if(action) {
-			if(action == "create") {
-				openProject(getDefaultProject());
-				return;
-			}
-		}
-		else if(hash) {
-			getProjectInfoByHash(hash).done(function(projectInfo) {
-				openProject(projectInfo);
-			}).fail(function() {
-				util.message("项目不存在");
-				window.location.hash = "";
-			});
-			return;
-		}
+	function configRoute() {
+		router = Router({
+			'/': onProjectView,
+			'/project/new': onProjectNew,
+			'/project/([0-9a-zA-Z]{6})/?': onProjectView,
+			'.*': onRouteOther, 
+		});
+	}
 
-		if(window.location.hash != "") {
-			window.location.hash = "";
-			return;
-		}
+	function onInitRoute() {
+		router.init("/");
+	}
 
-		if(openedProjects.length > 0) {
-			return;
-		}
+	function onRouteOther() {
+		router.setRoute("/");
+	}
 
-		var projectInfo;
-		if(myProjects.length > 0){
-			var index = 0;
-			var time = myProjects[index].updated_at;
-			for(var i = 1; i < myProjects.length; i++) {
-				if(myProjects[i].updated_at > time) {
-					time = myProjects[i].updated_at;
-					index = i;
+	function onProjectView(hash) {
+		if(!hash) {
+			var projectInfo;
+			if (myProjects.length > 0) {
+				var index = 0;
+				var time = myProjects[index].updated_at;
+				for (var i = 1; i < myProjects.length; i++) {
+					if (myProjects[i].updated_at > time) {
+						time = myProjects[i].updated_at;
+						index = i;
+					}
 				}
+				projectInfo = myProjects[index];
+			} else {
+				projectInfo = getDefaultProject();
 			}
-			projectInfo = myProjects[index];
-		} else {
-			projectInfo = getDefaultProject();
+			openProject(projectInfo);
+			return;
 		}
-		openProject(projectInfo);
+
+		getProjectInfoByHash(hash).done(function(projectInfo) {
+			openProject(projectInfo);
+		}).fail(function() {
+			util.message("项目不存在");
+			onRouteOther();
+		});
+	}
+
+	function onProjectNew() {
+		openProject(getDefaultProject());
+	}
+
+	function load() {
+		onInitRoute();
 	}
 
 	function build(autoClose) {
@@ -100,7 +108,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 		var callback = function() {
 			var info = getCurrentProject();
 			var id = info.id;
-			if(id == 0 || isUuid(id)) {
+			if (id == 0 || isUuid(id)) {
 				showSaveDialog(info);
 				promise.reject();
 
@@ -126,9 +134,9 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 					$('.x-dialog-content', dialog).text(result.message);
 
 					var projectInfo = getProjectById(openedProjects, id);
-					if(result.status == 0) {
+					if (result.status == 0) {
 						url = result.url;
-						if(autoClose) {
+						if (autoClose) {
 							$('.x-dialog-close', dialog).click();
 							setTimeout(function() {
 								promise.resolve(url);
@@ -150,7 +158,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 				});
 			};
 
-			if(info.status == 0) {
+			if (info.status == 0) {
 				doProjectSave(info, false, false, false, false, doBuild);
 			} else {
 				doBuild();
@@ -192,14 +200,16 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 		var projectInfo = getDefaultProject(example.id);
 		projectInfo.project_name = example.name;
 		projectInfo.project_intro = example.name + "示例";
-		projectInfo.project_data.software = {source: example.code};
+		projectInfo.project_data.software = {
+			source: example.code
+		};
 
 		openProject(projectInfo);
 	}
 
 	function isOpen(id, click) {
 		var targetTab = $('.top-tabs > ul li[data-project-id="' + id + '"]');
-		if(click && targetTab.length > 0) {
+		if (click && targetTab.length > 0) {
 			targetTab.click();
 		}
 
@@ -210,7 +220,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 		var doSave = function() {
 			var projectInfo = getCurrentProject();
 			var id = projectInfo.id;
-			if(id == 0 || isUuid(id)) {
+			if (id == 0 || isUuid(id)) {
 				showSaveDialog(projectInfo);
 			} else {
 				doProjectSave(projectInfo);
@@ -226,7 +236,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 		var ul = $('.top-tabs > ul');
 		var targetTab = ul.find('> li[data-project-id="' + projectInfo.id + '"]');
 
-		if(targetTab.length == 0) {
+		if (targetTab.length == 0) {
 			openedProjects.push(projectInfo);
 
 			targetTab = $(tabTemplate.replace(/\{\{project_name\}\}/g, projectInfo.project_name).replace(/\{\{id\}\}/g, projectInfo.id));
@@ -244,7 +254,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 	}
 
 	function getHashKeyValue(name) {
-		var reg = new RegExp("(^|&)" + name + "/([^&]*)(&|$)", "i");
+		var reg = new RegExp("(^|&)" + name + "/\/([^&]*)(&|$)", "i");
 		var r = window.location.hash.substr(1).match(reg);
 
 		return r != null ? unescape(r[2]) : null;
@@ -253,8 +263,8 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 	function getProjectInfoByHash(hash) {
 		var promise = $.Deferred();
 
-		for(var i = 0; i < myProjects.length; i++) {
-			if(myProjects[i].hash == hash) {
+		for (var i = 0; i < myProjects.length; i++) {
+			if (myProjects[i].hash == hash) {
 				return promise.resolve(myProjects[i]);
 			}
 		}
@@ -267,20 +277,20 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 	}
 
 	function convertProject(projectInfo) {
-		if(typeof projectInfo.project_data == "string") {
+		if (typeof projectInfo.project_data == "string") {
 			try {
 				projectInfo.project_data = JSON.parse(projectInfo.project_data);
-			} catch(ex) {
+			} catch (ex) {
 				console.log(ex);
 				projectInfo.project_data = {};
 			}
 		}
 
-		if(typeof projectInfo.created_at == "string") {
+		if (typeof projectInfo.created_at == "string") {
 			projectInfo.created_at = new Date(projectInfo.created_at);
 		}
 
-		if(typeof projectInfo.updated_at == "string") {
+		if (typeof projectInfo.updated_at == "string") {
 			projectInfo.updated_at = new Date(projectInfo.updated_at);
 		}
 
@@ -289,14 +299,14 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 
 	function addProject(projects) {
 		var ul = $(".project .list ul");
-		for(var i = 0; i < projects.length; i++) {
+		for (var i = 0; i < projects.length; i++) {
 			var projectInfo = projects[i];
 			projectInfo = convertProject(projectInfo);
 
-			if(projectInfo.status === undefined) {
+			if (projectInfo.status === undefined) {
 				projectInfo.status = 1;
 			}
-			
+
 			ul.append(getProjectHtml(projectInfo));
 			myProjects.push(projectInfo);
 		}
@@ -311,7 +321,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 
 		var projectInfo = getCurrentProject();
 		var user_id = user.getUserId();
-		if(projectInfo.user_id > 0 && projectInfo.user_id != user_id) {
+		if (projectInfo.user_id > 0 && projectInfo.user_id != user_id) {
 			showCopyDialog(function() {
 				showSaveDialog(projectInfo, true, true);
 			});
@@ -322,7 +332,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 	}
 
 	function onDownload() {
-		build(true).done(function(url){
+		build(true).done(function(url) {
 			window.location.href = url;
 		});
 	}
@@ -332,9 +342,9 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 	}
 
 	function onViewChange(view) {
-		if(view == "hardware") {
+		if (view == "hardware") {
 			var boardType = board.getData().board_type;
-			if(boardType != "uno") {
+			if (boardType != "uno") {
 				util.message("硬件设计目前只支持uno");
 				return;
 			}
@@ -349,7 +359,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 	function onShare() {
 		var doShare = function() {
 			var projectInfo = getCurrentProject();
-			if(projectInfo.public_type != 2) {
+			if (projectInfo.public_type != 2) {
 				util.message("你的项目未完全公开，不能分享");
 				return;
 			}
@@ -358,13 +368,13 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 			var project_name = projectInfo.project_name;
 			var project_url = "http://" + window.location.host + "/#project/" + projectInfo.hash;
 			var content = shareTemplate.replace(/\{\{name\}\}/g, user.getUserName())
-									   .replace(/\{\{project_name\}\}/g, project_name)
-									   .replace(/\{\{project_url\}\}/g, project_url);
-									   
+				.replace(/\{\{project_name\}\}/g, project_name)
+				.replace(/\{\{project_url\}\}/g, project_url);
+
 			var dialog = util.dialog(".share-dialog");
 			$('.share-content', dialog).text(content);
 		};
-		
+
 		checkOwn().done(doShare);
 	}
 
@@ -389,7 +399,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 	function onProjectActionClick(e) {
 		var li = $(this);
 		var action = li.data("action");
-		switch(action) {
+		switch (action) {
 			case "new":
 				onProjectNewClick();
 				break;
@@ -411,7 +421,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 	function onProjectEditClick(e) {
 		var id = $('.project .list li.active').data('project-id');
 		var projectInfo = getProjectById(myProjects, id);
-		if(!projectInfo) {
+		if (!projectInfo) {
 			return;
 		}
 
@@ -423,7 +433,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 	function onProjectDeleteClick(e) {
 		var id = $('.project .list li.active').data('project-id');
 		var projectInfo = getProjectById(myProjects, id);
-		if(!projectInfo) {
+		if (!projectInfo) {
 			return;
 		}
 
@@ -439,11 +449,11 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 			$('.name', dialog).text(projectInfo.project_name);
 		}
 
-		if(id == 0) {
+		if (id == 0) {
 			showDeleteDialog();
 			return;
 		}
-		
+
 		user.authCheck().then(showDeleteDialog, user.showLoginDialog);
 	}
 
@@ -451,7 +461,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 		sidebar.hide();
 
 		var text = isNew ? "创建项目" : "保存项目";
-		
+
 		var dialog = util.dialog('.save-dialog');
 		var form = $('form', dialog);
 		$('input[name="name"]', form).val(projectInfo.project_name);
@@ -468,12 +478,12 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 		var id = projectInfo.id;
 		var project;
 		showMessage = showMessage != false;
-		if(isEdit) {
+		if (isEdit) {
 			var dialog = $('.save-dialog');
 			var form = $('form', dialog);
 			var project_name = $('input[name="name"]', form).val();
 			project = {
-				id: (isCopy || isUuid(id)) ? 0: id,
+				id: (isCopy || isUuid(id)) ? 0 : id,
 				project_name: project_name,
 				user_id: user.getUserId(),
 				project_intro: $('textarea[name="intro"]', form).val(),
@@ -484,13 +494,13 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 			$('.x-dialog-close', dialog).click();
 		} else {
 			project = {
-				id: isCopy ? 0: id,
+				id: isCopy ? 0 : id,
 				user_id: user.getUserId(),
 				project_data: JSON.stringify(isNew ? {} : getProjectData()),
 			}
 		}
-		
-		if(project.project_data.length > config.project.maxCodeLength) {
+
+		if (project.project_data.length > config.project.maxCodeLength) {
 			util.message("代码太长");
 			return;
 		}
@@ -499,8 +509,8 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 
 		projectApi.save(project).done(function(result) {
 			showMessage && util.message(result.message);
-			if(result.status == 0) {
-				if(isEdit) {
+			if (result.status == 0) {
+				if (isEdit) {
 					projectApi.get(result.data.project_id).done(function(res) {
 						doUpdateProject(id, isCopy, res);
 						afterSaveProject();
@@ -520,7 +530,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 	}
 
 	function doUpdateProject(id, isCopy, result) {
-		if(result.status != 0) {
+		if (result.status != 0) {
 			util.message(result.message);
 			return;
 		}
@@ -530,12 +540,12 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 		convertProject(projectInfo);
 
 		var list = $('.project .list > ul');
-		if(id == 0 || isUuid(id) || isCopy) {
+		if (id == 0 || isUuid(id) || isCopy) {
 			//new
 			list.find('> li[data-project-id="' + id + '"]').remove();
 			$('.top-tabs > ul > li[data-project-id="' + id + '"]').remove();
 			deleteProjectById(openedProjects, id);
-			
+
 			addProject([projectInfo]);
 			openProject(projectInfo);
 		} else {
@@ -559,7 +569,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 			deleteProjectById(myProjects, id);
 			deleteProjectById(openedProjects, id);
 
-			if(openedProjects.length == 0) {
+			if (openedProjects.length == 0) {
 				var projectInfo = getDefaultProject();
 				openProject(getDefaultProject());
 			} else {
@@ -568,12 +578,12 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 			}
 		};
 
-		if(id == 0) {
+		if (id == 0) {
 			doDelete();
 			return;
 		}
 
-		projectApi.remove(id).done(function(result){
+		projectApi.remove(id).done(function(result) {
 			util.message(result.message);
 			if (result.status == 0) {
 				doDelete();
@@ -593,9 +603,9 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 		var view = li.data('view');
 		var active = li.hasClass("active");
 
-		if(!active) {
+		if (!active) {
 			var currentLi = li.parent().find("li.active");
-			if(currentLi.length > 0) {
+			if (currentLi.length > 0) {
 				var currentId = currentLi.data("project-id");
 				doSaveView(currentId);
 				currentLi.removeClass("active");
@@ -619,7 +629,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 		var project_data = projectInfo.project_data
 
 		view = view || "software";
-		if(view == "hardware") {
+		if (view == "hardware") {
 			project_data.software = software.getData();
 			hardware.setData(project_data.hardware);
 			$('.switch-view').data('view', 'software');
@@ -647,27 +657,27 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 	function onTabCloseClick(e) {
 		var li = $(this).parent();
 		var id = li.data('project-id');
-		if(li.siblings().length == 0) {
+		if (li.siblings().length == 0) {
 			return false;
 		}
 
 		var active = li.hasClass("active");
-		
+
 		var index = li.index() - 1;
 		index = index < 0 ? 0 : index;
 
 		doSaveView(id);
 		li.remove();
-		for(var i = 0; i < openedProjects.length; i++) {
-			if(openedProjects[i].id == id) {
+		for (var i = 0; i < openedProjects.length; i++) {
+			if (openedProjects[i].id == id) {
 				openedProjects.splice(i, 1);
 				break;
 			}
 		}
 
-		if(active) {
+		if (active) {
 			var list = $('.top-tabs > ul > li');
-			if(list.length == 0) {
+			if (list.length == 0) {
 				$('.main-tabs .tab').removeClass("active");
 			} else {
 				setTimeout(function() {
@@ -675,7 +685,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 				}, 10);
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -689,7 +699,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 
 	function getProjectHtml(projectInfo) {
 		return projectTemplate.replace(/\{\{project_name\}\}/g, projectInfo.project_name)
-							  .replace(/\{\{id\}\}/g, projectInfo.id);
+			.replace(/\{\{id\}\}/g, projectInfo.id);
 	}
 
 	function getDefaultProject(id) {
@@ -707,9 +717,9 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 
 	function getProjectIndex(projects, id) {
 		var index = -1;
-		for(var i = 0; i < projects.length; i++){
+		for (var i = 0; i < projects.length; i++) {
 			var info = projects[i];
-			if(info.id == id) {
+			if (info.id == id) {
 				index = i;
 				break;
 			}
@@ -718,18 +728,18 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 	}
 
 	function getProjectById(projects, id) {
-		for(var i = 0; i < projects.length; i++){
+		for (var i = 0; i < projects.length; i++) {
 			var info = projects[i];
-			if(info.id == id) {
+			if (info.id == id) {
 				return info;
 			}
 		}
 	}
 
 	function deleteProjectById(projects, id) {
-		for(var i = 0; i < projects.length; i++){
+		for (var i = 0; i < projects.length; i++) {
 			var info = projects[i];
-			if(info.id == id) {
+			if (info.id == id) {
 				projects.splice(i, 1);
 				break;
 			}
@@ -741,26 +751,26 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 	}
 
 	function onGuideStart(demoId) {
-		if(demoId == 1) {
+		if (demoId == 1) {
 			afterSaveProject = meld.after(afterSaveProject, function() {
 				var index = guide.getStep();
-				if(index == 1) {
+				if (index == 1) {
 					guide.nextStep();
 				}
 			});
-		} else if(demoId == 2) {
+		} else if (demoId == 2) {
 			afterSaveProject = meld.after(afterSaveProject, function() {
 				var index = guide.getStep();
-				if(index == 0 || index == 4) {
+				if (index == 0 || index == 4) {
 					guide.nextStep();
 				}
 			});
 
 			doSwitchView = meld.after(doSwitchView, function(view) {
 				var index = guide.getStep();
-				if(index == 1 && view == "hardware") {
+				if (index == 1 && view == "hardware") {
 					guide.nextStep();
-				} else if(index == 3 && view == "software") {
+				} else if (index == 3 && view == "software") {
 					guide.nextStep();
 				}
 			});
@@ -768,9 +778,9 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', './EventManager'
 	}
 
 	function onGuideStop(demoId) {
-		if(demoId == 1) {
+		if (demoId == 1) {
 			afterSaveProject = util.aspectReset(afterSaveProject);
-		} else if(demoId == 2) {
+		} else if (demoId == 2) {
 			afterSaveProject = util.aspectReset(afterSaveProject);
 			doSwitchView = util.aspectReset(doSwitchView);
 		}
