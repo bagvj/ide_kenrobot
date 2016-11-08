@@ -32,6 +32,12 @@ define(['vendor/jquery', './editor'], function($1, editor) {
 			case "format":
 				editor.format();
 				break;
+			case "redo":
+				editor.redo();
+				break;
+			case "undo":
+				editor.undo();
+				break;
 		}
 	}
 

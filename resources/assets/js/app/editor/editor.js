@@ -105,11 +105,21 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/mode-arduino',
 		}
 	}
 
+	function redo() {
+		editor.redo();
+	}
+
+	function undo() {
+		editor.undo();
+	}
+
 	return {
 		init: init,
 
 		getCode: getCode,
 		setCode: setCode,
 		format: format,
+		redo: redo,
+		undo: undo,
 	}
 });
