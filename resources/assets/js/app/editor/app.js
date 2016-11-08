@@ -11,13 +11,18 @@ define(['vendor/jquery', './editor'], function($1, editor) {
 			return;
 		}
 
-		console.log(e.data);
-		var data = e.data.split('::');
-		var message = data[0];
-		var args = JSON.parse(data[1] || "{}");
-		switch(message) {
+		var action, args;
+		try {
+			var message = JSON.parse(e.data);
+			action = message.action;
+			args = message.args || {};
+		} catch (ex) {
+			return;
+		}
+
+		switch(action) {
 			case "getCode":
-				sendMessage(e.source, message, {
+				sendMessage(e.source, action, {
 					code: editor.getCode()
 				});
 				break;
@@ -27,8 +32,12 @@ define(['vendor/jquery', './editor'], function($1, editor) {
 		}
 	}
 
-	function sendMessage(win, message, args) {
-		win.postMessage(message + "::" + JSON.stringify(args || {}), "*");
+	function sendMessage(win, action, args) {
+		var message = {
+			action: action,
+			args: args || {},
+		};
+		win.postMessage(JSON.stringify(message), "*");
 	}
 
 	return {
