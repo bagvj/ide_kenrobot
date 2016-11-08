@@ -139,7 +139,7 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 
 	function format() {
 		// var source = js_beautify(editor.getValue());
 		// editor.setValue(source, 1);
-		var placeholder = "codebender_reformat_cursor";
+		var placeholder = "kenrobot_reformat_cursor";
 		var old_position = editor.getCursorPosition();
 		var old_code_lines = editor.getSession().getValue().split("\n");
 		old_code_lines[old_position.row] = old_code_lines[old_position.row].slice(0, old_position.column) + placeholder + old_code_lines[old_position.row].slice(old_position.column);

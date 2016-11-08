@@ -29,6 +29,9 @@ define(['vendor/jquery', './editor'], function($1, editor) {
 			case "setCode":
 				editor.setCode(args.code);
 				break;
+			case "format":
+				editor.format();
+				break;
 		}
 	}
 
