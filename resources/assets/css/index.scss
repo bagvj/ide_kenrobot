@@ -4,28 +4,28 @@
 @import "vendor/_terminal.scss";
 @import "vendor/_kenrobot.scss";
 
-@import "base/_reset.scss";
+@import "app/common/base/_reset.scss";
 
-@import "helper/_helper.scss";
+@import "app/common/helper/_helper.scss";
 
-@import "layout/_layout.scss";
-@import "layout/_sidebar.scss";
-@import "layout/_right-bar.scss";
-@import "layout/_hardware.scss";
-@import "layout/_software.scss";
-@import "layout/_logcat.scss";
-@import "layout/_serial-assitant.scss";
+@import "app/index/layout/_layout.scss";
+@import "app/index/layout/_sidebar.scss";
+@import "app/index/layout/_right-bar.scss";
+@import "app/index/layout/_hardware.scss";
+@import "app/index/layout/_software.scss";
+@import "app/index/layout/_logcat.scss";
+@import "app/index/layout/_serial-assitant.scss";
 
-@import "component/_x-widget.scss";
-@import "component/_share-dialog.scss";
-@import "component/_login-dialog.scss";
-@import "component/_save-dialog.scss";
-@import "component/_install-dialog.scss";
-@import "component/_arduino-driver-dialog.scss";
-@import "component/_burn-dialog.scss";
-@import "component/_interpreter-dialog.scss";
-@import "component/_setting-dialog.scss";
+@import "app/index/component/_x-widget.scss";
+@import "app/index/component/_share-dialog.scss";
+@import "app/index/component/_login-dialog.scss";
+@import "app/index/component/_save-dialog.scss";
+@import "app/index/component/_install-dialog.scss";
+@import "app/index/component/_arduino-driver-dialog.scss";
+@import "app/index/component/_burn-dialog.scss";
+@import "app/index/component/_interpreter-dialog.scss";
+@import "app/index/component/_setting-dialog.scss";
 
-@import "component/_guide.scss";
+@import "app/index/component/_guide.scss";
 
-@import "theme/_white.scss";
+@import "app/index/theme/_white.scss";

@@ -45,14 +45,8 @@ class HomeController extends Controller {
 		return view("index", compact('user', 'mainpage', 'qrcodeurl', 'register_url', 'find_password_url', 'key', 'boards', 'components', 'libraries', 'exampleGroups', 'has_visit', 'setting'));
 	}
 
-	public function config() {
-		$config = array(
-			'libraries' => Repository::getLibraries(true),
-			'boards' => Repository::getBoards(true, true),
-			'components' => Repository::getComponents(true, true),
-		);
-		
-		return collect($config)->toJson();
+	public function editor(Request $request) {
+		return view("editor");
 	}
 
 	private function getQrcodeurl($key = '') {

@@ -11,6 +11,7 @@
 |
  */
 Route::get('/', 'HomeController@index');
+Route::get('/editor', 'HomeController@editor');
 Route::get('/logout', 'Auth\AuthController@getLogout2');
 Route::get('/project/download/{hash}/{ext?}', 'ProjectController@downloadProject')->where('hash', '[0-9a-zA-Z]{6}');
 
@@ -40,5 +41,3 @@ Route::post('/api/comment/delete', 'CommentController@remove');
 Route::post('/api/auth/check', 'Auth\WebAuthController@check');
 Route::post('/api/auth/login', 'Auth\WebAuthController@snsPostLogin');
 Route::post('/api/auth/login/weixin', 'Auth\WebAuthController@weixinlogin');
-
-Route::any('/demo/forumapi/projectinfo', 'ForumApiController@projectInfo');

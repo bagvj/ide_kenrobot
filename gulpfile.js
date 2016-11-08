@@ -59,6 +59,10 @@ gulp.task('js', ['clean-js', 'copy-env'], function() {
 		gulp.src(SRC + 'js/index.js')
 			.pipe(requirejsOptimize())
 			.pipe(gulp.dest(jsDst));
+
+		gulp.src(SRC + 'js/editor.js')
+			.pipe(requirejsOptimize())
+			.pipe(gulp.dest(jsDst));
 	} else {
 		return gulp.src(jsSrc)
 			.pipe(gulp.dest(jsDst));
@@ -67,7 +71,7 @@ gulp.task('js', ['clean-js', 'copy-env'], function() {
 
 // 样式处理
 gulp.task('css', function() {
-	var cssSrc = SRC + 'css/index.scss',
+	var cssSrc = SRC + 'css/*.scss',
 		cssDst = DIST + 'css/';
 
 	return sass(cssSrc, {style: 'expanded'})
