@@ -53,7 +53,11 @@ class HomeController extends Controller {
 			$option = $request->input($name);
 			isset($option) && ($options[$name] = $option);
 		}
-		$options = json_encode($options, JSON_FORCE_OBJECT);
+		$default_options = array(
+			"init_code" => true,
+			"theme" => "default",
+		);
+		$options = json_encode(array_merge($default_options, $options), JSON_FORCE_OBJECT);
 
 		return view("editor", compact("options"));
 	}
