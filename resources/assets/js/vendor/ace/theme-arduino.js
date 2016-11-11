@@ -11,8 +11,8 @@ width: 1px;\
 background: #555651\
 }\
 .ace-arduino {\
-background-color: #f6f6f6;\
-color: #333;\
+background-color: #eaeaea;\
+color: #515151;\
 }\
 .ace-arduino .ace_cursor {\
 color: #515151;\
@@ -31,7 +31,7 @@ margin: -1px 0 0 -1px;\
 border: 1px solid #49483E\
 }\
 .ace-arduino .ace_marker-layer .ace_active-line {\
-background: #f3efc0;\
+background: #e1e4e8;\
 }\
 .ace-arduino .ace_gutter-active-line {\
 background-color: transparent;\
@@ -46,11 +46,11 @@ color: #52524d\
 .ace-arduino .ace_keyword,\
 .ace-arduino .ace_meta.ace_tag,\
 .ace-arduino .ace_storage {\
-color: #f66f6f;\
+color: #f23d23;\
 }\
 .ace-arduino .ace_punctuation,\
 .ace-arduino .ace_punctuation.ace_tag {\
-color: #333;\
+color: #515151;\
 }\
 .ace-arduino .ace_constant.ace_character,\
 .ace-arduino .ace_constant.ace_language {\
@@ -81,7 +81,7 @@ border-color: #F8F8F2\
 .ace-arduino .ace_storage.ace_type,\
 .ace-arduino .ace_support.ace_class,\
 .ace-arduino .ace_support.ace_type {\
-color: #6f9fc5;\
+color: #12a9df;\
 }\
 .ace-arduino .ace_entity.ace_name.ace_function,\
 .ace-arduino .ace_entity.ace_other,\
@@ -93,16 +93,20 @@ color: #A6E22E\
 color: #FD971F\
 }\
 .ace-arduino .ace_string {\
-color: #eaa801;;\
+color: #ffa24d;\
 }\
 .ace-arduino .ace_comment {\
-color: #94a5a6;\
+color: #999;\
 }\
 .ace-arduino .ace_indent-guide {\
 background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWPQ0FD0ZXBzd/wPAAjVAoxeSgNeAAAAAElFTkSuQmCC) right repeat-y\
 }\
 .ace_gutter-cell {\
 	padding-left: 19px;\
+}\
+.ace_editor.ace_autocomplete {\
+    font-size: 14px;\
+    line-height: 20px;\
 }\
 .ace_editor.ace_autocomplete .ace_marker-layer .ace_active-line {\
     background-color: #02979d;\
@@ -114,11 +118,11 @@ background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgb
 	border: none;\
 }\
 .ace_editor.ace_autocomplete .ace_completion-highlight {\
-    color: #12a9df;\
+    color: #323620;\
     text-shadow: none;\
 }\
 .ace_editor.ace_autocomplete .ace_selected .ace_completion-highlight {\
-  color: #42d3fb;\
+  color: #32e620;\
 }\
 .ace_editor.ace_autocomplete .ace_line-hover {\
     border: none;\
