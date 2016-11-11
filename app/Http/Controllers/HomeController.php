@@ -46,7 +46,16 @@ class HomeController extends Controller {
 	}
 
 	public function editor(Request $request) {
-		return view("editor");
+		$option_names = array("theme", "author", "init_code");
+		$options = array();
+
+		foreach ($option_names as $name) {
+			$option = $request->input($name);
+			isset($option) && ($options[$name] = $option);
+		}
+		$options = json_encode($options, JSON_FORCE_OBJECT);
+
+		return view("editor", compact("options"));
 	}
 
 	private function getQrcodeurl($key = '') {

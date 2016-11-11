@@ -9,7 +9,7 @@
 <body>
 	<div class="main">
 		<div class="content">
-			<div class="ken-editor"></div>
+			<div class="ken-editor" data-options='{{$options}}'></div>
 		</div>
 	</div>
 </body>

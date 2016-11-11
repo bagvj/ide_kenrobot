@@ -2,8 +2,14 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/mode-arduino',
 	var editor;
 	var js_format_string = Module.cwrap("js_format_string", "string", ["string"]);
 
-	function init(container) {
+	var docCommentTemplate = '/**\n * 日期: {{date}}\n * 作者: {{author}}\n * 描述: \n */\n';
+	var initCode = "void setup()\n{\n    \n}\n\nvoid loop()\n{\n    \n}\n";
+	var falseValues = ["", false, "0", 0, undefined, null, "false"];
+
+	function init(container, options) {
 		editor = ace.edit(container);
+		maskHotKey();
+
 		editor.setOptions({
 			enableSnippets: true,
 			enableBasicAutocompletion: true,
@@ -11,9 +17,18 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/mode-arduino',
 		});
 		editor.setShowPrintMargin(false);
 		editor.$blockScrolling = Infinity;
-		editor.setTheme("ace/theme/default");
 		editor.session.setMode("ace/mode/arduino");
 
+		editor.setTheme("ace/theme/" + (options.theme || "default"));
+
+		var docCommentCode = docCommentTemplate.replace(/\{\{author\}\}/, options.author || "")
+			.replace(/\{\{date\}\}/, formatDate(new Date(), "yyyy/MM/dd"));
+		var code = docCommentCode + (isFalse(options.init_code, true) ? "" : "\n" + initCode);
+
+		editor.setValue(code, 1);
+	}
+
+	function maskHotKey() {
 		editor.commands.addCommands([{
 			name: "saveProject",
 			bindKey: {
@@ -79,6 +94,39 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/mode-arduino',
 		}]);
 	}
 
+	function formatDate(date, format) {
+		if (typeof date == "number") {
+			date = new Date(date);
+		}
+		var o = {
+			"M+": date.getMonth() + 1,
+			"d+": date.getDate(),
+			"h+": date.getHours() % 12 == 0 ? 12 : date.getHours() % 12,
+			"H+": date.getHours(),
+			"m+": date.getMinutes(),
+			"s+": date.getSeconds(),
+			"q+": Math.floor((date.getMonth() + 3) / 3),
+			"S": date.getMilliseconds()
+		};
+		if (/(y+)/.test(format)) {
+			format = format.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+		}
+		if (/(E+)/.test(format)) {
+			var week = ["日", "一", "二", "三", "四", "五", "六"];
+			format = format.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "星期" : "周") : "") + week[date.getDay()]);
+		}
+		for (var k in o) {
+			if (new RegExp("(" + k + ")").test(format)) {
+				format = format.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+			}
+		}
+		return format;
+	}
+
+	function isFalse(value, defaultValue) {
+		return value === undefined ? !defaultValue : falseValues.indexOf(value) >= 0;
+	}
+
 	function getCode() {
 		return editor.getValue();
 	}
@@ -113,6 +161,10 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/mode-arduino',
 		editor.undo();
 	}
 
+	function setTheme(theme) {
+		editor.setTheme("ace/theme/" + theme);
+	}
+
 	return {
 		init: init,
 
@@ -121,5 +173,6 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/mode-arduino',
 		format: format,
 		redo: redo,
 		undo: undo,
+		setTheme: setTheme,
 	}
 });

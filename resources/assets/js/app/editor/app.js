@@ -1,7 +1,14 @@
-define(['vendor/jquery', './editor'], function($1, editor) {
+define(['./editor'], function(editor) {
 
 	function init() {
-		editor.init($(".ken-editor")[0]);
+		var editorDom = document.querySelector(".ken-editor");
+		var options;
+		try {
+			options = JSON.parse(editorDom.dataset.options);
+		} catch(ex) {
+			options = {};
+		}
+		editor.init(editorDom, options);
 
 		window.addEventListener("message", onWindowMessage);
 	}
@@ -37,6 +44,9 @@ define(['vendor/jquery', './editor'], function($1, editor) {
 				break;
 			case "undo":
 				editor.undo();
+				break;
+			case "setTheme":
+				editor.setTheme(args.theme);
 				break;
 		}
 	}
