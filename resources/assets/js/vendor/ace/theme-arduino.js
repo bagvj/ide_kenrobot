@@ -3,8 +3,8 @@ ace.define("ace/theme/arduino",["require","exports","module","ace/lib/dom"], fun
 exports.iswhite = true;
 exports.cssClass = "ace-arduino";
 exports.cssText = ".ace-arduino .ace_gutter {\
-background: #e1e4e8;\
-color: #979797;\
+background: #dedfe0;\
+color: #333;\
 }\
 .ace-arduino .ace_print-margin {\
 width: 1px;\
@@ -18,7 +18,7 @@ color: #333;\
 color: #515151;\
 }\
 .ace-arduino .ace_marker-layer .ace_selection {\
-background-color: rgba(0, 154, 255, 0.3)\
+background-color: rgba(255, 180, 72, 0.2);\
 }\
 .ace-arduino.ace_multiselect .ace_selection.ace_start {\
 box-shadow: 0 0 3px 0px #534F59;\
@@ -105,7 +105,7 @@ background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgb
 	padding-left: 19px;\
 }\
 .ace_editor.ace_autocomplete .ace_marker-layer .ace_active-line {\
-    background-color: #0088ff;\
+    background-color: #02979d;\
 }\
 .ace_editor.ace_autocomplete .ace_line.ace_selected {\
     color: white;\
@@ -123,7 +123,7 @@ background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgb
 .ace_editor.ace_autocomplete .ace_line-hover {\
     border: none;\
     margin-top: 0;\
-    background: #f6f6f6;\
+    background: #dfeafa;\
 }\
 .ace_rightAlignedText {\
     display: none;\
