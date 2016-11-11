@@ -101,55 +101,55 @@ color: #999;\
 .ace-arduino .ace_indent-guide {\
 background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWPQ0FD0ZXBzd/wPAAjVAoxeSgNeAAAAAElFTkSuQmCC) right repeat-y\
 }\
-.ace_gutter-cell {\
+.ace-arduino .ace_gutter-cell {\
 	padding-left: 19px;\
 }\
-.ace_editor.ace_autocomplete {\
+.ace-arduino.ace_editor.ace_autocomplete {\
     font-size: 14px;\
     line-height: 20px;\
 }\
-.ace_editor.ace_autocomplete .ace_marker-layer .ace_active-line {\
+.ace-arduino.ace_editor.ace_autocomplete .ace_marker-layer .ace_active-line {\
     background-color: #02979d;\
 }\
-.ace_editor.ace_autocomplete .ace_line.ace_selected {\
+.ace-arduino.ace_editor.ace_autocomplete .ace_line.ace_selected {\
     color: white;\
 }\
-.ace_editor.ace_autocomplete {\
+.ace-arduino.ace_editor.ace_autocomplete {\
 	border: none;\
 }\
-.ace_editor.ace_autocomplete .ace_completion-highlight {\
-    color: #323620;\
+.ace-arduino.ace_editor.ace_autocomplete .ace_completion-highlight {\
+    color: #32e620;\
     text-shadow: none;\
 }\
-.ace_editor.ace_autocomplete .ace_selected .ace_completion-highlight {\
+.ace-arduino.ace_editor.ace_autocomplete .ace_selected .ace_completion-highlight {\
   color: #32e620;\
 }\
-.ace_editor.ace_autocomplete .ace_line-hover {\
+.ace-arduino.ace_editor.ace_autocomplete .ace_line-hover {\
     border: none;\
     margin-top: 0;\
     background: #dfeafa;\
 }\
-.ace_rightAlignedText {\
+.ace-arduino .ace_rightAlignedText {\
     display: none;\
 }\
-.ace_scrollbar.ace_scrollbar-v::-webkit-scrollbar-track {\
+.ace-arduino .ace_scrollbar.ace_scrollbar-v::-webkit-scrollbar-track {\
   -webkit-box-shadow: none;\
   background-color: #DFE1E5;\
 }\
-.ace_scrollbar.ace_scrollbar-v::-webkit-scrollbar {\
+.ace-arduino .ace_scrollbar.ace_scrollbar-v::-webkit-scrollbar {\
   background-color: #DFE1E5;\
 }\
-.ace_scrollbar.ace_scrollbar-v::-webkit-scrollbar-thumb {\
+.ace-arduino .ace_scrollbar.ace_scrollbar-v::-webkit-scrollbar-thumb {\
   background-color: #c1c1c1;\
 }\
-.ace_scrollbar.ace_scrollbar-h::-webkit-scrollbar-track {\
+.ace-arduino .ace_scrollbar.ace_scrollbar-h::-webkit-scrollbar-track {\
   -webkit-box-shadow: none;\
   background-color: #DFE1E5;\
 }\
-.ace_scrollbar.ace_scrollbar-h::-webkit-scrollbar {\
+.ace-arduino .ace_scrollbar.ace_scrollbar-h::-webkit-scrollbar {\
   background-color: #DFE1E5;\
 }\
-.ace_scrollbar.ace_scrollbar-h::-webkit-scrollbar-thumb {\
+.ace-arduino .ace_scrollbar.ace_scrollbar-h::-webkit-scrollbar-thumb {\
   background-color: #c1c1c1;\
 }\
 ";
