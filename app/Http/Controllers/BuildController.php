@@ -29,7 +29,7 @@ class BuildController extends Controller {
 		fwrite($f, $code);
 		fclose($f);
 
-		$cmd = "sudo sh ../app/Build/build.sh $path $board_type $hash 2>&1";
+		$cmd = "sudo sh ../app/Shell/build.sh $path $board_type $hash 2>&1";
 		$output = array();
 		exec($cmd, $output, $status);
 		if ($status != 0) {
