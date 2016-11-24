@@ -28,11 +28,13 @@ abstract class Controller extends BaseController
         if (isset($this->user)) {
             return $this->user;
         }
+        
         if ($userinfo['status'] == 0) {
             $this->user = [
                 'name' => $userinfo['data']['base_nickname'],
                 'avatar_url' => $userinfo['data']['base_avatar'],
                 'uid' => $userinfo['data']['user_id'],
+                'user_id' => $userinfo['data']['user_id'],
             ];
             return $this->user;
         }

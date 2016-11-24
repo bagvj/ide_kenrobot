@@ -45,7 +45,9 @@ define(['vendor/jquery', './user'], function(_, user) {
 	function build(id) {
 		return $.ajax({
 			type: "POST",
+			// url: "/api/project/build",
 			url: "/api/project/build",
+
 			dataType: "json",
 			data: {
 				id: id,

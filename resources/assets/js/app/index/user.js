@@ -12,7 +12,7 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 	}
 
 	function getUserId() {
-		return userInfo ? userInfo.id : 0;
+		return userInfo ? userInfo.uid : 0;
 	}
 
 	function getUserInfo() {
@@ -27,7 +27,7 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 		var promise = $.Deferred();
 		userApi.authCheck().done(function(result){
 			if(result.status == 0) {
-				userInfo = result.user;
+				userInfo = result.data;
 				promise.resolve();
 			} else {
 				userInfo = null;

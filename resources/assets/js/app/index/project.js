@@ -321,7 +321,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', 'vendor/director
 
 		var projectInfo = getCurrentProject();
 		var user_id = user.getUserId();
-		if (projectInfo.user_id > 0 && projectInfo.user_id != user_id) {
+		if (projectInfo.user_id > 0 && projectInfo.uid != user_id) {
 			showCopyDialog(function() {
 				showSaveDialog(projectInfo, true, true);
 			});
