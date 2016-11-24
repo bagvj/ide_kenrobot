@@ -25,7 +25,7 @@ class HomeController extends Controller {
 		$qrcodeurl = $this->getQrcodeurl($qrcode);
 		$key = 'qrscene_'.$qrcode;
 		Session::put('key',$key);
-		$mainpage = config('navigation.master.mainpage');
+		$mainpage = config('platform.url.mainpage');
 
 		$register_url = config('platform.url.register').'&redirect_uri='.urlencode($request->url());
 		$find_password_url = config('platform.url.find_password');
