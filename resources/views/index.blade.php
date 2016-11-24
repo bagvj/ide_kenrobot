@@ -112,10 +112,10 @@
 							</div>
 							<div class="user-info">
 								<a class="photo" href="{{$mainpage}}" target="_blank">
-									<img src="{{$user->avatar_url or asset('assets/image/default_portrait.png')}}" />
+									<img src="{{$user['avatar_url'] or asset('assets/image/default_portrait.png')}}" />
 								</a>
 								<div class="welcome">
-									<span class="name">{{isset($user) ? $user->name : ''}}</span><i class="kenrobot ken-triangle-down arrow"></i>
+									<span class="name">{{isset($user) ? $user['name'] : ''}}</span><i class="kenrobot ken-triangle-down arrow"></i>
 								</div>
 							</div>
 							<div class="user-menu">

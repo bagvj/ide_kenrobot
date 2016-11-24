@@ -13,17 +13,13 @@ use Session;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Project\Repository;
 
+
 class HomeController extends Controller {
 
-	public function __construct()
-	{
-		$this->middleware('snspassport');
-	}
-
 	public function index(Request $request) {
-		if (Auth::check()) {
-			$user = Auth::user();
-		}
+
+		$user = $this->currentUser();
+		
 
 		$qrcode = rand(70000,80000);
 		$qrcodeurl = $this->getQrcodeurl($qrcode);

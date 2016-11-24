@@ -12,7 +12,7 @@
  */
 Route::get('/', 'HomeController@index');
 Route::get('/editor', 'HomeController@editor');
-Route::get('/logout', 'Auth\AuthController@getLogout2');
+// Route::get('/logout', 'Auth\AuthController@getLogout2');
 Route::get('/project/download/{hash}/{ext?}', 'ProjectController@downloadProject')->where('hash', '[0-9a-zA-Z]{6}');
 
 // 配置API
@@ -38,6 +38,11 @@ Route::post('/api/comment/get', 'CommentController@get');
 Route::post('/api/comment/delete', 'CommentController@remove');
 
 // 登录验证API
-Route::post('/api/auth/check', 'Auth\WebAuthController@check');
-Route::post('/api/auth/login', 'Auth\WebAuthController@snsPostLogin');
-Route::post('/api/auth/login/weixin', 'Auth\WebAuthController@weixinlogin');
+// Route::post('/api/auth/check', 'Auth\WebAuthController@check');
+// Route::post('/api/auth/login', 'Auth\WebAuthController@snsPostLogin');
+// Route::post('/api/auth/login/weixin', 'Auth\WebAuthController@weixinlogin');
+Route::any('/api/auth/attach', 'AuthController@attach');
+Route::any('/api/auth/login', 'AuthController@login');
+Route::any('/api/auth/check', 'AuthController@userinfo');
+Route::any('/logout', 'AuthController@logout');
+Route::any('/api/auth/login/weixin', 'AuthController@weixinlogin');
