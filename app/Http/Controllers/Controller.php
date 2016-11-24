@@ -12,7 +12,11 @@ use App\WebAuth\Broker;
 abstract class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
     protected $user;
+
+
+
     public function apiReturn($status, $message, $data = null)
     {
         if (!isset($data)) {
@@ -39,5 +43,17 @@ abstract class Controller extends BaseController
             return $this->user;
         }
         return null;
+    }
+
+
+    public function attachSession()
+    {
+        $broker = new Broker();
+        if ($broker->isAttached()) {
+            return null;
+        }
+        $url = $broker->getAttachUrl(['return_url' => \Request::url()]);
+        return redirect($url, 307);
+
     }
 }
