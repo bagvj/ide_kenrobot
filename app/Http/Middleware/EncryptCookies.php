@@ -13,6 +13,5 @@ class EncryptCookies extends BaseEncrypter
      */
     protected $except = [
         //
-    'kenrobot_id',
     ];
 }
