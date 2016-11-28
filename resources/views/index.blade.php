@@ -329,7 +329,7 @@
 							<div class="title">账号登录</div>
 							<form>
 								{!! csrf_field() !!}
-								<input class="qrcode-key" type="hidden" value="{{$key or ''}}">
+								<input class="qrcode-key" type="hidden" value="">
 								<div class="field">
 									<span class="icon"><i class="kenrobot ken-user"></i></span>
 									<input class="email" type="email" name="email" value="{{old('email')}}" placeholder="邮箱地址/手机号码" autocomplete="off" />
@@ -348,7 +348,7 @@
 							<div class="scan">
 								<img src="{{asset('/assets/image/weixin-scan.png')}}" />
 							</div>
-							<img class="qrcode" alt="微信扫码" src="{{$qrcodeurl or ''}}" />
+							<img class="qrcode" alt="微信扫码" src="" />
 							<div class="login-tips tips">
 								请使用微信扫一扫<br />扫码关注后即可直接登录
 							</div>

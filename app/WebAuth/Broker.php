@@ -196,18 +196,24 @@ class Broker
         return $data;
     }
 
-    public function login($username = null, $password = null, $app = 'local')
+    public function login($username = null, $password = null, $source = 'local')
     {
         if (!isset($username) && isset($_REQUEST['username'])) $username = $_REQUEST['username'];
         if (!isset($password) && isset($_REQUEST['password'])) $password = $_REQUEST['password'];
 
-        $result = $this->request('POST', 'login', compact('username', 'password', 'app'));
+        $result = $this->request('POST', 'login', compact('username', 'password', 'source'));
 
         $this->userinfo = $result;
 
         return $this->userinfo;
     }
 
+    /**
+     * 根据 user_id 直接登录
+     * @param  [type] $id     [description]
+     * @param  [type] $source [description]
+     * @return [type]         [description]
+     */
     public function loginid($id, $source)
     {
         $result = $this->request('POST', 'loginid', compact('id', 'source'));
@@ -215,6 +221,20 @@ class Broker
 
         return $this->userinfo;
     }
+
+    /**
+     * 通过微信直接登录
+     * @return [type] [description]
+     */
+    public function loginWeixin($login_key, $source = 'weixin')
+    {
+        $result = $this->request('POST', 'login', compact('login_key', 'source'));
+
+        $this->userinfo = $result;
+
+        return $this->userinfo;
+    }
+
 
     /**
      * 退出

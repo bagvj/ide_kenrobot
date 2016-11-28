@@ -177,6 +177,8 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 					userInfo = result.data;
 					setWeixinLoginCheck(false);
 					doUpdateUser();
+				} else if(result.status == -3) {
+					refreshWeixinQrcode();
 				} else {
 					//登录失败
 
@@ -185,6 +187,18 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 		};
 
 		loginCheckTimer = setInterval(doCheck, 3000);
+	}
+
+	/**
+	 * 刷新验证码
+	 */
+	function refreshWeixinQrcode() {
+		userApi.weixinQrcode(true).done(function(result){
+			if (result.status == 0) {
+				$('.qrcode-key').val(result.data.login_key);
+				$('.qrcode').attr('src', result.data.qrcodeurl);
+			}
+		});
 	}
 
 	function doLoginCallback() {

@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\WebAuth\Broker;
+use App\WebAuth\ApiProxy;
 use Url;
+use Cache;
+use Carbon\Carbon;
 /**
 * 用户登录
 */
 class AuthController extends Controller
 {
     private $broker = null;
+
 
     function __construct()
     {
@@ -32,7 +36,8 @@ class AuthController extends Controller
         $username = $request->input('email');
         $password = $request->input('password');
 
-        $result =  $this->broker->login($username, $password);
+        $result =  $this->broker->login($username, $password, 'sns');
+
         if ($result['status'] != 0) {
             return $this->apiReturn($result['status'], $result['message']);
         }
@@ -44,14 +49,54 @@ class AuthController extends Controller
         return $this->apiReturn(0, '登录成功', $user);
     }
 
-    public function loginid(Request $request)
-    {
-
-    }
 
     public function weixinlogin(Request $request)
     {
-        
+        $ori_login_key = Cache::get('login_key');
+        $login_key = $request->input('login_key');
+        if (empty($ori_login_key) || empty($login_key)) {
+            return $this->apiReturn(-3, 'login_key 过期，请刷新重试！');
+        }
+
+        $result = $this->broker->loginWeixin($login_key);
+        if ($result['status'] != 0) {
+            return $this->apiReturn($result['status'], $result['message']);
+        }
+
+        $user = $this->currentUser();
+        if (empty($user)) {
+            return $this->apiReturn(-2, '登录失败');
+        }
+
+        return $this->apiReturn(0, '登录成功', $user);
+
+    }
+
+    /**
+     * 获取微信二维码
+     */
+    public function weixinQrcode(Request $request)
+    {
+        $refresh = $request->input('refresh');
+        $login_key = Cache::get('login_key');
+
+        if ($refresh || empty($login_key)) {
+
+            $apiproxy = new ApiProxy('ide', 'ide');
+            $result = $apiproxy->weixinScan();
+            if ($result['status'] != 0) {
+                return $this->apiReturn($result['status'], $result['message']);
+            }
+            $expire_seconds = $result['data']['expire_seconds'];
+            $login_key = $result['data']['login_key'];
+            Cache::put('login_key', $login_key, Carbon::now()->addSeconds($expire_seconds));
+            Cache::put('login_data', json_encode($result['data']), Carbon::now()->addSeconds($expire_seconds));
+        }
+
+        $login_data = Cache::get('login_data');
+        $login_data = json_decode($login_data);
+
+        return $this->apiReturn(0, '获取成功', $login_data);
     }
 
     public function userinfo()
