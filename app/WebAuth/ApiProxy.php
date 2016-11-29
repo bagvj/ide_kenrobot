@@ -15,7 +15,7 @@ class ApiProxy
     const API_WEIXINSCAN = '/api/user/weixin/scanlogin';
 
 
-    private $baseUrl = 'http://userver.kenrobot.com';
+    private $baseUrl = null;
     private $apiguard = null;
     private $apiCurl = null;
 
@@ -24,6 +24,7 @@ class ApiProxy
     {
         $this->apiguard = new ApiGuard($appId, $appSecret);
         $this->apiCurl = new Curl();
+        $this->baseUrl = env('SSO_BASE');
         if (!empty($baseUrl)) {
             $this->baseUrl = $baseUrl;
         }

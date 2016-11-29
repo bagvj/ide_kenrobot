@@ -42,7 +42,7 @@ define(['vendor/jquery', 'vendor/jsencrypt', './config'], function($1, JSEncrypt
 			type: 'POST',
 			url: '/api/auth/weixin/loginkey',
 			data: {
-				refresh: refresh,
+				refresh: refresh || false,
 			},
 			dataType: 'json',
 		});

@@ -69,7 +69,6 @@ class AuthController extends Controller
         }
 
         return $this->apiReturn(0, '登录成功', $user);
-
     }
 
     /**
@@ -105,6 +104,7 @@ class AuthController extends Controller
         if (!isset($user)) {
             return $this->apiReturn(-1, '未登录');
         }
+
         return $this->apiReturn(0,'Ok', $user);
     }
 

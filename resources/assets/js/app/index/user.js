@@ -2,6 +2,8 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 	var userInfo;
 	var loginCheckTimer;
 	var loginCallback;
+	var dialog;
+	var qrcodeTimeout = 10 * 60 * 1000;
 
 	function init() {
 		initLoginDialog();
@@ -41,7 +43,7 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 	function showLoginDialog(callback, type, isRegister) {
 		loginCallback = callback;
 
-		var dialog = util.dialog({
+		dialog = util.dialog({
 			selector: ".login-dialog",
 			onClosing: function() {
 				loginCallback = null;
@@ -65,14 +67,17 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 			$('.footer .login-footer', dialog).addClass("active");
 			$('.footer .register-footer', dialog).removeClass("active");
 		}
+		$('.qrcode', dialog).removeClass("timeout");
 
 		if(type == "account") {
 			$('.email', dialog).focus();
 		}
+
+		refreshWeixinQrcode();
+		setTimeout(onQrcodeTimeout, qrcodeTimeout);
 	}
 
 	function initLoginDialog() {
-		var dialog = $('.login-dialog');
 		var scan = $('.scan', dialog);
 
 		$('.switch li', dialog).on('click', function() {
@@ -112,6 +117,10 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 			}, 300);
 		});
 
+		$('.qrcode-refresh', dialog).on('click', function() {
+			refreshWeixinQrcode(true);
+		});
+
 		$('form', dialog).on('keyup', function(e) {
 			if(e.keyCode != 13) {
 				return;
@@ -123,10 +132,16 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 
 			$(".login-btn", dialog).click();
 		});
+
+		refreshWeixinQrcode();
+	}
+
+	function onQrcodeTimeout() {
+		setWeixinLoginCheck(false);
+		$('.qrcode').addClass("timeout");
 	}
 
 	function doLogin() {
-		var dialog = $('.login-dialog');
 		var username = $('.email', dialog).val();
 		var password = $('.password', dialog).val();
 		userApi.login(username, password).done(function(result){
@@ -158,7 +173,6 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 			return;
 		}
 
-		var dialog = $('.login-dialog');
 		var doCheck = function() {
 			var key = $('.qrcode-key', dialog).val();
 			userApi.weixinLogin(key).done(function(result) {
@@ -181,7 +195,6 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 					refreshWeixinQrcode();
 				} else {
 					//登录失败
-
 				}
 			});
 		};
@@ -192,11 +205,18 @@ define(['vendor/jquery', './EventManager', './util', './userApi'], function(_, E
 	/**
 	 * 刷新验证码
 	 */
-	function refreshWeixinQrcode() {
+	function refreshWeixinQrcode(timeout) {
 		userApi.weixinQrcode(true).done(function(result){
-			if (result.status == 0) {
-				$('.qrcode-key').val(result.data.login_key);
-				$('.qrcode').attr('src', result.data.qrcodeurl);
+			if (result.status != 0) {
+				return;
+			}
+
+			$('.qrcode-key', dialog).val(result.data.login_key);
+			$('.qrcode', dialog).attr('src', result.data.qrcodeurl);
+
+			if(timeout) {
+				$(".qrcode", dialog).removeClass("timeout");
+				setTimeout(onQrcodeTimeout, qrcodeTimeout);
 			}
 		});
 	}

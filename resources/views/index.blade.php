@@ -327,28 +327,30 @@
 					<div class="wrap">
 						<div class="tab tab-account active">
 							<div class="title">账号登录</div>
-							<form>
-								{!! csrf_field() !!}
-								<input class="qrcode-key" type="hidden" value="">
-								<div class="field">
-									<span class="icon"><i class="kenrobot ken-user"></i></span>
-									<input class="email" type="email" name="email" value="{{old('email')}}" placeholder="邮箱地址/手机号码" autocomplete="off" />
-								</div>
-								<div class="field">
-									<span class="icon"><i class="kenrobot ken-password"></i></span>
-									<input class="password" type="password" name="password" placeholder="密码" />
-								</div>
-								<div class="message">
-									<span></span>
-								</div>
-								<input class="login-btn" type="button" value="登录" />
-							</form>
+							<input class="qrcode-key" type="hidden" value="">
+							<div class="field">
+								<span class="icon"><i class="kenrobot ken-user"></i></span>
+								<input class="email" type="email" name="email" value="{{old('email')}}" placeholder="邮箱地址/手机号码" autocomplete="off" />
+							</div>
+							<div class="field">
+								<span class="icon"><i class="kenrobot ken-password"></i></span>
+								<input class="password" type="password" name="password" placeholder="密码" />
+							</div>
+							<div class="message">
+								<span></span>
+							</div>
+							<input class="login-btn" type="button" value="登录" />
 						</div>
 						<div class="tab tab-weixin">
 							<div class="scan">
 								<img src="{{asset('/assets/image/weixin-scan.png')}}" />
 							</div>
-							<img class="qrcode" alt="微信扫码" src="" />
+							<div class="qrcode-wrap">
+								<img class="qrcode" alt="微信扫码" src="" />
+								<div class="qrcode-refresh">
+									二维码已过期<br />点击刷新<br /><i class="kenrobot ken-refresh"></i>
+								</div>
+							</div>
 							<div class="login-tips tips">
 								请使用微信扫一扫<br />扫码关注后即可直接登录
 							</div>
