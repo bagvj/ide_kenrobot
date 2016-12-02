@@ -42,5 +42,6 @@ Route::post('/api/comment/delete', 'CommentController@remove');
 Route::any('/api/auth/attach', 'AuthController@attach');
 Route::any('/api/auth/login', 'AuthController@login');
 Route::any('/api/auth/check', 'AuthController@userinfo');
-Route::any('/api/auth/login/weixin', 'AuthController@weixinlogin');
-Route::any('/api/auth/weixin/loginkey', 'AuthController@weixinQrcode');
+Route::any('/api/auth/weixin/login', 'AuthController@weixinlogin');
+Route::any('/api/auth/weixin/qrcode', 'AuthController@weixinQrcode');
+

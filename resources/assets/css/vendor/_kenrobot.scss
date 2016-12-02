@@ -1,10 +1,10 @@
 
 @font-face {font-family: "kenrobot";
-  src: url('../font/kenrobot.eot'); /* IE9*/
-  src: url('../font/kenrobot.eot#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('../font/kenrobot.woff') format('woff'), /* chrome, firefox */
-  url('../font/kenrobot.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('../font/kenrobot.svg') format('svg'); /* iOS 4.1- */
+  src: url('../font/kenrobot.eot?t=1480507722095'); /* IE9*/
+  src: url('../font/kenrobot.eot?t=1480507722095#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../font/kenrobot.woff?t=1480507722095') format('woff'), /* chrome, firefox */
+  url('../font/kenrobot.ttf?t=1480507722095') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../font/kenrobot.svg?t=1480507722095') format('svg'); /* iOS 4.1- */
 }
 
 .kenrobot {
@@ -99,8 +99,6 @@
 
 .ken-switch-on:before { content: "\e60e"; }
 
-.ken-password:before { content: "\e60f"; }
-
 .ken-project:before { content: "\e610"; }
 
 .ken-setting1:before { content: "\e611"; }
@@ -141,8 +139,6 @@
 
 .ken-format:before { content: "\e623"; }
 
-.ken-scratch:before { content: "\e625"; }
-
 .ken-message:before { content: "\e63c"; }
 
 .ken-note:before { content: "\e62f"; }
@@ -171,13 +167,15 @@
 
 .ken-task-3:before { content: "\e646"; }
 
-.ken-kenrobot-logo:before { content: "\e647"; }
+.ken-logo:before { content: "\e647"; }
 
-.ken-kenrobot-face:before { content: "\e648"; }
+.ken-face:before { content: "\e648"; }
 
 .ken-share1:before { content: "\e64b"; }
 
 .ken-exit-fullscreen:before { content: "\e638"; }
+
+.ken-password:before { content: "\e6c6"; }
 
 .ken-edu-hardware:before { content: "\e63b"; }
 

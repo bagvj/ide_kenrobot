@@ -32,8 +32,9 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        // $username = $request->input('username');
-        $username = $request->input('email');
+        throw new Exception("Error Processing Request", 1);
+        
+        $username = $request->input('username');
         $password = $request->input('password');
 
         $result =  $this->broker->login($username, $password, 'sns');

@@ -116,6 +116,41 @@ define(function(){
 		}
 	}
 
+	function showDialog(args) {
+		args = typeof args == "string" ? {
+			selector: args
+		} : args;
+
+		var dialogWin = $(args.selector);
+		var beforeClose = args.beforeClose;
+		var onClose = args.onClose;
+		var afterClose = args.afterClose;
+
+		if (!dialogWin || !dialogWin.hasClass("a-dialog")) {
+			return;
+		}
+
+		var dialogLayer = $('.dialog-layer').addClass("active");
+
+		dialogWin.clearQueue("fadeIn").clearQueue("fadeOut");
+		$('.dialog-close', dialogWin).off('click').on('click', function() {
+			if(beforeClose && beforeClose() === false) {
+				return;
+			}
+
+			dialogWin.removeClass("dialog-in").addClass("dialog-fadeOut").delay(300, "fadeOut").queue("fadeOut", function() {
+				onClose && onClose();
+				dialogLayer.removeClass("active");
+				dialogWin.hide().removeClass("dialog-fadeOut");
+				afterClose && afterClose();
+			}).dequeue("fadeOut");
+		});
+
+		dialogWin.show().addClass("dialog-fadeIn").delay(300, "fadeIn").queue("fadeIn", function() {
+			dialogWin.addClass("dialog-in").removeClass("dialog-fadeIn");
+		}).dequeue("fadeIn");
+	}
+
 	return {
 		message: message,
 		dialog: dialog,
@@ -123,5 +158,6 @@ define(function(){
 		toggleActive: toggleActive,
 		aspectReset: aspectReset,
 		parseJson: parseJson,
+		showDialog: showDialog,
 	}
 });

@@ -20,7 +20,7 @@ define(['vendor/jquery', 'vendor/jsencrypt', './config'], function($1, JSEncrypt
 			url: '/api/auth/login',
 			dataType: 'json',
 			data: {
-				email: username,
+				username: username,
 				password: encrypt.encrypt(password)
 			},
 		});
@@ -29,7 +29,7 @@ define(['vendor/jquery', 'vendor/jsencrypt', './config'], function($1, JSEncrypt
 	function weixinLogin(login_key) {
 		return $.ajax({
 			type: 'POST',
-			url: '/api/auth/login/weixin',
+			url: '/api/auth/weixin/login',
 			data: {
 				login_key: login_key,
 			},
@@ -40,7 +40,7 @@ define(['vendor/jquery', 'vendor/jsencrypt', './config'], function($1, JSEncrypt
 	function weixinQrcode(refresh) {
 		return $.ajax({
 			type: 'POST',
-			url: '/api/auth/weixin/loginkey',
+			url: '/api/auth/weixin/qrcode',
 			data: {
 				refresh: refresh || false,
 			},

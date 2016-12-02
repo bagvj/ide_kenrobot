@@ -200,7 +200,7 @@ define(['vendor/jquery', './util', './EventManager', './commentApi', './user', '
 			});
 		};
 
-		user.authCheck().then(doPublish, user.showLoginDialog);
+		user.authCheck(true).then(doPublish);
 	}
 
 	function onOpenProject() {

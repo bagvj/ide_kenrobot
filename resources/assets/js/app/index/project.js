@@ -227,9 +227,9 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', 'vendor/director
 			}
 		};
 
-		user.authCheck().then(function() {
+		user.authCheck(true).then(function() {
 			checkOwn().done(doSave);
-		}, user.showLoginDialog);
+		});
 	}
 
 	function openProject(projectInfo) {
@@ -413,9 +413,9 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', 'vendor/director
 	}
 
 	function onProjectNewClick(e) {
-		user.authCheck().then(function() {
+		user.authCheck(true).then(function() {
 			showSaveDialog(getDefaultProject(), true);
-		}, user.showLoginDialog);
+		});
 	}
 
 	function onProjectEditClick(e) {
@@ -425,9 +425,9 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', 'vendor/director
 			return;
 		}
 
-		user.authCheck().then(function() {
+		user.authCheck(true).then(function() {
 			showSaveDialog(projectInfo);
-		}, user.showLoginDialog);
+		});
 	}
 
 	function onProjectDeleteClick(e) {
@@ -454,7 +454,7 @@ define(['vendor/jquery', 'vendor/ZeroClipboard', 'vendor/meld', 'vendor/director
 			return;
 		}
 
-		user.authCheck().then(showDeleteDialog, user.showLoginDialog);
+		user.authCheck(true).then(showDeleteDialog);
 	}
 
 	function showSaveDialog(projectInfo, isNew, isCopy) {
