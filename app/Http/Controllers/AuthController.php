@@ -31,9 +31,7 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-    {
-        throw new Exception("Error Processing Request", 1);
-        
+    {        
         $username = $request->input('username');
         $password = $request->input('password');
 
