@@ -173,7 +173,8 @@ class Broker
         }
 
         $response = curl_exec($ch);
-        if (curl_errno($ch) != 0) {
+
+         if (curl_errno($ch) != 0) {
             $message = 'Server request failed: ' . curl_error($ch);
             throw new \Exception($message);
         }
