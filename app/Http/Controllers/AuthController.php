@@ -104,9 +104,17 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $apiproxy = new ApiProxy('ide', 'ide');
-        $input = $request->all();
+        $input = $request->only(['username', 'email', 'password']);
         $input['source'] = 'default';
         $result = $apiproxy->register($result);
+        if (isset($result['status']) && $result['status'] == 0) {
+            $data = [
+                'name' => $result['data']['base_name'],
+                'avatar_url' => $result['data']['base_avatar'],
+                'uid' => $result['data']['user_id'],
+                'user_id' => $result['data']['user_id'],
+            ];
+        }
         return $result;
     }
 
@@ -126,23 +134,23 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    public function register(Request $request) {
-        $email = $request->input('email');
-        $username = $request->input('username');
-        $password = $request->input('password');
-        //注册成功后是否登录
-        $login = $request->input('login', false);
+    // public function register(Request $request) {
+    //     $email = $request->input('email');
+    //     $username = $request->input('username');
+    //     $password = $request->input('password');
+    //     //注册成功后是否登录
+    //     $login = $request->input('login', false);
 
-        //测试代码
-        if ($login) {
-            return $this->apiReturn(0, '注册成功', [
-                'name' => $username,
-                'avatar_url' => '',
-                'uid' => 999,
-                'user_id' => 999,
-            ]);
-        }
+    //     //测试代码
+    //     if ($login) {
+    //         return $this->apiReturn(0, '注册成功', [
+    //             'name' => $username,
+    //             'avatar_url' => '',
+    //             'uid' => 999,
+    //             'user_id' => 999,
+    //         ]);
+    //     }
 
-        return $this->apiReturn(0, '注册失败');
-    }
+    //     return $this->apiReturn(0, '注册失败');
+    // }
 }
