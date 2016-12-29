@@ -29,13 +29,14 @@ abstract class Controller extends BaseController
     {
         $broker = new Broker();
         $userinfo = $broker->userinfo();
+        
         if (isset($this->user)) {
             return $this->user;
         }
         
         if ($userinfo['status'] == 0) {
             $this->user = [
-                'name' => $userinfo['data']['base_nickname'],
+                'name' => $userinfo['data']['base_name'],
                 'avatar_url' => $userinfo['data']['base_avatar'],
                 'uid' => $userinfo['data']['user_id'],
                 'user_id' => $userinfo['data']['user_id'],

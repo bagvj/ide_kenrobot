@@ -41,7 +41,9 @@ Route::post('/api/comment/delete', 'CommentController@remove');
 // 登录验证API
 Route::any('/api/auth/attach', 'AuthController@attach');
 Route::any('/api/auth/login', 'AuthController@login');
+Route::any('/api/auth/register', 'AuthController@register');
 Route::any('/api/auth/check', 'AuthController@userinfo');
 Route::any('/api/auth/weixin/login', 'AuthController@weixinlogin');
 Route::any('/api/auth/weixin/qrcode', 'AuthController@weixinQrcode');
+
 

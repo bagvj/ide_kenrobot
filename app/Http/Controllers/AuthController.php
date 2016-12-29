@@ -35,8 +35,7 @@ class AuthController extends Controller
         $username = $request->input('username');
         $password = $request->input('password');
 
-        $result =  $this->broker->login($username, $password, 'sns');
-
+        $result =  $this->broker->login($username, $password, 'default');
         if ($result['status'] != 0) {
             return $this->apiReturn($result['status'], $result['message']);
         }
@@ -82,11 +81,16 @@ class AuthController extends Controller
 
             $apiproxy = new ApiProxy('ide', 'ide');
             $result = $apiproxy->weixinScan();
+            if (!$result || !isset($result['status'])) {
+                return $this->apiReturn(-1, '获取失败');
+            }
+            
             if ($result['status'] != 0) {
+
                 return $this->apiReturn($result['status'], $result['message']);
             }
             $expire_seconds = $result['data']['expire_seconds'];
-            $login_key = $result['data']['login_key'];
+            $login_key = $result['data']['auth_key'];
             Cache::put('login_key', $login_key, Carbon::now()->addSeconds($expire_seconds));
             Cache::put('login_data', json_encode($result['data']), Carbon::now()->addSeconds($expire_seconds));
         }
@@ -95,6 +99,15 @@ class AuthController extends Controller
         $login_data = json_decode($login_data);
 
         return $this->apiReturn(0, '获取成功', $login_data);
+    }
+
+    public function register(Request $request)
+    {
+        $apiproxy = new ApiProxy('ide', 'ide');
+        $input = $request->all();
+        $input['source'] = 'default';
+        $result = $apiproxy->register($result);
+        return $result;
     }
 
     public function userinfo()

@@ -174,6 +174,12 @@ class Broker
 
         $response = curl_exec($ch);
 
+        // if ($command == 'login') {
+        //     echo $response;
+        //     exit();
+        // }
+
+      
          if (curl_errno($ch) != 0) {
             $message = 'Server request failed: ' . curl_error($ch);
             throw new \Exception($message);
@@ -190,9 +196,9 @@ class Broker
         $data = json_decode($response, true);
         if ($httpCode == 403) {
             $this->clearToken();
-            throw new \Exception($data['error'] ?: $response, $httpCode);
+            throw new \Exception($data['message'] ?: $response, $httpCode);
         }
-        if ($httpCode >= 400) throw new \Exception($data['error'] ?: $response, $httpCode);
+        if ($httpCode >= 400) throw new \Exception($data['message'] ?: $response, $httpCode);
 
         return $data;
     }
