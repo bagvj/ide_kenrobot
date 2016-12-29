@@ -175,7 +175,7 @@
 					.error {
 						font-size: 12px;
 						position: absolute;
-						right: 0;
+						right: 6px;
 						top: 0;
 						line-height: 32px;
 						color: #f86c5f;
@@ -447,6 +447,7 @@
 			background-color: #f0f2f2;
 			border: 1px solid #ced2ce;
 			margin-bottom: 25px;
+			position: relative;
 
 			& > input {
 				width: 100%;
@@ -455,6 +456,20 @@
 				height: 42px;
 				padding-left: 11px;
 				padding-right: 11px;
+			}
+
+			.error {
+				font-size: 12px;
+				position: absolute;
+				right: 6px;
+				top: 0;
+				line-height: 42px;
+				color: #f86c5f;
+				display: none;
+
+				&.active {
+					display: block;
+				}
 			}
 		}
 

@@ -331,11 +331,12 @@
 										<div class="field">
 											<i class="icon kenrobot ken-logo"></i>
 											<input type="text" class="reset-field username" spellcheck="false" autocomplete="off" placeholder="邮箱地址/用户名" />
+											<span class="error"></span>
 										</div>
 										<div class="field">
 											<i class="icon kenrobot ken-password"></i>
 											<input type="password" class="reset-field password" spellcheck="false" autocomplete="off" placeholder="密码" />
-											<span class="error">帐号或密码不正确</span>
+											<span class="error"></span>
 										</div>
 										<div class="remember-wrap">
 											<input type="checkbox" class="reset-field remember" id="login-remember-password" /><label for="login-remember-password">记住密码</label>

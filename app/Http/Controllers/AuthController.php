@@ -125,4 +125,24 @@ class AuthController extends Controller
         $this->broker->logout();
         return redirect('/');
     }
+
+    public function register(Request $request) {
+        $email = $request->input('email');
+        $username = $request->input('username');
+        $password = $request->input('password');
+        //注册成功后是否登录
+        $login = $request->input('login', false);
+
+        //测试代码
+        if ($login) {
+            return $this->apiReturn(0, '注册成功', [
+                'name' => $username,
+                'avatar_url' => '',
+                'uid' => 999,
+                'user_id' => 999,
+            ]);
+        }
+
+        return $this->apiReturn(0, '注册失败');
+    }
 }
