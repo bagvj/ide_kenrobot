@@ -376,7 +376,7 @@ define(['vendor/jquery', './util', './EventManager', './userApi'], function($1, 
 
 		if(userInfo) {
 			user.addClass("active");
-			$(".photo img", user).attr("src", userInfo.avatar_url);
+			$(".photo img", user).attr("src", userInfo.avatar_url || "assets/image/default-user.png");
 			$(".name", user).text(userInfo.name);
 
 			topMenu.css({

@@ -9,14 +9,14 @@
 		<meta name="description" content="啃萝卜智能硬件平台" />
 		<meta name="csrf-token" content="{{csrf_token()}}" />
 
-		<link href="/assets/css/index.css" rel="stylesheet" />
+		<link href="assets/css/index.css" rel="stylesheet" />
 
 		@if(!env('APP_DEBUG'))
 		<script scr="//hm.baidu.com/hm.js?{{env('PV_KEY')}}"></script>
 		@endif
-		<script src="/assets/js/go.js"></script>
-		<script src="/assets/js/astyle.js"></script>
-		<script src="/assets/js/require.js" data-main="/assets/js/index"></script>
+		<script src="assets/js/go.js"></script>
+		<script src="assets/js/astyle.js"></script>
+		<script src="assets/js/require.js" data-main="assets/js/index"></script>
 	</head>
 	<body class="unselectable theme-{{$setting['theme']}}" data-theme="{{$setting['theme']}}">
 		<div class="main">
@@ -112,7 +112,7 @@
 							</div>
 							<div class="user-info">
 								<a class="photo" href="{{$mainpage}}" target="_blank">
-									<img src="{{$user['avatar_url'] or asset('assets/image/default_portrait.png')}}" />
+									<img src="{{$user['avatar_url'] or 'assets/image/default-user.png'}}" />
 								</a>
 								<div class="welcome">
 									<span class="name">{{isset($user) ? $user['name'] : ''}}</span><i class="kenrobot ken-triangle-down arrow"></i>
