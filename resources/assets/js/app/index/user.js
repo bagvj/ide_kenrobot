@@ -44,6 +44,27 @@ define(['vendor/jquery', './util', './EventManager', './userApi'], function($1, 
 		refreshWeixinQrcode();
 
 		$('.user-login li').on('click', onShowLogin);
+		var user = $('.user');
+		var userMenu = $('.user-menu', user);
+
+		var hideMenu = function() {
+			userMenu.hide();
+		}
+
+		userMenu.on('mouseleave', hideMenu);
+		user.on('mouseleave', hideMenu);
+
+		$('.user-info', user).on('mouseover', function() {
+			userMenu.show();
+		});
+
+		$('ul > li', userMenu).on('click', onMenuClick);
+
+		if(user.hasClass("active")) {
+			$('.top-menu').css({
+				'margin-right': user.width(),
+			});
+		}
 	}
 
 	function getUserId() {
@@ -208,12 +229,15 @@ define(['vendor/jquery', './util', './EventManager', './userApi'], function($1, 
 
 	function onAccountLogin(result) {
 		if (result.status == 0) {
+			userInfo = result.data;
 			//登录成功
 			closeDialog();
+			doUpdateUser();
 			EventManager.trigger("user", "login");
 			doLoginCallback();
 		} else if (result.status == 1) {
-
+			doUpdateUser();
+			doLoginCallback();
 		} else {
 			showError($(".tab-account .password"), result.message);
 		}
@@ -224,11 +248,13 @@ define(['vendor/jquery', './util', './EventManager', './userApi'], function($1, 
 			//登录成功
 			setWeixinLoginCheck(false);
 			closeDialog();
+			doUpdateUser();
 			EventManager.trigger("user", "login");
 			doLoginCallback();
 		} else if (result.status == 1) {
 			//已经登录
 			setWeixinLoginCheck(false);
+			doUpdateUser();
 		} else if(result.status == -3) {
 			refreshWeixinQrcode();
 		} else {
@@ -291,7 +317,9 @@ define(['vendor/jquery', './util', './EventManager', './userApi'], function($1, 
 
 	function onRegisterSuccess(result) {
 		if(result.status == 0) {
+			userInfo = result.data;
 			closeDialog();
+			doUpdateUser();
 			EventManager.trigger("user", "login");
 		} else {
 			showError($(".tab-register .username"), result.message);
@@ -327,6 +355,42 @@ define(['vendor/jquery', './util', './EventManager', './userApi'], function($1, 
 	function onShowLogin(e) {
 		var action = $(this).data('action');
 		showLoginDialog(null, "quick", action == "register");
+	}
+
+	function onMenuClick(e) {
+		var li = $(this);
+		var action = li.data('action');
+		switch(action) {
+			case "share":
+				EventManager.trigger("project", "share");
+				break;
+			case "logout":
+				window.location.href = "/logout";
+				break;
+		}
+	}
+
+	function doUpdateUser() {
+		var user = $('.user');
+		var topMenu = $('.top-menu');
+
+		if(userInfo) {
+			user.addClass("active");
+			$(".photo img", user).attr("src", userInfo.avatar_url);
+			$(".name", user).text(userInfo.name);
+
+			topMenu.css({
+				'margin-right': user.width(),
+			});
+		} else {
+			user.removeClass("active");
+			$(".name", user).text("");
+			$(".photo img", user).attr("src", "#");
+
+			topMenu.css({
+				'margin-right': 0,
+			});
+		}
 	}
 
 	return {
