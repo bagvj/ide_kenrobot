@@ -1,173 +1,139 @@
 /**
  * 组件安装
- * npm install gulp gulp-if gulp-rev gulp-rev-replace minimist run-sequence gulp-concat gulp-rename gulp-clean gulp-jshint gulp-uglify gulp-jsonminify gulp-ruby-sass gulp-clean-css gulp-autoprefixer gulp-imagemin gulp-minify-html gulp-ng-annotate gulp-sourcemaps gulp-requirejs-optimize --save-dev
+ * npm install --save-dev gulp gulp-if gulp-rename gulp-clean gulp-ruby-sass gulp-clean-css gulp-autoprefixer gulp-requirejs-optimize run-sequence minimist fs-extra uuid
  */
 
 // 引入 gulp及组件
-var gulp = require('gulp'),                      //基础库
-	gulpif = require('gulp-if');                 //条件执行
-	rev = require('gulp-rev');                   //rev
-	revReplace = require('gulp-rev-replace');    //rev替换
-	minimist = require('minimist')               //命令行参数解析
-	runSequence = require('run-sequence');       //顺序执行
-	concat = require('gulp-concat'),             //合并文件
-	rename = require('gulp-rename'),             //重命名
-	clean = require('gulp-clean');               //清空文件夹
-	// jshint = require('gulp-jshint'),             //js检查
-	uglify = require('gulp-uglify'),             //js压缩
-	jsonminify = require('gulp-jsonminify');     //json压缩
-	sass = require('gulp-ruby-sass'),            //sass
-	cleanCSS = require('gulp-clean-css'),        //css压缩
-	autoprefixer = require('gulp-autoprefixer'), //自动前缀
-	imagemin = require('gulp-imagemin'),         //image压缩
-	minifyHtml = require("gulp-minify-html");    //html压缩
-	ngAnnotate = require('gulp-ng-annotate'),    //ng注释
-	sourcemaps = require('gulp-sourcemaps'),     //source map
-	requirejsOptimize = require('gulp-requirejs-optimize'), //requirejs打包
-	path = require('path'),
-	child_process = require('child_process'),
-	os = require('os');
+const gulp = require('gulp')                      //基础库
+const gulpif = require('gulp-if')                 //条件执行
+const rename = require('gulp-rename')             //重命名
+const clean = require('gulp-clean')               //清空文件夹
+const sass = require('gulp-ruby-sass')            //sass
+const cleanCSS = require('gulp-clean-css')        //css压缩
+const autoprefixer = require('gulp-autoprefixer') //自动前缀
+const requirejsOptimize = require('gulp-requirejs-optimize') //requirejs打包
 
-var SRC = './resources/assets/';
-var DIST = './public/assets/';
-var args = minimist(process.argv.slice(2));
+const runSequence = require('run-sequence')       //顺序执行
+const minimist = require('minimist')              //命令行参数解析
+const fs = require('fs-extra')                    //文件操作
+const uuid = require('uuid')
 
-gulp.task('copy-env', function() {
-	gulp.src('./.env')
-		.pipe(clean());
+const path = require('path')                      //路径
+const child_process = require('child_process')    //子进程
+const os = require('os')                          //操作系统相关
+const crypto = require('crypto')                  //加密
 
-	var suffix = args.release ? "release" : "debug";
-	gulp.src('./.env-' + suffix)
-		.pipe(rename('.env'))
-		.pipe(gulp.dest('./'));
-});
+var args = minimist(process.argv.slice(2))        //命令行参数
 
-gulp.task('clean-js', function() {
-	return gulp.src(DIST + 'js')
-		.pipe(clean());
-});
+const ASSETS_SRC = './resources/assets/'
+const ASSETS_DIST = './public/assets/'
 
-// js处理
-gulp.task('js', ['clean-js', 'copy-env'], function() {
-	var jsSrc = SRC + 'js/**/*.js',
-		jsDst = DIST + 'js/';
+gulp.task('replace-env', callback => {
+	var name = ".env"
+	var suffix = args.release ? "release" : "debug"
+	fs.removeSync(name)
+	fs.copySync(name + "-" + suffix, name)
+	callback()
+})
 
+gulp.task('clean-js', _ => {
+	return gulp.src(ASSETS_DIST + 'js', {read: false})
+		.pipe(clean())
+})
+
+gulp.task('clean-css', _ => {
+	return gulp.src(ASSETS_DIST + 'css', {read: false})
+		.pipe(clean())
+})
+
+gulp.task('clean-image', _ => {
+	return gulp.src(ASSETS_DIST + 'image', {read: false})
+		.pipe(clean())
+})
+
+gulp.task('clean-font', _ => {
+	return gulp.src(ASSETS_DIST + 'font', {read: false})
+		.pipe(clean())
+})
+
+gulp.task('clean-res', _ => {
+	return gulp.src(ASSETS_DIST + 'res', {read: false})
+		.pipe(clean())
+})
+
+gulp.task('pack-js', ['clean-js'], callback => {
 	if(args.release) {
-		gulp.src([SRC + 'js/require.js', SRC + 'js/astyle.js', SRC + 'js/go.js'])
-			.pipe(gulp.dest(jsDst));
+		gulp.src([ASSETS_SRC + 'js/require.js', ASSETS_SRC + 'js/astyle.js', ASSETS_SRC + 'js/go.js'])
+			.pipe(gulp.dest(ASSETS_DIST + 'js/'))
+			
+		gulp.src([ASSETS_SRC + 'js/index.js'])
+			.pipe(requirejsOptimize({
+				useStrict: true,
+				optimize: args.min == 'false' ? "none" : "uglify",
+			}))
+			.pipe(gulp.dest(ASSETS_DIST + 'js/'))
 
-		gulp.src(SRC + 'js/index.js')
-			.pipe(requirejsOptimize())
-			.pipe(gulp.dest(jsDst));
-
-		gulp.src(SRC + 'js/editor.js')
-			.pipe(requirejsOptimize())
-			.pipe(gulp.dest(jsDst));
+		gulp.src(ASSETS_SRC + 'js/editor.js')
+			.pipe(requirejsOptimize({
+				useStrict: true,
+				optimize: args.min == 'false' ? "none" : "uglify",
+			}))
+			.pipe(gulp.dest(ASSETS_DIST + 'js/'))
 	} else {
-		return gulp.src(jsSrc)
-			.pipe(gulp.dest(jsDst));
+		return gulp.src(ASSETS_SRC + 'js/**/*.js')
+			.pipe(gulp.dest(ASSETS_DIST + 'js/'))
 	}
-});
+})
 
-// 样式处理
-gulp.task('css', function() {
-	var cssSrc = SRC + 'css/*.scss',
-		cssDst = DIST + 'css/';
-
-	return sass(cssSrc, {style: 'expanded'})
+gulp.task('pack-css', ['clean-css'], _ => {
+	return sass(ASSETS_SRC + 'css/*.scss', {style: "expanded"})
 		.pipe(autoprefixer())
 		.pipe(gulpif(args.release, cleanCSS()))
-		.pipe(gulp.dest(cssDst));
-});
+		.pipe(gulp.dest(ASSETS_DIST + 'css/'))
+})
 
-// 图片处理
-gulp.task('image', function() {
-	var imgSrc = SRC + 'image/**/*',
-		imgDst = DIST + 'image/';
+gulp.task('pack-image', ['clean-image'], _ => {
+	return gulp.src(ASSETS_SRC + 'image/**/*')
+		.pipe(gulp.dest(ASSETS_DIST + 'image/'))
+})
 
-	return gulp.src(imgSrc)
-		// .pipe(imagemin())
-		.pipe(gulp.dest(imgDst));
-});
+gulp.task('pack-font', ['clean-font'], _ => {
+	return gulp.src(ASSETS_SRC + 'font/**/*')
+		.pipe(gulp.dest(ASSETS_DIST + 'font/'))
+})
 
-// font处理
-gulp.task('font', function() {
-	var fontSrc = SRC + 'font/**/*',
-		fontDst = DIST + 'font/';
+gulp.task('pack-res', ['clean-res'], _ => {
+	return gulp.src(ASSETS_SRC + 'res/**/*')
+		.pipe(gulp.dest(ASSETS_DIST + 'res/'))
+})
 
-	return gulp.src(fontSrc)
-		.pipe(gulp.dest(fontDst));
-});
+gulp.task('pack', ['replace-env', 'pack-res', 'pack-image', 'pack-font', 'pack-css', 'pack-js'])
 
-gulp.task('res', function() {
-	var resSrc = SRC + 'res/**/*',
-		resDst = DIST + 'res/';
-
-	return gulp.src(resSrc)
-		.pipe(gulp.dest(resDst));
-});
-
-// 清空图片、样式、js
-gulp.task('clean', function() {
-	return gulp.src([DIST + 'css', DIST + 'js', DIST + 'image', DIST + 'font', + DIST + 'res'], {read: false})
-		.pipe(clean());
-});
-
-// 默认任务
-gulp.task('default', function() {
-	return runSequence('clean', ['css', 'image', 'font', 'res'], 'js');
-});
-
-function genUuid() {
-	var d = new Date().getTime();
-	var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-		var r = (d + Math.random() * 16) % 16 | 0;
-		d = Math.floor(d / 16);
-		return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-	});
-
-	return uuid;
-}
-
-gulp.task('uuid', function() {
-	var n = args.n || 1;
-	console.log("uuid:")
-	for(var i = 0; i < n; i++) {
-		console.log(genUuid());
-	}
-});
-
-// 样式处理
-gulp.task('sns-css', function() {
-	var cssSrc = '../sns_kenrobot/addons/theme/stv1/_static/css/mobile-index.scss',
-		cssDst = '../sns_kenrobot/addons/theme/stv1/_static/css/';
-
-	return sass(cssSrc, {style: 'expanded'})
-		.pipe(autoprefixer())
-		.pipe(gulpif(args.release, cleanCSS()))
-		.pipe(gulp.dest(cssDst));
-});
+gulp.task('default', ['pack'])
 
 //编译解释器hex
-gulp.task('interpreter', function() {
-	var name = "interpreter";
-	var inoSrc = "/home/arduino/libraries/KenArduino/examples/Interpreter/Interpreter.ino";
-	var projectPath = os.tmpdir() + "/" + name + "/";
-	var hexDist = './public/download/';
+gulp.task('interpreter', callback => {
+	var name = "interpreter"
+	var inoSrc = "/home/arduino/libraries/KenArduino/examples/Interpreter/Interpreter.ino"
+	var projectPath = path.join(os.tmpdir(), name)
+	var hexDist = './public/download/'
 
 	gulp.src(inoSrc)
 		.pipe(rename('main.ino'))
 		.pipe(gulp.dest(projectPath));
 
-	var cmd = "sudo sh app/Build/build.sh " + projectPath + " uno " + name;
-	child_process.exec(cmd, function(error) {
-		if(error) {
-			console.log(error);
-			return;
+	var cmd = `sudo sh app/Shell/build.sh ${projectPath} uno ${name}`;
+	child_process.exec(cmd, err => {
+		if(err) {
+			console.error(err)
+			callback(err)
+			return
 		}
 
-		gulp.src(projectPath + "build.hex")
+		gulp.src(path.join(projectPath, "build.hex"))
 			.pipe(rename(name + '.hex'))
-			.pipe(gulp.dest(hexDist));
-	});
-});
+			.pipe(gulp.dest(hexDist))
+
+		callback()
+	})
+})
