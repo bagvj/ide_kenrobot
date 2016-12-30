@@ -22,7 +22,6 @@ class HomeController extends Controller {
 			return $attachSession;
 		}
 
-
 		$user = $this->currentUser();
 		
 

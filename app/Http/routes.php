@@ -45,9 +45,4 @@ Route::any('/api/auth/register', 'AuthController@register');
 Route::any('/api/auth/check', 'AuthController@userinfo');
 Route::any('/api/auth/weixin/login', 'AuthController@weixinlogin');
 Route::any('/api/auth/weixin/qrcode', 'AuthController@weixinQrcode');
-<<<<<<< HEAD
-
-
-=======
-Route::post('/api/user/register', 'AuthController@register');
->>>>>>> 88fe426c84b2e64c31f5bbabb36a3305b3957fd5
+Route::any('/api/user/register', 'AuthController@register');

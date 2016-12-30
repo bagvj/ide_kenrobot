@@ -13,13 +13,6 @@ use Carbon\Carbon;
 */
 class AuthController extends Controller
 {
-    private $broker = null;
-
-
-    function __construct()
-    {
-        $this->broker = new Broker();
-    }
 
     public function attach(Request $request)
     {
@@ -31,11 +24,12 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-    {        
+    {
         $username = $request->input('username');
         $password = $request->input('password');
 
-        $result =  $this->broker->login($username, $password, 'default');
+        $result =  $this->broker->loginDefaultAndSns($username, $password);
+
         if ($result['status'] != 0) {
             return $this->apiReturn($result['status'], $result['message']);
         }
@@ -46,7 +40,6 @@ class AuthController extends Controller
 
         return $this->apiReturn(0, '登录成功', $user);
     }
-
 
     public function weixinlogin(Request $request)
     {
@@ -101,23 +94,6 @@ class AuthController extends Controller
         return $this->apiReturn(0, '获取成功', $login_data);
     }
 
-    public function register(Request $request)
-    {
-        $apiproxy = new ApiProxy('ide', 'ide');
-        $input = $request->only(['username', 'email', 'password']);
-        $input['source'] = 'default';
-        $result = $apiproxy->register($result);
-        if (isset($result['status']) && $result['status'] == 0) {
-            $data = [
-                'name' => $result['data']['base_name'],
-                'avatar_url' => $result['data']['base_avatar'],
-                'uid' => $result['data']['user_id'],
-                'user_id' => $result['data']['user_id'],
-            ];
-        }
-        return $result;
-    }
-
     public function userinfo()
     {
         $user = $this->currentUser();
@@ -134,23 +110,28 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    // public function register(Request $request) {
-    //     $email = $request->input('email');
-    //     $username = $request->input('username');
-    //     $password = $request->input('password');
-    //     //注册成功后是否登录
-    //     $login = $request->input('login', false);
+    public function register(Request $request)
+    {
+        $login = $request->input('login', false);
 
-    //     //测试代码
-    //     if ($login) {
-    //         return $this->apiReturn(0, '注册成功', [
-    //             'name' => $username,
-    //             'avatar_url' => '',
-    //             'uid' => 999,
-    //             'user_id' => 999,
-    //         ]);
-    //     }
+        $apiproxy = new ApiProxy('ide', 'ide');
+        $input = $request->only(['username', 'email', 'password']);
 
-    //     return $this->apiReturn(0, '注册失败');
-    // }
+        $input['source'] = 'default';
+        $result = $apiproxy->register($input);
+
+        if (isset($result['status']) && $result['status'] == 0) {
+            $user = $this->userService->mapDataToUser($result['data']);
+            if ($login) {
+                $this->broker->loginDefaultAndSns($input['email'], $input['password']);
+            }
+            return $this->apiReturn(0, '注册成功', $user);
+        }
+
+        $status = isset($result['status']) ? $result['status'] : -1;
+        $message = isset($result['message']) ? $result['message'] : '注册失败';
+        return $this->apiReturn($status, $message);
+
+    }
+
 }

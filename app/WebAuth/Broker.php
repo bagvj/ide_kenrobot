@@ -147,6 +147,15 @@ class Broker
         return $this->url ."/$command?" . http_build_query($params);
     }
 
+    public function request($method, $command, $data = null)
+    {
+        try {
+            return $this->brokerRequest($method, $command, $data);
+        } catch (\Exception $e) {
+            return ['status' => -10, 'message' => $e->getMessage()];
+        }
+    }
+
     /**
      * 将命令请求转发至SSO Server
      * @param  string $method  请求方法 get/post/delete
@@ -154,13 +163,12 @@ class Broker
      * @param  array  $data    数据       
      * @return array          请求结果
      */
-    protected function request($method, $command, $data = null)
+    protected function brokerRequest($method, $command, $data = null)
     {
         if (!$this->isAttached()) {
             throw new \Exception('No token');
         }
         $url = $this->getRequestUrl($command, !$data || $method === 'POST' ? array() : $data);
-
 
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -173,14 +181,7 @@ class Broker
         }
 
         $response = curl_exec($ch);
-
-        // if ($command == 'login') {
-        //     echo $response;
-        //     exit();
-        // }
-
-      
-         if (curl_errno($ch) != 0) {
+        if (curl_errno($ch) != 0) {
             $message = 'Server request failed: ' . curl_error($ch);
             throw new \Exception($message);
         }
@@ -196,14 +197,14 @@ class Broker
         $data = json_decode($response, true);
         if ($httpCode == 403) {
             $this->clearToken();
-            throw new \Exception($data['message'] ?: $response, $httpCode);
+            throw new \Exception($data['status'].$data['message'] ?: $response, $httpCode);
         }
-        if ($httpCode >= 400) throw new \Exception($data['message'] ?: $response, $httpCode);
+        if ($httpCode >= 400) throw new \Exception($data['status'].$data['message'] ?: $response, $httpCode);
 
         return $data;
     }
 
-    public function login($username = null, $password = null, $source = 'local')
+    public function login($username = null, $password = null, $source = 'sns')
     {
         if (!isset($username) && isset($_REQUEST['username'])) $username = $_REQUEST['username'];
         if (!isset($password) && isset($_REQUEST['password'])) $password = $_REQUEST['password'];
@@ -213,6 +214,34 @@ class Broker
         $this->userinfo = $result;
 
         return $this->userinfo;
+    }
+
+    public function loginDefaultAndSns($account, $password)
+    {
+        $credentials = array();
+        $credentials['password'] = $password;
+
+        $is_email = filter_var($account, FILTER_VALIDATE_EMAIL) ? true : false;
+        if ($is_email) {
+            $credentials['email'] = $account;
+        } else {
+            $credentials['username'] = $account;
+            $credentials['uname'] = $account;
+        }
+
+        $sourceList = ['default', 'sns'];
+        $result = null;
+
+        foreach ($sourceList as $source) {
+            $credentials['source'] = $source;
+            $result = $this->request('POST', 'login', $credentials);
+            if (isset($result['status']) && $result['status'] == 0) {
+                return $this->userinfo = $result;
+            }
+        }
+
+        return $this->userinfo = $result;
+
     }
 
     /**
