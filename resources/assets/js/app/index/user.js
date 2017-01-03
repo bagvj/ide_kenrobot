@@ -245,6 +245,7 @@ define(['vendor/jquery', './util', './EventManager', './userApi'], function($1, 
 
 	function onWeixinLogin(result) {
 		if (result.status == 0) {
+			userInfo = result.data;
 			//登录成功
 			setWeixinLoginCheck(false);
 			closeDialog();
