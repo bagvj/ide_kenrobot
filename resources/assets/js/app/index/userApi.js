@@ -49,12 +49,10 @@ define(['vendor/jquery', 'vendor/jsencrypt', './config'], function($1, JSEncrypt
 	}
 
 	function register(fields) {
-		var promise = $.Deferred();
-
 		var encrypt = new JSEncrypt.JSEncrypt();
 		encrypt.setPublicKey(config.encrypt.publicKey);
 
-		$.ajax({
+		return $.ajax({
 			type: 'POST',
 			url: '/api/user/register',
 			dataType: 'json',
@@ -64,17 +62,8 @@ define(['vendor/jquery', 'vendor/jsencrypt', './config'], function($1, JSEncrypt
 				password: encrypt.encrypt(fields.password),
 				login: true,
 			},
-		}).done(function(result) {
-			if(result.status == 0) {
-				userInfo = result.data;
-			}
-			promise.resolve(result);
 		});
-
-		return promise;
 	}
-
-
 
 	return {
 		authCheck: authCheck,
