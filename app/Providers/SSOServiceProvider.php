@@ -10,7 +10,7 @@ class SSOServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        //
+        
     }
 
     /**

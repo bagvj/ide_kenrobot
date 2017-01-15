@@ -9,21 +9,17 @@ namespace App\WebAuth;
 class ApiProxy
 {
 
-    const API_USERINFO = '/api/user/userinfo';
-    const API_REGISTER = '/api/user/register';
-    const API_VALIDATE = '/api/user/validate';
+    const API_USERINFO  = '/api/user/userinfo';
+    const API_REGISTER  = '/api/user/register';
+    const API_VALIDATE  = '/api/user/validate';
     const API_WEIXINSCAN = '/api/user/weixin/scanlogin';
-
 
     protected $appId = null;
     protected $appSecret = null;
     protected $baseUrl = null;
-    protected $apiCurl = null;
-
 
     function __construct($appId, $appSecret, $baseUrl)
     {
-
         if (!$appId) throw new \InvalidArgumentException("AppID not specified");
         if (!$appSecret) throw new \InvalidArgumentException("AppSecret not specified");
         if (!$baseUrl) throw new \InvalidArgumentException("APP BASEURL not specified");
