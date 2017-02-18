@@ -18,10 +18,11 @@ class ProjectController extends Controller {
     public function buildProject(Request $request) {
         $id = $request->input('id');
         $id = intval($id);
-        $user_id = $request->input('user_id');
         $project = ProjectModel::find($id);
 
-        if(!$project || $project['user_id'] != $user_id) {
+        $user = $this->currentUser();
+
+        if(!$project || !$user || $project['uid'] != $user['uid']) {
             return response()->json(['status' => -1, 'message' => '非法请求']);
         }
 
@@ -98,12 +99,12 @@ class ProjectController extends Controller {
      * 保存项目
      */
     public function saveProject(Request $request) {
-        $keys_required = array('project_name', 'user_id');
-        $keys = array('project_name', 'user_id','project_intro','project_data','public_type');
+        $keys_required = array('project_name');
+        $keys = array('project_name','project_intro','project_data','public_type');
         $input = $request->only($keys);
 
         $input['id'] = $request->input('id');
-
+        $input['user_id'] = 0;
         $is_update = !empty($input['id']);
 
         //验证数据
@@ -120,12 +121,13 @@ class ProjectController extends Controller {
             }
         }
 
-        $user = User::find($input['user_id']);
-        if ($user == null) {
+        $user = $this->currentUser();
+        if ($user === null) {
             return response()->json(['status' => -2, 'message' => "请登录后进行保存"]);
         }
-        $input['uid'] = $user->uid;
-        $input['author'] = $user->name;
+
+        $input['uid'] = $user['uid'];
+        $input['author'] = $user['name'];
 
         
         if ($is_update) {
@@ -134,7 +136,7 @@ class ProjectController extends Controller {
                 return response()->json(['status' => -3, 'message' => '项目不存在']);
             }
 
-            if ($project->user_id != $input['user_id']) {
+            if ($project->uid != $input['uid']) {
                 return response()->json(['status' => -5, 'message' => '没有该项目所有权']);
             }
 
@@ -168,7 +170,6 @@ class ProjectController extends Controller {
     public function getProject(Request $request) {
         $id = $request->input('id');
         $hash = $request->input('hash');
-        $user_id = $request->input('user_id');
         $type = isset($id) ? 'id' : 'hash';
 
         if (empty($id) && empty($hash)) {
@@ -176,8 +177,8 @@ class ProjectController extends Controller {
         }
 
         //传递默认参数
-        $user = User::find($user_id);
-        $uid = empty($user) ? 0 : $user->uid;
+        $user = $this->currentUser();
+        $uid = isset($user['uid']) ? $user['uid'] : 0;
 
         if ($type == 'id') {
             $project =  ProjectModel::find($id);
@@ -190,7 +191,7 @@ class ProjectController extends Controller {
         }
 
         //私密
-        if ($user_id != $project->user_id) {
+        if ($uid != $project->uid) {
             if ($project->public_type == 0) { //私有
                 return response()->json(['status' => -3, 'message' => '没有权限查看这个项目']);
             }else if ($project->public_type == 1) { //私有
@@ -205,14 +206,14 @@ class ProjectController extends Controller {
      * 获取项目列表
      */
     public function getProjects(Request $request) {
-        $user_id = $request->input('user_id');
 
-        if (empty($user_id)) {
-            return response()->json(['status' => -1, 'message' => '[user_id]为必需字段切类型为数字']);
+        $user = $this->currentUser();
+
+        if (empty($user)) {
+            return $this->apiReturn(-1, '请登录');
         }
-
-
-        $projectList = ProjectModel::where('user_id', $user_id)->get();
+        $uid = $user['uid'];
+        $projectList = ProjectModel::where('uid', $uid)->get();
         if (!empty($projectList) && $projectList->count() > 0) {
             return response()->json(['status' => 0, 'message' => '', 'data' => $projectList->toArray()]);
         }
@@ -238,7 +239,7 @@ class ProjectController extends Controller {
 		if (empty($uid)) {
 			return response()->json(['status' => -1, 'message' => '[uid]为必需字段']);
 		}
-		$allowKeys = ['id','project_name', 'user_id', 'uid', 'author' ,'project_intro', 'public_type', 'hash'];
+		$allowKeys = ['id','project_name', 'uid', 'author' ,'project_intro', 'public_type', 'hash'];
 		$projectList = ProjectModel::where('uid', $uid)
 			->orderby('updated_at','desc')
 			->skip(($page-1)*$pagesize)
@@ -272,6 +273,10 @@ class ProjectController extends Controller {
     public function deleteProject(Request $request) {
         $id = $request->input('id');
         $id = intval($id);
+        $user = $this->currentUser();
+        if ($user === null) {
+            return $this->apiReturn(-3, '您未登录，无权操作这个项目');
+        }
 
         if (empty($id)) {
             return response()->json(['status' => -1, 'message' => '[id]为必需字段且类型为数字']);
@@ -279,14 +284,14 @@ class ProjectController extends Controller {
 
         $project = ProjectModel::find($id);
 
-        if ($project == null) {
+        if ($project === null) {
             return response()->json(['status' => -2, 'message' => '正在删除不存在的数据']);
         }
 
         //暂时不开放
-        // if ($project->user_id != $request->input('user_id')) {
-        //     return response()->json(['status' => -3, 'message' => '无权操作这个项目']);
-        // }
+        if ($project->uid != $user['uid']) {
+            return response()->json(['status' => -3, 'message' => '无权操作这个项目']);
+        }
         $ret = $project->delete();
 
         if ($ret) {

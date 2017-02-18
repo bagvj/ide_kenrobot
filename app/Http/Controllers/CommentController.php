@@ -58,7 +58,7 @@ class CommentController extends Controller
 
     private function uglywordfitler($content)
     {
-        $words = ['李志华','二货','傻逼','孙子'];
+        $words = ['敏感词','...'];
         foreach ($words as $val) {
             if (strpos($content, $val) !== false) {
                 return "[$val]不符合相关法律规定，请选用其他词汇";
