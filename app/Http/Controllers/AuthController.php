@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\WebAuth\Broker;
 use App\WebAuth\ApiProxy;
-use Url;
-use Carbon\Carbon;
 use Session;
 /**
 * 用户登录
@@ -43,11 +40,11 @@ class AuthController extends Controller
 
     public function weixinlogin(Request $request)
     {
-        $ori_login_key = Session::get('login_key');
-        $login_key = $request->input('login_key');
-        if (empty($ori_login_key) || empty($login_key)) {
-            return $this->apiReturn(-3, 'login_key 过期，请刷新重试！');
-        }
+        // $ori_login_key = Session::get('login_key');
+        // $login_key = $request->input('login_key');
+        // if (empty($ori_login_key) || empty($login_key)) {
+        //     return $this->apiReturn(-3, 'login_key 过期，请刷新重试！');
+        // }
 
         $result = $this->broker->loginWeixin($login_key);
         if ($result['status'] != 0) {
@@ -65,14 +62,13 @@ class AuthController extends Controller
     /**
      * 获取微信二维码
      */
-    public function weixinQrcode(Request $request)
+    public function weixinQrcode(Request $request,  ApiProxy $apiproxy)
     {
         $refresh = $request->input('refresh');
         $login_key = Session::get('login_key');
 
         if ($refresh || empty($login_key)) {
 
-            $apiproxy = new ApiProxy('ide', 'ide');
             $result = $apiproxy->weixinScan();
             if (!$result || !isset($result['status'])) {
                 return $this->apiReturn(-1, '获取失败');
@@ -84,7 +80,7 @@ class AuthController extends Controller
             }
             $expire_seconds = $result['data']['expire_seconds'];
             $login_key = $result['data']['auth_key'];
-
+            $result['data']['login_key'] = $login_key;
             Session::put('login_key', $login_key);
             Session::put('login_data', json_encode($result['data']));
         }
@@ -117,11 +113,10 @@ class AuthController extends Controller
         return $this->apiReturn(0, '退出成功');
     }
 
-    public function register(Request $request)
+    public function register(Request $request,  ApiProxy $apiproxy)
     {
         $login = $request->input('login', false);
 
-        $apiproxy = new ApiProxy('ide', 'ide');
         $input = $request->only(['username', 'email', 'password']);
 
         $input['source'] = 'default';

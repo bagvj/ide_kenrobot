@@ -35,14 +35,12 @@ class Broker
      */
     protected $userinfo;
 
-    public function __construct($url = '', $broker = '' , $secret = '')
+    public function __construct($broker = '' , $secret = '', $url = '')
     {
-        $url = env('SSO_URL');
-        $broker = env('SSO_BROKER_ID');
-        $secret = env('SSO_BROKER_SECRET');
-        if (!$url) throw new \InvalidArgumentException("SSO server URL not specified");
+
         if (!$broker) throw new \InvalidArgumentException("SSO broker id not specified");
         if (!$secret) throw new \InvalidArgumentException("SSO broker secret not specified");
+        if (!$url) throw new \InvalidArgumentException("SSO server URL not specified");
 
         $this->url = $url;
         $this->broker = $broker;
@@ -185,7 +183,9 @@ class Broker
             $message = 'Server request failed: ' . curl_error($ch);
             throw new \Exception($message);
         }
+        // echo $response;
 
+        // dd($url);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         list($contentType) = explode(';', curl_getinfo($ch, CURLINFO_CONTENT_TYPE));
 
@@ -293,6 +293,11 @@ class Broker
         }
 
         return $this->userinfo;
+    }
+
+    public function userinfo()
+    {
+        return $this->getUserInfo();
     }
 
     /**

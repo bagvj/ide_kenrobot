@@ -126,7 +126,8 @@ class ProjectController extends Controller {
             return response()->json(['status' => -2, 'message' => "请登录后进行保存"]);
         }
 
-        $input['uid'] = $user['uid'];
+        $input['user_id'] = $user['user_id'];
+        $input['uid'] = isset($user['uid']) ? $user['uid'] : 0;
         $input['author'] = $user['name'];
 
         

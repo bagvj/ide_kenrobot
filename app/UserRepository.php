@@ -7,12 +7,6 @@ namespace App;
 */
 class UserRepository
 {
-	
-	function __construct()
-	{
-		
-	}
-
 	/**
 	 * 获取用户
 	 */

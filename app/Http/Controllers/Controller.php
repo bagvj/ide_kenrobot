@@ -27,7 +27,6 @@ abstract class Controller extends BaseController
         $this->broker = $broker;
     }
 
-
     public function apiReturn($status, $message, $data = null)
     {
         if (!isset($data)) {
