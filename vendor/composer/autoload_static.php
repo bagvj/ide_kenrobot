@@ -360,6 +360,7 @@ class ComposerStaticInita132b2827dc1d0fe6bb755edbab1a1a5
     );
 
     public static $classMap = array (
+        'CreateStatisticsTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_18_115043_create_statistics_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'DefaultTables' => __DIR__ . '/../..' . '/database/migrations/2016_11_01_083211_default_tables.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',

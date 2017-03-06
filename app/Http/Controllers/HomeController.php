@@ -12,6 +12,7 @@ use Curl\Curl;
 use Session;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Project\Repository;
+use App\Statistics as StatisticsModel;
 
 
 class HomeController extends Controller {
@@ -58,8 +59,25 @@ class HomeController extends Controller {
 			"theme" => "default",
 		);
 		$options = json_encode(array_merge($default_options, $options), JSON_FORCE_OBJECT);
-
+		$this->updatePV();
 		return view("editor", compact("options"));
+	}
+
+	/**
+	 * editor页面访问量
+	 * @return [type] [description]
+	 */
+	private function updatePV()
+	{
+		$key = 'editor_pageview_'.date('Ymd');	
+		$pv = StatisticsModel::where('key', $key)->first();
+		if ($pv == null) {
+			StatisticsModel::create(['key' => $key, 'value' => 1]);
+			return;
+		}
+
+		$pv->value ++;
+		$pv->save();
 	}
 
 	private function getQrcodeurl($key = '') {
