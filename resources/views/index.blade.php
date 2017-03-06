@@ -9,14 +9,14 @@
 		<meta name="description" content="啃萝卜智能硬件平台" />
 		<meta name="csrf-token" content="{{csrf_token()}}" />
 
-		<link href="/assets/css/index.css" rel="stylesheet" />
+		<link href="assets/css/index.css" rel="stylesheet" />
 
 		@if(!env('APP_DEBUG'))
 		<script scr="//hm.baidu.com/hm.js?{{env('PV_KEY')}}"></script>
 		@endif
-		<script src="/assets/js/go.js"></script>
-		<script src="/assets/js/astyle.js"></script>
-		<script src="/assets/js/require.js" data-main="/assets/js/index"></script>
+		<script src="assets/js/go.js"></script>
+		<script src="assets/js/astyle.js"></script>
+		<script src="assets/js/require.js" data-main="assets/js/index"></script>
 	</head>
 	<body class="unselectable theme-{{$setting['theme']}}" data-theme="{{$setting['theme']}}">
 		<div class="main">
@@ -112,10 +112,10 @@
 							</div>
 							<div class="user-info">
 								<a class="photo" href="{{$mainpage}}" target="_blank">
-									<img src="{{$user->avatar_url or asset('assets/image/default_portrait.png')}}" />
+									<img src="{{empty($user['avatar_url']) ? 'assets/image/default-user.png' : $user['avatar_url']}}" />
 								</a>
 								<div class="welcome">
-									<span class="name">{{isset($user) ? $user->name : ''}}</span><i class="kenrobot ken-triangle-down arrow"></i>
+									<span class="name">{{isset($user) ? $user['name'] : ''}}</span><i class="kenrobot ken-triangle-down arrow"></i>
 								</div>
 							</div>
 							<div class="user-menu">
@@ -316,56 +316,87 @@
 			<div class="float-layer"></div>
 			<div class="drag-layer"></div>
 			<div class="modal dialog-layer">
-				<div class="x-dialog x-dialog-custom login-dialog">
-					<i class="kenrobot ken-close x-dialog-close"></i>
-					<ul class="switch">
-						<li class="account active" data-action="account"></li>
-						<li class="weixin" data-action="weixin"><div class="tips">扫码登录更安全</div></li>
-					</ul>
-					<div class="logo"></div>
-					<div class="seperator"></div>
-					<div class="wrap">
-						<div class="tab tab-account active">
-							<div class="title">账号登录</div>
-							<form>
-								{!! csrf_field() !!}
-								<input class="qrcode-key" type="hidden" value="{{$key or ''}}">
-								<div class="field">
-									<span class="icon"><i class="kenrobot ken-user"></i></span>
-									<input class="email" type="email" name="email" value="{{old('email')}}" placeholder="邮箱地址/手机号码" autocomplete="off" />
+				<div class="a-dialog login-dialog">
+					<span class="dialog-close">&times;</span>
+					<div class="title"><span class="mode"></span>啃萝卜 - Make it Easy.</div>
+					<div class="dialog-content">
+						<div class="tab tab-login">
+							<ul class="switch">
+								<li data-action="account">帐号登录</li>
+								<li data-action="quick">快捷登录</li>
+							</ul>
+							<div class="tabs-wrap">
+								<div class="tabs">
+									<div class="tab tab-account">
+										<div class="field">
+											<i class="icon kenrobot ken-logo"></i>
+											<input type="text" class="reset-field username" spellcheck="false" autocomplete="off" placeholder="邮箱地址/用户名" />
+											<span class="error"></span>
+										</div>
+										<div class="field">
+											<i class="icon kenrobot ken-password"></i>
+											<input type="password" class="reset-field password" spellcheck="false" autocomplete="off" placeholder="密码" />
+											<span class="error"></span>
+										</div>
+										<div class="remember-wrap">
+											<input type="checkbox" class="reset-field remember" id="login-remember-password" /><label for="login-remember-password">记住密码</label>
+											<a class="find-password" href="{{$find_password_url}}">忘记密码?</a>
+										</div>
+										<div class="action">
+											<input type="button" class="switch-register" data-action="register" value="注 册" />
+											<input type="button" class="login" value="登 录" /> 
+										</div>
+									</div>
+									<div class="tab tab-quick">
+										<div class="weixin">
+											<div class="qrcode-wrap">
+												<input type="hidden" class="qrcode-key" />
+												<img class="qrcode" />
+												<div class="refresh">
+													二维码已过期<br />刷新重试<br /><i class="kenrobot ken-refresh"></i>
+												</div>
+											</div>
+											<div class="des">
+												请使用<span class="spec">微信app</span>扫描二维码，<br />安全登录，防止盗号。
+											</div>
+										</div>
+										<div class="others">
+											<ul class="list">
+												<li data-action="github"><i class="kenrobot ken-github"></i><span>github</span></li>
+												<li data-action="weibo"><i class="kenrobot ken-weibo"></i><span>微博</span></li>
+												<li data-action="qq"><i class="kenrobot ken-qq"></i><span>QQ</span></li>
+											</ul>
+											<div class="des">使用第三方帐号登录</div>
+										</div>
+									</div>
 								</div>
-								<div class="field">
-									<span class="icon"><i class="kenrobot ken-password"></i></span>
-									<input class="password" type="password" name="password" placeholder="密码" />
-								</div>
-								<div class="message">
-									<span></span>
-								</div>
-								<input class="login-btn" type="button" value="登录" />
-							</form>
-						</div>
-						<div class="tab tab-weixin">
-							<div class="scan">
-								<img src="{{asset('/assets/image/weixin-scan.png')}}" />
-							</div>
-							<img class="qrcode" alt="微信扫码" src="{{$qrcodeurl or ''}}" />
-							<div class="login-tips tips">
-								请使用微信扫一扫<br />扫码关注后即可直接登录
-							</div>
-							<div class="register-tips tips">
-								推荐使用微信扫码功能<br />扫码后将完成注册并登录
 							</div>
 						</div>
-					</div>
-					<div class="footer">
-						<div class="login-footer">
-							<a class="forget-password" href="{{$find_password_url}}">忘记密码</a>
-							<a class="register" href="{{$register_url}}">点击注册</a>
-							<span class="no-account">还没有啃萝卜账号？</span>
-						</div>
-						<div class="register-footer">
-							<span class="no-account">不使用微信？前往</span>
-							<a class="register" href="{{$register_url}}">网站注册</a>
+						<div class="tab tab-register">
+							<div class="field-label">邮箱:</div>
+							<div class="field">
+								<input type="email" class="reset-field email" spellcheck="false" autocomplete="off" placeholder="格式为******@***.***" />
+								<span class="error"></span>
+							</div>
+							<div class="field-label">用户名:</div>
+							<div class="field">
+								<input type="text" class="reset-field username" spellcheck="false" autocomplete="off" placeholder="英文、数字、下划线" />
+								<span class="error"></span>
+							</div>
+							<div class="field-label">密码:</div>
+							<div class="field">
+								<input type="password" class="reset-field password" placeholder="密码" />
+								<span class="error"></span>
+							</div>
+							<div class="field-label">确认密码:</div>
+							<div class="field">
+								<input type="password" class="reset-field confirm-password" placeholder="确认密码" />
+								<span class="error"></span>
+							</div>
+							<div class="action">
+								<input type="button" class="switch-login" data-action="login" value="已有帐号，去登录" />
+								<input type="button" class="register" value="确定注册" />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -393,7 +424,7 @@
 						如果你遇到了Arduino<span class="strong">驱动问题</span>，请按以下步骤操作:
 						<div class="step">
 							Step 1: 点击<a class="downloadUrl" href="#" title="Arduino驱动">下载</a>并解压<br />
-							Step 2: 运行<span class="strong">arduino驱动安装.exe</span><br />
+							Step 2: 运行<span class="strong">setup.exe</span><br />
 							Step 3: 完成安装
 						</div>
 					</div>

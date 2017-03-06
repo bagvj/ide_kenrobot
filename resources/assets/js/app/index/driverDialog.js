@@ -22,11 +22,11 @@ define(['vendor/jquery', './EventManager', './util'], function(_, EventManager, 
 
 		var bit;
 		if (navigator.userAgent.indexOf("WOW64") != -1 || navigator.userAgent.indexOf("Win64") != -1) {
-			bit = 64;
+			bit = "64";
 		} else {
-			bit = 32;
+			bit = "86";
 		}
-		var downloadUrl = "/download/arduino-driver-x" + bit + ".zip";
+		var downloadUrl = "/download/arduino-driver-x" + bit + ".7z";
 		$('.downloadUrl', selector).attr('href', downloadUrl);
 	}
 
