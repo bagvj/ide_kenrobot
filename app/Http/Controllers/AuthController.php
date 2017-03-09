@@ -40,11 +40,11 @@ class AuthController extends Controller
 
     public function weixinlogin(Request $request)
     {
-        // $ori_login_key = Session::get('login_key');
-        // $login_key = $request->input('login_key');
-        // if (empty($ori_login_key) || empty($login_key)) {
-        //     return $this->apiReturn(-3, 'login_key 过期，请刷新重试！');
-        // }
+        $ori_login_key = Session::get('login_key');
+        $login_key = $request->input('login_key');
+        if (empty($ori_login_key) || empty($login_key)) {
+            return $this->apiReturn(-3, 'login_key 过期，请刷新重试！');
+        }
 
         $result = $this->broker->loginWeixin($login_key);
         if ($result['status'] != 0) {
