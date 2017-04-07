@@ -23,7 +23,8 @@ define(['vendor/ace/ace', 'vendor/ace/theme-default', 'vendor/ace/theme-white', 
 
 		var docCommentCode = docCommentTemplate.replace(/\{\{author\}\}/, options.author || "")
 			.replace(/\{\{date\}\}/, formatDate(new Date(), "yyyy/MM/dd"));
-		var code = docCommentCode + (isFalse(options.init_code, true) ? "" : "\n" + initCode);
+		// var code = docCommentCode + (isFalse(options.init_code, true) ? "" : "\n" + initCode);
+		var code = isFalse(options.init_code, true) ? "" : docCommentCode + "\n" + init_code;
 
 		editor.setValue(code, 1);
 	}
